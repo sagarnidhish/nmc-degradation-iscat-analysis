@@ -1,0 +1,23 @@
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+.env
+*.DS_Store
+
+# Large data files — never commit
+echemDF_full/echemDF_full.csv
+*.hdf5
+*.h5
+*.npy
+*.npz
+*.parquet
+
+# Derived outputs (generated on cluster)
+derived/
+
+# Conda/pip
+*.conda
