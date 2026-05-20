@@ -21,3 +21,4 @@ derived/
 
 # Conda/pip
 *.conda
+echemDF_full/echemDF_partial_*.csv
