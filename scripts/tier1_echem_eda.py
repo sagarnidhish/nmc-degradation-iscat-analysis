@@ -183,6 +183,7 @@ def main() -> None:
 
     csv_path = resolve_existing_path([
         args.echem_csv.strip() if args.echem_csv else "",
+        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
         "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/echemDF_full/echemDF_full.csv",
         "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/echemDF_full.csv",
         "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
