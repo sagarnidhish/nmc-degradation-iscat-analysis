@@ -2134,6 +2134,279 @@
     "report": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/NMC_AI_PHYSICS_SYNTHESIS.md",
     "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/nmc_ai_physics_synthesis_summary.json"
   },
+  "particle_trace_physics_audit": {
+    "chosen_trace_state_k": 2,
+    "cycle_max": 158.0,
+    "cycle_min": 2.0,
+    "future_drop_classifier": [
+      {
+        "mean_balanced_accuracy": 0.6482142857142856,
+        "mean_roc_auc": 0.8827922077922079,
+        "n_folds": 5,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "mean_balanced_accuracy": 0.828042328042328,
+        "mean_roc_auc": 0.8273809523809524,
+        "n_folds": 3,
+        "target": "future_sync2_drop_within_8cycles"
+      }
+    ],
+    "future_drop_classifier_null": [
+      {
+        "empirical_p_ge_observed": 0.001996007984031936,
+        "n_permutations": 500,
+        "null_mean_auc": 0.495954633415089,
+        "null_p95_auc": 0.6785281348116169,
+        "observed_mean_auc": 0.8827922077922079,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "empirical_p_ge_observed": 0.00998003992015968,
+        "n_permutations": 500,
+        "null_mean_auc": 0.5083390446543807,
+        "null_p95_auc": 0.7437486383442261,
+        "observed_mean_auc": 0.8273809523809524,
+        "target": "future_sync2_drop_within_8cycles"
+      }
+    ],
+    "guardrail": "This audit uses the larger four-particle cycle intensity table, not video ROI masks. It tests cycle-level photometry/echem physics hypotheses and early-warning signals, but cannot localize phase fronts or validate diffusion without ROI/video QC.",
+    "n_any_drop_cycles": 4,
+    "n_cycle_rows": 89,
+    "n_sync2_drop_cycles": 2,
+    "n_sync3_drop_cycles": 2,
+    "top_echem_correlations": [
+      {
+        "left_feature": "V_max",
+        "n": 81,
+        "p_value": 4.144221338910567e-10,
+        "rho": 0.6259293890844787,
+        "right_feature": "particle_norm_mean"
+      },
+      {
+        "left_feature": "V_max",
+        "n": 81,
+        "p_value": 7.293304266108697e-06,
+        "rho": 0.47540687070776333,
+        "right_feature": "particle_norm_range"
+      },
+      {
+        "left_feature": "V_max",
+        "n": 81,
+        "p_value": 1.6560900248447577e-05,
+        "rho": 0.4587173142166009,
+        "right_feature": "particle_norm_std"
+      },
+      {
+        "left_feature": "coulombic_efficiency_pct",
+        "n": 81,
+        "p_value": 1.908585008237623e-05,
+        "rho": -0.455738797087193,
+        "right_feature": "particle_norm_mean"
+      },
+      {
+        "left_feature": "capacity_mAh",
+        "n": 81,
+        "p_value": 2.0810225758602482e-05,
+        "rho": 0.45390951846657546,
+        "right_feature": "particle_norm_mean"
+      },
+      {
+        "left_feature": "V_max",
+        "n": 80,
+        "p_value": 0.025367395390061387,
+        "rho": -0.24991813751331696,
+        "right_feature": "mean_abs_delta_prev"
+      },
+      {
+        "left_feature": "V_max",
+        "n": 80,
+        "p_value": 0.033571165972683226,
+        "rho": -0.23792407443801286,
+        "right_feature": "max_abs_delta_prev"
+      },
+      {
+        "left_feature": "capacity_mAh",
+        "n": 81,
+        "p_value": 0.06313443667774095,
+        "rho": 0.20744362516707748,
+        "right_feature": "particle_norm_range"
+      },
+      {
+        "left_feature": "capacity_mAh",
+        "n": 80,
+        "p_value": 0.07701007709371153,
+        "rho": -0.19885254836574678,
+        "right_feature": "mean_abs_delta_prev"
+      },
+      {
+        "left_feature": "capacity_mAh",
+        "n": 81,
+        "p_value": 0.08134136540282727,
+        "rho": 0.19482946493910874,
+        "right_feature": "particle_norm_std"
+      },
+      {
+        "left_feature": "capacity_mAh",
+        "n": 80,
+        "p_value": 0.10362664454106574,
+        "rho": -0.18330187034582984,
+        "right_feature": "max_abs_delta_prev"
+      },
+      {
+        "left_feature": "coulombic_efficiency_pct",
+        "n": 81,
+        "p_value": 0.1045017936791049,
+        "rho": -0.18169807699980642,
+        "right_feature": "particle_norm_range"
+      }
+    ],
+    "top_event_feature_tests": [
+      {
+        "feature": "mean_delta_prev",
+        "mannwhitney_p": 1.0292080672759006e-05,
+        "median_negative": 0.003355813386695411,
+        "median_pos_minus_neg": -0.11601775956284148,
+        "median_positive": -0.11266194617614607,
+        "n_negative": 84,
+        "n_positive": 4,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "max_abs_delta_prev",
+        "mannwhitney_p": 0.0013254345161334475,
+        "median_negative": 0.055946791862284906,
+        "median_pos_minus_neg": 0.16172169629800637,
+        "median_positive": 0.21766848816029127,
+        "n_negative": 84,
+        "n_positive": 4,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "mean_abs_delta_prev",
+        "mannwhitney_p": 0.002746051454362118,
+        "median_negative": 0.03710090689858642,
+        "median_pos_minus_neg": 0.08944992816644853,
+        "median_positive": 0.12655083506503495,
+        "n_negative": 84,
+        "n_positive": 4,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "particle_norm_mean",
+        "mannwhitney_p": 0.05859900496793728,
+        "median_negative": 1.0789912516996332,
+        "median_pos_minus_neg": -0.0962834154288208,
+        "median_positive": 0.9827078362708124,
+        "n_negative": 85,
+        "n_positive": 4,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "delta_std_across_particles",
+        "mannwhitney_p": 0.06681103091141621,
+        "median_negative": 0.033609929859975324,
+        "median_pos_minus_neg": 0.04902980561608955,
+        "median_positive": 0.08263973547606487,
+        "n_negative": 84,
+        "n_positive": 4,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "frames_percentile",
+        "mannwhitney_p": 0.25471555887964603,
+        "median_negative": 0.5224719101123596,
+        "median_pos_minus_neg": -0.2977528089887641,
+        "median_positive": 0.2247191011235955,
+        "n_negative": 85,
+        "n_positive": 4,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "n_frames",
+        "mannwhitney_p": 0.25471555887964603,
+        "median_negative": 934.0,
+        "median_pos_minus_neg": -24.5,
+        "median_positive": 909.5,
+        "n_negative": 85,
+        "n_positive": 4,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "V_min",
+        "mannwhitney_p": 0.43428579014776525,
+        "median_negative": 2.9930199999999996,
+        "median_pos_minus_neg": -0.005211999999999772,
+        "median_positive": 2.987808,
+        "n_negative": 78,
+        "n_positive": 3,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "capacity_mAh",
+        "mannwhitney_p": 0.4352086263478668,
+        "median_negative": 0.6497239059155266,
+        "median_pos_minus_neg": -0.00984183586897558,
+        "median_positive": 0.6398820700465511,
+        "n_negative": 78,
+        "n_positive": 3,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "coulombic_efficiency_pct",
+        "mannwhitney_p": 0.6964135021097047,
+        "median_negative": 98.7216757885319,
+        "median_pos_minus_neg": -0.12466658251605622,
+        "median_positive": 98.59700920601584,
+        "n_negative": 78,
+        "n_positive": 3,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "V_max",
+        "mannwhitney_p": 0.7706752953476388,
+        "median_negative": 4.201617,
+        "median_pos_minus_neg": 0.0001930000000003318,
+        "median_positive": 4.20181,
+        "n_negative": 78,
+        "n_positive": 3,
+        "target": "any_abrupt_drop"
+      },
+      {
+        "feature": "particle_norm_std",
+        "mannwhitney_p": 0.8044919335657457,
+        "median_negative": 0.05796416202985654,
+        "median_pos_minus_neg": -0.012985822003648735,
+        "median_positive": 0.044978340026207805,
+        "n_negative": 85,
+        "n_positive": 4,
+        "target": "any_abrupt_drop"
+      }
+    ],
+    "top_trace_state_clusters": [
+      {
+        "abrupt_drop_rate": 0.05084745762711865,
+        "cycle_max": 158,
+        "cycle_min": 2,
+        "median_capacity": 0.6399956269773582,
+        "median_ce": 98.7624204500116,
+        "n_cycles": 59,
+        "sync2_drop_rate": 0.01694915254237288,
+        "trace_state_cluster": 0
+      },
+      {
+        "abrupt_drop_rate": 0.03333333333333333,
+        "cycle_max": 153,
+        "cycle_min": 10,
+        "median_capacity": 0.8245203715857647,
+        "median_ce": 98.57526648401443,
+        "n_cycles": 30,
+        "sync2_drop_rate": 0.03333333333333333,
+        "trace_state_cluster": 1
+      }
+    ],
+    "trace_state_best_silhouette": 0.2661756152294208
+  },
   "persistence_best_all_cycles": true,
   "phase_kinetics_avrami": {
     "guardrail": "Kinetic fits are optical phase-fraction proxies from cropped particle ROIs using provisional timing. Avrami/logistic parameters are descriptive and not calibrated reaction constants.",

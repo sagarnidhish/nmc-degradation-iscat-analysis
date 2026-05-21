@@ -101,6 +101,7 @@ def main() -> None:
     manual_qc_gated = read_json(derived / "manual_qc_gated_front_effects" / "manual_qc_gated_front_effects_summary.json")
     spatiotemporal_graph = read_json(derived / "spatiotemporal_degradation_graph" / "spatiotemporal_degradation_graph_summary.json")
     phase_kinetics = read_json(derived / "phase_kinetics_avrami" / "phase_kinetics_avrami_summary.json")
+    particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -180,6 +181,10 @@ def main() -> None:
     graph_distance = top_items(first_summary(spatiotemporal_graph, "distance_gradient_tests", []), 8)
     phase_kinetics_tests = top_items(first_summary(phase_kinetics, "top_group_tests", []), 12)
     phase_kinetics_corr = top_items(first_summary(phase_kinetics, "top_correlations", []), 12)
+    particle_trace_event_tests = top_items(first_summary(particle_trace, "top_event_feature_tests", []), 12)
+    particle_trace_echem_corr = top_items(first_summary(particle_trace, "top_echem_correlations", []), 12)
+    particle_trace_classifiers = top_items(first_summary(particle_trace, "future_drop_classifier", []), 6)
+    particle_trace_nulls = top_items(first_summary(particle_trace, "future_drop_classifier_null", []), 6)
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -277,6 +282,7 @@ def main() -> None:
         f"- Prefix feature-importance audit features: {first_summary(prefix_importance, 'n_features', 0)}",
         f"- Spatiotemporal degradation graph nodes/edges: {first_summary(spatiotemporal_graph, 'n_nodes', 0)} / {first_summary(spatiotemporal_graph, 'n_edges', 0)}",
         f"- Phase-kinetics ROI rows/features: {first_summary(phase_kinetics, 'n_roi', 0)} / {first_summary(phase_kinetics, 'n_kinetic_features', 0)}",
+        f"- Particle trace cycle rows/drop cycles: {first_summary(particle_trace, 'n_cycle_rows', 0)} / {first_summary(particle_trace, 'n_any_drop_cycles', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -298,6 +304,7 @@ def main() -> None:
         f"- Manual-QC gated front-effect tests are status `{first_summary(manual_qc_gated, 'status', 'missing')}` with {first_summary(manual_qc_gated, 'n_manual_front_effect_accepted', 0)} accepted fronts, so no manual-QC-filtered diffusion/front claim is emitted yet.",
         f"- Spatiotemporal graph tests show strong same-cycle spatial homophily in front-positive residuals and event-enriched residual modes, but cross-cycle nearest-neighbor front/event labels do not show simple propagation and remain cohort-design sensitive.",
         "- Optical phase-kinetics fits add transition-sharpness and Avrami-style descriptors: event-enriched residual modes have larger q70/q80 transformed-fraction deltas and faster q60/q70 logistic rates, while kinetic fit quality/rates remain strongly coupled to frame count.",
+        f"- The larger four-particle cycle table shows leakage-conscious early-warning signal for future abrupt drops: any-drop within 8 cycles has mean AUC {fmt((particle_trace_classifiers[0] if particle_trace_classifiers else {}).get('mean_roc_auc'))} with empirical null p={fmt((particle_trace_nulls[0] if particle_trace_nulls else {}).get('empirical_p_ge_observed'))}; synchronized 2+ drops are also detectable but with only two positive cycles.",
         "",
         "## Model Readout",
         "",
@@ -489,6 +496,32 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Particle Trace Physics Audit",
+        "",
+        f"- Cycle rows/range: {first_summary(particle_trace, 'n_cycle_rows', 0)} rows, cycles {fmt(first_summary(particle_trace, 'cycle_min'))}-{fmt(first_summary(particle_trace, 'cycle_max'))}",
+        f"- Drop cycles: any={first_summary(particle_trace, 'n_any_drop_cycles', 0)}, synchronized 2+={first_summary(particle_trace, 'n_sync2_drop_cycles', 0)}, synchronized 3+={first_summary(particle_trace, 'n_sync3_drop_cycles', 0)}",
+        f"- Trace-state clustering: k={first_summary(particle_trace, 'chosen_trace_state_k', 'NA')}, silhouette={fmt(first_summary(particle_trace, 'trace_state_best_silhouette'))}",
+    ]
+    for row in particle_trace_classifiers:
+        report_lines.append(
+            f"- Future-drop classifier {row.get('target')}: folds={fmt(row.get('n_folds'), 0)}, AUC {fmt(row.get('mean_roc_auc'))}, balanced accuracy {fmt(row.get('mean_balanced_accuracy'))}"
+        )
+    for row in particle_trace_nulls:
+        report_lines.append(
+            f"- Future-drop null {row.get('target')}: observed AUC {fmt(row.get('observed_mean_auc'))}, null p95 {fmt(row.get('null_p95_auc'))}, empirical p={fmt(row.get('empirical_p_ge_observed'))}"
+        )
+    for row in particle_trace_event_tests[:6]:
+        report_lines.append(
+            f"- Event feature {row.get('target')} {row.get('feature')}: median pos-neg {fmt(row.get('median_pos_minus_neg'))}, p={fmt(row.get('mannwhitney_p'))}"
+        )
+    for row in particle_trace_echem_corr[:6]:
+        report_lines.append(
+            f"- Trace/echem correlation {row.get('left_feature')} vs {row.get('right_feature')}: rho {fmt(row.get('rho'))}, p={fmt(row.get('p_value'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(particle_trace, 'guardrail', 'Cycle-level trace audit only.')}")
+
+    report_lines += [
+        "",
         "## Top ROI/Echem Or Protocol Couplings",
         "",
     ]
@@ -618,6 +651,22 @@ def main() -> None:
             "top_group_tests": phase_kinetics_tests,
             "top_correlations": phase_kinetics_corr,
             "guardrail": first_summary(phase_kinetics, "guardrail"),
+        },
+        "particle_trace_physics_audit": {
+            "n_cycle_rows": first_summary(particle_trace, "n_cycle_rows"),
+            "cycle_min": first_summary(particle_trace, "cycle_min"),
+            "cycle_max": first_summary(particle_trace, "cycle_max"),
+            "n_any_drop_cycles": first_summary(particle_trace, "n_any_drop_cycles"),
+            "n_sync2_drop_cycles": first_summary(particle_trace, "n_sync2_drop_cycles"),
+            "n_sync3_drop_cycles": first_summary(particle_trace, "n_sync3_drop_cycles"),
+            "chosen_trace_state_k": first_summary(particle_trace, "chosen_trace_state_k"),
+            "trace_state_best_silhouette": first_summary(particle_trace, "trace_state_best_silhouette"),
+            "top_trace_state_clusters": first_summary(particle_trace, "top_trace_state_clusters", []),
+            "top_event_feature_tests": particle_trace_event_tests,
+            "top_echem_correlations": particle_trace_echem_corr,
+            "future_drop_classifier": particle_trace_classifiers,
+            "future_drop_classifier_null": particle_trace_nulls,
+            "guardrail": first_summary(particle_trace, "guardrail"),
         },
         "persistence_best_all_cycles": persistence_best,
         "prefix_forecast_n_roi": first_summary(prefix_forecast, "n_roi"),

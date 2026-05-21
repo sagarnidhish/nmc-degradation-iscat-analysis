@@ -19,6 +19,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Prefix feature-importance audit features: 54
 - Spatiotemporal degradation graph nodes/edges: 52 / 510
 - Phase-kinetics ROI rows/features: 52 / 40
+- Particle trace cycle rows/drop cycles: 89 / 4
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -40,6 +41,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Manual-QC gated front-effect tests are status `ready_for_manual_labels` with 0 accepted fronts, so no manual-QC-filtered diffusion/front claim is emitted yet.
 - Spatiotemporal graph tests show strong same-cycle spatial homophily in front-positive residuals and event-enriched residual modes, but cross-cycle nearest-neighbor front/event labels do not show simple propagation and remain cohort-design sensitive.
 - Optical phase-kinetics fits add transition-sharpness and Avrami-style descriptors: event-enriched residual modes have larger q70/q80 transformed-fraction deltas and faster q60/q70 logistic rates, while kinetic fit quality/rates remain strongly coupled to frame count.
+- The larger four-particle cycle table shows leakage-conscious early-warning signal for future abrupt drops: any-drop within 8 cycles has mean AUC 0.883 with empirical null p=0.002; synchronized 2+ drops are also detectable but with only two positive cycles.
 
 ## Model Readout
 
@@ -226,6 +228,29 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Correlation q70_max_abs_rate_per_s vs n_frames_percentile: rho 0.686, p=2.043e-08
 - Correlation q70_variation_to_net_abs vs n_frames_percentile: rho -0.675, p=4.098e-08
 - Guardrail: Kinetic fits are optical phase-fraction proxies from cropped particle ROIs using provisional timing. Avrami/logistic parameters are descriptive and not calibrated reaction constants.
+
+## Particle Trace Physics Audit
+
+- Cycle rows/range: 89 rows, cycles 2.000-158.000
+- Drop cycles: any=4, synchronized 2+=2, synchronized 3+=2
+- Trace-state clustering: k=2, silhouette=0.266
+- Future-drop classifier future_any_drop_within_8cycles: folds=5, AUC 0.883, balanced accuracy 0.648
+- Future-drop classifier future_sync2_drop_within_8cycles: folds=3, AUC 0.827, balanced accuracy 0.828
+- Future-drop null future_any_drop_within_8cycles: observed AUC 0.883, null p95 0.679, empirical p=0.002
+- Future-drop null future_sync2_drop_within_8cycles: observed AUC 0.827, null p95 0.744, empirical p=0.010
+- Event feature any_abrupt_drop mean_delta_prev: median pos-neg -0.116, p=1.029e-05
+- Event feature any_abrupt_drop max_abs_delta_prev: median pos-neg 0.162, p=0.001
+- Event feature any_abrupt_drop mean_abs_delta_prev: median pos-neg 0.089, p=0.003
+- Event feature any_abrupt_drop particle_norm_mean: median pos-neg -0.096, p=0.059
+- Event feature any_abrupt_drop delta_std_across_particles: median pos-neg 0.049, p=0.067
+- Event feature any_abrupt_drop frames_percentile: median pos-neg -0.298, p=0.255
+- Trace/echem correlation V_max vs particle_norm_mean: rho 0.626, p=4.144e-10
+- Trace/echem correlation V_max vs particle_norm_range: rho 0.475, p=7.293e-06
+- Trace/echem correlation V_max vs particle_norm_std: rho 0.459, p=1.656e-05
+- Trace/echem correlation coulombic_efficiency_pct vs particle_norm_mean: rho -0.456, p=1.909e-05
+- Trace/echem correlation capacity_mAh vs particle_norm_mean: rho 0.454, p=2.081e-05
+- Trace/echem correlation V_max vs mean_abs_delta_prev: rho -0.250, p=0.025
+- Guardrail: This audit uses the larger four-particle cycle intensity table, not video ROI masks. It tests cycle-level photometry/echem physics hypotheses and early-warning signals, but cannot localize phase fronts or validate diffusion without ROI/video QC.
 
 ## Top ROI/Echem Or Protocol Couplings
 

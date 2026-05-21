@@ -1379,3 +1379,31 @@ Key result:
 - The strongest global correlations are still acquisition/protocol-linked: q70 logistic R2 vs frame-count percentile rho=-0.801, q60 logistic R2 rho=-0.776, ROI norm rate sign consistency rho=0.728, and q80 max-rate rho=0.699. This is a major guardrail for interpreting kinetic parameters.
 
 Interpretation: the kinetic audit adds a physics-shaped layer beyond raw front slopes: event-enriched modes look like sharper/brighter optical phase transformations with earlier transition timing. These are optical transformation proxies, not calibrated reaction constants or diffusion coefficients, and frame-count/protocol coupling must be controlled before using them as mechanistic material parameters.
+
+## 2026-05-21 Particle Trace Physics Audit
+
+Added and ran:
+
+`python scripts/tier4_particle_trace_physics_audit.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit --n-permutation 500`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit`
+
+Local compact copy:
+
+`derived_local/particle_trace_physics_audit`
+
+Key result:
+
+- Built a cycle-level physics audit over the larger normalized four-particle intensity table rather than the 52 cropped ROI/video cohort.
+- The audit covers 89 cycle rows from cycle 2 to 158, with 4 any-drop cycles: 60, 86, 116, and 156. Cycles 86 and 116 are synchronized 3-particle drops; cycles 60 and 156 are single-particle abrupt drops.
+- Unsupervised trace-state clustering selects k=2 with silhouette 0.266. This is a coarse state split, not a definitive degradation taxonomy.
+- Abrupt-drop cycles have much more negative mean particle-intensity step changes than non-drop cycles: median positive-negative `mean_delta_prev` = -0.116, Mann-Whitney p=1.03e-05. They also have larger `max_abs_delta_prev` (+0.162, p=0.00133) and `mean_abs_delta_prev` (+0.0894, p=0.00275).
+- A leakage-conscious leave-cycle-block-out classifier predicts future any-drop cycles within 8 cycles with mean AUC 0.883 and balanced accuracy 0.648. A 500-shuffle null gives null p95 AUC 0.679 and empirical p=0.001996.
+- The analogous future synchronized 2+ drop classifier has mean AUC 0.827 and balanced accuracy 0.828, with null p95 AUC 0.744 and empirical p=0.00998, but this target has only two positive synchronized-drop cycles.
+- Echem/trace coupling is strong at the cycle level: Vmax correlates with particle norm mean (rho 0.626, p=4.14e-10), particle norm range (rho 0.475, p=7.29e-06), and particle norm std (rho 0.459, p=1.66e-05); capacity correlates with particle norm mean (rho 0.454, p=2.08e-05).
+- The project synthesis now includes a Particle Trace Physics Audit section and carries the audit into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this is the first stronger early-warning result from the broader particle trace table rather than only selected ROI videos. It supports the idea that particle-level photometry dynamics before an event carry predictive information about upcoming abrupt degradation, but it cannot localize phase boundaries, infer diffusion, or replace manual ROI/front QC.
+
