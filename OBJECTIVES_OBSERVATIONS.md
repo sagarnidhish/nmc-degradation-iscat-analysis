@@ -214,3 +214,55 @@ Key result:
 - The other three clusters are currently labeled stable/slow-drift variants, including later-cycle brighter/high-voltage regimes.
 
 Interpretation: the data support an exploratory degradation-mode view, but the cluster labels are not physical mechanisms yet. They should guide QC and hypothesis generation, not serve as final claims without raw ROI/video validation and particle/region controls.
+
+## 2026-05-21 Matched Controls And Degradation-Mode Clustering
+
+Three additional scripts were validated and run on Isambard:
+
+- `scripts/tier1_frame_count_matched_event_controls.py`
+- `scripts/tier1_protocol_local_window_scan.py`
+- `scripts/tier2_degradation_mode_clustering.py`
+
+Output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/frame_count_matched_controls`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_local_window_scan`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/degradation_mode_clustering`
+
+Key result:
+
+- Frame-count/protocol matched controls reinforce that synchronized event cycles 86 and 116 are at the extreme low end of frame count, even among matched non-event cycles.
+  - Observed mean frame count: 895.5; matched-null median: 897.5; empirical lower-tail p = 5.0e-5.
+  - Observed mean frame-count percentile: 0.0449; matched-null median: 0.0927; empirical lower-tail p = 5.0e-5.
+- Coarse local electrochemistry windows around cycles 86 and 116 still do not show strong voltage/current separation from neighboring cycles; all local-window p-values are >0.23.
+- Exploratory degradation-mode clustering selected k=4 with silhouette 0.289. One cluster is labeled `abrupt_drop_risk`, containing 53 particle-cycle rows with 15.1% event rate, negative mean delta, and stronger trailing negative drops. Other clusters are stable/slow-drift modes.
+
+Interpretation: low frame count is not merely a global loose correlate; cycles 86 and 116 are extreme even under matched controls. That makes low frame count a serious acquisition/protocol confound to resolve, not a reason to dismiss the synchronized persistent drops. The most defensible current hypothesis is a coordinated degradation-like optical transition that occurs in an unusual low-frame-count acquisition/protocol regime. Exact particle-region crop validation remains the next decisive check.
+
+## 2026-05-21 Event Frame Proxy QC And Integrated Evidence
+
+Pulled the Isambard-only proxy QC and integrated event evidence scripts into the repo:
+
+- `scripts/tier1_event_frame_proxy_qc.py`
+- `scripts/tier1_integrated_event_evidence.py`
+
+Remote output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_frame_proxy_qc`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/integrated_event_evidence`
+
+Key proxy-QC result:
+
+- Full-session HDF5 files are present, but chopped cycle HDF5 files referenced by `exampleParticles.csv` are not present on Isambard.
+- The script samples bounded full-frame segments around event cycles and immediate neighbors, builds fixed proxy masks from temporal variability/brightness, and writes preview PNGs.
+- All sampled event rows used fallback proxy masks, so these are not final particle/object masks.
+- Event-cycle mean ROI CV is similar to neighbor ROI CV, and sampled stage drift is modest but nonzero.
+
+Key integrated evidence result:
+
+- Cycles 116 and 86 are ranked as `synchronized_persistent_drop_low_frame_count`.
+- Cycle 116: three particles, mean drop fraction 0.192, sustained in 3/3 particles, frame-count percentile 0.011.
+- Cycle 86: three particles, mean drop fraction 0.142, sustained in 3/3 particles, frame-count percentile 0.079.
+- Cycles 60 and 156 are single-particle persistent drops needing ROI QC.
+
+Interpretation: the strongest computational finding is now a ranked degradation-event evidence table, not a final mechanism. Cycles 86 and 116 are high-priority synchronized persistent optical-drop candidates, but the low-frame-count coupling and fallback proxy masks mean exact particle/object-detector ROI recovery is required before claiming physical degradation, phase-boundary motion, or diffusion coefficients.
