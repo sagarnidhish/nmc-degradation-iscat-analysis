@@ -1,0 +1,81 @@
+{
+  "guardrail": "Permutation p-values test whether the small 52-ROI cohort predictor exceeds same-fold, same-cycle-class-balance shuffled labels. They are descriptive, not a final detector validation.",
+  "label_permutation": "within event_reference_cycle",
+  "n_permutations": 200,
+  "n_roi": 52,
+  "observed_vs_null": [
+    {
+      "feature_set": "all_physics_plus_qc",
+      "folds": 4,
+      "mean_average_precision": 0.7402199652199652,
+      "mean_balanced_accuracy": 0.609375,
+      "mean_roc_auc": 0.703125,
+      "model": "logistic_l2",
+      "null_mean_average_precision_mean": 0.5568388486513486,
+      "null_mean_average_precision_std": 0.08117394431547079,
+      "null_mean_balanced_accuracy_mean": 0.4946875,
+      "null_mean_balanced_accuracy_std": 0.07500661554202932,
+      "null_mean_roc_auc_mean": 0.48385416666666664,
+      "null_mean_roc_auc_std": 0.1119306152293828,
+      "p_ge_observed_mean_average_precision": 0.014925373134328358,
+      "p_ge_observed_mean_balanced_accuracy": 0.06965174129353234,
+      "p_ge_observed_mean_roc_auc": 0.01990049751243781
+    },
+    {
+      "feature_set": "all_physics_plus_qc",
+      "folds": 4,
+      "mean_average_precision": 0.809319153069153,
+      "mean_balanced_accuracy": 0.6875,
+      "mean_roc_auc": 0.796875,
+      "model": "random_forest",
+      "null_mean_average_precision_mean": 0.5612359151265401,
+      "null_mean_average_precision_std": 0.08989301217598955,
+      "null_mean_balanced_accuracy_mean": 0.4977083333333333,
+      "null_mean_balanced_accuracy_std": 0.08752143392260109,
+      "null_mean_roc_auc_mean": 0.4896614583333333,
+      "null_mean_roc_auc_std": 0.1258287512156664,
+      "p_ge_observed_mean_average_precision": 0.009950248756218905,
+      "p_ge_observed_mean_balanced_accuracy": 0.009950248756218905,
+      "p_ge_observed_mean_roc_auc": 0.004975124378109453
+    },
+    {
+      "feature_set": "physics_no_selection_qc",
+      "folds": 4,
+      "mean_average_precision": 0.6722305472305472,
+      "mean_balanced_accuracy": 0.5625,
+      "mean_roc_auc": 0.625,
+      "model": "logistic_l2",
+      "null_mean_average_precision_mean": 0.5567164085914086,
+      "null_mean_average_precision_std": 0.0800629562229606,
+      "null_mean_balanced_accuracy_mean": 0.5003645833333333,
+      "null_mean_balanced_accuracy_std": 0.07368935460781802,
+      "null_mean_roc_auc_mean": 0.48661458333333335,
+      "null_mean_roc_auc_std": 0.10861586730078472,
+      "p_ge_observed_mean_average_precision": 0.07960199004975124,
+      "p_ge_observed_mean_balanced_accuracy": 0.2537313432835821,
+      "p_ge_observed_mean_roc_auc": 0.08955223880597014
+    },
+    {
+      "feature_set": "physics_no_selection_qc",
+      "folds": 4,
+      "mean_average_precision": 0.7053622303622303,
+      "mean_balanced_accuracy": 0.5729166666666666,
+      "mean_roc_auc": 0.6510416666666666,
+      "model": "random_forest",
+      "null_mean_average_precision_mean": 0.5664177564333814,
+      "null_mean_average_precision_std": 0.08636885738813549,
+      "null_mean_balanced_accuracy_mean": 0.4985677083333333,
+      "null_mean_balanced_accuracy_std": 0.0856468304238619,
+      "null_mean_roc_auc_mean": 0.49265625,
+      "null_mean_roc_auc_std": 0.11899667243161717,
+      "p_ge_observed_mean_average_precision": 0.05472636815920398,
+      "p_ge_observed_mean_balanced_accuracy": 0.18407960199004975,
+      "p_ge_observed_mean_roc_auc": 0.1044776119402985
+    }
+  ],
+  "outputs": {
+    "observed_vs_permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null/observed_vs_permutation_null.csv",
+    "permutation_null_model_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null/permutation_null_model_summary.csv"
+  },
+  "predictor_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor"
+}

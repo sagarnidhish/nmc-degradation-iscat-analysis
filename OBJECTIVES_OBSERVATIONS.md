@@ -919,3 +919,26 @@ Key result:
 
 Interpretation: the project now has an auditable top-level index tying the requested goals to concrete outputs and limitations. The core AI/physics workflow is implemented as computational hypothesis generation: next-frame/rollout baselines, ROI latent dynamics, phase/front mobility proxies, degradation-mode rankings, and echem/protocol coupling. The remaining scientific gap is not more unconditioned modeling; it is manual ROI/front QC, broader cycle coverage, and echem/protocol-conditioned validation before making calibrated diffusion or deployable detector claims.
 
+## 2026-05-21 Multi-Cycle ROI Event Predictor Null
+
+Added and ran:
+
+`python scripts/tier3_multicycle_roi_event_predictor_null.py --n-permutations 200 --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null`
+
+Local compact copy:
+
+`derived_local/multi_cycle_roi_event_predictor_null`
+
+Key result:
+
+- Ran a 200-permutation within-event-reference-cycle label null using the same leave-cycle-out folds and model classes as the 52-ROI event predictor.
+- The all-physics-plus-QC random forest exceeded the null: observed mean ROC-AUC 0.797 vs null 0.490, p=0.00498; observed balanced accuracy 0.688 vs null 0.498, p=0.00995; observed average precision 0.809 vs null 0.561, p=0.00995.
+- The all-physics-plus-QC logistic model also exceeded the null by ranking metrics: ROC-AUC p=0.0199 and average precision p=0.0149, while balanced accuracy was weaker at p=0.0697.
+- The stricter `physics_no_selection_qc` models were only suggestive, not decisive: logistic ROC-AUC p=0.0896 and random forest ROC-AUC p=0.104, with balanced-accuracy p-values 0.254 and 0.184.
+
+Interpretation: the predictor signal is real relative to shuffled labels when QC/acquisition descriptors are included, but the stricter physics-only signal remains borderline in this small cohort. This strengthens the guardrail: the current classifier should be used for feature triage and experiment design, not as evidence of a deployable degradation detector.
+
