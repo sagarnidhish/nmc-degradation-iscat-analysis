@@ -1,0 +1,5 @@
+target,fold,train_cycle_max,test_cycle_min,test_cycle_max,purge_horizon_cycles,n_train,n_test,n_positive_train,n_positive_test,roc_auc,balanced_accuracy,status,mean_predicted_probability
+future_any_drop_within_8cycles,1,40.0,48.0,82.0,8,15,18,0,7,,,skipped_class_or_size,
+future_any_drop_within_8cycles,2,76.0,84.0,118.0,8,33,18,4,5,0.6,0.6230769230769231,evaluated,0.2578307463102342
+future_any_drop_within_8cycles,3,114.0,123.0,141.0,8,52,18,12,0,,,skipped_class_or_size,
+future_any_drop_within_8cycles,4,134.0,142.0,158.0,8,66,17,12,8,0.9583333333333333,0.6666666666666666,evaluated,0.8272917791641167

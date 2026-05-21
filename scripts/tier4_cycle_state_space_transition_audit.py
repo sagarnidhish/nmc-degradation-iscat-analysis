@@ -186,6 +186,72 @@ def cv_logistic(df: pd.DataFrame, feature_cols: List[str], target: str, seed: in
     return pd.DataFrame(rows)
 
 
+def temporal_holdout_logistic(
+    df: pd.DataFrame,
+    feature_cols: List[str],
+    target: str,
+    seed: int,
+    horizon_cycles: int = 8,
+    n_blocks: int = 5,
+) -> pd.DataFrame:
+    if target not in df.columns:
+        return pd.DataFrame()
+    ordered = df.sort_values("cycleNo").reset_index(drop=True)
+    y = pd.to_numeric(ordered[target], errors="coerce")
+    valid = y.isin([0, 1])
+    ordered = ordered.loc[valid].reset_index(drop=True)
+    y = y.loc[valid].astype(int).reset_index(drop=True)
+    if len(ordered) < n_blocks * 4 or y.nunique() < 2:
+        return pd.DataFrame()
+
+    index_blocks = np.array_split(np.arange(len(ordered)), n_blocks)
+    rows = []
+    for fold, test_idx in enumerate(index_blocks[1:], start=1):
+        test_start_cycle = float(ordered.loc[test_idx[0], "cycleNo"])
+        train_mask = pd.to_numeric(ordered["cycleNo"], errors="coerce") <= (test_start_cycle - horizon_cycles)
+        train_idx = np.flatnonzero(train_mask.to_numpy())
+        y_train = y.iloc[train_idx].to_numpy()
+        y_test = y.iloc[test_idx].to_numpy()
+        row: Dict[str, Any] = {
+            "target": target,
+            "fold": fold,
+            "train_cycle_max": float(ordered.loc[train_idx, "cycleNo"].max()) if len(train_idx) else np.nan,
+            "test_cycle_min": test_start_cycle,
+            "test_cycle_max": float(ordered.loc[test_idx[-1], "cycleNo"]),
+            "purge_horizon_cycles": int(horizon_cycles),
+            "n_train": int(len(train_idx)),
+            "n_test": int(len(test_idx)),
+            "n_positive_train": int(y_train.sum()) if len(y_train) else 0,
+            "n_positive_test": int(y_test.sum()),
+        }
+        if len(train_idx) < 12 or len(np.unique(y_train)) < 2 or len(np.unique(y_test)) < 2:
+            row.update({"roc_auc": np.nan, "balanced_accuracy": np.nan, "status": "skipped_class_or_size"})
+            rows.append(row)
+            continue
+        X_train = ordered.loc[train_idx, feature_cols].apply(pd.to_numeric, errors="coerce")
+        X_test = ordered.loc[test_idx, feature_cols].apply(pd.to_numeric, errors="coerce")
+        n_components = min(8, len(feature_cols), max(2, len(train_idx) - 1))
+        pipe = make_pipeline(
+            SimpleImputer(strategy="median"),
+            StandardScaler(),
+            PCA(n_components=n_components, random_state=seed),
+            LogisticRegression(max_iter=5000, class_weight="balanced", C=0.5),
+        )
+        pipe.fit(X_train, y_train)
+        prob = pipe.predict_proba(X_test)[:, 1]
+        pred = (prob >= 0.5).astype(int)
+        row.update(
+            {
+                "roc_auc": float(roc_auc_score(y_test, prob)),
+                "balanced_accuracy": float(balanced_accuracy_score(y_test, pred)),
+                "mean_predicted_probability": float(np.mean(prob)),
+                "status": "evaluated",
+            }
+        )
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
@@ -316,14 +382,25 @@ def main() -> None:
 
     cv_features = [c for c in ["degradation_state_axis", "state_step_norm", "cycle_state_pc1", "cycle_state_pc2", "cycle_state_pc3", "particle_norm_range", "mean_abs_delta_prev", "capacity_mAh", "coulombic_efficiency_pct"] if c in df.columns]
     folds = cv_logistic(df, cv_features, "future_any_drop_within_8cycles", args.seed)
+    temporal_folds = temporal_holdout_logistic(df, features, "future_any_drop_within_8cycles", args.seed)
     classifier_summary: Dict[str, Any] = {}
     if not folds.empty:
+        evaluated_temporal = temporal_folds[temporal_folds.get("status").eq("evaluated")] if not temporal_folds.empty else pd.DataFrame()
         classifier_summary = {
             "target": "future_any_drop_within_8cycles",
             "n_folds": int(len(folds)),
             "mean_roc_auc": float(folds["roc_auc"].mean(skipna=True)),
             "mean_balanced_accuracy": float(folds["balanced_accuracy"].mean(skipna=True)),
             "features": cv_features,
+            "temporal_holdout": {
+                "n_blocks": int(len(temporal_folds)),
+                "n_evaluated_blocks": int(len(evaluated_temporal)),
+                "purge_horizon_cycles": 8,
+                "mean_roc_auc": float(evaluated_temporal["roc_auc"].mean(skipna=True)) if not evaluated_temporal.empty else None,
+                "mean_balanced_accuracy": float(evaluated_temporal["balanced_accuracy"].mean(skipna=True)) if not evaluated_temporal.empty else None,
+                "features": features,
+                "note": "Expanding-origin chronological blocks; train rows within 8 cycle numbers of each test block are purged and PCA is refit inside each training window.",
+            },
         }
 
     corr_rows = []
@@ -366,6 +443,8 @@ def main() -> None:
     tests.to_csv(tests_path, index=False)
     folds_path = out / "cycle_state_future_drop_classifier_folds.csv"
     folds.to_csv(folds_path, index=False)
+    temporal_folds_path = out / "cycle_state_future_drop_temporal_holdout.csv"
+    temporal_folds.to_csv(temporal_folds_path, index=False)
     corr_path = out / "cycle_state_correlations.csv"
     corr_df.to_csv(corr_path, index=False)
     loadings_path = out / "cycle_state_pc_loadings.csv"
@@ -412,6 +491,7 @@ def main() -> None:
             "transition_summary": str(transition_path),
             "future_drop_tests": str(tests_path),
             "classifier_folds": str(folds_path),
+            "temporal_holdout": str(temporal_folds_path),
             "correlations": str(corr_path),
             "pc_loadings": str(loadings_path),
             "summary": str(out / "cycle_state_space_transition_audit_summary.json"),
@@ -433,6 +513,12 @@ def main() -> None:
     ]
     if classifier_summary:
         lines.append(f"- Future-drop classifier mean AUC: {classifier_summary['mean_roc_auc']:.3f}; balanced accuracy {classifier_summary['mean_balanced_accuracy']:.3f}")
+        temporal = classifier_summary.get("temporal_holdout", {})
+        if temporal.get("mean_roc_auc") is not None:
+            lines.append(
+                f"- Temporal holdout mean AUC: {temporal['mean_roc_auc']:.3f}; balanced accuracy {temporal['mean_balanced_accuracy']:.3f} "
+                f"across {temporal['n_evaluated_blocks']} evaluated blocks"
+            )
     lines += ["", "## Top Future-Drop Associations", ""]
     for row in summary["top_future_drop_tests"][:6]:
         lines.append(

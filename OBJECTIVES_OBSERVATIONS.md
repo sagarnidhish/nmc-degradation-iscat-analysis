@@ -1716,7 +1716,32 @@ Key result:
 - The degradation axis is strongly coupled to cycle/protocol progression and capacity: rho=-0.738 with `cycleNo`, rho=-0.710 with `capacity_mAh`, and rho=0.433 with `coulombic_efficiency_pct`.
 - PC2 is the strongest future-drop separator: future any-drop within 8 cycles has median positive-negative PC2 shift +0.730, Mann-Whitney p=2.32e-4, permutation p=0.0162.
 - A compact state-space logistic model for `future_any_drop_within_8cycles` reaches mean ROC-AUC 0.781 and balanced accuracy 0.731 across stratified folds.
+- Added an expanding-origin temporal holdout guardrail with an 8-cycle purge; 2 of 4 chronological blocks were evaluable, with mean ROC-AUC 0.779 and balanced accuracy 0.645. This supports signal persistence but shows the balanced-accuracy claim weakens under stricter temporal evaluation.
 - State clusters are useful but not definitive: two singleton transition states appear around cycles 126 and 150, so state-transition interpretations remain hypothesis-generating.
 - The project synthesis now includes a Cycle State-Space Transition Audit section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
 
 Interpretation: this creates a cycle-level companion to the ROI/front analyses. It suggests that degradation risk is visible in the joint particle-trace/echem-shape trajectory before abrupt drops, especially through a second state-space coordinate, but it remains a cycle-level early-warning analysis rather than localized front validation or calibrated diffusion.
+
+## 2026-05-21 Cycle State-Space Temporal Holdout Guardrail
+
+Command:
+
+`python scripts/tier4_cycle_state_space_transition_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit --n-permutation 5000`
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit`
+
+Local synced output:
+
+`derived_local/cycle_state_space_transition_audit`
+
+What changed:
+
+- Added an expanding-origin chronological holdout to the cycle state-space audit, with an 8-cycle purge before each test block and train-only fitting for imputation, scaling, PCA, and logistic regression.
+- The shuffled stratified folds remain mean ROC-AUC 0.781 and balanced accuracy 0.731 for `future_any_drop_within_8cycles`.
+- The stricter temporal holdout evaluates 2 of 4 later-cycle blocks; 2 blocks are skipped because the train or test slice lacks enough positive/negative class diversity.
+- Evaluated temporal blocks reach mean ROC-AUC 0.779 and balanced accuracy 0.645. Fold details: cycles 84-118 AUC 0.600 / balanced accuracy 0.623; cycles 142-158 AUC 0.958 / balanced accuracy 0.667.
+- The temporal holdout output is `cycle_state_future_drop_temporal_holdout.csv`, and the project synthesis now reports this guardrail alongside the shuffled-fold result.
+
+Interpretation: the cycle-level early-warning signal is not only an artifact of shuffled neighboring-cycle folds, but the usable chronological evidence is still sparse. Treat it as a promising degradation-state covariate for experiment prioritization and manual review, not as a deployable forecasting model.

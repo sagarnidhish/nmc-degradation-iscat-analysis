@@ -8,6 +8,7 @@ Cycle-level degradation-state audit using four-particle photometry traces joined
 - Chosen state clusters: 4 (silhouette 0.634)
 - Degradation axis oriented to: mean_abs_delta_prev (rho 0.32562542378621273)
 - Future-drop classifier mean AUC: 0.781; balanced accuracy 0.731
+- Temporal holdout mean AUC: 0.779; balanced accuracy 0.645 across 2 evaluated blocks
 
 ## Top Future-Drop Associations
 

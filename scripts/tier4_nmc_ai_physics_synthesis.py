@@ -226,6 +226,7 @@ def main() -> None:
     cycle_state_transitions = top_items(first_summary(cycle_state_space, "top_transitions", []), 8)
     cycle_state_loadings = top_items(first_summary(cycle_state_space, "top_pc_loadings", []), 12)
     cycle_state_classifier = first_summary(cycle_state_space, "future_drop_classifier", {}) or {}
+    cycle_state_temporal = cycle_state_classifier.get("temporal_holdout", {}) if isinstance(cycle_state_classifier, dict) else {}
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -367,7 +368,7 @@ def main() -> None:
         f"- Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for {first_summary(within_cycle_echem, 'n_echem_shape_cycles', 0)} observed cycles; strongest ROI association is {((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('feature', 'NA'))} vs {((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('target', 'NA'))}, rho={fmt((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('rho'))}, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.",
         f"- Echem-shape-conditioned residual audit uses {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_shape_features_used', 0)} shape features compressed to {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)} PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p={fmt((echem_shape_conditioned_tests[0] if echem_shape_conditioned_tests else {}).get('p_value'))}), while diffusion residuals remain non-significant and the shape-residual classifier is poor.",
         f"- Physics-consistency claim matrix scores {first_summary(physics_consistency, 'n_roi', 0)} ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; {first_summary(physics_consistency, 'tier_counts', {}).get('cross_modal_high_priority', 0)} rows are cross-modal high priority, but all {first_summary(physics_consistency, 'n_roi', 0)} remain `manual_qc_required_no_physics_claim`.",
-        f"- Cycle state-space transition audit builds a {first_summary(cycle_state_space, 'chosen_k', 0)}-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p={fmt((cycle_state_tests[0] if cycle_state_tests else {}).get('permutation_p'))}), and the state-space classifier reaches mean AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}.",
+        f"- Cycle state-space transition audit builds a {first_summary(cycle_state_space, 'chosen_k', 0)}-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p={fmt((cycle_state_tests[0] if cycle_state_tests else {}).get('permutation_p'))}), the shuffled-fold classifier reaches mean AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}, and stricter temporal holdout reaches AUC {fmt(cycle_state_temporal.get('mean_roc_auc'))} across {fmt(cycle_state_temporal.get('n_evaluated_blocks'), 0)} usable blocks.",
         "",
         "## Model Readout",
         "",
@@ -786,7 +787,8 @@ def main() -> None:
         f"- Echem-shape cycles joined: {first_summary(cycle_state_space, 'n_echem_shape_cycles_joined', 0)}",
         f"- Chosen state clusters: {first_summary(cycle_state_space, 'chosen_k', 0)} with silhouette {fmt(first_summary(cycle_state_space, 'best_silhouette'))}",
         f"- Degradation axis oriented to {first_summary(cycle_state_space, 'degradation_axis_oriented_to', 'NA')} with rho {fmt(first_summary(cycle_state_space, 'degradation_axis_orientation_rho'))}",
-        f"- Future-drop classifier: AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}, balanced accuracy {fmt(cycle_state_classifier.get('mean_balanced_accuracy'))}",
+        f"- Future-drop classifier: shuffled-fold AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}, balanced accuracy {fmt(cycle_state_classifier.get('mean_balanced_accuracy'))}",
+        f"- Expanding temporal holdout: AUC {fmt(cycle_state_temporal.get('mean_roc_auc'))}, balanced accuracy {fmt(cycle_state_temporal.get('mean_balanced_accuracy'))}, evaluated blocks {fmt(cycle_state_temporal.get('n_evaluated_blocks'), 0)} / {fmt(cycle_state_temporal.get('n_blocks'), 0)}, purge {fmt(cycle_state_temporal.get('purge_horizon_cycles'), 0)} cycles",
     ]
     for row in cycle_state_tests[:6]:
         report_lines.append(
