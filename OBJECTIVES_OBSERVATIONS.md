@@ -1642,7 +1642,7 @@ Interpretation: this is a stronger covariate test than the previous coarse proto
 
 Added and ran:
 
-`python scripts/tier4_physics_consistency_claim_matrix.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix --n-permutation 2000`
+`python scripts/tier4_physics_consistency_claim_matrix.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix --n-permutation 5000`
 
 Remote output directory:
 
@@ -1654,12 +1654,14 @@ Local compact copy:
 
 Key result:
 
-- Scored 52 ROI rows across 11 cycles using seven evidence pillars: front direction, optical change, rollout residual, kinetic transition, precursor context, echem-shape context, and residual mode taxonomy.
-- Tier counts are 2 `cross_modal_high_priority`, 8 `cross_modal_review_priority`, 4 `front_kinetic_consistent`, 3 `rollout_mode_consistent`, 14 `discordant_guardrail`, and 21 `routine_or_low_consistency`.
-- Top cross-modal candidates are `cycle156_rank7_obj27` and `cycle156_rank2_obj2`; both show six supporting pillars and no contradiction count in the automatic matrix.
-- The strongest event/control pillar separation is `optical_change_score`, median event-control +0.574, Mann-Whitney p=0.00145, permutation p=0.00250.
-- Front-direction and mode-taxonomy pillars also separate event/control more weakly, but the overall composite consistency score is not significant by the permutation test.
-- All 52 rows remain `manual_qc_required_no_physics_claim`; the matrix is review prioritization, not accepted manual QC.
-- The project synthesis now includes the matrix and carries its summary into `nmc_ai_physics_synthesis_summary.json`.
+- Scored 52 ROI rows across 11 cycles using seven evidence pillars: front direction, optical change, rollout residuals, kinetic transition, precursor context, echem-shape context, and residual mode taxonomy.
+- Tier counts: 2 `cross_modal_high_priority`, 8 `cross_modal_review_priority`, 4 `front_kinetic_consistent`, 3 `rollout_mode_consistent`, 14 `discordant_guardrail`, and 21 `routine_or_low_consistency`.
+- Claim readiness is deliberately conservative: all 52 rows are `manual_qc_required_no_physics_claim`, with 0 manual-QC accepted rows.
+- Top ranked candidates are cycle-156 ROIs already prioritized by the precursor-informed review bundle: `cycle156_rank7_obj27`, `cycle156_rank5_obj4`, and `cycle156_rank2_obj2`.
+- Event/control pillar tests show the strongest separation in `optical_change_score` (median event-control +0.574, Mann-Whitney p=0.00145, permutation p=0.00240) and `front_direction_score` (+0.531, p=0.00991, permutation p=0.0410).
+- `mode_taxonomy_score` is suggestive by permutation (+0.644, p=0.0110) but has weaker asymptotic Mann-Whitney p=0.0599; `rollout_residual_score` is suggestive but just above the permutation cutoff (p=0.0564).
+- The overall `physics_consistency_score` is not itself a robust event/control classifier (permutation p=0.239), because high-consistency control rows are also present and useful for review.
+- Calibration evidence and claim wording are carried through from the calibration risk register: 32/33 scanned HDF5 files contain timing, HDF5 spatial calibration attributes are absent, and spatial scale remains slide-derived.
+- The project synthesis now includes a Physics Consistency Claim Matrix section and carries the matrix into `nmc_ai_physics_synthesis_summary.json`.
 
-Interpretation: this turns the many paper-inspired AI/physics outputs into a conservative claim-readiness table. It highlights ROI candidates where independent computational evidence agrees, while explicitly preserving the manual-QC and calibration gates before any degradation-mode or diffusion claim.
+Interpretation: this matrix is the current best review-prioritization map. It consolidates independent optical/front/rollout/kinetic/precursor/mode evidence into a ranked set of hypotheses while explicitly preventing overclaiming. The most defensible physics pattern remains event-associated optical change plus phase-front direction, with manual QC and calibration still gating any publication-scale diffusion or material-mechanism claim.
