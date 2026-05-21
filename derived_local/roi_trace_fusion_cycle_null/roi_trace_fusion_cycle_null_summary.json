@@ -1,0 +1,1092 @@
+{
+  "guardrail": "This audit collapses repeated ROI rows to one median point per cycle before testing trace/front associations. It is deliberately conservative for the 52-ROI cohort; surviving tests are stronger evidence, while lost tests indicate cycle-clustering sensitivity.",
+  "n_cycle_points": 11,
+  "n_event_reference_cycles": 4,
+  "n_permutation": 1000,
+  "n_predictors_tested": 68,
+  "n_roi_rows": 52,
+  "outputs": {
+    "cycle_collapsed_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_cycle_collapsed_table.csv",
+    "cycle_spearman_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_cycle_spearman_tests.csv",
+    "reference_centered_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_reference_centered_table.csv",
+    "reference_centered_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_reference_centered_spearman_tests.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_fusion_cycle_null_summary.json"
+  },
+  "robust_cycle_collapsed_tests": [
+    {
+      "asymptotic_p": 0.0016769738964523802,
+      "empirical_p_abs_ge_observed": 0.002997002997002997,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2551181818181818,
+      "null_p95_abs_rho": 0.6181818181818182,
+      "predictor": "lag8_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.8272727272727273,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.0014272961872224715,
+      "empirical_p_abs_ge_observed": 0.003996003996003996,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26045625660045996,
+      "null_p95_abs_rho": 0.6200471667539369,
+      "predictor": "trace_lag8_n_frames",
+      "rho": 0.8337151470681154,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.0023561106719498124,
+      "empirical_p_abs_ge_observed": 0.003996003996003996,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2606739504525474,
+      "null_p95_abs_rho": 0.6027460097699345,
+      "predictor": "trace_lag16_n_frames",
+      "rho": 0.8127938616594571,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.0031104283103858448,
+      "empirical_p_abs_ge_observed": 0.003996003996003996,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2667727272727273,
+      "null_p95_abs_rho": 0.6363636363636364,
+      "predictor": "lag4_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.8000000000000002,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.0014272961872224715,
+      "empirical_p_abs_ge_observed": 0.004995004995004995,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2614722045665593,
+      "null_p95_abs_rho": 0.615035764230577,
+      "predictor": "trace_lag8_frames_percentile",
+      "rho": 0.8337151470681154,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.007282041008429151,
+      "empirical_p_abs_ge_observed": 0.005994005994005994,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2565818181818182,
+      "null_p95_abs_rho": 0.6,
+      "predictor": "trace_lag16_capacity_mAh",
+      "rho": 0.7545454545454545,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.0023561106719498124,
+      "empirical_p_abs_ge_observed": 0.006993006993006993,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2540437443450781,
+      "null_p95_abs_rho": 0.5847092920533339,
+      "predictor": "trace_lag16_frames_percentile",
+      "rho": 0.8127938616594571,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.008454728885061562,
+      "empirical_p_abs_ge_observed": 0.006993006993006993,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25384545454545454,
+      "null_p95_abs_rho": 0.6090909090909091,
+      "predictor": "trace_lag4_frames_percentile",
+      "rho": 0.7454545454545456,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.00925988150954961,
+      "empirical_p_abs_ge_observed": 0.00999000999000999,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2585871707066015,
+      "null_p95_abs_rho": 0.6073122674197067,
+      "predictor": "trace_lag16_frames_percentile",
+      "rho": 0.7397337392631014,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.01020128429076337,
+      "empirical_p_abs_ge_observed": 0.00999000999000999,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2625701573012228,
+      "null_p95_abs_rho": 0.5970402733512377,
+      "predictor": "trace_lag2_frames_percentile",
+      "rho": 0.7334870966009104,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.01020128429076337,
+      "empirical_p_abs_ge_observed": 0.00999000999000999,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2573264079335977,
+      "null_p95_abs_rho": 0.615035764230577,
+      "predictor": "trace_lag2_n_frames",
+      "rho": 0.7334870966009104,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.01020128429076337,
+      "empirical_p_abs_ge_observed": 0.01098901098901099,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2423650934911294,
+      "null_p95_abs_rho": 0.5877008413758847,
+      "predictor": "trace_lag8_n_frames",
+      "rho": 0.7334870966009104,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.011988011988011988,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26332727272727263,
+      "null_p95_abs_rho": 0.6272727272727273,
+      "predictor": "trace_lag2_particle_norm_mean",
+      "rho": 0.7000000000000001,
+      "target": "phase_slope_median_per_s_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.008454728885061562,
+      "empirical_p_abs_ge_observed": 0.012987012987012988,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2631181818181818,
+      "null_p95_abs_rho": 0.6272727272727273,
+      "predictor": "trace_lag4_n_frames",
+      "rho": 0.7454545454545456,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.01020128429076337,
+      "empirical_p_abs_ge_observed": 0.012987012987012988,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2547751484671597,
+      "null_p95_abs_rho": 0.6107077347785839,
+      "predictor": "trace_lag8_frames_percentile",
+      "rho": 0.7334870966009104,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.013986013986013986,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2638272727272727,
+      "null_p95_abs_rho": 0.6181818181818182,
+      "predictor": "trace_lag4_frames_percentile",
+      "rho": 0.7000000000000001,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.00925988150954961,
+      "empirical_p_abs_ge_observed": 0.014985014985014986,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2637424755931943,
+      "null_p95_abs_rho": 0.6301435556685678,
+      "predictor": "trace_lag16_n_frames",
+      "rho": 0.7397337392631014,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.009759535959916901,
+      "empirical_p_abs_ge_observed": 0.014985014985014986,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25585454545454545,
+      "null_p95_abs_rho": 0.5818181818181818,
+      "predictor": "trace_lag8_capacity_mAh",
+      "rho": 0.7363636363636363,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.02081512725352528,
+      "empirical_p_abs_ge_observed": 0.016983016983016984,
+      "n_cycle_points": 8,
+      "null_mean_abs_rho": 0.3101428571428571,
+      "null_p95_abs_rho": 0.7142857142857143,
+      "predictor": "trace_lag2_capacity_mAh",
+      "rho": -0.7857142857142858,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.01898101898101898,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2610636363636364,
+      "null_p95_abs_rho": 0.6272727272727273,
+      "predictor": "trace_lag4_n_frames",
+      "rho": 0.7000000000000001,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.01998001998001998,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25783636363636364,
+      "null_p95_abs_rho": 0.6181818181818182,
+      "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.7000000000000001,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.020842853610945077,
+      "empirical_p_abs_ge_observed": 0.02197802197802198,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25722727272727275,
+      "null_p95_abs_rho": 0.6090909090909091,
+      "predictor": "trace_lag8_mean_delta_prev",
+      "rho": 0.6818181818181819,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.020842853610945077,
+      "empirical_p_abs_ge_observed": 0.022977022977022976,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25880000000000003,
+      "null_p95_abs_rho": 0.6,
+      "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.6818181818181819,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.020631016245937963,
+      "empirical_p_abs_ge_observed": 0.027972027972027972,
+      "n_cycle_points": 8,
+      "null_mean_abs_rho": 0.3106354493618804,
+      "null_p95_abs_rho": 0.7229684624403734,
+      "predictor": "trace_lag4_V_max",
+      "rho": -0.7863867486193535,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.02886459895700189,
+      "empirical_p_abs_ge_observed": 0.030969030969030968,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25628181818181817,
+      "null_p95_abs_rho": 0.6,
+      "predictor": "trace_lag2_particle_norm_range",
+      "rho": -0.6545454545454547,
+      "target": "q70_transformed_fraction_delta"
+    },
+    {
+      "asymptotic_p": 0.02886459895700189,
+      "empirical_p_abs_ge_observed": 0.03196803196803197,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2535272727272727,
+      "null_p95_abs_rho": 0.6277272727272724,
+      "predictor": "trace_lag8_coulombic_efficiency_pct",
+      "rho": -0.6545454545454547,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.026924393992726905,
+      "empirical_p_abs_ge_observed": 0.03296703296703297,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2619915681007985,
+      "null_p95_abs_rho": 0.6107077347785839,
+      "predictor": "trace_lag2_frames_percentile",
+      "rho": 0.6605939689883975,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.03377418786561192,
+      "empirical_p_abs_ge_observed": 0.03396603396603397,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2576316579422104,
+      "null_p95_abs_rho": 0.6069680658676346,
+      "predictor": "trace_lag4_max_abs_delta_prev",
+      "rho": -0.6404229986319925,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.023313039833185972,
+      "empirical_p_abs_ge_observed": 0.03496503496503497,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25839090909090906,
+      "null_p95_abs_rho": 0.6090909090909091,
+      "predictor": "trace_lag2_delta_std_across_particles",
+      "rho": 0.6727272727272727,
+      "target": "q70_transformed_fraction_delta"
+    },
+    {
+      "asymptotic_p": 0.026924393992726905,
+      "empirical_p_abs_ge_observed": 0.03496503496503497,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25154051592935445,
+      "null_p95_abs_rho": 0.6061519143028018,
+      "predictor": "trace_lag2_n_frames",
+      "rho": 0.6605939689883975,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.0326336954289529,
+      "empirical_p_abs_ge_observed": 0.03496503496503497,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2604212869869963,
+      "null_p95_abs_rho": 0.610923473287069,
+      "predictor": "trace_lag16_V_max",
+      "rho": 0.6435682390352331,
+      "target": "phase_slope_median_per_s_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.03528698122006229,
+      "empirical_p_abs_ge_observed": 0.03496503496503497,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2555909090909091,
+      "null_p95_abs_rho": 0.5822727272727268,
+      "predictor": "lag8_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.6363636363636364,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.028004939153071808,
+      "empirical_p_abs_ge_observed": 0.03596403596403597,
+      "n_cycle_points": 8,
+      "null_mean_abs_rho": 0.31397619047619046,
+      "null_p95_abs_rho": 0.7142857142857143,
+      "predictor": "trace_lag4_capacity_mAh",
+      "rho": -0.7619047619047621,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.02886459895700189,
+      "empirical_p_abs_ge_observed": 0.03696303696303696,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25247272727272724,
+      "null_p95_abs_rho": 0.6272727272727273,
+      "predictor": "trace_lag2_particle_norm_cv",
+      "rho": -0.6545454545454547,
+      "target": "q70_transformed_fraction_delta"
+    },
+    {
+      "asymptotic_p": 0.04264556980532671,
+      "empirical_p_abs_ge_observed": 0.04095904095904096,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25789090909090906,
+      "null_p95_abs_rho": 0.5909090909090909,
+      "predictor": "trace_lag16_capacity_mAh",
+      "rho": 0.6181818181818182,
+      "target": "mode_review_priority"
+    }
+  ],
+  "robust_reference_centered_tests": [
+    {
+      "asymptotic_p": 6.661451941355567e-05,
+      "empirical_p_abs_ge_observed": 0.000999000999000999,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2615545454545455,
+      "null_p95_abs_rho": 0.6363636363636364,
+      "predictor": "trace_lag8_particle_norm_mean",
+      "rho": 0.9181818181818183,
+      "target": "phase_slope_median_per_s_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.0003430008169136331,
+      "empirical_p_abs_ge_observed": 0.001998001998001998,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25663465365095467,
+      "null_p95_abs_rho": 0.6151635037643536,
+      "predictor": "trace_lag8_n_frames",
+      "rho": 0.8807710121010887,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.0007177938266368857,
+      "empirical_p_abs_ge_observed": 0.001998001998001998,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26693885594803485,
+      "null_p95_abs_rho": 0.5984080650026506,
+      "predictor": "trace_lag8_frames_percentile",
+      "rho": 0.8584564381571795,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.002558580199713916,
+      "empirical_p_abs_ge_observed": 0.003996003996003996,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2505818181818182,
+      "null_p95_abs_rho": 0.5909090909090909,
+      "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.8090909090909091,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.004558029271828904,
+      "empirical_p_abs_ge_observed": 0.007992007992007992,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26121733511287026,
+      "null_p95_abs_rho": 0.6210110403690234,
+      "predictor": "trace_lag16_frames_percentile",
+      "rho": 0.7808300581110517,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.007282041008429151,
+      "empirical_p_abs_ge_observed": 0.008991008991008992,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2525909090909091,
+      "null_p95_abs_rho": 0.6,
+      "predictor": "trace_lag16_mean_abs_delta_prev",
+      "rho": 0.7545454545454545,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.007282041008429151,
+      "empirical_p_abs_ge_observed": 0.008991008991008992,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2488272727272727,
+      "null_p95_abs_rho": 0.600454545454545,
+      "predictor": "trace_lag2_particle_norm_mean",
+      "rho": 0.7545454545454545,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.008454728885061562,
+      "empirical_p_abs_ge_observed": 0.00999000999000999,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2516909090909091,
+      "null_p95_abs_rho": 0.6181818181818182,
+      "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.7454545454545456,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.010175540123456754,
+      "empirical_p_abs_ge_observed": 0.00999000999000999,
+      "n_cycle_points": 8,
+      "null_mean_abs_rho": 0.31388095238095237,
+      "null_p95_abs_rho": 0.7380952380952381,
+      "predictor": "trace_lag2_capacity_mAh",
+      "rho": -0.8333333333333335,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.008454728885061562,
+      "empirical_p_abs_ge_observed": 0.014985014985014986,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2571818181818181,
+      "null_p95_abs_rho": 0.600454545454545,
+      "predictor": "trace_lag8_delta_std_across_particles",
+      "rho": 0.7454545454545456,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.016983016983016984,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2624272727272727,
+      "null_p95_abs_rho": 0.5909090909090909,
+      "predictor": "trace_lag4_particle_norm_std",
+      "rho": 0.7000000000000001,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.01890464970890005,
+      "empirical_p_abs_ge_observed": 0.017982017982017984,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2466372744371475,
+      "null_p95_abs_rho": 0.5938418073528784,
+      "predictor": "trace_lag16_n_frames",
+      "rho": 0.689504905115607,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.01898101898101898,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25742727272727267,
+      "null_p95_abs_rho": 0.6090909090909091,
+      "predictor": "lag2_trace_predprob_future_any_drop_within_8cycles",
+      "rho": 0.7000000000000001,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.01998001998001998,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25723636363636365,
+      "null_p95_abs_rho": 0.5909090909090909,
+      "predictor": "trace_lag4_particle_norm_cv",
+      "rho": 0.7000000000000001,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.01020128429076337,
+      "empirical_p_abs_ge_observed": 0.02097902097902098,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26828771199832924,
+      "null_p95_abs_rho": 0.6332590461337052,
+      "predictor": "trace_lag8_max_abs_delta_prev",
+      "rho": 0.7334870966009104,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.024178155822074797,
+      "empirical_p_abs_ge_observed": 0.02097902097902098,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2507751380894231,
+      "null_p95_abs_rho": 0.5922566618516668,
+      "predictor": "trace_lag2_frames_percentile",
+      "rho": -0.6697056099399616,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.013350055216304332,
+      "empirical_p_abs_ge_observed": 0.02197802197802198,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25842402277328763,
+      "null_p95_abs_rho": 0.6079492802529991,
+      "predictor": "trace_lag2_future_any_drop_within_8cycles",
+      "rho": 0.7152344473564697,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.02245437698633361,
+      "empirical_p_abs_ge_observed": 0.02197802197802198,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26004837315452856,
+      "null_p95_abs_rho": 0.607540580302195,
+      "predictor": "trace_lag16_frames_percentile",
+      "rho": 0.6758061321662903,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.024178155822074797,
+      "empirical_p_abs_ge_observed": 0.023976023976023976,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2689164152239872,
+      "null_p95_abs_rho": 0.6195915847063591,
+      "predictor": "trace_lag2_max_abs_delta_prev",
+      "rho": -0.6697056099399616,
+      "target": "phase_slope_median_per_s_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.020842853610945077,
+      "empirical_p_abs_ge_observed": 0.024975024975024976,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2524727272727273,
+      "null_p95_abs_rho": 0.6095454545454542,
+      "predictor": "trace_lag16_particle_norm_cv",
+      "rho": 0.6818181818181819,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.024883657057213255,
+      "empirical_p_abs_ge_observed": 0.025974025974025976,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.24796781832035972,
+      "null_p95_abs_rho": 0.5686536761219463,
+      "predictor": "trace_lag4_future_any_drop_within_8cycles",
+      "rho": 0.6672976811635084,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.025984133918765487,
+      "empirical_p_abs_ge_observed": 0.026973026973026972,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2443,
+      "null_p95_abs_rho": 0.600454545454545,
+      "predictor": "trace_lag4_mean_abs_delta_prev",
+      "rho": -0.6636363636363638,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.024883657057213255,
+      "empirical_p_abs_ge_observed": 0.029970029970029972,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2530102677545431,
+      "null_p95_abs_rho": 0.6092717958449424,
+      "predictor": "trace_lag4_future_sync2_drop_within_8cycles",
+      "rho": 0.6672976811635084,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.023313039833185972,
+      "empirical_p_abs_ge_observed": 0.030969030969030968,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2569,
+      "null_p95_abs_rho": 0.6181818181818182,
+      "predictor": "trace_lag16_mean_delta_prev",
+      "rho": 0.6727272727272727,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.025984133918765487,
+      "empirical_p_abs_ge_observed": 0.03196803196803197,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2651454545454545,
+      "null_p95_abs_rho": 0.6272727272727273,
+      "predictor": "trace_lag4_particle_norm_range",
+      "rho": 0.6636363636363638,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.025985710209531783,
+      "empirical_p_abs_ge_observed": 0.03296703296703297,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.259882554159433,
+      "null_p95_abs_rho": 0.617863529780453,
+      "predictor": "trace_lag16_V_max",
+      "rho": 0.6636311986530791,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.03196279932801745,
+      "empirical_p_abs_ge_observed": 0.03796203796203796,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26048181818181815,
+      "null_p95_abs_rho": 0.6181818181818182,
+      "predictor": "trace_lag16_particle_norm_std",
+      "rho": 0.6454545454545455,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.03093166786902806,
+      "empirical_p_abs_ge_observed": 0.03996003996003996,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2665872541090024,
+      "null_p95_abs_rho": 0.6164447827192512,
+      "predictor": "trace_lag16_n_frames",
+      "rho": 0.6484085862676569,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.04264556980532671,
+      "empirical_p_abs_ge_observed": 0.04295704295704296,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2504454545454545,
+      "null_p95_abs_rho": 0.6,
+      "predictor": "trace_lag8_mean_abs_delta_prev",
+      "rho": 0.6181818181818182,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.046528232284167255,
+      "empirical_p_abs_ge_observed": 0.04595404595404595,
+      "n_cycle_points": 8,
+      "null_mean_abs_rho": 0.3151190476190476,
+      "null_p95_abs_rho": 0.7142857142857143,
+      "predictor": "trace_lag4_coulombic_efficiency_pct",
+      "rho": 0.7142857142857144,
+      "target": "phase_slope_median_per_s_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.051003260706950715,
+      "empirical_p_abs_ge_observed": 0.04795204795204795,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2541,
+      "null_p95_abs_rho": 0.6,
+      "predictor": "trace_lag8_capacity_mAh",
+      "rho": -0.6000000000000001,
+      "target": "phase_slope_median_per_s_protocol_residual"
+    }
+  ],
+  "targets": [
+    "phase_slope_positive_fraction_protocol_residual",
+    "phase_slope_median_per_s_protocol_residual",
+    "threshold_robust_phase_score_protocol_residual",
+    "q70_logistic_k_per_s",
+    "q70_transformed_fraction_delta",
+    "is_event_enriched_mode",
+    "mode_review_priority"
+  ],
+  "top_cycle_collapsed_tests": [
+    {
+      "asymptotic_p": 0.0016769738964523802,
+      "empirical_p_abs_ge_observed": 0.002997002997002997,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2551181818181818,
+      "null_p95_abs_rho": 0.6181818181818182,
+      "predictor": "lag8_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.8272727272727273,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.0014272961872224715,
+      "empirical_p_abs_ge_observed": 0.003996003996003996,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26045625660045996,
+      "null_p95_abs_rho": 0.6200471667539369,
+      "predictor": "trace_lag8_n_frames",
+      "rho": 0.8337151470681154,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.0023561106719498124,
+      "empirical_p_abs_ge_observed": 0.003996003996003996,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2606739504525474,
+      "null_p95_abs_rho": 0.6027460097699345,
+      "predictor": "trace_lag16_n_frames",
+      "rho": 0.8127938616594571,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.0031104283103858448,
+      "empirical_p_abs_ge_observed": 0.003996003996003996,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2667727272727273,
+      "null_p95_abs_rho": 0.6363636363636364,
+      "predictor": "lag4_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.8000000000000002,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.0014272961872224715,
+      "empirical_p_abs_ge_observed": 0.004995004995004995,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2614722045665593,
+      "null_p95_abs_rho": 0.615035764230577,
+      "predictor": "trace_lag8_frames_percentile",
+      "rho": 0.8337151470681154,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.007282041008429151,
+      "empirical_p_abs_ge_observed": 0.005994005994005994,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2565818181818182,
+      "null_p95_abs_rho": 0.6,
+      "predictor": "trace_lag16_capacity_mAh",
+      "rho": 0.7545454545454545,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.0023561106719498124,
+      "empirical_p_abs_ge_observed": 0.006993006993006993,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2540437443450781,
+      "null_p95_abs_rho": 0.5847092920533339,
+      "predictor": "trace_lag16_frames_percentile",
+      "rho": 0.8127938616594571,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.008454728885061562,
+      "empirical_p_abs_ge_observed": 0.006993006993006993,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25384545454545454,
+      "null_p95_abs_rho": 0.6090909090909091,
+      "predictor": "trace_lag4_frames_percentile",
+      "rho": 0.7454545454545456,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.00925988150954961,
+      "empirical_p_abs_ge_observed": 0.00999000999000999,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2585871707066015,
+      "null_p95_abs_rho": 0.6073122674197067,
+      "predictor": "trace_lag16_frames_percentile",
+      "rho": 0.7397337392631014,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.01020128429076337,
+      "empirical_p_abs_ge_observed": 0.00999000999000999,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2625701573012228,
+      "null_p95_abs_rho": 0.5970402733512377,
+      "predictor": "trace_lag2_frames_percentile",
+      "rho": 0.7334870966009104,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.01020128429076337,
+      "empirical_p_abs_ge_observed": 0.00999000999000999,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2573264079335977,
+      "null_p95_abs_rho": 0.615035764230577,
+      "predictor": "trace_lag2_n_frames",
+      "rho": 0.7334870966009104,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.01020128429076337,
+      "empirical_p_abs_ge_observed": 0.01098901098901099,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2423650934911294,
+      "null_p95_abs_rho": 0.5877008413758847,
+      "predictor": "trace_lag8_n_frames",
+      "rho": 0.7334870966009104,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.011988011988011988,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26332727272727263,
+      "null_p95_abs_rho": 0.6272727272727273,
+      "predictor": "trace_lag2_particle_norm_mean",
+      "rho": 0.7000000000000001,
+      "target": "phase_slope_median_per_s_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.008454728885061562,
+      "empirical_p_abs_ge_observed": 0.012987012987012988,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2631181818181818,
+      "null_p95_abs_rho": 0.6272727272727273,
+      "predictor": "trace_lag4_n_frames",
+      "rho": 0.7454545454545456,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.01020128429076337,
+      "empirical_p_abs_ge_observed": 0.012987012987012988,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2547751484671597,
+      "null_p95_abs_rho": 0.6107077347785839,
+      "predictor": "trace_lag8_frames_percentile",
+      "rho": 0.7334870966009104,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.013986013986013986,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2638272727272727,
+      "null_p95_abs_rho": 0.6181818181818182,
+      "predictor": "trace_lag4_frames_percentile",
+      "rho": 0.7000000000000001,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.00925988150954961,
+      "empirical_p_abs_ge_observed": 0.014985014985014986,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2637424755931943,
+      "null_p95_abs_rho": 0.6301435556685678,
+      "predictor": "trace_lag16_n_frames",
+      "rho": 0.7397337392631014,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.009759535959916901,
+      "empirical_p_abs_ge_observed": 0.014985014985014986,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25585454545454545,
+      "null_p95_abs_rho": 0.5818181818181818,
+      "predictor": "trace_lag8_capacity_mAh",
+      "rho": 0.7363636363636363,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.02081512725352528,
+      "empirical_p_abs_ge_observed": 0.016983016983016984,
+      "n_cycle_points": 8,
+      "null_mean_abs_rho": 0.3101428571428571,
+      "null_p95_abs_rho": 0.7142857142857143,
+      "predictor": "trace_lag2_capacity_mAh",
+      "rho": -0.7857142857142858,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.01898101898101898,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2610636363636364,
+      "null_p95_abs_rho": 0.6272727272727273,
+      "predictor": "trace_lag4_n_frames",
+      "rho": 0.7000000000000001,
+      "target": "q70_logistic_k_per_s"
+    }
+  ],
+  "top_reference_centered_tests": [
+    {
+      "asymptotic_p": 6.661451941355567e-05,
+      "empirical_p_abs_ge_observed": 0.000999000999000999,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2615545454545455,
+      "null_p95_abs_rho": 0.6363636363636364,
+      "predictor": "trace_lag8_particle_norm_mean",
+      "rho": 0.9181818181818183,
+      "target": "phase_slope_median_per_s_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.0003430008169136331,
+      "empirical_p_abs_ge_observed": 0.001998001998001998,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25663465365095467,
+      "null_p95_abs_rho": 0.6151635037643536,
+      "predictor": "trace_lag8_n_frames",
+      "rho": 0.8807710121010887,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.0007177938266368857,
+      "empirical_p_abs_ge_observed": 0.001998001998001998,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26693885594803485,
+      "null_p95_abs_rho": 0.5984080650026506,
+      "predictor": "trace_lag8_frames_percentile",
+      "rho": 0.8584564381571795,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.002558580199713916,
+      "empirical_p_abs_ge_observed": 0.003996003996003996,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2505818181818182,
+      "null_p95_abs_rho": 0.5909090909090909,
+      "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.8090909090909091,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.004558029271828904,
+      "empirical_p_abs_ge_observed": 0.007992007992007992,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26121733511287026,
+      "null_p95_abs_rho": 0.6210110403690234,
+      "predictor": "trace_lag16_frames_percentile",
+      "rho": 0.7808300581110517,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.007282041008429151,
+      "empirical_p_abs_ge_observed": 0.008991008991008992,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2525909090909091,
+      "null_p95_abs_rho": 0.6,
+      "predictor": "trace_lag16_mean_abs_delta_prev",
+      "rho": 0.7545454545454545,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.007282041008429151,
+      "empirical_p_abs_ge_observed": 0.008991008991008992,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2488272727272727,
+      "null_p95_abs_rho": 0.600454545454545,
+      "predictor": "trace_lag2_particle_norm_mean",
+      "rho": 0.7545454545454545,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.008454728885061562,
+      "empirical_p_abs_ge_observed": 0.00999000999000999,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2516909090909091,
+      "null_p95_abs_rho": 0.6181818181818182,
+      "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.7454545454545456,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.010175540123456754,
+      "empirical_p_abs_ge_observed": 0.00999000999000999,
+      "n_cycle_points": 8,
+      "null_mean_abs_rho": 0.31388095238095237,
+      "null_p95_abs_rho": 0.7380952380952381,
+      "predictor": "trace_lag2_capacity_mAh",
+      "rho": -0.8333333333333335,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.008454728885061562,
+      "empirical_p_abs_ge_observed": 0.014985014985014986,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2571818181818181,
+      "null_p95_abs_rho": 0.600454545454545,
+      "predictor": "trace_lag8_delta_std_across_particles",
+      "rho": 0.7454545454545456,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.016983016983016984,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2624272727272727,
+      "null_p95_abs_rho": 0.5909090909090909,
+      "predictor": "trace_lag4_particle_norm_std",
+      "rho": 0.7000000000000001,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.01890464970890005,
+      "empirical_p_abs_ge_observed": 0.017982017982017984,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2466372744371475,
+      "null_p95_abs_rho": 0.5938418073528784,
+      "predictor": "trace_lag16_n_frames",
+      "rho": 0.689504905115607,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.01898101898101898,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25742727272727267,
+      "null_p95_abs_rho": 0.6090909090909091,
+      "predictor": "lag2_trace_predprob_future_any_drop_within_8cycles",
+      "rho": 0.7000000000000001,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.016470978836514424,
+      "empirical_p_abs_ge_observed": 0.01998001998001998,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25723636363636365,
+      "null_p95_abs_rho": 0.5909090909090909,
+      "predictor": "trace_lag4_particle_norm_cv",
+      "rho": 0.7000000000000001,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.01020128429076337,
+      "empirical_p_abs_ge_observed": 0.02097902097902098,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26828771199832924,
+      "null_p95_abs_rho": 0.6332590461337052,
+      "predictor": "trace_lag8_max_abs_delta_prev",
+      "rho": 0.7334870966009104,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.024178155822074797,
+      "empirical_p_abs_ge_observed": 0.02097902097902098,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2507751380894231,
+      "null_p95_abs_rho": 0.5922566618516668,
+      "predictor": "trace_lag2_frames_percentile",
+      "rho": -0.6697056099399616,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "asymptotic_p": 0.013350055216304332,
+      "empirical_p_abs_ge_observed": 0.02197802197802198,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.25842402277328763,
+      "null_p95_abs_rho": 0.6079492802529991,
+      "predictor": "trace_lag2_future_any_drop_within_8cycles",
+      "rho": 0.7152344473564697,
+      "target": "mode_review_priority"
+    },
+    {
+      "asymptotic_p": 0.02245437698633361,
+      "empirical_p_abs_ge_observed": 0.02197802197802198,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.26004837315452856,
+      "null_p95_abs_rho": 0.607540580302195,
+      "predictor": "trace_lag16_frames_percentile",
+      "rho": 0.6758061321662903,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.024178155822074797,
+      "empirical_p_abs_ge_observed": 0.023976023976023976,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2689164152239872,
+      "null_p95_abs_rho": 0.6195915847063591,
+      "predictor": "trace_lag2_max_abs_delta_prev",
+      "rho": -0.6697056099399616,
+      "target": "phase_slope_median_per_s_protocol_residual"
+    },
+    {
+      "asymptotic_p": 0.020842853610945077,
+      "empirical_p_abs_ge_observed": 0.024975024975024976,
+      "n_cycle_points": 11,
+      "null_mean_abs_rho": 0.2524727272727273,
+      "null_p95_abs_rho": 0.6095454545454542,
+      "predictor": "trace_lag16_particle_norm_cv",
+      "rho": 0.6818181818181819,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    }
+  ]
+}

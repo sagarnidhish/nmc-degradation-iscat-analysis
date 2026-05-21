@@ -104,6 +104,7 @@ def main() -> None:
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
     roi_trace_fusion = read_json(derived / "roi_trace_fusion_audit" / "roi_trace_fusion_audit_summary.json")
+    roi_trace_cycle_null = read_json(derived / "roi_trace_fusion_cycle_null" / "roi_trace_fusion_cycle_null_summary.json")
     precursor_review = read_json(derived / "precursor_informed_roi_review" / "precursor_informed_roi_review_summary.json")
     precursor_visual_bundle = read_json(derived / "precursor_review_visual_bundle" / "precursor_review_visual_bundle_summary.json")
 
@@ -193,6 +194,8 @@ def main() -> None:
     particle_precursor_all_tests = top_items(first_summary(particle_precursor, "top_window_tests", []), 12)
     roi_trace_focus = top_items(first_summary(roi_trace_fusion, "top_precursor_context_residual_spearman", []), 12)
     roi_trace_mode_tests = top_items(first_summary(roi_trace_fusion, "top_precursor_event_enriched_mode_tests", []), 12)
+    roi_trace_cycle_tests = top_items(first_summary(roi_trace_cycle_null, "top_cycle_collapsed_tests", []), 12)
+    roi_trace_centered_tests = top_items(first_summary(roi_trace_cycle_null, "top_reference_centered_tests", []), 12)
     precursor_review_top = top_items(first_summary(precursor_review, "top_precursor_informed_candidates", []), 12)
     precursor_visual_top = top_items(first_summary(precursor_visual_bundle, "top_candidates", []), 12)
 
@@ -295,6 +298,7 @@ def main() -> None:
         f"- Particle trace cycle rows/drop cycles: {first_summary(particle_trace, 'n_cycle_rows', 0)} / {first_summary(particle_trace, 'n_any_drop_cycles', 0)}",
         f"- Particle precursor event/control anchors: {first_summary(particle_precursor, 'n_event_anchors', 0)} / {first_summary(particle_precursor, 'n_matched_control_anchors', 0)}",
         f"- ROI trace-fusion rows/predictors: {first_summary(roi_trace_fusion, 'n_roi_rows', 0)} / {first_summary(roi_trace_fusion, 'n_predictors', 0)}",
+        f"- ROI trace-fusion cycle-null points: {first_summary(roi_trace_cycle_null, 'n_cycle_points', 0)}",
         f"- Precursor-informed review candidates: {first_summary(precursor_review, 'n_review_candidates', 0)}",
         f"- Precursor visual-bundle candidates/assets: {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)} / {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
@@ -320,7 +324,8 @@ def main() -> None:
         "- Optical phase-kinetics fits add transition-sharpness and Avrami-style descriptors: event-enriched residual modes have larger q70/q80 transformed-fraction deltas and faster q60/q70 logistic rates, while kinetic fit quality/rates remain strongly coupled to frame count.",
         f"- The larger four-particle cycle table shows leakage-conscious early-warning signal for future abrupt drops: any-drop within 8 cycles has mean AUC {fmt((particle_trace_classifiers[0] if particle_trace_classifiers else {}).get('mean_roc_auc'))} with empirical null p={fmt((particle_trace_nulls[0] if particle_trace_nulls else {}).get('empirical_p_ge_observed'))}; synchronized 2+ drops are also detectable but with only two positive cycles.",
         f"- Event-aligned precursor windows show lower pre-event capacity/CE and higher cross-particle delta dispersion versus matched non-event anchors; the strongest precursor window test is {((particle_precursor_tests[0] if particle_precursor_tests else {}).get('window', 'NA'))} {((particle_precursor_tests[0] if particle_precursor_tests else {}).get('feature', 'NA'))} with p={fmt((particle_precursor_tests[0] if particle_precursor_tests else {}).get('mannwhitney_p'))}.",
-        f"- ROI trace-fusion links lagged global particle-trace state to localized front behavior: strongest focused context-residual association is {((roi_trace_focus[0] if roi_trace_focus else {}).get('predictor', 'NA'))} vs {((roi_trace_focus[0] if roi_trace_focus else {}).get('target', 'NA'))}, rho={fmt((roi_trace_focus[0] if roi_trace_focus else {}).get('rho'))}, p={fmt((roi_trace_focus[0] if roi_trace_focus else {}).get('p_value'))}.",
+        f"- ROI trace-fusion links lagged global particle-trace state to localized front behavior at the ROI-row level: strongest focused context-residual association is {((roi_trace_focus[0] if roi_trace_focus else {}).get('predictor', 'NA'))} vs {((roi_trace_focus[0] if roi_trace_focus else {}).get('target', 'NA'))}, rho={fmt((roi_trace_focus[0] if roi_trace_focus else {}).get('rho'))}, p={fmt((roi_trace_focus[0] if roi_trace_focus else {}).get('p_value'))}.",
+        f"- Cycle-collapsed ROI trace-fusion null audit reduces 52 ROI rows to {first_summary(roi_trace_cycle_null, 'n_cycle_points', 0)} cycle points; top surviving collapsed association is {((roi_trace_cycle_tests[0] if roi_trace_cycle_tests else {}).get('predictor', 'NA'))} vs {((roi_trace_cycle_tests[0] if roi_trace_cycle_tests else {}).get('target', 'NA'))}, rho={fmt((roi_trace_cycle_tests[0] if roi_trace_cycle_tests else {}).get('rho'))}, empirical p={fmt((roi_trace_cycle_tests[0] if roi_trace_cycle_tests else {}).get('empirical_p_abs_ge_observed'))}.",
         f"- Precursor-informed ROI review ranks {first_summary(precursor_review, 'n_review_candidates', 0)} pending manual-QC candidates; the top candidate is {(precursor_review_top[0] if precursor_review_top else {}).get('roi_id', 'NA')} with score {fmt((precursor_review_top[0] if precursor_review_top else {}).get('precursor_informed_review_score'))}.",
         f"- A visual review bundle now packages {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)} top precursor-informed ROI candidates; {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)} have at least one copied QC/preview asset and a contact sheet for manual inspection.",
         "",
@@ -570,6 +575,23 @@ def main() -> None:
         )
     report_lines.append(f"- Guardrail: {first_summary(roi_trace_fusion, 'guardrail', 'Trace-fusion associations are cycle-level linkage evidence only.')}")
 
+    report_lines += [
+        "",
+        "## ROI Trace Fusion Cycle Null",
+        "",
+        f"- Cycle-collapsed points: {first_summary(roi_trace_cycle_null, 'n_cycle_points', 0)} from {first_summary(roi_trace_cycle_null, 'n_roi_rows', 0)} ROI rows",
+        f"- Event-reference cycles: {first_summary(roi_trace_cycle_null, 'n_event_reference_cycles', 0)}",
+        f"- Predictors/permutations: {first_summary(roi_trace_cycle_null, 'n_predictors_tested', 0)} / {first_summary(roi_trace_cycle_null, 'n_permutation', 0)}",
+    ]
+    for row in roi_trace_cycle_tests[:6]:
+        report_lines.append(
+            f"- Cycle-collapsed {row.get('predictor')} vs {row.get('target')}: rho {fmt(row.get('rho'))}, empirical p={fmt(row.get('empirical_p_abs_ge_observed'))}, n={fmt(row.get('n_cycle_points'), 0)}"
+        )
+    for row in roi_trace_centered_tests[:4]:
+        report_lines.append(
+            f"- Reference-centered {row.get('predictor')} vs {row.get('target')}: rho {fmt(row.get('rho'))}, empirical p={fmt(row.get('empirical_p_abs_ge_observed'))}, n={fmt(row.get('n_cycle_points'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(roi_trace_cycle_null, 'guardrail', 'Cycle-collapsed null audit only.')}")
 
     report_lines += [
         "",
@@ -766,6 +788,16 @@ def main() -> None:
             "top_precursor_context_residual_spearman": roi_trace_focus,
             "top_precursor_event_enriched_mode_tests": roi_trace_mode_tests,
             "guardrail": first_summary(roi_trace_fusion, "guardrail"),
+        },
+        "roi_trace_fusion_cycle_null": {
+            "n_roi_rows": first_summary(roi_trace_cycle_null, "n_roi_rows"),
+            "n_cycle_points": first_summary(roi_trace_cycle_null, "n_cycle_points"),
+            "n_event_reference_cycles": first_summary(roi_trace_cycle_null, "n_event_reference_cycles"),
+            "n_predictors_tested": first_summary(roi_trace_cycle_null, "n_predictors_tested"),
+            "n_permutation": first_summary(roi_trace_cycle_null, "n_permutation"),
+            "top_cycle_collapsed_tests": roi_trace_cycle_tests,
+            "top_reference_centered_tests": roi_trace_centered_tests,
+            "guardrail": first_summary(roi_trace_cycle_null, "guardrail"),
         },
         "precursor_informed_roi_review": {
             "n_review_candidates": first_summary(precursor_review, "n_review_candidates"),
