@@ -21,6 +21,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Phase-kinetics ROI rows/features: 52 / 40
 - Particle trace cycle rows/drop cycles: 89 / 4
 - Particle precursor event/control anchors: 4 / 24
+- Precursor-informed review candidates: 47
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -44,6 +45,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Optical phase-kinetics fits add transition-sharpness and Avrami-style descriptors: event-enriched residual modes have larger q70/q80 transformed-fraction deltas and faster q60/q70 logistic rates, while kinetic fit quality/rates remain strongly coupled to frame count.
 - The larger four-particle cycle table shows leakage-conscious early-warning signal for future abrupt drops: any-drop within 8 cycles has mean AUC 0.883 with empirical null p=0.002; synchronized 2+ drops are also detectable but with only two positive cycles.
 - Event-aligned precursor windows show lower pre-event capacity/CE and higher cross-particle delta dispersion versus matched non-event anchors; the strongest precursor window test is pre8_to_pre5 capacity_mAh with p=0.002.
+- Precursor-informed ROI review ranks 47 pending manual-QC candidates; the top candidate is cycle156_rank7_obj27 with score 5.527.
 
 ## Model Readout
 
@@ -273,6 +275,21 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - All-window event_cycle max_abs_delta_prev min_value: event-control 0.136, p=0.002
 - All-window pre8_to_pre5 capacity_mAh min_value: event-control -0.024, p=0.002
 - Guardrail: Precursor windows are aligned to four detected abrupt-drop cycles and matched non-event anchors from the four-particle cycle table. Results show cycle-level trace precursors for review and hypothesis generation, not localized phase-front motion or calibrated diffusion.
+
+## Precursor-Informed ROI Review
+
+- Review candidates: 47
+- Event/control candidates: 23 / 24
+- Review tiers: {'high': 12, 'medium': 18, 'routine': 17}
+- cycle156_rank7_obj27 (event, cycle 156): score 5.527, tier high, reason event-cycle ROI;high precursor-context cycle;event-enriched residual mode;kinetic proxy available
+- cycle60_rank5_obj18 (event, cycle 60): score 5.094, tier high, reason event-cycle ROI;high precursor-context cycle;large front-direction residual;kinetic proxy available
+- cycle156_rank6_obj3 (event, cycle 156): score 5.086, tier high, reason event-cycle ROI;high precursor-context cycle;kinetic proxy available
+- cycle156_rank5_obj4 (event, cycle 156): score 5.054, tier high, reason event-cycle ROI;high precursor-context cycle;event-enriched residual mode;kinetic proxy available
+- cycle156_rank2_obj2 (event, cycle 156): score 4.926, tier high, reason event-cycle ROI;high precursor-context cycle;event-enriched residual mode;kinetic proxy available
+- cycle156_rank1_obj1 (event, cycle 156): score 4.834, tier high, reason event-cycle ROI;high precursor-context cycle;kinetic proxy available
+- cycle156_rank8_obj10 (event, cycle 156): score 4.741, tier high, reason event-cycle ROI;high precursor-context cycle;event-enriched residual mode;kinetic proxy available
+- cycle60_rank3_obj9 (event, cycle 60): score 4.632, tier high, reason event-cycle ROI;high precursor-context cycle;event-enriched residual mode;large front-direction residual;kinetic proxy available
+- Guardrail: This is a review-prioritization manifest. It combines automatic ROI/front/mode/kinetic descriptors with cycle-level precursor context to decide what to inspect first; it does not assign manual QC labels or validate diffusion/front claims.
 
 ## Top ROI/Echem Or Protocol Couplings
 

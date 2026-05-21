@@ -1434,3 +1434,51 @@ Key result:
 
 Interpretation: this turns the broader cycle-level early-warning classifier into a more physical timeline. Events are preceded by weaker echem state, stronger cross-particle photometry heterogeneity, and then the abrupt intensity drop itself. Because there are only four event anchors and acquisition terms remain significant, this is a review-prioritization and hypothesis-generation result, not a calibrated degradation-propagation model.
 
+## 2026-05-21 ROI Trace Fusion Audit
+
+Added and ran:
+
+`python scripts/tier4_roi_trace_fusion_audit.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit`
+
+Local compact copy:
+
+`derived_local/roi_trace_fusion_audit`
+
+Key result:
+
+- Joined cycle-level four-particle/echem trace state onto the 52 ROI/front/kinetic residual rows using lags of 0, 2, 4, 8, and 16 cycles.
+- The full audit correctly recovers lag-0 event-label sanity checks, but the report headline excludes lag-0/event-flag terms when interpreting precursor evidence.
+- Among non-lag-0 context-residual associations, two-cycle-prior cross-particle intensity spread is strongly associated with front-positive residual fraction: `trace_lag2_particle_norm_range` and `trace_lag2_particle_norm_std` both have rho=0.725, p=2.69e-07, n=38 after residualizing against cycle number, frame-count percentile, Vmean, and mean current.
+- Four-cycle-prior `delta_std_across_particles` is inversely associated with front-positive residual fraction after the same context residualization: rho=-0.705, p=7.72e-07, n=38.
+- Event-enriched residual-mode ROIs differ in several lagged precursor/context terms, including lower lag16 cross-particle delta dispersion (median diff -0.00726, p=0.00491), higher lag8 frame-count percentile and frame count (both p=0.00630), and lower lag16 CE (median diff -0.442 percentage points, p=0.0169).
+
+Interpretation: this links global particle-trace precursor state to localized ROI/front behavior more directly than the standalone cycle audit. The strongest front-direction association is with prior cross-particle trace heterogeneity, but ROI rows are clustered by cycle/reference and automatic ROI labels remain pending manual QC, so this is linkage and prioritization evidence rather than causal proof.
+
+## 2026-05-21 Precursor-Informed ROI Review Manifest
+
+Added and ran:
+
+`python scripts/tier4_precursor_informed_roi_review.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_informed_roi_review`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_informed_roi_review`
+
+Local compact copy:
+
+`derived_local/precursor_informed_roi_review`
+
+Key result:
+
+- Built a review-prioritization manifest over 47 pending manual-QC candidates by combining the existing manual-QC workbook priority, event precursor severity, residual-mode priority, front-direction residual magnitude, robust phase score magnitude, kinetic rate magnitude, and event/pre-event cycle bonuses.
+- Tiered the candidates into 12 high, 18 medium, and 17 routine review priorities.
+- Event-cycle candidates dominate the top tier, especially cycle 156 and cycle 60 ROI rows; the top candidate is `cycle156_rank7_obj27`, followed by `cycle60_rank5_obj18`, `cycle156_rank6_obj3`, `cycle156_rank5_obj4`, and `cycle156_rank2_obj2`.
+- The precursor context scores rank event-reference-cycle severity as cycle 156 highest, then 86, 60, and 116 under the selected event-window tests.
+- The manifest does not assign manual labels. It gives the next practical inspection order for particle identity, front-mask validity, and diffusion/front interpretability.
+
+Interpretation: this converts the many automatic analyses into a concrete manual-review queue. The highest-value next human/visual QC work is not arbitrary: inspect top-tier precursor-informed candidates first, with particular attention to event-cycle ROIs that combine high precursor severity, event-enriched residual modes, and large front-direction residuals.
+
