@@ -24,7 +24,12 @@ def finite_float(x, default=np.nan) -> float:
         return default
 
 
-def select_controls(recon: pd.DataFrame, event_rois: pd.DataFrame, controls_per_event_cycle: int) -> pd.DataFrame:
+def select_controls(
+    recon: pd.DataFrame,
+    event_rois: pd.DataFrame,
+    controls_per_event_cycle: int,
+    max_controls_per_control_cycle: int = 0,
+) -> pd.DataFrame:
     recon = recon.copy()
     recon["cycleNo"] = pd.to_numeric(recon["cycleNo"], errors="coerce")
     recon["candidate_rank"] = pd.to_numeric(recon["candidate_rank"], errors="coerce")
@@ -49,7 +54,14 @@ def select_controls(recon: pd.DataFrame, event_rois: pd.DataFrame, controls_per_
             ["local_distance_from_event", "cycleNo", "candidate_rank"],
             ascending=[True, True, True],
         )
-        selected = controls.head(controls_per_event_cycle)
+        if max_controls_per_control_cycle > 0:
+            selected = (
+                controls.groupby("cycleNo", group_keys=False)
+                .head(max_controls_per_control_cycle)
+                .head(controls_per_event_cycle)
+            )
+        else:
+            selected = controls.head(controls_per_event_cycle)
         for i, row in selected.iterrows():
             out = {
                 "cycleNo": float(row["cycleNo"]),
@@ -83,6 +95,12 @@ def main() -> None:
     parser.add_argument("--event-roi-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv")
     parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection")
     parser.add_argument("--controls-per-event-cycle", type=int, default=8)
+    parser.add_argument(
+        "--max-controls-per-control-cycle",
+        type=int,
+        default=0,
+        help="If positive, cap selections from any single non-event cycle before filling the event-cycle quota.",
+    )
     args = parser.parse_args()
 
     recon_path = os.path.join(args.derived_dir, "event_object_candidate_reconstruction", "reconstructed_object_candidates.csv")
@@ -90,7 +108,12 @@ def main() -> None:
         raise SystemExit(f"missing reconstructed candidate table: {recon_path}")
     recon = pd.read_csv(recon_path)
     event_rois = pd.read_csv(args.event_roi_table)
-    controls = select_controls(recon, event_rois, args.controls_per_event_cycle)
+    controls = select_controls(
+        recon,
+        event_rois,
+        args.controls_per_event_cycle,
+        args.max_controls_per_control_cycle,
+    )
     if controls.empty:
         raise SystemExit("no controls selected")
 
@@ -105,6 +128,7 @@ def main() -> None:
         "event_roi_table": args.event_roi_table,
         "n_control_rois": int(len(controls)),
         "controls_per_event_cycle": int(args.controls_per_event_cycle),
+        "max_controls_per_control_cycle": int(args.max_controls_per_control_cycle),
         "control_cycle_counts": cycle_counts.to_dict(orient="records"),
         "guardrail": "Control ROIs are automatic reconstructed candidates from nearby non-event segments, not manual annotations.",
     }

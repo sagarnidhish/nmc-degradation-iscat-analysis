@@ -1,0 +1,22 @@
+{
+  "crop_size_full": 192,
+  "cycle_summary": {
+    "118.0": {
+      "mean_norm_roi_delta": -0.0008760327473282814,
+      "mean_roi_delta": -15.93634033203125,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 8
+    },
+    "88.0": {
+      "mean_norm_roi_delta": 4.6790577471256256e-05,
+      "mean_roi_delta": -0.70703125,
+      "mean_stage_drift_xy_sampled": 0.18027756377319315,
+      "n_roi_sequences": 8
+    }
+  },
+  "guardrail": "Sequences are fixed padded crops around automatically selected ROIs; they are particle-region model inputs, not manual annotations.",
+  "n_roi_sequences": 16,
+  "output_size": 96,
+  "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection/selected_control_rois.csv",
+  "samples_per_roi": 96
+}

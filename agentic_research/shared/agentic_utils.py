@@ -87,6 +87,9 @@ def summarize_available_artifacts(root: Path) -> Dict[str, Any]:
         "roi_rollout_baselines": derived / "roi_rollout_baselines" / "roi_rollout_baseline_summary.json",
         "roi_event_conditioned_nextframe": derived / "roi_event_conditioned_nextframe" / "roi_event_model_summary.json",
         "roi_residual_cnn_fast": derived / "roi_residual_cnn_fast" / "roi_residual_cnn_summary.json",
+        "roi_joint_physics_degradation_modes": derived / "roi_joint_physics_degradation_modes" / "roi_joint_physics_degradation_modes_summary.json",
+        "event_vs_control_roi_physics": derived / "event_vs_control_roi_physics" / "event_vs_control_roi_physics_summary.json",
+        "control_roi_selection": derived / "control_roi_selection" / "control_roi_selection_summary.json",
         "echem_cycle_summary": derived / "event_echem_coupling" / "echem_cycle_summary.csv",
         "local_particle_events": repo_derived / "particle_event_targets" / "particle_abrupt_events.csv",
     }

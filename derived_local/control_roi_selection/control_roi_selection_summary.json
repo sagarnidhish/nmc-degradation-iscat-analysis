@@ -1,0 +1,19 @@
+{
+  "control_cycle_counts": [
+    {
+      "control_for_event_cycle": 86.0,
+      "cycleNo": 88.0,
+      "n_roi": 8
+    },
+    {
+      "control_for_event_cycle": 116.0,
+      "cycleNo": 118.0,
+      "n_roi": 8
+    }
+  ],
+  "controls_per_event_cycle": 8,
+  "event_roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv",
+  "guardrail": "Control ROIs are automatic reconstructed candidates from nearby non-event segments, not manual annotations.",
+  "n_control_rois": 16,
+  "recon_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_object_candidate_reconstruction/reconstructed_object_candidates.csv"
+}

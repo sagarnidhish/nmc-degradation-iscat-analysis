@@ -1,0 +1,148 @@
+{
+  "classifier_leave_pair_out": [
+    {
+      "accuracy": 0.38461538461538464,
+      "holdout_event_cycle": 86.0,
+      "mean_event_probability_for_controls": 0.9864933095956985,
+      "mean_event_probability_for_events": 0.8355222433027789,
+      "n_test": 13,
+      "n_train": 14,
+      "roc_auc": 0.1
+    },
+    {
+      "accuracy": 0.2857142857142857,
+      "holdout_event_cycle": 116.0,
+      "mean_event_probability_for_controls": 0.687477804729054,
+      "mean_event_probability_for_events": 0.5696655662555361,
+      "n_test": 14,
+      "n_train": 13,
+      "roc_auc": 0.3125
+    }
+  ],
+  "control_cycles": [
+    88.0,
+    118.0
+  ],
+  "event_cycles": [
+    86.0,
+    116.0
+  ],
+  "group_summary": [
+    {
+      "cumulative_abs_change": 0.00712373829446733,
+      "event_cycle": 86.0,
+      "n_roi": 8,
+      "persistence_tail_mse": 0.00011272516348981299,
+      "roi_class": "control",
+      "roi_mean_delta": 4.6790577471256256e-05,
+      "stage_drift_xy_sampled": 0.1802775637731931,
+      "temporal_diff_energy": 0.00010033525813923916
+    },
+    {
+      "cumulative_abs_change": 0.006563862960319966,
+      "event_cycle": 116.0,
+      "n_roi": 8,
+      "persistence_tail_mse": 7.420113070111256e-05,
+      "roi_class": "control",
+      "roi_mean_delta": -0.0008760327473282814,
+      "stage_drift_xy_sampled": 0.2915475947422533,
+      "temporal_diff_energy": 7.406685153910075e-05
+    },
+    {
+      "cumulative_abs_change": 0.006591827236115932,
+      "event_cycle": 86.0,
+      "n_roi": 5,
+      "persistence_tail_mse": 9.07012406969443e-05,
+      "roi_class": "event",
+      "roi_mean_delta": 0.000164148211479187,
+      "stage_drift_xy_sampled": 0.2499999999999317,
+      "temporal_diff_energy": 8.426418862654828e-05
+    },
+    {
+      "cumulative_abs_change": 0.007677388610318303,
+      "event_cycle": 116.0,
+      "n_roi": 6,
+      "persistence_tail_mse": 0.0001035224352866256,
+      "roi_class": "event",
+      "roi_mean_delta": -0.0006899808843930563,
+      "stage_drift_xy_sampled": 0.2236067977499281,
+      "temporal_diff_energy": 0.00010499935524421744
+    }
+  ],
+  "guardrail": "Controls are automatic nearby reconstructed ROIs, not manual matched particles. Treat event-control differences as hypothesis-ranking evidence.",
+  "n_control_roi": 16,
+  "n_event_roi": 11,
+  "outputs": {
+    "classifier": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_classifier_leave_pair_out.csv",
+    "descriptors": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_descriptors.csv",
+    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_feature_tests.csv",
+    "group_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_group_summary.csv",
+    "plot": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_physics.png"
+  },
+  "top_feature_tests": [
+    {
+      "control_mean": 0.00014220539179720613,
+      "event_mean": 0.0002860685796858998,
+      "event_minus_control": 0.00014386318788869369,
+      "feature": "high_fraction_slope_per_frame",
+      "mannwhitney_u": 159.0,
+      "p_value": 0.0005034396288265983
+    },
+    {
+      "control_mean": 4.5201209792185383e-05,
+      "event_mean": 7.646516906661254e-05,
+      "event_minus_control": 3.1263959274427154e-05,
+      "feature": "roi_mean_slope_per_frame",
+      "mannwhitney_u": 154.0,
+      "p_value": 0.0012284633367519047
+    },
+    {
+      "control_mean": -0.002251519097222222,
+      "event_mean": 0.0011935763888888799,
+      "event_minus_control": 0.003445095486111102,
+      "feature": "high_fraction_delta",
+      "mannwhitney_u": 127.0,
+      "p_value": 0.05741664569125998
+    },
+    {
+      "control_mean": -0.0004146210849285126,
+      "event_mean": -0.0003017403862693093,
+      "event_minus_control": 0.00011288069865920329,
+      "feature": "roi_mean_delta",
+      "mannwhitney_u": 97.0,
+      "p_value": 0.6748915230109515
+    },
+    {
+      "control_mean": 8.720105483916996e-05,
+      "event_mean": 9.557427950891328e-05,
+      "event_minus_control": 8.373224669743322e-06,
+      "feature": "temporal_diff_energy",
+      "mannwhitney_u": 92.0,
+      "p_value": 0.8628775594244169
+    },
+    {
+      "control_mean": 0.006843800627393648,
+      "event_mean": 0.007183951622044498,
+      "event_minus_control": 0.0003401509946508504,
+      "feature": "cumulative_abs_change",
+      "mannwhitney_u": 92.0,
+      "p_value": 0.8628775594244169
+    },
+    {
+      "control_mean": 9.346314709546277e-05,
+      "event_mean": 9.76946195640432e-05,
+      "event_minus_control": 4.2314724685804206e-06,
+      "feature": "persistence_tail_mse",
+      "mannwhitney_u": 91.0,
+      "p_value": 0.9018173247317224
+    },
+    {
+      "control_mean": -0.00042819067231208844,
+      "event_mean": -0.0003876399618086378,
+      "event_minus_control": 4.055071050345065e-05,
+      "feature": "low_fraction_slope_per_frame",
+      "mannwhitney_u": 90.0,
+      "p_value": 0.9409948168019828
+    }
+  ]
+}

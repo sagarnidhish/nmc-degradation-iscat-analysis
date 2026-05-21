@@ -94,6 +94,26 @@ def extract_observations(root: Path) -> List[Dict[str, Any]]:
             "evidence": str(derived / "roi_residual_cnn_fast" / "roi_residual_cnn_summary.json"),
             "strength": "negative_baseline",
         })
+    joint = read_json(derived / "roi_joint_physics_degradation_modes" / "roi_joint_physics_degradation_modes_summary.json")
+    if joint:
+        top = joint.get("top_ranked_rois", [])[:2]
+        top_bits = [f"{r.get('roi_key')} score {finite_float(r.get('joint_degradation_score')):.3g}" for r in top]
+        observations.append({
+            "topic": "roi_joint_physics_degradation_modes",
+            "observation": f"Combined rollout residual, front tracking, ROI physics, residual-CNN guardrails, and cycle evidence into {joint.get('n_roi', 'unknown')} ROI joint modes; selected k={joint.get('selected_k', 'unknown')} with silhouette {finite_float(joint.get('silhouette')):.3g}. Top ROIs: {'; '.join(top_bits)}.",
+            "evidence": str(derived / "roi_joint_physics_degradation_modes" / "roi_joint_physics_degradation_modes_summary.json"),
+            "strength": "moderate_synthesis",
+        })
+    evctrl = read_json(derived / "event_vs_control_roi_physics" / "event_vs_control_roi_physics_summary.json")
+    if evctrl:
+        top_tests = evctrl.get("top_feature_tests", [])[:2]
+        test_bits = [f"{t.get('feature')} p={finite_float(t.get('p_value')):.3g}" for t in top_tests]
+        observations.append({
+            "topic": "event_vs_control_roi_physics",
+            "observation": f"Compared {evctrl.get('n_event_roi', 'unknown')} event ROIs against {evctrl.get('n_control_roi', 'unknown')} matched control ROIs; strongest shifts: {'; '.join(test_bits)}. Leave-pair classifier did not generalize well, so controls are a guardrail.",
+            "evidence": str(derived / "event_vs_control_roi_physics" / "event_vs_control_roi_physics_summary.json"),
+            "strength": "moderate_control_check",
+        })
     baselines = read_csv_if_exists(derived / "particle_event_targets" / "particle_event_feature_baselines.csv")
     if not baselines.empty and "f1" in baselines:
         observations.append({
@@ -143,7 +163,19 @@ def next_actions(observations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             "action": "Review candidate front overlays for cycles 86/116 and select validated ROIs for calibrated front tracking.",
             "expected_output": "validated_front_candidates.csv and manual QC decisions",
         })
-    if "roi_event_conditioned_nextframe" in topics:
+    if "event_vs_control_roi_physics" in topics:
+        actions.append({
+            "priority": 5,
+            "action": "Scale ROI/control sampling to additional cycles and add manual QC/spatial calibration for the top joint-mode ROIs.",
+            "expected_output": "expanded_roi_control_manifest.csv and calibrated top-mode ROI report",
+        })
+    elif "roi_joint_physics_degradation_modes" in topics:
+        actions.append({
+            "priority": 5,
+            "action": "Expand ROI/control sampling beyond synchronized events and validate whether joint modes generalize to non-event particle regions.",
+            "expected_output": "control_roi_sequences and event-vs-control joint physics report",
+        })
+    elif "roi_event_conditioned_nextframe" in topics:
         actions.append({
             "priority": 5,
             "action": "Use ROI rollout residual and front-tracking features in a joint degradation-mode/hazard model across selected and future ROIs.",

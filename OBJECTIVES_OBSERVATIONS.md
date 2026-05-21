@@ -619,3 +619,33 @@ Key result:
 
 Interpretation: the strongest physics-facing story is now a joint degradation descriptor rather than any single video model. Cycle 86 appears more active/difficult for rollout prediction, while cycle 116 looks more like coherent optical loss/contraction with stronger event evidence. These modes are automatic hypothesis rankings from selected ROIs and still need control ROI expansion, manual QC, and spatial calibration before mechanistic diffusion claims.
 
+## 2026-05-21 Event vs Control ROI Physics Check
+
+Added and ran:
+
+- `scripts/tier2_select_control_rois.py`
+- `scripts/tier3_event_vs_control_roi_physics.py`
+
+Remote output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics`
+
+Local compact copies:
+
+- `derived_local/control_roi_selection`
+- `derived_local/control_roi_sequences`
+- `derived_local/event_vs_control_roi_physics`
+
+Key result:
+
+- Selected 16 matched non-event control ROIs from nearby reconstructed candidates: 8 from cycle 88 as controls for event cycle 86, and 8 from cycle 118 as controls for event cycle 116.
+- Exported control ROI particle-region tensors with the same crop size and sampling style as selected event ROIs.
+- Compared 11 event ROIs against 16 matched control ROIs using ROI mean trends, high/low optical-state fractions, temporal difference energy, cumulative absolute change, persistence tail MSE, and stage drift.
+- Strongest event-vs-control shifts are in high/bright-state growth and mean-intensity slope: high-fraction slope p=5.03e-4 and ROI-mean slope p=0.00123 by Mann-Whitney tests.
+- Mean high-fraction slope is higher for event ROIs than controls: 2.86e-4 vs 1.42e-4 per frame.
+- Leave-pair-out logistic classification did not generalize: holdout cycle 86 ROC-AUC 0.10 and holdout cycle 116 ROC-AUC 0.313.
+
+Interpretation: matched controls support the idea that selected event ROIs have different optical-state trend structure, especially bright/high-fraction growth, but simple event-vs-control classification is not robust with only two event/control cycle pairs. This is a useful guardrail: the joint degradation modes should be treated as hypothesis rankings until expanded to more cycles and manually QC'd particle regions.
+

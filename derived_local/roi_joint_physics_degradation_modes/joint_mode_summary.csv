@@ -1,0 +1,3 @@
+joint_mode_cluster,joint_mode_name,n_roi,mean_cycle,joint_degradation_score,rollout_residual_energy_mean,radius2_slope_full_px2_per_s,roi_mean_delta_corrected,active_fraction_last,cumulative_abs_change
+0,lower_residual_comparison_mode,9,106.0,-0.47521963244906335,0.0007646182177469888,-0.14893478549278802,-3.746310763888889,0.06561656057098762,0.010639212611648711
+1,highest_score_contracting_optical_loss,2,86.0,2.1384883460207806,0.0026570416645199,-0.13444742050839115,-7.76220703125,0.12619357638888884,0.017981650307774502

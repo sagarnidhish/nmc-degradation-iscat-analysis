@@ -1,0 +1,135 @@
+{
+  "cycle_summary": [
+    {
+      "active_fraction_last": 0.10987955729166665,
+      "cycleNo": 86.0,
+      "evidence_score": 12.399287527913966,
+      "joint_degradation_score": 0.06758719428843377,
+      "mean_drop_frac": 0.1420951480652973,
+      "n_roi": 5,
+      "radius2_slope_full_px2_per_s": -0.12134757271421859,
+      "roi_mean_delta_corrected": -1.8919921875,
+      "rollout_residual_energy_mean": 0.00170620326116472
+    },
+    {
+      "active_fraction_last": 0.048923068576388846,
+      "cycleNo": 116.0,
+      "evidence_score": 12.929917335181958,
+      "joint_degradation_score": -0.05632266190702969,
+      "mean_drop_frac": 0.1917019578422557,
+      "n_roi": 6,
+      "radius2_slope_full_px2_per_s": -0.16709500781346362,
+      "roi_mean_delta_corrected": -6.630208333333333,
+      "rollout_residual_energy_mean": 0.0006107718304898499
+    }
+  ],
+  "feature_columns": [
+    "rollout_residual_energy_mean",
+    "rollout_residual_energy_slope_per_step",
+    "radius2_slope_full_px2_per_s",
+    "active_fraction_last",
+    "roi_mean_delta_corrected",
+    "cumulative_abs_change",
+    "high_fraction_slope_per_frame",
+    "apparent_diffusion_proxy_px2_per_frame",
+    "relative_mse_improvement",
+    "joint_degradation_score"
+  ],
+  "guardrail": "Joint modes combine automatic ROI/model/front proxies. They rank degradation hypotheses but are not calibrated diffusion coefficients or manual annotations.",
+  "mode_names": {
+    "0": "lower_residual_comparison_mode",
+    "1": "highest_score_contracting_optical_loss"
+  },
+  "n_roi": 11,
+  "outputs": {
+    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/joint_feature_spearman_correlations.csv",
+    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/joint_cycle_summary.csv",
+    "joint_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes.csv",
+    "mode_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/joint_mode_summary.csv",
+    "plot": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes.png"
+  },
+  "selected_k": 2,
+  "silhouette": 0.3351118784180543,
+  "top_ranked_rois": [
+    {
+      "active_fraction_last": 0.1118977864583333,
+      "cycleNo": 86.0,
+      "joint_degradation_score": 2.8584733209397086,
+      "joint_mode_name": "highest_score_contracting_optical_loss",
+      "radius2_slope_full_px2_per_s": -0.1868965376690237,
+      "roi_key": "cycle86_front4_obj9",
+      "roi_mean_delta_corrected": -15.6640625,
+      "rollout_residual_energy_mean": 0.0021907234888658
+    },
+    {
+      "active_fraction_last": 0.0594346788194444,
+      "cycleNo": 116.0,
+      "joint_degradation_score": 1.719174409328104,
+      "joint_mode_name": "lower_residual_comparison_mode",
+      "radius2_slope_full_px2_per_s": -0.2627405067053337,
+      "roi_key": "cycle116_front3_obj9",
+      "roi_mean_delta_corrected": -12.10546875,
+      "rollout_residual_energy_mean": 0.00064808735533
+    },
+    {
+      "active_fraction_last": 0.1404893663194444,
+      "cycleNo": 86.0,
+      "joint_degradation_score": 1.4185033711018522,
+      "joint_mode_name": "highest_score_contracting_optical_loss",
+      "radius2_slope_full_px2_per_s": -0.0819983033477586,
+      "roi_key": "cycle86_front8_obj17",
+      "roi_mean_delta_corrected": 0.1396484375,
+      "rollout_residual_energy_mean": 0.003123359840174
+    },
+    {
+      "active_fraction_last": 0.0464409722222222,
+      "cycleNo": 116.0,
+      "joint_degradation_score": 0.6719779575502947,
+      "joint_mode_name": "lower_residual_comparison_mode",
+      "radius2_slope_full_px2_per_s": -0.1452021427645233,
+      "roi_key": "cycle116_front1_obj6",
+      "roi_mean_delta_corrected": -17.044921875,
+      "rollout_residual_energy_mean": 0.0007327046444061
+    },
+    {
+      "active_fraction_last": 0.0425075954861111,
+      "cycleNo": 116.0,
+      "joint_degradation_score": 0.12806194448803976,
+      "joint_mode_name": "lower_residual_comparison_mode",
+      "radius2_slope_full_px2_per_s": -0.217030104531719,
+      "roi_key": "cycle116_front7_obj37",
+      "roi_mean_delta_corrected": -5.15625,
+      "rollout_residual_energy_mean": 0.0006502347223431
+    },
+    {
+      "active_fraction_last": 0.0482584635416666,
+      "cycleNo": 116.0,
+      "joint_degradation_score": 0.1071998373891978,
+      "joint_mode_name": "lower_residual_comparison_mode",
+      "radius2_slope_full_px2_per_s": -0.2536737743074581,
+      "roi_key": "cycle116_front2_obj2",
+      "roi_mean_delta_corrected": -2.8876953125,
+      "rollout_residual_energy_mean": 0.0003880475560436
+    },
+    {
+      "active_fraction_last": 0.0359429253472222,
+      "cycleNo": 116.0,
+      "joint_degradation_score": -0.0926086224960257,
+      "joint_mode_name": "lower_residual_comparison_mode",
+      "radius2_slope_full_px2_per_s": -0.1611129823826615,
+      "roi_key": "cycle116_front4_obj58",
+      "roi_mean_delta_corrected": -11.54296875,
+      "rollout_residual_energy_mean": 0.0005653882249134
+    },
+    {
+      "active_fraction_last": 0.1001519097222222,
+      "cycleNo": 86.0,
+      "joint_degradation_score": -0.7735151267667235,
+      "joint_mode_name": "lower_residual_comparison_mode",
+      "radius2_slope_full_px2_per_s": -0.1771701224715564,
+      "roi_key": "cycle86_front2_obj6",
+      "roi_mean_delta_corrected": -1.8193359375,
+      "rollout_residual_energy_mean": 0.0007274599122411
+    }
+  ]
+}

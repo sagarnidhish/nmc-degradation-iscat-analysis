@@ -13,6 +13,8 @@
 | roi_rollout_baselines | moderate_baseline | Evaluated 11 particle-ROI sequences with persistence, velocity, and low-rank DMD rollouts; DMD spectral radius 1.002. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_baseline_summary.json |
 | roi_event_conditioned_nextframe | moderate_baseline | Trained a PCA-ridge event-conditioned next-frame model on 11 selected ROI sequences; cycle 86 residual mean 0.00171; cycle 116 residual mean 0.000611. Persistence remains a strong recursive baseline, so residuals are the main degradation descriptor. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_event_conditioned_nextframe/roi_event_model_summary.json |
 | roi_residual_cnn_fast | negative_baseline | A leave-one-cycle residual CNN on 11 selected ROIs did not beat persistence; overall relative MSE improvement -4.23. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_residual_cnn_fast/roi_residual_cnn_summary.json |
+| roi_joint_physics_degradation_modes | moderate_synthesis | Combined rollout residual, front tracking, ROI physics, residual-CNN guardrails, and cycle evidence into 11 ROI joint modes; selected k=2 with silhouette 0.335. Top ROIs: cycle86_front4_obj9 score 2.86; cycle116_front3_obj9 score 1.72. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes_summary.json |
+| event_vs_control_roi_physics | moderate_control_check | Compared 11 event ROIs against 16 matched control ROIs; strongest shifts: high_fraction_slope_per_frame p=0.000503; roi_mean_slope_per_frame p=0.00123. Leave-pair classifier did not generalize well, so controls are a guardrail. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_physics_summary.json |
 | event_forecasting | weak_to_moderate | Best transparent leave-one-particle event-forecast F1 is 0.435. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv |
 
 ## Next Action Queue
@@ -23,4 +25,4 @@
 | 2 | Run protocol-local echem window scan around cycles 86 and 116. | local_echem_window_features.csv with neighbor-cycle controls |
 | 3 | Generate ROI/event visual QC manifest for raw frame inspection. | event_roi_qc_manifest.csv and review checklist |
 | 4 | Add manual QC/spatial calibration metadata for selected front ROIs and convert pixel-scale slopes to calibrated units. | front_roi_qc_calibration.csv and calibrated_front_tracking.csv |
-| 5 | Use ROI rollout residual and front-tracking features in a joint degradation-mode/hazard model across selected and future ROIs. | roi_joint_physics_degradation_modes.csv and calibrated event-hazard report |
+| 5 | Scale ROI/control sampling to additional cycles and add manual QC/spatial calibration for the top joint-mode ROIs. | expanded_roi_control_manifest.csv and calibrated top-mode ROI report |
