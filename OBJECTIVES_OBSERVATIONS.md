@@ -698,6 +698,7 @@ Key result:
 - Computed threshold-front mobility proxies on the selected event ROI tensors and expanded matched controls: bright/high phase fraction slopes, mid-threshold front fraction, high/low apparent radius-squared changes, interface-density changes, centroid path, first-last correlation, and first-last absolute change.
 - Compared 11 event ROIs with 32 expanded control ROIs from cycles 88, 90, 92, and 118.
 - Event ROIs show faster high-phase fraction growth than controls: mean slope 3.36e-4 vs 1.54e-4 per frame, Mann-Whitney p=0.00097.
+- Using HDF5 `camera_timing`, those high-phase growth rates correspond to 3.51e-6/s for events vs 1.60e-6/s for expanded controls; sampled ROI frames are roughly 10 s apart.
 - Event ROIs show larger first-last absolute change: 0.01213 vs 0.00828, p=0.00925, and lower first-last correlation: 0.9863 vs 0.9957, p=0.0118.
 - The apparent high-phase radius-squared change is larger for events: +7.01 px^2 vs -0.91 px^2, p=0.0100. This is a phase-boundary proxy only, not a calibrated diffusion coefficient.
 - Interface density increases slightly in event ROIs but decreases in controls: +0.00128 vs -0.00182, p=0.0241.

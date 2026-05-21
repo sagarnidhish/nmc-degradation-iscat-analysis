@@ -17,6 +17,7 @@ from typing import Dict, List
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import h5py
 import numpy as np
 import pandas as pd
 from scipy import ndimage as ndi
@@ -172,12 +173,57 @@ def load_control_map(control_table_path: str) -> Dict[str, float]:
     return dict(zip(table["roi_id"], table["control_for_event_cycle"]))
 
 
-def descriptors_for_manifest(manifest_path: str, roi_class: str, control_map: Dict[str, float]) -> pd.DataFrame:
+
+def timing_seconds(root: str, source_stem: str, frame_indices: np.ndarray) -> Dict[str, float]:
+    if not root:
+        return {"timing_elapsed_s": np.nan, "seconds_per_sample": np.nan}
+    h5_path = os.path.join(root, "NMC_degradation_3_160623_Halfthedata", f"{source_stem}.hdf5")
+    if not os.path.exists(h5_path):
+        return {"timing_elapsed_s": np.nan, "seconds_per_sample": np.nan}
+    try:
+        with h5py.File(h5_path, "r") as f:
+            if "camera_timing" not in f:
+                return {"timing_elapsed_s": np.nan, "seconds_per_sample": np.nan}
+            timing = np.asarray(f["camera_timing"])
+    except Exception:
+        return {"timing_elapsed_s": np.nan, "seconds_per_sample": np.nan}
+    if timing.ndim == 1:
+        trace = timing
+    else:
+        trace = timing.reshape(-1, timing.shape[-1])[0]
+    frame_indices = np.asarray(frame_indices, dtype=int)
+    frame_indices = frame_indices[(frame_indices >= 0) & (frame_indices < len(trace))]
+    if len(frame_indices) < 2:
+        return {"timing_elapsed_s": np.nan, "seconds_per_sample": np.nan}
+    t = trace[frame_indices].astype(float)
+    elapsed_raw = float(np.nanmax(t) - np.nanmin(t))
+    # HDF5 camera_timing is nanosecond-like in the NMC movies.
+    elapsed_s = elapsed_raw / 1e9 if elapsed_raw > 1e6 else elapsed_raw
+    return {
+        "timing_elapsed_s": elapsed_s,
+        "seconds_per_sample": elapsed_s / float(len(frame_indices) - 1) if elapsed_s > 0 else np.nan,
+    }
+
+
+def descriptors_for_manifest(manifest_path: str, roi_class: str, control_map: Dict[str, float], root: str) -> pd.DataFrame:
     manifest = pd.read_csv(manifest_path)
     rows: List[Dict[str, object]] = []
     for _, row in manifest.iterrows():
         with np.load(row["npz_path"]) as data:
             features = trace_features(data["frames_norm"])
+            frame_indices = data["frame_indices"] if "frame_indices" in data else np.array([], dtype=int)
+        timing = timing_seconds(root, str(row.get("source_stem", "")), frame_indices)
+        seconds_per_sample = timing["seconds_per_sample"]
+        if np.isfinite(seconds_per_sample) and seconds_per_sample > 0:
+            for col in [
+                "high_fraction_slope_per_frame",
+                "low_fraction_slope_per_frame",
+                "mid_fraction_slope_per_frame",
+                "high_radius2_slope_px2_per_frame",
+                "low_radius2_slope_px2_per_frame",
+                "interface_density_slope_per_frame",
+            ]:
+                features[col.replace("_per_frame", "_per_s")] = features[col] / seconds_per_sample
         event_cycle = float(row["cycleNo"]) if roi_class == "event" else finite_float(control_map.get(row["roi_id"]), np.nan)
         out = {
             "roi_id": row["roi_id"],
@@ -188,6 +234,7 @@ def descriptors_for_manifest(manifest_path: str, roi_class: str, control_map: Di
             "source_stem": row.get("source_stem", ""),
             "stage_drift_xy_sampled": finite_float(row.get("stage_drift_xy_sampled")),
             "roi_norm_mean_delta_last_minus_first": finite_float(row.get("roi_norm_mean_delta_last_minus_first")),
+            **timing,
         }
         out.update(features)
         rows.append(out)
@@ -248,27 +295,34 @@ def main() -> None:
     parser.add_argument("--event-manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences/selected_roi_sequence_manifest.csv")
     parser.add_argument("--control-manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences_expanded/selected_roi_sequence_manifest.csv")
     parser.add_argument("--control-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection_expanded/selected_control_rois.csv")
+    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
     parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_phase_boundary_mobility")
     args = parser.parse_args()
 
     control_map = load_control_map(args.control_table)
-    event_df = descriptors_for_manifest(args.event_manifest, "event", control_map)
-    control_df = descriptors_for_manifest(args.control_manifest, "control", control_map)
+    event_df = descriptors_for_manifest(args.event_manifest, "event", control_map, args.root)
+    control_df = descriptors_for_manifest(args.control_manifest, "control", control_map, args.root)
     df = pd.concat([event_df, control_df], ignore_index=True)
     features = [
         "high_fraction_delta",
         "high_fraction_slope_per_frame",
+        "high_fraction_slope_per_s",
         "low_fraction_delta",
         "low_fraction_slope_per_frame",
+        "low_fraction_slope_per_s",
         "mid_fraction_delta",
         "mid_fraction_slope_per_frame",
+        "mid_fraction_slope_per_s",
         "high_radius2_delta_px2",
         "high_radius2_slope_px2_per_frame",
+        "high_radius2_slope_px2_per_s",
         "low_radius2_delta_px2",
         "low_radius2_slope_px2_per_frame",
+        "low_radius2_slope_px2_per_s",
         "interface_density_mean",
         "interface_density_delta",
         "interface_density_slope_per_frame",
+        "interface_density_slope_per_s",
         "centroid_path_px",
         "centroid_net_px",
         "temporal_diff_energy",
@@ -279,7 +333,9 @@ def main() -> None:
     group = df.groupby(["roi_class", "event_cycle"], dropna=False).agg({
         "roi_id": "count",
         "high_fraction_slope_per_frame": "mean",
+        "high_fraction_slope_per_s": "mean",
         "high_radius2_slope_px2_per_frame": "mean",
+        "high_radius2_slope_px2_per_s": "mean",
         "interface_density_mean": "mean",
         "centroid_path_px": "mean",
         "first_last_corr": "mean",
@@ -309,6 +365,7 @@ def main() -> None:
         "event_manifest": args.event_manifest,
         "control_manifest": args.control_manifest,
         "control_table": args.control_table,
+        "root": args.root,
         "n_event_roi": int((df["is_event_roi"] == 1).sum()),
         "n_control_roi": int((df["is_event_roi"] == 0).sum()),
         "event_cycles": sorted(float(x) for x in event_df["event_cycle"].dropna().unique()),
@@ -322,7 +379,9 @@ def main() -> None:
             "event_cycle",
             "mobility_score",
             "high_fraction_slope_per_frame",
+            "high_fraction_slope_per_s",
             "high_radius2_slope_px2_per_frame",
+            "high_radius2_slope_px2_per_s",
             "interface_density_mean",
             "centroid_path_px",
             "first_last_corr",
