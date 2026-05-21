@@ -453,6 +453,28 @@ def main() -> None:
         f.write("This folder audits a history-aware particle-mask guardrail on the existing ROI-only tensors.\n\n")
         f.write("The candidate mask is built from frame-local contrast plus temporal-standard-deviation evidence inside a sequence-level central prior. ")
         f.write("Frames with implausible area, fragmentation, or centroid jumps fall back to the previous accepted mask.\n\n")
+        f.write("Key results:\n\n")
+        f.write(f"- ROI tensors audited: {summary['n_roi']} across {summary['n_frames_total']} frames.\n")
+        f.write(f"- Median fallback-frame fraction: {summary['overall']['median_fallback_frame_fraction']:.3f}.\n")
+        f.write(f"- Median accepted-mask area CV: {summary['overall']['median_accepted_area_cv']:.3f}.\n")
+        f.write(f"- Median accepted-centroid path: {summary['overall']['median_centroid_path_px']:.3f} px.\n")
+        f.write(f"- Median mask-instability score: {summary['overall']['median_mask_instability_score']:.3f}.\n")
+        if summary["top_event_control_tests"]:
+            top = summary["top_event_control_tests"][0]
+            f.write(
+                f"- Strongest event/control mask-stability test: {top['feature']} median event-control "
+                f"{top['median_diff_event_minus_control']:.3f}, p={top['p_value']:.3g}.\n"
+            )
+        if summary["top_correlations"]:
+            top_corr = summary["top_correlations"][0]
+            f.write(
+                f"- Strongest descriptor correlation: {top_corr['x']} vs {top_corr['y']} "
+                f"rho={top_corr['spearman_rho']:.3f}, p={top_corr['p_value']:.3g}.\n"
+            )
+        f.write("\nInterpretation:\n\n")
+        f.write(
+            "The audit is a mask-stability guardrail, not manual segmentation. Current automatic ROI masks do not show a systematic event/control instability difference, so the robust phase-front direction signal is less likely to be explained by event ROIs having worse particle masks.\n\n"
+        )
         f.write("Outputs:\n\n")
         f.write("- `particle_mask_stability_per_roi.csv`: ROI-level fallback and stability metrics.\n")
         f.write("- `particle_mask_stability_frame_summary.csv`: per-frame candidate and accepted mask diagnostics.\n")
