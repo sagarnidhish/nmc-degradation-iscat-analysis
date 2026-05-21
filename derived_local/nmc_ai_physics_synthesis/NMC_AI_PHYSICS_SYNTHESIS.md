@@ -29,6 +29,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Precursor visual-bundle candidates/assets: 12 / 12
 - Within-cycle echem shape cycles/features: 81 / 48
 - Echem-shape-conditioned ROI/front rows/shape PCs: 52 / 6
+- Physics-consistency matrix ROI/cycles: 52 / 11
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -60,6 +61,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - A visual review bundle now packages 12 top precursor-informed ROI candidates; 12 have at least one copied QC/preview asset and a contact sheet for manual inspection.
 - Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for 81 observed cycles; strongest ROI association is shape_V_q95 vs mode_review_priority, rho=-0.864, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.
 - Echem-shape-conditioned residual audit uses 45 shape features compressed to 6 PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p=0.004), while diffusion residuals remain non-significant and the shape-residual classifier is poor.
+- Physics-consistency claim matrix scores 52 ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; 2 rows are cross-modal high priority, but all 52 remain `manual_qc_required_no_physics_claim`.
 
 ## Model Readout
 
@@ -428,6 +430,28 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Shape PC correlation echem_shape_pc6 vs high_fraction_delta_protocol_residual: rho=0.516, p=9.166e-05, n=52
 - Shape PC correlation echem_shape_pc4 vs cumulative_abs_norm_change_protocol_residual: rho=-0.490, p=2.252e-04, n=52
 - Guardrail: Echem-shape conditioning uses low-dimensional PCA/ridge covariates on a small automatically selected ROI cohort. Surviving residuals are evidence that optical/front signals are not fully explained by measured within-cycle echem shape, but they are not causal proof or calibrated transport constants.
+
+## Physics Consistency Claim Matrix
+
+- ROI/cycles: 52 / 11
+- Tier counts: {'cross_modal_high_priority': 2, 'cross_modal_review_priority': 8, 'discordant_guardrail': 14, 'front_kinetic_consistent': 4, 'rollout_mode_consistent': 3, 'routine_or_low_consistency': 21}
+- Claim readiness: {'manual_qc_required_no_physics_claim': 52}
+- Manual-QC accepted rows: 0
+- Rank 1 cycle156_rank7_obj27 (event, cycle 156): score 5.790, support 6, tier cross_modal_high_priority
+- Rank 2 cycle156_rank5_obj4 (event, cycle 156): score 5.503, support 6, tier cross_modal_review_priority
+- Rank 3 cycle156_rank2_obj2 (event, cycle 156): score 5.486, support 6, tier cross_modal_high_priority
+- Rank 4 cycle158_rank2_obj1 (control, cycle 158): score 4.968, support 6, tier cross_modal_review_priority
+- Rank 5 cycle156_rank8_obj10 (event, cycle 156): score 3.925, support 4, tier cross_modal_review_priority
+- Rank 6 cycle158_rank4_obj8 (control, cycle 158): score 3.656, support 5, tier cross_modal_review_priority
+- Rank 7 cycle158_rank6_obj3 (control, cycle 158): score 3.146, support 3, tier front_kinetic_consistent
+- Rank 8 cycle156_rank6_obj3 (event, cycle 156): score 2.681, support 3, tier front_kinetic_consistent
+- Event/control pillar test optical_change_score: median event-control 0.574, MW p=0.001, permutation p=0.002
+- Event/control pillar test mode_taxonomy_score: median event-control 0.644, MW p=0.060, permutation p=0.011
+- Event/control pillar test front_direction_score: median event-control 0.531, MW p=0.010, permutation p=0.041
+- Event/control pillar test rollout_residual_score: median event-control 0.354, MW p=0.023, permutation p=0.056
+- Event/control pillar test physics_consistency_score: median event-control 0.775, MW p=0.071, permutation p=0.239
+- Event/control pillar test precursor_context_score: median event-control 0.159, MW p=0.425, permutation p=0.396
+- Guardrail: This matrix is a multimodal consistency and review-prioritization audit. It does not assign manual QC labels and does not validate calibrated diffusion or material degradation mechanisms.
 
 ## Top ROI/Echem Or Protocol Couplings
 

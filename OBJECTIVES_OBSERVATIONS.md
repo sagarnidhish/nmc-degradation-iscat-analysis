@@ -1638,3 +1638,28 @@ Key result:
 
 Interpretation: this is a stronger covariate test than the previous coarse protocol conditioning. Within-cycle echem trajectory shape explains a lot of optical mode/kinetic variance, but it does not fully explain the robust phase-front direction residual. The credible physics claim remains localized optical phase-front direction/morphology coupled to degradation context, not calibrated diffusion or a deployable detector.
 
+## 2026-05-21 Physics Consistency Claim Matrix
+
+Added and ran:
+
+`python scripts/tier4_physics_consistency_claim_matrix.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix --n-permutation 2000`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix`
+
+Local compact copy:
+
+`derived_local/physics_consistency_claim_matrix`
+
+Key result:
+
+- Scored 52 ROI rows across 11 cycles using seven evidence pillars: front direction, optical change, rollout residual, kinetic transition, precursor context, echem-shape context, and residual mode taxonomy.
+- Tier counts are 2 `cross_modal_high_priority`, 8 `cross_modal_review_priority`, 4 `front_kinetic_consistent`, 3 `rollout_mode_consistent`, 14 `discordant_guardrail`, and 21 `routine_or_low_consistency`.
+- Top cross-modal candidates are `cycle156_rank7_obj27` and `cycle156_rank2_obj2`; both show six supporting pillars and no contradiction count in the automatic matrix.
+- The strongest event/control pillar separation is `optical_change_score`, median event-control +0.574, Mann-Whitney p=0.00145, permutation p=0.00250.
+- Front-direction and mode-taxonomy pillars also separate event/control more weakly, but the overall composite consistency score is not significant by the permutation test.
+- All 52 rows remain `manual_qc_required_no_physics_claim`; the matrix is review prioritization, not accepted manual QC.
+- The project synthesis now includes the matrix and carries its summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this turns the many paper-inspired AI/physics outputs into a conservative claim-readiness table. It highlights ROI candidates where independent computational evidence agrees, while explicitly preserving the manual-QC and calibration gates before any degradation-mode or diffusion claim.

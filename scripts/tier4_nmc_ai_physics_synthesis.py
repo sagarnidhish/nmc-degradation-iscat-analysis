@@ -111,6 +111,7 @@ def main() -> None:
     precursor_visual_bundle = read_json(derived / "precursor_review_visual_bundle" / "precursor_review_visual_bundle_summary.json")
     within_cycle_echem = read_json(derived / "within_cycle_echem_shape_audit" / "within_cycle_echem_shape_audit_summary.json")
     echem_shape_conditioned = read_json(derived / "echem_shape_conditioned_roi_front_effects" / "echem_shape_conditioned_roi_front_effects_summary.json")
+    physics_consistency = read_json(derived / "physics_consistency_claim_matrix" / "physics_consistency_claim_matrix_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -211,6 +212,8 @@ def main() -> None:
     echem_shape_context = top_items(first_summary(echem_shape_conditioned, "top_shape_context_fits", []), 12)
     echem_shape_pc_corr = top_items(first_summary(echem_shape_conditioned, "top_shape_pc_target_correlations", []), 12)
     echem_shape_model = first_summary(echem_shape_conditioned, "model_summary", {}) or {}
+    physics_consistency_top = top_items(first_summary(physics_consistency, "top_consistency_rows", []), 12)
+    physics_consistency_tests = top_items(first_summary(physics_consistency, "top_event_tests", []), 12)
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -318,6 +321,7 @@ def main() -> None:
         f"- Precursor visual-bundle candidates/assets: {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)} / {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)}",
         f"- Within-cycle echem shape cycles/features: {first_summary(within_cycle_echem, 'n_echem_shape_cycles', 0)} / {first_summary(within_cycle_echem, 'n_shape_features', 0)}",
         f"- Echem-shape-conditioned ROI/front rows/shape PCs: {first_summary(echem_shape_conditioned, 'n_rows', 0)} / {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)}",
+        f"- Physics-consistency matrix ROI/cycles: {first_summary(physics_consistency, 'n_roi', 0)} / {first_summary(physics_consistency, 'n_cycles', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -349,6 +353,7 @@ def main() -> None:
         f"- A visual review bundle now packages {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)} top precursor-informed ROI candidates; {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)} have at least one copied QC/preview asset and a contact sheet for manual inspection.",
         f"- Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for {first_summary(within_cycle_echem, 'n_echem_shape_cycles', 0)} observed cycles; strongest ROI association is {((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('feature', 'NA'))} vs {((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('target', 'NA'))}, rho={fmt((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('rho'))}, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.",
         f"- Echem-shape-conditioned residual audit uses {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_shape_features_used', 0)} shape features compressed to {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)} PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p={fmt((echem_shape_conditioned_tests[0] if echem_shape_conditioned_tests else {}).get('p_value'))}), while diffusion residuals remain non-significant and the shape-residual classifier is poor.",
+        f"- Physics-consistency claim matrix scores {first_summary(physics_consistency, 'n_roi', 0)} ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; {first_summary(physics_consistency, 'tier_counts', {}).get('cross_modal_high_priority', 0)} rows are cross-modal high priority, but all {first_summary(physics_consistency, 'n_roi', 0)} remain `manual_qc_required_no_physics_claim`.",
         "",
         "## Model Readout",
         "",
@@ -713,6 +718,24 @@ def main() -> None:
         )
     report_lines.append(f"- Guardrail: {first_summary(echem_shape_conditioned, 'guardrail', 'Echem-shape-conditioned residual audit unavailable.')}")
 
+    report_lines += [
+        "",
+        "## Physics Consistency Claim Matrix",
+        "",
+        f"- ROI/cycles: {first_summary(physics_consistency, 'n_roi', 0)} / {first_summary(physics_consistency, 'n_cycles', 0)}",
+        f"- Tier counts: {first_summary(physics_consistency, 'tier_counts', {})}",
+        f"- Claim readiness: {first_summary(physics_consistency, 'claim_readiness_counts', {})}",
+        f"- Manual-QC accepted rows: {first_summary(physics_consistency, 'manual_qc_accepted', 0)}",
+    ]
+    for row in physics_consistency_top[:8]:
+        report_lines.append(
+            f"- Rank {fmt(row.get('physics_consistency_rank'), 0)} {row.get('roi_id')} ({row.get('cohort_role')}, cycle {fmt(row.get('cycleNo'), 0)}): score {fmt(row.get('physics_consistency_score'))}, support {fmt(row.get('physics_pillar_support_count'), 0)}, tier {row.get('physics_consistency_tier')}"
+        )
+    for row in physics_consistency_tests[:6]:
+        report_lines.append(
+            f"- Event/control pillar test {row.get('feature')}: median event-control {fmt(row.get('median_event_minus_control'))}, MW p={fmt(row.get('mannwhitney_p'))}, permutation p={fmt(row.get('permutation_p'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(physics_consistency, 'guardrail', 'Physics consistency matrix unavailable.')}")
 
     report_lines += [
         "",
@@ -753,6 +776,9 @@ def main() -> None:
         f"- Priority tiers: {first_summary(manual_qc_workbook, 'review_priority_tier_counts', {})}",
         f"- Manual-QC status counts: {first_summary(manual_qc_workbook, 'manual_qc_status_counts', {})}",
         f"- Guardrail: {first_summary(manual_qc_workbook, 'guardrail', 'This is a label template, not completed manual QC.')}",
+    ]
+
+    report_lines += [
         "",
         "## Manual-QC Gated Front Effects",
         "",
@@ -845,6 +871,17 @@ def main() -> None:
             "top_group_tests": phase_kinetics_tests,
             "top_correlations": phase_kinetics_corr,
             "guardrail": first_summary(phase_kinetics, "guardrail"),
+        },
+        "physics_consistency_claim_matrix": {
+            "n_roi": first_summary(physics_consistency, "n_roi"),
+            "n_cycles": first_summary(physics_consistency, "n_cycles"),
+            "tier_counts": first_summary(physics_consistency, "tier_counts", {}),
+            "claim_readiness_counts": first_summary(physics_consistency, "claim_readiness_counts", {}),
+            "manual_qc_accepted": first_summary(physics_consistency, "manual_qc_accepted"),
+            "calibration_evidence": first_summary(physics_consistency, "calibration_evidence", {}),
+            "top_consistency_rows": physics_consistency_top,
+            "top_event_tests": physics_consistency_tests,
+            "guardrail": first_summary(physics_consistency, "guardrail"),
         },
         "echem_shape_conditioned_roi_front_effects": {
             "n_rows": first_summary(echem_shape_conditioned, "n_rows"),

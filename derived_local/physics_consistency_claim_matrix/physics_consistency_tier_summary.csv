@@ -1,0 +1,7 @@
+physics_consistency_tier,claim_readiness,n_roi,n_event,median_score,median_support
+cross_modal_high_priority,manual_qc_required_no_physics_claim,2,2,5.637825820017726,6.0
+cross_modal_review_priority,manual_qc_required_no_physics_claim,8,6,3.024766119057988,4.0
+front_kinetic_consistent,manual_qc_required_no_physics_claim,4,2,2.265527938008148,3.0
+rollout_mode_consistent,manual_qc_required_no_physics_claim,3,2,1.225759204839178,3.0
+routine_or_low_consistency,manual_qc_required_no_physics_claim,21,8,-0.20178736110685425,0.0
+discordant_guardrail,manual_qc_required_no_physics_claim,14,4,-1.8079231183558646,0.0
