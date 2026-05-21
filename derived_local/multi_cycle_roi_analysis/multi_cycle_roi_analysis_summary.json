@@ -1,0 +1,414 @@
+{
+  "cohort_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort/multi_cycle_roi_table.csv",
+  "event_reference_cycles": [
+    60.0,
+    86.0,
+    116.0,
+    156.0
+  ],
+  "group_summary": [
+    {
+      "cohort_role": "control",
+      "cumulative_abs_norm_change": 0.02507769619114697,
+      "event_reference_cycle": 60.0,
+      "evidence_score": 5.37722440775176,
+      "first_last_corr": 0.9201811512544891,
+      "high_fraction_slope": 0.0002346830337253131,
+      "high_radius2_slope_px2_per_frame": -0.0758377269857072,
+      "n_roi": 8,
+      "roi_norm_mean_delta": 0.00047226250171661377,
+      "temporal_diff_energy": 0.0001215279307871242
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.03457163367420435,
+      "event_reference_cycle": 60.0,
+      "evidence_score": 5.37722440775176,
+      "first_last_corr": 0.8723452743064062,
+      "high_fraction_slope": 0.00018905023351922722,
+      "high_radius2_slope_px2_per_frame": -0.1257015736083105,
+      "n_roi": 6,
+      "roi_norm_mean_delta": 0.00016263499855995178,
+      "temporal_diff_energy": 0.0001294965610820024
+    },
+    {
+      "cohort_role": "control",
+      "cumulative_abs_norm_change": 0.008956961275544018,
+      "event_reference_cycle": 86.0,
+      "evidence_score": 12.399287527913966,
+      "first_last_corr": 0.9954632025351366,
+      "high_fraction_slope": 0.0003769752394724308,
+      "high_radius2_slope_px2_per_frame": -0.28812880431121535,
+      "n_roi": 8,
+      "roi_norm_mean_delta": -0.00036693643778562546,
+      "temporal_diff_energy": 0.00010327467362003517
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.016100429619352024,
+      "event_reference_cycle": 86.0,
+      "evidence_score": 12.399287527913964,
+      "first_last_corr": 0.9750192889213882,
+      "high_fraction_slope": 0.0004367477564376906,
+      "high_radius2_slope_px2_per_frame": -0.005399760501128079,
+      "n_roi": 6,
+      "roi_norm_mean_delta": 0.00019059330224990845,
+      "temporal_diff_energy": 0.00010927393608047471
+    },
+    {
+      "cohort_role": "control",
+      "cumulative_abs_norm_change": 0.008490985026583076,
+      "event_reference_cycle": 116.0,
+      "evidence_score": 12.929917335181958,
+      "first_last_corr": 0.9957381545449139,
+      "high_fraction_slope": 0.0003574648651228949,
+      "high_radius2_slope_px2_per_frame": 0.02182485357599478,
+      "n_roi": 4,
+      "roi_norm_mean_delta": -0.001081930473446846,
+      "temporal_diff_energy": 8.426417116425e-05
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.00890040552864472,
+      "event_reference_cycle": 116.0,
+      "evidence_score": 12.92991733518196,
+      "first_last_corr": 0.9958732171950221,
+      "high_fraction_slope": 0.0005110456395844347,
+      "high_radius2_slope_px2_per_frame": -0.045750308644618674,
+      "n_roi": 6,
+      "roi_norm_mean_delta": -0.0007337269683678945,
+      "temporal_diff_energy": 0.0001027694161166437
+    },
+    {
+      "cohort_role": "control",
+      "cumulative_abs_norm_change": 0.024832792580127716,
+      "event_reference_cycle": 156.0,
+      "evidence_score": 4.816527810967591,
+      "first_last_corr": 0.9406894366133377,
+      "high_fraction_slope": -0.00013500887562357781,
+      "high_radius2_slope_px2_per_frame": -0.10350522870224449,
+      "n_roi": 8,
+      "roi_norm_mean_delta": -0.005936353467404842,
+      "temporal_diff_energy": 0.00015897625098659773
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.04383582714945078,
+      "event_reference_cycle": 156.0,
+      "evidence_score": 4.816527810967591,
+      "first_last_corr": 0.905977902732351,
+      "high_fraction_slope": 0.0007012258159090095,
+      "high_radius2_slope_px2_per_frame": -0.06231329950400255,
+      "n_roi": 6,
+      "roi_norm_mean_delta": 0.030045326178272564,
+      "temporal_diff_energy": 0.0001456397452178256
+    }
+  ],
+  "guardrail": "Expanded cohort descriptors are automatic ROI-crop measurements. They rank physics candidates but do not replace manual particle/front validation.",
+  "manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv",
+  "n_control_roi": 28,
+  "n_event_roi": 24,
+  "n_roi": 52,
+  "outputs": {
+    "descriptors": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_descriptors.csv",
+    "evidence_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_event_evidence_correlations.csv",
+    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_event_control_feature_tests.csv",
+    "group_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_group_summary.csv",
+    "ranked": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_ranked.csv",
+    "sync_vs_single_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_sync_vs_single_summary.csv"
+  },
+  "sync_vs_single_summary": [
+    {
+      "cohort_role": "control",
+      "cumulative_abs_norm_change": 0.024955244385637343,
+      "first_last_corr": 0.9304352939339133,
+      "high_fraction_slope": 4.9837079050867656e-05,
+      "is_synchronized_reference": 0,
+      "n_roi": 16,
+      "roi_norm_mean_delta": -0.0027320454828441143,
+      "temporal_diff_energy": 0.00014025209088686097
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.039203730411827564,
+      "first_last_corr": 0.8891615885193785,
+      "high_fraction_slope": 0.00044513802471411837,
+      "is_synchronized_reference": 0,
+      "n_roi": 12,
+      "roi_norm_mean_delta": 0.015103980588416258,
+      "temporal_diff_energy": 0.000137568153149914
+    },
+    {
+      "cohort_role": "control",
+      "cumulative_abs_norm_change": 0.008801635859223703,
+      "first_last_corr": 0.9955548532050624,
+      "high_fraction_slope": 0.00037047178135591886,
+      "is_synchronized_reference": 1,
+      "n_roi": 12,
+      "roi_norm_mean_delta": -0.0006052677830060323,
+      "temporal_diff_energy": 9.693783946810679e-05
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.012500417573998371,
+      "first_last_corr": 0.9854462530582051,
+      "high_fraction_slope": 0.0004738966980110627,
+      "is_synchronized_reference": 1,
+      "n_roi": 12,
+      "roi_norm_mean_delta": -0.00027156683305899304,
+      "temporal_diff_energy": 0.00010602167609855921
+    }
+  ],
+  "top_feature_tests": [
+    {
+      "control_mean": 4.495402738904712e-05,
+      "event_mean": 0.00010515017530119562,
+      "event_minus_control": 6.0196147912148496e-05,
+      "feature": "roi_norm_mean_slope",
+      "mannwhitney_u": 527.0,
+      "p_value": 0.00047098502793921804
+    },
+    {
+      "control_mean": 0.0001872519514673182,
+      "event_mean": 0.0004595173613625905,
+      "event_minus_control": 0.0002722654098952723,
+      "feature": "high_fraction_slope",
+      "mannwhitney_u": 502.0,
+      "p_value": 0.0023827405345112147
+    },
+    {
+      "control_mean": 16.925325017500576,
+      "event_mean": 15.17915345123727,
+      "event_minus_control": -1.7461715662633068,
+      "feature": "centroid_path_px",
+      "mannwhitney_u": 186.0,
+      "p_value": 0.0060666177730577635
+    },
+    {
+      "control_mean": 0.008661088761448249,
+      "event_mean": -0.03549405831835429,
+      "event_minus_control": -0.04415514707980254,
+      "feature": "low_fraction_delta",
+      "mannwhitney_u": 228.0,
+      "p_value": 0.04845079740577278
+    },
+    {
+      "control_mean": -0.0018205693257706507,
+      "event_mean": 0.007416206877678633,
+      "event_minus_control": 0.009236776203449284,
+      "feature": "roi_norm_mean_delta",
+      "mannwhitney_u": 443.0,
+      "p_value": 0.05059853449389016
+    },
+    {
+      "control_mean": 0.01803226930288864,
+      "event_mean": 0.025852073992912967,
+      "event_minus_control": 0.007819804690024326,
+      "feature": "cumulative_abs_norm_change",
+      "mannwhitney_u": 435.0,
+      "p_value": 0.07060270631426327
+    },
+    {
+      "control_mean": -0.007607207052982972,
+      "event_mean": 0.03779084282005193,
+      "event_minus_control": 0.0453980498730349,
+      "feature": "high_fraction_delta",
+      "mannwhitney_u": 424.0,
+      "p_value": 0.10821142370985956
+    },
+    {
+      "control_mean": -5.472723681150654,
+      "event_mean": 1.9350522948727047,
+      "event_minus_control": 7.407775976023359,
+      "feature": "high_radius2_delta_px2",
+      "mannwhitney_u": 422.0,
+      "p_value": 0.1165543280461957
+    },
+    {
+      "control_mean": -0.0003739869412414454,
+      "event_mean": -0.0005382678592918638,
+      "event_minus_control": -0.00016428091805041845,
+      "feature": "low_fraction_slope",
+      "mannwhitney_u": 251.0,
+      "p_value": 0.12089058994604392
+    },
+    {
+      "control_mean": 0.9583436764786916,
+      "event_mean": 0.9373039207887919,
+      "event_minus_control": -0.021039755689899686,
+      "feature": "first_last_corr",
+      "mannwhitney_u": 260.0,
+      "p_value": 0.1657939028563742
+    }
+  ],
+  "top_ranked_rois": [
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.06091739237308502,
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 156.0,
+      "evidence_score": 4.816527810967591,
+      "first_last_corr": 0.8532969442834611,
+      "high_fraction_slope": 0.0005926764343106447,
+      "multicycle_physics_score": 2.7115384615384617,
+      "roi_id": "cycle156_rank7_obj27",
+      "roi_norm_mean_delta": 0.03925304114818573,
+      "temporal_diff_energy": 0.0003313284832984209
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.04768078029155731,
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 156.0,
+      "evidence_score": 4.816527810967591,
+      "first_last_corr": 0.8783240136194344,
+      "high_fraction_slope": 0.0010660384527595439,
+      "multicycle_physics_score": 2.576923076923077,
+      "roi_id": "cycle156_rank5_obj4",
+      "roi_norm_mean_delta": 0.034987110644578934,
+      "temporal_diff_energy": 0.00013733973901253194
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.04514714702963829,
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 156.0,
+      "evidence_score": 4.816527810967591,
+      "first_last_corr": 0.9025044705929467,
+      "high_fraction_slope": 0.0006402403393490911,
+      "multicycle_physics_score": 2.2884615384615383,
+      "roi_id": "cycle156_rank8_obj10",
+      "roi_norm_mean_delta": 0.031792543828487396,
+      "temporal_diff_energy": 0.00013462679635267705
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.04509711638092995,
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 156.0,
+      "evidence_score": 4.816527810967591,
+      "first_last_corr": 0.9114002644646184,
+      "high_fraction_slope": 0.001044924468381627,
+      "multicycle_physics_score": 2.25,
+      "roi_id": "cycle156_rank2_obj2",
+      "roi_norm_mean_delta": 0.03450114279985428,
+      "temporal_diff_energy": 0.00013061214121989906
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.04806748032569885,
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 60.0,
+      "evidence_score": 5.37722440775176,
+      "first_last_corr": 0.8344266769197118,
+      "high_fraction_slope": 0.00022361550971497238,
+      "multicycle_physics_score": 2.25,
+      "roi_id": "cycle60_rank6_obj26",
+      "roi_norm_mean_delta": -0.0003846213221549988,
+      "temporal_diff_energy": 0.0002903675485868007
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.03590240702033043,
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 60.0,
+      "evidence_score": 5.37722440775176,
+      "first_last_corr": 0.8693913322247689,
+      "high_fraction_slope": 0.000533717081799767,
+      "multicycle_physics_score": 2.0769230769230766,
+      "roi_id": "cycle60_rank3_obj9",
+      "roi_norm_mean_delta": 0.00011994689702987671,
+      "temporal_diff_energy": 0.0001272370427614078
+    },
+    {
+      "cohort_role": "control",
+      "cumulative_abs_norm_change": 0.039540208876132965,
+      "cycleNo": 62.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 60.0,
+      "evidence_score": 5.37722440775176,
+      "first_last_corr": 0.8236546885004241,
+      "high_fraction_slope": 0.0004487433252786773,
+      "multicycle_physics_score": 2.0,
+      "roi_id": "cycle62_rank3_obj9",
+      "roi_norm_mean_delta": 0.0019241869449615479,
+      "temporal_diff_energy": 9.748830780154094e-05
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.018771573901176453,
+      "cycleNo": 86.0,
+      "degradation_mode_hypothesis": "synchronized_persistent_drop_low_frame_count",
+      "event_reference_cycle": 86.0,
+      "evidence_score": 12.399287527913966,
+      "first_last_corr": 0.9761674649981452,
+      "high_fraction_slope": 0.0007780110592423359,
+      "multicycle_physics_score": 1.8076923076923075,
+      "roi_id": "cycle86_rank4_obj9",
+      "roi_norm_mean_delta": -0.0006625205278396606,
+      "temporal_diff_energy": 0.0001479157799622044
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.03675686940550804,
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 60.0,
+      "evidence_score": 5.37722440775176,
+      "first_last_corr": 0.8437913552152481,
+      "high_fraction_slope": 0.00010956158630664352,
+      "multicycle_physics_score": 1.7307692307692308,
+      "roi_id": "cycle60_rank4_obj5",
+      "roi_norm_mean_delta": -0.00028930604457855225,
+      "temporal_diff_energy": 0.0001335912966169417
+    },
+    {
+      "cohort_role": "control",
+      "cumulative_abs_norm_change": 0.02243044786155224,
+      "cycleNo": 58.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 60.0,
+      "evidence_score": 5.37722440775176,
+      "first_last_corr": 0.9707391341919097,
+      "high_fraction_slope": 0.0003044329971007629,
+      "multicycle_physics_score": 1.6346153846153846,
+      "roi_id": "cycle58_rank6_obj29",
+      "roi_norm_mean_delta": 0.00016123801469802856,
+      "temporal_diff_energy": 0.00030483605223707855
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_norm_change": 0.034793127328157425,
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 156.0,
+      "evidence_score": 4.816527810967591,
+      "first_last_corr": 0.9400506417866396,
+      "high_fraction_slope": 0.0005163444254966123,
+      "multicycle_physics_score": 1.5192307692307694,
+      "roi_id": "cycle156_rank6_obj3",
+      "roi_norm_mean_delta": 0.023494169116020203,
+      "temporal_diff_energy": 7.549088331870735e-05
+    },
+    {
+      "cohort_role": "control",
+      "cumulative_abs_norm_change": 0.03932403028011322,
+      "cycleNo": 62.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "event_reference_cycle": 60.0,
+      "evidence_score": 5.37722440775176,
+      "first_last_corr": 0.81748654409238,
+      "high_fraction_slope": 4.559550694961352e-05,
+      "multicycle_physics_score": 1.5192307692307692,
+      "roi_id": "cycle62_rank4_obj1",
+      "roi_norm_mean_delta": 0.0005491375923156738,
+      "temporal_diff_energy": 0.0001122558896895498
+    }
+  ]
+}

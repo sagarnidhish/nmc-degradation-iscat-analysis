@@ -731,3 +731,31 @@ Key result:
 - Several lower-ranked ROIs are automatically flagged for low radius^2 fit R2, and all ROIs remain `manual_qc_status=pending`.
 
 Interpretation: this converts the front-tracking outputs into physically interpretable provisional units while keeping a strict guardrail. The signs are mostly negative, so the current front metric is better described as apparent optical-front contraction/loss than diffusion expansion. These values should not be treated as final diffusion coefficients until the 96 nm/px calibration is confirmed from microscope metadata and the front masks/particle identities are manually reviewed.
+
+## 2026-05-21 Expanded Multi-Cycle ROI Cohort
+
+Added and ran:
+
+- `scripts/tier3_build_multicycle_roi_cohort.py`
+- `scripts/tier2_export_selected_roi_sequences.py` on the expanded cohort table
+- `scripts/tier3_multicycle_roi_cohort_analysis.py`
+
+Remote output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis`
+
+Local compact copies use the same names under `derived_local/`.
+
+Key result:
+
+- Built an expanded automatic ROI cohort for synchronized event cycles 86/116 and single-particle event cycles 60/156, plus nearby non-event controls.
+- The cohort has 52 ROI crops: 24 event ROIs and 28 control ROIs. Control cycles are 58/62 for event 60, 88/90 for event 86, 118 for event 116, and 157/158 for event 156.
+- Exported 64-frame fixed particle-region crops for all 52 ROIs from the full HDF5 movies.
+- Across the expanded cohort, event ROIs separate from controls most strongly by ROI normalized mean slope (event 1.05e-4 vs control 4.50e-5 per frame, Mann-Whitney p=4.71e-4) and high-fraction slope (event 4.60e-4 vs control 1.87e-4 per frame, p=0.00238).
+- Single-particle candidate event cycles 60/156 show larger visible ROI dynamics than their controls: event first-last correlation 0.889 vs control 0.930, cumulative absolute normalized change 0.0392 vs 0.0250, and positive ROI mean delta 0.0151 vs control -0.00273.
+- Synchronized event cycles 86/116 still show subtler but consistent event/control shifts: event first-last correlation 0.985 vs control 0.996 and cumulative absolute normalized change 0.0125 vs 0.00880.
+- The top expanded-cohort physics-ranked ROIs are mostly cycle 156 event ROIs (`cycle156_rank7_obj27`, `cycle156_rank5_obj4`, `cycle156_rank8_obj10`, `cycle156_rank2_obj2`), followed by cycle 60 and the known cycle 86 ROI `cycle86_rank4_obj9`.
+
+Interpretation: expanding beyond the synchronized cycles changes the story. Cycles 86/116 remain the strongest coordinated degradation-event candidates, but cycles 60/156 have stronger local optical dynamics and may be better for learning particle-region degradation morphology. The useful AI program is therefore two-track: use synchronized cycles for event/protocol/degradation timing, and use the expanded single+sync ROI cohort for front/mobility morphology, rollout residuals, and degradation-mode discovery. All expanded ROIs are still automatic candidates and need manual particle/front QC before mechanistic claims.

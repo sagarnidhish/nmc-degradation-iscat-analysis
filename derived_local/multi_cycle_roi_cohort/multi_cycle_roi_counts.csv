@@ -1,0 +1,12 @@
+event_reference_cycle,cohort_role,cycleNo,n_roi
+60.0,control,58.0,4
+60.0,control,62.0,4
+60.0,event,60.0,6
+86.0,control,88.0,4
+86.0,control,90.0,4
+86.0,event,86.0,6
+116.0,control,118.0,4
+116.0,event,116.0,6
+156.0,control,157.0,4
+156.0,control,158.0,4
+156.0,event,156.0,6
