@@ -90,9 +90,6 @@ def main() -> None:
     conditioned_fronts = read_json(derived / "protocol_conditioned_front_effects" / "protocol_conditioned_front_effects_summary.json")
     qc_packet = read_json(derived / "qc_review_packet" / "qc_review_packet_summary.json")
     qc_package = read_json(derived / "roi_front_qc_package" / "roi_front_qc_package_summary.json")
-    conditioned_fronts = read_json(derived / "protocol_conditioned_front_effects" / "protocol_conditioned_front_effects_summary.json")
-    qc_packet = read_json(derived / "qc_review_packet" / "qc_review_packet_summary.json")
-    qc_package = read_json(derived / "roi_front_qc_package" / "roi_front_qc_package_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -144,8 +141,6 @@ def main() -> None:
     conditioned_tests = top_items(first_summary(conditioned, "top_protocol_conditioned_event_control_tests", []), 8)
     robust_front_tests = top_items(first_summary(robust_fronts, "top_overall_feature_tests", []), 8)
     robust_front_by_event = top_items(first_summary(robust_fronts, "top_by_event_feature_tests", []), 8)
-    conditioned_front_model = first_summary(conditioned_fronts, "model_summary", {})
-    conditioned_front_tests = top_items(first_summary(conditioned_fronts, "top_protocol_conditioned_front_tests", []), 8)
     conditioned_front_model = first_summary(conditioned_fronts, "model_summary", {})
     conditioned_front_tests = top_items(first_summary(conditioned_fronts, "top_protocol_conditioned_front_tests", []), 8)
 
@@ -375,8 +370,6 @@ def main() -> None:
         "top_protocol_conditioned_event_control_tests": conditioned_tests,
         "top_threshold_robust_front_tests": robust_front_tests,
         "top_threshold_robust_front_by_event_tests": robust_front_by_event,
-        "top_protocol_conditioned_front_tests": conditioned_front_tests,
-        "top_qc_review_candidates": top_items(first_summary(qc_packet, "top_candidates", []), 8),
         "top_protocol_conditioned_front_tests": conditioned_front_tests,
         "top_qc_review_candidates": top_items(first_summary(qc_packet, "top_candidates", []), 8),
         "top_ranked_roi_candidates": top_rois,
