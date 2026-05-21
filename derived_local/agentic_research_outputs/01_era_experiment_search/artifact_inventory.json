@@ -12,6 +12,7 @@
     "protocol_context": true,
     "recovery_qc": true,
     "roi_event_conditioned_nextframe": true,
+    "roi_residual_cnn_fast": true,
     "roi_rollout_baselines": true,
     "selected_front_roi_tracking": true,
     "validated_front_rois": true
@@ -30,6 +31,7 @@
     "protocol_context": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context/event_protocol_context_summary.json",
     "recovery_qc": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_recovery_qc/event_recovery_qc_summary.json",
     "roi_event_conditioned_nextframe": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_event_conditioned_nextframe/roi_event_model_summary.json",
+    "roi_residual_cnn_fast": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_residual_cnn_fast/roi_residual_cnn_summary.json",
     "roi_rollout_baselines": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_baseline_summary.json",
     "selected_front_roi_tracking": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_front_roi_tracking/selected_front_roi_tracking_summary.json",
     "validated_front_rois": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois/validated_front_rois_summary.json"

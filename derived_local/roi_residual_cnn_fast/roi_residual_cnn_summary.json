@@ -1,0 +1,35 @@
+{
+  "cycle_summary": [
+    {
+      "cycleNo": 86.0,
+      "model_mse": 7.871685732728413e-05,
+      "n_roi": 5,
+      "persistence_mse": 7.278410345558465e-05,
+      "pred_residual_energy": 6.168933146000199e-06,
+      "relative_mse_improvement": -0.09367529066700292,
+      "relative_residual_mse_improvement": -0.09631396754821435,
+      "residual_sign_accuracy_top_quartile": 0.5030058041242501,
+      "truth_residual_energy": 7.278410345558465e-05
+    },
+    {
+      "cycleNo": 116.0,
+      "model_mse": 0.0007737742271274328,
+      "n_roi": 6,
+      "persistence_mse": 0.00010566984757234523,
+      "pred_residual_energy": 0.0013507916794171454,
+      "relative_mse_improvement": -7.677939323174139,
+      "relative_residual_mse_improvement": -16.587563399444694,
+      "residual_sign_accuracy_top_quartile": 0.49238650007136425,
+      "truth_residual_energy": 0.00010566984757234523
+    }
+  ],
+  "device": "cpu",
+  "eval_mode": "leave_one_cycle",
+  "guardrail": "Residual CNN is a small ROI-only next-frame baseline. Positive improvement over persistence is required before considering larger neural rollout models.",
+  "n_frame_pairs": 132,
+  "n_roi": 11,
+  "overall_relative_mse_improvement": -4.230546581125441,
+  "overall_relative_residual_mse_improvement": -9.091540930400841,
+  "plot_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_residual_cnn_fast/roi_residual_cnn_summary.png",
+  "roi_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences"
+}

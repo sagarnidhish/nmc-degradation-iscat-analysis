@@ -86,6 +86,14 @@ def extract_observations(root: Path) -> List[Dict[str, Any]]:
             "evidence": str(derived / "roi_event_conditioned_nextframe" / "roi_event_model_summary.json"),
             "strength": "moderate_baseline",
         })
+    residual_cnn = read_json(derived / "roi_residual_cnn_fast" / "roi_residual_cnn_summary.json")
+    if residual_cnn:
+        observations.append({
+            "topic": "roi_residual_cnn_fast",
+            "observation": f"A leave-one-cycle residual CNN on {residual_cnn.get('n_roi', 'unknown')} selected ROIs did not beat persistence; overall relative MSE improvement {finite_float(residual_cnn.get('overall_relative_mse_improvement')):.3g}.",
+            "evidence": str(derived / "roi_residual_cnn_fast" / "roi_residual_cnn_summary.json"),
+            "strength": "negative_baseline",
+        })
     baselines = read_csv_if_exists(derived / "particle_event_targets" / "particle_event_feature_baselines.csv")
     if not baselines.empty and "f1" in baselines:
         observations.append({
