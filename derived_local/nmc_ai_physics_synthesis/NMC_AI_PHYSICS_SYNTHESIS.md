@@ -36,6 +36,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Masked ROI rollout frame rows: 4992
 - Masked rollout cycle-warning ROI cycles/features: 11 / 105
 - Masked residual transition ROI/method rows: 156
+- Masked residual state-transfer anchor/full cycles: 11 / 89
 - Diffusion sanity selected-front/publication candidates: 12 / 0
 - Control-balanced high-res front tracking/sanity candidates: 40 / 0
 - Weak-label benchmark trainable positives/negatives: 3 / 4
@@ -78,6 +79,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction 0.000, accepted-area CV 0.042, centroid path 73.607 px; event/control mask instability is not significantly different in the current cohort.
 - Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for 52 of 52 ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho=0.637, p=3.909e-07).
 - Cycle-collapsed masked-rollout warning audit covers 11 observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p=0.014), while future-drop evaluation is underpowered with only 1 positive 8-cycle warning case.
+- Masked residual state-transfer warning expands the masked-residual signature from 11 video-backed cycles to 89 cycle-state rows; the transferred score separates future 8-cycle drops (AUC 0.708, permutation p=0.004), but anchor leave-one-cycle transfer is weak (rho=-0.155, p=0.650) and cycle-state PC2 remains the stronger direct future8 baseline (AUC 0.772).
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
@@ -530,6 +532,39 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Undercoverage priority cycle156_rank7_obj27 persistence: q90 undercoverage 1.000, priority 3.471, role event
 - Undercoverage priority cycle156_rank2_obj2 low_rank_dmd: q90 undercoverage 0.781, priority 3.401, role event
 - Guardrail: Empirical residual quantiles are a calibration audit for ROI-only rollout baselines. They are not a generative uncertainty model, not calibrated diffusion, and not manual QC.
+
+## Masked Residual State Transfer Warning
+
+- Anchor/full cycles/permutations: 11 / 89 / 5000
+- Signature features: 8
+- Anchor leave-one-cycle transfer: rho=-0.155, p=0.650, n=11
+- Signature feature low_rank_dmd_particle_to_nonparticle_mse_ratio_mean_max_delta_prev_observed_roi_cycle: median positive-negative 12.290, permutation p=0.013
+- Signature feature low_rank_dmd_particle_mse_mean_max_delta_prev_observed_roi_cycle: median positive-negative 0.009, permutation p=0.014
+- Signature feature low_rank_dmd_nonparticle_mse_mean_max_delta_prev_observed_roi_cycle: median positive-negative 0.002, permutation p=0.024
+- Signature feature low_rank_dmd_particle_mse_mean_median_delta_prev_observed_roi_cycle: median positive-negative 0.005, permutation p=0.043
+- Signature feature low_rank_dmd_particle_to_nonparticle_mse_ratio_mean_max: median positive-negative 8.364, permutation p=0.045
+- Signature feature low_rank_dmd_nonparticle_mse_mean_median_delta_prev_observed_roi_cycle: median positive-negative 7.885e-04, permutation p=0.050
+- Transfer target future_any_drop_within_16cycles transferred_masked_residual_signature: median positive-negative 0.631, AUC 0.676, permutation p=3.999e-04, n=40/49
+- Transfer target any_abrupt_drop mean_abs_delta_prev: median positive-negative 0.089, AUC 0.946, permutation p=0.001, n=4/84
+- Transfer target future_any_drop_within_8cycles transferred_masked_residual_signature: median positive-negative 0.648, AUC 0.708, permutation p=0.004, n=20/69
+- Transfer target any_abrupt_drop state_step_norm: median positive-negative 5.544, AUC 0.887, permutation p=0.013, n=4/84
+- Transfer target future_sync2_drop_within_8cycles frames_percentile: median positive-negative -0.362, AUC 0.856, permutation p=0.014, n=8/81
+- Transfer target future_any_drop_within_8cycles cycle_state_pc2: median positive-negative 0.730, AUC 0.772, permutation p=0.016, n=20/69
+- Transfer target future_any_drop_within_16cycles mean_abs_delta_prev: median positive-negative -0.011, AUC 0.652, permutation p=0.020, n=40/48
+- Transfer target future_any_drop_within_16cycles state_step_norm: median positive-negative -0.813, AUC 0.668, permutation p=0.021, n=40/48
+- Transfer/context link cycle_state_pc6: rho=0.541, p=4.330e-08, n=89
+- Transfer/context link axis_step: rho=0.522, p=1.779e-07, n=88
+- Transfer/context link coulombic_efficiency_pct: rho=-0.499, p=2.162e-06, n=81
+- Transfer/context link cycle_state_pc5: rho=-0.399, p=1.098e-04, n=89
+- Transfer/context link cycle_state_pc2: rho=0.354, p=6.631e-04, n=89
+- Transfer/context link frames_percentile: rho=0.319, p=0.002, n=89
+- Transfer-ranked cycle 150: score 40.972, future8=1, future16=1, abrupt=0
+- Transfer-ranked cycle 146: score 3.217, future8=0, future16=1, abrupt=0
+- Transfer-ranked cycle 156: score 1.612, future8=0, future16=0, abrupt=1
+- Transfer-ranked cycle 151: score 1.439, future8=1, future16=1, abrupt=0
+- Transfer-ranked cycle 152: score 1.188, future8=1, future16=1, abrupt=0
+- Transfer-ranked cycle 154: score 1.010, future8=1, future16=1, abrupt=0
+- Guardrail: Masked residual signature is learned from 11 video-backed ROI cycles and transferred through the cycle-state/echem manifold to 89 cycles; use as hypothesis-ranking evidence, not a deployable warning model or direct video residual measurement for unexported cycles.
 
 ## Masked Residual Transition Timing
 

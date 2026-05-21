@@ -119,6 +119,7 @@ def main() -> None:
     masked_rollout = read_json(derived / "masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
     masked_cycle_warning = read_json(derived / "masked_rollout_cycle_warning" / "masked_rollout_cycle_warning_summary.json")
     masked_residual_timing = read_json(derived / "masked_residual_transition_timing" / "masked_residual_transition_timing_summary.json")
+    masked_residual_transfer = read_json(derived / "masked_residual_state_transfer_warning" / "masked_residual_state_transfer_warning_summary.json")
     diffusion_sanity = read_json(derived / "diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
     control_balanced_front_tracking = read_json(derived / "control_balanced_front_tracking" / "selected_front_roi_tracking_summary.json")
     control_balanced_diffusion_sanity = read_json(derived / "control_balanced_diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
@@ -258,6 +259,15 @@ def main() -> None:
     masked_residual_timing_tests = top_items(first_summary(masked_residual_timing, "top_event_control_tests", []), 12)
     masked_residual_timing_corr = top_items(first_summary(masked_residual_timing, "top_correlations", []), 12)
     masked_residual_timing_top = top_items(first_summary(masked_residual_timing, "top_near_transition_residual_rois", []), 12)
+    masked_residual_transfer_tests = top_items(first_summary(masked_residual_transfer, "top_target_tests", []), 15)
+    masked_residual_transfer_features = top_items(first_summary(masked_residual_transfer, "top_signature_features", []), 8)
+    masked_residual_transfer_coeff = top_items(first_summary(masked_residual_transfer, "top_transfer_coefficients", []), 10)
+    masked_residual_transfer_corr = top_items(first_summary(masked_residual_transfer, "top_correlations", []), 12)
+    masked_residual_transfer_ranked = top_items(first_summary(masked_residual_transfer, "top_ranked_cycles", []), 12)
+    masked_residual_transfer_temporal = top_items(first_summary(masked_residual_transfer, "temporal_block_auc", []), 30)
+    masked_residual_transfer_anchor = first_summary(masked_residual_transfer, "anchor_loo_summary", {}) or {}
+    masked_residual_transfer_future8 = next((r for r in masked_residual_transfer_tests if r.get("target") == "future_any_drop_within_8cycles" and r.get("score") == "transferred_masked_residual_signature"), {})
+    masked_residual_transfer_pc2_future8 = next((r for r in masked_residual_transfer_tests if r.get("target") == "future_any_drop_within_8cycles" and r.get("score") == "cycle_state_pc2"), {})
     diffusion_sanity_gate = top_items(first_summary(diffusion_sanity, "gate_counts", []), 12)
     diffusion_sanity_candidates = top_items(first_summary(diffusion_sanity, "top_automatic_candidates", []), 12)
     diffusion_sanity_corr = top_items(first_summary(diffusion_sanity, "top_correlations", []), 8)
@@ -388,6 +398,7 @@ def main() -> None:
         f"- Masked ROI rollout frame rows: {first_summary(masked_rollout, 'n_frame_metric_rows', 0)}",
         f"- Masked rollout cycle-warning ROI cycles/features: {first_summary(masked_cycle_warning, 'n_roi_cycles', 0)} / {first_summary(masked_cycle_warning, 'n_rollout_features_tested', 0)}",
         f"- Masked residual transition ROI/method rows: {first_summary(masked_residual_timing, 'n_roi_method_rows', 0)}",
+        f"- Masked residual state-transfer anchor/full cycles: {first_summary(masked_residual_transfer, 'n_anchor_cycles', 0)} / {first_summary(masked_residual_transfer, 'n_full_cycles', 0)}",
         f"- Diffusion sanity selected-front/publication candidates: {first_summary(diffusion_sanity, 'n_selected_front_rois', 0)} / {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
         f"- Control-balanced high-res front tracking/sanity candidates: {first_summary(control_balanced_front_tracking, 'n_tracked_rois', 0)} / {first_summary(control_balanced_diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
         f"- Weak-label benchmark trainable positives/negatives: {first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)}",
@@ -430,6 +441,7 @@ def main() -> None:
         f"- Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction {fmt(particle_mask_overall.get('median_fallback_frame_fraction'))}, accepted-area CV {fmt(particle_mask_overall.get('median_accepted_area_cv'))}, centroid path {fmt(particle_mask_overall.get('median_centroid_path_px'))} px; event/control mask instability is not significantly different in the current cohort.",
         f"- Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for {masked_rollout_best_counts.get('persistence', 0)} of {first_summary(masked_rollout, 'n_roi', 0)} ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho={fmt((masked_rollout_corr[0] if masked_rollout_corr else {}).get('spearman_rho'))}, p={fmt((masked_rollout_corr[0] if masked_rollout_corr else {}).get('p_value'))}).",
         f"- Cycle-collapsed masked-rollout warning audit covers {first_summary(masked_cycle_warning, 'n_roi_cycles', 0)} observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p={fmt((masked_cycle_warning_tests[0] if masked_cycle_warning_tests else {}).get('permutation_p_abs_median_diff'))}), while future-drop evaluation is underpowered with only {masked_cycle_warning_targets.get('future_any_drop_within_8cycles', 0)} positive 8-cycle warning case.",
+        f"- Masked residual state-transfer warning expands the masked-residual signature from {first_summary(masked_residual_transfer, 'n_anchor_cycles', 0)} video-backed cycles to {first_summary(masked_residual_transfer, 'n_full_cycles', 0)} cycle-state rows; the transferred score separates future 8-cycle drops (AUC {fmt(masked_residual_transfer_future8.get('abs_oriented_auc'))}, permutation p={fmt(masked_residual_transfer_future8.get('permutation_p_abs_median_diff'))}), but anchor leave-one-cycle transfer is weak (rho={fmt(masked_residual_transfer_anchor.get('rho'))}, p={fmt(masked_residual_transfer_anchor.get('p_value'))}) and cycle-state PC2 remains the stronger direct future8 baseline (AUC {fmt(masked_residual_transfer_pc2_future8.get('abs_oriented_auc'))}).",
         f"- Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p={fmt((masked_residual_timing_align[0] if masked_residual_timing_align else {}).get('empirical_p_distance_le_observed'))}), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.",
         f"- Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: {first_summary(weak_label_benchmark, 'n_trainable_weak_label_rows', 0)} trainable weak rows ({first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} positive / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)} negative), and only {weak_label_leakage.get('n_usable_binary_folds', 0)} leave-reference fold is class-balanced enough for binary evaluation.",
         "",
@@ -876,6 +888,32 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Masked Residual State Transfer Warning",
+        "",
+        f"- Anchor/full cycles/permutations: {first_summary(masked_residual_transfer, 'n_anchor_cycles', 0)} / {first_summary(masked_residual_transfer, 'n_full_cycles', 0)} / {first_summary(masked_residual_transfer, 'n_permutation', 0)}",
+        f"- Signature features: {first_summary(masked_residual_transfer, 'n_signature_features', 0)}",
+        f"- Anchor leave-one-cycle transfer: rho={fmt(masked_residual_transfer_anchor.get('rho'))}, p={fmt(masked_residual_transfer_anchor.get('p_value'))}, n={fmt(masked_residual_transfer_anchor.get('n_anchor'), 0)}",
+    ]
+    for row in masked_residual_transfer_features[:6]:
+        report_lines.append(
+            f"- Signature feature {row.get('feature')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, permutation p={fmt(row.get('permutation_p_abs_median_diff'))}"
+        )
+    for row in masked_residual_transfer_tests[:8]:
+        report_lines.append(
+            f"- Transfer target {row.get('target')} {row.get('score')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, AUC {fmt(row.get('abs_oriented_auc'))}, permutation p={fmt(row.get('permutation_p_abs_median_diff'))}, n={fmt(row.get('n_positive'), 0)}/{fmt(row.get('n_negative'), 0)}"
+        )
+    for row in masked_residual_transfer_corr[:6]:
+        report_lines.append(
+            f"- Transfer/context link {row.get('context')}: rho={fmt(row.get('rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in masked_residual_transfer_ranked[:6]:
+        report_lines.append(
+            f"- Transfer-ranked cycle {fmt(row.get('cycleNo'), 0)}: score {fmt(row.get('transferred_masked_residual_signature'))}, future8={fmt(row.get('future_any_drop_within_8cycles'), 0)}, future16={fmt(row.get('future_any_drop_within_16cycles'), 0)}, abrupt={fmt(row.get('any_abrupt_drop'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(masked_residual_transfer, 'guardrail', 'Masked residual state-transfer audit unavailable.')}")
+
+    report_lines += [
+        "",
         "## Masked Residual Transition Timing",
         "",
         f"- ROI/method rows/permutations: {first_summary(masked_residual_timing, 'n_roi_method_rows', 0)} / {first_summary(masked_residual_timing, 'n_permutation', 0)}",
@@ -1238,6 +1276,20 @@ def main() -> None:
             "top_automatic_candidates": diffusion_sanity_candidates,
             "top_correlations": diffusion_sanity_corr,
             "guardrail": first_summary(diffusion_sanity, "guardrail"),
+        },
+        "masked_residual_state_transfer_warning": {
+            "n_anchor_cycles": first_summary(masked_residual_transfer, "n_anchor_cycles"),
+            "n_full_cycles": first_summary(masked_residual_transfer, "n_full_cycles"),
+            "n_signature_features": first_summary(masked_residual_transfer, "n_signature_features"),
+            "n_permutation": first_summary(masked_residual_transfer, "n_permutation"),
+            "anchor_loo_summary": masked_residual_transfer_anchor,
+            "top_signature_features": masked_residual_transfer_features,
+            "top_transfer_coefficients": masked_residual_transfer_coeff,
+            "top_target_tests": masked_residual_transfer_tests,
+            "temporal_block_auc": masked_residual_transfer_temporal,
+            "top_correlations": masked_residual_transfer_corr,
+            "top_ranked_cycles": masked_residual_transfer_ranked,
+            "guardrail": first_summary(masked_residual_transfer, "guardrail"),
         },
         "masked_residual_transition_timing": {
             "n_roi": first_summary(masked_residual_timing, "n_roi"),

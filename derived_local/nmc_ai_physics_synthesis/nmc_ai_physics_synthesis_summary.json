@@ -4345,6 +4345,854 @@
       "ranked_review_packet": 30
     }
   },
+  "masked_residual_state_transfer_warning": {
+    "anchor_loo_summary": {
+      "n_anchor": 11,
+      "p_value": 0.6500339654975801,
+      "rho": -0.15454545454545454
+    },
+    "guardrail": "Masked residual signature is learned from 11 video-backed ROI cycles and transferred through the cycle-state/echem manifold to 89 cycles; use as hypothesis-ranking evidence, not a deployable warning model or direct video residual measurement for unexported cycles.",
+    "n_anchor_cycles": 11,
+    "n_full_cycles": 89,
+    "n_permutation": 5000,
+    "n_signature_features": 8,
+    "temporal_block_auc": [
+      {
+        "abs_oriented_auc": 0.55,
+        "cycle_max": 56.0,
+        "cycle_min": 2.0,
+        "n": 23,
+        "n_positive": 3,
+        "score": "cycle_state_pc2",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 0
+      },
+      {
+        "abs_oriented_auc": 0.7058823529411764,
+        "cycle_max": 100.0,
+        "cycle_min": 58.0,
+        "n": 22,
+        "n_positive": 5,
+        "score": "cycle_state_pc2",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 1
+      },
+      {
+        "abs_oriented_auc": 0.9027777777777778,
+        "cycle_max": 136.0,
+        "cycle_min": 102.0,
+        "n": 22,
+        "n_positive": 4,
+        "score": "cycle_state_pc2",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 2
+      },
+      {
+        "abs_oriented_auc": 0.8928571428571428,
+        "cycle_max": 158.0,
+        "cycle_min": 137.0,
+        "n": 22,
+        "n_positive": 8,
+        "score": "cycle_state_pc2",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 3
+      },
+      {
+        "abs_oriented_auc": 0.5333333333333333,
+        "cycle_max": 56.0,
+        "cycle_min": 2.0,
+        "n": 23,
+        "n_positive": 3,
+        "score": "degradation_state_axis",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 0
+      },
+      {
+        "abs_oriented_auc": 0.8941176470588235,
+        "cycle_max": 100.0,
+        "cycle_min": 58.0,
+        "n": 22,
+        "n_positive": 5,
+        "score": "degradation_state_axis",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 1
+      },
+      {
+        "abs_oriented_auc": 0.75,
+        "cycle_max": 136.0,
+        "cycle_min": 102.0,
+        "n": 22,
+        "n_positive": 4,
+        "score": "degradation_state_axis",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 2
+      },
+      {
+        "abs_oriented_auc": 0.6071428571428571,
+        "cycle_max": 158.0,
+        "cycle_min": 137.0,
+        "n": 22,
+        "n_positive": 8,
+        "score": "degradation_state_axis",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 3
+      },
+      {
+        "abs_oriented_auc": 0.8666666666666667,
+        "cycle_max": 56.0,
+        "cycle_min": 2.0,
+        "n": 23,
+        "n_positive": 3,
+        "score": "frames_percentile",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 0
+      },
+      {
+        "abs_oriented_auc": 0.6058823529411765,
+        "cycle_max": 100.0,
+        "cycle_min": 58.0,
+        "n": 22,
+        "n_positive": 5,
+        "score": "frames_percentile",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 1
+      },
+      {
+        "abs_oriented_auc": 0.7222222222222222,
+        "cycle_max": 136.0,
+        "cycle_min": 102.0,
+        "n": 22,
+        "n_positive": 4,
+        "score": "frames_percentile",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 2
+      },
+      {
+        "abs_oriented_auc": 0.8348214285714286,
+        "cycle_max": 158.0,
+        "cycle_min": 137.0,
+        "n": 22,
+        "n_positive": 8,
+        "score": "frames_percentile",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 3
+      },
+      {
+        "abs_oriented_auc": 0.7192982456140351,
+        "cycle_max": 56.0,
+        "cycle_min": 2.0,
+        "n": 22,
+        "n_positive": 3,
+        "score": "mean_abs_delta_prev",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 0
+      },
+      {
+        "abs_oriented_auc": 0.611764705882353,
+        "cycle_max": 100.0,
+        "cycle_min": 58.0,
+        "n": 22,
+        "n_positive": 5,
+        "score": "mean_abs_delta_prev",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 1
+      },
+      {
+        "abs_oriented_auc": 0.6666666666666666,
+        "cycle_max": 136.0,
+        "cycle_min": 102.0,
+        "n": 22,
+        "n_positive": 4,
+        "score": "mean_abs_delta_prev",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 2
+      },
+      {
+        "abs_oriented_auc": 0.5892857142857143,
+        "cycle_max": 158.0,
+        "cycle_min": 137.0,
+        "n": 22,
+        "n_positive": 8,
+        "score": "mean_abs_delta_prev",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 3
+      },
+      {
+        "abs_oriented_auc": 0.7192982456140351,
+        "cycle_max": 56.0,
+        "cycle_min": 2.0,
+        "n": 22,
+        "n_positive": 3,
+        "score": "state_step_norm",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 0
+      },
+      {
+        "abs_oriented_auc": 0.7058823529411764,
+        "cycle_max": 100.0,
+        "cycle_min": 58.0,
+        "n": 22,
+        "n_positive": 5,
+        "score": "state_step_norm",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 1
+      },
+      {
+        "abs_oriented_auc": 0.5694444444444444,
+        "cycle_max": 136.0,
+        "cycle_min": 102.0,
+        "n": 22,
+        "n_positive": 4,
+        "score": "state_step_norm",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 2
+      },
+      {
+        "abs_oriented_auc": 0.5625,
+        "cycle_max": 158.0,
+        "cycle_min": 137.0,
+        "n": 22,
+        "n_positive": 8,
+        "score": "state_step_norm",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 3
+      },
+      {
+        "abs_oriented_auc": 0.5833333333333333,
+        "cycle_max": 56.0,
+        "cycle_min": 2.0,
+        "n": 23,
+        "n_positive": 3,
+        "score": "transferred_masked_residual_signature",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 0
+      },
+      {
+        "abs_oriented_auc": 0.7294117647058823,
+        "cycle_max": 100.0,
+        "cycle_min": 58.0,
+        "n": 22,
+        "n_positive": 5,
+        "score": "transferred_masked_residual_signature",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 1
+      },
+      {
+        "abs_oriented_auc": 0.5277777777777777,
+        "cycle_max": 136.0,
+        "cycle_min": 102.0,
+        "n": 22,
+        "n_positive": 4,
+        "score": "transferred_masked_residual_signature",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 2
+      },
+      {
+        "abs_oriented_auc": 0.8660714285714286,
+        "cycle_max": 158.0,
+        "cycle_min": 137.0,
+        "n": 22,
+        "n_positive": 8,
+        "score": "transferred_masked_residual_signature",
+        "target": "future_any_drop_within_8cycles",
+        "temporal_block": 3
+      }
+    ],
+    "top_correlations": [
+      {
+        "context": "cycle_state_pc6",
+        "n": 89,
+        "p_value": 4.330034131526787e-08,
+        "rho": 0.541283622744297,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "axis_step",
+        "n": 88,
+        "p_value": 1.7788265283233686e-07,
+        "rho": 0.522454298897538,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "coulombic_efficiency_pct",
+        "n": 81,
+        "p_value": 2.1620322424504797e-06,
+        "rho": -0.49864498644986444,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "cycle_state_pc5",
+        "n": 89,
+        "p_value": 0.00010981654873192717,
+        "rho": -0.3985018726591761,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "cycle_state_pc2",
+        "n": 89,
+        "p_value": 0.0006631268755713166,
+        "rho": 0.3541028260129384,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "frames_percentile",
+        "n": 89,
+        "p_value": 0.002334675289653587,
+        "rho": 0.3187085569385907,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "future_any_drop_within_16cycles",
+        "n": 89,
+        "p_value": 0.0038574321485609292,
+        "rho": 0.30333260277049856,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "cycle_state_pc8",
+        "n": 89,
+        "p_value": 0.004152749786081025,
+        "rho": -0.30100442628532526,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "particle_norm_range",
+        "n": 89,
+        "p_value": 0.004177019839539796,
+        "rho": 0.30081972098230597,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "future_any_drop_within_8cycles",
+        "n": 89,
+        "p_value": 0.004189437093396179,
+        "rho": 0.30072559010595723,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "particle_norm_cv",
+        "n": 89,
+        "p_value": 0.005689850535715318,
+        "rho": 0.29085074417502177,
+        "score": "transferred_masked_residual_signature"
+      },
+      {
+        "context": "any_abrupt_drop",
+        "n": 89,
+        "p_value": 0.008187697044566865,
+        "rho": 0.27865221840769444,
+        "score": "transferred_masked_residual_signature"
+      }
+    ],
+    "top_ranked_cycles": [
+      {
+        "any_abrupt_drop": 0,
+        "capacity_mAh": 0.4018784230033991,
+        "coulombic_efficiency_pct": 46.81331631510453,
+        "cycleNo": 150,
+        "cycle_state_pc2": 25.30493760374338,
+        "degradation_state_axis": -6.674485392649005,
+        "frames_percentile": 0.848314606741573,
+        "future_any_drop_within_16cycles": 1,
+        "future_any_drop_within_4cycles": 0,
+        "future_any_drop_within_8cycles": 1,
+        "mean_abs_delta_prev": 0.0245821467969932,
+        "particle_norm_range": 0.1775956284153004,
+        "state_step_norm": 29.647137869789937,
+        "transferred_masked_residual_signature": 40.971861830039266
+      },
+      {
+        "any_abrupt_drop": 0,
+        "capacity_mAh": 0.8465362155334497,
+        "coulombic_efficiency_pct": 94.75651022551988,
+        "cycleNo": 146,
+        "cycle_state_pc2": -0.1363769546912965,
+        "degradation_state_axis": -8.366266876242605,
+        "frames_percentile": 0.8876404494382022,
+        "future_any_drop_within_16cycles": 1,
+        "future_any_drop_within_4cycles": 0,
+        "future_any_drop_within_8cycles": 0,
+        "mean_abs_delta_prev": 0.0227898355524768,
+        "particle_norm_range": 0.2641165755919854,
+        "state_step_norm": 2.834328402176376,
+        "transferred_masked_residual_signature": 3.21719464829548
+      },
+      {
+        "any_abrupt_drop": 1,
+        "capacity_mAh": null,
+        "coulombic_efficiency_pct": null,
+        "cycleNo": 156,
+        "cycle_state_pc2": 1.2872442413850915,
+        "degradation_state_axis": 2.2859718258330584,
+        "frames_percentile": 0.9101123595505618,
+        "future_any_drop_within_16cycles": 0,
+        "future_any_drop_within_4cycles": 0,
+        "future_any_drop_within_8cycles": 0,
+        "mean_abs_delta_prev": 0.1098742271479513,
+        "particle_norm_range": 0.0928961748633878,
+        "state_step_norm": 6.385183479815459,
+        "transferred_masked_residual_signature": 1.611586757942234
+      },
+      {
+        "any_abrupt_drop": 0,
+        "capacity_mAh": null,
+        "coulombic_efficiency_pct": null,
+        "cycleNo": 151,
+        "cycle_state_pc2": 2.3464881791734293,
+        "degradation_state_axis": 0.0135317125971764,
+        "frames_percentile": 0.8314606741573034,
+        "future_any_drop_within_16cycles": 1,
+        "future_any_drop_within_4cycles": 0,
+        "future_any_drop_within_8cycles": 1,
+        "mean_abs_delta_prev": 0.0216433848995613,
+        "particle_norm_range": 0.1448087431693989,
+        "state_step_norm": 28.533194056224296,
+        "transferred_masked_residual_signature": 1.4388691546947752
+      },
+      {
+        "any_abrupt_drop": 0,
+        "capacity_mAh": null,
+        "coulombic_efficiency_pct": null,
+        "cycleNo": 152,
+        "cycle_state_pc2": 2.070677823110428,
+        "degradation_state_axis": 0.5622501690765456,
+        "frames_percentile": 0.8202247191011236,
+        "future_any_drop_within_16cycles": 1,
+        "future_any_drop_within_4cycles": 1,
+        "future_any_drop_within_8cycles": 1,
+        "mean_abs_delta_prev": 0.0432736216937326,
+        "particle_norm_range": 0.2313296903460835,
+        "state_step_norm": 1.6389462244070354,
+        "transferred_masked_residual_signature": 1.1876601241161993
+      },
+      {
+        "any_abrupt_drop": 0,
+        "capacity_mAh": null,
+        "coulombic_efficiency_pct": null,
+        "cycleNo": 154,
+        "cycle_state_pc2": 1.921769764976593,
+        "degradation_state_axis": 0.5817194979377159,
+        "frames_percentile": 0.7921348314606742,
+        "future_any_drop_within_16cycles": 1,
+        "future_any_drop_within_4cycles": 1,
+        "future_any_drop_within_8cycles": 1,
+        "mean_abs_delta_prev": 0.0554336950665744,
+        "particle_norm_range": 0.1202185792349723,
+        "state_step_norm": 0.5547306155173712,
+        "transferred_masked_residual_signature": 1.0097002411185476
+      },
+      {
+        "any_abrupt_drop": 0,
+        "capacity_mAh": null,
+        "coulombic_efficiency_pct": null,
+        "cycleNo": 153,
+        "cycle_state_pc2": 1.7830453363427,
+        "degradation_state_axis": 0.3202435001320098,
+        "frames_percentile": 0.8089887640449438,
+        "future_any_drop_within_16cycles": 1,
+        "future_any_drop_within_4cycles": 1,
+        "future_any_drop_within_8cycles": 1,
+        "mean_abs_delta_prev": 0.0272720567485056,
+        "particle_norm_range": 0.319672131147541,
+        "state_step_norm": 0.8322469875994432,
+        "transferred_masked_residual_signature": 0.8710369083836372
+      },
+      {
+        "any_abrupt_drop": 0,
+        "capacity_mAh": 0.6456776883909884,
+        "coulombic_efficiency_pct": 98.70623035375256,
+        "cycleNo": 40,
+        "cycle_state_pc2": 0.7079144140698478,
+        "degradation_state_axis": 5.235546508470637,
+        "frames_percentile": 0.4662921348314606,
+        "future_any_drop_within_16cycles": 0,
+        "future_any_drop_within_4cycles": 0,
+        "future_any_drop_within_8cycles": 0,
+        "mean_abs_delta_prev": 0.0950694604787192,
+        "particle_norm_range": 0.2094717668488159,
+        "state_step_norm": 3.0569007235031207,
+        "transferred_masked_residual_signature": 0.7842017555889671
+      },
+      {
+        "any_abrupt_drop": 0,
+        "capacity_mAh": 0.8459858724847423,
+        "coulombic_efficiency_pct": 97.966336448007,
+        "cycleNo": 148,
+        "cycle_state_pc2": 0.6075503518224842,
+        "degradation_state_axis": -10.119787426502562,
+        "frames_percentile": 0.8764044943820225,
+        "future_any_drop_within_16cycles": 1,
+        "future_any_drop_within_4cycles": 0,
+        "future_any_drop_within_8cycles": 1,
+        "mean_abs_delta_prev": 0.0201634213294337,
+        "particle_norm_range": 0.2495446265938068,
+        "state_step_norm": 1.2155468832528935,
+        "transferred_masked_residual_signature": 0.7480825471472065
+      },
+      {
+        "any_abrupt_drop": 0,
+        "capacity_mAh": null,
+        "coulombic_efficiency_pct": null,
+        "cycleNo": 155,
+        "cycle_state_pc2": 2.0547761846604518,
+        "degradation_state_axis": 0.514430179763499,
+        "frames_percentile": 0.7921348314606742,
+        "future_any_drop_within_16cycles": 1,
+        "future_any_drop_within_4cycles": 1,
+        "future_any_drop_within_8cycles": 1,
+        "mean_abs_delta_prev": 0.0186914748967392,
+        "particle_norm_range": 0.1757741347905279,
+        "state_step_norm": 0.2924823808335112,
+        "transferred_masked_residual_signature": 0.7426923860413742
+      },
+      {
+        "any_abrupt_drop": 0,
+        "capacity_mAh": 0.8476244096711879,
+        "coulombic_efficiency_pct": 97.277614199115,
+        "cycleNo": 147,
+        "cycle_state_pc2": 0.7341471382964359,
+        "degradation_state_axis": -10.20170308068876,
+        "frames_percentile": 0.848314606741573,
+        "future_any_drop_within_16cycles": 1,
+        "future_any_drop_within_4cycles": 0,
+        "future_any_drop_within_8cycles": 0,
+        "mean_abs_delta_prev": 0.0189534749480488,
+        "particle_norm_range": 0.3051001821493624,
+        "state_step_norm": 2.0433041588295424,
+        "transferred_masked_residual_signature": 0.6943342227566772
+      },
+      {
+        "any_abrupt_drop": 1,
+        "capacity_mAh": 0.824414588297882,
+        "coulombic_efficiency_pct": 98.39927188340005,
+        "cycleNo": 116,
+        "cycle_state_pc2": -1.2460533610577464,
+        "degradation_state_axis": -2.1141956086485054,
+        "frames_percentile": 0.0112359550561797,
+        "future_any_drop_within_16cycles": 0,
+        "future_any_drop_within_4cycles": 0,
+        "future_any_drop_within_8cycles": 0,
+        "mean_abs_delta_prev": 0.2017531876138433,
+        "particle_norm_range": 0.23816029143898,
+        "state_step_norm": 13.563520693660344,
+        "transferred_masked_residual_signature": 0.6939075621668416
+      }
+    ],
+    "top_signature_features": [
+      {
+        "feature": "low_rank_dmd_particle_to_nonparticle_mse_ratio_mean_max_delta_prev_observed_roi_cycle",
+        "mannwhitney_p": 0.01904761904761905,
+        "median_negative": -3.3094408739055603,
+        "median_positive": 8.980281638979644,
+        "median_positive_minus_negative": 12.289722512885204,
+        "n_negative": 6,
+        "n_positive": 4,
+        "orientation": 1.0,
+        "permutation_p_abs_median_diff": 0.01259748050389922
+      },
+      {
+        "feature": "low_rank_dmd_particle_mse_mean_max_delta_prev_observed_roi_cycle",
+        "mannwhitney_p": 0.0380952380952381,
+        "median_negative": -0.0049128554383059495,
+        "median_positive": 0.0039343863099929,
+        "median_positive_minus_negative": 0.008847241748298849,
+        "n_negative": 6,
+        "n_positive": 4,
+        "orientation": 1.0,
+        "permutation_p_abs_median_diff": 0.013597280543891222
+      },
+      {
+        "feature": "low_rank_dmd_nonparticle_mse_mean_max_delta_prev_observed_roi_cycle",
+        "mannwhitney_p": 0.0380952380952381,
+        "median_negative": -0.00047360510416185003,
+        "median_positive": 0.00138321550730325,
+        "median_positive_minus_negative": 0.0018568206114650998,
+        "n_negative": 6,
+        "n_positive": 4,
+        "orientation": 1.0,
+        "permutation_p_abs_median_diff": 0.02419516096780644
+      },
+      {
+        "feature": "low_rank_dmd_particle_mse_mean_median_delta_prev_observed_roi_cycle",
+        "mannwhitney_p": 0.0380952380952381,
+        "median_negative": -0.0025015119299496,
+        "median_positive": 0.00263850485862345,
+        "median_positive_minus_negative": 0.00514001678857305,
+        "n_negative": 6,
+        "n_positive": 4,
+        "orientation": 1.0,
+        "permutation_p_abs_median_diff": 0.04319136172765447
+      },
+      {
+        "feature": "low_rank_dmd_particle_to_nonparticle_mse_ratio_mean_max",
+        "mannwhitney_p": 0.16363636363636364,
+        "median_negative": 9.977171217949785,
+        "median_positive": 18.341079775770538,
+        "median_positive_minus_negative": 8.363908557820753,
+        "n_negative": 7,
+        "n_positive": 4,
+        "orientation": 1.0,
+        "permutation_p_abs_median_diff": 0.04459108178364327
+      },
+      {
+        "feature": "low_rank_dmd_nonparticle_mse_mean_median_delta_prev_observed_roi_cycle",
+        "mannwhitney_p": 0.0380952380952381,
+        "median_negative": -0.0002979400587719,
+        "median_positive": 0.00049052887857215,
+        "median_positive_minus_negative": 0.00078846893734405,
+        "n_negative": 6,
+        "n_positive": 4,
+        "orientation": 1.0,
+        "permutation_p_abs_median_diff": 0.04999000199960008
+      },
+      {
+        "feature": "low_rank_dmd_particle_mse_mean_median",
+        "mannwhitney_p": 0.10909090909090909,
+        "median_negative": 0.0052249630389268,
+        "median_positive": 0.00832170923240475,
+        "median_positive_minus_negative": 0.00309674619347795,
+        "n_negative": 7,
+        "n_positive": 4,
+        "orientation": 1.0,
+        "permutation_p_abs_median_diff": 0.0597880423915217
+      },
+      {
+        "feature": "low_rank_dmd_particle_mse_fraction_of_full_mean_max_delta_prev_observed_roi_cycle",
+        "mannwhitney_p": 0.0380952380952381,
+        "median_negative": -0.36512372478466015,
+        "median_positive": 0.5654131091853813,
+        "median_positive_minus_negative": 0.9305368339700415,
+        "n_negative": 6,
+        "n_positive": 4,
+        "orientation": 1.0,
+        "permutation_p_abs_median_diff": 0.07138572285542892
+      }
+    ],
+    "top_target_tests": [
+      {
+        "abs_oriented_auc": 0.6760204081632653,
+        "mannwhitney_p": 0.00449176108342557,
+        "median_negative": -0.4832041896432918,
+        "median_positive": 0.14767323544809197,
+        "median_positive_minus_negative": 0.6308774250913838,
+        "n_negative": 49,
+        "n_positive": 40,
+        "permutation_p_abs_median_diff": 0.0003999200159968006,
+        "score": "transferred_masked_residual_signature",
+        "target": "future_any_drop_within_16cycles"
+      },
+      {
+        "abs_oriented_auc": 0.9464285714285714,
+        "mannwhitney_p": 0.002746051454362118,
+        "median_negative": 0.03710090689858635,
+        "median_positive": 0.1265508350650349,
+        "median_positive_minus_negative": 0.08944992816644855,
+        "n_negative": 84,
+        "n_positive": 4,
+        "permutation_p_abs_median_diff": 0.0013997200559888023,
+        "score": "mean_abs_delta_prev",
+        "target": "any_abrupt_drop"
+      },
+      {
+        "abs_oriented_auc": 0.7079710144927536,
+        "mannwhitney_p": 0.004860427515760338,
+        "median_negative": -0.38518473266684483,
+        "median_positive": 0.26287546444003573,
+        "median_positive_minus_negative": 0.6480601971068806,
+        "n_negative": 69,
+        "n_positive": 20,
+        "permutation_p_abs_median_diff": 0.003799240151969606,
+        "score": "transferred_masked_residual_signature",
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "abs_oriented_auc": 0.8869047619047619,
+        "mannwhitney_p": 0.005288414119019336,
+        "median_negative": 1.9094729372033963,
+        "median_positive": 7.453323867187882,
+        "median_positive_minus_negative": 5.543850929984485,
+        "n_negative": 84,
+        "n_positive": 4,
+        "permutation_p_abs_median_diff": 0.013397320535892822,
+        "score": "state_step_norm",
+        "target": "any_abrupt_drop"
+      },
+      {
+        "abs_oriented_auc": 0.8557098765432098,
+        "mannwhitney_p": 0.000966576299240235,
+        "median_negative": 0.5449438202247191,
+        "median_positive": 0.1825842696629213,
+        "median_positive_minus_negative": -0.3623595505617978,
+        "n_negative": 81,
+        "n_positive": 8,
+        "permutation_p_abs_median_diff": 0.013797240551889621,
+        "score": "frames_percentile",
+        "target": "future_sync2_drop_within_8cycles"
+      },
+      {
+        "abs_oriented_auc": 0.7717391304347826,
+        "mannwhitney_p": 0.00023219876834436058,
+        "median_negative": -0.1363769546912965,
+        "median_positive": 0.5937252583810246,
+        "median_positive_minus_negative": 0.7301022130723211,
+        "n_negative": 69,
+        "n_positive": 20,
+        "permutation_p_abs_median_diff": 0.015796840631873626,
+        "score": "cycle_state_pc2",
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "abs_oriented_auc": 0.65234375,
+        "mannwhitney_p": 0.014405599217472424,
+        "median_negative": 0.041996171015161954,
+        "median_positive": 0.03082749685728215,
+        "median_positive_minus_negative": -0.011168674157879803,
+        "n_negative": 48,
+        "n_positive": 40,
+        "permutation_p_abs_median_diff": 0.01979604079184163,
+        "score": "mean_abs_delta_prev",
+        "target": "future_any_drop_within_16cycles"
+      },
+      {
+        "abs_oriented_auc": 0.6682291666666667,
+        "mannwhitney_p": 0.0068808563403987034,
+        "median_negative": 2.3136582470443194,
+        "median_positive": 1.5003162261673786,
+        "median_positive_minus_negative": -0.8133420208769409,
+        "n_negative": 48,
+        "n_positive": 40,
+        "permutation_p_abs_median_diff": 0.020595880823835233,
+        "score": "state_step_norm",
+        "target": "future_any_drop_within_16cycles"
+      },
+      {
+        "abs_oriented_auc": 0.8882352941176471,
+        "mannwhitney_p": 0.005050732585580265,
+        "median_negative": -0.29005643523772273,
+        "median_positive": 0.6256745371561689,
+        "median_positive_minus_negative": 0.9157309723938917,
+        "n_negative": 85,
+        "n_positive": 4,
+        "permutation_p_abs_median_diff": 0.03979204159168166,
+        "score": "transferred_masked_residual_signature",
+        "target": "any_abrupt_drop"
+      },
+      {
+        "abs_oriented_auc": 0.7658227848101266,
+        "mannwhitney_p": 0.006494756872927214,
+        "median_negative": -0.021956754100346,
+        "median_positive": 0.7259854413374613,
+        "median_positive_minus_negative": 0.7479421954378074,
+        "n_negative": 79,
+        "n_positive": 10,
+        "permutation_p_abs_median_diff": 0.07618476304739052,
+        "score": "cycle_state_pc2",
+        "target": "future_any_drop_within_4cycles"
+      },
+      {
+        "abs_oriented_auc": 0.6551470588235294,
+        "mannwhitney_p": 0.036086124869465476,
+        "median_negative": 0.03879396598168245,
+        "median_positive": 0.02691994407244925,
+        "median_positive_minus_negative": -0.011874021909233201,
+        "n_negative": 68,
+        "n_positive": 20,
+        "permutation_p_abs_median_diff": 0.07878424315136973,
+        "score": "mean_abs_delta_prev",
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "abs_oriented_auc": 0.6227941176470588,
+        "mannwhitney_p": 0.09735146900245757,
+        "median_negative": 2.170547204840827,
+        "median_positive": 1.4765356686234492,
+        "median_positive_minus_negative": -0.6940115362173778,
+        "n_negative": 68,
+        "n_positive": 20,
+        "permutation_p_abs_median_diff": 0.09218156368726255,
+        "score": "state_step_norm",
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "abs_oriented_auc": 0.7243589743589743,
+        "mannwhitney_p": 0.02177523018826058,
+        "median_negative": 2.1579013575930492,
+        "median_positive": 1.1682092646060664,
+        "median_positive_minus_negative": -0.9896920929869828,
+        "n_negative": 78,
+        "n_positive": 10,
+        "permutation_p_abs_median_diff": 0.10837832433513298,
+        "score": "state_step_norm",
+        "target": "future_any_drop_within_4cycles"
+      },
+      {
+        "abs_oriented_auc": 0.6705882352941176,
+        "mannwhitney_p": 0.25471555887964603,
+        "median_negative": 0.5224719101123596,
+        "median_positive": 0.2247191011235955,
+        "median_positive_minus_negative": -0.2977528089887641,
+        "n_negative": 85,
+        "n_positive": 4,
+        "permutation_p_abs_median_diff": 0.118376324735053,
+        "score": "frames_percentile",
+        "target": "any_abrupt_drop"
+      },
+      {
+        "abs_oriented_auc": 0.6215189873417721,
+        "mannwhitney_p": 0.21472460534281324,
+        "median_negative": -0.2782743397063966,
+        "median_positive": 0.18328104241644622,
+        "median_positive_minus_negative": 0.4615553821228428,
+        "n_negative": 79,
+        "n_positive": 10,
+        "permutation_p_abs_median_diff": 0.13917216556688664,
+        "score": "transferred_masked_residual_signature",
+        "target": "future_any_drop_within_4cycles"
+      }
+    ],
+    "top_transfer_coefficients": [
+      {
+        "coef": -0.2711125099975008,
+        "feature": "cycle_state_pc5"
+      },
+      {
+        "coef": 0.24463740959462346,
+        "feature": "cycle_state_pc6"
+      },
+      {
+        "coef": 0.21439364166315772,
+        "feature": "frames_percentile"
+      },
+      {
+        "coef": 0.15804489815464035,
+        "feature": "delta_std_across_particles"
+      },
+      {
+        "coef": -0.14160858604177912,
+        "feature": "coulombic_efficiency_pct"
+      },
+      {
+        "coef": 0.1130774330348108,
+        "feature": "max_abs_delta_prev"
+      },
+      {
+        "coef": 0.10411679171128646,
+        "feature": "axis_step"
+      },
+      {
+        "coef": -0.10244115036536589,
+        "feature": "cycle_state_pc4"
+      },
+      {
+        "coef": -0.08954462935933613,
+        "feature": "capacity_mAh"
+      },
+      {
+        "coef": 0.07178864644847079,
+        "feature": "cycle_state_pc7"
+      }
+    ]
+  },
   "masked_residual_transition_timing": {
     "guardrail": "Automatic phase-kinetic transition timing and masked rollout residual timing audit; not manual front annotation or calibrated transport.",
     "n_permutation": 5000,

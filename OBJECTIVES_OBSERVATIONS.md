@@ -1968,3 +1968,36 @@ Key result:
 - The project synthesis now includes a Masked Residual Transition Timing section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
 
 Interpretation: this adds a timing guardrail between AI residuals and optical phase kinetics. There is a borderline low-rank DMD weighted-center alignment signal and clear kinetic-rate correlations, but no robust peak-frame timing alignment or strong event/control separation. Treat it as evidence that masked residual energy partly reflects phase-transition kinetics, not as a manual front annotation or calibrated transport result.
+
+
+## 2026-05-22 Masked Residual State Transfer Warning Audit
+
+Added and ran:
+
+`scripts/tier4_masked_residual_state_transfer_warning.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning --n-permutation 5000`
+
+Then regenerated the synthesis:
+
+`python scripts/tier4_nmc_ai_physics_synthesis.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning`
+
+Local compact copy:
+
+`derived_local/masked_residual_state_transfer_warning`
+
+Key result:
+
+- Built a masked-residual signature from the 11 video-backed masked rollout warning cycles using the strongest low-rank-DMD particle residual jump features, then transferred that signature through cycle-state/echem features onto the full 89-cycle trace table.
+- The expanded transfer table has many more future positives than the direct masked video cycle table: 20 future_any_drop_within_8cycles positives and 40 future_any_drop_within_16cycles positives.
+- Transferred masked-residual signature separates future 16-cycle drops: median positive-negative +0.631, Mann-Whitney p=0.00449, permutation p=0.000400, AUC=0.676.
+- It also separates future 8-cycle drops: median positive-negative +0.648, Mann-Whitney p=0.00486, permutation p=0.00380, AUC=0.708.
+- Direct cycle-state PC2 remains the stronger simple future-8 baseline on the same 89-cycle table: AUC=0.772, permutation p=0.0158.
+- Anchor leave-one-cycle transfer is weak: rho=-0.155, p=0.650 across the 11 video-backed cycles. This is the key guardrail against treating the transferred score as a validated video residual measurement.
+- The transferred score correlates with cycle_state_pc6 (rho=0.541), axis_step (rho=0.522), lower coulombic efficiency (rho=-0.499), cycle_state_pc2 (rho=0.354), and future_any_drop_within_8cycles (rho=0.301).
+- Top transfer-ranked cycles are dominated by the late high-COV window around cycles 150-156, including cycles 150, 151, 152, 154, 155, and 156.
+- The project synthesis now includes a Masked Residual State Transfer Warning section and carries the compact summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this addresses the direct masked-rollout future-warning underpowering by using the 11 video-backed cycles as a particle-local residual anchor and testing the transferred signature across all cycle-state rows. It is useful for hypothesis ranking and for choosing which cycles deserve new ROI/video extraction, but the weak leave-one-cycle anchor check means it is not a deployable warning model and not proof that unexported cycles have measured video residuals.
