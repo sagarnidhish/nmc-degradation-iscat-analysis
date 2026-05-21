@@ -966,3 +966,28 @@ Key result:
 
 Interpretation: this is the strongest guardrail-aware evidence so far that event ROIs differ from controls beyond obvious frame-count/protocol context. The result does not prove causality because the cohort is still 52 automatically selected ROIs, but it improves the project from raw correlations to conditioned optical/rollout event effects. These residualized descriptors should be the default input for any next event-ranking or degradation-mode model.
 
+## 2026-05-21 Multi-Cycle Threshold-Robust Fronts
+
+Added and ran:
+
+`python scripts/tier3_multicycle_threshold_robust_fronts.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts --n-bootstrap 200`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts`
+
+Local compact copy:
+
+`derived_local/multi_cycle_threshold_robust_fronts`
+
+Key result:
+
+- Swept seven bright-phase thresholds (`0.55` to `0.85` early-frame quantiles) for all 52 particle ROI tensors, using camera timing and the provisional 0.096 um/px calibration.
+- Bootstrapped the default q70 threshold slopes 200 times per ROI and summarized threshold sign agreement, slope IQR, apparent radius-squared motion, and apparent optical-front diffusion proxy `slope(radius^2) * pixel_size^2 / 4`.
+- Event ROIs show globally higher threshold-robust bright-phase growth than controls: median phase-fraction slope 2.57e-6/s vs 1.48e-6/s, p=0.0175; absolute median slope 2.59e-6/s vs 1.79e-6/s, p=0.0310; threshold-robust phase score 0.593 vs 0.438, p=0.0406; positive-threshold-slope fraction 0.970 vs 0.832, p=0.0406.
+- Apparent diffusion proxies do not separate events globally: median proxy -7.61e-7 vs -1.91e-6 um^2/s, p=0.259; absolute proxy 2.22e-6 vs 2.69e-6 um^2/s, p=0.680; diffusion robustness score p=0.993.
+- Cycle-specific physics remains heterogeneous. Cycle 156 events have strong threshold-robust phase growth relative to controls (2.21e-6/s vs -3.76e-7/s, p=0.000666). Cycle 86 events have weaker contraction/diffusion-proxy magnitude than controls (absolute proxy 8.69e-7 vs 5.00e-6 um^2/s, p=0.0127), consistent with cycle 86 being more structural/decorrelating than a simple expanding-front case.
+- Top robust phase-front ROIs include `cycle156_rank6_obj3`, `cycle60_rank2_obj2`, `cycle116_rank1_obj6`, `cycle116_rank2_obj2`, and `cycle156_rank2_obj2`. Top robust diffusion-proxy candidates include both event and active-control ROIs, reinforcing the need for manual front QC.
+
+Interpretation: threshold-swept ROI fronts strengthen the phase-boundary movement evidence while keeping diffusion claims guarded. Bright-phase growth is robust to threshold choice and bootstrapping across the expanded event cohort, but apparent diffusion proxies are threshold- and control-sensitive. The strongest current physics claim is therefore phase/front mobility and optical-state change, not calibrated Li diffusion coefficients.
+
