@@ -406,3 +406,30 @@ Key result:
 
 Interpretation: this is the first front-specific, time-normalized ROI selection layer. It provides a concrete short list for high-resolution front tracking and manual QC, but the apparent transport values are still downsampled/object-candidate proxies rather than calibrated micron-scale diffusion coefficients. Cycle 86 shows the stronger front-fit evidence; cycle 116 remains a strong synchronized optical-drop event but has weaker front-radius fit quality.
 
+
+## 2026-05-21 ROI-Only Rollout Baselines
+
+Added and ran:
+
+`scripts/tier3_roi_rollout_baselines.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines`
+
+Local compact copy:
+
+`derived_local/roi_rollout_baselines`
+
+Key result:
+
+- Evaluated particle-region-only next-frame/rollout baselines on the 11 selected ROI sequences from cycles 86 and 116.
+- Methods: persistence, velocity extrapolation, and rank-10 low-rank DMD/PCA latent dynamics.
+- Persistence is the strongest short-horizon baseline, showing that selected ROI crops evolve slowly at the sampled cadence.
+- Cycle 86 persistence: mean MSE 9.02e-5, SSIM 0.969.
+- Cycle 116 persistence: mean MSE 1.03e-4, SSIM 0.964.
+- Low-rank DMD is weaker than persistence as a pixel predictor but gives an interpretable latent state. DMD spectral radius is 1.0024, close to marginally stable dynamics.
+- Cycle 86 has larger latent movement than cycle 116: mean latent path length 11.11 vs 7.59 and net displacement 1.12 vs 0.315.
+- Cycle 116 has negative mean latent component-0 shift (-0.0565), while cycle 86 is positive on average (+0.0330).
+
+Interpretation: the first ROI-only rollout experiment shows that simple persistence is a hard baseline for these slowly varying selected particle crops, so future neural next-frame models must beat a strong near-static baseline and should report residual/difference metrics. The low-rank latent dynamics provide a compact physics-facing descriptor: synchronized event cycles 86 and 116 do not behave identically, with cycle 86 showing more latent movement and cycle 116 showing a more consistent negative latent shift. This supports treating degradation mode as a latent trajectory/phase-space problem rather than only a pixel MSE problem.
