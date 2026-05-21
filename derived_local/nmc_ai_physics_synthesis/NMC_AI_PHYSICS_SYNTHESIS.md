@@ -17,6 +17,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Persistence is the strongest raw next-frame baseline; DMD/velocity/learned residual experiments are most useful as residual and latent descriptors.
 - ROI event/control optical differences survive event-reference-cycle centering, especially cumulative normalized change, first-last decorrelation, latent net displacement, high-fraction growth, and ROI mean trend.
 - Frame count and protocol-block position strongly couple to ROI dynamics, so echem/protocol context must be a model covariate and a guardrail.
+- After residualizing available protocol/echem covariates and event-reference fixed effects, event/control separation remains in ROI mean delta, high-fraction delta, first-last correlation, cumulative change, DMD residual, and latent displacement.
 - Cycles 86 and 116 remain the strongest synchronized event-timing regimes; cycles 60 and 156 provide stronger single-particle morphology/latent-movement examples.
 - Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.
 
@@ -25,6 +26,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Strict no-selection-QC random forest: ROC-AUC 0.651, balanced accuracy 0.573.
 - Strict no-selection-QC logistic: ROC-AUC 0.625, balanced accuracy 0.562.
 - All physics plus QC random forest: ROC-AUC 0.797, balanced accuracy 0.688.
+- Protocol-conditioned residual logistic: ROC-AUC 0.672, balanced accuracy 0.682.
 
 Interpretation: the stricter model is above random but not deployable. QC/acquisition features improve apparent performance and should be treated as leakage-sensitive guardrails.
 
@@ -38,6 +40,17 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - roi_norm_mean_delta_centered_by_reference: event-control 0.010, p=8.084e-04
 - low_fraction_delta_centered_by_reference: event-control -0.046, p=9.843e-04
 - centroid_path_px_centered_by_reference: event-control -1.512, p=0.003
+
+## Top Protocol-Conditioned Event Effects
+
+- roi_norm_mean_delta_protocol_residual: event-control 0.003, p=4.424e-05
+- high_fraction_delta_protocol_residual: event-control 0.015, p=8.238e-05
+- low_fraction_delta_protocol_residual: event-control -0.015, p=4.707e-04
+- first_last_corr_protocol_residual: event-control -0.018, p=0.019
+- cumulative_abs_norm_change_protocol_residual: event-control 0.004, p=0.019
+- dmd_minus_persistence_mse_protocol_residual: event-control 4.515e-04, p=0.041
+- latent_net_displacement_protocol_residual: event-control 0.377, p=0.043
+- low_rank_dmd_mse_protocol_residual: event-control 4.593e-04, p=0.046
 
 ## Top ROI/Echem Or Protocol Couplings
 
@@ -71,7 +84,7 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Track phase-boundary movement: implemented_as_proxy. Evidence: Front/phase mobility descriptors and selected-front tracking exist; calibration table has 12 ROI rows. Limitation: Front masks are automatic; all selected calibrated front ROIs remain manual-QC pending.
 - Extract diffusion coefficients: partial_proxy_only. Evidence: Provisional 0.096 um/px calibration and apparent diffusion proxies were computed for 12 front ROIs. Limitation: The values are apparent optical-front contraction/expansion proxies, not validated diffusion coefficients.
 - Identify degradation modes: implemented_as_hypothesis_ranking. Evidence: Joint physics/rollout/echem degradation mode tables and multi-cycle ROI mobility rankings exist. Limitation: Modes are unsupervised/automatic and tied to the selected ROI cohort.
-- Correlate degradation with cycles, particle regions, and echem/protocol context: implemented_with_guardrail. Evidence: Multi-cycle ROI echem coupling found strong frame-count/protocol correlations and within-reference event/control optical shifts. Limitation: Protocol/frame-count confounding is strong; correlations are not causal physics.
+- Correlate degradation with cycles, particle regions, and echem/protocol context: implemented_with_guardrail. Evidence: Multi-cycle ROI echem coupling found strong frame-count/protocol correlations; protocol-conditioned residual tests still show event/control optical shifts. Limitation: Residualization reduces but does not eliminate confounding and cannot prove causality with 52 automatic ROIs.
 - Keep objectives and observations updated: implemented. Evidence: OBJECTIVES_OBSERVATIONS.md contains chronological experiment summaries and guardrails. Limitation: It is long and narrative; the new synthesis is the compact index.
 - Keep GitHub updated: local_commits_ready_remote_unverified. Evidence: Local git commits exist through the latest echem coupling and this synthesis can be committed. Limitation: Remote push must be verified separately because prior pushes were blocked by approval/network state.
 
@@ -79,9 +92,9 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 1. Manual QC the selected front/particle ROI previews and update the manifest with accepted/rejected labels.
 2. Expand the ROI cohort across more cycles after QC to reduce event-reference and protocol confounding.
-3. Fit echem/protocol-conditioned rollout and event-ranking models, reporting persistence-normalized residuals and uncertainty coverage.
-4. Recompute apparent diffusion/front-motion proxies only on QC-accepted fronts with confirmed spatial/time calibration.
-5. Convert the top ROI candidates into a labeled degradation-mode benchmark for future self-supervised video models.
+3. Recompute apparent diffusion/front-motion proxies only on QC-accepted fronts with confirmed spatial/time calibration.
+4. Convert the top ROI candidates into a labeled degradation-mode benchmark for future self-supervised video models.
+5. Grow protocol-conditioned residual models after adding more QC-accepted cycles and particle regions.
 
 ## Guardrail
 

@@ -942,3 +942,27 @@ Key result:
 
 Interpretation: the predictor signal is real relative to shuffled labels when QC/acquisition descriptors are included, but the stricter physics-only signal remains borderline in this small cohort. This strengthens the guardrail: the current classifier should be used for feature triage and experiment design, not as evidence of a deployable degradation detector.
 
+## 2026-05-21 Protocol-Conditioned ROI Event Effects
+
+Added and ran:
+
+`python scripts/tier4_protocol_conditioned_roi_effects.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_roi_effects`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_roi_effects`
+
+Local compact copy:
+
+`derived_local/protocol_conditioned_roi_effects`
+
+Key result:
+
+- Residualized 19 ROI optical/rollout descriptors against available protocol/echem covariates (`n_frames_percentile`, protocol-block position, voltage/current summaries, and duration) plus event-reference-cycle fixed effects.
+- Protocol/echem context explains substantial variance in several raw ROI descriptors: ROI mean delta 0.890, high-fraction delta 0.865, low-fraction delta 0.846, latent net displacement 0.770, cumulative absolute normalized change 0.766, first-last correlation 0.660, and high-fraction slope 0.654.
+- Despite that adjustment, event/control separation survives in residual space: ROI mean delta residual +0.00322 (p=4.42e-05), high-fraction delta residual +0.0145 (p=8.24e-05), low-fraction delta residual -0.0150 (p=4.71e-04), first-last correlation residual -0.0184 (p=0.0193), cumulative absolute normalized change residual +0.00386 (p=0.0193), DMD-minus-persistence residual +4.51e-04 (p=0.0407), latent net displacement residual +0.377 (p=0.0425), and low-rank DMD MSE residual +4.59e-04 (p=0.0464).
+- Leave-event-reference-out logistic classification using residualized descriptors gives mean ROC-AUC 0.672 and balanced accuracy 0.682.
+- Updated the tier4 synthesis report to include these protocol-conditioned results.
+
+Interpretation: this is the strongest guardrail-aware evidence so far that event ROIs differ from controls beyond obvious frame-count/protocol context. The result does not prove causality because the cohort is still 52 automatically selected ROIs, but it improves the project from raw correlations to conditioned optical/rollout event effects. These residualized descriptors should be the default input for any next event-ranking or degradation-mode model.
+

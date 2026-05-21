@@ -12,6 +12,8 @@
     "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/nmc_ai_physics_synthesis_summary.json"
   },
   "persistence_best_all_cycles": true,
+  "protocol_conditioned_residual_mean_balanced_accuracy": 0.6822916666666665,
+  "protocol_conditioned_residual_mean_roc_auc": 0.671875,
   "requirement_audit": [
     {
       "evidence": "agentic_research outputs plus derived tier1/tier2/tier3 experiment folders were created on Isambard and compact outputs synced locally.",
@@ -56,9 +58,9 @@
       "status": "implemented_as_hypothesis_ranking"
     },
     {
-      "evidence": "Multi-cycle ROI echem coupling found strong frame-count/protocol correlations and within-reference event/control optical shifts.",
-      "limitation": "Protocol/frame-count confounding is strong; correlations are not causal physics.",
-      "next_step": "Use echem/protocol covariates in downstream models and avoid raw detector claims without conditioning.",
+      "evidence": "Multi-cycle ROI echem coupling found strong frame-count/protocol correlations; protocol-conditioned residual tests still show event/control optical shifts.",
+      "limitation": "Residualization reduces but does not eliminate confounding and cannot prove causality with 52 automatic ROIs.",
+      "next_step": "Use protocol-conditioned residuals as the default event-effect readout and expand after manual QC.",
       "requirement": "Correlate degradation with cycles, particle regions, and echem/protocol context",
       "status": "implemented_with_guardrail"
     },
@@ -80,6 +82,88 @@
   "strict_logistic_mean_roc_auc": 0.625,
   "strict_rf_mean_balanced_accuracy": 0.5729166666666667,
   "strict_rf_mean_roc_auc": 0.6510416666666666,
+  "top_protocol_conditioned_event_control_tests": [
+    {
+      "control_mean": -0.0014879010345997408,
+      "event_mean": 0.0017358845403666458,
+      "event_minus_control": 0.003223785574966387,
+      "feature": "roi_norm_mean_delta_protocol_residual",
+      "mannwhitney_u": 559.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 4.4244928982705735e-05
+    },
+    {
+      "control_mean": -0.006713746410458703,
+      "event_mean": 0.007832704145536308,
+      "event_minus_control": 0.014546450555995011,
+      "feature": "high_fraction_delta_protocol_residual",
+      "mannwhitney_u": 551.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 8.238454452754937e-05
+    },
+    {
+      "control_mean": 0.006940535486263309,
+      "event_mean": -0.00809729140064137,
+      "event_minus_control": -0.015037826886904679,
+      "feature": "low_fraction_delta_protocol_residual",
+      "mannwhitney_u": 145.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.0004707215632002064
+    },
+    {
+      "control_mean": 0.008491098648249389,
+      "event_mean": -0.009906281756290927,
+      "event_minus_control": -0.018397380404540316,
+      "feature": "first_last_corr_protocol_residual",
+      "mannwhitney_u": 208.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.019266391492803608
+    },
+    {
+      "control_mean": -0.0017834846091198783,
+      "event_mean": 0.0020807320439731798,
+      "event_minus_control": 0.003864216653093058,
+      "feature": "cumulative_abs_norm_change_protocol_residual",
+      "mannwhitney_u": 464.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.019266391492803608
+    },
+    {
+      "control_mean": -0.00020838440042520435,
+      "event_mean": 0.00024311513382940577,
+      "event_minus_control": 0.0004514995342546101,
+      "feature": "dmd_minus_persistence_mse_protocol_residual",
+      "mannwhitney_u": 448.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.04069276775383134
+    },
+    {
+      "control_mean": -0.17392242757778423,
+      "event_mean": 0.20290949884073262,
+      "event_minus_control": 0.3768319264185168,
+      "feature": "latent_net_displacement_protocol_residual",
+      "mannwhitney_u": 447.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.04253052547903887
+    },
+    {
+      "control_mean": -0.00021196520206722587,
+      "event_mean": 0.0002472927357450966,
+      "event_minus_control": 0.0004592579378123225,
+      "feature": "low_rank_dmd_mse_protocol_residual",
+      "mannwhitney_u": 445.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.04641714267682965
+    }
+  ],
   "top_ranked_roi_candidates": [
     {
       "cohort_role": "control",

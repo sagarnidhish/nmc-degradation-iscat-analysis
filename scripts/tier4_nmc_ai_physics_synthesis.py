@@ -85,6 +85,7 @@ def main() -> None:
     event_sync = read_json(derived / "event_synchrony" / "event_synchrony_summary.json")
     front_mobility = read_json(derived / "multi_cycle_roi_mobility" / "multi_cycle_roi_mobility_summary.json")
     modes = read_json(derived / "roi_joint_physics_degradation_modes" / "roi_joint_physics_degradation_modes_summary.json")
+    conditioned = read_json(derived / "protocol_conditioned_roi_effects" / "protocol_conditioned_roi_effects_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -131,6 +132,9 @@ def main() -> None:
         top_rois = ranked_mobility[[c for c in top_roi_cols if c in ranked_mobility.columns]].head(10).to_dict("records")
     else:
         top_rois = []
+
+    conditioned_model = first_summary(conditioned, "model_summary", {})
+    conditioned_tests = top_items(first_summary(conditioned, "top_protocol_conditioned_event_control_tests", []), 8)
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -182,9 +186,9 @@ def main() -> None:
         evidence_row(
             "Correlate degradation with cycles, particle regions, and echem/protocol context",
             "implemented_with_guardrail",
-            "Multi-cycle ROI echem coupling found strong frame-count/protocol correlations and within-reference event/control optical shifts.",
-            "Protocol/frame-count confounding is strong; correlations are not causal physics.",
-            "Use echem/protocol covariates in downstream models and avoid raw detector claims without conditioning.",
+            "Multi-cycle ROI echem coupling found strong frame-count/protocol correlations; protocol-conditioned residual tests still show event/control optical shifts.",
+            "Residualization reduces but does not eliminate confounding and cannot prove causality with 52 automatic ROIs.",
+            "Use protocol-conditioned residuals as the default event-effect readout and expand after manual QC.",
         ),
         evidence_row(
             "Keep objectives and observations updated",
@@ -226,6 +230,7 @@ def main() -> None:
         "- Persistence is the strongest raw next-frame baseline; DMD/velocity/learned residual experiments are most useful as residual and latent descriptors.",
         "- ROI event/control optical differences survive event-reference-cycle centering, especially cumulative normalized change, first-last decorrelation, latent net displacement, high-fraction growth, and ROI mean trend.",
         "- Frame count and protocol-block position strongly couple to ROI dynamics, so echem/protocol context must be a model covariate and a guardrail.",
+        "- After residualizing available protocol/echem covariates and event-reference fixed effects, event/control separation remains in ROI mean delta, high-fraction delta, first-last correlation, cumulative change, DMD residual, and latent displacement.",
         "- Cycles 86 and 116 remain the strongest synchronized event-timing regimes; cycles 60 and 156 provide stronger single-particle morphology/latent-movement examples.",
         "- Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.",
         "",
@@ -234,6 +239,7 @@ def main() -> None:
         f"- Strict no-selection-QC random forest: ROC-AUC {fmt(strict_rf.get('mean_roc_auc'))}, balanced accuracy {fmt(strict_rf.get('mean_balanced_accuracy'))}.",
         f"- Strict no-selection-QC logistic: ROC-AUC {fmt(strict_logistic.get('mean_roc_auc'))}, balanced accuracy {fmt(strict_logistic.get('mean_balanced_accuracy'))}.",
         f"- All physics plus QC random forest: ROC-AUC {fmt(all_rf.get('mean_roc_auc'))}, balanced accuracy {fmt(all_rf.get('mean_balanced_accuracy'))}.",
+        f"- Protocol-conditioned residual logistic: ROC-AUC {fmt(conditioned_model.get('mean_roc_auc'))}, balanced accuracy {fmt(conditioned_model.get('mean_balanced_accuracy'))}.",
         "",
         "Interpretation: the stricter model is above random but not deployable. QC/acquisition features improve apparent performance and should be treated as leakage-sensitive guardrails.",
         "",
@@ -241,6 +247,16 @@ def main() -> None:
         "",
     ]
     for row in best_within:
+        report_lines.append(
+            f"- {row.get('feature')}: event-control {fmt(row.get('event_minus_control'))}, p={fmt(row.get('p_value'))}"
+        )
+
+    report_lines += [
+        "",
+        "## Top Protocol-Conditioned Event Effects",
+        "",
+    ]
+    for row in conditioned_tests:
         report_lines.append(
             f"- {row.get('feature')}: event-control {fmt(row.get('event_minus_control'))}, p={fmt(row.get('p_value'))}"
         )
@@ -279,9 +295,9 @@ def main() -> None:
         "",
         "1. Manual QC the selected front/particle ROI previews and update the manifest with accepted/rejected labels.",
         "2. Expand the ROI cohort across more cycles after QC to reduce event-reference and protocol confounding.",
-        "3. Fit echem/protocol-conditioned rollout and event-ranking models, reporting persistence-normalized residuals and uncertainty coverage.",
-        "4. Recompute apparent diffusion/front-motion proxies only on QC-accepted fronts with confirmed spatial/time calibration.",
-        "5. Convert the top ROI candidates into a labeled degradation-mode benchmark for future self-supervised video models.",
+        "3. Recompute apparent diffusion/front-motion proxies only on QC-accepted fronts with confirmed spatial/time calibration.",
+        "4. Convert the top ROI candidates into a labeled degradation-mode benchmark for future self-supervised video models.",
+        "5. Grow protocol-conditioned residual models after adding more QC-accepted cycles and particle regions.",
         "",
         "## Guardrail",
         "",
@@ -303,8 +319,11 @@ def main() -> None:
         "strict_rf_mean_balanced_accuracy": strict_rf.get("mean_balanced_accuracy"),
         "strict_logistic_mean_roc_auc": strict_logistic.get("mean_roc_auc"),
         "all_qc_rf_mean_roc_auc": all_rf.get("mean_roc_auc"),
+        "protocol_conditioned_residual_mean_roc_auc": conditioned_model.get("mean_roc_auc"),
+        "protocol_conditioned_residual_mean_balanced_accuracy": conditioned_model.get("mean_balanced_accuracy"),
         "top_within_reference_tests": best_within,
         "top_roi_echem_correlations": best_echem_corr,
+        "top_protocol_conditioned_event_control_tests": conditioned_tests,
         "top_ranked_roi_candidates": top_rois,
         "requirement_audit": audit,
         "outputs": {

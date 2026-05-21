@@ -1,0 +1,325 @@
+{
+  "features_residualized": [
+    "roi_norm_mean_delta",
+    "roi_norm_mean_slope",
+    "high_fraction_delta",
+    "high_fraction_slope",
+    "low_fraction_delta",
+    "high_radius2_delta_px2",
+    "high_radius2_slope_px2_per_frame",
+    "centroid_path_px",
+    "first_last_corr",
+    "cumulative_abs_norm_change",
+    "temporal_diff_energy",
+    "latent_path_length",
+    "latent_mean_step",
+    "latent_net_displacement",
+    "persistence_mse",
+    "velocity_mse",
+    "low_rank_dmd_mse",
+    "dmd_minus_persistence_mse",
+    "physics_no_qc_rf_event_probability"
+  ],
+  "guardrail": "Residualization reduces measured context effects but cannot prove causal event physics with 52 automatically selected ROIs.",
+  "model_summary": {
+    "folds": 4,
+    "mean_balanced_accuracy": 0.6822916666666665,
+    "mean_roc_auc": 0.671875
+  },
+  "n_control_roi": 28,
+  "n_event_roi": 24,
+  "n_rows": 52,
+  "protocol_echem_covariates": [
+    "n_frames_percentile",
+    "cycles_from_block_start",
+    "cycles_to_block_end",
+    "block_fraction_elapsed",
+    "V_mean",
+    "I_mean_mA",
+    "I_abs_mean_mA",
+    "duration_s"
+  ],
+  "source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/multi_cycle_roi_echem_joined.csv",
+  "top_protocol_conditioned_event_control_tests": [
+    {
+      "control_mean": -0.0014879010345997408,
+      "event_mean": 0.0017358845403666458,
+      "event_minus_control": 0.003223785574966387,
+      "feature": "roi_norm_mean_delta_protocol_residual",
+      "mannwhitney_u": 559.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 4.4244928982705735e-05
+    },
+    {
+      "control_mean": -0.006713746410458703,
+      "event_mean": 0.007832704145536308,
+      "event_minus_control": 0.014546450555995011,
+      "feature": "high_fraction_delta_protocol_residual",
+      "mannwhitney_u": 551.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 8.238454452754937e-05
+    },
+    {
+      "control_mean": 0.006940535486263309,
+      "event_mean": -0.00809729140064137,
+      "event_minus_control": -0.015037826886904679,
+      "feature": "low_fraction_delta_protocol_residual",
+      "mannwhitney_u": 145.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.0004707215632002064
+    },
+    {
+      "control_mean": 0.008491098648249389,
+      "event_mean": -0.009906281756290927,
+      "event_minus_control": -0.018397380404540316,
+      "feature": "first_last_corr_protocol_residual",
+      "mannwhitney_u": 208.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.019266391492803608
+    },
+    {
+      "control_mean": -0.0017834846091198783,
+      "event_mean": 0.0020807320439731798,
+      "event_minus_control": 0.003864216653093058,
+      "feature": "cumulative_abs_norm_change_protocol_residual",
+      "mannwhitney_u": 464.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.019266391492803608
+    },
+    {
+      "control_mean": -0.00020838440042520435,
+      "event_mean": 0.00024311513382940577,
+      "event_minus_control": 0.0004514995342546101,
+      "feature": "dmd_minus_persistence_mse_protocol_residual",
+      "mannwhitney_u": 448.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.04069276775383134
+    },
+    {
+      "control_mean": -0.17392242757778423,
+      "event_mean": 0.20290949884073262,
+      "event_minus_control": 0.3768319264185168,
+      "feature": "latent_net_displacement_protocol_residual",
+      "mannwhitney_u": 447.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.04253052547903887
+    },
+    {
+      "control_mean": -0.00021196520206722587,
+      "event_mean": 0.0002472927357450966,
+      "event_minus_control": 0.0004592579378123225,
+      "feature": "low_rank_dmd_mse_protocol_residual",
+      "mannwhitney_u": 445.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.04641714267682965
+    },
+    {
+      "control_mean": 0.3327108682703141,
+      "event_mean": -0.3881626796486961,
+      "event_minus_control": -0.7208735479190103,
+      "feature": "centroid_path_px_protocol_residual",
+      "mannwhitney_u": 236.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.06779304883178186
+    },
+    {
+      "control_mean": -7.56808170394838e-06,
+      "event_mean": 8.829428654607091e-06,
+      "event_minus_control": 1.639751035855547e-05,
+      "feature": "roi_norm_mean_slope_protocol_residual",
+      "mannwhitney_u": 434.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.07350717066135161
+    },
+    {
+      "control_mean": -3.4018382441301234,
+      "event_mean": 3.9688112848184773,
+      "event_minus_control": 7.370649528948601,
+      "feature": "high_radius2_delta_px2_protocol_residual",
+      "mannwhitney_u": 422.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.1165543280461957
+    },
+    {
+      "control_mean": -2.9162373526938417e-05,
+      "event_mean": 3.402276911476949e-05,
+      "event_minus_control": 6.31851426417079e-05,
+      "feature": "high_fraction_slope_protocol_residual",
+      "mannwhitney_u": 390.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.3260883233242168
+    }
+  ],
+  "top_protocol_context_fits": [
+    {
+      "feature": "roi_norm_mean_delta",
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "variance_explained_by_protocol_context": 0.8898005676224245
+    },
+    {
+      "feature": "high_fraction_delta",
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "variance_explained_by_protocol_context": 0.8650980584817293
+    },
+    {
+      "feature": "low_fraction_delta",
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "variance_explained_by_protocol_context": 0.8456929374261606
+    },
+    {
+      "feature": "latent_net_displacement",
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "variance_explained_by_protocol_context": 0.7702496454809311
+    },
+    {
+      "feature": "cumulative_abs_norm_change",
+      "n": 52,
+      "ridge_alpha": 4.641588833612772,
+      "variance_explained_by_protocol_context": 0.7658716232942657
+    },
+    {
+      "feature": "roi_norm_mean_slope",
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "variance_explained_by_protocol_context": 0.7170342715239539
+    },
+    {
+      "feature": "first_last_corr",
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "variance_explained_by_protocol_context": 0.6598821493372627
+    },
+    {
+      "feature": "high_fraction_slope",
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "variance_explained_by_protocol_context": 0.6544363703135186
+    },
+    {
+      "feature": "latent_path_length",
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "variance_explained_by_protocol_context": 0.5986685873557864
+    },
+    {
+      "feature": "latent_mean_step",
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "variance_explained_by_protocol_context": 0.5986685825607956
+    },
+    {
+      "feature": "centroid_path_px",
+      "n": 52,
+      "ridge_alpha": 10.0,
+      "variance_explained_by_protocol_context": 0.5317713952699574
+    },
+    {
+      "feature": "dmd_minus_persistence_mse",
+      "n": 52,
+      "ridge_alpha": 46.41588833612773,
+      "variance_explained_by_protocol_context": 0.3521832808963117
+    }
+  ],
+  "top_residual_context_correlations": [
+    {
+      "context_feature": "cycles_to_block_end",
+      "n": 52,
+      "p_value": 0.021115410333843652,
+      "residual_feature": "velocity_mse_protocol_residual",
+      "rho": -0.3191192785949713
+    },
+    {
+      "context_feature": "I_mean_mA",
+      "n": 38,
+      "p_value": 0.07828915257631854,
+      "residual_feature": "high_radius2_delta_px2_protocol_residual",
+      "rho": -0.28914592830158914
+    },
+    {
+      "context_feature": "I_mean_mA",
+      "n": 38,
+      "p_value": 0.09117074159447414,
+      "residual_feature": "high_radius2_slope_px2_per_frame_protocol_residual",
+      "rho": -0.27788910208526774
+    },
+    {
+      "context_feature": "cycles_to_block_end",
+      "n": 52,
+      "p_value": 0.1637540903396211,
+      "residual_feature": "physics_no_qc_rf_event_probability_protocol_residual",
+      "rho": 0.19599843455404314
+    },
+    {
+      "context_feature": "I_mean_mA",
+      "n": 38,
+      "p_value": 0.1807360531828029,
+      "residual_feature": "first_last_corr_protocol_residual",
+      "rho": -0.22182569308633368
+    },
+    {
+      "context_feature": "n_frames_percentile",
+      "n": 52,
+      "p_value": 0.32765377817761315,
+      "residual_feature": "high_radius2_delta_px2_protocol_residual",
+      "rho": -0.13845260921218133
+    },
+    {
+      "context_feature": "V_mean",
+      "n": 38,
+      "p_value": 0.3358564368537914,
+      "residual_feature": "first_last_corr_protocol_residual",
+      "rho": -0.16046495410324832
+    },
+    {
+      "context_feature": "cycles_to_block_end",
+      "n": 52,
+      "p_value": 0.3402094976597055,
+      "residual_feature": "high_radius2_slope_px2_per_frame_protocol_residual",
+      "rho": 0.13493547048930002
+    },
+    {
+      "context_feature": "I_mean_mA",
+      "n": 38,
+      "p_value": 0.346052216319124,
+      "residual_feature": "dmd_minus_persistence_mse_protocol_residual",
+      "rho": 0.1571541228631538
+    },
+    {
+      "context_feature": "cycles_from_block_start",
+      "n": 52,
+      "p_value": 0.3481419024676365,
+      "residual_feature": "physics_no_qc_rf_event_probability_protocol_residual",
+      "rho": 0.1327549056759361
+    },
+    {
+      "context_feature": "V_mean",
+      "n": 38,
+      "p_value": 0.3740981515930236,
+      "residual_feature": "low_fraction_delta_protocol_residual",
+      "rho": 0.14834147214063997
+    },
+    {
+      "context_feature": "n_frames_percentile",
+      "n": 52,
+      "p_value": 0.3778487313544493,
+      "residual_feature": "roi_norm_mean_delta_protocol_residual",
+      "rho": 0.12484843492391973
+    }
+  ]
+}
