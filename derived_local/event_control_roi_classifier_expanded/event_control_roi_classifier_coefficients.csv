@@ -1,0 +1,17 @@
+test_pair,feature,coefficient
+86,roi_norm_mean_delta_last_minus_first,0.1566983003510548
+86,roi_mean_delta_last_minus_first,0.2072174781511127
+86,stage_drift_xy_sampled,-1.2195468345541796
+86,temporal_diff_energy,0.1869000984000483
+86,cumulative_abs_norm_change,0.154685388089447
+86,first_last_corr,0.15507475177894217
+86,mean_norm_intensity,0.1919855707130306
+86,std_norm_intensity,0.30349048479341617
+116,roi_norm_mean_delta_last_minus_first,0.24877277573073622
+116,roi_mean_delta_last_minus_first,0.4462480027318045
+116,stage_drift_xy_sampled,0.3237501775200223
+116,temporal_diff_energy,-0.17960640883188675
+116,cumulative_abs_norm_change,0.7532466270264477
+116,first_last_corr,-0.8657535129237428
+116,mean_norm_intensity,-0.17064390870669538
+116,std_norm_intensity,0.31335711009108386

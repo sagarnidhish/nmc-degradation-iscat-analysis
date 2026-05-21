@@ -114,6 +114,18 @@ def extract_observations(root: Path) -> List[Dict[str, Any]]:
             "evidence": str(derived / "event_vs_control_roi_physics" / "event_vs_control_roi_physics_summary.json"),
             "strength": "moderate_control_check",
         })
+    evctrl_exp = read_json(derived / "event_control_roi_comparison_expanded" / "event_control_roi_comparison_summary.json")
+    clf_exp = read_json(derived / "event_control_roi_classifier_expanded" / "event_control_roi_classifier_summary.json")
+    if evctrl_exp:
+        top = evctrl_exp.get("top_metric_differences", [])[:2]
+        bits = [f"{r.get('metric')} d={finite_float(r.get('cohens_d_event_vs_control')):.3g}, p={finite_float(r.get('mannwhitney_p')):.3g}" for r in top]
+        clf_bit = f"; expanded classifier mean ROC-AUC {finite_float(clf_exp.get('mean_roc_auc')):.3g}" if clf_exp else ""
+        observations.append({
+            "topic": "event_control_roi_comparison_expanded",
+            "observation": f"Expanded matched controls to {evctrl_exp.get('n_control_roi', 'unknown')} ROIs; strongest event-control shifts: {'; '.join(bits)}{clf_bit}.",
+            "evidence": str(derived / "event_control_roi_comparison_expanded" / "event_control_roi_comparison_summary.json"),
+            "strength": "moderate_control_check",
+        })
     baselines = read_csv_if_exists(derived / "particle_event_targets" / "particle_event_feature_baselines.csv")
     if not baselines.empty and "f1" in baselines:
         observations.append({
@@ -163,7 +175,13 @@ def next_actions(observations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             "action": "Review candidate front overlays for cycles 86/116 and select validated ROIs for calibrated front tracking.",
             "expected_output": "validated_front_candidates.csv and manual QC decisions",
         })
-    if "event_vs_control_roi_physics" in topics:
+    if "event_control_roi_comparison_expanded" in topics:
+        actions.append({
+            "priority": 5,
+            "action": "Add manual QC/spatial calibration for top joint-mode ROIs and expand event/control extraction to additional non-synchronized candidate cycles.",
+            "expected_output": "calibrated top-mode ROI report and expanded multi-cycle ROI cohort",
+        })
+    elif "event_vs_control_roi_physics" in topics:
         actions.append({
             "priority": 5,
             "action": "Scale ROI/control sampling to additional cycles and add manual QC/spatial calibration for the top joint-mode ROIs.",

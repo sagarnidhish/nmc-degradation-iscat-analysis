@@ -3,4 +3,4 @@ priority,action,expected_output
 2,Run protocol-local echem window scan around cycles 86 and 116.,local_echem_window_features.csv with neighbor-cycle controls
 3,Generate ROI/event visual QC manifest for raw frame inspection.,event_roi_qc_manifest.csv and review checklist
 4,Add manual QC/spatial calibration metadata for selected front ROIs and convert pixel-scale slopes to calibrated units.,front_roi_qc_calibration.csv and calibrated_front_tracking.csv
-5,Scale ROI/control sampling to additional cycles and add manual QC/spatial calibration for the top joint-mode ROIs.,expanded_roi_control_manifest.csv and calibrated top-mode ROI report
+5,Add manual QC/spatial calibration for top joint-mode ROIs and expand event/control extraction to additional non-synchronized candidate cycles.,calibrated top-mode ROI report and expanded multi-cycle ROI cohort

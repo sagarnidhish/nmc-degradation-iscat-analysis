@@ -1,0 +1,75 @@
+{
+  "features": [
+    "roi_norm_mean_delta_last_minus_first",
+    "roi_mean_delta_last_minus_first",
+    "stage_drift_xy_sampled",
+    "temporal_diff_energy",
+    "cumulative_abs_norm_change",
+    "first_last_corr",
+    "mean_norm_intensity",
+    "std_norm_intensity"
+  ],
+  "guardrail": "Small pair-holdout classifier on automatic ROIs; use as feature ranking, not definitive validation.",
+  "mean_accuracy": 0.37192118226600984,
+  "mean_average_precision": 0.347798131925921,
+  "mean_roc_auc": 0.2895833333333333,
+  "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_metrics.csv",
+  "n_control": 32,
+  "n_event": 11,
+  "n_rows": 43,
+  "pair_holdout": [
+    {
+      "accuracy": 0.1724137931034483,
+      "average_precision": 0.11562068387626197,
+      "mean_event_probability_control": 0.8552184067875371,
+      "mean_event_probability_true_event": 0.5773837679236624,
+      "n_test": 29,
+      "n_train": 14,
+      "roc_auc": 0.1,
+      "test_pair": 86
+    },
+    {
+      "accuracy": 0.5714285714285714,
+      "average_precision": 0.57997557997558,
+      "mean_event_probability_control": 0.09596030145744787,
+      "mean_event_probability_true_event": 0.13690471199462426,
+      "n_test": 14,
+      "n_train": 29,
+      "roc_auc": 0.47916666666666663,
+      "test_pair": 116
+    }
+  ],
+  "plot_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_classifier_expanded/event_control_roi_classifier.png",
+  "top_coefficients": [
+    {
+      "abs_mean_coefficient": 0.45396600755794736,
+      "coefficient": 0.45396600755794736,
+      "feature": "cumulative_abs_norm_change"
+    },
+    {
+      "abs_mean_coefficient": 0.44789832851707867,
+      "coefficient": -0.44789832851707867,
+      "feature": "stage_drift_xy_sampled"
+    },
+    {
+      "abs_mean_coefficient": 0.35533938057240033,
+      "coefficient": -0.35533938057240033,
+      "feature": "first_last_corr"
+    },
+    {
+      "abs_mean_coefficient": 0.3267327404414586,
+      "coefficient": 0.3267327404414586,
+      "feature": "roi_mean_delta_last_minus_first"
+    },
+    {
+      "abs_mean_coefficient": 0.30842379744225,
+      "coefficient": 0.30842379744225,
+      "feature": "std_norm_intensity"
+    },
+    {
+      "abs_mean_coefficient": 0.2027355380408955,
+      "coefficient": 0.2027355380408955,
+      "feature": "roi_norm_mean_delta_last_minus_first"
+    }
+  ]
+}

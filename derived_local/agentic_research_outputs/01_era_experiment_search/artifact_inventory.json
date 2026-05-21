@@ -1,9 +1,12 @@
 {
   "available": {
     "control_roi_selection": true,
+    "control_roi_selection_expanded": true,
     "echem_cycle_summary": true,
     "event_baselines": true,
     "event_candidate_fronts": true,
+    "event_control_roi_classifier_expanded": true,
+    "event_control_roi_comparison_expanded": true,
     "event_cycle_table": true,
     "event_echem": true,
     "event_synchrony": true,
@@ -23,9 +26,12 @@
   "derived": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived",
   "paths": {
     "control_roi_selection": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection/control_roi_selection_summary.json",
+    "control_roi_selection_expanded": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection_expanded/control_roi_selection_summary.json",
     "echem_cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/echem_cycle_summary.csv",
     "event_baselines": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",
     "event_candidate_fronts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/event_candidate_fronts_summary.json",
+    "event_control_roi_classifier_expanded": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_classifier_expanded/event_control_roi_classifier_summary.json",
+    "event_control_roi_comparison_expanded": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_comparison_summary.json",
     "event_cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
     "event_echem": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_coupling_summary.json",
     "event_synchrony": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_synchrony/event_synchrony_summary.json",

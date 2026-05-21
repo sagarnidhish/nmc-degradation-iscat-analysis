@@ -2,9 +2,12 @@
   "artifacts": {
     "available": {
       "control_roi_selection": true,
+      "control_roi_selection_expanded": true,
       "echem_cycle_summary": true,
       "event_baselines": true,
       "event_candidate_fronts": true,
+      "event_control_roi_classifier_expanded": true,
+      "event_control_roi_comparison_expanded": true,
       "event_cycle_table": true,
       "event_echem": true,
       "event_synchrony": true,
@@ -24,9 +27,12 @@
     "derived": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived",
     "paths": {
       "control_roi_selection": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection/control_roi_selection_summary.json",
+      "control_roi_selection_expanded": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection_expanded/control_roi_selection_summary.json",
       "echem_cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/echem_cycle_summary.csv",
       "event_baselines": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",
       "event_candidate_fronts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/event_candidate_fronts_summary.json",
+      "event_control_roi_classifier_expanded": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_classifier_expanded/event_control_roi_classifier_summary.json",
+      "event_control_roi_comparison_expanded": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_comparison_summary.json",
       "event_cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
       "event_echem": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_coupling_summary.json",
       "event_synchrony": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_synchrony/event_synchrony_summary.json",
@@ -67,8 +73,8 @@
       "priority": 4
     },
     {
-      "action": "Scale ROI/control sampling to additional cycles and add manual QC/spatial calibration for the top joint-mode ROIs.",
-      "expected_output": "expanded_roi_control_manifest.csv and calibrated top-mode ROI report",
+      "action": "Add manual QC/spatial calibration for top joint-mode ROIs and expand event/control extraction to additional non-synchronized candidate cycles.",
+      "expected_output": "calibrated top-mode ROI report and expanded multi-cycle ROI cohort",
       "priority": 5
     }
   ],
@@ -138,6 +144,12 @@
       "observation": "Compared 11 event ROIs against 16 matched control ROIs; strongest shifts: high_fraction_slope_per_frame p=0.000503; roi_mean_slope_per_frame p=0.00123. Leave-pair classifier did not generalize well, so controls are a guardrail.",
       "strength": "moderate_control_check",
       "topic": "event_vs_control_roi_physics"
+    },
+    {
+      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_comparison_summary.json",
+      "observation": "Expanded matched controls to 32 ROIs; strongest event-control shifts: first_last_corr d=-1.5, p=0.0187; cumulative_abs_norm_change d=1.48, p=0.01; expanded classifier mean ROC-AUC 0.29.",
+      "strength": "moderate_control_check",
+      "topic": "event_control_roi_comparison_expanded"
     },
     {
       "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",

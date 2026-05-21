@@ -1,0 +1,60 @@
+{
+  "control_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences_expanded",
+  "event_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences",
+  "guardrail": "Controls are automatic reconstructed non-event ROIs from adjacent source segments; this is a matched-control screen, not manual annotation.",
+  "n_control_roi": 32,
+  "n_event_roi": 11,
+  "plot_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_comparison.png",
+  "top_metric_differences": [
+    {
+      "cohens_d_event_vs_control": -1.5022943532848814,
+      "control_mean": 0.9946678481309748,
+      "control_median": 0.9949802905274635,
+      "event_mean": 0.9854776878654189,
+      "event_median": 0.9919201759637432,
+      "event_minus_control_mean": -0.009190160265555858,
+      "mannwhitney_p": 0.018669419076246436,
+      "metric": "first_last_corr"
+    },
+    {
+      "cohens_d_event_vs_control": 1.483802083870796,
+      "control_mean": 0.008480100441374816,
+      "control_median": 0.008278355468064547,
+      "event_mean": 0.011974201283671639,
+      "event_median": 0.011798858642578125,
+      "event_minus_control_mean": 0.0034941008422968226,
+      "mannwhitney_p": 0.01003132183694552,
+      "metric": "cumulative_abs_norm_change"
+    },
+    {
+      "cohens_d_event_vs_control": 0.887630362742876,
+      "control_mean": 0.13116391049697995,
+      "control_median": 0.12894510477781296,
+      "event_mean": 0.13909481330351395,
+      "event_median": 0.14160476624965668,
+      "event_minus_control_mean": 0.007930902806533996,
+      "mannwhitney_p": 0.018669419076246436,
+      "metric": "std_norm_intensity"
+    },
+    {
+      "cohens_d_event_vs_control": 0.47605756299596946,
+      "control_mean": 0.09359867102466524,
+      "control_median": 0.094638392329216,
+      "event_mean": 0.10076360607689078,
+      "event_median": 0.0915786400437355,
+      "event_minus_control_mean": 0.007164935052225541,
+      "mannwhitney_p": 0.8783248501010348,
+      "metric": "mean_norm_intensity"
+    },
+    {
+      "cohens_d_event_vs_control": 0.37370106477730586,
+      "control_mean": -7.4940948486328125,
+      "control_median": -6.736328125,
+      "event_mean": -4.5810546875,
+      "event_median": -6.7822265625,
+      "event_minus_control_mean": 2.9130401611328125,
+      "mannwhitney_p": 0.49526410980778757,
+      "metric": "roi_mean_delta_last_minus_first"
+    }
+  ]
+}
