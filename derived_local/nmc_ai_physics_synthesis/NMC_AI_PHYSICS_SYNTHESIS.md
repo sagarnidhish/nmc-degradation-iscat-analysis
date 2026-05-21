@@ -35,6 +35,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Particle-mask stability ROI/frame rows: 52 / 4992
 - Masked ROI rollout frame rows: 4992
 - Masked rollout cycle-warning ROI cycles/features: 11 / 105
+- Masked residual transition ROI/method rows: 156
 - Diffusion sanity selected-front/publication candidates: 12 / 0
 - Control-balanced high-res front tracking/sanity candidates: 40 / 0
 - Weak-label benchmark trainable positives/negatives: 3 / 4
@@ -77,6 +78,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction 0.000, accepted-area CV 0.042, centroid path 73.607 px; event/control mask instability is not significantly different in the current cohort.
 - Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for 52 of 52 ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho=0.637, p=3.909e-07).
 - Cycle-collapsed masked-rollout warning audit covers 11 observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p=0.014), while future-drop evaluation is underpowered with only 1 positive 8-cycle warning case.
+- Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
 ## Model Readout
@@ -528,6 +530,36 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Undercoverage priority cycle156_rank7_obj27 persistence: q90 undercoverage 1.000, priority 3.471, role event
 - Undercoverage priority cycle156_rank2_obj2 low_rank_dmd: q90 undercoverage 0.781, priority 3.401, role event
 - Guardrail: Empirical residual quantiles are a calibration audit for ROI-only rollout baselines. They are not a generative uncertainty model, not calibrated diffusion, and not manual QC.
+
+## Masked Residual Transition Timing
+
+- ROI/method rows/permutations: 156 / 5000
+- ROI count: 52
+- Alignment low_rank_dmd weighted_center_distance_to_transition_frac: median distance 0.196, null mean 0.250, empirical p=0.056, n=52
+- Alignment low_rank_dmd peak_distance_to_transition_frac: median distance 0.453, null mean 0.419, empirical p=0.714, n=52
+- Alignment velocity weighted_center_distance_to_transition_frac: median distance 0.279, null mean 0.250, empirical p=0.798, n=52
+- Alignment persistence peak_distance_to_transition_frac: median distance 0.346, null mean 0.299, empirical p=0.828, n=52
+- Alignment velocity peak_distance_to_transition_frac: median distance 0.357, null mean 0.299, empirical p=0.886, n=52
+- Alignment persistence weighted_center_distance_to_transition_frac: median distance 0.319, null mean 0.253, empirical p=0.966, n=52
+- Event/control timing persistence near_transition_residual_fraction: median event-control 0.069, p=0.068, n=24/28
+- Event/control timing low_rank_dmd peak_distance_to_transition_frac: median event-control 0.122, p=0.183, n=24/28
+- Event/control timing velocity near_transition_residual_fraction: median event-control 0.053, p=0.209, n=24/28
+- Event/control timing low_rank_dmd near_minus_far_particle_mse_median: median event-control -5.138e-04, p=0.317, n=24/28
+- Event/control timing low_rank_dmd particle_to_nonparticle_mse_ratio_median: median event-control -0.444, p=0.354, n=24/28
+- Event/control timing low_rank_dmd weighted_center_distance_to_transition_frac: median event-control 0.042, p=0.393, n=24/28
+- Timing/kinetics link persistence particle_to_nonparticle_mse_ratio_median vs q70_max_abs_rate_per_s: rho=0.518, p=8.420e-05, n=52
+- Timing/kinetics link persistence particle_to_nonparticle_mse_ratio_median vs q80_transformed_fraction_delta: rho=0.490, p=2.286e-04, n=52
+- Timing/kinetics link persistence particle_to_nonparticle_mse_ratio_median vs q80_max_abs_rate_per_s: rho=0.489, p=2.310e-04, n=52
+- Timing/kinetics link low_rank_dmd near_minus_far_particle_mse_median vs q70_transformed_fraction_delta: rho=-0.474, p=3.847e-04, n=52
+- Timing/kinetics link persistence particle_to_nonparticle_mse_ratio_median vs q70_transformed_fraction_delta: rho=0.438, p=0.001, n=52
+- Timing/kinetics link low_rank_dmd near_minus_far_particle_mse_median vs q80_transformed_fraction_delta: rho=-0.421, p=0.002, n=52
+- Near-transition residual ROI cycle158_rank2_obj1 velocity (control, cycle 158): near fraction 0.860, peak distance 0.021, weighted distance 0.048
+- Near-transition residual ROI cycle158_rank2_obj1 persistence (control, cycle 158): near fraction 0.773, peak distance 0.021, weighted distance 0.046
+- Near-transition residual ROI cycle86_rank4_obj9 persistence (event, cycle 86): near fraction 0.696, peak distance 0.044, weighted distance 0.006
+- Near-transition residual ROI cycle86_rank8_obj17 persistence (event, cycle 86): near fraction 0.645, peak distance 0.054, weighted distance 0.008
+- Near-transition residual ROI cycle86_rank5_obj8 persistence (event, cycle 86): near fraction 0.626, peak distance 0.044, weighted distance 0.001
+- Near-transition residual ROI cycle86_rank3_obj5 persistence (event, cycle 86): near fraction 0.597, peak distance 0.033, weighted distance 0.015
+- Guardrail: Automatic phase-kinetic transition timing and masked rollout residual timing audit; not manual front annotation or calibrated transport.
 
 ## Masked Rollout Cycle Warning
 

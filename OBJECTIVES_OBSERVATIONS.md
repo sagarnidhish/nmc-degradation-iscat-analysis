@@ -1938,3 +1938,33 @@ Key result:
 
 Interpretation: masked particle-local rollout residuals are useful as same-cycle degradation-state descriptors and review-priority signals. The current selected ROI-cycle subset does not prove future early warning because future-positive counts are too sparse; expanding ROI extraction beyond event-centered windows is still required for a real warning model.
 
+## 2026-05-22 Masked Residual Transition Timing Audit
+
+Added and ran:
+
+`scripts/tier4_masked_residual_transition_timing.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_transition_timing --n-permutation 5000`
+
+Then regenerated the synthesis:
+
+`python scripts/tier4_nmc_ai_physics_synthesis.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_transition_timing`
+
+Local compact copy:
+
+`derived_local/masked_residual_transition_timing`
+
+Key result:
+
+- Joined masked ROI rollout frame metrics to automatic phase-kinetics transition timing for 52 ROIs and 156 ROI-method rows, with 5,000 permutation draws for method-level timing alignment.
+- Low-rank DMD residual weighted centers are closer to automatic phase-transition centers than the random-timing null at borderline strength: median distance 0.1960 of the evaluation window, null mean 0.2501, null p05 0.1945, empirical p=0.05599.
+- Peak-frame timing does not support the same claim. Low-rank DMD peak distance has empirical p=0.714, and persistence/velocity peak timing are also non-significant.
+- Event/control timing separation is weak. The strongest trend is persistence near-transition residual fraction, median event-control +0.0692, Mann-Whitney p=0.0678; low-rank DMD and velocity near-transition fractions are not significant.
+- Persistence particle/nonparticle residual ratios track kinetic-rate descriptors: rho=0.518 vs q70 max absolute rate, p=8.42e-5; rho=0.490 vs q80 transformed-fraction delta, p=2.29e-4; rho=0.489 vs q80 max absolute rate, p=2.31e-4.
+- Low-rank DMD near-minus-far particle residuals are anticorrelated with q70/q80 transformed-fraction deltas, rho=-0.474 and -0.421, respectively.
+- Top near-transition residual examples include `cycle158_rank2_obj1` for velocity and persistence, plus event-cycle 86 ROIs (`cycle86_rank4_obj9`, `cycle86_rank8_obj17`, `cycle86_rank5_obj8`, `cycle86_rank3_obj5`) whose residual centers sit close to automatic transition centers.
+- The project synthesis now includes a Masked Residual Transition Timing section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this adds a timing guardrail between AI residuals and optical phase kinetics. There is a borderline low-rank DMD weighted-center alignment signal and clear kinetic-rate correlations, but no robust peak-frame timing alignment or strong event/control separation. Treat it as evidence that masked residual energy partly reflects phase-transition kinetics, not as a manual front annotation or calibrated transport result.

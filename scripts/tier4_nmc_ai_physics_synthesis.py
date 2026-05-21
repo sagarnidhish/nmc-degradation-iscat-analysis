@@ -118,6 +118,7 @@ def main() -> None:
     particle_mask = read_json(derived / "particle_mask_stability_audit" / "particle_mask_stability_audit_summary.json")
     masked_rollout = read_json(derived / "masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
     masked_cycle_warning = read_json(derived / "masked_rollout_cycle_warning" / "masked_rollout_cycle_warning_summary.json")
+    masked_residual_timing = read_json(derived / "masked_residual_transition_timing" / "masked_residual_transition_timing_summary.json")
     diffusion_sanity = read_json(derived / "diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
     control_balanced_front_tracking = read_json(derived / "control_balanced_front_tracking" / "selected_front_roi_tracking_summary.json")
     control_balanced_diffusion_sanity = read_json(derived / "control_balanced_diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
@@ -253,6 +254,10 @@ def main() -> None:
     masked_cycle_warning_corr = top_items(first_summary(masked_cycle_warning, "top_correlations", []), 12)
     masked_cycle_warning_top = top_items(first_summary(masked_cycle_warning, "top_warning_cycles", []), 12)
     masked_cycle_warning_targets = first_summary(masked_cycle_warning, "target_positive_counts", {}) or {}
+    masked_residual_timing_align = top_items(first_summary(masked_residual_timing, "top_alignment_tests", []), 10)
+    masked_residual_timing_tests = top_items(first_summary(masked_residual_timing, "top_event_control_tests", []), 12)
+    masked_residual_timing_corr = top_items(first_summary(masked_residual_timing, "top_correlations", []), 12)
+    masked_residual_timing_top = top_items(first_summary(masked_residual_timing, "top_near_transition_residual_rois", []), 12)
     diffusion_sanity_gate = top_items(first_summary(diffusion_sanity, "gate_counts", []), 12)
     diffusion_sanity_candidates = top_items(first_summary(diffusion_sanity, "top_automatic_candidates", []), 12)
     diffusion_sanity_corr = top_items(first_summary(diffusion_sanity, "top_correlations", []), 8)
@@ -382,6 +387,7 @@ def main() -> None:
         f"- Particle-mask stability ROI/frame rows: {first_summary(particle_mask, 'n_roi', 0)} / {first_summary(particle_mask, 'n_frames_total', 0)}",
         f"- Masked ROI rollout frame rows: {first_summary(masked_rollout, 'n_frame_metric_rows', 0)}",
         f"- Masked rollout cycle-warning ROI cycles/features: {first_summary(masked_cycle_warning, 'n_roi_cycles', 0)} / {first_summary(masked_cycle_warning, 'n_rollout_features_tested', 0)}",
+        f"- Masked residual transition ROI/method rows: {first_summary(masked_residual_timing, 'n_roi_method_rows', 0)}",
         f"- Diffusion sanity selected-front/publication candidates: {first_summary(diffusion_sanity, 'n_selected_front_rois', 0)} / {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
         f"- Control-balanced high-res front tracking/sanity candidates: {first_summary(control_balanced_front_tracking, 'n_tracked_rois', 0)} / {first_summary(control_balanced_diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
         f"- Weak-label benchmark trainable positives/negatives: {first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)}",
@@ -424,6 +430,7 @@ def main() -> None:
         f"- Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction {fmt(particle_mask_overall.get('median_fallback_frame_fraction'))}, accepted-area CV {fmt(particle_mask_overall.get('median_accepted_area_cv'))}, centroid path {fmt(particle_mask_overall.get('median_centroid_path_px'))} px; event/control mask instability is not significantly different in the current cohort.",
         f"- Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for {masked_rollout_best_counts.get('persistence', 0)} of {first_summary(masked_rollout, 'n_roi', 0)} ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho={fmt((masked_rollout_corr[0] if masked_rollout_corr else {}).get('spearman_rho'))}, p={fmt((masked_rollout_corr[0] if masked_rollout_corr else {}).get('p_value'))}).",
         f"- Cycle-collapsed masked-rollout warning audit covers {first_summary(masked_cycle_warning, 'n_roi_cycles', 0)} observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p={fmt((masked_cycle_warning_tests[0] if masked_cycle_warning_tests else {}).get('permutation_p_abs_median_diff'))}), while future-drop evaluation is underpowered with only {masked_cycle_warning_targets.get('future_any_drop_within_8cycles', 0)} positive 8-cycle warning case.",
+        f"- Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p={fmt((masked_residual_timing_align[0] if masked_residual_timing_align else {}).get('empirical_p_distance_le_observed'))}), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.",
         f"- Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: {first_summary(weak_label_benchmark, 'n_trainable_weak_label_rows', 0)} trainable weak rows ({first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} positive / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)} negative), and only {weak_label_leakage.get('n_usable_binary_folds', 0)} leave-reference fold is class-balanced enough for binary evaluation.",
         "",
         "## Model Readout",
@@ -869,6 +876,31 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Masked Residual Transition Timing",
+        "",
+        f"- ROI/method rows/permutations: {first_summary(masked_residual_timing, 'n_roi_method_rows', 0)} / {first_summary(masked_residual_timing, 'n_permutation', 0)}",
+        f"- ROI count: {first_summary(masked_residual_timing, 'n_roi', 0)}",
+    ]
+    for row in masked_residual_timing_align[:6]:
+        report_lines.append(
+            f"- Alignment {row.get('method')} {row.get('distance_feature')}: median distance {fmt(row.get('median_distance_to_transition'))}, null mean {fmt(row.get('null_median_distance_mean'))}, empirical p={fmt(row.get('empirical_p_distance_le_observed'))}, n={fmt(row.get('n_roi'), 0)}"
+        )
+    for row in masked_residual_timing_tests[:6]:
+        report_lines.append(
+            f"- Event/control timing {row.get('method')} {row.get('feature')}: median event-control {fmt(row.get('median_diff_a_minus_b'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n_a'), 0)}/{fmt(row.get('n_b'), 0)}"
+        )
+    for row in masked_residual_timing_corr[:6]:
+        report_lines.append(
+            f"- Timing/kinetics link {row.get('method')} {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in masked_residual_timing_top[:6]:
+        report_lines.append(
+            f"- Near-transition residual ROI {row.get('roi_id')} {row.get('method')} ({row.get('cohort_role')}, cycle {fmt(row.get('cycleNo'), 0)}): near fraction {fmt(row.get('near_transition_residual_fraction'))}, peak distance {fmt(row.get('peak_distance_to_transition_frac'))}, weighted distance {fmt(row.get('weighted_center_distance_to_transition_frac'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(masked_residual_timing, 'guardrail', 'Masked residual timing audit unavailable.')}")
+
+    report_lines += [
+        "",
         "## Masked Rollout Cycle Warning",
         "",
         f"- ROI cycles/features/permutations: {first_summary(masked_cycle_warning, 'n_roi_cycles', 0)} / {first_summary(masked_cycle_warning, 'n_rollout_features_tested', 0)} / {first_summary(masked_cycle_warning, 'n_permutation', 0)}",
@@ -887,6 +919,7 @@ def main() -> None:
             f"- Warning-ranked cycle {fmt(row.get('cycleNo'), 0)}: score {fmt(row.get('masked_rollout_cycle_warning_score'))}, abrupt_drop={fmt(row.get('any_abrupt_drop'), 0)}, future8={fmt(row.get('future_any_drop_within_8cycles'), 0)}, n_roi={fmt(row.get('n_roi'), 0)}"
         )
     report_lines.append(f"- Guardrail: {first_summary(masked_cycle_warning, 'guardrail', 'Cycle-level masked rollout warning audit unavailable.')}")
+
 
     report_lines += [
         "",
@@ -1205,6 +1238,16 @@ def main() -> None:
             "top_automatic_candidates": diffusion_sanity_candidates,
             "top_correlations": diffusion_sanity_corr,
             "guardrail": first_summary(diffusion_sanity, "guardrail"),
+        },
+        "masked_residual_transition_timing": {
+            "n_roi": first_summary(masked_residual_timing, "n_roi"),
+            "n_roi_method_rows": first_summary(masked_residual_timing, "n_roi_method_rows"),
+            "n_permutation": first_summary(masked_residual_timing, "n_permutation"),
+            "top_alignment_tests": masked_residual_timing_align,
+            "top_event_control_tests": masked_residual_timing_tests,
+            "top_correlations": masked_residual_timing_corr,
+            "top_near_transition_residual_rois": masked_residual_timing_top,
+            "guardrail": first_summary(masked_residual_timing, "guardrail"),
         },
         "masked_rollout_cycle_warning": {
             "n_roi_cycles": first_summary(masked_cycle_warning, "n_roi_cycles"),
