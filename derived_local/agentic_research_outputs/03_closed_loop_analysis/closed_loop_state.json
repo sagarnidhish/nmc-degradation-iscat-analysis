@@ -11,7 +11,8 @@
       "local_particle_events": false,
       "particle_events": true,
       "protocol_context": true,
-      "recovery_qc": true
+      "recovery_qc": true,
+      "validated_front_rois": true
     },
     "derived": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived",
     "paths": {
@@ -25,7 +26,8 @@
       "local_particle_events": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/derived_local/particle_event_targets/particle_abrupt_events.csv",
       "particle_events": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_abrupt_events.csv",
       "protocol_context": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context/event_protocol_context_summary.json",
-      "recovery_qc": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_recovery_qc/event_recovery_qc_summary.json"
+      "recovery_qc": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_recovery_qc/event_recovery_qc_summary.json",
+      "validated_front_rois": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois/validated_front_rois_summary.json"
     },
     "root": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho"
   },
@@ -46,8 +48,8 @@
       "priority": 3
     },
     {
-      "action": "Review candidate front overlays for cycles 86/116 and select validated ROIs for calibrated front tracking.",
-      "expected_output": "validated_front_candidates.csv and manual QC decisions",
+      "action": "Run high-resolution selected-ROI front tracking with manual QC and spatial calibration.",
+      "expected_output": "calibrated_front_tracking.csv with QC decisions and micron-scale transport proxies",
       "priority": 4
     },
     {
@@ -80,6 +82,12 @@
       "observation": "Detected 88 candidate particle/front regions; outputs are apparent front proxies, not calibrated diffusion coefficients.",
       "strength": "exploratory",
       "topic": "event_candidate_fronts"
+    },
+    {
+      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois/validated_front_rois_summary.json",
+      "observation": "Selected 10 cycle-86/116 candidate ROIs for next tracking from 16 scored candidates; selections are algorithmic and still need manual QC/spatial calibration.",
+      "strength": "exploratory_to_moderate",
+      "topic": "validated_front_rois"
     },
     {
       "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",

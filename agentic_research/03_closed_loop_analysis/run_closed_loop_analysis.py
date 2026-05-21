@@ -48,6 +48,14 @@ def extract_observations(root: Path) -> List[Dict[str, Any]]:
             "evidence": str(derived / "event_candidate_fronts" / "event_candidate_fronts_summary.json"),
             "strength": "exploratory",
         })
+    validated = read_json(derived / "validated_front_rois" / "validated_front_rois_summary.json")
+    if validated:
+        observations.append({
+            "topic": "validated_front_rois",
+            "observation": f"Selected {validated.get('n_selected_for_next_tracking', 'unknown')} cycle-86/116 candidate ROIs for next tracking from {validated.get('n_candidates_scored', 'unknown')} scored candidates; selections are algorithmic and still need manual QC/spatial calibration.",
+            "evidence": str(derived / "validated_front_rois" / "validated_front_rois_summary.json"),
+            "strength": "exploratory_to_moderate",
+        })
     baselines = read_csv_if_exists(derived / "particle_event_targets" / "particle_event_feature_baselines.csv")
     if not baselines.empty and "f1" in baselines:
         observations.append({
@@ -79,11 +87,18 @@ def next_actions(observations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         "action": "Generate ROI/event visual QC manifest for raw frame inspection.",
         "expected_output": "event_roi_qc_manifest.csv and review checklist",
     })
-    actions.append({
-        "priority": 4,
-        "action": "Review candidate front overlays for cycles 86/116 and select validated ROIs for calibrated front tracking.",
-        "expected_output": "validated_front_candidates.csv and manual QC decisions",
-    })
+    if "validated_front_rois" in topics:
+        actions.append({
+            "priority": 4,
+            "action": "Run high-resolution selected-ROI front tracking with manual QC and spatial calibration.",
+            "expected_output": "calibrated_front_tracking.csv with QC decisions and micron-scale transport proxies",
+        })
+    else:
+        actions.append({
+            "priority": 4,
+            "action": "Review candidate front overlays for cycles 86/116 and select validated ROIs for calibrated front tracking.",
+            "expected_output": "validated_front_candidates.csv and manual QC decisions",
+        })
     actions.append({
         "priority": 5,
         "action": "Fit grouped degradation-mode clustering and hazard calibration.",

@@ -8,6 +8,7 @@
 | event_echem | moderate | 81 cycles matched to electrochemistry; coarse cycle summaries do not fully explain events. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_coupling_summary.json |
 | protocol_context | moderate | Synchronized event cycles are linked to unusually short frame-count regimes. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context/event_protocol_context_summary.json |
 | event_candidate_fronts | exploratory | Detected 88 candidate particle/front regions; outputs are apparent front proxies, not calibrated diffusion coefficients. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/event_candidate_fronts_summary.json |
+| validated_front_rois | exploratory_to_moderate | Selected 10 cycle-86/116 candidate ROIs for next tracking from 16 scored candidates; selections are algorithmic and still need manual QC/spatial calibration. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois/validated_front_rois_summary.json |
 | event_forecasting | weak_to_moderate | Best transparent leave-one-particle event-forecast F1 is 0.435. | /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv |
 
 ## Next Action Queue
@@ -17,5 +18,5 @@
 | 1 | Run frame-count-matched shuffled controls for synchronized event cycles. | matched_control_p_values.csv and artifact-risk summary |
 | 2 | Run protocol-local echem window scan around cycles 86 and 116. | local_echem_window_features.csv with neighbor-cycle controls |
 | 3 | Generate ROI/event visual QC manifest for raw frame inspection. | event_roi_qc_manifest.csv and review checklist |
-| 4 | Review candidate front overlays for cycles 86/116 and select validated ROIs for calibrated front tracking. | validated_front_candidates.csv and manual QC decisions |
+| 4 | Run high-resolution selected-ROI front tracking with manual QC and spatial calibration. | calibrated_front_tracking.csv with QC decisions and micron-scale transport proxies |
 | 5 | Fit grouped degradation-mode clustering and hazard calibration. | degradation_modes.csv, hazard_calibration.csv |

@@ -380,3 +380,29 @@ Key result:
 - Sampled XY stage drift is small but nonzero: about 0.25 for cycle 86 and 0.224 for cycle 116.
 
 Interpretation: the project now has concrete particle-region-only model inputs for the two strongest synchronized events, satisfying the requirement that modeling should not feed full frames when selected particle regions are available. The small crop-level deltas show that the trace-level degradation signal is subtle after fixed padded cropping; next-frame/rollout models should use ROI-local contrast, temporal differencing, or event-conditioned targets rather than relying only on absolute crop mean intensity.
+
+## 2026-05-21 Validated Front ROI Selection
+
+Added and ran:
+
+`scripts/tier2_select_validated_front_rois.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois`
+
+Local compact copy:
+
+`derived_local/validated_front_rois`
+
+Key result:
+
+- The script cross-validates candidate front regions against reconstructed object candidates and nearest neighboring-segment support for cycles 86 and 116.
+- It scored 16 candidate front/object matches and selected 10 ROIs for the next front-tracking pass, 5 per event cycle.
+- All 10 selected rows were labeled `candidate_roi_supported` by the automatic validation tier.
+- Cycle 86 top selected front ROI: validation score 6.575, front-quality score 2.198, front-radius R2 0.543, monotonic fraction 0.613, nearest object match 2.41 downsampled pixels, nearest cycle-88 neighbor 2.21 downsampled pixels, and apparent full-pixel radius-squared proxy -0.000610 px^2/s.
+- Cycle 116 top selected front ROI: validation score 5.166, front-quality score 1.255, front-radius R2 0.0067, monotonic fraction 0.742, nearest object match 1.91 downsampled pixels, nearest cycle-118 neighbor 2.28 downsampled pixels, and apparent full-pixel radius-squared proxy 0.0000413 px^2/s.
+- Camera timing was read from `camera_timing` to normalize apparent transport proxies to seconds; the observed frame spacing is about 10.04 s/frame for both selected event segments.
+
+Interpretation: this is the first front-specific, time-normalized ROI selection layer. It provides a concrete short list for high-resolution front tracking and manual QC, but the apparent transport values are still downsampled/object-candidate proxies rather than calibrated micron-scale diffusion coefficients. Cycle 86 shows the stronger front-fit evidence; cycle 116 remains a strong synchronized optical-drop event but has weaker front-radius fit quality.
+
