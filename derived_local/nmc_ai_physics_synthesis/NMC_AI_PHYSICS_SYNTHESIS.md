@@ -12,6 +12,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Calibrated front-QC ROI rows: 12
 - Manual-QC pending front ROIs: 12
 - ROI/front QC package candidates: 24
+- Control-balanced front QC candidates: 40
 - Residual physics mode clusters: 4
 
 ## Main Findings
@@ -26,7 +27,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
-- A QC review packet prioritizes 30 ROI/front candidates for manual accept/reject review before publication-scale diffusion claims.
+- A QC review packet prioritizes 30 ROI/front candidates, and a control-balanced front package adds 24 control candidates for manual accept/reject review before publication-scale diffusion claims.
 
 ## Model Readout
 
@@ -101,6 +102,7 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - front_quality_top_quartile phase-sign residual: median event-control 0.139, bootstrap p05 -0.038, MW p=0.158, permutation p=0.036
 - q70_phase_ci_excludes_zero phase-sign residual: median event-control 0.088, bootstrap p05 0.047, MW p=1.065e-04, permutation p=9.995e-04
 - Diffusion-proxy separations do not remain globally robust; review-panel diffusion differences are selection-biased and still require manual QC.
+- Control-balanced QC augmentation selects 40 ROIs (16 event / 24 control), with non-fragmented counts {'control': 4, 'event': 6}.
 
 ## Residual Physics Mode Taxonomy
 

@@ -1145,3 +1145,28 @@ Key result:
 - Updated the tier4 synthesis to include this cycle/region context as a bridge between residual degradation modes, cycle dependence, and coarse particle location.
 
 Interpretation: the residual mode taxonomy is not uniformly distributed over cycles or particle regions. It highlights cycles 60/156 and the coarse `x2_y3` image region as high-priority manual-review strata, while also exposing remaining protocol/acquisition coupling. This moves the project closer to cycle-region degradation mapping, but it remains a QC-prioritization and hypothesis-generation layer rather than proof of spatial degradation mechanism.
+
+## 2026-05-21 Control-Balanced Front QC Package
+
+Added and ran:
+
+`python scripts/tier4_control_balanced_front_qc_package.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_qc_package --n-per-role 16 --n-extra-controls 8`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_qc_package`
+
+Local compact copy:
+
+`derived_local/control_balanced_front_qc_package`
+
+Key result:
+
+- Built a separate visual QC augmentation package to address the front-QC sensitivity gap where strict no-fragment/no-flag review strata had no controls.
+- The package contains 40 ROI/front panels: 16 event ROIs and 24 control ROIs, with 22 ROIs not present in the primary QC package.
+- It preserves the same panel format as the primary package: first/middle/last/delta ROI frames, q70 bright-front contours, and central ROI guard masks, plus an HTML review index and manifest with pending manual QC columns.
+- Automatic flags still show substantial mask risk: 30/40 candidates have fragmented q70 masks, 13/40 have diffusion CI crossing zero, 3/40 are active controls, and 3/40 have threshold-sign instability.
+- The augmentation now provides non-fragmented examples in both roles: 4 controls and 6 events. No-auto-flag examples are still control-only (2 controls), so final clean event/control diffusion inference still needs manual acceptance labels.
+- Updated the tier4 synthesis to include the control-balanced QC package as the recommended manual review companion to the high-signal primary QC package.
+
+Interpretation: this closes a practical review-design gap rather than a scientific claim gap. We now have enough control-heavy visual panels to manually assess whether front-mask quality artifacts explain the apparent diffusion/control effects. It supports better manual QC and benchmark construction, but calibrated diffusion and final degradation labels remain guarded until those panels are reviewed.

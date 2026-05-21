@@ -1,5 +1,18 @@
 {
   "all_qc_rf_mean_roc_auc": 0.796875,
+  "control_balanced_front_qc": {
+    "n_control_roi": 24,
+    "n_event_roi": 16,
+    "n_new_roi": 22,
+    "n_selected_roi": 40,
+    "no_auto_flag_by_role": {
+      "control": 2
+    },
+    "nonfragmented_by_role": {
+      "control": 4,
+      "event": 6
+    }
+  },
   "cycle_region_mode_context": {
     "context_only_classifier": {
       "features": [
@@ -689,7 +702,7 @@
     {
       "evidence": "Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers 52 ROI rows.",
       "limitation": "Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics and is robust in 5 automatic QC strata.",
-      "next_step": "Use the generated QC review packet with 30 prioritized candidates to record accept/reject decisions.",
+      "next_step": "Use the primary and control-balanced QC packages to record accept/reject decisions, including 24 control candidates.",
       "requirement": "Track phase-boundary movement",
       "status": "implemented_as_proxy"
     },

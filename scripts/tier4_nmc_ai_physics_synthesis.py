@@ -90,6 +90,7 @@ def main() -> None:
     conditioned_fronts = read_json(derived / "protocol_conditioned_front_effects" / "protocol_conditioned_front_effects_summary.json")
     qc_packet = read_json(derived / "qc_review_packet" / "qc_review_packet_summary.json")
     qc_package = read_json(derived / "roi_front_qc_package" / "roi_front_qc_package_summary.json")
+    control_balanced_qc = read_json(derived / "control_balanced_front_qc_package" / "control_balanced_front_qc_summary.json")
     front_qc_sensitivity = read_json(derived / "front_qc_sensitivity" / "front_qc_sensitivity_summary.json")
     residual_modes = read_json(derived / "residual_physics_mode_taxonomy" / "residual_physics_mode_taxonomy_summary.json")
     cycle_region_modes = read_json(derived / "cycle_region_mode_context" / "cycle_region_mode_context_summary.json")
@@ -152,6 +153,7 @@ def main() -> None:
     spatial_region_context = top_items(first_summary(cycle_region_modes, "top_spatial_region_summaries", []), 8)
     mode_context_correlations = top_items(first_summary(cycle_region_modes, "top_context_correlations", []), 8)
     top_residual_mode = residual_mode_enrichment[0] if residual_mode_enrichment else {}
+    control_balanced_nonfragment = first_summary(control_balanced_qc, "nonfragmented_by_role", {}) or {}
     front_qc_focus = top_items(first_summary(front_qc_sensitivity, "focus_tests", []), 25)
     front_qc_strata = top_items(first_summary(front_qc_sensitivity, "strata", []), 12)
     robust_phase_strata = first_summary(front_qc_sensitivity, "robust_positive_phase_residual_strata", [])
@@ -187,7 +189,7 @@ def main() -> None:
             "implemented_as_proxy",
             f"Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers {first_summary(robust_fronts, 'n_roi', 0)} ROI rows.",
             f"Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics and is robust in {len(robust_phase_strata)} automatic QC strata.",
-            f"Use the generated QC review packet with {first_summary(qc_packet, 'n_candidates', 0)} prioritized candidates to record accept/reject decisions.",
+            f"Use the primary and control-balanced QC packages to record accept/reject decisions, including {first_summary(control_balanced_qc, 'n_control_roi', 0)} control candidates.",
         ),
         evidence_row(
             "Extract diffusion coefficients",
@@ -245,6 +247,7 @@ def main() -> None:
         f"- Calibrated front-QC ROI rows: {len(calibration_table)}",
         f"- Manual-QC pending front ROIs: {qc_pending}",
         f"- ROI/front QC package candidates: {first_summary(qc_package, 'n_selected_roi', 0)}",
+        f"- Control-balanced front QC candidates: {first_summary(control_balanced_qc, 'n_selected_roi', 0)}",
         f"- Residual physics mode clusters: {first_summary(residual_modes, 'chosen_k', 0)}",
         "",
         "## Main Findings",
@@ -259,7 +262,7 @@ def main() -> None:
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
         f"- Automatic front-QC sensitivity keeps the positive phase-front residual in {len(robust_phase_strata)} strata: {', '.join(robust_phase_strata) if robust_phase_strata else 'none'}; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.",
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
-        f"- A QC review packet prioritizes {first_summary(qc_packet, 'n_candidates', 0)} ROI/front candidates for manual accept/reject review before publication-scale diffusion claims.",
+        f"- A QC review packet prioritizes {first_summary(qc_packet, 'n_candidates', 0)} ROI/front candidates, and a control-balanced front package adds {first_summary(control_balanced_qc, 'n_control_roi', 0)} control candidates for manual accept/reject review before publication-scale diffusion claims.",
         "",
         "## Model Readout",
         "",
@@ -327,6 +330,9 @@ def main() -> None:
                 f"- {row.get('stratum')} phase-sign residual: median event-control {fmt(row.get('median_event_minus_control'))}, bootstrap p05 {fmt(row.get('bootstrap_p05'))}, MW p={fmt(row.get('mannwhitney_p'))}, permutation p={fmt(row.get('permutation_median_p'))}"
             )
     report_lines.append("- Diffusion-proxy separations do not remain globally robust; review-panel diffusion differences are selection-biased and still require manual QC.")
+    report_lines.append(
+        f"- Control-balanced QC augmentation selects {first_summary(control_balanced_qc, 'n_selected_roi', 0)} ROIs ({first_summary(control_balanced_qc, 'n_event_roi', 0)} event / {first_summary(control_balanced_qc, 'n_control_roi', 0)} control), with non-fragmented counts {control_balanced_nonfragment}."
+    )
 
     report_lines += [
         "",
@@ -427,6 +433,14 @@ def main() -> None:
         "n_qc_review_candidates": first_summary(qc_packet, "n_candidates"),
         "n_roi_front_qc_package_candidates": first_summary(qc_package, "n_selected_roi"),
         "roi_front_qc_flag_counts": first_summary(qc_package, "flag_counts", {}),
+        "control_balanced_front_qc": {
+            "n_selected_roi": first_summary(control_balanced_qc, "n_selected_roi"),
+            "n_event_roi": first_summary(control_balanced_qc, "n_event_roi"),
+            "n_control_roi": first_summary(control_balanced_qc, "n_control_roi"),
+            "n_new_roi": first_summary(control_balanced_qc, "n_new_roi"),
+            "nonfragmented_by_role": first_summary(control_balanced_qc, "nonfragmented_by_role", {}),
+            "no_auto_flag_by_role": first_summary(control_balanced_qc, "no_auto_flag_by_role", {}),
+        },
         "n_residual_physics_mode_roi": first_summary(residual_modes, "n_roi"),
         "front_qc_sensitivity_n_roi": first_summary(front_qc_sensitivity, "n_roi"),
         "front_qc_robust_positive_phase_residual_strata": robust_phase_strata,
