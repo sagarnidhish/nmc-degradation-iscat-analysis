@@ -791,3 +791,26 @@ Key result:
 - Top multi-cycle mobility-ranked event ROIs are dominated by cycle 156 and cycle 60, while the previously important `cycle86_rank4_obj9` remains high-ranked but no longer dominates the full multi-cycle cohort.
 
 Interpretation: the analysis now has a broader event/control ROI dataset instead of relying only on cycles 86 and 116. The physics picture is heterogeneous: cycle 86 looks like structural/front disorder, cycle 116 remains coherent optical loss with weak decorrelation, cycle 156 is a strong brightening/phase-growth case, and cycle 60 needs caution because controls are also active. This cohort is now ready for broader rollout modeling and cycle-conditioned degradation-mode learning.
+
+## 2026-05-21 Multi-Cycle ROI Rollout Baseline
+
+Added and ran the existing rollout baseline on the expanded 52-ROI cohort:
+
+`python scripts/tier3_roi_rollout_baselines.py --roi-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines --rank 16 --train-fraction 0.67`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines`
+
+Local compact copy:
+
+`derived_local/multi_cycle_roi_rollout_baselines`
+
+Key result:
+
+- Evaluated persistence, velocity, and low-rank DMD recursive rollouts for all 52 expanded ROI sequences.
+- Persistence remains the strongest pixel-space baseline across all cycles. Example MSE means: cycle 60 persistence 1.27e-4 vs DMD 2.41e-3; cycle 86 persistence 9.83e-5 vs DMD 1.21e-3; cycle 116 persistence 1.00e-4 vs DMD 1.06e-3; cycle 156 persistence 1.16e-4 vs DMD 3.13e-3.
+- The value of the rollout pass is therefore not better pixel prediction, but latent/rollout descriptors. Latent net displacement is much larger for single-particle event cycles 60 and 156 than for synchronized cycles 86 and 116: cycle 60 mean 3.12, cycle 156 mean 4.17, cycle 86 mean 1.24, cycle 116 mean 0.383.
+- Cycle 156 has the largest event-like latent movement among the candidate event cycles, consistent with the expanded cohort descriptor result that single-particle cycles carry stronger visible morphology.
+
+Interpretation: the expanded AI rollout confirms the project direction. Standard low-rank image rollout does not beat persistence, so the publishable signal should come from physically constrained descriptors: latent displacement, event/control front-mobility shifts, calibrated-but-provisional front tracking, and degradation-mode clustering. The stronger latent dynamics in cycles 60/156 make them useful morphology-training cases, while cycles 86/116 remain the strongest coordinated event-timing cases.
