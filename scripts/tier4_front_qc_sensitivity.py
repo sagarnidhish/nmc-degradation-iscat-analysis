@@ -47,6 +47,25 @@ def to_num(s: pd.Series) -> pd.Series:
     return pd.to_numeric(s, errors="coerce")
 
 
+def clean_json(value):
+    if isinstance(value, dict):
+        return {k: clean_json(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [clean_json(v) for v in value]
+    if isinstance(value, tuple):
+        return [clean_json(v) for v in value]
+    if isinstance(value, (np.integer,)):
+        return int(value)
+    if isinstance(value, (np.floating, float)):
+        return float(value) if np.isfinite(value) else None
+    try:
+        if pd.isna(value):
+            return None
+    except TypeError:
+        pass
+    return value
+
+
 def bootstrap_ci(event: np.ndarray, control: np.ndarray, rng: np.random.Generator, n_boot: int) -> Dict[str, float]:
     if len(event) < 2 or len(control) < 2:
         return {"bootstrap_p05": np.nan, "bootstrap_p50": np.nan, "bootstrap_p95": np.nan}
@@ -288,7 +307,7 @@ def main() -> None:
         },
     }
     with open(summary["outputs"]["summary"], "w") as f:
-        json.dump(summary, f, indent=2, sort_keys=True)
+        json.dump(clean_json(summary), f, indent=2, sort_keys=True, allow_nan=False)
 
     readme = [
         "# Front QC Sensitivity",

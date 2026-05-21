@@ -695,7 +695,7 @@
     },
     {
       "evidence": "Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across 7 thresholds with bootstrap slopes.",
-      "limitation": "Global threshold-robust phase slopes separate event/control ROIs, but conditioned diffusion-proxy residuals remain non-significant and front-only residual classifiers are poor.",
+      "limitation": "Global threshold-robust phase slopes separate event/control ROIs, but QC-stratified diffusion proxies are inconsistent and conditioned diffusion-proxy residuals remain non-significant.",
       "next_step": "Treat diffusion numbers as apparent optical-front proxies until microscope calibration, timebase, and front masks are manually validated.",
       "requirement": "Extract diffusion coefficients",
       "status": "partial_proxy_only"
