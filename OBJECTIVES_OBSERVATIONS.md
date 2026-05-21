@@ -511,3 +511,29 @@ Key result:
 
 Interpretation: this gives a concrete AI next-frame experiment on particle-region-only battery photometry videos. It confirms that persistence is a strong baseline and that model residuals carry cycle-specific information. The result supports using rollout residual energy, latent displacement, and front-tracking features together as physics-facing degradation descriptors, while reserving stronger video-model claims for a larger ROI set and better calibrated/manual-QC annotations.
 
+
+## 2026-05-21 ROI Residual CNN Negative Baseline
+
+Added and ran:
+
+`scripts/tier3_roi_residual_cnn.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_residual_cnn_fast`
+
+Local compact copy:
+
+`derived_local/roi_residual_cnn_fast`
+
+Key result:
+
+- Trained a small particle-ROI-only CNN to predict residuals `next_frame - current_frame`, using cycle-holdout evaluation.
+- The persistence baseline is equivalent to predicting zero residual; the learned residual model must improve on this to justify heavier neural rollouts.
+- The fast diagnostic run used 11 selected ROI sequences, 132 frame pairs, stride 8, CPU training, hidden width 4, and leave-one-cycle-out testing.
+- The residual CNN did not beat persistence.
+- Cycle 86 holdout: persistence MSE 7.28e-5, model MSE 7.87e-5, relative MSE improvement -0.0937, residual sign accuracy 0.503.
+- Cycle 116 holdout: persistence MSE 1.06e-4, model MSE 7.74e-4, relative MSE improvement -7.68, residual sign accuracy 0.492.
+- Overall relative MSE improvement is -4.23, and overall relative residual-MSE improvement is -9.09.
+
+Interpretation: the current selected ROI dataset is too small and too cycle-specific for a naive residual CNN to generalize across event cycles. This is an important negative result: larger neural video models should not be judged by raw next-frame MSE alone and should not be scaled until we add more ROI sequences, stronger event/echem conditioning, or train on broader non-event particle crops. For now, persistence plus physics descriptors/front tracking are more reliable baselines than a small supervised residual CNN.
