@@ -1698,7 +1698,7 @@ Interpretation: this fills the uncertainty-calibration gap without pretending to
 
 Added and ran:
 
-`python scripts/tier4_cycle_state_space_transition_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit --n-permutation 2000`
+`python scripts/tier4_cycle_state_space_transition_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit --n-permutation 5000`
 
 Remote output directory:
 
@@ -1714,7 +1714,7 @@ Key result:
 - Used 107 current-cycle features, excluding future labels and abrupt-drop labels from the state-space inputs.
 - PCA/state clustering selected 4 cycle-state clusters with silhouette 0.634.
 - The degradation axis is strongly coupled to cycle/protocol progression and capacity: rho=-0.738 with `cycleNo`, rho=-0.710 with `capacity_mAh`, and rho=0.433 with `coulombic_efficiency_pct`.
-- PC2 is the strongest future-drop separator: future any-drop within 8 cycles has median positive-negative PC2 shift +0.730, Mann-Whitney p=2.32e-4, permutation p=0.0155.
+- PC2 is the strongest future-drop separator: future any-drop within 8 cycles has median positive-negative PC2 shift +0.730, Mann-Whitney p=2.32e-4, permutation p=0.0162.
 - A compact state-space logistic model for `future_any_drop_within_8cycles` reaches mean ROC-AUC 0.781 and balanced accuracy 0.731 across stratified folds.
 - State clusters are useful but not definitive: two singleton transition states appear around cycles 126 and 150, so state-transition interpretations remain hypothesis-generating.
 - The project synthesis now includes a Cycle State-Space Transition Audit section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.

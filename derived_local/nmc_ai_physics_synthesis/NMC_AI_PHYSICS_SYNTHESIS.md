@@ -63,7 +63,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for 81 observed cycles; strongest ROI association is shape_V_q95 vs mode_review_priority, rho=-0.864, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.
 - Echem-shape-conditioned residual audit uses 45 shape features compressed to 6 PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p=0.004), while diffusion residuals remain non-significant and the shape-residual classifier is poor.
 - Physics-consistency claim matrix scores 52 ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; 2 rows are cross-modal high priority, but all 52 remain `manual_qc_required_no_physics_claim`.
-- Cycle state-space transition audit builds a 4-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p=0.015), and the state-space classifier reaches mean AUC 0.781.
+- Cycle state-space transition audit builds a 4-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p=0.016), and the state-space classifier reaches mean AUC 0.781.
 
 ## Model Readout
 
@@ -494,11 +494,11 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Chosen state clusters: 4 with silhouette 0.634
 - Degradation axis oriented to mean_abs_delta_prev with rho 0.326
 - Future-drop classifier: AUC 0.781, balanced accuracy 0.731
-- Future-drop test cycle_state_pc2: positive-negative median 0.730, permutation p=0.015, MW p=2.322e-04
-- Future-drop test mean_abs_delta_prev: positive-negative median -0.012, permutation p=0.068, MW p=0.036
-- Future-drop test state_step_norm: positive-negative median -0.694, permutation p=0.102, MW p=0.097
-- Future-drop test degradation_state_axis: positive-negative median -2.269, permutation p=0.183, MW p=0.295
-- Future-drop test cycle_state_pc1: positive-negative median 2.269, permutation p=0.188, MW p=0.295
+- Future-drop test cycle_state_pc2: positive-negative median 0.730, permutation p=0.016, MW p=2.322e-04
+- Future-drop test mean_abs_delta_prev: positive-negative median -0.012, permutation p=0.080, MW p=0.036
+- Future-drop test state_step_norm: positive-negative median -0.694, permutation p=0.101, MW p=0.097
+- Future-drop test degradation_state_axis: positive-negative median -2.269, permutation p=0.184, MW p=0.295
+- Future-drop test cycle_state_pc1: positive-negative median 2.269, permutation p=0.199, MW p=0.295
 - Future-drop test capacity_mAh: positive-negative median -0.014, permutation p=0.205, MW p=0.033
 - State correlation degradation_state_axis vs cycleNo: rho=-0.738, p=1.594e-16, n=89
 - State correlation cycle_state_pc1 vs cycleNo: rho=0.738, p=1.594e-16, n=89
