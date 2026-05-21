@@ -1530,3 +1530,30 @@ Key result:
 - The original row-level `trace_lag2_particle_norm_range/std` association with `phase_slope_positive_fraction_protocol_residual` is not the top cycle-collapsed result, so it should be treated as cycle-cluster-sensitive linkage evidence rather than a standalone local causal precursor.
 
 Interpretation: this audit upgrades the trace-fusion story from a simple row-level association to a properly guarded result. Some lagged global trace/echem state still aligns with ROI/front/mode descriptors after cycle collapse, but the strongest surviving signals mix degradation-risk predictions, frame-count/protocol context, and mode/kinetic descriptors. This supports prioritization and hypothesis generation, not a calibrated propagation or diffusion claim.
+
+## 2026-05-21 Within-Cycle Echem Shape Audit
+
+Added and ran:
+
+`python scripts/tier4_within_cycle_echem_shape_audit.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit`
+
+Local compact copy:
+
+`derived_local/within_cycle_echem_shape_audit`
+
+Key result:
+
+- Scanned the raw `echemDF_full.csv` time/potential/current rows and computed within-cycle trajectory descriptors for observed particle/ROI cycles.
+- Matched 81 echem shape cycles out of 89 requested observed cycles, producing 48 shape descriptors including voltage quantiles, current quantiles, integrated signed/absolute charge, dV/dt summaries, and voltage-binned dQ/dV proxy fractions/entropy.
+- The echem shape descriptors strongly recover expected electrochemical structure: `shape_charge_mAh_neg_abs` correlates with `capacity_mAh` at rho=0.9999, and `echem_shape_duration_s` correlates with capacity at rho=0.985.
+- ROI optical mode-review priority has strong associations with voltage/dQ-shape descriptors, led by `shape_V_q95` versus `mode_review_priority` (rho=-0.864, p=2.72e-12, n=38) and dQ/dV concentration terms such as `neg_dq_abs_peak_frac` (rho=0.841, p=3.81e-11, n=38).
+- Direct abrupt-event cycle tests are weak with only three matched event cycles: best any-drop shape test is `neg_dq_abs_peak_voltage`, p=0.230, and `shape_dVdt_abs_p95`, p=0.255.
+- ROI event/control binary shape tests are modest: `shape_V_std` separates event/control ROI rows (median diff +0.00579, p=0.00153), while most direct event-label shape terms are weaker.
+- The project synthesis now includes a Within-Cycle Echem Shape Audit section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: raw echem trajectory shape is a useful physics/protocol context layer for optical modes and kinetic/front descriptors, especially voltage-window and dQ/dV-proxy concentration. It does not independently explain abrupt degradation-event timing. Treat these descriptors as covariates and guardrails for ROI optical physics, not calibrated dQ/dV or diffusion constants.
+

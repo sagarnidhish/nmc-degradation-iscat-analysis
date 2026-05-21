@@ -25,6 +25,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - ROI trace-fusion cycle-null points: 11
 - Precursor-informed review candidates: 47
 - Precursor visual-bundle candidates/assets: 12 / 12
+- Within-cycle echem shape cycles/features: 81 / 48
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -52,6 +53,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle-collapsed ROI trace-fusion null audit reduces 52 ROI rows to 11 cycle points; top surviving collapsed association is trace_lag16_frames_percentile vs mode_review_priority, rho=0.813, empirical p=0.002.
 - Precursor-informed ROI review ranks 47 pending manual-QC candidates; the top candidate is cycle156_rank7_obj27 with score 5.527.
 - A visual review bundle now packages 12 top precursor-informed ROI candidates; 12 have at least one copied QC/preview asset and a contact sheet for manual inspection.
+- Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for 81 observed cycles; strongest ROI association is shape_V_q95 vs mode_review_priority, rho=-0.864, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.
 
 ## Model Readout
 
@@ -304,17 +306,17 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 - Cycle-collapsed points: 11 from 52 ROI rows
 - Event-reference cycles: 4
-- Predictors/permutations: 24 / 1000
+- Predictors/permutations: 54 / 1000
 - Cycle-collapsed trace_lag16_frames_percentile vs mode_review_priority: rho 0.813, empirical p=0.002, n=11
 - Cycle-collapsed trace_lag8_frames_percentile vs mode_review_priority: rho 0.834, empirical p=0.003, n=11
 - Cycle-collapsed trace_lag8_n_frames vs mode_review_priority: rho 0.834, empirical p=0.005, n=11
 - Cycle-collapsed trace_lag16_n_frames vs mode_review_priority: rho 0.813, empirical p=0.007, n=11
+- Cycle-collapsed trace_lag2_n_frames vs mode_review_priority: rho 0.733, empirical p=0.007, n=11
 - Cycle-collapsed trace_lag16_n_frames vs q70_logistic_k_per_s: rho 0.740, empirical p=0.009, n=11
-- Cycle-collapsed trace_lag8_frames_percentile vs q70_logistic_k_per_s: rho 0.733, empirical p=0.014, n=11
+- Reference-centered trace_lag8_particle_norm_mean vs phase_slope_median_per_s_protocol_residual: rho 0.918, empirical p=9.990e-04, n=11
 - Reference-centered trace_lag8_n_frames vs mode_review_priority: rho 0.881, empirical p=9.990e-04, n=11
 - Reference-centered trace_lag8_frames_percentile vs mode_review_priority: rho 0.858, empirical p=0.003, n=11
-- Reference-centered trace_lag16_frames_percentile vs threshold_robust_phase_score_protocol_residual: rho 0.781, empirical p=0.006, n=11
-- Reference-centered lag16_trace_predprob_future_any_drop_within_8cycles vs phase_slope_positive_fraction_protocol_residual: rho -0.809, empirical p=0.007, n=11
+- Reference-centered trace_lag8_max_abs_delta_prev vs threshold_robust_phase_score_protocol_residual: rho 0.733, empirical p=0.004, n=11
 - Guardrail: This audit collapses repeated ROI rows to one median point per cycle before testing trace/front associations. It is deliberately conservative for the 52-ROI cohort; surviving tests are stronger evidence, while lost tests indicate cycle-clustering sensitivity.
 
 ## Precursor-Informed ROI Review
@@ -346,6 +348,30 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Visual rank 7 cycle156_rank8_obj10 (event, cycle 156): score 4.741, tier high
 - Visual rank 8 cycle60_rank3_obj9 (event, cycle 60): score 4.632, tier high
 - Guardrail: This bundle copies existing automatic QC/preview assets for manual inspection. It does not create labels, adjudicate particle identity, or validate diffusion/front interpretability.
+
+## Within-Cycle Echem Shape Audit
+
+- Echem shape cycles/features: 81 / 48
+- ROI rows joined: 52
+- ROI shape correlation shape_V_q95 vs mode_review_priority: rho=-0.864, p=2.718e-12, n=38
+- ROI shape correlation neg_dq_abs_peak_frac vs mode_review_priority: rho=0.841, p=3.806e-11, n=38
+- ROI shape correlation pos_dq_abs_midV_frac vs mode_review_priority: rho=0.840, p=4.174e-11, n=38
+- ROI shape correlation all_dq_abs_entropy vs mode_review_priority: rho=-0.839, p=4.679e-11, n=38
+- ROI shape correlation pos_dq_abs_peak_frac vs mode_review_priority: rho=0.839, p=4.679e-11, n=38
+- ROI shape correlation pos_dq_abs_highV_frac vs mode_review_priority: rho=-0.839, p=4.787e-11, n=38
+- ROI shape correlation pos_dq_abs_entropy vs mode_review_priority: rho=-0.801, p=1.607e-09, n=38
+- ROI shape correlation all_dq_abs_peak_frac vs mode_review_priority: rho=0.790, p=3.651e-09, n=38
+- Cycle shape correlation shape_charge_mAh_neg_abs vs capacity_mAh: rho=1.000, p=1.253e-149, n=81
+- Cycle shape correlation neg_dq_abs_total_mAh vs capacity_mAh: rho=1.000, p=7.534e-126, n=81
+- Cycle shape correlation echem_shape_duration_s vs capacity_mAh: rho=0.985, p=1.680e-61, n=81
+- Cycle shape correlation shape_charge_mAh_abs vs capacity_mAh: rho=0.985, p=1.680e-61, n=81
+- Cycle shape correlation shape_charge_mAh_signed vs coulombic_efficiency_pct: rho=-0.968, p=2.136e-49, n=81
+- Cycle shape correlation shape_dIdt_slope vs capacity_mAh: rho=0.934, p=5.846e-37, n=81
+- Event shape test neg_dq_abs_peak_voltage: median event-control 0.000, p=0.230
+- Event shape test shape_dVdt_abs_p95: median event-control 0.003, p=0.255
+- Event shape test neg_dq_abs_total_mAh: median event-control -0.010, p=0.406
+- Event shape test shape_charge_mAh_neg_abs: median event-control -0.010, p=0.406
+- Guardrail: Within-cycle echem shape features are computed from raw time/potential/current rows for observed particle/ROI cycles. dQ/dV terms are proxy descriptors from current-time integration over voltage bins, not calibrated electrochemical capacity analysis.
 
 ## Top ROI/Echem Or Protocol Couplings
 

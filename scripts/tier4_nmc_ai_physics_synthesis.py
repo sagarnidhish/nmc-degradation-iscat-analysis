@@ -107,6 +107,7 @@ def main() -> None:
     roi_trace_cycle_null = read_json(derived / "roi_trace_fusion_cycle_null" / "roi_trace_fusion_cycle_null_summary.json")
     precursor_review = read_json(derived / "precursor_informed_roi_review" / "precursor_informed_roi_review_summary.json")
     precursor_visual_bundle = read_json(derived / "precursor_review_visual_bundle" / "precursor_review_visual_bundle_summary.json")
+    within_cycle_echem = read_json(derived / "within_cycle_echem_shape_audit" / "within_cycle_echem_shape_audit_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -198,6 +199,10 @@ def main() -> None:
     roi_trace_centered_tests = top_items(first_summary(roi_trace_cycle_null, "top_reference_centered_tests", []), 12)
     precursor_review_top = top_items(first_summary(precursor_review, "top_precursor_informed_candidates", []), 12)
     precursor_visual_top = top_items(first_summary(precursor_visual_bundle, "top_candidates", []), 12)
+    within_cycle_roi_corr = top_items(first_summary(within_cycle_echem, "top_roi_shape_correlations", []), 12)
+    within_cycle_cycle_corr = top_items(first_summary(within_cycle_echem, "top_cycle_shape_correlations", []), 12)
+    within_cycle_event_tests = top_items(first_summary(within_cycle_echem, "top_event_shape_tests", []), 8)
+    within_cycle_roi_binary = top_items(first_summary(within_cycle_echem, "top_roi_binary_shape_tests", []), 8)
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -301,6 +306,7 @@ def main() -> None:
         f"- ROI trace-fusion cycle-null points: {first_summary(roi_trace_cycle_null, 'n_cycle_points', 0)}",
         f"- Precursor-informed review candidates: {first_summary(precursor_review, 'n_review_candidates', 0)}",
         f"- Precursor visual-bundle candidates/assets: {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)} / {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)}",
+        f"- Within-cycle echem shape cycles/features: {first_summary(within_cycle_echem, 'n_echem_shape_cycles', 0)} / {first_summary(within_cycle_echem, 'n_shape_features', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -328,6 +334,7 @@ def main() -> None:
         f"- Cycle-collapsed ROI trace-fusion null audit reduces 52 ROI rows to {first_summary(roi_trace_cycle_null, 'n_cycle_points', 0)} cycle points; top surviving collapsed association is {((roi_trace_cycle_tests[0] if roi_trace_cycle_tests else {}).get('predictor', 'NA'))} vs {((roi_trace_cycle_tests[0] if roi_trace_cycle_tests else {}).get('target', 'NA'))}, rho={fmt((roi_trace_cycle_tests[0] if roi_trace_cycle_tests else {}).get('rho'))}, empirical p={fmt((roi_trace_cycle_tests[0] if roi_trace_cycle_tests else {}).get('empirical_p_abs_ge_observed'))}.",
         f"- Precursor-informed ROI review ranks {first_summary(precursor_review, 'n_review_candidates', 0)} pending manual-QC candidates; the top candidate is {(precursor_review_top[0] if precursor_review_top else {}).get('roi_id', 'NA')} with score {fmt((precursor_review_top[0] if precursor_review_top else {}).get('precursor_informed_review_score'))}.",
         f"- A visual review bundle now packages {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)} top precursor-informed ROI candidates; {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)} have at least one copied QC/preview asset and a contact sheet for manual inspection.",
+        f"- Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for {first_summary(within_cycle_echem, 'n_echem_shape_cycles', 0)} observed cycles; strongest ROI association is {((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('feature', 'NA'))} vs {((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('target', 'NA'))}, rho={fmt((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('rho'))}, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.",
         "",
         "## Model Readout",
         "",
@@ -620,6 +627,28 @@ def main() -> None:
             f"- Visual rank {fmt(row.get('visual_rank'), 0)} {row.get('roi_id')} ({row.get('cohort_role')}, cycle {fmt(row.get('cycleNo'), 0)}): score {fmt(row.get('precursor_informed_review_score'))}, tier {row.get('precursor_review_tier')}"
         )
     report_lines.append(f"- Guardrail: {first_summary(precursor_visual_bundle, 'guardrail', 'Visual bundle only; no manual labels assigned.')}")
+
+    report_lines += [
+        "",
+        "## Within-Cycle Echem Shape Audit",
+        "",
+        f"- Echem shape cycles/features: {first_summary(within_cycle_echem, 'n_echem_shape_cycles', 0)} / {first_summary(within_cycle_echem, 'n_shape_features', 0)}",
+        f"- ROI rows joined: {first_summary(within_cycle_echem, 'n_roi_rows', 0)}",
+    ]
+    for row in within_cycle_roi_corr[:8]:
+        report_lines.append(
+            f"- ROI shape correlation {row.get('feature')} vs {row.get('target')}: rho={fmt(row.get('rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in within_cycle_cycle_corr[:6]:
+        report_lines.append(
+            f"- Cycle shape correlation {row.get('feature')} vs {row.get('target')}: rho={fmt(row.get('rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in within_cycle_event_tests[:4]:
+        report_lines.append(
+            f"- Event shape test {row.get('feature')}: median event-control {fmt(row.get('positive_minus_negative_median'))}, p={fmt(row.get('mannwhitney_p'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(within_cycle_echem, 'guardrail', 'Within-cycle echem shape descriptors are proxy context only.')}")
+
 
     report_lines += [
         "",

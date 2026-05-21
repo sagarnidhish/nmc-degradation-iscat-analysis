@@ -4675,7 +4675,7 @@
     "n_cycle_points": 11,
     "n_event_reference_cycles": 4,
     "n_permutation": 1000,
-    "n_predictors_tested": 24,
+    "n_predictors_tested": 54,
     "n_roi_rows": 52,
     "top_cycle_collapsed_tests": [
       {
@@ -4719,6 +4719,16 @@
         "target": "mode_review_priority"
       },
       {
+        "asymptotic_p": 0.01020128429076337,
+        "empirical_p_abs_ge_observed": 0.006993006993006993,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.2506111285522949,
+        "null_p95_abs_rho": 0.5968124823274488,
+        "predictor": "trace_lag2_n_frames",
+        "rho": 0.7334870966009104,
+        "target": "mode_review_priority"
+      },
+      {
         "asymptotic_p": 0.00925988150954961,
         "empirical_p_abs_ge_observed": 0.008991008991008992,
         "n_cycle_points": 11,
@@ -4726,6 +4736,36 @@
         "null_p95_abs_rho": 0.5981797521201623,
         "predictor": "trace_lag16_n_frames",
         "rho": 0.7397337392631014,
+        "target": "q70_logistic_k_per_s"
+      },
+      {
+        "asymptotic_p": 0.008454728885061562,
+        "empirical_p_abs_ge_observed": 0.01098901098901099,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.2551090909090909,
+        "null_p95_abs_rho": 0.5909090909090909,
+        "predictor": "trace_lag4_frames_percentile",
+        "rho": 0.7454545454545456,
+        "target": "mode_review_priority"
+      },
+      {
+        "asymptotic_p": 0.008454728885061562,
+        "empirical_p_abs_ge_observed": 0.011988011988011988,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.2512909090909091,
+        "null_p95_abs_rho": 0.6272727272727273,
+        "predictor": "trace_lag4_n_frames",
+        "rho": 0.7454545454545456,
+        "target": "mode_review_priority"
+      },
+      {
+        "asymptotic_p": 0.007282041008429151,
+        "empirical_p_abs_ge_observed": 0.013986013986013986,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.25022727272727274,
+        "null_p95_abs_rho": 0.6090909090909091,
+        "predictor": "trace_lag16_capacity_mAh",
+        "rho": 0.7545454545454545,
         "target": "q70_logistic_k_per_s"
       },
       {
@@ -4757,49 +4797,19 @@
         "predictor": "trace_lag2_delta_std_across_particles",
         "rho": 0.6727272727272727,
         "target": "q70_transformed_fraction_delta"
-      },
-      {
-        "asymptotic_p": 0.016470978836514424,
-        "empirical_p_abs_ge_observed": 0.016983016983016984,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.26141818181818177,
-        "null_p95_abs_rho": 0.6095454545454542,
-        "predictor": "trace_lag2_particle_norm_mean",
-        "rho": 0.7000000000000001,
-        "target": "phase_slope_median_per_s_protocol_residual"
-      },
-      {
-        "asymptotic_p": 0.01020128429076337,
-        "empirical_p_abs_ge_observed": 0.017982017982017984,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.25813734397828686,
-        "null_p95_abs_rho": 0.619819375730148,
-        "predictor": "trace_lag8_n_frames",
-        "rho": 0.7334870966009104,
-        "target": "q70_logistic_k_per_s"
-      },
-      {
-        "asymptotic_p": 0.016470978836514424,
-        "empirical_p_abs_ge_observed": 0.017982017982017984,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2515,
-        "null_p95_abs_rho": 0.591363636363636,
-        "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
-        "rho": -0.7000000000000001,
-        "target": "mode_review_priority"
-      },
-      {
-        "asymptotic_p": 0.020842853610945077,
-        "empirical_p_abs_ge_observed": 0.02097902097902098,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.25229999999999997,
-        "null_p95_abs_rho": 0.5818181818181818,
-        "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
-        "rho": -0.6818181818181819,
-        "target": "q70_logistic_k_per_s"
       }
     ],
     "top_reference_centered_tests": [
+      {
+        "asymptotic_p": 6.661451941355567e-05,
+        "empirical_p_abs_ge_observed": 0.000999000999000999,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.25317272727272727,
+        "null_p95_abs_rho": 0.6,
+        "predictor": "trace_lag8_particle_norm_mean",
+        "rho": 0.9181818181818183,
+        "target": "phase_slope_median_per_s_protocol_residual"
+      },
       {
         "asymptotic_p": 0.0003430008169136331,
         "empirical_p_abs_ge_observed": 0.000999000999000999,
@@ -4819,6 +4829,16 @@
         "predictor": "trace_lag8_frames_percentile",
         "rho": 0.8584564381571795,
         "target": "mode_review_priority"
+      },
+      {
+        "asymptotic_p": 0.01020128429076337,
+        "empirical_p_abs_ge_observed": 0.003996003996003996,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.2508616986784629,
+        "null_p95_abs_rho": 0.6013683028032308,
+        "predictor": "trace_lag8_max_abs_delta_prev",
+        "rho": 0.7334870966009104,
+        "target": "threshold_robust_phase_score_protocol_residual"
       },
       {
         "asymptotic_p": 0.004558029271828904,
@@ -4871,54 +4891,34 @@
         "target": "mode_review_priority"
       },
       {
-        "asymptotic_p": 0.016470978836514424,
-        "empirical_p_abs_ge_observed": 0.01898101898101898,
+        "asymptotic_p": 0.008454728885061562,
+        "empirical_p_abs_ge_observed": 0.011988011988011988,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.25179090909090907,
-        "null_p95_abs_rho": 0.5909090909090909,
-        "predictor": "trace_lag4_particle_norm_cv",
-        "rho": 0.7000000000000001,
-        "target": "mode_review_priority"
-      },
-      {
-        "asymptotic_p": 0.01890464970890005,
-        "empirical_p_abs_ge_observed": 0.022977022977022976,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2475961885435997,
-        "null_p95_abs_rho": 0.5890472368206178,
-        "predictor": "trace_lag16_n_frames",
-        "rho": 0.689504905115607,
+        "null_mean_abs_rho": 0.25792727272727267,
+        "null_p95_abs_rho": 0.6186363636363632,
+        "predictor": "trace_lag8_delta_std_across_particles",
+        "rho": 0.7454545454545456,
         "target": "threshold_robust_phase_score_protocol_residual"
       },
       {
-        "asymptotic_p": 0.02245437698633361,
-        "empirical_p_abs_ge_observed": 0.022977022977022976,
+        "asymptotic_p": 0.007282041008429151,
+        "empirical_p_abs_ge_observed": 0.014985014985014986,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.26001640935098014,
-        "null_p95_abs_rho": 0.607540580302195,
-        "predictor": "trace_lag16_frames_percentile",
-        "rho": 0.6758061321662903,
-        "target": "phase_slope_positive_fraction_protocol_residual"
+        "null_mean_abs_rho": 0.2629818181818182,
+        "null_p95_abs_rho": 0.6090909090909091,
+        "predictor": "trace_lag16_mean_abs_delta_prev",
+        "rho": 0.7545454545454545,
+        "target": "mode_review_priority"
       },
       {
-        "asymptotic_p": 0.025985710209531783,
-        "empirical_p_abs_ge_observed": 0.023976023976023976,
+        "asymptotic_p": 0.023313039833185972,
+        "empirical_p_abs_ge_observed": 0.017982017982017984,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.25180456060341455,
-        "null_p95_abs_rho": 0.5860549999139777,
-        "predictor": "trace_lag16_V_max",
-        "rho": 0.6636311986530791,
+        "null_mean_abs_rho": 0.25877272727272727,
+        "null_p95_abs_rho": 0.6,
+        "predictor": "trace_lag16_mean_delta_prev",
+        "rho": 0.6727272727272727,
         "target": "phase_slope_positive_fraction_protocol_residual"
-      },
-      {
-        "asymptotic_p": 0.024178155822074797,
-        "empirical_p_abs_ge_observed": 0.025974025974025976,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2557409824080255,
-        "null_p95_abs_rho": 0.5922566618516668,
-        "predictor": "trace_lag2_max_abs_delta_prev",
-        "rho": -0.6697056099399616,
-        "target": "phase_slope_median_per_s_protocol_residual"
       }
     ]
   },
