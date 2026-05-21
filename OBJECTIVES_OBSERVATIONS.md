@@ -649,3 +649,32 @@ Key result:
 
 Interpretation: matched controls support the idea that selected event ROIs have different optical-state trend structure, especially bright/high-fraction growth, but simple event-vs-control classification is not robust with only two event/control cycle pairs. This is a useful guardrail: the joint degradation modes should be treated as hypothesis rankings until expanded to more cycles and manually QC'd particle regions.
 
+## 2026-05-21 Expanded Control ROI Screen
+
+Added and ran expanded controls using:
+
+- `scripts/tier2_select_control_rois.py --controls-per-event-cycle 24 --max-controls-per-control-cycle 8`
+- `scripts/tier2_export_selected_roi_sequences.py` on the expanded control table
+- `scripts/tier3_compare_event_control_roi_sequences.py`
+- `scripts/tier3_event_control_roi_classifier.py`
+
+Remote output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection_expanded`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences_expanded`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_classifier_expanded`
+
+Local compact copies use the same names under `derived_local/`.
+
+Key result:
+
+- Expanded from 16 to 32 automatic matched control ROIs.
+- Controls for event cycle 86 now include cycles 88, 90, and 92, with 8 ROIs per cycle; controls for event cycle 116 include cycle 118 with 8 ROIs.
+- Event ROI crops have larger cumulative absolute normalized change than expanded controls: 0.01197 vs 0.00848, Cohen's d 1.48, Mann-Whitney p=0.0100.
+- Event ROI crops have lower first-last image correlation than expanded controls: 0.9855 vs 0.9947, Cohen's d -1.50, p=0.0187.
+- Event ROI crops also have higher normalized intensity standard deviation: 0.1391 vs 0.1312, p=0.0187.
+- Pair-holdout logistic classification remains weak even with expanded controls: mean accuracy 0.372 and mean ROC-AUC 0.290.
+- Top classifier coefficients rank cumulative absolute change positive, first-last correlation negative, and stage drift negative among the strongest separating features.
+
+Interpretation: expanded controls strengthen the feature-level evidence that event ROIs are more dynamically changing and less temporally correlated than nearby non-event particle-like controls. However, the poor pair-holdout classifier means the current feature set does not yet generalize robustly across event/control cycle pairs. This supports using event-control descriptors as physics evidence and guardrails, not as a final automated event detector.

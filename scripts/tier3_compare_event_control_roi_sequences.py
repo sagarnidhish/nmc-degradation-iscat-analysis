@@ -62,6 +62,7 @@ def load_npz_metrics(manifest: pd.DataFrame) -> pd.DataFrame:
             "roi_id": row["roi_id"],
             "cohort": row["cohort"],
             "cycleNo": float(row["cycleNo"]),
+            "control_for_event_cycle": float(row["control_for_event_cycle"]) if "control_for_event_cycle" in row and pd.notna(row["control_for_event_cycle"]) else np.nan,
             "roi_norm_mean_delta_last_minus_first": float(row["roi_norm_mean_delta_last_minus_first"]),
             "roi_mean_delta_last_minus_first": float(row["roi_mean_delta_last_minus_first"]),
             "stage_drift_xy_sampled": float(row["stage_drift_xy_sampled"]),
@@ -108,7 +109,7 @@ def main() -> None:
     fig, axes = plt.subplots(1, 3, figsize=(12, 4))
     for ax, metric in zip(axes, ["roi_norm_mean_delta_last_minus_first", "temporal_diff_energy", "cumulative_abs_norm_change"]):
         vals = [metrics_df.loc[metrics_df["cohort"] == c, metric].to_numpy(dtype=float) for c in ["event", "control"]]
-        ax.boxplot(vals, labels=["event", "control"])
+        ax.boxplot(vals, tick_labels=["event", "control"])
         ax.set_title(metric, fontsize=9)
     fig.tight_layout()
     plot_path = os.path.join(args.out_dir, "event_control_roi_comparison.png")

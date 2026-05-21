@@ -37,8 +37,12 @@ FEATURES = [
 
 
 def infer_pair_label(row: pd.Series) -> int:
+    if "control_for_event_cycle" in row:
+        control_for = pd.to_numeric(pd.Series([row["control_for_event_cycle"]]), errors="coerce").iloc[0]
+        if np.isfinite(control_for):
+            return int(control_for)
     cycle = float(row["cycleNo"])
-    if cycle in (86.0, 88.0):
+    if cycle in (86.0, 88.0, 90.0, 92.0):
         return 86
     if cycle in (116.0, 118.0):
         return 116
