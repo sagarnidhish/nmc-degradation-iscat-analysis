@@ -102,6 +102,7 @@ def main() -> None:
     spatiotemporal_graph = read_json(derived / "spatiotemporal_degradation_graph" / "spatiotemporal_degradation_graph_summary.json")
     phase_kinetics = read_json(derived / "phase_kinetics_avrami" / "phase_kinetics_avrami_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
+    particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -185,6 +186,8 @@ def main() -> None:
     particle_trace_echem_corr = top_items(first_summary(particle_trace, "top_echem_correlations", []), 12)
     particle_trace_classifiers = top_items(first_summary(particle_trace, "future_drop_classifier", []), 6)
     particle_trace_nulls = top_items(first_summary(particle_trace, "future_drop_classifier_null", []), 6)
+    particle_precursor_tests = top_items(first_summary(particle_precursor, "top_precursor_window_tests", []), 12)
+    particle_precursor_all_tests = top_items(first_summary(particle_precursor, "top_window_tests", []), 12)
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -283,6 +286,7 @@ def main() -> None:
         f"- Spatiotemporal degradation graph nodes/edges: {first_summary(spatiotemporal_graph, 'n_nodes', 0)} / {first_summary(spatiotemporal_graph, 'n_edges', 0)}",
         f"- Phase-kinetics ROI rows/features: {first_summary(phase_kinetics, 'n_roi', 0)} / {first_summary(phase_kinetics, 'n_kinetic_features', 0)}",
         f"- Particle trace cycle rows/drop cycles: {first_summary(particle_trace, 'n_cycle_rows', 0)} / {first_summary(particle_trace, 'n_any_drop_cycles', 0)}",
+        f"- Particle precursor event/control anchors: {first_summary(particle_precursor, 'n_event_anchors', 0)} / {first_summary(particle_precursor, 'n_matched_control_anchors', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -305,6 +309,7 @@ def main() -> None:
         f"- Spatiotemporal graph tests show strong same-cycle spatial homophily in front-positive residuals and event-enriched residual modes, but cross-cycle nearest-neighbor front/event labels do not show simple propagation and remain cohort-design sensitive.",
         "- Optical phase-kinetics fits add transition-sharpness and Avrami-style descriptors: event-enriched residual modes have larger q70/q80 transformed-fraction deltas and faster q60/q70 logistic rates, while kinetic fit quality/rates remain strongly coupled to frame count.",
         f"- The larger four-particle cycle table shows leakage-conscious early-warning signal for future abrupt drops: any-drop within 8 cycles has mean AUC {fmt((particle_trace_classifiers[0] if particle_trace_classifiers else {}).get('mean_roc_auc'))} with empirical null p={fmt((particle_trace_nulls[0] if particle_trace_nulls else {}).get('empirical_p_ge_observed'))}; synchronized 2+ drops are also detectable but with only two positive cycles.",
+        f"- Event-aligned precursor windows show lower pre-event capacity/CE and higher cross-particle delta dispersion versus matched non-event anchors; the strongest precursor window test is {((particle_precursor_tests[0] if particle_precursor_tests else {}).get('window', 'NA'))} {((particle_precursor_tests[0] if particle_precursor_tests else {}).get('feature', 'NA'))} with p={fmt((particle_precursor_tests[0] if particle_precursor_tests else {}).get('mannwhitney_p'))}.",
         "",
         "## Model Readout",
         "",
@@ -522,6 +527,22 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Particle Event Precursor Atlas",
+        "",
+        f"- Anchors: {first_summary(particle_precursor, 'n_event_anchors', 0)} event anchors, {first_summary(particle_precursor, 'n_candidate_control_anchors', 0)} candidate controls, {first_summary(particle_precursor, 'n_matched_control_anchors', 0)} matched controls",
+    ]
+    for row in particle_precursor_tests[:10]:
+        report_lines.append(
+            f"- Precursor {row.get('window')} {row.get('feature')} {row.get('statistic')}: event-control {fmt(row.get('event_minus_control_median'))}, p={fmt(row.get('mannwhitney_p'))}"
+        )
+    for row in particle_precursor_all_tests[:5]:
+        report_lines.append(
+            f"- All-window {row.get('window')} {row.get('feature')} {row.get('statistic')}: event-control {fmt(row.get('event_minus_control_median'))}, p={fmt(row.get('mannwhitney_p'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(particle_precursor, 'guardrail', 'Event-aligned trace precursor atlas only.')}")
+
+    report_lines += [
+        "",
         "## Top ROI/Echem Or Protocol Couplings",
         "",
     ]
@@ -667,6 +688,16 @@ def main() -> None:
             "future_drop_classifier": particle_trace_classifiers,
             "future_drop_classifier_null": particle_trace_nulls,
             "guardrail": first_summary(particle_trace, "guardrail"),
+        },
+        "particle_event_precursor_atlas": {
+            "n_cycle_rows": first_summary(particle_precursor, "n_cycle_rows"),
+            "n_event_anchors": first_summary(particle_precursor, "n_event_anchors"),
+            "n_candidate_control_anchors": first_summary(particle_precursor, "n_candidate_control_anchors"),
+            "n_matched_control_anchors": first_summary(particle_precursor, "n_matched_control_anchors"),
+            "event_cycles": first_summary(particle_precursor, "event_cycles", []),
+            "top_precursor_window_tests": particle_precursor_tests,
+            "top_window_tests": particle_precursor_all_tests,
+            "guardrail": first_summary(particle_precursor, "guardrail"),
         },
         "persistence_best_all_cycles": persistence_best,
         "prefix_forecast_n_roi": first_summary(prefix_forecast, "n_roi"),

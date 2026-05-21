@@ -1407,3 +1407,30 @@ Key result:
 
 Interpretation: this is the first stronger early-warning result from the broader particle trace table rather than only selected ROI videos. It supports the idea that particle-level photometry dynamics before an event carry predictive information about upcoming abrupt degradation, but it cannot localize phase boundaries, infer diffusion, or replace manual ROI/front QC.
 
+## 2026-05-21 Particle Event Precursor Atlas
+
+Added and ran:
+
+`python scripts/tier4_particle_event_precursor_atlas.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas`
+
+Local compact copy:
+
+`derived_local/particle_event_precursor_atlas`
+
+Key result:
+
+- Built event-aligned precursor windows from the normalized four-particle cycle table using the four abrupt-drop event anchors: cycles 60, 86, 116, and 156.
+- Selected 17 candidate non-event control anchors outside a +/-16 cycle exclusion zone around events, then formed 24 matched control anchors using cycle, frame-count, capacity, and Vmax context.
+- The strongest pre-event precursor window is lower capacity 5-8 cycles before an event: `pre8_to_pre5 capacity_mAh min_value` median event-control -0.0238 mAh, Mann-Whitney p=0.00171.
+- Longer-range pre-event echem degradation is visible 9-16 cycles before events: `coulombic_efficiency_pct` minimum is lower by -1.11 percentage points (p=0.00194) and mean CE is lower by -0.421 percentage points (p=0.00223).
+- Cross-particle trace dispersion is elevated before events: `pre16_to_pre9 delta_std_across_particles max_value` is higher by +0.0396 (p=0.00665), consistent with increasingly heterogeneous particle response before abrupt degradation.
+- Some significant precursor terms are acquisition/protocol guardrails rather than material physics: pre16-to-pre9 `n_frames` slope is lower in event windows (event-control -2.18 frames/cycle, p=0.0118) and frame-count percentile slope is also lower (p=0.0212).
+- At the event cycle, the atlas recovers the expected abrupt-change signature: `max_abs_delta_prev` event-control +0.136 and `mean_delta_prev` event-control -0.109, both p~0.0017.
+- The project synthesis now includes a Particle Event Precursor Atlas section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this turns the broader cycle-level early-warning classifier into a more physical timeline. Events are preceded by weaker echem state, stronger cross-particle photometry heterogeneity, and then the abrupt intensity drop itself. Because there are only four event anchors and acquisition terms remain significant, this is a review-prioritization and hypothesis-generation result, not a calibrated degradation-propagation model.
+

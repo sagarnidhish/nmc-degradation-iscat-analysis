@@ -20,6 +20,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Spatiotemporal degradation graph nodes/edges: 52 / 510
 - Phase-kinetics ROI rows/features: 52 / 40
 - Particle trace cycle rows/drop cycles: 89 / 4
+- Particle precursor event/control anchors: 4 / 24
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -42,6 +43,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Spatiotemporal graph tests show strong same-cycle spatial homophily in front-positive residuals and event-enriched residual modes, but cross-cycle nearest-neighbor front/event labels do not show simple propagation and remain cohort-design sensitive.
 - Optical phase-kinetics fits add transition-sharpness and Avrami-style descriptors: event-enriched residual modes have larger q70/q80 transformed-fraction deltas and faster q60/q70 logistic rates, while kinetic fit quality/rates remain strongly coupled to frame count.
 - The larger four-particle cycle table shows leakage-conscious early-warning signal for future abrupt drops: any-drop within 8 cycles has mean AUC 0.883 with empirical null p=0.002; synchronized 2+ drops are also detectable but with only two positive cycles.
+- Event-aligned precursor windows show lower pre-event capacity/CE and higher cross-particle delta dispersion versus matched non-event anchors; the strongest precursor window test is pre8_to_pre5 capacity_mAh with p=0.002.
 
 ## Model Readout
 
@@ -251,6 +253,26 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Trace/echem correlation capacity_mAh vs particle_norm_mean: rho 0.454, p=2.081e-05
 - Trace/echem correlation V_max vs mean_abs_delta_prev: rho -0.250, p=0.025
 - Guardrail: This audit uses the larger four-particle cycle intensity table, not video ROI masks. It tests cycle-level photometry/echem physics hypotheses and early-warning signals, but cannot localize phase fronts or validate diffusion without ROI/video QC.
+
+## Particle Event Precursor Atlas
+
+- Anchors: 4 event anchors, 17 candidate controls, 24 matched controls
+- Precursor pre8_to_pre5 capacity_mAh min_value: event-control -0.024, p=0.002
+- Precursor pre16_to_pre9 coulombic_efficiency_pct min_value: event-control -1.110, p=0.002
+- Precursor pre16_to_pre9 coulombic_efficiency_pct mean_value: event-control -0.421, p=0.002
+- Precursor pre16_to_pre9 delta_std_across_particles max_value: event-control 0.040, p=0.007
+- Precursor pre16_to_pre9 n_frames slope_per_cycle: event-control -2.175, p=0.012
+- Precursor pre16_to_pre9 frames_percentile slope_per_cycle: event-control -0.019, p=0.021
+- Precursor pre16_to_pre9 coulombic_efficiency_pct max_value: event-control -0.299, p=0.024
+- Precursor pre4_to_pre1 particle_norm_mean min_value: event-control 0.047, p=0.027
+- Precursor pre8_to_pre5 mean_delta_prev max_value: event-control -0.017, p=0.030
+- Precursor pre16_to_pre9 V_max slope_per_cycle: event-control -5.163e-04, p=0.037
+- All-window event_cycle max_abs_delta_prev max_value: event-control 0.136, p=0.002
+- All-window event_cycle max_abs_delta_prev mean_value: event-control 0.136, p=0.002
+- All-window event_cycle max_abs_delta_prev median_value: event-control 0.136, p=0.002
+- All-window event_cycle max_abs_delta_prev min_value: event-control 0.136, p=0.002
+- All-window pre8_to_pre5 capacity_mAh min_value: event-control -0.024, p=0.002
+- Guardrail: Precursor windows are aligned to four detected abrupt-drop cycles and matched non-event anchors from the four-particle cycle table. Results show cycle-level trace precursors for review and hypothesis generation, not localized phase-front motion or calibrated diffusion.
 
 ## Top ROI/Echem Or Protocol Couplings
 
