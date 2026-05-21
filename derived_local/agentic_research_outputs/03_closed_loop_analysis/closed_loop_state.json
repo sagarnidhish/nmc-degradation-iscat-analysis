@@ -12,6 +12,7 @@
       "particle_events": true,
       "protocol_context": true,
       "recovery_qc": true,
+      "roi_event_conditioned_nextframe": true,
       "roi_rollout_baselines": true,
       "selected_front_roi_tracking": true,
       "validated_front_rois": true
@@ -29,6 +30,7 @@
       "particle_events": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_abrupt_events.csv",
       "protocol_context": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context/event_protocol_context_summary.json",
       "recovery_qc": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_recovery_qc/event_recovery_qc_summary.json",
+      "roi_event_conditioned_nextframe": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_event_conditioned_nextframe/roi_event_model_summary.json",
       "roi_rollout_baselines": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_baseline_summary.json",
       "selected_front_roi_tracking": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_front_roi_tracking/selected_front_roi_tracking_summary.json",
       "validated_front_rois": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois/validated_front_rois_summary.json"
@@ -57,8 +59,8 @@
       "priority": 4
     },
     {
-      "action": "Train event-conditioned ROI next-frame models against persistence/DMD baselines and test rollout residuals as degradation features.",
-      "expected_output": "roi_event_model_metrics.csv and rollout_residual_degradation_features.csv",
+      "action": "Use ROI rollout residual and front-tracking features in a joint degradation-mode/hazard model across selected and future ROIs.",
+      "expected_output": "roi_joint_physics_degradation_modes.csv and calibrated event-hazard report",
       "priority": 5
     }
   ],
@@ -95,7 +97,7 @@
     },
     {
       "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_front_roi_tracking/selected_front_roi_tracking_summary.json",
-      "observation": "Tracked 10 selected front ROIs at full-pixel crop scale; cycle 86 mean radius2 slope -0.121 px2/s, R2 0.184; cycle 116 mean radius2 slope -0.201 px2/s, R2 0.297. These are apparent front-motion proxies, not calibrated diffusion coefficients.",
+      "observation": "Tracked 12 selected front ROIs at full-pixel crop scale; cycle 86 mean radius2 slope -0.127 px2/s, R2 0.178; cycle 116 mean radius2 slope -0.167 px2/s, R2 0.284. These are apparent front-motion proxies, not calibrated diffusion coefficients.",
       "strength": "exploratory_to_moderate",
       "topic": "selected_front_roi_tracking"
     },
@@ -104,6 +106,12 @@
       "observation": "Evaluated 11 particle-ROI sequences with persistence, velocity, and low-rank DMD rollouts; DMD spectral radius 1.002.",
       "strength": "moderate_baseline",
       "topic": "roi_rollout_baselines"
+    },
+    {
+      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_event_conditioned_nextframe/roi_event_model_summary.json",
+      "observation": "Trained a PCA-ridge event-conditioned next-frame model on 11 selected ROI sequences; cycle 86 residual mean 0.00171; cycle 116 residual mean 0.000611. Persistence remains a strong recursive baseline, so residuals are the main degradation descriptor.",
+      "strength": "moderate_baseline",
+      "topic": "roi_event_conditioned_nextframe"
     },
     {
       "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",

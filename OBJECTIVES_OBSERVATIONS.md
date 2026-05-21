@@ -485,3 +485,29 @@ Key result:
 - Sampled XY stage drift was similar across the tracked cycle groups, about 0.224.
 
 Interpretation: the higher-resolution crop tracking strengthens the view that the strongest synchronized events are optical-loss/contraction-like rather than simple expanding bright fronts. Cycle 116 has a stronger negative front-radius proxy and larger corrected ROI mean loss than cycle 86. Fit quality remains modest, so these values should be treated as ranked apparent transport proxies until spatial calibration, manual ROI validation, and exact time-base checks are complete.
+
+## 2026-05-21 Event-Conditioned ROI Next-Frame Model
+
+Added and ran:
+
+`scripts/tier3_roi_event_conditioned_nextframe.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_event_conditioned_nextframe`
+
+Local compact copy:
+
+`derived_local/roi_event_conditioned_nextframe`
+
+Key result:
+
+- Trained a fast PCA-latent ridge next-frame model on the 11 selected ROI sequences, conditioned on cycle identity, normalized time, and ROI validation score.
+- Used stride-2 ROI inputs, 24 PCA components, train fraction 0.67, and ridge alpha 1.0. PCA explained 99.6% of early-frame variance.
+- Teacher-forced next-frame prediction: the event-conditioned model improves over persistence for cycle 116 (MSE 8.55e-05 vs 1.04e-04, SSIM 0.986 vs 0.977), but not for cycle 86 (MSE 3.80e-04 vs persistence 9.05e-05).
+- Recursive rollout: persistence remains stronger than the event-conditioned model for both cycles, showing that autoregressive drift is still a hard failure mode.
+- Rollout residual energy is higher for cycle 86 than cycle 116: mean 0.00171 vs 0.000611, last-step 0.00398 vs 0.00167, residual slope 1.42e-4 vs 4.87e-5 per step.
+- Both cycles have negative truth tail ROI deltas, but the event-conditioned rollout tail drifts slightly positive, so residual sign/magnitude should be treated as a degradation descriptor rather than a faithful long-run simulator.
+
+Interpretation: this gives a concrete AI next-frame experiment on particle-region-only battery photometry videos. It confirms that persistence is a strong baseline and that model residuals carry cycle-specific information. The result supports using rollout residual energy, latent displacement, and front-tracking features together as physics-facing degradation descriptors, while reserving stronger video-model claims for a larger ROI set and better calibrated/manual-QC annotations.
+

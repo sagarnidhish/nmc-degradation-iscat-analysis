@@ -75,6 +75,17 @@ def extract_observations(root: Path) -> List[Dict[str, Any]]:
             "evidence": str(derived / "roi_rollout_baselines" / "roi_rollout_baseline_summary.json"),
             "strength": "moderate_baseline",
         })
+    event_model = read_json(derived / "roi_event_conditioned_nextframe" / "roi_event_model_summary.json")
+    if event_model:
+        residual_bits = []
+        for rec in event_model.get("residual_cycle_summary", []):
+            residual_bits.append(f"cycle {int(float(rec.get('cycleNo', 0)))} residual mean {finite_float(rec.get('rollout_residual_energy_mean')):.3g}")
+        observations.append({
+            "topic": "roi_event_conditioned_nextframe",
+            "observation": f"Trained a PCA-ridge event-conditioned next-frame model on {event_model.get('n_roi_sequences', 'unknown')} selected ROI sequences; {'; '.join(residual_bits)}. Persistence remains a strong recursive baseline, so residuals are the main degradation descriptor.",
+            "evidence": str(derived / "roi_event_conditioned_nextframe" / "roi_event_model_summary.json"),
+            "strength": "moderate_baseline",
+        })
     baselines = read_csv_if_exists(derived / "particle_event_targets" / "particle_event_feature_baselines.csv")
     if not baselines.empty and "f1" in baselines:
         observations.append({
@@ -124,7 +135,13 @@ def next_actions(observations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             "action": "Review candidate front overlays for cycles 86/116 and select validated ROIs for calibrated front tracking.",
             "expected_output": "validated_front_candidates.csv and manual QC decisions",
         })
-    if "roi_rollout_baselines" in topics:
+    if "roi_event_conditioned_nextframe" in topics:
+        actions.append({
+            "priority": 5,
+            "action": "Use ROI rollout residual and front-tracking features in a joint degradation-mode/hazard model across selected and future ROIs.",
+            "expected_output": "roi_joint_physics_degradation_modes.csv and calibrated event-hazard report",
+        })
+    elif "roi_rollout_baselines" in topics:
         actions.append({
             "priority": 5,
             "action": "Train event-conditioned ROI next-frame models against persistence/DMD baselines and test rollout residuals as degradation features.",
