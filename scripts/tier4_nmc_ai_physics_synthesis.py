@@ -105,6 +105,7 @@ def main() -> None:
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
     roi_trace_fusion = read_json(derived / "roi_trace_fusion_audit" / "roi_trace_fusion_audit_summary.json")
     precursor_review = read_json(derived / "precursor_informed_roi_review" / "precursor_informed_roi_review_summary.json")
+    precursor_visual_bundle = read_json(derived / "precursor_review_visual_bundle" / "precursor_review_visual_bundle_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -193,6 +194,7 @@ def main() -> None:
     roi_trace_focus = top_items(first_summary(roi_trace_fusion, "top_precursor_context_residual_spearman", []), 12)
     roi_trace_mode_tests = top_items(first_summary(roi_trace_fusion, "top_precursor_event_enriched_mode_tests", []), 12)
     precursor_review_top = top_items(first_summary(precursor_review, "top_precursor_informed_candidates", []), 12)
+    precursor_visual_top = top_items(first_summary(precursor_visual_bundle, "top_candidates", []), 12)
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -294,6 +296,7 @@ def main() -> None:
         f"- Particle precursor event/control anchors: {first_summary(particle_precursor, 'n_event_anchors', 0)} / {first_summary(particle_precursor, 'n_matched_control_anchors', 0)}",
         f"- ROI trace-fusion rows/predictors: {first_summary(roi_trace_fusion, 'n_roi_rows', 0)} / {first_summary(roi_trace_fusion, 'n_predictors', 0)}",
         f"- Precursor-informed review candidates: {first_summary(precursor_review, 'n_review_candidates', 0)}",
+        f"- Precursor visual-bundle candidates/assets: {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)} / {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -319,6 +322,7 @@ def main() -> None:
         f"- Event-aligned precursor windows show lower pre-event capacity/CE and higher cross-particle delta dispersion versus matched non-event anchors; the strongest precursor window test is {((particle_precursor_tests[0] if particle_precursor_tests else {}).get('window', 'NA'))} {((particle_precursor_tests[0] if particle_precursor_tests else {}).get('feature', 'NA'))} with p={fmt((particle_precursor_tests[0] if particle_precursor_tests else {}).get('mannwhitney_p'))}.",
         f"- ROI trace-fusion links lagged global particle-trace state to localized front behavior: strongest focused context-residual association is {((roi_trace_focus[0] if roi_trace_focus else {}).get('predictor', 'NA'))} vs {((roi_trace_focus[0] if roi_trace_focus else {}).get('target', 'NA'))}, rho={fmt((roi_trace_focus[0] if roi_trace_focus else {}).get('rho'))}, p={fmt((roi_trace_focus[0] if roi_trace_focus else {}).get('p_value'))}.",
         f"- Precursor-informed ROI review ranks {first_summary(precursor_review, 'n_review_candidates', 0)} pending manual-QC candidates; the top candidate is {(precursor_review_top[0] if precursor_review_top else {}).get('roi_id', 'NA')} with score {fmt((precursor_review_top[0] if precursor_review_top else {}).get('precursor_informed_review_score'))}.",
+        f"- A visual review bundle now packages {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)} top precursor-informed ROI candidates; {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)} have at least one copied QC/preview asset and a contact sheet for manual inspection.",
         "",
         "## Model Readout",
         "",
@@ -583,6 +587,20 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Precursor Visual Review Bundle",
+        "",
+        f"- Ranked candidates included: {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)}",
+        f"- Candidates with visual assets: {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)}",
+        f"- Contact sheet: {first_summary(precursor_visual_bundle, 'contact_sheet', 'NA')}",
+    ]
+    for row in precursor_visual_top[:8]:
+        report_lines.append(
+            f"- Visual rank {fmt(row.get('visual_rank'), 0)} {row.get('roi_id')} ({row.get('cohort_role')}, cycle {fmt(row.get('cycleNo'), 0)}): score {fmt(row.get('precursor_informed_review_score'))}, tier {row.get('precursor_review_tier')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(precursor_visual_bundle, 'guardrail', 'Visual bundle only; no manual labels assigned.')}")
+
+    report_lines += [
+        "",
         "## Top ROI/Echem Or Protocol Couplings",
         "",
     ]
@@ -758,6 +776,13 @@ def main() -> None:
             "top_precursor_informed_candidates": precursor_review_top,
             "score_weights": first_summary(precursor_review, "score_weights", {}),
             "guardrail": first_summary(precursor_review, "guardrail"),
+        },
+        "precursor_review_visual_bundle": {
+            "n_ranked_candidates": first_summary(precursor_visual_bundle, "n_ranked_candidates"),
+            "n_candidates_with_visual_asset": first_summary(precursor_visual_bundle, "n_candidates_with_visual_asset"),
+            "contact_sheet": first_summary(precursor_visual_bundle, "contact_sheet"),
+            "top_candidates": precursor_visual_top,
+            "guardrail": first_summary(precursor_visual_bundle, "guardrail"),
         },
         "persistence_best_all_cycles": persistence_best,
         "prefix_forecast_n_roi": first_summary(prefix_forecast, "n_roi"),

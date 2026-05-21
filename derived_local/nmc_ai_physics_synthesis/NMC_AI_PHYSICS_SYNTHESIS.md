@@ -23,6 +23,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Particle precursor event/control anchors: 4 / 24
 - ROI trace-fusion rows/predictors: 52 / 100
 - Precursor-informed review candidates: 47
+- Precursor visual-bundle candidates/assets: 12 / 12
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -48,6 +49,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Event-aligned precursor windows show lower pre-event capacity/CE and higher cross-particle delta dispersion versus matched non-event anchors; the strongest precursor window test is pre8_to_pre5 capacity_mAh with p=0.002.
 - ROI trace-fusion links lagged global particle-trace state to localized front behavior: strongest focused context-residual association is trace_lag2_particle_norm_range vs phase_slope_positive_fraction_protocol_residual, rho=0.725, p=2.688e-07.
 - Precursor-informed ROI review ranks 47 pending manual-QC candidates; the top candidate is cycle156_rank7_obj27 with score 5.527.
+- A visual review bundle now packages 12 top precursor-informed ROI candidates; 12 have at least one copied QC/preview asset and a contact sheet for manual inspection.
 
 ## Model Readout
 
@@ -310,6 +312,21 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - cycle156_rank8_obj10 (event, cycle 156): score 4.741, tier high, reason event-cycle ROI;high precursor-context cycle;event-enriched residual mode;kinetic proxy available
 - cycle60_rank3_obj9 (event, cycle 60): score 4.632, tier high, reason event-cycle ROI;high precursor-context cycle;event-enriched residual mode;large front-direction residual;kinetic proxy available
 - Guardrail: This is a review-prioritization manifest. It combines automatic ROI/front/mode/kinetic descriptors with cycle-level precursor context to decide what to inspect first; it does not assign manual QC labels or validate diffusion/front claims.
+
+## Precursor Visual Review Bundle
+
+- Ranked candidates included: 12
+- Candidates with visual assets: 12
+- Contact sheet: /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_review_visual_bundle/top_candidate_contact_sheet.png
+- Visual rank 1 cycle156_rank7_obj27 (event, cycle 156): score 5.527, tier high
+- Visual rank 2 cycle60_rank5_obj18 (event, cycle 60): score 5.094, tier high
+- Visual rank 3 cycle156_rank6_obj3 (event, cycle 156): score 5.086, tier high
+- Visual rank 4 cycle156_rank5_obj4 (event, cycle 156): score 5.054, tier high
+- Visual rank 5 cycle156_rank2_obj2 (event, cycle 156): score 4.926, tier high
+- Visual rank 6 cycle156_rank1_obj1 (event, cycle 156): score 4.834, tier high
+- Visual rank 7 cycle156_rank8_obj10 (event, cycle 156): score 4.741, tier high
+- Visual rank 8 cycle60_rank3_obj9 (event, cycle 60): score 4.632, tier high
+- Guardrail: This bundle copies existing automatic QC/preview assets for manual inspection. It does not create labels, adjudicate particle identity, or validate diffusion/front interpretability.
 
 ## Top ROI/Echem Or Protocol Couplings
 

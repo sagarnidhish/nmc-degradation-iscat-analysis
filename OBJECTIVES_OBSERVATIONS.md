@@ -1482,3 +1482,26 @@ Key result:
 
 Interpretation: this converts the many automatic analyses into a concrete manual-review queue. The highest-value next human/visual QC work is not arbitrary: inspect top-tier precursor-informed candidates first, with particular attention to event-cycle ROIs that combine high precursor severity, event-enriched residual modes, and large front-direction residuals.
 
+## 2026-05-21 Precursor Review Visual Bundle
+
+Added and ran:
+
+`python scripts/tier4_precursor_review_visual_bundle.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_review_visual_bundle --top-n 12`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_review_visual_bundle`
+
+Local compact copy:
+
+`derived_local/precursor_review_visual_bundle`
+
+Key result:
+
+- Packaged the top 12 precursor-informed ROI review candidates into a visual inspection bundle.
+- All 12 ranked candidates have at least one copied automatic QC/preview asset on Isambard.
+- Created a contact sheet at `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_review_visual_bundle/top_candidate_contact_sheet.png`; the compact contact sheet was synced locally.
+- The bundle starts with the same highest-ranked candidates: `cycle156_rank7_obj27`, `cycle60_rank5_obj18`, `cycle156_rank6_obj3`, `cycle156_rank5_obj4`, and `cycle156_rank2_obj2`.
+- Per-candidate asset folders remain on Isambard under `precursor_review_visual_bundle/assets`; only the compact index, summary, README, and contact sheet are copied locally.
+
+Interpretation: this does not solve manual QC, but it removes the path-chasing friction. The next human or automated visual review can start from a single ranked contact sheet and per-ROI asset folders while keeping labels, particle identity decisions, and diffusion/front interpretability explicitly unassigned.
