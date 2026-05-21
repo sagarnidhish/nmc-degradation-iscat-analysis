@@ -1,0 +1,28 @@
+{
+  "best_k": 4,
+  "best_silhouette": 0.28946038050927647,
+  "cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
+  "event_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_training_table.csv",
+  "feature_cols": [
+    "norm_intensity",
+    "delta_norm",
+    "trailing_mean_norm",
+    "trailing_std_norm",
+    "trailing_min_delta",
+    "trailing_slope_norm",
+    "n_frames_percentile",
+    "V_mean",
+    "V_range",
+    "I_mean_mA",
+    "I_abs_mean_mA",
+    "V_mean_delta",
+    "I_mean_delta"
+  ],
+  "interpretation": "Clusters are exploratory degradation modes. They require raw ROI/video validation before being treated as physical mechanisms.",
+  "label_map": {
+    "0": "abrupt_drop_risk",
+    "1": "stable_or_slow_drift",
+    "2": "stable_or_slow_drift",
+    "3": "stable_or_slow_drift"
+  }
+}

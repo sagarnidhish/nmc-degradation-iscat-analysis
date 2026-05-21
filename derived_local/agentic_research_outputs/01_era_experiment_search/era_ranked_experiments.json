@@ -1,0 +1,118 @@
+{
+  "ranked_experiments": [
+    {
+      "compute_cost": 1,
+      "control_strength": 10,
+      "era_score": 43.5,
+      "id": "E1_frame_count_matched_event_artifact_control",
+      "inputs": [
+        "event_cycle_table",
+        "event_training"
+      ],
+      "physics_yield": 8,
+      "priority_reason": "Separates physical degradation from short-cycle imaging/protocol artifact.",
+      "question": "Are synchronized events still enriched after matching cycles by frame count and protocol block?",
+      "readiness": 1.0,
+      "script": "new: tier1_frame_count_matched_event_controls.py",
+      "status": "ready"
+    },
+    {
+      "compute_cost": 2,
+      "control_strength": 8,
+      "era_score": 40.6,
+      "id": "E2_protocol_local_echem_window_scan",
+      "inputs": [
+        "event_cycle_table",
+        "echem_cycle_summary"
+      ],
+      "physics_yield": 9,
+      "priority_reason": "Directly tests electrochemical context around synchronized optical events.",
+      "question": "Do cycles 86/116 show local dV/dt, dQ/dV, current, or capacity anomalies compared with neighboring cycles?",
+      "readiness": 1.0,
+      "script": "new: tier1_protocol_local_window_scan.py",
+      "status": "ready"
+    },
+    {
+      "compute_cost": 4,
+      "control_strength": 9,
+      "era_score": 39.4,
+      "id": "E5_roi_event_visual_qc_manifest",
+      "inputs": [
+        "particle_events",
+        "event_cycle_table"
+      ],
+      "physics_yield": 9,
+      "priority_reason": "Required before claiming physical abrupt degradation from optical traces.",
+      "question": "Do raw ROI frames around event cycles show real particle changes rather than threshold/drift artifacts?",
+      "readiness": 1.0,
+      "script": "new: tier1_event_roi_qc_manifest.py",
+      "status": "ready"
+    },
+    {
+      "compute_cost": 2,
+      "control_strength": 8,
+      "era_score": 36.506,
+      "id": "E3_particle_event_hazard_calibration",
+      "inputs": [
+        "event_training",
+        "event_cycle_table"
+      ],
+      "physics_yield": 7,
+      "priority_reason": "Turns weak precursor signal into a calibrated degradation-risk model.",
+      "question": "Can grouped hazard models forecast abrupt particle events under leave-one-particle and blocked-cycle validation?",
+      "readiness": 1.0,
+      "script": "extend: tier2_crack_hazard.py",
+      "status": "ready"
+    },
+    {
+      "compute_cost": 2,
+      "control_strength": 6,
+      "era_score": 33.4,
+      "id": "E4_degradation_mode_clustering",
+      "inputs": [
+        "event_training",
+        "event_cycle_table"
+      ],
+      "physics_yield": 8,
+      "priority_reason": "Extracts interpretable degradation modes rather than binary event labels only.",
+      "question": "Do particles/cycles cluster into gradual drift, abrupt drop, recovery, and stable modes?",
+      "readiness": 1.0,
+      "script": "new: tier2_degradation_mode_clustering.py",
+      "status": "ready"
+    },
+    {
+      "compute_cost": 5,
+      "control_strength": 7,
+      "era_score": 29.9,
+      "id": "E6_observable_sequence_forecast",
+      "inputs": [
+        "event_training",
+        "event_cycle_table",
+        "echem_cycle_summary"
+      ],
+      "physics_yield": 7,
+      "priority_reason": "Bridges the NMC degradation data and the SP observable-forecasting strategy.",
+      "question": "Can past particle optical observables plus future protocol/echem context predict future degradation observables?",
+      "readiness": 1.0,
+      "script": "extend: tier3_multimodal_transformer.py",
+      "status": "ready"
+    },
+    {
+      "compute_cost": 3,
+      "control_strength": 7,
+      "era_score": 29.9,
+      "id": "E7_front_proxy_readiness_scan",
+      "inputs": [
+        "event_training",
+        "recovery_qc"
+      ],
+      "physics_yield": 6,
+      "priority_reason": "Prevents over-interpreting diffusion coefficients before front-quality validation.",
+      "question": "Which particles/cycles are suitable for phase-front/proxy tracking and apparent transport fits?",
+      "readiness": 1.0,
+      "script": "new: tier2_front_proxy_readiness_scan.py",
+      "status": "ready"
+    }
+  ],
+  "root": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho"
+}

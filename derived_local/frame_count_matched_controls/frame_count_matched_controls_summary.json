@@ -1,0 +1,150 @@
+{
+  "cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
+  "failed_event_matches": 0,
+  "interpretation": "If observed low frame-count percentile remains extreme after matching, event cycles are not explained by frame-count/protocol artifact alone. If it does not, raw ROI QC is mandatory before physical claims.",
+  "n_matched_draws": 20000,
+  "n_permutations_requested": 20000,
+  "observed_summary": {
+    "I_abs_mean_mA_mean": 0.500889,
+    "I_abs_mean_mA_min": 0.500889,
+    "I_mean_mA_mean": 0.0052635948511247,
+    "I_mean_mA_min": 0.0034861829990025,
+    "V_mean_mean": 3.862787127747806,
+    "V_mean_min": 3.821635612224316,
+    "duration_s_mean": 10484.13150036335,
+    "duration_s_min": 9021.373033046722,
+    "echem_points_mean": 80471.0,
+    "echem_points_min": 70712.0,
+    "n_cycles": 2.0,
+    "n_frames_mean": 895.5,
+    "n_frames_min": 892.0,
+    "n_frames_percentile_mean": 0.04494382022471905,
+    "n_frames_percentile_min": 0.0112359550561797
+  },
+  "synchronized_event_cycles": [
+    86.0,
+    116.0
+  ],
+  "top_matched_tests": [
+    {
+      "metric": "n_frames_mean",
+      "null_mean": 898.30255,
+      "null_p05": 896.0,
+      "null_p50": 897.5,
+      "null_p95": 901.5,
+      "observed": 895.5,
+      "p_higher_or_equal": 1.0,
+      "p_lower_or_equal": 4.999750012499375e-05
+    },
+    {
+      "metric": "n_frames_min",
+      "null_mean": 895.95505,
+      "null_p05": 893.0,
+      "null_p50": 895.0,
+      "null_p95": 901.0,
+      "observed": 892.0,
+      "p_higher_or_equal": 1.0,
+      "p_lower_or_equal": 4.999750012499375e-05
+    },
+    {
+      "metric": "n_frames_percentile_mean",
+      "null_mean": 0.09214662921348313,
+      "null_p05": 0.050561797752808946,
+      "null_p50": 0.0926966292134831,
+      "null_p95": 0.15168539325842695,
+      "observed": 0.04494382022471905,
+      "p_higher_or_equal": 1.0,
+      "p_lower_or_equal": 4.999750012499375e-05
+    },
+    {
+      "metric": "n_frames_percentile_min",
+      "null_mean": 0.05553117977528086,
+      "null_p05": 0.0224719101123595,
+      "null_p50": 0.0337078651685393,
+      "null_p95": 0.1404494382022472,
+      "observed": 0.0112359550561797,
+      "p_higher_or_equal": 1.0,
+      "p_lower_or_equal": 4.999750012499375e-05
+    },
+    {
+      "metric": "V_mean_mean",
+      "null_mean": 3.8419576439928975,
+      "null_p05": 3.8207020920809267,
+      "null_p50": 3.8305842985487013,
+      "null_p95": 3.8755859866255307,
+      "observed": 3.862787127747806,
+      "p_higher_or_equal": 0.32583370831458425,
+      "p_lower_or_equal": 0.6742162891855408
+    },
+    {
+      "metric": "V_mean_min",
+      "null_mean": 3.8252864180329924,
+      "null_p05": 3.819906377444828,
+      "null_p50": 3.8214978067170255,
+      "null_p95": 3.836861087936663,
+      "observed": 3.821635612224316,
+      "p_higher_or_equal": 0.4409279536023199,
+      "p_lower_or_equal": 0.5591220438978051
+    },
+    {
+      "metric": "I_mean_mA_mean",
+      "null_mean": 0.023588242790633786,
+      "null_p05": 0.0031388078027354,
+      "null_p50": 0.023140951972242498,
+      "null_p95": 0.04966104459049705,
+      "observed": 0.0052635948511247,
+      "p_higher_or_equal": 0.8858057097145142,
+      "p_lower_or_equal": 0.11424428778561072
+    },
+    {
+      "metric": "I_mean_mA_min",
+      "null_mean": 0.012160141887677974,
+      "null_p05": 0.0024334815383651,
+      "null_p50": 0.0038441340671057,
+      "null_p95": 0.0438484224061199,
+      "observed": 0.0034861829990025,
+      "p_higher_or_equal": 0.6642167891605419,
+      "p_lower_or_equal": 0.335833208339583
+    },
+    {
+      "metric": "I_abs_mean_mA_mean",
+      "null_mean": 0.5008889999999999,
+      "null_p05": 0.5008889999999999,
+      "null_p50": 0.5008889999999999,
+      "null_p95": 0.500889,
+      "observed": 0.500889,
+      "p_higher_or_equal": 0.2231888405579721,
+      "p_lower_or_equal": 1.0
+    },
+    {
+      "metric": "I_abs_mean_mA_min",
+      "null_mean": 0.5008889999999999,
+      "null_p05": 0.5008889999999999,
+      "null_p50": 0.5008889999999999,
+      "null_p95": 0.500889,
+      "observed": 0.500889,
+      "p_higher_or_equal": 0.2231888405579721,
+      "p_lower_or_equal": 1.0
+    },
+    {
+      "metric": "duration_s_mean",
+      "null_mean": 9531.936201156914,
+      "null_p05": 9027.836590647697,
+      "null_p50": 9074.817904829979,
+      "null_p95": 10526.435000061989,
+      "observed": 10484.13150036335,
+      "p_higher_or_equal": 0.32583370831458425,
+      "p_lower_or_equal": 0.6742162891855408
+    },
+    {
+      "metric": "duration_s_min",
+      "null_mean": 9037.574973967623,
+      "null_p05": 9003.555330276487,
+      "null_p50": 9052.117851018906,
+      "null_p95": 9059.980037927628,
+      "observed": 9021.373033046722,
+      "p_higher_or_equal": 0.6625168741562922,
+      "p_lower_or_equal": 0.3375331233438328
+    }
+  ]
+}

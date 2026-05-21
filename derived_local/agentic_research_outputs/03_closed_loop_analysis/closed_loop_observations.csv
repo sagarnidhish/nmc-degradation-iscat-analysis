@@ -1,0 +1,5 @@
+topic,observation,evidence,strength
+event_synchrony,Synchronized optical drop events have already passed a permutation sanity check.,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_synchrony/event_synchrony_summary.json,moderate
+event_echem,81 cycles matched to electrochemistry; coarse cycle summaries do not fully explain events.,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_coupling_summary.json,moderate
+protocol_context,Synchronized event cycles are linked to unusually short frame-count regimes.,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context/event_protocol_context_summary.json,moderate
+event_forecasting,Best transparent leave-one-particle event-forecast F1 is 0.435.,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv,weak_to_moderate

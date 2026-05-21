@@ -138,3 +138,79 @@ Key result:
 - The highest-priority next action is exact particle-region validation for cycles 116 and 86, ideally by recovering original object detector coordinates or reconstructing stable particle crops from full-frame videos.
 
 Interpretation: the strongest NMC finding so far is not a diffusion coefficient yet; it is a ranked, evidence-backed degradation-event hypothesis. The current evidence supports coordinated persistent optical degradation at cycles 86 and 116, with a confounding association to low frame counts that must be separated from protocol/acquisition artifacts before mechanistic interpretation.
+
+## 2026-05-21 Agentic Research Workflow Implementation
+
+Implemented the four paper-inspired workflows as separate Isambard folders under:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/agentic_research`
+
+The four workflows are:
+
+1. `01_era_experiment_search`: ranks next computational experiments using readiness, physics yield, controls, cost, and current evidence.
+2. `02_hypothesis_tournament`: scores degradation/transport hypotheses against available evidence and skeptical risks.
+3. `03_closed_loop_analysis`: summarizes current outputs and writes a next-action queue.
+4. `04_guarded_code_generation`: generates reviewable experiment stubs for top-ranked next analyses.
+
+Smoke outputs are written on Isambard under:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs`
+
+Current ERA ranking prioritizes: frame-count/protocol matched controls, protocol-local echem window scans, ROI event visual QC, hazard calibration, and degradation-mode clustering.
+
+## 2026-05-21 Frame-Count Matched Control Result
+
+Added and ran:
+
+`scripts/tier1_frame_count_matched_event_controls.py`
+
+Output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/frame_count_matched_controls`
+
+Key result:
+
+- Synchronized event cycles are 86 and 116.
+- Even after matched sampling against non-event cycles, their frame counts remain unusually low.
+- Matched null with 20,000 draws gives:
+  - observed mean frame count: 895.5 vs null mean 898.3, empirical lower-tail p = 0.00005.
+  - observed mean frame-count percentile: 0.0449 vs null mean 0.0921, empirical lower-tail p = 0.00005.
+- Coarse voltage/current metrics are not similarly extreme under the matched null.
+
+Interpretation: the synchronized optical events remain tightly associated with the shortest cycle-frame regimes. This strengthens the artifact/protocol-risk concern rather than proving physical degradation. Raw ROI/event visual QC around cycles 86 and 116 is now mandatory before making a physical claim.
+
+## 2026-05-21 Protocol-Local Echem Window Scan Result
+
+Added and ran:
+
+`scripts/tier1_protocol_local_window_scan.py`
+
+Output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_local_window_scan`
+
+Key result:
+
+- Compared synchronized event cycles with neighboring cycles over a +/- 6 cycle window.
+- Coarse per-cycle echem features do not show strong local anomalies; best local test was echem point count, p = 0.235.
+- Current, voltage, duration, and simple deltas are not significant with this small event set.
+
+Interpretation: event timing is not explained by coarse per-cycle voltage/current summaries. The next echem step should inspect within-cycle traces or protocol metadata, but the highest-priority check remains raw optical/ROI validation.
+
+## 2026-05-21 Degradation Mode Clustering Result
+
+Added and ran:
+
+`scripts/tier2_degradation_mode_clustering.py`
+
+Output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/degradation_mode_clustering`
+
+Key result:
+
+- K-means model selection chose k = 4 with silhouette 0.289.
+- One cluster is clearly an `abrupt_drop_risk` mode: 53 particle-cycle rows, event rate 0.151, mean cycle about 89, negative delta/trailing slope, low frame-count percentile.
+- The other three clusters are currently labeled stable/slow-drift variants, including later-cycle brighter/high-voltage regimes.
+
+Interpretation: the data support an exploratory degradation-mode view, but the cluster labels are not physical mechanisms yet. They should guide QC and hypothesis generation, not serve as final claims without raw ROI/video validation and particle/region controls.

@@ -1,0 +1,5 @@
+priority,action,expected_output
+1,Run frame-count-matched shuffled controls for synchronized event cycles.,matched_control_p_values.csv and artifact-risk summary
+2,Run protocol-local echem window scan around cycles 86 and 116.,local_echem_window_features.csv with neighbor-cycle controls
+3,Generate ROI/event visual QC manifest for raw frame inspection.,event_roi_qc_manifest.csv and review checklist
+4,Fit grouped degradation-mode clustering and hazard calibration.,"degradation_modes.csv, hazard_calibration.csv"

@@ -1,0 +1,46 @@
+{
+  "hypotheses": [
+    {
+      "id": "H1_sync_events_are_real_degradation",
+      "statement": "The same-cycle abrupt optical drops around cycles 86 and 116 are coordinated degradation events rather than independent particle noise.",
+      "supports": ["event_synchrony"],
+      "critical_tests": ["shuffle_cycle_control", "raw_roi_visual_qc", "background_region_control"],
+      "risk": "Protocol or frame-count artifacts can create synchronized apparent events."
+    },
+    {
+      "id": "H2_short_frame_protocol_context",
+      "statement": "Synchronized event cycles are associated with unusually short cycle-frame regimes and protocol context changes.",
+      "supports": ["protocol_context", "event_echem"],
+      "critical_tests": ["local_protocol_window_scan", "frame_count_matched_controls"],
+      "risk": "Frame-count association may be an imaging artifact, not electrochemical degradation."
+    },
+    {
+      "id": "H3_event_precursors_are_weak_but_present",
+      "statement": "Prior-cycle optical features contain weak but nonzero warning signal for abrupt degradation events.",
+      "supports": ["event_baselines"],
+      "critical_tests": ["leave_one_particle_out", "cycle_blocked_cv", "calibrated_hazard_model"],
+      "risk": "Rare events and particle grouping can inflate apparent precursor skill."
+    },
+    {
+      "id": "H4_degradation_modes_are_particle_region_specific",
+      "statement": "Particles and regions differ in degradation mode, with synchronized events superimposed on heterogeneous gradual drift.",
+      "supports": ["event_training"],
+      "critical_tests": ["particle_random_effects", "region_feature_clustering", "spatial_covariate_controls"],
+      "risk": "Only four example particles are currently summarized, limiting spatial inference."
+    },
+    {
+      "id": "H5_observable_forecasting_more_useful_than_pixel_rollout",
+      "statement": "For this project stage, forecasting physical observables and event hazards is more scientifically useful than unconstrained pixel rollout.",
+      "supports": ["event_baselines", "event_echem"],
+      "critical_tests": ["observable_forecast_vs_persistence", "event_hazard_calibration", "phase_or_protocol_stratified_metrics"],
+      "risk": "Observable compression may miss spatial crack morphology or phase-front movement."
+    },
+    {
+      "id": "H6_apparent_transport_requires_validation",
+      "statement": "Phase-boundary/front-motion and apparent diffusion extraction should be treated as readiness-ranked proxies until visual validation and spatial calibration are complete.",
+      "supports": ["recovery_qc"],
+      "critical_tests": ["front_overlay_review", "monotonicity_filter", "calibration_metadata_check"],
+      "risk": "Apparent coefficients can be physically misleading without calibration."
+    }
+  ]
+}

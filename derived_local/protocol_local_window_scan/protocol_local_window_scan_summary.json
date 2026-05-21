@@ -1,0 +1,74 @@
+{
+  "event_cycles": [
+    86.0,
+    116.0
+  ],
+  "half_width": 6,
+  "interpretation": "Local event-cycle anomalies suggest protocol/echem forcing candidates; null results mean coarse per-cycle echem is insufficient and raw within-cycle traces should be scanned.",
+  "n_local_rows": 26,
+  "top_tests": [
+    {
+      "event_center_mean": 80471.0,
+      "event_minus_neighbor": 12955.083333333328,
+      "mannwhitney_p": 0.23481825658676414,
+      "metric": "echem_points",
+      "neighbor_mean": 67515.91666666667
+    },
+    {
+      "event_center_mean": 0.0052635948511247,
+      "event_minus_neighbor": -0.0071642415822602504,
+      "mannwhitney_p": 0.3516483516483517,
+      "metric": "I_mean_mA",
+      "neighbor_mean": 0.01242783643338495
+    },
+    {
+      "event_center_mean": 3.862787127747806,
+      "event_minus_neighbor": -0.0034725927836984916,
+      "mannwhitney_p": 0.4395604395604396,
+      "metric": "V_mean",
+      "neighbor_mean": 3.8662597205315046
+    },
+    {
+      "event_center_mean": 10484.13150036335,
+      "event_minus_neighbor": -32.3550793528575,
+      "mannwhitney_p": 0.5494505494505495,
+      "metric": "duration_s",
+      "neighbor_mean": 10516.486579716207
+    },
+    {
+      "event_center_mean": 0.02535586941815675,
+      "event_minus_neighbor": 0.031025641750367223,
+      "mannwhitney_p": 0.5494505494505495,
+      "metric": "I_mean_delta",
+      "neighbor_mean": -0.005669772332210475
+    },
+    {
+      "event_center_mean": 1.3071419999999998,
+      "event_minus_neighbor": -0.013287499999999897,
+      "mannwhitney_p": 0.5834684592371177,
+      "metric": "V_range",
+      "neighbor_mean": 1.3204294999999997
+    },
+    {
+      "event_center_mean": 0.00433992751197,
+      "event_minus_neighbor": 0.005765914218587041,
+      "mannwhitney_p": 0.6593406593406594,
+      "metric": "V_mean_delta",
+      "neighbor_mean": -0.0014259867066170418
+    },
+    {
+      "event_center_mean": 0.500889,
+      "event_minus_neighbor": 1.1102230246251565e-16,
+      "mannwhitney_p": 0.8382564863858263,
+      "metric": "I_abs_mean_mA",
+      "neighbor_mean": 0.5008889999999999
+    },
+    {
+      "event_center_mean": 0.0008680000000003,
+      "event_minus_neighbor": -0.001335999999999718,
+      "mannwhitney_p": 0.9230769230769231,
+      "metric": "V_range_delta",
+      "neighbor_mean": 0.002204000000000018
+    }
+  ]
+}
