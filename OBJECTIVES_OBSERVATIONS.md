@@ -459,3 +459,77 @@ Key result:
 - Cycle 116 has slightly larger temporal difference energy than cycle 86: 1.05e-4 vs 8.43e-5.
 
 Interpretation: the selected event ROIs do not show a single uniform degradation mode. The dominant behavior is slow near-static/mixed evolution, but a minority of ROIs show front-like brightening/expansion signatures. Cycle 86 appears more spatially/cumulatively active in the selected crops, while cycle 116 looks more temporally noisy but less net-displaced. These descriptors are still image-coordinate proxies; calibrated diffusion claims require spatial calibration, manual ROI validation, and time-base alignment.
+
+## 2026-05-21 ROI Rollout Baseline Result
+
+Added and ran:
+
+`scripts/tier3_roi_rollout_baselines.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines`
+
+Local compact copy:
+
+`derived_local/roi_rollout_baselines`
+
+Key result:
+
+- Evaluated 11 particle-region-only ROI sequences from selected synchronized-event crops.
+- Methods were persistence, velocity extrapolation, and low-rank DMD/PCA latent rollout with rank 10 and train fraction 0.67.
+- Persistence is the strongest next-frame/rollout baseline: cycle 86 mean MSE 9.02e-05 and SSIM 0.969; cycle 116 mean MSE 1.03e-04 and SSIM 0.964.
+- Low-rank DMD is weaker than persistence on pixel metrics, but its latent dynamics separate the two synchronized event cycles: cycle 86 mean latent path length 11.11 and net displacement 1.12, versus cycle 116 path length 7.59 and net displacement 0.315.
+- DMD spectral radius is 1.002, consistent with near-neutral latent dynamics over the evaluated crop windows.
+
+Interpretation: for these slowly evolving ROI videos, simple persistence is a hard baseline that any neural next-frame predictor must beat. The useful physics-facing signal is not raw next-frame MSE alone; rollout residuals and latent path/displacement features are better candidates for event/degradation descriptors.
+
+## 2026-05-21 Selected Front ROI Tracking Result
+
+Added and ran:
+
+`scripts/tier3_track_selected_front_rois.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_front_roi_tracking`
+
+Local compact copy:
+
+`derived_local/selected_front_roi_tracking`
+
+Key result:
+
+- Tracked the 10 selected validated front ROIs at full-pixel crop scale using 192x192 crops and camera-timing-normalized elapsed seconds.
+- The tracker computes signed optical-change masks relative to early-frame baselines, weighted front radii, radius-squared slopes, active area fractions, and stage drift summaries.
+- Cycle 86: 5 tracked ROIs, mean radius-squared slope -0.121 full px^2/s, mean radius-squared fit R2 0.184, mean apparent diffusion proxy -0.0303 full px^2/s, mean corrected ROI delta -1.89, final active fraction 0.110.
+- Cycle 116: 5 tracked ROIs, mean radius-squared slope -0.201 full px^2/s, mean radius-squared fit R2 0.297, mean apparent diffusion proxy -0.0503 full px^2/s, mean corrected ROI delta -11.24, final active fraction 0.049.
+- Stage drift over the sampled windows is about 0.224 in the recorded XY stage units for both cycles.
+
+Interpretation: this gives the first high-resolution front-motion measurements on selected event ROIs. The negative radius-squared slopes suggest contracting or fading signed-change regions under the current thresholding convention, not simple outward growth. Cycle 116 has stronger mean corrected optical loss and more negative front-motion proxy, while cycle 86 has larger final active fraction. These remain apparent pixel-scale proxies; calibrated diffusion claims still require manual ROI QC, spatial calibration, and a convention-checked phase-boundary model.
+
+
+## 2026-05-21 High-Resolution Selected Front ROI Tracking
+
+Added and ran:
+
+`scripts/tier3_track_selected_front_rois.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_front_roi_tracking`
+
+Local compact copy:
+
+`derived_local/selected_front_roi_tracking`
+
+Key result:
+
+- Re-read full-resolution HDF5 crops around the selected cycle-86 and cycle-116 ROI candidates and tracked signed optical-change fronts over sampled event segments.
+- Tracked 12 selected ROIs: 6 from cycle 86 and 6 from cycle 116.
+- Fitted apparent full-pixel radius-squared slopes versus elapsed camera time. These are transport proxies, not calibrated diffusion coefficients.
+- Cycle 86: mean radius^2 slope -0.127 full-px^2/s, mean apparent diffusion proxy -0.0318 full-px^2/s, mean fit R2 0.178, final active fraction 0.108, corrected ROI mean delta -1.82.
+- Cycle 116: mean radius^2 slope -0.167 full-px^2/s, mean apparent diffusion proxy -0.0418 full-px^2/s, mean fit R2 0.284, final active fraction 0.0489, corrected ROI mean delta -6.63.
+- Sampled XY stage drift was similar across the tracked cycle groups, about 0.224.
+
+Interpretation: the higher-resolution crop tracking strengthens the view that the strongest synchronized events are optical-loss/contraction-like rather than simple expanding bright fronts. Cycle 116 has a stronger negative front-radius proxy and larger corrected ROI mean loss than cycle 86. Fit quality remains modest, so these values should be treated as ranked apparent transport proxies until spatial calibration, manual ROI validation, and exact time-base checks are complete.

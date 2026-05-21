@@ -1,0 +1,6 @@
+mode_cluster,mode_name,cycleNo,n_roi
+0,near_static_or_mixed,86.0,3
+0,near_static_or_mixed,116.0,4
+1,brightening_expanding_front,86.0,2
+1,brightening_expanding_front,116.0,1
+2,brightening_expanding_front,116.0,1

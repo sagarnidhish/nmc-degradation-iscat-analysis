@@ -11,6 +11,8 @@
     "particle_events": true,
     "protocol_context": true,
     "recovery_qc": true,
+    "roi_rollout_baselines": true,
+    "selected_front_roi_tracking": true,
     "validated_front_rois": true
   },
   "derived": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived",
@@ -26,6 +28,8 @@
     "particle_events": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_abrupt_events.csv",
     "protocol_context": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context/event_protocol_context_summary.json",
     "recovery_qc": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_recovery_qc/event_recovery_qc_summary.json",
+    "roi_rollout_baselines": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_baseline_summary.json",
+    "selected_front_roi_tracking": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_front_roi_tracking/selected_front_roi_tracking_summary.json",
     "validated_front_rois": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois/validated_front_rois_summary.json"
   },
   "root": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho"

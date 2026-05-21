@@ -83,6 +83,8 @@ def summarize_available_artifacts(root: Path) -> Dict[str, Any]:
         "recovery_qc": derived / "event_recovery_qc" / "event_recovery_qc_summary.json",
         "event_candidate_fronts": derived / "event_candidate_fronts" / "event_candidate_fronts_summary.json",
         "validated_front_rois": derived / "validated_front_rois" / "validated_front_rois_summary.json",
+        "selected_front_roi_tracking": derived / "selected_front_roi_tracking" / "selected_front_roi_tracking_summary.json",
+        "roi_rollout_baselines": derived / "roi_rollout_baselines" / "roi_rollout_baseline_summary.json",
         "echem_cycle_summary": derived / "event_echem_coupling" / "echem_cycle_summary.csv",
         "local_particle_events": repo_derived / "particle_event_targets" / "particle_abrupt_events.csv",
     }

@@ -1,0 +1,101 @@
+{
+  "cycle_method_summary": [
+    {
+      "cycleNo": 86.0,
+      "mae_mean": 0.015470163969439454,
+      "mae_std": 0.004263884056065366,
+      "method": "low_rank_dmd",
+      "mse_mean": 0.0009565556058078073,
+      "mse_std": 0.0005526997956557094,
+      "psnr_mean": 31.89420085321634,
+      "psnr_std": 2.501396930344694,
+      "ssim_mean": 0.9104521201764939,
+      "ssim_std": 0.025172632744696857
+    },
+    {
+      "cycleNo": 86.0,
+      "mae_mean": 0.006693183683091774,
+      "mae_std": 0.0013057902906730779,
+      "method": "persistence",
+      "mse_mean": 9.021111668516824e-05,
+      "mse_std": 3.5433468077982554e-05,
+      "psnr_mean": 41.40907044144294,
+      "psnr_std": 1.7595366765200857,
+      "ssim_mean": 0.9692546041441599,
+      "ssim_std": 0.00876883402079371
+    },
+    {
+      "cycleNo": 86.0,
+      "mae_mean": 0.011268813599599525,
+      "mae_std": 0.002173742508051322,
+      "method": "velocity",
+      "mse_mean": 0.00023379500094051765,
+      "mse_std": 8.86256208202513e-05,
+      "psnr_mean": 36.84645833878254,
+      "psnr_std": 1.749342957557309,
+      "ssim_mean": 0.9194803396123519,
+      "ssim_std": 0.02035126922636751
+    },
+    {
+      "cycleNo": 116.0,
+      "mae_mean": 0.009562602470396087,
+      "mae_std": 0.0019192125642235258,
+      "method": "low_rank_dmd",
+      "mse_mean": 0.0002466039559484064,
+      "mse_std": 6.960200953957984e-05,
+      "psnr_mean": 36.88197686753286,
+      "psnr_std": 1.4980157198012027,
+      "ssim_mean": 0.9663213544911341,
+      "ssim_std": 0.008950458723081424
+    },
+    {
+      "cycleNo": 116.0,
+      "mae_mean": 0.007632283615142417,
+      "mae_std": 0.002299700220436692,
+      "method": "persistence",
+      "mse_mean": 0.00010348353151812262,
+      "mse_std": 6.623957044119611e-05,
+      "psnr_mean": 40.45431356330074,
+      "psnr_std": 2.400223710119625,
+      "ssim_mean": 0.9637462769825119,
+      "ssim_std": 0.014667323733763133
+    },
+    {
+      "cycleNo": 116.0,
+      "mae_mean": 0.013049222145734044,
+      "mae_std": 0.003950457298494491,
+      "method": "velocity",
+      "mse_mean": 0.0003016847676917678,
+      "mse_std": 0.00019403438770473436,
+      "psnr_mean": 35.81467903657064,
+      "psnr_std": 2.4135384012062024,
+      "ssim_mean": 0.9049066836715373,
+      "ssim_std": 0.033086056666805974
+    }
+  ],
+  "dmd_spectral_radius": 1.00236976146698,
+  "guardrail": "Low-rank DMD is an interpretable ROI-only rollout baseline, not a final neural video model or calibrated diffusion estimator.",
+  "latent_cycle_summary": [
+    {
+      "cycleNo": 86.0,
+      "latent_component0_delta": 0.03298916816711426,
+      "latent_mean_step": 0.11694352328777313,
+      "latent_net_displacement": 1.1216312050819397,
+      "latent_path_length": 11.109634590148925
+    },
+    {
+      "cycleNo": 116.0,
+      "latent_component0_delta": -0.05646995703379313,
+      "latent_mean_step": 0.07994311302900314,
+      "latent_net_displacement": 0.3153570791085561,
+      "latent_path_length": 7.594595750172933
+    }
+  ],
+  "n_frame_metric_rows": 1056,
+  "n_roi_sequences": 11,
+  "plot_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_cycle_summary.png",
+  "preview_count": 11,
+  "rank": 10,
+  "roi_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences",
+  "train_fraction": 0.67
+}

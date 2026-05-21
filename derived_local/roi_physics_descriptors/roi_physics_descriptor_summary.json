@@ -1,0 +1,83 @@
+{
+  "cluster_meta": {
+    "feature_columns": [
+      "roi_mean_slope_per_frame",
+      "high_fraction_slope_per_frame",
+      "low_fraction_slope_per_frame",
+      "front_radius_high_slope_px_per_frame",
+      "apparent_diffusion_proxy_px2_per_frame",
+      "weighted_radial_mean_slope_px_per_frame",
+      "temporal_diff_energy",
+      "cumulative_abs_change"
+    ],
+    "mode_names": {
+      "0": "near_static_or_mixed",
+      "1": "brightening_expanding_front",
+      "2": "brightening_expanding_front"
+    },
+    "selected_k": 3,
+    "silhouette": 0.31092970366806205
+  },
+  "cycle_summary": [
+    {
+      "apparent_diffusion_proxy_px2_per_frame": -0.002016197564210784,
+      "cumulative_abs_change": 0.015103669837117195,
+      "cycleNo": 86.0,
+      "front_radius_high_slope_px_per_frame": -0.00011258387277926954,
+      "high_fraction_slope_per_frame": 1.6391660514247534e-05,
+      "n_roi": 5,
+      "roi_mean_slope_per_frame": 7.2681405551666035e-06,
+      "temporal_diff_energy": 8.426418862654828e-05,
+      "weighted_radial_mean_slope_px_per_frame": -0.00035001836580743356
+    },
+    {
+      "apparent_diffusion_proxy_px2_per_frame": -0.0006400924762848923,
+      "cumulative_abs_change": 0.009366310822467009,
+      "cycleNo": 116.0,
+      "front_radius_high_slope_px_per_frame": 3.111524128087342e-05,
+      "high_fraction_slope_per_frame": 2.0451764653882067e-05,
+      "n_roi": 6,
+      "roi_mean_slope_per_frame": 8.61166438780813e-06,
+      "temporal_diff_energy": 0.00010499935524421744,
+      "weighted_radial_mean_slope_px_per_frame": -0.00020806065806171963
+    }
+  ],
+  "guardrail": "Front/radius and diffusion values are normalized-image pixel/frame proxies, not calibrated micron-scale diffusion coefficients.",
+  "mode_counts": [
+    {
+      "cycleNo": 86.0,
+      "mode_cluster": 0,
+      "mode_name": "near_static_or_mixed",
+      "n_roi": 3
+    },
+    {
+      "cycleNo": 116.0,
+      "mode_cluster": 0,
+      "mode_name": "near_static_or_mixed",
+      "n_roi": 4
+    },
+    {
+      "cycleNo": 86.0,
+      "mode_cluster": 1,
+      "mode_name": "brightening_expanding_front",
+      "n_roi": 2
+    },
+    {
+      "cycleNo": 116.0,
+      "mode_cluster": 1,
+      "mode_name": "brightening_expanding_front",
+      "n_roi": 1
+    },
+    {
+      "cycleNo": 116.0,
+      "mode_cluster": 2,
+      "mode_name": "brightening_expanding_front",
+      "n_roi": 1
+    }
+  ],
+  "n_roi": 11,
+  "plots": {
+    "mode_plot": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_physics_descriptors/roi_physics_descriptor_modes.png"
+  },
+  "roi_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences"
+}

@@ -56,6 +56,25 @@ def extract_observations(root: Path) -> List[Dict[str, Any]]:
             "evidence": str(derived / "validated_front_rois" / "validated_front_rois_summary.json"),
             "strength": "exploratory_to_moderate",
         })
+    tracking = read_json(derived / "selected_front_roi_tracking" / "selected_front_roi_tracking_summary.json")
+    if tracking:
+        cycle_bits = []
+        for rec in tracking.get("cycle_summary", []):
+            cycle_bits.append(f"cycle {int(float(rec.get('cycleNo', 0)))} mean radius2 slope {finite_float(rec.get('radius2_slope_full_px2_per_s')):.3g} px2/s, R2 {finite_float(rec.get('radius2_slope_r2')):.3g}")
+        observations.append({
+            "topic": "selected_front_roi_tracking",
+            "observation": f"Tracked {tracking.get('n_tracked_rois', 'unknown')} selected front ROIs at full-pixel crop scale; {'; '.join(cycle_bits)}. These are apparent front-motion proxies, not calibrated diffusion coefficients.",
+            "evidence": str(derived / "selected_front_roi_tracking" / "selected_front_roi_tracking_summary.json"),
+            "strength": "exploratory_to_moderate",
+        })
+    rollout = read_json(derived / "roi_rollout_baselines" / "roi_rollout_baseline_summary.json")
+    if rollout:
+        observations.append({
+            "topic": "roi_rollout_baselines",
+            "observation": f"Evaluated {rollout.get('n_roi_sequences', 'unknown')} particle-ROI sequences with persistence, velocity, and low-rank DMD rollouts; DMD spectral radius {finite_float(rollout.get('dmd_spectral_radius')):.3f}.",
+            "evidence": str(derived / "roi_rollout_baselines" / "roi_rollout_baseline_summary.json"),
+            "strength": "moderate_baseline",
+        })
     baselines = read_csv_if_exists(derived / "particle_event_targets" / "particle_event_feature_baselines.csv")
     if not baselines.empty and "f1" in baselines:
         observations.append({
@@ -87,7 +106,13 @@ def next_actions(observations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         "action": "Generate ROI/event visual QC manifest for raw frame inspection.",
         "expected_output": "event_roi_qc_manifest.csv and review checklist",
     })
-    if "validated_front_rois" in topics:
+    if "selected_front_roi_tracking" in topics:
+        actions.append({
+            "priority": 4,
+            "action": "Add manual QC/spatial calibration metadata for selected front ROIs and convert pixel-scale slopes to calibrated units.",
+            "expected_output": "front_roi_qc_calibration.csv and calibrated_front_tracking.csv",
+        })
+    elif "validated_front_rois" in topics:
         actions.append({
             "priority": 4,
             "action": "Run high-resolution selected-ROI front tracking with manual QC and spatial calibration.",
@@ -99,11 +124,18 @@ def next_actions(observations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             "action": "Review candidate front overlays for cycles 86/116 and select validated ROIs for calibrated front tracking.",
             "expected_output": "validated_front_candidates.csv and manual QC decisions",
         })
-    actions.append({
-        "priority": 5,
-        "action": "Fit grouped degradation-mode clustering and hazard calibration.",
-        "expected_output": "degradation_modes.csv, hazard_calibration.csv",
-    })
+    if "roi_rollout_baselines" in topics:
+        actions.append({
+            "priority": 5,
+            "action": "Train event-conditioned ROI next-frame models against persistence/DMD baselines and test rollout residuals as degradation features.",
+            "expected_output": "roi_event_model_metrics.csv and rollout_residual_degradation_features.csv",
+        })
+    else:
+        actions.append({
+            "priority": 5,
+            "action": "Fit grouped degradation-mode clustering and hazard calibration.",
+            "expected_output": "degradation_modes.csv, hazard_calibration.csv",
+        })
     return actions
 
 

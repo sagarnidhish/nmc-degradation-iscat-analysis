@@ -1,0 +1,28 @@
+{
+  "crop_size_full": 192,
+  "cycle_summary": [
+    {
+      "active_fraction_last": 0.1084572120949074,
+      "apparent_diffusion_proxy_full_px2_per_s": -0.03175703382138238,
+      "cycleNo": 86.0,
+      "n_tracked_rois": 6,
+      "radius2_slope_full_px2_per_s": -0.12702813528552953,
+      "radius2_slope_r2": 0.178212954380205,
+      "roi_mean_delta_corrected": -1.82421875,
+      "stage_drift_xy": 0.22363409516745456
+    },
+    {
+      "active_fraction_last": 0.04892306857638889,
+      "apparent_diffusion_proxy_full_px2_per_s": -0.041773751953365905,
+      "cycleNo": 116.0,
+      "n_tracked_rois": 6,
+      "radius2_slope_full_px2_per_s": -0.16709500781346362,
+      "radius2_slope_r2": 0.2843446811986486,
+      "roi_mean_delta_corrected": -6.630208333333333,
+      "stage_drift_xy": 0.22363409516745456
+    }
+  ],
+  "guardrail": "Radius-squared slopes are apparent full-pixel/second front-motion proxies from automatic ROIs, not calibrated diffusion coefficients without spatial calibration and manual QC.",
+  "n_tracked_rois": 12,
+  "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv"
+}
