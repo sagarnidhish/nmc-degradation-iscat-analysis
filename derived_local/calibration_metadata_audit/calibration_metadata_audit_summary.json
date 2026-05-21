@@ -1,0 +1,51 @@
+{
+  "fps_max_across_h5": 0.09991007553907215,
+  "fps_median_across_h5": 0.09937929871365499,
+  "fps_min_across_h5": 0.004999700435528002,
+  "guardrail": "This audit verifies metadata evidence for timebase/spatial calibration. Camera timing is present in HDF5 files, but physical pixel-size evidence should be treated as slide-derived unless raw HDF5 attributes or microscope metadata explicitly confirm it.",
+  "movie_shape_counts": {
+    "(1, 1200, 1920)": 2,
+    "(13648, 1200, 1920)": 1,
+    "(2108, 1200, 1920)": 1,
+    "(6193, 1200, 1920)": 1,
+    "(7, 1200, 1920)": 3,
+    "(9, 1200, 1920)": 3,
+    "(9141, 1200, 1920)": 1,
+    "(9206, 1200, 1920)": 1,
+    "(9256, 1200, 1920)": 1,
+    "(9279, 1200, 1920)": 1,
+    "(9365, 1200, 1920)": 1,
+    "nan": 1
+  },
+  "n_csv_files_scanned": 5,
+  "n_h5_files": 33,
+  "n_h5_with_calibration_attr_hits": 0,
+  "n_h5_with_camera_timing": 32,
+  "n_h5_with_movie": 32,
+  "n_pptx_calibration_hits": 3,
+  "n_pptx_files_scanned": 3,
+  "outputs": {
+    "csv_timebase_metadata": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit/csv_timebase_metadata.csv",
+    "h5_calibration_metadata": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit/h5_calibration_metadata.csv",
+    "pptx_calibration_text_hits": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit/pptx_calibration_text_hits.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit/calibration_metadata_audit_summary.json"
+  },
+  "top_h5_calibration_attr_hits": [],
+  "top_pptx_hits": [
+    {
+      "pptx_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
+      "slide": 16,
+      "snippets": "We also plot the minimum viable facet size based on the point spread function of the microscope as ~0.2um^2 (dotted line)(check value). ADD COMPARISON TO MANUFACTURER\u2019S EXPECTED FACET SIZES. The consistency of facet sizes as"
+    },
+    {
+      "pptx_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
+      "slide": 3,
+      "snippets": "an improved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active || proved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active material ma || iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active material mass loading acquire"
+    },
+    {
+      "pptx_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Project.pptx",
+      "slide": 3,
+      "snippets": "and wouldn\u2019t cycle again. Switched to second cell\u2026 Cell 2: Cycled from pristine. No bubbles visible FOV: full field of view, including 4 drilled holes on left half, and undrilled holes on right half. Imaging camera exposure || \u2019t cycle again. Switched to second cell\u2026 Cell 2: Cycled from pristine. No bubbles visible FOV: full field of view, including 4 drilled holes on left half, and undrilled holes on right half. Imaging camera exposure time = 2 ms (for al"
+    }
+  ]
+}

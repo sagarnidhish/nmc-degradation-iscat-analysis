@@ -19,6 +19,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Prefix feature-importance audit features: 54
 - Spatiotemporal degradation graph nodes/edges: 52 / 510
 - Phase-kinetics ROI rows/features: 52 / 40
+- Calibration metadata HDF5/camera-timing files: 33 / 32
 - Particle trace cycle rows/drop cycles: 89 / 4
 - Particle precursor event/control anchors: 4 / 24
 - ROI trace-fusion rows/predictors: 52 / 100
@@ -39,6 +40,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycles 86 and 116 remain the strongest synchronized event-timing regimes; cycles 60 and 156 provide stronger single-particle morphology/latent-movement examples.
 - Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.
 - Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.
+- Calibration metadata audit finds HDF5 camera timing in 32 of 33 HDF5 files, but no HDF5 pixel-size attributes; the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
@@ -50,7 +52,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - The larger four-particle cycle table shows leakage-conscious early-warning signal for future abrupt drops: any-drop within 8 cycles has mean AUC 0.883 with empirical null p=0.002; synchronized 2+ drops are also detectable but with only two positive cycles.
 - Event-aligned precursor windows show lower pre-event capacity/CE and higher cross-particle delta dispersion versus matched non-event anchors; the strongest precursor window test is pre8_to_pre5 capacity_mAh with p=0.002.
 - ROI trace-fusion links lagged global particle-trace state to localized front behavior at the ROI-row level: strongest focused context-residual association is trace_lag2_particle_norm_range vs phase_slope_positive_fraction_protocol_residual, rho=0.725, p=2.688e-07.
-- Cycle-collapsed ROI trace-fusion null audit reduces 52 ROI rows to 11 cycle points; top surviving collapsed association is trace_lag16_frames_percentile vs mode_review_priority, rho=0.813, empirical p=0.002.
+- Cycle-collapsed ROI trace-fusion null audit reduces 52 ROI rows to 11 cycle points; top surviving collapsed association is trace_lag8_frames_percentile vs mode_review_priority, rho=0.834, empirical p=0.002.
 - Precursor-informed ROI review ranks 47 pending manual-QC candidates; the top candidate is cycle156_rank7_obj27 with score 5.527.
 - A visual review bundle now packages 12 top precursor-informed ROI candidates; 12 have at least one copied QC/preview asset and a contact sheet for manual inspection.
 - Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for 81 observed cycles; strongest ROI association is shape_V_q95 vs mode_review_priority, rho=-0.864, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.
@@ -241,6 +243,17 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Correlation q70_variation_to_net_abs vs n_frames_percentile: rho -0.675, p=4.098e-08
 - Guardrail: Kinetic fits are optical phase-fraction proxies from cropped particle ROIs using provisional timing. Avrami/logistic parameters are descriptive and not calibrated reaction constants.
 
+## Calibration Metadata Audit
+
+- HDF5 files/movie datasets/camera timing: 33 / 32 / 32
+- HDF5 calibration-like attribute hits: 0
+- Median sampled HDF5 FPS: 0.099
+- PPTX files scanned/calibration hits: 3 / 3
+- PPTX hit Degradation Paper Outline.pptx slide 16: We also plot the minimum viable facet size based on the point spread function of the microscope as ~0.2um^2 (dotted line)(check value). ADD COMPARISON TO MANUFACTURER’S EXPECTED FACET SIZES. The consistency of facet size
+- PPTX hit Degradation Paper Outline.pptx slide 3: an improved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) act
+- PPTX hit Degradation Project.pptx slide 3: and wouldn’t cycle again. Switched to second cell… Cell 2: Cycled from pristine. No bubbles visible FOV: full field of view, including 4 drilled holes on left half, and undrilled holes on right half. Imaging camera expos
+- Guardrail: This audit verifies metadata evidence for timebase/spatial calibration. Camera timing is present in HDF5 files, but physical pixel-size evidence should be treated as slide-derived unless raw HDF5 attributes or microscope metadata explicitly confirm it.
+
 ## Particle Trace Physics Audit
 
 - Cycle rows/range: 89 rows, cycles 2.000-158.000
@@ -306,17 +319,17 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 - Cycle-collapsed points: 11 from 52 ROI rows
 - Event-reference cycles: 4
-- Predictors/permutations: 54 / 1000
-- Cycle-collapsed trace_lag16_frames_percentile vs mode_review_priority: rho 0.813, empirical p=0.002, n=11
-- Cycle-collapsed trace_lag8_frames_percentile vs mode_review_priority: rho 0.834, empirical p=0.003, n=11
-- Cycle-collapsed trace_lag8_n_frames vs mode_review_priority: rho 0.834, empirical p=0.005, n=11
-- Cycle-collapsed trace_lag16_n_frames vs mode_review_priority: rho 0.813, empirical p=0.007, n=11
-- Cycle-collapsed trace_lag2_n_frames vs mode_review_priority: rho 0.733, empirical p=0.007, n=11
-- Cycle-collapsed trace_lag16_n_frames vs q70_logistic_k_per_s: rho 0.740, empirical p=0.009, n=11
-- Reference-centered trace_lag8_particle_norm_mean vs phase_slope_median_per_s_protocol_residual: rho 0.918, empirical p=9.990e-04, n=11
-- Reference-centered trace_lag8_n_frames vs mode_review_priority: rho 0.881, empirical p=9.990e-04, n=11
-- Reference-centered trace_lag8_frames_percentile vs mode_review_priority: rho 0.858, empirical p=0.003, n=11
-- Reference-centered trace_lag8_max_abs_delta_prev vs threshold_robust_phase_score_protocol_residual: rho 0.733, empirical p=0.004, n=11
+- Predictors/permutations: 68 / 10000
+- Cycle-collapsed trace_lag8_frames_percentile vs mode_review_priority: rho 0.834, empirical p=0.002, n=11
+- Cycle-collapsed trace_lag8_n_frames vs mode_review_priority: rho 0.834, empirical p=0.003, n=11
+- Cycle-collapsed lag8_trace_predprob_future_any_drop_within_8cycles vs mode_review_priority: rho -0.827, empirical p=0.003, n=11
+- Cycle-collapsed trace_lag16_frames_percentile vs mode_review_priority: rho 0.813, empirical p=0.003, n=11
+- Cycle-collapsed trace_lag16_n_frames vs mode_review_priority: rho 0.813, empirical p=0.005, n=11
+- Cycle-collapsed lag4_trace_predprob_future_any_drop_within_8cycles vs q70_logistic_k_per_s: rho -0.800, empirical p=0.005, n=11
+- Reference-centered trace_lag8_particle_norm_mean vs phase_slope_median_per_s_protocol_residual: rho 0.918, empirical p=2.000e-04, n=11
+- Reference-centered trace_lag8_n_frames vs mode_review_priority: rho 0.881, empirical p=8.999e-04, n=11
+- Reference-centered trace_lag8_frames_percentile vs mode_review_priority: rho 0.858, empirical p=0.002, n=11
+- Reference-centered lag16_trace_predprob_future_any_drop_within_8cycles vs phase_slope_positive_fraction_protocol_residual: rho -0.809, empirical p=0.003, n=11
 - Guardrail: This audit collapses repeated ROI rows to one median point per cycle before testing trace/front associations. It is deliberately conservative for the 52-ROI cohort; surviving tests are stronger evidence, while lost tests indicate cycle-clustering sensitivity.
 
 ## Precursor-Informed ROI Review

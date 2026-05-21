@@ -1557,3 +1557,27 @@ Key result:
 
 Interpretation: raw echem trajectory shape is a useful physics/protocol context layer for optical modes and kinetic/front descriptors, especially voltage-window and dQ/dV-proxy concentration. It does not independently explain abrupt degradation-event timing. Treat these descriptors as covariates and guardrails for ROI optical physics, not calibrated dQ/dV or diffusion constants.
 
+## 2026-05-21 Calibration Metadata Audit
+
+Added and ran a metadata-only audit using top-level HDF5 attributes/datasets, small CSV samples, and PPTX text extraction:
+
+`python scripts/tier4_calibration_metadata_audit.py --base-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho --repo-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit`
+
+Local compact copy:
+
+`derived_local/calibration_metadata_audit`
+
+Key result:
+
+- Scanned 33 HDF5 files from the discovered raw HDF5 set; 32 contain `movie` datasets and 32 contain `camera_timing`.
+- No HDF5 file exposed calibration-like pixel-size or field-of-view attributes in top-level file/dataset/group metadata.
+- HDF5 timing rows yield a median timing-derived FPS proxy of 0.0994, with a range from about 0.0050 to 0.0999 across files.
+- That timing result is a metadata guardrail, not a true camera-cadence claim: some files have very short movie stacks or sparse timing, so `camera_timing` may encode sparse segment/cycle timing rather than every exposure.
+- PPTX text extraction found slide-derived calibration context: `Degradation Paper Outline.pptx` slide 3 states 96 nm pixel size and 180x120 um field of view; slide 16 mentions a minimum viable facet-size/point-spread-function note; `Degradation Project.pptx` slide 3 mentions exposure time = 2 ms.
+- The project synthesis now carries the calibration metadata audit into `nmc_ai_physics_synthesis_summary.json` and the synthesis markdown.
+
+Interpretation: this improves the calibration evidence boundary. HDF5 timing metadata exists but must be interpreted cautiously for cadence; spatial calibration for the current um-scale front/diffusion proxies is still slide-derived, not raw-HDF5-confirmed. Diffusion values therefore remain apparent optical-front proxies until microscope metadata or manual provenance confirms both pixel size and the relevant timebase.

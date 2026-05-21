@@ -1,5 +1,32 @@
 {
   "all_qc_rf_mean_roc_auc": 0.796875,
+  "calibration_metadata_audit": {
+    "fps_median_across_h5": 0.09937929871365499,
+    "guardrail": "This audit verifies metadata evidence for timebase/spatial calibration. Camera timing is present in HDF5 files, but physical pixel-size evidence should be treated as slide-derived unless raw HDF5 attributes or microscope metadata explicitly confirm it.",
+    "n_h5_files": 33,
+    "n_h5_with_calibration_attr_hits": 0,
+    "n_h5_with_camera_timing": 32,
+    "n_h5_with_movie": 32,
+    "n_pptx_calibration_hits": 3,
+    "n_pptx_files_scanned": 3,
+    "top_pptx_hits": [
+      {
+        "pptx_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
+        "slide": 16,
+        "snippets": "We also plot the minimum viable facet size based on the point spread function of the microscope as ~0.2um^2 (dotted line)(check value). ADD COMPARISON TO MANUFACTURER\u2019S EXPECTED FACET SIZES. The consistency of facet sizes as"
+      },
+      {
+        "pptx_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
+        "slide": 3,
+        "snippets": "an improved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active || proved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active material ma || iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active material mass loading acquire"
+      },
+      {
+        "pptx_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Project.pptx",
+        "slide": 3,
+        "snippets": "and wouldn\u2019t cycle again. Switched to second cell\u2026 Cell 2: Cycled from pristine. No bubbles visible FOV: full field of view, including 4 drilled holes on left half, and undrilled holes on right half. Imaging camera exposure || \u2019t cycle again. Switched to second cell\u2026 Cell 2: Cycled from pristine. No bubbles visible FOV: full field of view, including 4 drilled holes on left half, and undrilled holes on right half. Imaging camera exposure time = 2 ms (for al"
+      }
+    ]
+  },
   "control_balanced_front_qc": {
     "n_control_roi": 24,
     "n_event_roi": 16,
@@ -4674,95 +4701,75 @@
     "guardrail": "This audit collapses repeated ROI rows to one median point per cycle before testing trace/front associations. It is deliberately conservative for the 52-ROI cohort; surviving tests are stronger evidence, while lost tests indicate cycle-clustering sensitivity.",
     "n_cycle_points": 11,
     "n_event_reference_cycles": 4,
-    "n_permutation": 1000,
-    "n_predictors_tested": 54,
+    "n_permutation": 10000,
+    "n_predictors_tested": 68,
     "n_roi_rows": 52,
     "top_cycle_collapsed_tests": [
       {
-        "asymptotic_p": 0.0023561106719498124,
-        "empirical_p_abs_ge_observed": 0.001998001998001998,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2567424026160935,
-        "null_p95_abs_rho": 0.6166730956017396,
-        "predictor": "trace_lag16_frames_percentile",
-        "rho": 0.8127938616594571,
-        "target": "mode_review_priority"
-      },
-      {
         "asymptotic_p": 0.0014272961872224715,
-        "empirical_p_abs_ge_observed": 0.002997002997002997,
+        "empirical_p_abs_ge_observed": 0.0016998300169983002,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.26226491732934537,
-        "null_p95_abs_rho": 0.610479943754795,
+        "null_mean_abs_rho": 0.2594284635011235,
+        "null_p95_abs_rho": 0.605924123279013,
         "predictor": "trace_lag8_frames_percentile",
         "rho": 0.8337151470681154,
         "target": "mode_review_priority"
       },
       {
         "asymptotic_p": 0.0014272961872224715,
-        "empirical_p_abs_ge_observed": 0.004995004995004995,
+        "empirical_p_abs_ge_observed": 0.0025997400259974,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.26190956333223436,
-        "null_p95_abs_rho": 0.6241474051821412,
+        "null_mean_abs_rho": 0.256704994020701,
+        "null_p95_abs_rho": 0.615035764230577,
         "predictor": "trace_lag8_n_frames",
         "rho": 0.8337151470681154,
         "target": "mode_review_priority"
       },
       {
-        "asymptotic_p": 0.0023561106719498124,
-        "empirical_p_abs_ge_observed": 0.006993006993006993,
+        "asymptotic_p": 0.0016769738964523802,
+        "empirical_p_abs_ge_observed": 0.0030996900309969004,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2611260099598748,
-        "null_p95_abs_rho": 0.6210110403690234,
+        "null_mean_abs_rho": 0.25398454545454546,
+        "null_p95_abs_rho": 0.6000000000000001,
+        "predictor": "lag8_trace_predprob_future_any_drop_within_8cycles",
+        "rho": -0.8272727272727273,
+        "target": "mode_review_priority"
+      },
+      {
+        "asymptotic_p": 0.0023561106719498124,
+        "empirical_p_abs_ge_observed": 0.0030996900309969004,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.2559364581409087,
+        "null_p95_abs_rho": 0.6073122674197068,
+        "predictor": "trace_lag16_frames_percentile",
+        "rho": 0.8127938616594571,
+        "target": "mode_review_priority"
+      },
+      {
+        "asymptotic_p": 0.0023561106719498124,
+        "empirical_p_abs_ge_observed": 0.0045995400459954,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.2592524744461732,
+        "null_p95_abs_rho": 0.6164447827192512,
         "predictor": "trace_lag16_n_frames",
         "rho": 0.8127938616594571,
         "target": "mode_review_priority"
       },
       {
-        "asymptotic_p": 0.01020128429076337,
-        "empirical_p_abs_ge_observed": 0.006993006993006993,
+        "asymptotic_p": 0.0031104283103858448,
+        "empirical_p_abs_ge_observed": 0.005499450054994501,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2506111285522949,
-        "null_p95_abs_rho": 0.5968124823274488,
-        "predictor": "trace_lag2_n_frames",
-        "rho": 0.7334870966009104,
-        "target": "mode_review_priority"
-      },
-      {
-        "asymptotic_p": 0.00925988150954961,
-        "empirical_p_abs_ge_observed": 0.008991008991008992,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2543816474111612,
-        "null_p95_abs_rho": 0.5981797521201623,
-        "predictor": "trace_lag16_n_frames",
-        "rho": 0.7397337392631014,
+        "null_mean_abs_rho": 0.2570190909090909,
+        "null_p95_abs_rho": 0.6090909090909091,
+        "predictor": "lag4_trace_predprob_future_any_drop_within_8cycles",
+        "rho": -0.8000000000000002,
         "target": "q70_logistic_k_per_s"
       },
       {
-        "asymptotic_p": 0.008454728885061562,
-        "empirical_p_abs_ge_observed": 0.01098901098901099,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2551090909090909,
-        "null_p95_abs_rho": 0.5909090909090909,
-        "predictor": "trace_lag4_frames_percentile",
-        "rho": 0.7454545454545456,
-        "target": "mode_review_priority"
-      },
-      {
-        "asymptotic_p": 0.008454728885061562,
-        "empirical_p_abs_ge_observed": 0.011988011988011988,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2512909090909091,
-        "null_p95_abs_rho": 0.6272727272727273,
-        "predictor": "trace_lag4_n_frames",
-        "rho": 0.7454545454545456,
-        "target": "mode_review_priority"
-      },
-      {
         "asymptotic_p": 0.007282041008429151,
-        "empirical_p_abs_ge_observed": 0.013986013986013986,
+        "empirical_p_abs_ge_observed": 0.0110988901109889,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.25022727272727274,
+        "null_mean_abs_rho": 0.2616381818181818,
         "null_p95_abs_rho": 0.6090909090909091,
         "predictor": "trace_lag16_capacity_mAh",
         "rho": 0.7545454545454545,
@@ -4770,155 +4777,175 @@
       },
       {
         "asymptotic_p": 0.01020128429076337,
-        "empirical_p_abs_ge_observed": 0.013986013986013986,
+        "empirical_p_abs_ge_observed": 0.011998800119988001,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2583879141044549,
-        "null_p95_abs_rho": 0.6107077347785839,
-        "predictor": "trace_lag8_frames_percentile",
+        "null_mean_abs_rho": 0.2539578342738044,
+        "null_p95_abs_rho": 0.605924123279013,
+        "predictor": "trace_lag2_frames_percentile",
         "rho": 0.7334870966009104,
+        "target": "mode_review_priority"
+      },
+      {
+        "asymptotic_p": 0.00925988150954961,
+        "empirical_p_abs_ge_observed": 0.012398760123987601,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.2589392291713989,
+        "null_p95_abs_rho": 0.6118785250694789,
+        "predictor": "trace_lag16_n_frames",
+        "rho": 0.7397337392631014,
         "target": "q70_logistic_k_per_s"
       },
       {
         "asymptotic_p": 0.00925988150954961,
-        "empirical_p_abs_ge_observed": 0.014985014985014986,
+        "empirical_p_abs_ge_observed": 0.012698730126987301,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2543085872887649,
-        "null_p95_abs_rho": 0.6212393532515118,
+        "null_mean_abs_rho": 0.26063833364287914,
+        "null_p95_abs_rho": 0.6164447827192512,
         "predictor": "trace_lag16_frames_percentile",
         "rho": 0.7397337392631014,
         "target": "q70_logistic_k_per_s"
       },
       {
-        "asymptotic_p": 0.023313039833185972,
-        "empirical_p_abs_ge_observed": 0.015984015984015984,
+        "asymptotic_p": 0.008454728885061562,
+        "empirical_p_abs_ge_observed": 0.012798720127987202,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.24746363636363636,
-        "null_p95_abs_rho": 0.5545454545454546,
-        "predictor": "trace_lag2_delta_std_across_particles",
-        "rho": 0.6727272727272727,
-        "target": "q70_transformed_fraction_delta"
+        "null_mean_abs_rho": 0.26098727272727273,
+        "null_p95_abs_rho": 0.609545454545448,
+        "predictor": "trace_lag4_frames_percentile",
+        "rho": 0.7454545454545456,
+        "target": "mode_review_priority"
+      },
+      {
+        "asymptotic_p": 0.008454728885061562,
+        "empirical_p_abs_ge_observed": 0.012798720127987202,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.25788818181818185,
+        "null_p95_abs_rho": 0.6090909090909091,
+        "predictor": "trace_lag4_n_frames",
+        "rho": 0.7454545454545456,
+        "target": "mode_review_priority"
       }
     ],
     "top_reference_centered_tests": [
       {
         "asymptotic_p": 6.661451941355567e-05,
-        "empirical_p_abs_ge_observed": 0.000999000999000999,
+        "empirical_p_abs_ge_observed": 0.00019998000199980003,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.25317272727272727,
-        "null_p95_abs_rho": 0.6,
+        "null_mean_abs_rho": 0.2579,
+        "null_p95_abs_rho": 0.6000000000000001,
         "predictor": "trace_lag8_particle_norm_mean",
         "rho": 0.9181818181818183,
         "target": "phase_slope_median_per_s_protocol_residual"
       },
       {
         "asymptotic_p": 0.0003430008169136331,
-        "empirical_p_abs_ge_observed": 0.000999000999000999,
+        "empirical_p_abs_ge_observed": 0.0008999100089991,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2553501959249739,
-        "null_p95_abs_rho": 0.6055300708194983,
+        "null_mean_abs_rho": 0.25916595284094096,
+        "null_p95_abs_rho": 0.6147047688622179,
         "predictor": "trace_lag8_n_frames",
         "rho": 0.8807710121010887,
         "target": "mode_review_priority"
       },
       {
         "asymptotic_p": 0.0007177938266368857,
-        "empirical_p_abs_ge_observed": 0.002997002997002997,
+        "empirical_p_abs_ge_observed": 0.0017998200179982,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.25967394002724725,
-        "null_p95_abs_rho": 0.6255772980187957,
+        "null_mean_abs_rho": 0.2554615673453324,
+        "null_p95_abs_rho": 0.6118785250694789,
         "predictor": "trace_lag8_frames_percentile",
         "rho": 0.8584564381571795,
         "target": "mode_review_priority"
       },
       {
-        "asymptotic_p": 0.01020128429076337,
-        "empirical_p_abs_ge_observed": 0.003996003996003996,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2508616986784629,
-        "null_p95_abs_rho": 0.6013683028032308,
-        "predictor": "trace_lag8_max_abs_delta_prev",
-        "rho": 0.7334870966009104,
-        "target": "threshold_robust_phase_score_protocol_residual"
-      },
-      {
-        "asymptotic_p": 0.004558029271828904,
-        "empirical_p_abs_ge_observed": 0.005994005994005994,
-        "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2592949406423161,
-        "null_p95_abs_rho": 0.607540580302195,
-        "predictor": "trace_lag16_frames_percentile",
-        "rho": 0.7808300581110517,
-        "target": "threshold_robust_phase_score_protocol_residual"
-      },
-      {
         "asymptotic_p": 0.002558580199713916,
-        "empirical_p_abs_ge_observed": 0.006993006993006993,
+        "empirical_p_abs_ge_observed": 0.0027997200279972004,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2697,
+        "null_mean_abs_rho": 0.25761636363636364,
         "null_p95_abs_rho": 0.6090909090909091,
         "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
         "rho": -0.8090909090909091,
         "target": "phase_slope_positive_fraction_protocol_residual"
       },
       {
-        "asymptotic_p": 0.008454728885061562,
-        "empirical_p_abs_ge_observed": 0.007992007992007992,
+        "asymptotic_p": 0.004558029271828904,
+        "empirical_p_abs_ge_observed": 0.005599440055994401,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2611181818181818,
+        "null_mean_abs_rho": 0.25881959322097486,
+        "null_p95_abs_rho": 0.6073122674197068,
+        "predictor": "trace_lag16_frames_percentile",
+        "rho": 0.7808300581110517,
+        "target": "threshold_robust_phase_score_protocol_residual"
+      },
+      {
+        "asymptotic_p": 0.007282041008429151,
+        "empirical_p_abs_ge_observed": 0.009299070092990702,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.2563527272727273,
+        "null_p95_abs_rho": 0.6000000000000001,
+        "predictor": "trace_lag16_mean_abs_delta_prev",
+        "rho": 0.7545454545454545,
+        "target": "mode_review_priority"
+      },
+      {
+        "asymptotic_p": 0.008454728885061562,
+        "empirical_p_abs_ge_observed": 0.009799020097990201,
+        "n_cycle_points": 11,
+        "null_mean_abs_rho": 0.25686909090909094,
         "null_p95_abs_rho": 0.6090909090909091,
         "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
         "rho": -0.7454545454545456,
         "target": "threshold_robust_phase_score_protocol_residual"
       },
       {
-        "asymptotic_p": 0.010175540123456754,
-        "empirical_p_abs_ge_observed": 0.008991008991008992,
-        "n_cycle_points": 8,
-        "null_mean_abs_rho": 0.307547619047619,
-        "null_p95_abs_rho": 0.7154761904761894,
-        "predictor": "trace_lag2_capacity_mAh",
-        "rho": -0.8333333333333335,
-        "target": "q70_logistic_k_per_s"
-      },
-      {
         "asymptotic_p": 0.007282041008429151,
-        "empirical_p_abs_ge_observed": 0.01098901098901099,
+        "empirical_p_abs_ge_observed": 0.0108989101089891,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2629545454545455,
-        "null_p95_abs_rho": 0.6,
+        "null_mean_abs_rho": 0.2583681818181818,
+        "null_p95_abs_rho": 0.6181818181818182,
         "predictor": "trace_lag2_particle_norm_mean",
         "rho": 0.7545454545454545,
         "target": "mode_review_priority"
       },
       {
         "asymptotic_p": 0.008454728885061562,
-        "empirical_p_abs_ge_observed": 0.011988011988011988,
+        "empirical_p_abs_ge_observed": 0.011398860113988602,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.25792727272727267,
-        "null_p95_abs_rho": 0.6186363636363632,
+        "null_mean_abs_rho": 0.2590372727272727,
+        "null_p95_abs_rho": 0.6090909090909091,
         "predictor": "trace_lag8_delta_std_across_particles",
         "rho": 0.7454545454545456,
         "target": "threshold_robust_phase_score_protocol_residual"
       },
       {
-        "asymptotic_p": 0.007282041008429151,
-        "empirical_p_abs_ge_observed": 0.014985014985014986,
+        "asymptotic_p": 0.01020128429076337,
+        "empirical_p_abs_ge_observed": 0.0122987701229877,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.2629818181818182,
-        "null_p95_abs_rho": 0.6090909090909091,
-        "predictor": "trace_lag16_mean_abs_delta_prev",
-        "rho": 0.7545454545454545,
-        "target": "mode_review_priority"
+        "null_mean_abs_rho": 0.25552822559180643,
+        "null_p95_abs_rho": 0.605924123279013,
+        "predictor": "trace_lag8_max_abs_delta_prev",
+        "rho": 0.7334870966009104,
+        "target": "threshold_robust_phase_score_protocol_residual"
       },
       {
-        "asymptotic_p": 0.023313039833185972,
-        "empirical_p_abs_ge_observed": 0.017982017982017984,
+        "asymptotic_p": 0.010175540123456754,
+        "empirical_p_abs_ge_observed": 0.0143985601439856,
+        "n_cycle_points": 8,
+        "null_mean_abs_rho": 0.3104976190476191,
+        "null_p95_abs_rho": 0.7142857142857144,
+        "predictor": "trace_lag2_capacity_mAh",
+        "rho": -0.8333333333333335,
+        "target": "q70_logistic_k_per_s"
+      },
+      {
+        "asymptotic_p": 0.013350055216304332,
+        "empirical_p_abs_ge_observed": 0.0143985601439856,
         "n_cycle_points": 11,
-        "null_mean_abs_rho": 0.25877272727272727,
-        "null_p95_abs_rho": 0.6,
-        "predictor": "trace_lag16_mean_delta_prev",
-        "rho": 0.6727272727272727,
-        "target": "phase_slope_positive_fraction_protocol_residual"
+        "null_mean_abs_rho": 0.25591555999909493,
+        "null_p95_abs_rho": 0.6077155435054972,
+        "predictor": "trace_lag2_future_any_drop_within_8cycles",
+        "rho": 0.7152344473564697,
+        "target": "mode_review_priority"
       }
     ]
   },
