@@ -705,3 +705,28 @@ Key result:
 - Cycle 116 event ROIs have high bright-fraction growth but much weaker decorrelation and mobility ranking, consistent with the earlier interpretation that cycle 116 is more coherent optical loss/contraction while cycle 86 is more dynamically heterogeneous.
 
 Interpretation: this gives a physics-facing bridge between video prediction residuals and phase-boundary language. The selected event ROIs, especially cycle 86, are not just harder to predict; their threshold-front geometry changes faster and loses structural correlation relative to expanded controls. These are still apparent optical front metrics from fixed particle crops, so they should be treated as calibrated-diffusion candidates only after spatial calibration and manual ROI QC.
+
+## 2026-05-21 Front ROI Calibration QC
+
+Added and ran:
+
+`scripts/tier3_front_roi_calibration_qc.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_roi_calibration_qc`
+
+Local compact copy:
+
+`derived_local/front_roi_calibration_qc`
+
+Key result:
+
+- Built a provisional calibration/QC manifest for the selected front-tracking ROIs and joined it to the joint degradation-mode ranking.
+- Used provisional pixel calibration 0.096 um/px from `Battery_Degradation_Project/Degradation Paper Outline.pptx` slide text noting 96 nm pixel size and 180x120 um FoV.
+- Converted front-tracking radius-squared slopes and apparent diffusion proxies from full-pixel units into um^2/s using pixel area 0.009216 um^2/px^2.
+- Top joint-ranked ROI `cycle86_front4_obj9` has radius^2 slope -0.00172 um^2/s and apparent diffusion proxy -0.000431 um^2/s, with radius^2 fit R2 0.258 and no automatic QC warning.
+- Top cycle 116 ROI has radius^2 slope -0.00242 um^2/s and apparent diffusion proxy -0.000605 um^2/s, R2 0.299.
+- Several lower-ranked ROIs are automatically flagged for low radius^2 fit R2, and all ROIs remain `manual_qc_status=pending`.
+
+Interpretation: this converts the front-tracking outputs into physically interpretable provisional units while keeping a strict guardrail. The signs are mostly negative, so the current front metric is better described as apparent optical-front contraction/loss than diffusion expansion. These values should not be treated as final diffusion coefficients until the 96 nm/px calibration is confirmed from microscope metadata and the front masks/particle identities are manually reviewed.
