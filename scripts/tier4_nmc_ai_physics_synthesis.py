@@ -112,6 +112,8 @@ def main() -> None:
     within_cycle_echem = read_json(derived / "within_cycle_echem_shape_audit" / "within_cycle_echem_shape_audit_summary.json")
     echem_shape_conditioned = read_json(derived / "echem_shape_conditioned_roi_front_effects" / "echem_shape_conditioned_roi_front_effects_summary.json")
     physics_consistency = read_json(derived / "physics_consistency_claim_matrix" / "physics_consistency_claim_matrix_summary.json")
+    rollout_calibration = read_json(derived / "probabilistic_rollout_calibration" / "probabilistic_rollout_calibration_summary.json")
+    cycle_state_space = read_json(derived / "cycle_state_space_transition_audit" / "cycle_state_space_transition_audit_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -214,6 +216,16 @@ def main() -> None:
     echem_shape_model = first_summary(echem_shape_conditioned, "model_summary", {}) or {}
     physics_consistency_top = top_items(first_summary(physics_consistency, "top_consistency_rows", []), 12)
     physics_consistency_tests = top_items(first_summary(physics_consistency, "top_event_tests", []), 12)
+    rollout_calibration_coverage = top_items(first_summary(rollout_calibration, "coverage_summary", []), 30)
+    rollout_calibration_tests = top_items(first_summary(rollout_calibration, "top_transition_error_tests", []), 12)
+    rollout_calibration_corr = top_items(first_summary(rollout_calibration, "top_calibration_physics_correlations", []), 12)
+    rollout_calibration_top = top_items(first_summary(rollout_calibration, "top_undercovered_roi_method_rows", []), 12)
+    cycle_state_tests = top_items(first_summary(cycle_state_space, "top_future_drop_tests", []), 12)
+    cycle_state_corr = top_items(first_summary(cycle_state_space, "top_cycle_state_correlations", []), 12)
+    cycle_state_clusters = top_items(first_summary(cycle_state_space, "top_state_clusters", []), 8)
+    cycle_state_transitions = top_items(first_summary(cycle_state_space, "top_transitions", []), 8)
+    cycle_state_loadings = top_items(first_summary(cycle_state_space, "top_pc_loadings", []), 12)
+    cycle_state_classifier = first_summary(cycle_state_space, "future_drop_classifier", {}) or {}
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -322,6 +334,7 @@ def main() -> None:
         f"- Within-cycle echem shape cycles/features: {first_summary(within_cycle_echem, 'n_echem_shape_cycles', 0)} / {first_summary(within_cycle_echem, 'n_shape_features', 0)}",
         f"- Echem-shape-conditioned ROI/front rows/shape PCs: {first_summary(echem_shape_conditioned, 'n_rows', 0)} / {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)}",
         f"- Physics-consistency matrix ROI/cycles: {first_summary(physics_consistency, 'n_roi', 0)} / {first_summary(physics_consistency, 'n_cycles', 0)}",
+        f"- Cycle state-space rows/clusters: {first_summary(cycle_state_space, 'n_cycles', 0)} / {first_summary(cycle_state_space, 'chosen_k', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -354,6 +367,7 @@ def main() -> None:
         f"- Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for {first_summary(within_cycle_echem, 'n_echem_shape_cycles', 0)} observed cycles; strongest ROI association is {((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('feature', 'NA'))} vs {((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('target', 'NA'))}, rho={fmt((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('rho'))}, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.",
         f"- Echem-shape-conditioned residual audit uses {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_shape_features_used', 0)} shape features compressed to {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)} PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p={fmt((echem_shape_conditioned_tests[0] if echem_shape_conditioned_tests else {}).get('p_value'))}), while diffusion residuals remain non-significant and the shape-residual classifier is poor.",
         f"- Physics-consistency claim matrix scores {first_summary(physics_consistency, 'n_roi', 0)} ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; {first_summary(physics_consistency, 'tier_counts', {}).get('cross_modal_high_priority', 0)} rows are cross-modal high priority, but all {first_summary(physics_consistency, 'n_roi', 0)} remain `manual_qc_required_no_physics_claim`.",
+        f"- Cycle state-space transition audit builds a {first_summary(cycle_state_space, 'chosen_k', 0)}-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p={fmt((cycle_state_tests[0] if cycle_state_tests else {}).get('permutation_p'))}), and the state-space classifier reaches mean AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}.",
         "",
         "## Model Readout",
         "",
@@ -720,6 +734,33 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Probabilistic Rollout Calibration",
+        "",
+        f"- Frame rows / ROI-method rows: {first_summary(rollout_calibration, 'n_frame_rows', 0)} / {first_summary(rollout_calibration, 'n_roi_method_rows', 0)}",
+        f"- ROI / event-reference cycles: {first_summary(rollout_calibration, 'n_roi', 0)} / {first_summary(rollout_calibration, 'n_event_reference_cycles', 0)}",
+        f"- Near-transition frame fraction: {fmt(first_summary(rollout_calibration, 'near_transition_frame_fraction'))}",
+    ]
+    for row in rollout_calibration_coverage:
+        if row.get("alpha") == 0.05 and row.get("group") in {"all", "event_roi", "near_transition"}:
+            report_lines.append(
+                f"- 95% empirical coverage {row.get('method')} {row.get('group')}: global {fmt(row.get('coverage_global_weighted'))}, local {fmt(row.get('coverage_local_weighted'))}, n={fmt(row.get('n'), 0)}"
+            )
+    for row in rollout_calibration_tests[:5]:
+        report_lines.append(
+            f"- Residual test {row.get('method')} {row.get('contrast')}: median diff {fmt(row.get('median_diff'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n_a'), 0)}/{fmt(row.get('n_b'), 0)}"
+        )
+    for row in rollout_calibration_corr[:5]:
+        report_lines.append(
+            f"- Calibration/physics link {row.get('method')} {row.get('x_calibration_feature')} vs {row.get('y_physics_feature')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in rollout_calibration_top[:6]:
+        report_lines.append(
+            f"- Undercoverage priority {row.get('roi_id')} {row.get('method')}: q90 undercoverage {fmt(row.get('q90_undercoverage_rate'))}, priority {fmt(row.get('calibration_review_priority'))}, role {row.get('cohort_role_first')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(rollout_calibration, 'guardrail', 'Probabilistic rollout calibration unavailable.')}")
+
+    report_lines += [
+        "",
         "## Physics Consistency Claim Matrix",
         "",
         f"- ROI/cycles: {first_summary(physics_consistency, 'n_roi', 0)} / {first_summary(physics_consistency, 'n_cycles', 0)}",
@@ -736,6 +777,34 @@ def main() -> None:
             f"- Event/control pillar test {row.get('feature')}: median event-control {fmt(row.get('median_event_minus_control'))}, MW p={fmt(row.get('mannwhitney_p'))}, permutation p={fmt(row.get('permutation_p'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(physics_consistency, 'guardrail', 'Physics consistency matrix unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Cycle State-Space Transition Audit",
+        "",
+        f"- Cycle rows/features: {first_summary(cycle_state_space, 'n_cycles', 0)} / {first_summary(cycle_state_space, 'n_features_used', 0)}",
+        f"- Echem-shape cycles joined: {first_summary(cycle_state_space, 'n_echem_shape_cycles_joined', 0)}",
+        f"- Chosen state clusters: {first_summary(cycle_state_space, 'chosen_k', 0)} with silhouette {fmt(first_summary(cycle_state_space, 'best_silhouette'))}",
+        f"- Degradation axis oriented to {first_summary(cycle_state_space, 'degradation_axis_oriented_to', 'NA')} with rho {fmt(first_summary(cycle_state_space, 'degradation_axis_orientation_rho'))}",
+        f"- Future-drop classifier: AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}, balanced accuracy {fmt(cycle_state_classifier.get('mean_balanced_accuracy'))}",
+    ]
+    for row in cycle_state_tests[:6]:
+        report_lines.append(
+            f"- Future-drop test {row.get('feature')}: positive-negative median {fmt(row.get('median_positive_minus_negative'))}, permutation p={fmt(row.get('permutation_p'))}, MW p={fmt(row.get('mannwhitney_p'))}"
+        )
+    for row in cycle_state_corr[:5]:
+        report_lines.append(
+            f"- State correlation {row.get('feature')} vs {row.get('target')}: rho={fmt(row.get('rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in cycle_state_clusters[:4]:
+        report_lines.append(
+            f"- State {row.get('cycle_state_cluster')}: n={fmt(row.get('n_cycles'), 0)}, cycles {fmt(row.get('cycle_min'), 0)}-{fmt(row.get('cycle_max'), 0)}, future8 rate={fmt(row.get('future_any_drop_within_8cycles_rate'))}"
+        )
+    for row in cycle_state_transitions[:4]:
+        report_lines.append(
+            f"- Transition {row.get('transition')}: n={fmt(row.get('n_transitions'), 0)}, next future8 rate={fmt(row.get('next_future8_rate'))}, step norm={fmt(row.get('median_state_step_norm'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(cycle_state_space, 'guardrail', 'Cycle state-space audit unavailable.')}")
 
     report_lines += [
         "",
@@ -872,6 +941,18 @@ def main() -> None:
             "top_correlations": phase_kinetics_corr,
             "guardrail": first_summary(phase_kinetics, "guardrail"),
         },
+        "probabilistic_rollout_calibration": {
+            "n_frame_rows": first_summary(rollout_calibration, "n_frame_rows"),
+            "n_roi_method_rows": first_summary(rollout_calibration, "n_roi_method_rows"),
+            "n_roi": first_summary(rollout_calibration, "n_roi"),
+            "n_event_reference_cycles": first_summary(rollout_calibration, "n_event_reference_cycles"),
+            "near_transition_frame_fraction": first_summary(rollout_calibration, "near_transition_frame_fraction"),
+            "coverage_summary": rollout_calibration_coverage,
+            "top_transition_error_tests": rollout_calibration_tests,
+            "top_calibration_physics_correlations": rollout_calibration_corr,
+            "top_undercovered_roi_method_rows": rollout_calibration_top,
+            "guardrail": first_summary(rollout_calibration, "guardrail"),
+        },
         "physics_consistency_claim_matrix": {
             "n_roi": first_summary(physics_consistency, "n_roi"),
             "n_cycles": first_summary(physics_consistency, "n_cycles"),
@@ -882,6 +963,24 @@ def main() -> None:
             "top_consistency_rows": physics_consistency_top,
             "top_event_tests": physics_consistency_tests,
             "guardrail": first_summary(physics_consistency, "guardrail"),
+        },
+        "cycle_state_space_transition_audit": {
+            "n_cycles": first_summary(cycle_state_space, "n_cycles"),
+            "n_echem_shape_cycles_joined": first_summary(cycle_state_space, "n_echem_shape_cycles_joined"),
+            "n_features_used": first_summary(cycle_state_space, "n_features_used"),
+            "feature_group_counts": first_summary(cycle_state_space, "feature_group_counts", {}),
+            "chosen_k": first_summary(cycle_state_space, "chosen_k"),
+            "best_silhouette": first_summary(cycle_state_space, "best_silhouette"),
+            "pca_explained_variance": first_summary(cycle_state_space, "pca_explained_variance", []),
+            "degradation_axis_oriented_to": first_summary(cycle_state_space, "degradation_axis_oriented_to"),
+            "degradation_axis_orientation_rho": first_summary(cycle_state_space, "degradation_axis_orientation_rho"),
+            "future_drop_classifier": cycle_state_classifier,
+            "top_future_drop_tests": cycle_state_tests,
+            "top_cycle_state_correlations": cycle_state_corr,
+            "top_state_clusters": cycle_state_clusters,
+            "top_transitions": cycle_state_transitions,
+            "top_pc_loadings": cycle_state_loadings,
+            "guardrail": first_summary(cycle_state_space, "guardrail"),
         },
         "echem_shape_conditioned_roi_front_effects": {
             "n_rows": first_summary(echem_shape_conditioned, "n_rows"),

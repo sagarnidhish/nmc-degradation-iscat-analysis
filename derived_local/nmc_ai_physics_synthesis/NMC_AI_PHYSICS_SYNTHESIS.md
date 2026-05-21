@@ -30,6 +30,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Within-cycle echem shape cycles/features: 81 / 48
 - Echem-shape-conditioned ROI/front rows/shape PCs: 52 / 6
 - Physics-consistency matrix ROI/cycles: 52 / 11
+- Cycle state-space rows/clusters: 89 / 4
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -62,6 +63,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for 81 observed cycles; strongest ROI association is shape_V_q95 vs mode_review_priority, rho=-0.864, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.
 - Echem-shape-conditioned residual audit uses 45 shape features compressed to 6 PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p=0.004), while diffusion residuals remain non-significant and the shape-residual classifier is poor.
 - Physics-consistency claim matrix scores 52 ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; 2 rows are cross-modal high priority, but all 52 remain `manual_qc_required_no_physics_claim`.
+- Cycle state-space transition audit builds a 4-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p=0.015), and the state-space classifier reaches mean AUC 0.781.
 
 ## Model Readout
 
@@ -431,6 +433,38 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Shape PC correlation echem_shape_pc4 vs cumulative_abs_norm_change_protocol_residual: rho=-0.490, p=2.252e-04, n=52
 - Guardrail: Echem-shape conditioning uses low-dimensional PCA/ridge covariates on a small automatically selected ROI cohort. Surviving residuals are evidence that optical/front signals are not fully explained by measured within-cycle echem shape, but they are not causal proof or calibrated transport constants.
 
+## Probabilistic Rollout Calibration
+
+- Frame rows / ROI-method rows: 4992 / 156
+- ROI / event-reference cycles: 52 / 4
+- Near-transition frame fraction: 0.264
+- 95% empirical coverage low_rank_dmd all: global 0.921, local 0.921, n=1664
+- 95% empirical coverage low_rank_dmd event_roi: global 0.871, local 0.871, n=768
+- 95% empirical coverage low_rank_dmd near_transition: global 0.909, local 0.941, n=440
+- 95% empirical coverage persistence all: global 0.955, local 0.955, n=1664
+- 95% empirical coverage persistence event_roi: global 0.945, local 0.945, n=768
+- 95% empirical coverage persistence near_transition: global 0.975, local 0.952, n=440
+- 95% empirical coverage velocity all: global 0.942, local 0.942, n=1664
+- 95% empirical coverage velocity event_roi: global 0.917, local 0.917, n=768
+- 95% empirical coverage velocity near_transition: global 0.952, local 0.959, n=440
+- Residual test low_rank_dmd late_minus_early_rollout: median diff 0.006, p=8.875e-29, n=572/572
+- Residual test low_rank_dmd event_minus_control: median diff 0.004, p=5.586e-15, n=768/896
+- Residual test velocity event_minus_control: median diff 1.569e-04, p=0.110, n=768/896
+- Residual test persistence event_minus_control: median diff 4.067e-05, p=0.161, n=768/896
+- Residual test velocity late_minus_early_rollout: median diff -5.112e-05, p=0.516, n=572/572
+- Calibration/physics link low_rank_dmd mae_max vs cumulative_abs_first_last_first: rho=0.631, p=5.263e-07, n=52
+- Calibration/physics link low_rank_dmd mae_mean vs cumulative_abs_first_last_first: rho=0.600, p=2.617e-06, n=52
+- Calibration/physics link low_rank_dmd q90_undercoverage_rate vs cumulative_abs_first_last_first: rho=0.586, p=5.079e-06, n=52
+- Calibration/physics link persistence mae_max vs q70_transformed_fraction_delta_first: rho=0.569, p=1.078e-05, n=52
+- Calibration/physics link low_rank_dmd mae_max vs first_last_corr_first: rho=-0.542, p=3.274e-05, n=52
+- Undercoverage priority cycle156_rank7_obj27 low_rank_dmd: q90 undercoverage 1.000, priority 3.843, role event
+- Undercoverage priority cycle156_rank5_obj4 low_rank_dmd: q90 undercoverage 0.344, priority 3.699, role event
+- Undercoverage priority cycle156_rank7_obj27 velocity: q90 undercoverage 1.000, priority 3.606, role event
+- Undercoverage priority cycle156_rank8_obj10 low_rank_dmd: q90 undercoverage 0.125, priority 3.516, role event
+- Undercoverage priority cycle156_rank7_obj27 persistence: q90 undercoverage 1.000, priority 3.471, role event
+- Undercoverage priority cycle156_rank2_obj2 low_rank_dmd: q90 undercoverage 0.781, priority 3.401, role event
+- Guardrail: Empirical residual quantiles are a calibration audit for ROI-only rollout baselines. They are not a generative uncertainty model, not calibrated diffusion, and not manual QC.
+
 ## Physics Consistency Claim Matrix
 
 - ROI/cycles: 52 / 11
@@ -452,6 +486,34 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Event/control pillar test physics_consistency_score: median event-control 0.775, MW p=0.071, permutation p=0.239
 - Event/control pillar test precursor_context_score: median event-control 0.159, MW p=0.425, permutation p=0.396
 - Guardrail: This matrix is a multimodal consistency and review-prioritization audit. It does not assign manual QC labels and does not validate calibrated diffusion or material degradation mechanisms.
+
+## Cycle State-Space Transition Audit
+
+- Cycle rows/features: 89 / 107
+- Echem-shape cycles joined: 81
+- Chosen state clusters: 4 with silhouette 0.634
+- Degradation axis oriented to mean_abs_delta_prev with rho 0.326
+- Future-drop classifier: AUC 0.781, balanced accuracy 0.731
+- Future-drop test cycle_state_pc2: positive-negative median 0.730, permutation p=0.015, MW p=2.322e-04
+- Future-drop test mean_abs_delta_prev: positive-negative median -0.012, permutation p=0.068, MW p=0.036
+- Future-drop test state_step_norm: positive-negative median -0.694, permutation p=0.102, MW p=0.097
+- Future-drop test degradation_state_axis: positive-negative median -2.269, permutation p=0.183, MW p=0.295
+- Future-drop test cycle_state_pc1: positive-negative median 2.269, permutation p=0.188, MW p=0.295
+- Future-drop test capacity_mAh: positive-negative median -0.014, permutation p=0.205, MW p=0.033
+- State correlation degradation_state_axis vs cycleNo: rho=-0.738, p=1.594e-16, n=89
+- State correlation cycle_state_pc1 vs cycleNo: rho=0.738, p=1.594e-16, n=89
+- State correlation degradation_state_axis vs capacity_mAh: rho=-0.710, p=1.133e-13, n=81
+- State correlation cycle_state_pc1 vs capacity_mAh: rho=0.710, p=1.133e-13, n=81
+- State correlation degradation_state_axis vs frames_percentile: rho=-0.641, p=1.360e-11, n=89
+- State 1: n=58, cycles 2-158, future8 rate=0.259
+- State 2: n=1, cycles 150-150, future8 rate=1.000
+- State 0: n=29, cycles 112-149, future8 rate=0.138
+- State 3: n=1, cycles 126-126, future8 rate=0.000
+- Transition 0->2: n=1, next future8 rate=1.000, step norm=29.647
+- Transition 2->1: n=1, next future8 rate=1.000, step norm=28.533
+- Transition 1->0: n=1, next future8 rate=1.000, step norm=8.756
+- Transition 1->1: n=56, next future8 rate=0.250, step norm=1.833
+- Guardrail: Cycle state-space clusters use four-particle trace summaries and echem-shape descriptors at cycle resolution. They are degradation-state hypotheses and early-warning covariates, not localized ROI/front validation or calibrated diffusion measurements.
 
 ## Top ROI/Echem Or Protocol Couplings
 

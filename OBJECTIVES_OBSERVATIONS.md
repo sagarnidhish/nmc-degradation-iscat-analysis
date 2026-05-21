@@ -1665,3 +1665,58 @@ Key result:
 - The project synthesis now includes a Physics Consistency Claim Matrix section and carries the matrix into `nmc_ai_physics_synthesis_summary.json`.
 
 Interpretation: this matrix is the current best review-prioritization map. It consolidates independent optical/front/rollout/kinetic/precursor/mode evidence into a ranked set of hypotheses while explicitly preventing overclaiming. The most defensible physics pattern remains event-associated optical change plus phase-front direction, with manual QC and calibration still gating any publication-scale diffusion or material-mechanism claim.
+
+## 2026-05-21 Probabilistic Rollout Calibration
+
+Added and ran:
+
+`python scripts/tier4_probabilistic_rollout_calibration.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration`
+
+Local compact copy:
+
+`derived_local/probabilistic_rollout_calibration`
+
+Key result:
+
+- Audited 4,992 frame-level ROI-only rollout residual rows, collapsed into 156 ROI-method rows across 52 ROIs and 4 event-reference cycles.
+- Near-transition frames, defined from the median q60/q70/q80 max-rate phase-kinetics time, make up 0.264 of evaluated frames.
+- Persistence is close to nominal empirical 95% coverage overall: 0.955 global weighted coverage, with event ROI coverage 0.945.
+- Low-rank DMD undercovers event ROIs: 95% target coverage is only 0.871 on event ROI frames, versus 0.963 on controls. This supports treating DMD as a residual/latent stress descriptor rather than a calibrated predictor.
+- Transition-local quantiles improve low-rank DMD near-transition coverage from 0.909 to 0.941, suggesting transition-aware uncertainty bands are more physically appropriate than a single global residual band.
+- The strongest residual-error contrast is low-rank DMD late-vs-early rollout MAE, median +0.00559, p=8.87e-29; DMD event-vs-control MAE is also higher, median +0.00401, p=5.59e-15. Persistence and velocity event/control contrasts are weak by comparison.
+- Calibration/physics correlations show low-rank DMD q90 undercoverage tracks cumulative optical change (rho=0.586, p=5.08e-06) and first-last decorrelation (rho=-0.519, p=8.07e-05).
+- Top undercovered ROI-method rows again prioritize cycle-156 candidates, especially `cycle156_rank7_obj27`, `cycle156_rank5_obj4`, and `cycle156_rank2_obj2`.
+- The project synthesis now includes a Probabilistic Rollout Calibration section and carries this audit into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this fills the uncertainty-calibration gap without pretending to have a final generative uncertainty model. Persistence remains the best-calibrated raw pixel baseline, while DMD undercoverage is a useful physics-facing stress signal that concentrates on high-change event ROIs. For future neural rollout models, uncertainty should be conditioned on transition state and optical-change descriptors, not only on frame index or global residual variance.
+
+## 2026-05-21 Cycle State-Space Transition Audit
+
+Added and ran:
+
+`python scripts/tier4_cycle_state_space_transition_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit --n-permutation 2000`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit`
+
+Local compact copy:
+
+`derived_local/cycle_state_space_transition_audit`
+
+Key result:
+
+- Built a cycle-level degradation state space from 89 four-particle trace cycles joined to 81 within-cycle echem-shape cycles.
+- Used 107 current-cycle features, excluding future labels and abrupt-drop labels from the state-space inputs.
+- PCA/state clustering selected 4 cycle-state clusters with silhouette 0.634.
+- The degradation axis is strongly coupled to cycle/protocol progression and capacity: rho=-0.738 with `cycleNo`, rho=-0.710 with `capacity_mAh`, and rho=0.433 with `coulombic_efficiency_pct`.
+- PC2 is the strongest future-drop separator: future any-drop within 8 cycles has median positive-negative PC2 shift +0.730, Mann-Whitney p=2.32e-4, permutation p=0.0155.
+- A compact state-space logistic model for `future_any_drop_within_8cycles` reaches mean ROC-AUC 0.781 and balanced accuracy 0.731 across stratified folds.
+- State clusters are useful but not definitive: two singleton transition states appear around cycles 126 and 150, so state-transition interpretations remain hypothesis-generating.
+- The project synthesis now includes a Cycle State-Space Transition Audit section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this creates a cycle-level companion to the ROI/front analyses. It suggests that degradation risk is visible in the joint particle-trace/echem-shape trajectory before abrupt drops, especially through a second state-space coordinate, but it remains a cycle-level early-warning analysis rather than localized front validation or calibrated diffusion.
