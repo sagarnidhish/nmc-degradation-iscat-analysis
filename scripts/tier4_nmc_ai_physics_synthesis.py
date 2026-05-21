@@ -100,6 +100,7 @@ def main() -> None:
     manual_qc_workbook = read_json(derived / "manual_qc_label_workbook" / "manual_qc_label_workbook_summary.json")
     manual_qc_gated = read_json(derived / "manual_qc_gated_front_effects" / "manual_qc_gated_front_effects_summary.json")
     spatiotemporal_graph = read_json(derived / "spatiotemporal_degradation_graph" / "spatiotemporal_degradation_graph_summary.json")
+    phase_kinetics = read_json(derived / "phase_kinetics_avrami" / "phase_kinetics_avrami_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -177,6 +178,8 @@ def main() -> None:
     graph_continuous = top_items(first_summary(spatiotemporal_graph, "top_continuous_neighbor_tests", []), 10)
     graph_lag = top_items(first_summary(spatiotemporal_graph, "temporal_lag_tests", []), 10)
     graph_distance = top_items(first_summary(spatiotemporal_graph, "distance_gradient_tests", []), 8)
+    phase_kinetics_tests = top_items(first_summary(phase_kinetics, "top_group_tests", []), 12)
+    phase_kinetics_corr = top_items(first_summary(phase_kinetics, "top_correlations", []), 12)
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -273,6 +276,7 @@ def main() -> None:
         f"- Manual-QC gated accepted fronts: {first_summary(manual_qc_gated, 'n_manual_front_effect_accepted', 0)}",
         f"- Prefix feature-importance audit features: {first_summary(prefix_importance, 'n_features', 0)}",
         f"- Spatiotemporal degradation graph nodes/edges: {first_summary(spatiotemporal_graph, 'n_nodes', 0)} / {first_summary(spatiotemporal_graph, 'n_edges', 0)}",
+        f"- Phase-kinetics ROI rows/features: {first_summary(phase_kinetics, 'n_roi', 0)} / {first_summary(phase_kinetics, 'n_kinetic_features', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -293,6 +297,7 @@ def main() -> None:
         f"- Control-balanced QC sensitivity keeps positive phase-front residuals robust in {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))} automatic strata, including the balanced selected panel; diffusion-proxy residuals remain non-significant in that balanced panel.",
         f"- Manual-QC gated front-effect tests are status `{first_summary(manual_qc_gated, 'status', 'missing')}` with {first_summary(manual_qc_gated, 'n_manual_front_effect_accepted', 0)} accepted fronts, so no manual-QC-filtered diffusion/front claim is emitted yet.",
         f"- Spatiotemporal graph tests show strong same-cycle spatial homophily in front-positive residuals and event-enriched residual modes, but cross-cycle nearest-neighbor front/event labels do not show simple propagation and remain cohort-design sensitive.",
+        "- Optical phase-kinetics fits add transition-sharpness and Avrami-style descriptors: event-enriched residual modes have larger q70/q80 transformed-fraction deltas and faster q60/q70 logistic rates, while kinetic fit quality/rates remain strongly coupled to frame count.",
         "",
         "## Model Readout",
         "",
@@ -468,6 +473,22 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Phase Kinetics Avrami Audit",
+        "",
+        f"- ROI/features: {first_summary(phase_kinetics, 'n_roi', 0)} / {first_summary(phase_kinetics, 'n_kinetic_features', 0)}",
+    ]
+    for row in phase_kinetics_tests[:8]:
+        report_lines.append(
+            f"- {row.get('comparison')} {row.get('feature')}: median difference {fmt(row.get('median_positive_minus_negative'))}, p={fmt(row.get('mannwhitney_p'))}"
+        )
+    for row in phase_kinetics_corr[:8]:
+        report_lines.append(
+            f"- Correlation {row.get('feature')} vs {row.get('target')}: rho {fmt(row.get('spearman_rho'))}, p={fmt(row.get('spearman_p'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(phase_kinetics, 'guardrail', 'Optical kinetic proxy only.')}")
+
+    report_lines += [
+        "",
         "## Top ROI/Echem Or Protocol Couplings",
         "",
     ]
@@ -590,6 +611,13 @@ def main() -> None:
             "temporal_lag_tests": graph_lag,
             "distance_gradient_tests": graph_distance,
             "guardrail": first_summary(spatiotemporal_graph, "guardrail"),
+        },
+        "phase_kinetics_avrami": {
+            "n_roi": first_summary(phase_kinetics, "n_roi"),
+            "n_kinetic_features": first_summary(phase_kinetics, "n_kinetic_features"),
+            "top_group_tests": phase_kinetics_tests,
+            "top_correlations": phase_kinetics_corr,
+            "guardrail": first_summary(phase_kinetics, "guardrail"),
         },
         "persistence_best_all_cycles": persistence_best,
         "prefix_forecast_n_roi": first_summary(prefix_forecast, "n_roi"),

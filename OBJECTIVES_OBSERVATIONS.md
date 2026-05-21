@@ -1355,3 +1355,27 @@ Key result:
 - Distance-gradient checks flag that event-event edges are farther than other same-reference edges, but this is a cohort-design artifact because event/control ROIs are selected in separate cycles. Event-enriched mode positive-positive edges do not have a shorter median distance than other edges (97.5 px versus 103.7 px, p=0.672).
 
 Interpretation: front-direction and residual-mode signals are spatially organized within individual cycles, which supports using local particle-region context for manual review and physics triage. The graph does not prove degradation propagation across cycles; cross-cycle nearest-neighbor behavior is weak or reversed and remains confounded by event/control cycle selection.
+
+## 2026-05-21 Phase Kinetics Avrami Audit
+
+Added and ran:
+
+`python scripts/tier4_phase_kinetics_avrami.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/phase_kinetics_avrami`
+
+Local compact copy:
+
+`derived_local/phase_kinetics_avrami`
+
+Key result:
+
+- Extracted optical phase-fraction trajectories from each cropped particle ROI movie at q60/q70/q80 thresholds and fit descriptive logistic and Avrami-style transformed-fraction summaries.
+- The corrected feature list uses only newly generated kinetic features, avoiding accidental reuse of older ROI descriptor columns.
+- Event-enriched residual-mode ROIs show faster/stronger optical transformations than other modes: q60 logistic rate median difference 2.66e-04 1/s (p=0.0137), q70 transformed-fraction delta +0.00632 (p=0.0169), and q80 transformed-fraction delta +0.00566 (p=0.0384).
+- Event ROIs have better simple Avrami fit quality than controls at q70 and q60: q70 Avrami R2 median difference +0.0452 (p=0.0223), q60 Avrami R2 +0.0253 (p=0.0283). Event q70/q80 maximum-rate timing occurs earlier than controls (q70 timing fraction -0.100, p=0.0362; q80 -0.132, p=0.0239).
+- The strongest global correlations are still acquisition/protocol-linked: q70 logistic R2 vs frame-count percentile rho=-0.801, q60 logistic R2 rho=-0.776, ROI norm rate sign consistency rho=0.728, and q80 max-rate rho=0.699. This is a major guardrail for interpreting kinetic parameters.
+
+Interpretation: the kinetic audit adds a physics-shaped layer beyond raw front slopes: event-enriched modes look like sharper/brighter optical phase transformations with earlier transition timing. These are optical transformation proxies, not calibrated reaction constants or diffusion coefficients, and frame-count/protocol coupling must be controlled before using them as mechanistic material parameters.

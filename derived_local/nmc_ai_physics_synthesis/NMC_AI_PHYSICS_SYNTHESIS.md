@@ -18,6 +18,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Manual-QC gated accepted fronts: 0
 - Prefix feature-importance audit features: 54
 - Spatiotemporal degradation graph nodes/edges: 52 / 510
+- Phase-kinetics ROI rows/features: 52 / 40
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -38,6 +39,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Control-balanced QC sensitivity keeps positive phase-front residuals robust in 6 automatic strata, including the balanced selected panel; diffusion-proxy residuals remain non-significant in that balanced panel.
 - Manual-QC gated front-effect tests are status `ready_for_manual_labels` with 0 accepted fronts, so no manual-QC-filtered diffusion/front claim is emitted yet.
 - Spatiotemporal graph tests show strong same-cycle spatial homophily in front-positive residuals and event-enriched residual modes, but cross-cycle nearest-neighbor front/event labels do not show simple propagation and remain cohort-design sensitive.
+- Optical phase-kinetics fits add transition-sharpness and Avrami-style descriptors: event-enriched residual modes have larger q70/q80 transformed-fraction deltas and faster q60/q70 logistic rates, while kinetic fit quality/rates remain strongly coupled to frame count.
 
 ## Model Readout
 
@@ -203,6 +205,27 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Distance gradient front_positive_residual_binary: positive-positive median distance 196.291 px vs other 28.496 px, p=0.129
 - Distance gradient is_event_enriched_mode: positive-positive median distance 97.506 px vs other 103.716 px, p=0.672
 - Guardrail: Spatiotemporal graph tests use automatic ROI coordinates and automatic residual labels on a selected 52-ROI cohort. They test clustering/propagation hypotheses for review prioritization, not causal material degradation mechanisms.
+
+## Phase Kinetics Avrami Audit
+
+- ROI/features: 52 / 40
+- event_enriched_mode_vs_other q60_logistic_k_per_s: median difference 2.660e-04, p=0.014
+- event_enriched_mode_vs_other q70_fraction_delta: median difference 0.006, p=0.017
+- event_enriched_mode_vs_other q70_transformed_fraction_delta: median difference 0.006, p=0.017
+- event_vs_control q70_avrami_r2: median difference 0.045, p=0.022
+- event_vs_control q80_time_of_max_abs_rate_frac: median difference -0.132, p=0.024
+- event_vs_control q60_avrami_r2: median difference 0.025, p=0.028
+- event_enriched_mode_vs_other q80_positive_rate_fraction: median difference 0.021, p=0.032
+- event_enriched_mode_vs_other q80_time_of_max_abs_rate_frac: median difference -0.200, p=0.034
+- Correlation q70_logistic_r2 vs n_frames_percentile: rho -0.801, p=2.796e-12
+- Correlation q60_logistic_r2 vs n_frames_percentile: rho -0.776, p=9.625e-11
+- Correlation roi_norm_rate_sign_consistency vs n_frames_percentile: rho 0.728, p=9.758e-10
+- Correlation roi_norm_max_abs_rate_per_s vs n_frames_percentile: rho 0.701, p=7.281e-09
+- Correlation q80_max_abs_rate_per_s vs n_frames_percentile: rho 0.699, p=8.018e-09
+- Correlation q60_max_abs_rate_per_s vs n_frames_percentile: rho 0.690, p=1.525e-08
+- Correlation q70_max_abs_rate_per_s vs n_frames_percentile: rho 0.686, p=2.043e-08
+- Correlation q70_variation_to_net_abs vs n_frames_percentile: rho -0.675, p=4.098e-08
+- Guardrail: Kinetic fits are optical phase-fraction proxies from cropped particle ROIs using provisional timing. Avrami/logistic parameters are descriptive and not calibrated reaction constants.
 
 ## Top ROI/Echem Or Protocol Couplings
 
