@@ -593,3 +593,29 @@ Key result:
 - The largest average positive coefficients were cumulative absolute normalized change and normalized intensity standard deviation; first-last correlation had a negative coefficient, consistent with the matched-control univariate screen.
 
 Interpretation: event/control ROI descriptors are promising as univariate degradation signatures, but they do not yet form a cycle-general classifier. This is a useful guardrail: cycle/source/protocol effects are strong, and robust event-vs-control classification will require more source movies, more non-event controls, and probably echem/protocol conditioning. The current best use of these features is ranked hypothesis generation and matched-control evidence, not a deployed classifier.
+
+## 2026-05-21 Joint ROI Physics Degradation Modes
+
+Added and ran:
+
+`scripts/tier3_joint_roi_physics_degradation_modes.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes`
+
+Local compact copy:
+
+`derived_local/roi_joint_physics_degradation_modes`
+
+Key result:
+
+- Combined selected-ROI physics descriptors, event-conditioned rollout residual features, residual-CNN guardrail metrics, high-resolution front tracking, integrated event evidence, and cycle-level electrochemistry context into one ROI-level joint table.
+- The joint table contains 11 selected ROIs and uses 10 interpretable features, including rollout residual energy, radius-squared front slope, active front fraction, corrected ROI mean loss, cumulative absolute change, high-fraction trend, residual-CNN relative improvement, and cycle evidence score.
+- KMeans selected k=2 with silhouette 0.335.
+- The highest-score joint mode is `highest_score_contracting_optical_loss`; top ROI is `cycle86_front4_obj9` with joint score 2.86, radius-squared slope -0.187 full px^2/s, corrected ROI delta -15.66, active fraction 0.112, and rollout residual energy 0.00219.
+- The next-ranked ROI is `cycle116_front3_obj9` with joint score 1.72, radius-squared slope -0.263 full px^2/s, corrected ROI delta -12.11, active fraction 0.0594, and rollout residual energy 0.000648.
+- Cycle-level synthesis: cycle 86 has higher mean AI rollout residual energy and active front fraction; cycle 116 has larger mean optical drop fraction, more negative mean radius-squared slope, and stronger corrected ROI mean loss.
+
+Interpretation: the strongest physics-facing story is now a joint degradation descriptor rather than any single video model. Cycle 86 appears more active/difficult for rollout prediction, while cycle 116 looks more like coherent optical loss/contraction with stronger event evidence. These modes are automatic hypothesis rankings from selected ROIs and still need control ROI expansion, manual QC, and spatial calibration before mechanistic diffusion claims.
+
