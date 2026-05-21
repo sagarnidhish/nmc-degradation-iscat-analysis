@@ -73,3 +73,17 @@ Key result:
 - Cycle 156 has an optical event for particle1 but no echem match in this scan, so downstream statistics should treat it carefully.
 
 Interpretation: the synchronized optical events are unlikely to be random particle-local coincidences, but they are not yet explained by coarse per-cycle voltage/current summaries. The next useful analyses are protocol-local checks around the event cycles, visual/ROI validation, and image-derived degradation features within those cycles.
+
+## 2026-05-21 Protocol Context Result
+
+A protocol-context pass was added in `scripts/tier1_event_protocol_context.py` using the compact event/echem cycle table.
+
+Output directory: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context`
+
+Key result:
+
+- Synchronized event cycles 86 and 116 have low frame counts: mean 895.5 frames versus 1036.1 for non-synchronized cycles, Mann-Whitney p = 0.0240.
+- The same cycles are at very low frame-count percentiles: 0.079 and 0.011.
+- Block-position inference was not reliable because dominant block labels produce 82 inferred block segments across 89 particle cycles; treat those boundary features as exploratory only.
+
+Interpretation: synchronized optical degradation events are now linked most clearly to unusually short cycle-frame regimes, not to coarse voltage/current summaries. The next check should inspect raw frame/video quality and particle ROI behavior around cycles 86 and 116 to distinguish physical abrupt degradation from imaging/protocol/frame-count artifacts.
