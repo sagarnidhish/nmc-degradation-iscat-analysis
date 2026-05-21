@@ -99,6 +99,7 @@ def main() -> None:
     prefix_importance = read_json(derived / "prefix_roi_feature_importance" / "prefix_feature_importance_summary.json")
     manual_qc_workbook = read_json(derived / "manual_qc_label_workbook" / "manual_qc_label_workbook_summary.json")
     manual_qc_gated = read_json(derived / "manual_qc_gated_front_effects" / "manual_qc_gated_front_effects_summary.json")
+    spatiotemporal_graph = read_json(derived / "spatiotemporal_degradation_graph" / "spatiotemporal_degradation_graph_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -172,6 +173,10 @@ def main() -> None:
     robust_phase_strata = first_summary(front_qc_sensitivity, "robust_positive_phase_residual_strata", [])
     balanced_qc_focus = first_summary(control_balanced_qc_sensitivity, "focus_tests", []) or []
     balanced_robust_phase_strata = first_summary(control_balanced_qc_sensitivity, "robust_positive_phase_residual_strata", [])
+    graph_homophily = top_items(first_summary(spatiotemporal_graph, "top_homophily_tests", []), 10)
+    graph_continuous = top_items(first_summary(spatiotemporal_graph, "top_continuous_neighbor_tests", []), 10)
+    graph_lag = top_items(first_summary(spatiotemporal_graph, "temporal_lag_tests", []), 10)
+    graph_distance = top_items(first_summary(spatiotemporal_graph, "distance_gradient_tests", []), 8)
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -267,6 +272,7 @@ def main() -> None:
         f"- Manual-QC label workbook candidates: {first_summary(manual_qc_workbook, 'n_unique_roi', 0)}",
         f"- Manual-QC gated accepted fronts: {first_summary(manual_qc_gated, 'n_manual_front_effect_accepted', 0)}",
         f"- Prefix feature-importance audit features: {first_summary(prefix_importance, 'n_features', 0)}",
+        f"- Spatiotemporal degradation graph nodes/edges: {first_summary(spatiotemporal_graph, 'n_nodes', 0)} / {first_summary(spatiotemporal_graph, 'n_edges', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -286,6 +292,7 @@ def main() -> None:
         f"- A QC review packet prioritizes {first_summary(qc_packet, 'n_candidates', 0)} ROI/front candidates, a control-balanced front package adds {first_summary(control_balanced_qc, 'n_control_roi', 0)} control candidates, and the manual-QC label workbook deduplicates these into {first_summary(manual_qc_workbook, 'n_unique_roi', 0)} pending ROI labels.",
         f"- Control-balanced QC sensitivity keeps positive phase-front residuals robust in {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))} automatic strata, including the balanced selected panel; diffusion-proxy residuals remain non-significant in that balanced panel.",
         f"- Manual-QC gated front-effect tests are status `{first_summary(manual_qc_gated, 'status', 'missing')}` with {first_summary(manual_qc_gated, 'n_manual_front_effect_accepted', 0)} accepted fronts, so no manual-QC-filtered diffusion/front claim is emitted yet.",
+        f"- Spatiotemporal graph tests show strong same-cycle spatial homophily in front-positive residuals and event-enriched residual modes, but cross-cycle nearest-neighbor front/event labels do not show simple propagation and remain cohort-design sensitive.",
         "",
         "## Model Readout",
         "",
@@ -436,6 +443,31 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Spatiotemporal Degradation Graph",
+        "",
+        f"- Graph size: {first_summary(spatiotemporal_graph, 'n_nodes', 0)} ROI nodes and {first_summary(spatiotemporal_graph, 'n_edges', 0)} directed nearest-neighbor edges.",
+    ]
+    for row in graph_homophily[:6]:
+        report_lines.append(
+            f"- Homophily {row.get('edge_type')} {row.get('target')}: same fraction {fmt(row.get('observed_same_fraction'))}, null mean {fmt(row.get('null_same_mean'))}, empirical p={fmt(row.get('empirical_p_same_ge_observed'))}"
+        )
+    for row in graph_continuous[:6]:
+        report_lines.append(
+            f"- Continuous neighbor {row.get('edge_type')} {row.get('target')}: rho {fmt(row.get('spearman_src_dst'))}, null p95 {fmt(row.get('null_p95'))}, empirical p={fmt(row.get('empirical_p_abs_ge_observed'))}"
+        )
+    for row in graph_lag[:4]:
+        metric = row.get('roc_auc_previous_neighbor_predicts_current', row.get('spearman_previous_nearest_vs_current'))
+        report_lines.append(
+            f"- Temporal lag {row.get('target')}: n={fmt(row.get('n_lag_pairs'), 0)}, previous-neighbor metric {fmt(metric)}"
+        )
+    for row in graph_distance[:3]:
+        report_lines.append(
+            f"- Distance gradient {row.get('target')}: positive-positive median distance {fmt(row.get('median_distance_positive_positive'))} px vs other {fmt(row.get('median_distance_other'))} px, p={fmt(row.get('mannwhitney_p'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(spatiotemporal_graph, 'guardrail', 'Automatic graph audit only.')}")
+
+    report_lines += [
+        "",
         "## Top ROI/Echem Or Protocol Couplings",
         "",
     ]
@@ -548,6 +580,16 @@ def main() -> None:
             "n_xy_regions": first_summary(cycle_region_modes, "n_xy_regions"),
             "event_enriched_mode_fraction": first_summary(cycle_region_modes, "event_enriched_mode_fraction"),
             "context_only_classifier": first_summary(cycle_region_modes, "context_only_classifier", {}),
+        },
+        "spatiotemporal_degradation_graph": {
+            "n_nodes": first_summary(spatiotemporal_graph, "n_nodes"),
+            "n_edges": first_summary(spatiotemporal_graph, "n_edges"),
+            "edge_counts": first_summary(spatiotemporal_graph, "edge_counts", {}),
+            "top_homophily_tests": graph_homophily,
+            "top_continuous_neighbor_tests": graph_continuous,
+            "temporal_lag_tests": graph_lag,
+            "distance_gradient_tests": graph_distance,
+            "guardrail": first_summary(spatiotemporal_graph, "guardrail"),
         },
         "persistence_best_all_cycles": persistence_best,
         "prefix_forecast_n_roi": first_summary(prefix_forecast, "n_roi"),

@@ -1330,3 +1330,28 @@ Key result:
 - This revises the previous optimistic prefix interpretation: early particle-region video features may still triage front-direction behavior, but current evidence does not prove a robust leakage-clean predictor on the 52-ROI cohort.
 
 Interpretation: this is a useful negative/control result. It prevents an acquisition index from masquerading as image physics and narrows the credible claim to descriptive early-ROI intensity/texture associations. The next prefix-model step should use stricter leakage controls, more ROI rows, and preferably manual-QC-accepted particle/front labels before claiming deployable forecasting.
+
+## 2026-05-21 Spatiotemporal Degradation Graph Result
+
+Added and ran:
+
+`python scripts/tier4_spatiotemporal_degradation_graph.py --n-permutation 1000`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/spatiotemporal_degradation_graph`
+
+Local compact copy:
+
+`derived_local/spatiotemporal_degradation_graph`
+
+Key result:
+
+- Built a directed nearest-neighbor graph over the 52 multi-cycle ROI nodes using approximate particle coordinates, cycle number, and event-reference-cycle blocks. The graph contains 510 directed edges across same-cycle, same-reference, previous-cycle, and next-cycle neighbor definitions.
+- Same-cycle spatial neighbors show strong front-direction homophily: `front_positive_residual_binary` same-label fraction 0.936 versus within-reference permutation null mean 0.489, empirical p=0.000999. Same-cycle event-enriched residual modes also cluster: same-label fraction 0.769 versus null mean 0.647, empirical p=0.00599.
+- Continuous front-direction residuals are spatially correlated within cycle: `phase_slope_positive_fraction_protocol_residual` neighbor rho 0.696 versus null p95 0.197, empirical p=0.000999.
+- A same-reference, not necessarily same-cycle, threshold-robust phase residual correlation remains visible: rho 0.275 versus null p95 0.096, empirical p=0.002997.
+- Cross-cycle nearest-neighbor labels do not show simple propagation. Previous-cycle nearest neighbor AUC for current front-positive residual is 0.426, for event-enriched mode is 0.441, and for event label is 0.167. The next-cycle continuous front residual relation is negative (rho -0.219, empirical p=0.02398), consistent with local cycling/reversal or cohort design rather than monotonic spread.
+- Distance-gradient checks flag that event-event edges are farther than other same-reference edges, but this is a cohort-design artifact because event/control ROIs are selected in separate cycles. Event-enriched mode positive-positive edges do not have a shorter median distance than other edges (97.5 px versus 103.7 px, p=0.672).
+
+Interpretation: front-direction and residual-mode signals are spatially organized within individual cycles, which supports using local particle-region context for manual review and physics triage. The graph does not prove degradation propagation across cycles; cross-cycle nearest-neighbor behavior is weak or reversed and remains confounded by event/control cycle selection.

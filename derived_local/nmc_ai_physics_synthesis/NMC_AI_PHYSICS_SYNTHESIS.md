@@ -17,6 +17,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Manual-QC label workbook candidates: 47
 - Manual-QC gated accepted fronts: 0
 - Prefix feature-importance audit features: 54
+- Spatiotemporal degradation graph nodes/edges: 52 / 510
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -36,6 +37,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - A QC review packet prioritizes 30 ROI/front candidates, a control-balanced front package adds 24 control candidates, and the manual-QC label workbook deduplicates these into 47 pending ROI labels.
 - Control-balanced QC sensitivity keeps positive phase-front residuals robust in 6 automatic strata, including the balanced selected panel; diffusion-proxy residuals remain non-significant in that balanced panel.
 - Manual-QC gated front-effect tests are status `ready_for_manual_labels` with 0 accepted fronts, so no manual-QC-filtered diffusion/front claim is emitted yet.
+- Spatiotemporal graph tests show strong same-cycle spatial homophily in front-positive residuals and event-enriched residual modes, but cross-cycle nearest-neighbor front/event labels do not show simple propagation and remain cohort-design sensitive.
 
 ## Model Readout
 
@@ -177,6 +179,30 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - region x1_y2: n=13, event-enriched mode fraction=0.308, event fraction=0.308
 - region x3_y1: n=15, event-enriched mode fraction=0.067, event fraction=0.400
 - Context-only leave-cycle-out classifier: pooled ROC-AUC 0.429, pooled balanced accuracy 0.433; descriptive context is not a standalone detector.
+
+## Spatiotemporal Degradation Graph
+
+- Graph size: 52 ROI nodes and 510 directed nearest-neighbor edges.
+- Homophily same_cycle_spatial_knn front_positive_residual_binary: same fraction 0.936, null mean 0.489, empirical p=9.990e-04
+- Homophily same_cycle_spatial_knn is_event_roi: same fraction 1.000, null mean 0.473, empirical p=9.990e-04
+- Homophily same_cycle_spatial_knn is_event_enriched_mode: same fraction 0.769, null mean 0.647, empirical p=0.006
+- Homophily same_reference_spatial_knn is_event_enriched_mode: same fraction 0.673, null mean 0.648, empirical p=0.264
+- Homophily next_cycle_spatial_knn is_event_enriched_mode: same fraction 0.602, null mean 0.645, empirical p=0.888
+- Homophily previous_cycle_spatial_knn is_event_enriched_mode: same fraction 0.544, null mean 0.628, empirical p=0.975
+- Continuous neighbor same_cycle_spatial_knn phase_slope_positive_fraction_protocol_residual: rho 0.696, null p95 0.197, empirical p=9.990e-04
+- Continuous neighbor same_reference_spatial_knn threshold_robust_phase_score_protocol_residual: rho 0.275, null p95 0.096, empirical p=0.003
+- Continuous neighbor same_cycle_spatial_knn mode_review_priority: rho 0.814, null p95 0.784, empirical p=0.010
+- Continuous neighbor next_cycle_spatial_knn mode_review_priority: rho 0.783, null p95 0.776, empirical p=0.024
+- Continuous neighbor next_cycle_spatial_knn phase_slope_positive_fraction_protocol_residual: rho -0.219, null p95 0.124, empirical p=0.024
+- Continuous neighbor next_cycle_spatial_knn diffusion_proxy_abs_median_um2_per_s_protocol_residual: rho -0.227, null p95 0.061, empirical p=0.036
+- Temporal lag is_event_roi: n=30, previous-neighbor metric 0.167
+- Temporal lag is_event_enriched_mode: n=30, previous-neighbor metric 0.441
+- Temporal lag front_positive_residual_binary: n=30, previous-neighbor metric 0.426
+- Temporal lag mode_review_priority: n=30, previous-neighbor metric NA
+- Distance gradient is_event_roi: positive-positive median distance 277.440 px vs other 10.419 px, p=2.672e-04
+- Distance gradient front_positive_residual_binary: positive-positive median distance 196.291 px vs other 28.496 px, p=0.129
+- Distance gradient is_event_enriched_mode: positive-positive median distance 97.506 px vs other 103.716 px, p=0.672
+- Guardrail: Spatiotemporal graph tests use automatic ROI coordinates and automatic residual labels on a selected 52-ROI cohort. They test clustering/propagation hypotheses for review prioritization, not causal material degradation mechanisms.
 
 ## Top ROI/Echem Or Protocol Couplings
 

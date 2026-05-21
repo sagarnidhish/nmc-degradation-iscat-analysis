@@ -2521,6 +2521,328 @@
     "fragmented_q70_mask": 17,
     "none": 5
   },
+  "spatiotemporal_degradation_graph": {
+    "distance_gradient_tests": [
+      {
+        "mannwhitney_p": 0.0002671756311951924,
+        "median_distance_other": 10.418575106916114,
+        "median_distance_positive_positive": 277.4395116861116,
+        "median_distance_pp_minus_other": 267.02093657919545,
+        "n_other_edges": 135,
+        "n_positive_positive_edges": 21,
+        "target": "is_event_roi"
+      },
+      {
+        "mannwhitney_p": 0.12902280209335132,
+        "median_distance_other": 28.496085379723255,
+        "median_distance_positive_positive": 196.29113186315257,
+        "median_distance_pp_minus_other": 167.7950464834293,
+        "n_other_edges": 115,
+        "n_positive_positive_edges": 41,
+        "target": "front_positive_residual_binary"
+      },
+      {
+        "mannwhitney_p": 0.6721349046749023,
+        "median_distance_other": 103.7157960563711,
+        "median_distance_positive_positive": 97.50618665798716,
+        "median_distance_pp_minus_other": -6.209609398383947,
+        "n_other_edges": 143,
+        "n_positive_positive_edges": 13,
+        "target": "is_event_enriched_mode"
+      }
+    ],
+    "edge_counts": {
+      "next_cycle_spatial_knn": 108,
+      "previous_cycle_spatial_knn": 90,
+      "same_cycle_spatial_knn": 156,
+      "same_reference_spatial_knn": 156
+    },
+    "guardrail": "Spatiotemporal graph tests use automatic ROI coordinates and automatic residual labels on a selected 52-ROI cohort. They test clustering/propagation hypotheses for review prioritization, not causal material degradation mechanisms.",
+    "n_edges": 510,
+    "n_nodes": 52,
+    "temporal_lag_tests": [
+      {
+        "n_lag_pairs": 30,
+        "previous_nearest_positive_rate_when_current_negative": 0.6666666666666666,
+        "previous_nearest_positive_rate_when_current_positive": 0.0,
+        "roc_auc_previous_neighbor_predicts_current": 0.16666666666666669,
+        "spearman_previous_nearest_vs_current": null,
+        "target": "is_event_roi"
+      },
+      {
+        "n_lag_pairs": 30,
+        "previous_nearest_positive_rate_when_current_negative": 0.2608695652173913,
+        "previous_nearest_positive_rate_when_current_positive": 0.14285714285714285,
+        "roc_auc_previous_neighbor_predicts_current": 0.4409937888198757,
+        "spearman_previous_nearest_vs_current": null,
+        "target": "is_event_enriched_mode"
+      },
+      {
+        "n_lag_pairs": 30,
+        "previous_nearest_positive_rate_when_current_negative": 0.7727272727272727,
+        "previous_nearest_positive_rate_when_current_positive": 0.625,
+        "roc_auc_previous_neighbor_predicts_current": 0.42613636363636365,
+        "spearman_previous_nearest_vs_current": null,
+        "target": "front_positive_residual_binary"
+      },
+      {
+        "n_lag_pairs": 30,
+        "previous_nearest_positive_rate_when_current_negative": null,
+        "previous_nearest_positive_rate_when_current_positive": null,
+        "roc_auc_previous_neighbor_predicts_current": null,
+        "spearman_previous_nearest_vs_current": 0.7524212447823986,
+        "target": "mode_review_priority"
+      },
+      {
+        "n_lag_pairs": 30,
+        "previous_nearest_positive_rate_when_current_negative": null,
+        "previous_nearest_positive_rate_when_current_positive": null,
+        "roc_auc_previous_neighbor_predicts_current": null,
+        "spearman_previous_nearest_vs_current": -0.15295919308739753,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "n_lag_pairs": 30,
+        "previous_nearest_positive_rate_when_current_negative": null,
+        "previous_nearest_positive_rate_when_current_positive": null,
+        "roc_auc_previous_neighbor_predicts_current": null,
+        "spearman_previous_nearest_vs_current": 0.48252842528181794,
+        "target": "threshold_robust_phase_score_protocol_residual"
+      },
+      {
+        "n_lag_pairs": 30,
+        "previous_nearest_positive_rate_when_current_negative": null,
+        "previous_nearest_positive_rate_when_current_positive": null,
+        "roc_auc_previous_neighbor_predicts_current": null,
+        "spearman_previous_nearest_vs_current": 0.27776544038362955,
+        "target": "diffusion_proxy_abs_median_um2_per_s_protocol_residual"
+      }
+    ],
+    "top_continuous_neighbor_tests": [
+      {
+        "edge_type": "same_cycle_spatial_knn",
+        "empirical_p_abs_ge_observed": 0.000999000999000999,
+        "n_edges": 156,
+        "null_mean": -0.01219866045508171,
+        "null_p05": -0.16422577924687073,
+        "null_p95": 0.19700568919677625,
+        "spearman_src_dst": 0.6964134768145923,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "edge_type": "same_reference_spatial_knn",
+        "empirical_p_abs_ge_observed": 0.002997002997002997,
+        "n_edges": 156,
+        "null_mean": -0.06669343572806594,
+        "null_p05": -0.20539987951031297,
+        "null_p95": 0.09620232144250451,
+        "spearman_src_dst": 0.27471468660058534,
+        "target": "threshold_robust_phase_score_protocol_residual"
+      },
+      {
+        "edge_type": "same_cycle_spatial_knn",
+        "empirical_p_abs_ge_observed": 0.00999000999000999,
+        "n_edges": 156,
+        "null_mean": 0.7366471259136281,
+        "null_p05": 0.6985729769163533,
+        "null_p95": 0.7843111703697511,
+        "spearman_src_dst": 0.813939405233897,
+        "target": "mode_review_priority"
+      },
+      {
+        "edge_type": "next_cycle_spatial_knn",
+        "empirical_p_abs_ge_observed": 0.023976023976023976,
+        "n_edges": 108,
+        "null_mean": 0.7232553831907907,
+        "null_p05": 0.6552190332207114,
+        "null_p95": 0.7759337310616283,
+        "spearman_src_dst": 0.783344664575077,
+        "target": "mode_review_priority"
+      },
+      {
+        "edge_type": "next_cycle_spatial_knn",
+        "empirical_p_abs_ge_observed": 0.023976023976023976,
+        "n_edges": 108,
+        "null_mean": -0.007513254993592742,
+        "null_p05": -0.17222620550009451,
+        "null_p95": 0.12399671143452326,
+        "spearman_src_dst": -0.21852040991493207,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "edge_type": "next_cycle_spatial_knn",
+        "empirical_p_abs_ge_observed": 0.03596403596403597,
+        "n_edges": 108,
+        "null_mean": -0.06414484773201312,
+        "null_p05": -0.20056469437967736,
+        "null_p95": 0.06083813852286766,
+        "spearman_src_dst": -0.22731676422824,
+        "target": "diffusion_proxy_abs_median_um2_per_s_protocol_residual"
+      },
+      {
+        "edge_type": "previous_cycle_spatial_knn",
+        "empirical_p_abs_ge_observed": 0.054945054945054944,
+        "n_edges": 90,
+        "null_mean": -0.06632813518000111,
+        "null_p05": -0.22369326314463864,
+        "null_p95": 0.07859880619067369,
+        "spearman_src_dst": 0.22089804001682334,
+        "target": "threshold_robust_phase_score_protocol_residual"
+      },
+      {
+        "edge_type": "same_reference_spatial_knn",
+        "empirical_p_abs_ge_observed": 0.08891108891108891,
+        "n_edges": 156,
+        "null_mean": -0.017443059803885618,
+        "null_p05": -0.16963302834542177,
+        "null_p95": 0.17143329176590275,
+        "spearman_src_dst": -0.17427613974146677,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "edge_type": "previous_cycle_spatial_knn",
+        "empirical_p_abs_ge_observed": 0.17682317682317683,
+        "n_edges": 90,
+        "null_mean": -0.06443499892167023,
+        "null_p05": -0.23485561149538806,
+        "null_p95": 0.08399762945434877,
+        "spearman_src_dst": -0.15586985048870097,
+        "target": "diffusion_proxy_abs_median_um2_per_s_protocol_residual"
+      },
+      {
+        "edge_type": "same_reference_spatial_knn",
+        "empirical_p_abs_ge_observed": 0.20679320679320679,
+        "n_edges": 156,
+        "null_mean": -0.06362863859105547,
+        "null_p05": -0.2046223806390479,
+        "null_p95": 0.11844784970275068,
+        "spearman_src_dst": 0.15475975092223407,
+        "target": "diffusion_proxy_abs_median_um2_per_s_protocol_residual"
+      }
+    ],
+    "top_homophily_tests": [
+      {
+        "edge_type": "same_cycle_spatial_knn",
+        "empirical_p_both_ge_observed": 0.000999000999000999,
+        "empirical_p_same_ge_observed": 0.000999000999000999,
+        "n_edges": 156,
+        "null_both_positive_mean": 0.3214487179487179,
+        "null_same_mean": 0.48878846153846156,
+        "null_same_p95": 0.570833333333333,
+        "observed_both_positive_fraction": 0.5512820512820513,
+        "observed_same_fraction": 0.9358974358974359,
+        "target": "front_positive_residual_binary"
+      },
+      {
+        "edge_type": "same_cycle_spatial_knn",
+        "empirical_p_both_ge_observed": 0.000999000999000999,
+        "empirical_p_same_ge_observed": 0.000999000999000999,
+        "n_edges": 156,
+        "null_both_positive_mean": 0.19735897435897437,
+        "null_same_mean": 0.4730320512820513,
+        "null_same_p95": 0.5576923076923077,
+        "observed_both_positive_fraction": 0.46153846153846156,
+        "observed_same_fraction": 1.0,
+        "target": "is_event_roi"
+      },
+      {
+        "edge_type": "same_cycle_spatial_knn",
+        "empirical_p_both_ge_observed": 0.000999000999000999,
+        "empirical_p_same_ge_observed": 0.005994005994005994,
+        "n_edges": 156,
+        "null_both_positive_mean": 0.07358974358974359,
+        "null_same_mean": 0.6474102564102565,
+        "null_same_p95": 0.717948717948718,
+        "observed_both_positive_fraction": 0.16025641025641027,
+        "observed_same_fraction": 0.7692307692307693,
+        "target": "is_event_enriched_mode"
+      },
+      {
+        "edge_type": "same_reference_spatial_knn",
+        "empirical_p_both_ge_observed": 0.3096903096903097,
+        "empirical_p_same_ge_observed": 0.26373626373626374,
+        "n_edges": 156,
+        "null_both_positive_mean": 0.07332692307692307,
+        "null_same_mean": 0.6478846153846155,
+        "null_same_p95": 0.717948717948718,
+        "observed_both_positive_fraction": 0.08333333333333333,
+        "observed_same_fraction": 0.6730769230769231,
+        "target": "is_event_enriched_mode"
+      },
+      {
+        "edge_type": "next_cycle_spatial_knn",
+        "empirical_p_both_ge_observed": 0.9470529470529471,
+        "empirical_p_same_ge_observed": 0.8881118881118881,
+        "n_edges": 108,
+        "null_both_positive_mean": 0.07679629629629629,
+        "null_same_mean": 0.6450648148148148,
+        "null_same_p95": 0.7037037037037037,
+        "observed_both_positive_fraction": 0.046296296296296294,
+        "observed_same_fraction": 0.6018518518518519,
+        "target": "is_event_enriched_mode"
+      },
+      {
+        "edge_type": "previous_cycle_spatial_knn",
+        "empirical_p_both_ge_observed": 0.987012987012987,
+        "empirical_p_same_ge_observed": 0.975024975024975,
+        "n_edges": 90,
+        "null_both_positive_mean": 0.08443333333333333,
+        "null_same_mean": 0.6284666666666665,
+        "null_same_p95": 0.7,
+        "observed_both_positive_fraction": 0.03333333333333333,
+        "observed_same_fraction": 0.5444444444444444,
+        "target": "is_event_enriched_mode"
+      },
+      {
+        "edge_type": "same_reference_spatial_knn",
+        "empirical_p_both_ge_observed": 0.986013986013986,
+        "empirical_p_same_ge_observed": 0.993006993006993,
+        "n_edges": 156,
+        "null_both_positive_mean": 0.321826923076923,
+        "null_same_mean": 0.4902307692307693,
+        "null_same_p95": 0.5769230769230769,
+        "observed_both_positive_fraction": 0.26282051282051283,
+        "observed_same_fraction": 0.40384615384615385,
+        "target": "front_positive_residual_binary"
+      },
+      {
+        "edge_type": "same_reference_spatial_knn",
+        "empirical_p_both_ge_observed": 0.994005994005994,
+        "empirical_p_same_ge_observed": 0.995004995004995,
+        "n_edges": 156,
+        "null_both_positive_mean": 0.19741666666666668,
+        "null_same_mean": 0.4735512820512821,
+        "null_same_p95": 0.5641025641025641,
+        "observed_both_positive_fraction": 0.1346153846153846,
+        "observed_same_fraction": 0.3782051282051282,
+        "target": "is_event_roi"
+      },
+      {
+        "edge_type": "previous_cycle_spatial_knn",
+        "empirical_p_both_ge_observed": 1.0,
+        "empirical_p_same_ge_observed": 0.999000999000999,
+        "n_edges": 90,
+        "null_both_positive_mean": 0.326,
+        "null_same_mean": 0.49188888888888893,
+        "null_same_p95": 0.5555555555555556,
+        "observed_both_positive_fraction": 0.16666666666666666,
+        "observed_same_fraction": 0.34444444444444444,
+        "target": "front_positive_residual_binary"
+      },
+      {
+        "edge_type": "next_cycle_spatial_knn",
+        "empirical_p_both_ge_observed": 1.0,
+        "empirical_p_same_ge_observed": 1.0,
+        "n_edges": 108,
+        "null_both_positive_mean": 0.3214907407407407,
+        "null_same_mean": 0.49041666666666667,
+        "null_same_p95": 0.5462962962962963,
+        "observed_both_positive_fraction": 0.10185185185185185,
+        "observed_same_fraction": 0.2777777777777778,
+        "target": "front_positive_residual_binary"
+      }
+    ]
+  },
   "strict_logistic_mean_roc_auc": 0.625,
   "strict_rf_mean_balanced_accuracy": 0.5729166666666667,
   "strict_rf_mean_roc_auc": 0.6510416666666666,

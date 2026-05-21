@@ -1,0 +1,8 @@
+target,n_lag_pairs,previous_nearest_positive_rate_when_current_positive,previous_nearest_positive_rate_when_current_negative,roc_auc_previous_neighbor_predicts_current,spearman_previous_nearest_vs_current
+is_event_roi,30,0.0,0.6666666666666666,0.16666666666666669,
+is_event_enriched_mode,30,0.14285714285714285,0.2608695652173913,0.4409937888198757,
+front_positive_residual_binary,30,0.625,0.7727272727272727,0.42613636363636365,
+mode_review_priority,30,,,,0.7524212447823986
+phase_slope_positive_fraction_protocol_residual,30,,,,-0.15295919308739753
+threshold_robust_phase_score_protocol_residual,30,,,,0.48252842528181794
+diffusion_proxy_abs_median_um2_per_s_protocol_residual,30,,,,0.27776544038362955
