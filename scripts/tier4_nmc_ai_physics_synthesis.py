@@ -91,6 +91,8 @@ def main() -> None:
     qc_packet = read_json(derived / "qc_review_packet" / "qc_review_packet_summary.json")
     qc_package = read_json(derived / "roi_front_qc_package" / "roi_front_qc_package_summary.json")
     residual_modes = read_json(derived / "residual_physics_mode_taxonomy" / "residual_physics_mode_taxonomy_summary.json")
+    cycle_region_modes = read_json(derived / "cycle_region_mode_context" / "cycle_region_mode_context_summary.json")
+    front_qc_sensitivity = read_json(derived / "front_qc_sensitivity" / "front_qc_sensitivity_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -146,7 +148,13 @@ def main() -> None:
     conditioned_front_tests = top_items(first_summary(conditioned_fronts, "top_protocol_conditioned_front_tests", []), 8)
     residual_mode_enrichment = top_items(first_summary(residual_modes, "mode_enrichment", []), 8)
     residual_mode_top_rois = top_items(first_summary(residual_modes, "top_review_rois", []), 10)
+    cycle_region_context = top_items(first_summary(cycle_region_modes, "top_cycle_summaries", []), 8)
+    spatial_region_context = top_items(first_summary(cycle_region_modes, "top_spatial_region_summaries", []), 8)
+    mode_context_correlations = top_items(first_summary(cycle_region_modes, "top_context_correlations", []), 8)
     top_residual_mode = residual_mode_enrichment[0] if residual_mode_enrichment else {}
+    front_qc_focus = top_items(first_summary(front_qc_sensitivity, "focus_tests", []), 25)
+    front_qc_strata = top_items(first_summary(front_qc_sensitivity, "strata", []), 12)
+    robust_phase_strata = first_summary(front_qc_sensitivity, "robust_positive_phase_residual_strata", [])
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -178,7 +186,7 @@ def main() -> None:
             "Track phase-boundary movement",
             "implemented_as_proxy",
             f"Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers {first_summary(robust_fronts, 'n_roi', 0)} ROI rows.",
-            "Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics.",
+            f"Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics and is robust in {len(robust_phase_strata)} automatic QC strata.",
             f"Use the generated QC review packet with {first_summary(qc_packet, 'n_candidates', 0)} prioritized candidates to record accept/reject decisions.",
         ),
         evidence_row(
@@ -191,9 +199,9 @@ def main() -> None:
         evidence_row(
             "Identify degradation modes",
             "implemented_as_hypothesis_ranking",
-            f"Joint physics/rollout/echem mode tables exist, and residual taxonomy found {first_summary(residual_modes, 'chosen_k', 0)} protocol-adjusted modes; top mode {top_residual_mode.get('mode_label', 'NA')} has event fraction {fmt(top_residual_mode.get('event_fraction'))}.",
-            "Modes are unsupervised/automatic and tied to the selected ROI cohort; residual taxonomy silhouette is modest and needs manual QC labels.",
-            "Use the top-ranked ROI list for manual labeling, then refit supervised or semi-supervised degradation-mode models.",
+            f"Joint physics/rollout/echem mode tables exist, residual taxonomy found {first_summary(residual_modes, 'chosen_k', 0)} protocol-adjusted modes, and cycle/region context maps them across {first_summary(cycle_region_modes, 'n_cycles', 0)} cycles and {first_summary(cycle_region_modes, 'n_xy_regions', 0)} coarse regions.",
+            "Modes are unsupervised/automatic and tied to the selected ROI cohort; residual taxonomy silhouette is modest and cycle/region context is descriptive.",
+            "Use the residual-mode and cycle/region review lists for manual labeling, then refit supervised or semi-supervised degradation-mode models.",
         ),
         evidence_row(
             "Correlate degradation with cycles, particle regions, and echem/protocol context",
@@ -249,6 +257,7 @@ def main() -> None:
         "- Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.",
         "- Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
+        f"- Automatic front-QC sensitivity keeps the positive phase-front residual in {len(robust_phase_strata)} strata: {', '.join(robust_phase_strata) if robust_phase_strata else 'none'}.",
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
         f"- A QC review packet prioritizes {first_summary(qc_packet, 'n_candidates', 0)} ROI/front candidates for manual accept/reject review before publication-scale diffusion claims.",
         "",
@@ -305,6 +314,22 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Front QC Sensitivity",
+        "",
+    ]
+    for row in front_qc_strata:
+        report_lines.append(
+            f"- {row.get('stratum')}: n={fmt(row.get('n_roi'), 0)}, event/control {fmt(row.get('n_event'), 0)}/{fmt(row.get('n_control'), 0)}, phase-CI-positive fraction {fmt(row.get('phase_ci_positive_fraction'))}"
+        )
+    for row in front_qc_focus:
+        if row.get("feature") == "phase_slope_positive_fraction_protocol_residual":
+            report_lines.append(
+                f"- {row.get('stratum')} phase-sign residual: median event-control {fmt(row.get('median_event_minus_control'))}, bootstrap p05 {fmt(row.get('bootstrap_p05'))}, MW p={fmt(row.get('mannwhitney_p'))}, permutation p={fmt(row.get('permutation_median_p'))}"
+            )
+    report_lines.append("- Diffusion-proxy separations do not remain globally robust; review-panel diffusion differences are selection-biased and still require manual QC.")
+
+    report_lines += [
+        "",
         "## Residual Physics Mode Taxonomy",
         "",
         f"- Selected k={first_summary(residual_modes, 'chosen_k', 'NA')} with silhouette={fmt(first_summary(residual_modes, 'cluster_selection', {}).get('best', {}).get('silhouette'))} and mean seed-stability ARI={fmt(first_summary(residual_modes, 'cluster_stability', {}).get('mean_adjusted_rand_index'))}.",
@@ -315,6 +340,24 @@ def main() -> None:
         )
     report_lines.append(
         f"- Guardrail: {first_summary(residual_modes, 'guardrail', 'Treat these as computational hypotheses pending manual QC.')}"
+    )
+
+    report_lines += [
+        "",
+        "## Cycle/Region Mode Context",
+        "",
+    ]
+    for row in cycle_region_context[:6]:
+        report_lines.append(
+            f"- cycle {fmt(row.get('cycleNo'), 0)}: n={fmt(row.get('n_roi'), 0)}, event-enriched mode fraction={fmt(row.get('event_enriched_mode_fraction'))}, top modes={row.get('top_modes')}"
+        )
+    for row in spatial_region_context[:4]:
+        report_lines.append(
+            f"- region {row.get('xy_region')}: n={fmt(row.get('n_roi'), 0)}, event-enriched mode fraction={fmt(row.get('event_enriched_mode_fraction'))}, event fraction={fmt(row.get('event_fraction'))}"
+        )
+    clf = first_summary(cycle_region_modes, 'context_only_classifier', {})
+    report_lines.append(
+        f"- Context-only leave-cycle-out classifier: pooled ROC-AUC {fmt(clf.get('pooled_roc_auc'))}, pooled balanced accuracy {fmt(clf.get('pooled_balanced_accuracy'))}; descriptive context is not a standalone detector."
     )
 
     report_lines += [
@@ -385,11 +428,21 @@ def main() -> None:
         "n_roi_front_qc_package_candidates": first_summary(qc_package, "n_selected_roi"),
         "roi_front_qc_flag_counts": first_summary(qc_package, "flag_counts", {}),
         "n_residual_physics_mode_roi": first_summary(residual_modes, "n_roi"),
+        "front_qc_sensitivity_n_roi": first_summary(front_qc_sensitivity, "n_roi"),
+        "front_qc_robust_positive_phase_residual_strata": robust_phase_strata,
+        "front_qc_sensitivity_strata": front_qc_strata,
+        "front_qc_sensitivity_focus_tests": front_qc_focus,
         "residual_physics_mode_chosen_k": first_summary(residual_modes, "chosen_k"),
         "residual_physics_mode_cluster_stability": first_summary(residual_modes, "cluster_stability", {}),
         "residual_physics_mode_best_silhouette": first_summary(residual_modes, "cluster_selection", {}).get("best", {}).get("silhouette"),
         "residual_physics_mode_enrichment": residual_mode_enrichment,
         "top_residual_mode_review_rois": residual_mode_top_rois,
+        "cycle_region_mode_context": {
+            "n_cycles": first_summary(cycle_region_modes, "n_cycles"),
+            "n_xy_regions": first_summary(cycle_region_modes, "n_xy_regions"),
+            "event_enriched_mode_fraction": first_summary(cycle_region_modes, "event_enriched_mode_fraction"),
+            "context_only_classifier": first_summary(cycle_region_modes, "context_only_classifier", {}),
+        },
         "persistence_best_all_cycles": persistence_best,
         "strict_rf_mean_roc_auc": strict_rf.get("mean_roc_auc"),
         "strict_rf_mean_balanced_accuracy": strict_rf.get("mean_balanced_accuracy"),

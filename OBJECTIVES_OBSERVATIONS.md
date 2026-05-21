@@ -1091,3 +1091,57 @@ Key result:
 - Updated the tier4 synthesis to include this taxonomy in the degradation-mode audit and machine-readable summary.
 
 Interpretation: the current mode taxonomy points to a reproducible event-enriched pattern combining protocol-adjusted optical brightening, decorrelation, rollout difficulty, and positive front-direction residuals. This is useful for manual review and benchmark labeling, but the labels remain computational hypotheses from automatic particle/front candidates until QC decisions are recorded.
+
+## 2026-05-21 Front QC Sensitivity Result
+
+Added and ran:
+
+`python scripts/tier4_front_qc_sensitivity.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_qc_sensitivity`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_qc_sensitivity`
+
+Local compact copy:
+
+`derived_local/front_qc_sensitivity`
+
+Key result:
+
+- Tested whether threshold-front and protocol-conditioned front effects survive automatic quality strata: complete threshold sweeps, high front-quality score, q70 phase-slope bootstrap CI excluding zero, q70 positive-CI fronts, and the 24-ROI review-panel subset.
+- All 52 ROIs had complete threshold sweeps. The review-panel subset has 24 ROIs, but removing fragmented q70 masks leaves 7 event ROIs and 0 controls, so review-panel no-fragment/no-flag strata cannot estimate event/control separation yet.
+- The protocol-conditioned phase-slope positive-fraction residual is robust in five strata: all front ROIs, complete threshold sweep, q70 phase CI excluding zero, q70 phase CI positive, and review-panel selected.
+- All-front phase-sign residual: median event-control +0.0475, bootstrap 5th percentile +0.0342, Mann-Whitney p=0.000825, permutation median-difference p=0.0470.
+- q70 phase-CI-excluding-zero stratum: 18 events and 12 controls; phase-sign residual median event-control +0.0885, bootstrap 5th percentile +0.0475, Mann-Whitney p=0.000106, permutation p=0.0010.
+- q70 positive-CI stratum: 18 events and 8 controls; phase-sign residual median event-control +0.0604, bootstrap 5th percentile +0.0273, Mann-Whitney p=0.00209, permutation p=0.0150.
+- High-front-quality strata preserve the positive direction but have sparse controls and do not pass the bootstrap-positive criterion.
+- Diffusion-proxy effects remain unstable: absolute diffusion proxy is not significant across all ROIs or q70 phase-CI strata. The review-panel subset shows lower event absolute diffusion proxy than controls, but this subset is selection-biased and has only 6 controls.
+- Updated the tier4 synthesis to include the QC-sensitivity result as an explicit guardrail around phase-front and diffusion claims.
+
+Interpretation: automatic QC filtering strengthens the confidence that event ROIs have more consistent positive phase-front directionality after protocol/echem conditioning. It does not validate calibrated diffusion coefficients. The control imbalance after removing fragmented review masks shows why manual QC must include accepted controls, not only event-looking candidates.
+
+## 2026-05-21 Cycle/Region Residual Mode Context
+
+Added and ran:
+
+`python scripts/tier4_cycle_region_mode_context.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context`
+
+Local compact copy:
+
+`derived_local/cycle_region_mode_context`
+
+Key result:
+
+- Mapped the residual physics mode assignments across 11 cycles and 7 coarse image-region bins using the ROI approximate object coordinates from `multi_cycle_roi_echem_joined.csv`.
+- The event-enriched residual mode `optical_brightening_decorrelating_rollout_hard_front_positive` covers 25.0% of the 52 ROI cohort, but is concentrated in cycle 60 (5/6 ROIs, fraction 0.833) and cycle 156 (4/6 ROIs, fraction 0.667).
+- The strongest coarse spatial region for this mode is `x2_y3` with 15 ROIs, event fraction 0.600, and event-enriched-mode fraction 0.467; the right-side `x3` region is depleted for this mode by Fisher level-vs-rest testing (fraction 0.056 vs 0.353 outside, p=0.0210).
+- Context correlations show the residual-mode review priority still tracks acquisition/protocol axes: `n_frames_percentile` rho=0.716 (p=2.46e-09), `V_mean` rho=-0.503 (p=0.00130), and cycles-to-block-end rho=0.378 (p=0.00569).
+- The event-enriched-mode indicator itself is weaker but still frame-count associated: rho=0.343 with `n_frames_percentile` (p=0.0127).
+- A context-only leave-cycle-out logistic probe is unstable: mean fold ROC-AUC 0.711 but pooled ROC-AUC 0.429 and pooled balanced accuracy 0.433 over scored folds. This is evidence against using cycle/region context alone as a detector.
+- Updated the tier4 synthesis to include this cycle/region context as a bridge between residual degradation modes, cycle dependence, and coarse particle location.
+
+Interpretation: the residual mode taxonomy is not uniformly distributed over cycles or particle regions. It highlights cycles 60/156 and the coarse `x2_y3` image region as high-priority manual-review strata, while also exposing remaining protocol/acquisition coupling. This moves the project closer to cycle-region degradation mapping, but it remains a QC-prioritization and hypothesis-generation layer rather than proof of spatial degradation mechanism.

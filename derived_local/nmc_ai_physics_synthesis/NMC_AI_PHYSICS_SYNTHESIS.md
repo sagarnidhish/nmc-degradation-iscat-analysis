@@ -24,6 +24,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.
 - Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
+- Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
 - A QC review packet prioritizes 30 ROI/front candidates for manual accept/reject review before publication-scale diffusion claims.
 
@@ -83,6 +84,24 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - radius2_slope_positive_fraction_protocol_residual: event-control 0.099, p=0.468
 - Conditioning preserves phase-slope sign consistency but weakens magnitude and diffusion-proxy effects; front residuals are not a standalone detector.
 
+## Front QC Sensitivity
+
+- all_front_rois: n=52, event/control 24/28, phase-CI-positive fraction 0.500
+- complete_threshold_sweep: n=52, event/control 24/28, phase-CI-positive fraction 0.500
+- front_quality_top_half: n=26, event/control 20/6, phase-CI-positive fraction 0.577
+- front_quality_top_quartile: n=13, event/control 8/5, phase-CI-positive fraction 0.462
+- q70_phase_ci_excludes_zero: n=30, event/control 18/12, phase-CI-positive fraction 0.867
+- q70_phase_ci_positive: n=26, event/control 18/8, phase-CI-positive fraction 1.000
+- review_panel_selected: n=24, event/control 18/6, phase-CI-positive fraction 0.750
+- review_panel_not_fragmented: n=7, event/control 7/0, phase-CI-positive fraction 0.857
+- review_panel_no_auto_flags: n=5, event/control 5/0, phase-CI-positive fraction 1.000
+- all_front_rois phase-sign residual: median event-control 0.047, bootstrap p05 0.034, MW p=8.252e-04, permutation p=0.047
+- complete_threshold_sweep phase-sign residual: median event-control 0.047, bootstrap p05 0.034, MW p=8.252e-04, permutation p=0.042
+- front_quality_top_half phase-sign residual: median event-control 0.093, bootstrap p05 -0.051, MW p=0.116, permutation p=0.024
+- front_quality_top_quartile phase-sign residual: median event-control 0.139, bootstrap p05 -0.038, MW p=0.158, permutation p=0.036
+- q70_phase_ci_excludes_zero phase-sign residual: median event-control 0.088, bootstrap p05 0.047, MW p=1.065e-04, permutation p=9.995e-04
+- Diffusion-proxy separations do not remain globally robust; review-panel diffusion differences are selection-biased and still require manual QC.
+
 ## Residual Physics Mode Taxonomy
 
 - Selected k=4 with silhouette=0.204 and mean seed-stability ARI=0.935.
@@ -91,6 +110,20 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - near_baseline_or_context_like: n=24, event fraction 0.333, p=0.102, cycles 86.0;58.0;118.0;116.0
 - front_negative_high_apparent_front_proxy: n=10, event fraction 0.300, p=0.309, cycles 88.0;90.0;116.0;60.0
 - Guardrail: Mode labels are protocol-adjusted computational hypotheses from automatic ROI candidates; they require QC labels before being treated as biological/material degradation modes.
+
+## Cycle/Region Mode Context
+
+- cycle 60: n=6, event-enriched mode fraction=0.833, top modes=optical_brightening_decorrelating_rollout_hard_front_positive;front_negative_high_apparent_front_proxy
+- cycle 156: n=6, event-enriched mode fraction=0.667, top modes=optical_brightening_decorrelating_rollout_hard_front_positive;optical_loss_rollout_hard
+- cycle 62: n=4, event-enriched mode fraction=0.250, top modes=optical_brightening_decorrelating_rollout_hard_front_positive;optical_loss_rollout_hard;front_negative_high_apparent_front_proxy
+- cycle 158: n=4, event-enriched mode fraction=0.250, top modes=near_baseline_or_context_like;optical_brightening_decorrelating_rollout_hard_front_positive;front_negative_high_apparent_front_proxy
+- cycle 86: n=6, event-enriched mode fraction=0.167, top modes=near_baseline_or_context_like;optical_brightening_decorrelating_rollout_hard_front_positive
+- cycle 116: n=6, event-enriched mode fraction=0.167, top modes=near_baseline_or_context_like;front_negative_high_apparent_front_proxy;optical_brightening_decorrelating_rollout_hard_front_positive
+- region x2_y3: n=15, event-enriched mode fraction=0.467, event fraction=0.600
+- region x1_y1: n=3, event-enriched mode fraction=0.333, event fraction=0.333
+- region x1_y2: n=13, event-enriched mode fraction=0.308, event fraction=0.308
+- region x3_y1: n=15, event-enriched mode fraction=0.067, event fraction=0.400
+- Context-only leave-cycle-out classifier: pooled ROC-AUC 0.429, pooled balanced accuracy 0.433; descriptive context is not a standalone detector.
 
 ## Top ROI/Echem Or Protocol Couplings
 
@@ -134,9 +167,9 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Implement paper-inspired agentic workflows in separate Isambard folders: implemented. Evidence: agentic_research outputs plus derived tier1/tier2/tier3 experiment folders were created on Isambard and compact outputs synced locally. Limitation: The synthesis script summarizes the outputs but does not rerun the original literature analysis.
 - Focus on Alek_Jiho NMC degradation dataset on Isambard: implemented. Evidence: Synthesis reads Isambard derived directory with 52 ROI rows, 11 cycles, and 4 event-reference cycles. Limitation: The current multi-cycle ROI cohort is selected around event/reference cycles, not every raw video in the full dataset.
 - Next-frame prediction and rollout: implemented_with_guardrail. Evidence: Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, and residual-CNN guardrails were run. Persistence is best across cycles: True. Limitation: Learned/full rollout models do not yet beat persistence robustly; use residuals and latent paths as descriptors rather than claiming superior prediction.
-- Track phase-boundary movement: implemented_as_proxy. Evidence: Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers 52 ROI rows. Limitation: Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics.
+- Track phase-boundary movement: implemented_as_proxy. Evidence: Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers 52 ROI rows. Limitation: Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics and is robust in 5 automatic QC strata.
 - Extract diffusion coefficients: partial_proxy_only. Evidence: Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across 7 thresholds with bootstrap slopes. Limitation: Global threshold-robust phase slopes separate event/control ROIs, but conditioned diffusion-proxy residuals remain non-significant and front-only residual classifiers are poor.
-- Identify degradation modes: implemented_as_hypothesis_ranking. Evidence: Joint physics/rollout/echem mode tables exist, and residual taxonomy found 4 protocol-adjusted modes; top mode optical_brightening_decorrelating_rollout_hard_front_positive has event fraction 0.846. Limitation: Modes are unsupervised/automatic and tied to the selected ROI cohort; residual taxonomy silhouette is modest and needs manual QC labels.
+- Identify degradation modes: implemented_as_hypothesis_ranking. Evidence: Joint physics/rollout/echem mode tables exist, residual taxonomy found 4 protocol-adjusted modes, and cycle/region context maps them across 11 cycles and 7 coarse regions. Limitation: Modes are unsupervised/automatic and tied to the selected ROI cohort; residual taxonomy silhouette is modest and cycle/region context is descriptive.
 - Correlate degradation with cycles, particle regions, and echem/protocol context: implemented_with_guardrail. Evidence: Multi-cycle ROI echem coupling found strong frame-count/protocol correlations; protocol-conditioned residual tests still show event/control optical shifts and phase-front sign consistency. Limitation: Residualization reduces but does not eliminate confounding, and front residual classifiers are not deployable with 52 automatic ROIs.
 - Keep objectives and observations updated: implemented. Evidence: OBJECTIVES_OBSERVATIONS.md contains chronological experiment summaries and guardrails. Limitation: It is long and narrative; the new synthesis is the compact index.
 - Keep GitHub updated: implemented_with_verification. Evidence: Scoped analysis scripts, compact derived outputs, and observations are committed and pushed after each completed increment. Limitation: The synthesis report records workflow state at generation time; final push status should still be checked with git status and git log.

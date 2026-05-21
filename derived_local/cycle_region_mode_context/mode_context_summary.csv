@@ -1,0 +1,5 @@
+mode_label,n_roi,n_event,mean_cycle,median_x,median_y,top_xy_regions,cycle_by_role_kruskal_p
+optical_brightening_decorrelating_rollout_hard_front_positive,13,11,103.53846153846153,1196.9032258064517,843.4166666666666,x2_y3;x1_y2;x1_y1;x3_y1,0.30287028153875933
+near_baseline_or_context_like,24,8,101.75,1180.5185185185185,232.39215686274508,x1_y2;x3_y1;x2_y3;x1_y1,0.35336075138944534
+front_negative_high_apparent_front_proxy,10,3,95.6,1335.3354735152489,180.57008836042326,x3_y1;x3_y2;x2_y3;x1_y3,0.7276354729575194
+optical_loss_rollout_hard,5,2,137.6,1195.9157894736843,166.8,x3_y1;x2_y3;x1_y1;x1_y2,0.5428024537573717
