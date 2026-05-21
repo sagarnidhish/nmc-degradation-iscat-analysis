@@ -1608,3 +1608,33 @@ Key result:
 
 Interpretation: this is a useful paper-writing and future-analysis guardrail. It prevents accidental overclaiming by separating strong optical proxy evidence from calibrated transport claims. Current diffusion-like values should continue to be described as apparent optical-front proxies until spatial calibration, true frame cadence, particle/front masks, and manual QC are jointly validated.
 
+## 2026-05-21 Echem-Shape-Conditioned ROI/Front Effects
+
+Added and ran:
+
+`python scripts/tier4_echem_shape_conditioned_roi_front_effects.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects`
+
+Local compact copy:
+
+`derived_local/echem_shape_conditioned_roi_front_effects`
+
+Key result:
+
+- Conditioned 17 ROI/front/kinetic targets on within-cycle echem shape using 45 numeric voltage/current/dQ-proxy descriptors compressed to 6 PCA components; those PCs explain 0.997 of the shape-feature variance.
+- The audit uses 52 ROI rows, with 24 event and 28 control rows, and keeps event-reference-cycle fixed effects in the residual model.
+- Shape PCs explain substantial variance in several targets: `mode_review_priority` 0.839, `first_last_corr_protocol_residual` 0.583, `q60_logistic_k_per_s` 0.544, and `q70_logistic_k_per_s` 0.515.
+- The strongest shape-PC association is `echem_shape_pc3` versus `mode_review_priority`, rho=-0.707, p=4.52e-09, confirming that echem-shape context is a strong protocol/physics covariate for the optical mode ranking.
+- After echem-shape conditioning, the front-direction residual remains the strongest event/control readout: `phase_slope_positive_fraction_protocol_residual_shape_residual` median event-control +0.0305, p=0.00375. This retains about 0.64 of the original median effect.
+- High/low optical fraction residuals remain but weaken: `high_fraction_delta_protocol_residual_shape_residual` p=0.00799 and `low_fraction_delta_protocol_residual_shape_residual` p=0.0158.
+- Shape conditioning makes q70/q80 transformed-fraction deltas more separable than their raw event/control tests in this cohort, suggesting echem-shape adjustment can sharpen optical kinetics contrasts.
+- Several earlier ROI effects are largely absorbed by shape context: first-last correlation and latent net displacement no longer separate event/control after shape conditioning.
+- Diffusion-like residuals remain non-significant after shape conditioning, consistent with the calibration risk register.
+- Leave-event-reference-out logistic classification on shape-conditioned residuals is poor: mean ROC-AUC 0.469 and balanced accuracy 0.448.
+- The project synthesis now includes this audit and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this is a stronger covariate test than the previous coarse protocol conditioning. Within-cycle echem trajectory shape explains a lot of optical mode/kinetic variance, but it does not fully explain the robust phase-front direction residual. The credible physics claim remains localized optical phase-front direction/morphology coupled to degradation context, not calibrated diffusion or a deployable detector.
+

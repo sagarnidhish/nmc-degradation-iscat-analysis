@@ -28,6 +28,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Precursor-informed review candidates: 47
 - Precursor visual-bundle candidates/assets: 12 / 12
 - Within-cycle echem shape cycles/features: 81 / 48
+- Echem-shape-conditioned ROI/front rows/shape PCs: 52 / 6
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -58,6 +59,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Precursor-informed ROI review ranks 47 pending manual-QC candidates; the top candidate is cycle156_rank7_obj27 with score 5.527.
 - A visual review bundle now packages 12 top precursor-informed ROI candidates; 12 have at least one copied QC/preview asset and a contact sheet for manual inspection.
 - Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for 81 observed cycles; strongest ROI association is shape_V_q95 vs mode_review_priority, rho=-0.864, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.
+- Echem-shape-conditioned residual audit uses 45 shape features compressed to 6 PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p=0.004), while diffusion residuals remain non-significant and the shape-residual classifier is poor.
 
 ## Model Readout
 
@@ -401,6 +403,31 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Event shape test neg_dq_abs_total_mAh: median event-control -0.010, p=0.406
 - Event shape test shape_charge_mAh_neg_abs: median event-control -0.010, p=0.406
 - Guardrail: Within-cycle echem shape features are computed from raw time/potential/current rows for observed particle/ROI cycles. dQ/dV terms are proxy descriptors from current-time integration over voltage bins, not calibrated electrochemical capacity analysis.
+
+## Echem-Shape-Conditioned ROI/Front Effects
+
+- Rows event/control: 24 / 28
+- Shape PCA: 45 features, 6 PCs, total explained variance 0.997
+- Shape-residual classifier: ROC-AUC 0.469, balanced accuracy 0.448
+- Shape-conditioned phase_slope_positive_fraction_protocol_residual: event-control residual median 0.031, p=0.004
+- Shape-conditioned high_fraction_delta_protocol_residual: event-control residual median 0.002, p=0.008
+- Shape-conditioned q70_transformed_fraction_delta: event-control residual median 0.005, p=0.010
+- Shape-conditioned low_fraction_delta_protocol_residual: event-control residual median -0.007, p=0.016
+- Shape-conditioned q80_transformed_fraction_delta: event-control residual median 0.003, p=0.021
+- Shape-conditioned dmd_minus_persistence_mse_protocol_residual: event-control residual median 4.775e-04, p=0.041
+- Shape-conditioned mode_review_priority: event-control residual median 0.135, p=0.300
+- Shape-conditioned threshold_robust_phase_score_protocol_residual: event-control residual median -0.013, p=0.393
+- Shape context fit mode_review_priority: variance explained 0.839, n=52
+- Shape context fit first_last_corr_protocol_residual: variance explained 0.583, n=52
+- Shape context fit q60_logistic_k_per_s: variance explained 0.544, n=48
+- Shape context fit q70_logistic_k_per_s: variance explained 0.515, n=50
+- Shape context fit cumulative_abs_norm_change_protocol_residual: variance explained 0.423, n=52
+- Shape context fit latent_net_displacement_protocol_residual: variance explained 0.413, n=52
+- Shape PC correlation echem_shape_pc3 vs mode_review_priority: rho=-0.707, p=4.516e-09, n=52
+- Shape PC correlation echem_shape_pc6 vs phase_slope_positive_fraction_protocol_residual: rho=0.586, p=4.918e-06, n=52
+- Shape PC correlation echem_shape_pc6 vs high_fraction_delta_protocol_residual: rho=0.516, p=9.166e-05, n=52
+- Shape PC correlation echem_shape_pc4 vs cumulative_abs_norm_change_protocol_residual: rho=-0.490, p=2.252e-04, n=52
+- Guardrail: Echem-shape conditioning uses low-dimensional PCA/ridge covariates on a small automatically selected ROI cohort. Surviving residuals are evidence that optical/front signals are not fully explained by measured within-cycle echem shape, but they are not causal proof or calibrated transport constants.
 
 ## Top ROI/Echem Or Protocol Couplings
 

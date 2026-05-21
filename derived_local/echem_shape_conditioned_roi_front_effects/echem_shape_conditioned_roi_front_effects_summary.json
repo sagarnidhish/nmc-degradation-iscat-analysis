@@ -1,0 +1,555 @@
+{
+  "guardrail": "Echem-shape conditioning uses low-dimensional PCA/ridge covariates on a small automatically selected ROI cohort. Surviving residuals are evidence that optical/front signals are not fully explained by measured within-cycle echem shape, but they are not causal proof or calibrated transport constants.",
+  "model_summary": {
+    "folds": 4,
+    "mean_balanced_accuracy": 0.4479166666666667,
+    "mean_roc_auc": 0.46875
+  },
+  "n_control_roi": 28,
+  "n_event_roi": 24,
+  "n_rows": 52,
+  "outputs": {
+    "context_fit": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_context_fit_summary.csv",
+    "effect_retention": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/shape_conditioning_effect_retention.csv",
+    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_conditioned_joined.csv",
+    "leave_reference_classifier": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/leave_reference_shape_residual_classifier_metrics.csv",
+    "pc_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/shape_pc_target_correlations.csv",
+    "pc_loadings": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_pc_loadings.csv",
+    "raw_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/raw_event_control_tests.csv",
+    "residuals": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_conditioned_residuals.csv",
+    "shape_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/shape_conditioned_event_control_tests.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_conditioned_roi_front_effects_summary.json"
+  },
+  "shape_features_used": [
+    "echem_shape_duration_s",
+    "shape_V_min",
+    "shape_V_max",
+    "shape_V_range",
+    "shape_V_mean",
+    "shape_V_std",
+    "shape_I_mean_mA",
+    "shape_I_pos_fraction",
+    "shape_I_neg_fraction",
+    "shape_charge_mAh_signed",
+    "shape_charge_mAh_abs",
+    "shape_charge_mAh_pos",
+    "shape_charge_mAh_neg_abs",
+    "shape_dVdt_slope",
+    "shape_dIdt_slope",
+    "shape_V_q05",
+    "shape_V_q10",
+    "shape_V_q25",
+    "shape_V_q50",
+    "shape_V_q75",
+    "shape_V_q90",
+    "shape_V_q95",
+    "shape_dVdt_abs_p95",
+    "shape_dVdt_sign_consistency",
+    "all_dq_abs_total_mAh",
+    "all_dq_abs_lowV_frac",
+    "all_dq_abs_midV_frac",
+    "all_dq_abs_highV_frac",
+    "all_dq_abs_peak_frac",
+    "all_dq_abs_entropy",
+    "all_dqdv_abs_integral_proxy",
+    "pos_dq_abs_total_mAh",
+    "pos_dq_abs_lowV_frac",
+    "pos_dq_abs_midV_frac",
+    "pos_dq_abs_highV_frac",
+    "pos_dq_abs_peak_frac",
+    "pos_dq_abs_entropy",
+    "pos_dqdv_abs_integral_proxy",
+    "neg_dq_abs_total_mAh",
+    "neg_dq_abs_lowV_frac",
+    "neg_dq_abs_midV_frac",
+    "neg_dq_abs_highV_frac",
+    "neg_dq_abs_peak_frac",
+    "neg_dq_abs_entropy",
+    "neg_dqdv_abs_integral_proxy"
+  ],
+  "shape_pca": {
+    "explained_variance_ratio": [
+      0.7517365380526893,
+      0.11134904304177293,
+      0.08377913449032957,
+      0.032465998249335125,
+      0.011888382638133025,
+      0.005815616419975287
+    ],
+    "explained_variance_total": 0.9970347128922353,
+    "n_components": 6,
+    "n_shape_features_used": 45
+  },
+  "source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_roi_joined.csv",
+  "target_features": [
+    "roi_norm_mean_delta_protocol_residual",
+    "high_fraction_delta_protocol_residual",
+    "low_fraction_delta_protocol_residual",
+    "first_last_corr_protocol_residual",
+    "cumulative_abs_norm_change_protocol_residual",
+    "latent_net_displacement_protocol_residual",
+    "dmd_minus_persistence_mse_protocol_residual",
+    "phase_slope_median_per_s_protocol_residual",
+    "phase_slope_positive_fraction_protocol_residual",
+    "threshold_robust_phase_score_protocol_residual",
+    "diffusion_proxy_median_um2_per_s_protocol_residual",
+    "diffusion_proxy_abs_median_um2_per_s_protocol_residual",
+    "q60_logistic_k_per_s",
+    "q70_logistic_k_per_s",
+    "q70_transformed_fraction_delta",
+    "q80_transformed_fraction_delta",
+    "mode_review_priority"
+  ],
+  "top_effect_retention": [
+    {
+      "abs_effect_retention_ratio": 0.6436068907204944,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 4.540997676480849,
+      "raw_event_minus_control_median": 0.047463842278614804,
+      "raw_feature": "phase_slope_positive_fraction_protocol_residual",
+      "raw_p_value": 0.0008252166926316412,
+      "shape_residual_event_minus_control_median": 0.030548055950587218,
+      "shape_residual_feature": "phase_slope_positive_fraction_protocol_residual_shape_residual",
+      "shape_residual_p_value": 0.003747307083833494,
+      "target_base": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "abs_effect_retention_ratio": 0.1762308503739014,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 96.99987815510036,
+      "raw_event_minus_control_median": 0.013612198957989898,
+      "raw_feature": "high_fraction_delta_protocol_residual",
+      "raw_p_value": 8.238454452754937e-05,
+      "shape_residual_event_minus_control_median": 0.0023988893978252944,
+      "shape_residual_feature": "high_fraction_delta_protocol_residual_shape_residual",
+      "shape_residual_p_value": 0.007991290781035729,
+      "target_base": "high_fraction_delta_protocol_residual"
+    },
+    {
+      "abs_effect_retention_ratio": 1.3051568654042038,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 0.08335774728224493,
+      "raw_event_minus_control_median": 0.0037434895833334007,
+      "raw_feature": "q70_transformed_fraction_delta",
+      "raw_p_value": 0.12535207737474185,
+      "shape_residual_event_minus_control_median": 0.00488584113025671,
+      "shape_residual_feature": "q70_transformed_fraction_delta_shape_residual",
+      "shape_residual_p_value": 0.010449066787108144,
+      "target_base": "q70_transformed_fraction_delta"
+    },
+    {
+      "abs_effect_retention_ratio": 0.43780888530319945,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 33.53722312381076,
+      "raw_event_minus_control_median": -0.0153439053599054,
+      "raw_feature": "low_fraction_delta_protocol_residual",
+      "raw_p_value": 0.0004707215632002064,
+      "shape_residual_event_minus_control_median": -0.006717698101817971,
+      "shape_residual_feature": "low_fraction_delta_protocol_residual_shape_residual",
+      "shape_residual_p_value": 0.015786694094234312,
+      "target_base": "low_fraction_delta_protocol_residual"
+    },
+    {
+      "abs_effect_retention_ratio": 0.8938033449776547,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 0.2722153684043396,
+      "raw_event_minus_control_median": 0.00378689236111105,
+      "raw_feature": "q80_transformed_fraction_delta",
+      "raw_p_value": 0.07804006440341116,
+      "shape_residual_event_minus_control_median": 0.0033847370594313852,
+      "shape_residual_feature": "q80_transformed_fraction_delta_shape_residual",
+      "shape_residual_p_value": 0.021243704881872955,
+      "target_base": "q80_transformed_fraction_delta"
+    },
+    {
+      "abs_effect_retention_ratio": 1.0008522282159855,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 1.0,
+      "raw_event_minus_control_median": 0.0004771398513828,
+      "raw_feature": "dmd_minus_persistence_mse_protocol_residual",
+      "raw_p_value": 0.04069276775383134,
+      "shape_residual_event_minus_control_median": 0.0004775464834271196,
+      "shape_residual_feature": "dmd_minus_persistence_mse_protocol_residual_shape_residual",
+      "shape_residual_p_value": 0.04069276775383134,
+      "target_base": "dmd_minus_persistence_mse_protocol_residual"
+    },
+    {
+      "abs_effect_retention_ratio": 0.3159250953604719,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 1.0749184835695285,
+      "raw_event_minus_control_median": 0.4278846153846154,
+      "raw_feature": "mode_review_priority",
+      "raw_p_value": 0.27878693114477526,
+      "shape_residual_event_minus_control_median": 0.13517948791866347,
+      "shape_residual_feature": "mode_review_priority_shape_residual",
+      "shape_residual_p_value": 0.2996732252651444,
+      "target_base": "mode_review_priority"
+    },
+    {
+      "abs_effect_retention_ratio": 1.0018782185307198,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 1.0,
+      "raw_event_minus_control_median": -0.012779195271434549,
+      "raw_feature": "threshold_robust_phase_score_protocol_residual",
+      "raw_p_value": 0.39336304629272045,
+      "shape_residual_event_minus_control_median": -0.012803197392801044,
+      "shape_residual_feature": "threshold_robust_phase_score_protocol_residual_shape_residual",
+      "shape_residual_p_value": 0.39336304629272045,
+      "target_base": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "abs_effect_retention_ratio": 0.9875769123554012,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 1.0241983158153114,
+      "raw_event_minus_control_median": 3.1331722158002437e-07,
+      "raw_feature": "diffusion_proxy_median_um2_per_s_protocol_residual",
+      "raw_p_value": 0.46842423431347424,
+      "shape_residual_event_minus_control_median": 3.0942485427577355e-07,
+      "shape_residual_feature": "diffusion_proxy_median_um2_per_s_protocol_residual_shape_residual",
+      "shape_residual_p_value": 0.4797593118709371,
+      "target_base": "diffusion_proxy_median_um2_per_s_protocol_residual"
+    },
+    {
+      "abs_effect_retention_ratio": 0.5806109265995415,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 11.280352322648495,
+      "raw_event_minus_control_median": 0.21201001515830253,
+      "raw_feature": "latent_net_displacement_protocol_residual",
+      "raw_p_value": 0.04253052547903887,
+      "shape_residual_event_minus_control_median": 0.12309533134944488,
+      "shape_residual_feature": "latent_net_displacement_protocol_residual_shape_residual",
+      "shape_residual_p_value": 0.4797593118709371,
+      "target_base": "latent_net_displacement_protocol_residual"
+    },
+    {
+      "abs_effect_retention_ratio": 0.986754626340735,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 1.0,
+      "raw_event_minus_control_median": 8.771186223484154e-08,
+      "raw_feature": "phase_slope_median_per_s_protocol_residual",
+      "raw_p_value": 0.5631286330999417,
+      "shape_residual_event_minus_control_median": 8.655008584519108e-08,
+      "shape_residual_feature": "phase_slope_median_per_s_protocol_residual_shape_residual",
+      "shape_residual_p_value": 0.5631286330999417,
+      "target_base": "phase_slope_median_per_s_protocol_residual"
+    },
+    {
+      "abs_effect_retention_ratio": 0.10777421827675156,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value_change_factor": 34.578840928155934,
+      "raw_event_minus_control_median": -0.01013994342274595,
+      "raw_feature": "first_last_corr_protocol_residual",
+      "raw_p_value": 0.019266391492803608,
+      "shape_residual_event_minus_control_median": -0.0010928244757569333,
+      "shape_residual_feature": "first_last_corr_protocol_residual_shape_residual",
+      "shape_residual_p_value": 0.6662094866892327,
+      "target_base": "first_last_corr_protocol_residual"
+    }
+  ],
+  "top_shape_conditioned_event_control_tests": [
+    {
+      "control_median": -0.0026218451330230538,
+      "event_median": 0.027926210817564162,
+      "event_minus_control_median": 0.030548055950587218,
+      "feature": "phase_slope_positive_fraction_protocol_residual_shape_residual",
+      "mannwhitney_u": 494.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.003747307083833494,
+      "target_base": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "control_median": -0.000728113682459609,
+      "event_median": 0.0016707757153656855,
+      "event_minus_control_median": 0.0023988893978252944,
+      "feature": "high_fraction_delta_protocol_residual_shape_residual",
+      "mannwhitney_u": 481.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.007991290781035729,
+      "target_base": "high_fraction_delta_protocol_residual"
+    },
+    {
+      "control_median": -0.005510052728466566,
+      "event_median": -0.0006242115982098557,
+      "event_minus_control_median": 0.00488584113025671,
+      "feature": "q70_transformed_fraction_delta_shape_residual",
+      "mannwhitney_u": 476.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.010449066787108144,
+      "target_base": "q70_transformed_fraction_delta"
+    },
+    {
+      "control_median": 0.0020753356653317396,
+      "event_median": -0.004642362436486231,
+      "event_minus_control_median": -0.006717698101817971,
+      "feature": "low_fraction_delta_protocol_residual_shape_residual",
+      "mannwhitney_u": 204.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.015786694094234312,
+      "target_base": "low_fraction_delta_protocol_residual"
+    },
+    {
+      "control_median": -0.003512005581940968,
+      "event_median": -0.00012726852250958274,
+      "event_minus_control_median": 0.0033847370594313852,
+      "feature": "q80_transformed_fraction_delta_shape_residual",
+      "mannwhitney_u": 462.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.021243704881872955,
+      "target_base": "q80_transformed_fraction_delta"
+    },
+    {
+      "control_median": -0.00027086185674989104,
+      "event_median": 0.00020668462667722856,
+      "event_minus_control_median": 0.0004775464834271196,
+      "feature": "dmd_minus_persistence_mse_protocol_residual_shape_residual",
+      "mannwhitney_u": 448.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.04069276775383134,
+      "target_base": "dmd_minus_persistence_mse_protocol_residual"
+    },
+    {
+      "control_median": -0.12243614971652417,
+      "event_median": 0.012743338202139298,
+      "event_minus_control_median": 0.13517948791866347,
+      "feature": "mode_review_priority_shape_residual",
+      "mannwhitney_u": 393.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.2996732252651444,
+      "target_base": "mode_review_priority"
+    },
+    {
+      "control_median": 0.053294302876999086,
+      "event_median": 0.04049110548419804,
+      "event_minus_control_median": -0.012803197392801044,
+      "feature": "threshold_robust_phase_score_protocol_residual_shape_residual",
+      "mannwhitney_u": 383.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.39336304629272045,
+      "target_base": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "control_median": 3.0631023283011577e-09,
+      "event_median": 3.124879566040747e-07,
+      "event_minus_control_median": 3.0942485427577355e-07,
+      "feature": "diffusion_proxy_median_um2_per_s_protocol_residual_shape_residual",
+      "mannwhitney_u": 375.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.4797593118709371,
+      "target_base": "diffusion_proxy_median_um2_per_s_protocol_residual"
+    },
+    {
+      "control_median": -0.09725339293797208,
+      "event_median": 0.02584193841147279,
+      "event_minus_control_median": 0.12309533134944488,
+      "feature": "latent_net_displacement_protocol_residual_shape_residual",
+      "mannwhitney_u": 375.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.4797593118709371,
+      "target_base": "latent_net_displacement_protocol_residual"
+    },
+    {
+      "control_median": -2.3228898493051354e-07,
+      "event_median": -1.4573889908532246e-07,
+      "event_minus_control_median": 8.655008584519108e-08,
+      "feature": "phase_slope_median_per_s_protocol_residual_shape_residual",
+      "mannwhitney_u": 368.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.5631286330999417,
+      "target_base": "phase_slope_median_per_s_protocol_residual"
+    },
+    {
+      "control_median": 0.000803348271692417,
+      "event_median": -0.00028947620406451625,
+      "event_minus_control_median": -0.0010928244757569333,
+      "feature": "first_last_corr_protocol_residual_shape_residual",
+      "mannwhitney_u": 312.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.6662094866892327,
+      "target_base": "first_last_corr_protocol_residual"
+    }
+  ],
+  "top_shape_context_fits": [
+    {
+      "n": 52,
+      "ridge_alpha": 0.00021544346900318845,
+      "target": "mode_review_priority",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.8389892525668183
+    },
+    {
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "target": "first_last_corr_protocol_residual",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.5829257309546452
+    },
+    {
+      "n": 48,
+      "ridge_alpha": 2.154434690031882,
+      "target": "q60_logistic_k_per_s",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.5439256016189518
+    },
+    {
+      "n": 50,
+      "ridge_alpha": 1.0,
+      "target": "q70_logistic_k_per_s",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.5146240533938973
+    },
+    {
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "target": "cumulative_abs_norm_change_protocol_residual",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.4233107939270314
+    },
+    {
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "target": "latent_net_displacement_protocol_residual",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.4129215063623114
+    },
+    {
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "target": "diffusion_proxy_abs_median_um2_per_s_protocol_residual",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.3718056396766364
+    },
+    {
+      "n": 52,
+      "ridge_alpha": 0.0001,
+      "target": "roi_norm_mean_delta_protocol_residual",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.2743868007581275
+    },
+    {
+      "n": 52,
+      "ridge_alpha": 10.0,
+      "target": "high_fraction_delta_protocol_residual",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.17118405168152895
+    },
+    {
+      "n": 52,
+      "ridge_alpha": 46.41588833612773,
+      "target": "q80_transformed_fraction_delta",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.1464849482897086
+    },
+    {
+      "n": 52,
+      "ridge_alpha": 21.54434690031882,
+      "target": "low_fraction_delta_protocol_residual",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.13959738692502666
+    },
+    {
+      "n": 52,
+      "ridge_alpha": 46.41588833612773,
+      "target": "q70_transformed_fraction_delta",
+      "variance_explained_by_shape_pcs_and_event_ref": 0.13207721082468005
+    }
+  ],
+  "top_shape_pc_target_correlations": [
+    {
+      "n": 52,
+      "p_value": 4.516200365440796e-09,
+      "pc": "echem_shape_pc3",
+      "rho": -0.7074989663477794,
+      "target": "mode_review_priority"
+    },
+    {
+      "n": 52,
+      "p_value": 4.9177947488848154e-06,
+      "pc": "echem_shape_pc6",
+      "rho": 0.586420940595236,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "n": 52,
+      "p_value": 9.166237785237073e-05,
+      "pc": "echem_shape_pc6",
+      "rho": 0.5155889923508575,
+      "target": "high_fraction_delta_protocol_residual"
+    },
+    {
+      "n": 52,
+      "p_value": 0.00022518782597785942,
+      "pc": "echem_shape_pc4",
+      "rho": -0.49020864491000266,
+      "target": "cumulative_abs_norm_change_protocol_residual"
+    },
+    {
+      "n": 48,
+      "p_value": 0.0006361979414975076,
+      "pc": "echem_shape_pc5",
+      "rho": 0.4755229811957228,
+      "target": "q60_logistic_k_per_s"
+    },
+    {
+      "n": 52,
+      "p_value": 0.0006879820417708039,
+      "pc": "echem_shape_pc6",
+      "rho": 0.45564005792828777,
+      "target": "roi_norm_mean_delta_protocol_residual"
+    },
+    {
+      "n": 52,
+      "p_value": 0.0016881225392264099,
+      "pc": "echem_shape_pc6",
+      "rho": -0.42495828357112286,
+      "target": "low_fraction_delta_protocol_residual"
+    },
+    {
+      "n": 52,
+      "p_value": 0.01668953422924875,
+      "pc": "echem_shape_pc3",
+      "rho": -0.3305612798436318,
+      "target": "q80_transformed_fraction_delta"
+    },
+    {
+      "n": 52,
+      "p_value": 0.017433951202173514,
+      "pc": "echem_shape_pc5",
+      "rho": 0.32846924206240957,
+      "target": "roi_norm_mean_delta_protocol_residual"
+    },
+    {
+      "n": 50,
+      "p_value": 0.017606721461693692,
+      "pc": "echem_shape_pc6",
+      "rho": -0.3344334013799304,
+      "target": "q70_logistic_k_per_s"
+    },
+    {
+      "n": 52,
+      "p_value": 0.02907341083383803,
+      "pc": "echem_shape_pc6",
+      "rho": 0.3028714322965801,
+      "target": "threshold_robust_phase_score_protocol_residual"
+    },
+    {
+      "n": 52,
+      "p_value": 0.036819513908714734,
+      "pc": "echem_shape_pc5",
+      "rho": 0.29030973121504716,
+      "target": "mode_review_priority"
+    }
+  ]
+}

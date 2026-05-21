@@ -110,6 +110,7 @@ def main() -> None:
     precursor_review = read_json(derived / "precursor_informed_roi_review" / "precursor_informed_roi_review_summary.json")
     precursor_visual_bundle = read_json(derived / "precursor_review_visual_bundle" / "precursor_review_visual_bundle_summary.json")
     within_cycle_echem = read_json(derived / "within_cycle_echem_shape_audit" / "within_cycle_echem_shape_audit_summary.json")
+    echem_shape_conditioned = read_json(derived / "echem_shape_conditioned_roi_front_effects" / "echem_shape_conditioned_roi_front_effects_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -205,6 +206,11 @@ def main() -> None:
     within_cycle_cycle_corr = top_items(first_summary(within_cycle_echem, "top_cycle_shape_correlations", []), 12)
     within_cycle_event_tests = top_items(first_summary(within_cycle_echem, "top_event_shape_tests", []), 8)
     within_cycle_roi_binary = top_items(first_summary(within_cycle_echem, "top_roi_binary_shape_tests", []), 8)
+    echem_shape_conditioned_tests = top_items(first_summary(echem_shape_conditioned, "top_shape_conditioned_event_control_tests", []), 12)
+    echem_shape_retention = top_items(first_summary(echem_shape_conditioned, "top_effect_retention", []), 12)
+    echem_shape_context = top_items(first_summary(echem_shape_conditioned, "top_shape_context_fits", []), 12)
+    echem_shape_pc_corr = top_items(first_summary(echem_shape_conditioned, "top_shape_pc_target_correlations", []), 12)
+    echem_shape_model = first_summary(echem_shape_conditioned, "model_summary", {}) or {}
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -311,6 +317,7 @@ def main() -> None:
         f"- Precursor-informed review candidates: {first_summary(precursor_review, 'n_review_candidates', 0)}",
         f"- Precursor visual-bundle candidates/assets: {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)} / {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)}",
         f"- Within-cycle echem shape cycles/features: {first_summary(within_cycle_echem, 'n_echem_shape_cycles', 0)} / {first_summary(within_cycle_echem, 'n_shape_features', 0)}",
+        f"- Echem-shape-conditioned ROI/front rows/shape PCs: {first_summary(echem_shape_conditioned, 'n_rows', 0)} / {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -341,6 +348,7 @@ def main() -> None:
         f"- Precursor-informed ROI review ranks {first_summary(precursor_review, 'n_review_candidates', 0)} pending manual-QC candidates; the top candidate is {(precursor_review_top[0] if precursor_review_top else {}).get('roi_id', 'NA')} with score {fmt((precursor_review_top[0] if precursor_review_top else {}).get('precursor_informed_review_score'))}.",
         f"- A visual review bundle now packages {first_summary(precursor_visual_bundle, 'n_ranked_candidates', 0)} top precursor-informed ROI candidates; {first_summary(precursor_visual_bundle, 'n_candidates_with_visual_asset', 0)} have at least one copied QC/preview asset and a contact sheet for manual inspection.",
         f"- Within-cycle echem shape descriptors add raw voltage/current trajectory and dQ/dV-proxy context for {first_summary(within_cycle_echem, 'n_echem_shape_cycles', 0)} observed cycles; strongest ROI association is {((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('feature', 'NA'))} vs {((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('target', 'NA'))}, rho={fmt((within_cycle_roi_corr[0] if within_cycle_roi_corr else {}).get('rho'))}, but direct event-cycle shape tests are weak and shape terms remain protocol/capacity guardrails.",
+        f"- Echem-shape-conditioned residual audit uses {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_shape_features_used', 0)} shape features compressed to {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)} PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p={fmt((echem_shape_conditioned_tests[0] if echem_shape_conditioned_tests else {}).get('p_value'))}), while diffusion residuals remain non-significant and the shape-residual classifier is poor.",
         "",
         "## Model Readout",
         "",
@@ -683,6 +691,28 @@ def main() -> None:
         )
     report_lines.append(f"- Guardrail: {first_summary(within_cycle_echem, 'guardrail', 'Within-cycle echem shape descriptors are proxy context only.')}")
 
+    report_lines += [
+        "",
+        "## Echem-Shape-Conditioned ROI/Front Effects",
+        "",
+        f"- Rows event/control: {first_summary(echem_shape_conditioned, 'n_event_roi', 0)} / {first_summary(echem_shape_conditioned, 'n_control_roi', 0)}",
+        f"- Shape PCA: {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_shape_features_used', 0)} features, {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)} PCs, total explained variance {fmt(first_summary(echem_shape_conditioned, 'shape_pca', {}).get('explained_variance_total'))}",
+        f"- Shape-residual classifier: ROC-AUC {fmt(echem_shape_model.get('mean_roc_auc'))}, balanced accuracy {fmt(echem_shape_model.get('mean_balanced_accuracy'))}",
+    ]
+    for row in echem_shape_conditioned_tests[:8]:
+        report_lines.append(
+            f"- Shape-conditioned {row.get('target_base')}: event-control residual median {fmt(row.get('event_minus_control_median'))}, p={fmt(row.get('p_value'))}"
+        )
+    for row in echem_shape_context[:6]:
+        report_lines.append(
+            f"- Shape context fit {row.get('target')}: variance explained {fmt(row.get('variance_explained_by_shape_pcs_and_event_ref'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in echem_shape_pc_corr[:4]:
+        report_lines.append(
+            f"- Shape PC correlation {row.get('pc')} vs {row.get('target')}: rho={fmt(row.get('rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(echem_shape_conditioned, 'guardrail', 'Echem-shape-conditioned residual audit unavailable.')}")
+
 
     report_lines += [
         "",
@@ -815,6 +845,18 @@ def main() -> None:
             "top_group_tests": phase_kinetics_tests,
             "top_correlations": phase_kinetics_corr,
             "guardrail": first_summary(phase_kinetics, "guardrail"),
+        },
+        "echem_shape_conditioned_roi_front_effects": {
+            "n_rows": first_summary(echem_shape_conditioned, "n_rows"),
+            "n_event_roi": first_summary(echem_shape_conditioned, "n_event_roi"),
+            "n_control_roi": first_summary(echem_shape_conditioned, "n_control_roi"),
+            "shape_pca": first_summary(echem_shape_conditioned, "shape_pca", {}),
+            "model_summary": echem_shape_model,
+            "top_shape_conditioned_event_control_tests": echem_shape_conditioned_tests,
+            "top_effect_retention": echem_shape_retention,
+            "top_shape_context_fits": echem_shape_context,
+            "top_shape_pc_target_correlations": echem_shape_pc_corr,
+            "guardrail": first_summary(echem_shape_conditioned, "guardrail"),
         },
         "calibration_claim_risk_register": {
             "n_claim_families": first_summary(calibration_claim_risk, "n_claim_families"),
