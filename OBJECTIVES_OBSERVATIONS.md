@@ -866,3 +866,29 @@ Key result:
 - Fold behavior is heterogeneous: cycle 86 and 116 are relatively separable in several folds, while cycle 156 reverses or depends strongly on model class.
 
 Interpretation: ROI physics and rollout descriptors contain some event/control signal, but the current 52-ROI cohort is not enough for a reliable event detector. The predictor is most useful as a ranking and ablation tool: it identifies which features are likely physical (`high_fraction_slope`, `cumulative_abs_norm_change`, `first_last_corr`, latent movement) and which are likely guardrail/artifact-sensitive (`stage_drift_xy_sampled`, validation/front-quality scores). This supports continuing with physics descriptor extraction and manual QC rather than claiming automated degradation detection.
+
+## 2026-05-21 Multi-Cycle ROI Echem Coupling
+
+Added and ran:
+
+`python scripts/tier3_multicycle_roi_echem_coupling.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling`
+
+Local compact copy:
+
+`derived_local/multi_cycle_roi_echem_coupling`
+
+Key result:
+
+- Joined 52 multi-cycle ROI rows across 11 cycles with event-reference metadata, electrochemical summaries where available, protocol-block position, mobility descriptors, rollout baselines, and event-predictor probabilities.
+- Event-reference cycles have distinct optical and protocol contexts: cycle 60 has stronger latent movement than cycles 86 and 116, cycle 116 sits at higher mean voltage, and cycle 156 has the largest normalized ROI mean delta but lacks a matched echem row in the current join.
+- ROI/echem and ROI/protocol correlations are strong, but many are acquisition/protocol entangled rather than clean degradation physics. Frame-count percentile correlates with latent net displacement (rho=0.776), cumulative absolute normalized change (rho=0.756), first-last correlation (rho=-0.700), and DMD failure over persistence (rho=0.595). Protocol-block position also correlates with latent path and net displacement.
+- Current/echem deltas show additional coupling where matched rows exist: `I_mean_delta` anticorrelates with latent net displacement (rho=-0.675, n=38) and correlates with first-last correlation (rho=0.636, n=38).
+- Within-event-reference centered event/control tests still show optical separation after removing event-reference-cycle context: cumulative absolute normalized change +0.00953 (p=2.74e-05), first-last correlation -0.0273 (p=4.71e-04), latent net displacement +0.846 (p=6.19e-04), high-fraction delta +0.0478 (p=6.84e-04), ROI mean delta +0.00968 (p=8.08e-04), and high-fraction slope +2.54e-04 (p=0.00407).
+- The strict physics event-predictor probability is not significant after within-reference centering (p=0.121), which is an important guardrail against presenting the current classifier as a validated detector.
+
+Interpretation: the new coupling analysis makes the main caveat explicit. ROI morphology, rollout descriptors, and apparent event separability are strongly conditioned by frame count and protocol-block position, so echem/protocol metadata should be used as covariates and guardrails. At the same time, event-vs-control optical shifts survive within-reference centering, supporting a physically useful signal that should be advanced through manual QC, cycle-conditioned models, and echem-aware validation rather than a raw automated detector claim.
+
