@@ -1770,3 +1770,29 @@ Key result:
 - The project synthesis now includes a Cycle State To ROI/Front Bridge section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
 
 Interpretation: the cycle-level AI state coordinate is not isolated from localized ROI/front physics. PC2, already the strongest future-drop coordinate, also tracks the ROI physics-consistency/mode/kinetic scores after collapsing repeated ROI rows by cycle. This makes it a useful bridge variable for experiment prioritization and future model conditioning, while still not validating manual front labels, causal propagation, or calibrated diffusion.
+
+## 2026-05-21 Particle Mask Stability And History-Fallback Audit
+
+Added and ran:
+
+`scripts/tier4_particle_mask_stability_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_stability_audit`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_stability_audit`
+
+Local compact copy:
+
+`derived_local/particle_mask_stability_audit`
+
+Key result:
+
+- Audited 52 ROI-only particle crops and 4,992 frame masks using a sequence-level particle-support prior plus per-frame local-contrast/temporal-variance candidates.
+- The fallback rule reuses the previous accepted mask when candidate area, fragmentation, or centroid jump violates rolling-history constraints, addressing drift-correction blur without expanding back to full-frame context.
+- Median fallback fraction was 0.000; median accepted-area CV was 0.0418; median accepted centroid path was 73.6 px.
+- Event and control ROIs did not differ significantly in mask instability: mask-instability median event-control -0.0518, Mann-Whitney p=0.949.
+- The strongest mask/physics association was accepted centroid path versus high-fraction slope, Spearman rho=-0.370, p=0.00695; this is a guardrail signal that front/phase-rate readouts should keep mask stability as a covariate.
+- Highest-instability examples for manual review include `cycle86_rank8_obj17`, `cycle156_rank2_obj2`, `cycle86_rank6_obj78`, `cycle88_rank2_obj4`, and `cycle116_rank2_obj2`.
+
+Interpretation: the selected tensors remain particle-region-only, and the automatic history-aware mask guardrail does not show event/control mask-instability leakage in the current cohort. This is not manual segmentation; it is a stability/fallback audit to keep ROI-only AI and front/phase physics claims honest under drift-correction blur.
+

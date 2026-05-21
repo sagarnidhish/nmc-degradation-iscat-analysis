@@ -32,6 +32,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Physics-consistency matrix ROI/cycles: 52 / 11
 - Cycle state-space rows/clusters: 89 / 4
 - Cycle-state ROI bridge rows/cycles: 52 / 11
+- Particle-mask stability ROI/frame rows: 52 / 4992
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -66,6 +67,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Physics-consistency claim matrix scores 52 ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; 2 rows are cross-modal high priority, but all 52 remain `manual_qc_required_no_physics_claim`.
 - Cycle state-space transition audit builds a 4-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p=0.016), the shuffled-fold classifier reaches mean AUC 0.781, and stricter temporal holdout reaches AUC 0.779 across 2 usable blocks.
 - Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to 11 cycles: top collapsed test cycle_state_pc2 vs mode_taxonomy_score, rho=0.855, permutation p=0.002.
+- Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction 0.000, accepted-area CV 0.042, centroid path 73.607 px; event/control mask instability is not significantly different in the current cohort.
 
 ## Model Readout
 
@@ -467,6 +469,33 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Undercoverage priority cycle156_rank2_obj2 low_rank_dmd: q90 undercoverage 0.781, priority 3.401, role event
 - Guardrail: Empirical residual quantiles are a calibration audit for ROI-only rollout baselines. They are not a generative uncertainty model, not calibrated diffusion, and not manual QC.
 
+## Particle Mask Stability Audit
+
+- ROI/frame rows: 52 / 4992
+- Overall median fallback fraction: 0.000
+- Overall median accepted-area CV: 0.042
+- Overall median centroid path: 73.607 px
+- Overall median instability score: 0.809
+- control masks: n=28, fallback median 0.000, area-CV median 0.036, centroid-path median 73.607 px
+- event masks: n=24, fallback median 0.000, area-CV median 0.045, centroid-path median 68.920 px
+- Event/control mask test fallback_frame_fraction: median event-control 0.000, p=0.298
+- Event/control mask test centroid_jump_fraction: median event-control 0.000, p=0.298
+- Event/control mask test accepted_area_cv: median event-control 0.008, p=0.435
+- Event/control mask test accepted_area_fraction_iqr: median event-control 0.002, p=0.576
+- Event/control mask test candidate_area_cv: median event-control 0.002, p=0.790
+- Event/control mask test accepted_centroid_path_px: median event-control -4.687, p=0.847
+- Mask/physics link accepted_centroid_path_px vs high_fraction_slope_per_s: rho=-0.370, p=0.007, n=52
+- Mask/physics link mask_instability_score vs high_fraction_slope_per_s: rho=-0.353, p=0.010, n=52
+- Mask/physics link accepted_area_fraction_iqr vs high_fraction_slope_per_s: rho=-0.341, p=0.013, n=52
+- Mask/physics link accepted_area_fraction_iqr vs evidence_score: rho=-0.269, p=0.054, n=52
+- Mask/physics link accepted_area_fraction_iqr vs mean_drop_frac: rho=-0.250, p=0.074, n=52
+- High-instability ROI cycle86_rank8_obj17 (event, cycle 86): score 2.228, area-CV 0.228, centroid path 275.841 px
+- High-instability ROI cycle156_rank2_obj2 (event, cycle 156): score 2.155, area-CV 0.155, centroid path 197.337 px
+- High-instability ROI cycle86_rank6_obj78 (event, cycle 86): score 2.117, area-CV 0.117, centroid path 263.636 px
+- High-instability ROI cycle88_rank2_obj4 (control, cycle 88): score 2.115, area-CV 0.115, centroid path 301.115 px
+- High-instability ROI cycle116_rank2_obj2 (event, cycle 116): score 2.113, area-CV 0.113, centroid path 290.833 px
+- Guardrail: guardrail audit of particle-region mask stability, not manual segmentation
+
 ## Physics Consistency Claim Matrix
 
 - ROI/cycles: 52 / 11
@@ -603,6 +632,7 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Implement paper-inspired agentic workflows in separate Isambard folders: implemented. Evidence: agentic_research outputs plus derived tier1/tier2/tier3 experiment folders were created on Isambard and compact outputs synced locally. Limitation: The synthesis script summarizes the outputs but does not rerun the original literature analysis.
 - Focus on Alek_Jiho NMC degradation dataset on Isambard: implemented. Evidence: Synthesis reads Isambard derived directory with 52 ROI rows, 11 cycles, and 4 event-reference cycles. Limitation: The current multi-cycle ROI cohort is selected around event/reference cycles, not every raw video in the full dataset.
 - Next-frame prediction and rollout: implemented_with_guardrail. Evidence: Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, residual-CNN guardrails, and prefix-only ROI forecasts were run. Persistence is best across raw pixel rollouts: True; best prefix classifier target is front_positive_residual_binary with AUC 0.691. Limitation: Learned/full rollout models do not yet beat persistence robustly; use residuals, latent paths, and prefix forecasts as physics descriptors rather than claiming superior pixel prediction.
+- Select and guard particle-region-only ROIs: implemented_with_guardrail. Evidence: Model inputs use cropped ROI tensors and the particle-mask stability audit covers 52 ROI rows / 4992 frames; median fallback fraction is 0.000. Limitation: The audit uses automatic contrast/history masks and is not a manual segmentation of each particle boundary.
 - Track phase-boundary movement: implemented_as_proxy. Evidence: Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers 52 ROI rows. Limitation: Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics and is robust in 5 automatic QC strata.
 - Extract diffusion coefficients: partial_proxy_only. Evidence: Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across 7 thresholds with bootstrap slopes. Limitation: Global threshold-robust phase slopes separate event/control ROIs, but QC-stratified diffusion proxies are inconsistent and conditioned diffusion-proxy residuals remain non-significant.
 - Identify degradation modes: implemented_as_hypothesis_ranking. Evidence: Joint physics/rollout/echem mode tables exist, residual taxonomy found 4 protocol-adjusted modes, and cycle/region context maps them across 11 cycles and 7 coarse regions. Limitation: Modes are unsupervised/automatic and tied to the selected ROI cohort; residual taxonomy silhouette is modest and cycle/region context is descriptive.

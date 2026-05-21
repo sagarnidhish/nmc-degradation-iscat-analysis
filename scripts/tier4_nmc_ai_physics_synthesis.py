@@ -115,6 +115,7 @@ def main() -> None:
     rollout_calibration = read_json(derived / "probabilistic_rollout_calibration" / "probabilistic_rollout_calibration_summary.json")
     cycle_state_space = read_json(derived / "cycle_state_space_transition_audit" / "cycle_state_space_transition_audit_summary.json")
     cycle_state_roi_bridge = read_json(derived / "cycle_state_roi_bridge" / "cycle_state_roi_bridge_summary.json")
+    particle_mask = read_json(derived / "particle_mask_stability_audit" / "particle_mask_stability_audit_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -232,6 +233,11 @@ def main() -> None:
     cycle_state_roi_centered_tests = top_items(first_summary(cycle_state_roi_bridge, "top_reference_centered_tests", []), 12)
     cycle_state_roi_collapsed_tests = top_items(first_summary(cycle_state_roi_bridge, "top_cycle_collapsed_tests", []), 12)
     cycle_state_roi_clusters = top_items(first_summary(cycle_state_roi_bridge, "cluster_summary", []), 8)
+    particle_mask_role_summary = top_items(first_summary(particle_mask, "role_summary", []), 8)
+    particle_mask_tests = top_items(first_summary(particle_mask, "top_event_control_tests", []), 12)
+    particle_mask_corr = top_items(first_summary(particle_mask, "top_correlations", []), 12)
+    particle_mask_top = top_items(first_summary(particle_mask, "highest_instability_rois", []), 12)
+    particle_mask_overall = first_summary(particle_mask, "overall", {}) or {}
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -258,6 +264,13 @@ def main() -> None:
             f"Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, residual-CNN guardrails, and prefix-only ROI forecasts were run. Persistence is best across raw pixel rollouts: {persistence_best}; best prefix classifier target is {top_prefix_classifier.get('target', 'NA')} with AUC {fmt(top_prefix_classifier.get('mean_roc_auc'))}.",
             "Learned/full rollout models do not yet beat persistence robustly; use residuals, latent paths, and prefix forecasts as physics descriptors rather than claiming superior pixel prediction.",
             "Train cycle-conditioned probabilistic video models only after growing the ROI set and validating particle masks.",
+        ),
+        evidence_row(
+            "Select and guard particle-region-only ROIs",
+            "implemented_with_guardrail",
+            f"Model inputs use cropped ROI tensors and the particle-mask stability audit covers {first_summary(particle_mask, 'n_roi', 0)} ROI rows / {first_summary(particle_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(particle_mask_overall.get('median_fallback_frame_fraction'))}.",
+            "The audit uses automatic contrast/history masks and is not a manual segmentation of each particle boundary.",
+            "Use the highest-instability ROI list during manual QC and avoid calibrated front/diffusion claims for unstable masks.",
         ),
         evidence_row(
             "Track phase-boundary movement",
@@ -342,6 +355,7 @@ def main() -> None:
         f"- Physics-consistency matrix ROI/cycles: {first_summary(physics_consistency, 'n_roi', 0)} / {first_summary(physics_consistency, 'n_cycles', 0)}",
         f"- Cycle state-space rows/clusters: {first_summary(cycle_state_space, 'n_cycles', 0)} / {first_summary(cycle_state_space, 'chosen_k', 0)}",
         f"- Cycle-state ROI bridge rows/cycles: {first_summary(cycle_state_roi_bridge, 'n_roi_rows', 0)} / {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)}",
+        f"- Particle-mask stability ROI/frame rows: {first_summary(particle_mask, 'n_roi', 0)} / {first_summary(particle_mask, 'n_frames_total', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -376,6 +390,7 @@ def main() -> None:
         f"- Physics-consistency claim matrix scores {first_summary(physics_consistency, 'n_roi', 0)} ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; {first_summary(physics_consistency, 'tier_counts', {}).get('cross_modal_high_priority', 0)} rows are cross-modal high priority, but all {first_summary(physics_consistency, 'n_roi', 0)} remain `manual_qc_required_no_physics_claim`.",
         f"- Cycle state-space transition audit builds a {first_summary(cycle_state_space, 'chosen_k', 0)}-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p={fmt((cycle_state_tests[0] if cycle_state_tests else {}).get('permutation_p'))}), the shuffled-fold classifier reaches mean AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}, and stricter temporal holdout reaches AUC {fmt(cycle_state_temporal.get('mean_roc_auc'))} across {fmt(cycle_state_temporal.get('n_evaluated_blocks'), 0)} usable blocks.",
         f"- Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)} cycles: top collapsed test {((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('predictor', 'NA'))} vs {((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('target', 'NA'))}, rho={fmt((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('rho'))}, permutation p={fmt((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('permutation_p'))}.",
+        f"- Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction {fmt(particle_mask_overall.get('median_fallback_frame_fraction'))}, accepted-area CV {fmt(particle_mask_overall.get('median_accepted_area_cv'))}, centroid path {fmt(particle_mask_overall.get('median_centroid_path_px'))} px; event/control mask instability is not significantly different in the current cohort.",
         "",
         "## Model Readout",
         "",
@@ -767,6 +782,35 @@ def main() -> None:
         )
     report_lines.append(f"- Guardrail: {first_summary(rollout_calibration, 'guardrail', 'Probabilistic rollout calibration unavailable.')}")
 
+
+    report_lines += [
+        "",
+        "## Particle Mask Stability Audit",
+        "",
+        f"- ROI/frame rows: {first_summary(particle_mask, 'n_roi', 0)} / {first_summary(particle_mask, 'n_frames_total', 0)}",
+        f"- Overall median fallback fraction: {fmt(particle_mask_overall.get('median_fallback_frame_fraction'))}",
+        f"- Overall median accepted-area CV: {fmt(particle_mask_overall.get('median_accepted_area_cv'))}",
+        f"- Overall median centroid path: {fmt(particle_mask_overall.get('median_centroid_path_px'))} px",
+        f"- Overall median instability score: {fmt(particle_mask_overall.get('median_mask_instability_score'))}",
+    ]
+    for row in particle_mask_role_summary:
+        report_lines.append(
+            f"- {row.get('cohort_role')} masks: n={fmt(row.get('n_roi'), 0)}, fallback median {fmt(row.get('fallback_frame_fraction'))}, area-CV median {fmt(row.get('accepted_area_cv'))}, centroid-path median {fmt(row.get('accepted_centroid_path_px'))} px"
+        )
+    for row in particle_mask_tests[:6]:
+        report_lines.append(
+            f"- Event/control mask test {row.get('feature')}: median event-control {fmt(row.get('median_diff_event_minus_control'))}, p={fmt(row.get('p_value'))}"
+        )
+    for row in particle_mask_corr[:5]:
+        report_lines.append(
+            f"- Mask/physics link {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in particle_mask_top[:5]:
+        report_lines.append(
+            f"- High-instability ROI {row.get('roi_id')} ({row.get('cohort_role')}, cycle {fmt(row.get('cycleNo'), 0)}): score {fmt(row.get('mask_instability_score'))}, area-CV {fmt(row.get('accepted_area_cv'))}, centroid path {fmt(row.get('accepted_centroid_path_px'))} px"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(particle_mask, 'method', {}).get('interpretation', 'Automatic particle-mask stability audit only.')}")
+
     report_lines += [
         "",
         "## Physics Consistency Claim Matrix",
@@ -1015,6 +1059,16 @@ def main() -> None:
             "top_transitions": cycle_state_transitions,
             "top_pc_loadings": cycle_state_loadings,
             "guardrail": first_summary(cycle_state_space, "guardrail"),
+        },
+        "particle_mask_stability_audit": {
+            "n_roi": first_summary(particle_mask, "n_roi"),
+            "n_frames_total": first_summary(particle_mask, "n_frames_total"),
+            "overall": particle_mask_overall,
+            "role_summary": particle_mask_role_summary,
+            "top_event_control_tests": particle_mask_tests,
+            "top_correlations": particle_mask_corr,
+            "highest_instability_rois": particle_mask_top,
+            "method": first_summary(particle_mask, "method", {}),
         },
         "cycle_state_roi_bridge": {
             "n_roi_rows": first_summary(cycle_state_roi_bridge, "n_roi_rows"),

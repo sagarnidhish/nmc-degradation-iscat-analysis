@@ -1,0 +1,12 @@
+n_event,n_control,median_event,median_control,median_diff_event_minus_control,p_value,feature,contrast
+24,28,0.0,0.0,0.0,0.2976214678911161,fallback_frame_fraction,event_minus_control
+24,28,0.0,0.0,0.0,0.2976214678911161,centroid_jump_fraction,event_minus_control
+24,28,0.044840284076836795,0.036365144985033376,0.008475139091803419,0.43532492909162546,accepted_area_cv,event_minus_control
+24,28,0.01199801175663126,0.010031949004547375,0.001966062752083886,0.5755850898148072,accepted_area_fraction_iqr,event_minus_control
+24,28,0.03832007769461321,0.036365144985033376,0.001954932709579832,0.7901191657666573,candidate_area_cv,event_minus_control
+24,28,68.92042327942195,73.60719480351244,-4.686771524090489,0.8471676365348794,accepted_centroid_path_px,event_minus_control
+24,28,3.3706568317547854,3.293226678973932,0.07743015278085341,0.9195856457655296,accepted_centroid_max_step_px,event_minus_control
+24,28,0.7574340766475027,0.8091915720322364,-0.05175749538473362,0.9487755278844096,mask_instability_score,event_minus_control
+24,28,0.0,0.0,0.0,1.0,low_area_fraction,event_minus_control
+24,28,0.0,0.0,0.0,1.0,high_area_fraction,event_minus_control
+24,28,0.0,0.0,0.0,1.0,fragmented_fraction,event_minus_control
