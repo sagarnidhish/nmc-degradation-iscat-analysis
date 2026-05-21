@@ -1,0 +1,909 @@
+{
+  "context_residualized_against": [
+    "cycleNo",
+    "n_frames_percentile",
+    "V_mean",
+    "I_mean_mA"
+  ],
+  "guardrail": "Trace lags are cycle-level four-particle/echem summaries attached to selected ROI rows by cycle number. Associations are useful for linking global precursor state to ROI/front outcomes, but rows are not independent within cycle and this does not prove localized causality.",
+  "n_event_enriched_mode": 13,
+  "n_event_roi": 24,
+  "n_predictors": 100,
+  "n_roi_rows": 52,
+  "outputs": {
+    "binary_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_binary_tests.csv",
+    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_joined.csv",
+    "spearman_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_spearman_tests.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_audit_summary.json"
+  },
+  "top_binary_tests": [
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 9.978628221907759e-13,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.0,
+      "positive_median": 1.0,
+      "positive_minus_negative_median": 1.0,
+      "predictor": "trace_lag0_any_abrupt_drop"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 1.0292552007425108e-11,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.0,
+      "positive_median": 2.0,
+      "positive_minus_negative_median": 2.0,
+      "predictor": "trace_lag0_drop_count"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 5.84220131592957e-10,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.081967213114754,
+      "positive_median": 0.21766848816029125,
+      "positive_minus_negative_median": 0.13570127504553725,
+      "predictor": "trace_lag0_max_abs_delta_prev"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 6.167639784518791e-10,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.054798096410888,
+      "positive_median": 0.1265508350650349,
+      "positive_minus_negative_median": 0.07175273865414689,
+      "predictor": "trace_lag0_mean_abs_delta_prev"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 6.167639784518791e-10,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.0049879422253009,
+      "positive_median": -0.112661946176146,
+      "positive_minus_negative_median": -0.1176498884014469,
+      "predictor": "trace_lag0_mean_delta_prev"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 1.8272873380001254e-07,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.0,
+      "positive_median": 1.0,
+      "positive_minus_negative_median": 1.0,
+      "predictor": "trace_lag2_future_any_drop_within_8cycles"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 1.1826614104945405e-06,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": -0.0728437107160266,
+      "positive_median": 0.029282915159444797,
+      "positive_minus_negative_median": 0.1021266258754714,
+      "predictor": "trace_lag2_mean_delta_prev"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 6.739483828342078e-06,
+      "n_negative": 16,
+      "n_positive": 12,
+      "negative_median": 0.3198849922450431,
+      "positive_median": 0.5907127821818723,
+      "positive_minus_negative_median": 0.2708277899368292,
+      "predictor": "lag2_trace_predprob_future_sync2_drop_within_8cycles"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 1.0054466686039769e-05,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": -0.0179872495446266,
+      "positive_median": 0.044688646450652854,
+      "positive_minus_negative_median": 0.06267589599527945,
+      "predictor": "trace_lag16_mean_delta_prev"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 1.1010831953961161e-05,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 1.0,
+      "positive_median": 0.0,
+      "positive_minus_negative_median": -1.0,
+      "predictor": "trace_lag2_any_abrupt_drop"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 1.5390093468565763e-05,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 1.0,
+      "positive_median": 0.0,
+      "positive_minus_negative_median": -1.0,
+      "predictor": "trace_lag2_drop_count"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 2.527254691962948e-05,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.0,
+      "positive_median": 0.5,
+      "positive_minus_negative_median": 0.5,
+      "predictor": "trace_lag0_synchronized_drop_2plus"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 2.527254691962948e-05,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.0,
+      "positive_median": 0.5,
+      "positive_minus_negative_median": 0.5,
+      "predictor": "trace_lag2_future_sync2_drop_within_8cycles"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 3.05151333250823e-05,
+      "n_negative": 16,
+      "n_positive": 18,
+      "negative_median": 0.14780069178968197,
+      "positive_median": 0.4628404609884337,
+      "positive_minus_negative_median": 0.3150397691987517,
+      "predictor": "lag0_trace_predprob_future_sync2_drop_within_8cycles"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 7.083101532507441e-05,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.0795906591621515,
+      "positive_median": 0.34877163057339605,
+      "positive_minus_negative_median": 0.26918097141124453,
+      "predictor": "lag2_trace_predprob_future_any_drop_within_8cycles"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 7.083101532507441e-05,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.0346935294156834,
+      "positive_median": 0.08263973547606485,
+      "positive_minus_negative_median": 0.04794620606038145,
+      "predictor": "trace_lag0_delta_std_across_particles"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 7.083101532507441e-05,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.999941635239488,
+      "positive_median": 1.1200062854357475,
+      "positive_minus_negative_median": 0.12006465019625956,
+      "predictor": "trace_lag2_particle_norm_mean"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 0.00041406194148251735,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.0837887067395264,
+      "positive_median": 0.1088342440801458,
+      "positive_minus_negative_median": 0.0250455373406194,
+      "predictor": "trace_lag16_particle_norm_range"
+    },
+    {
+      "label": "is_event_roi",
+      "mannwhitney_p": 0.00041406194148251735,
+      "n_negative": 28,
+      "n_positive": 24,
+      "negative_median": 0.0375865850842762,
+      "positive_median": 0.0278146566099695,
+      "positive_minus_negative_median": -0.009771928474306704,
+      "predictor": "trace_lag4_mean_abs_delta_prev"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.000479479618816663,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 0.0346935294156834,
+      "positive_median": 0.0997075820649382,
+      "positive_minus_negative_median": 0.0650140526492548,
+      "predictor": "trace_lag0_delta_std_across_particles"
+    }
+  ],
+  "top_context_residual_spearman": [
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.0,
+      "predictor": "trace_lag0_any_abrupt_drop",
+      "rho": 1.0,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 1.5166631707565942e-16,
+      "predictor": "trace_lag8_n_frames",
+      "rho": 0.9234194122885129,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 1.0197079168976506e-15,
+      "predictor": "trace_lag16_particle_norm_mean",
+      "rho": 0.9145146927871772,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 2.0636048333976497e-15,
+      "predictor": "trace_lag0_drop_count",
+      "rho": 0.910952804986643,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 2.0636048333976497e-15,
+      "predictor": "trace_lag2_particle_norm_mean",
+      "rho": 0.910952804986643,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 1.4505065550058148e-14,
+      "predictor": "lag8_trace_predprob_future_any_drop_within_8cycles",
+      "rho": 0.9002671415850402,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 1.4505065550058148e-14,
+      "predictor": "trace_lag0_future_any_drop_within_8cycles",
+      "rho": -0.9002671415850402,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 1.4505065550058148e-14,
+      "predictor": "trace_lag8_future_any_drop_within_8cycles",
+      "rho": 0.9002671415850402,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 2.090905081122582e-12,
+      "predictor": "trace_lag16_capacity_mAh",
+      "rho": -0.8664292074799643,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 1.1466821638027891e-11,
+      "predictor": "trace_lag16_mean_delta_prev",
+      "rho": 0.8521816562778273,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 1.1466821638027891e-11,
+      "predictor": "trace_lag2_n_frames",
+      "rho": 0.8521816562778273,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 1.1466821638027891e-11,
+      "predictor": "trace_lag4_n_frames",
+      "rho": -0.8521816562778273,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 2.1378972342858406e-10,
+      "predictor": "trace_lag2_frames_percentile",
+      "rho": 0.823686553873553,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 2.97028737418133e-10,
+      "predictor": "trace_lag0_mean_abs_delta_prev",
+      "rho": 0.8201246660730188,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 2.97028737418133e-10,
+      "predictor": "trace_lag0_synchronized_drop_2plus",
+      "rho": 0.8201246660730188,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 2.97028737418133e-10,
+      "predictor": "trace_lag2_future_sync2_drop_within_8cycles",
+      "rho": 0.8201246660730188,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 7.641217266097303e-10,
+      "predictor": "trace_lag2_capacity_mAh",
+      "rho": 0.8094390026714158,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 1.0334704524936802e-09,
+      "predictor": "trace_lag0_max_abs_delta_prev",
+      "rho": 0.8058771148708815,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 2.466832889937023e-09,
+      "predictor": "trace_lag4_frames_percentile",
+      "rho": -0.7951914514692787,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 3.7398405155109165e-09,
+      "predictor": "trace_lag16_delta_std_across_particles",
+      "rho": -0.7898486197684773,
+      "target": "is_event_roi"
+    }
+  ],
+  "top_precursor_context_residual_spearman": [
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 2.688236369867674e-07,
+      "predictor": "trace_lag2_particle_norm_range",
+      "rho": 0.7246465506072899,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 2.688236369867674e-07,
+      "predictor": "trace_lag2_particle_norm_std",
+      "rho": 0.7246465506072899,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 7.719362340891743e-07,
+      "predictor": "trace_lag4_delta_std_across_particles",
+      "rho": -0.7050855394252526,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 9.324232558293843e-06,
+      "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.6517373271106054,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 9.324232558293843e-06,
+      "predictor": "trace_lag4_particle_norm_cv",
+      "rho": 0.6517373271106054,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 1.449591393480747e-05,
+      "predictor": "trace_lag2_particle_norm_cv",
+      "rho": 0.641067684647676,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 6.805406660184734e-05,
+      "predictor": "trace_lag16_frames_percentile",
+      "rho": 0.60016738853978,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 6.805406660184734e-05,
+      "predictor": "trace_lag16_max_abs_delta_prev",
+      "rho": 0.60016738853978,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 6.805406660184734e-05,
+      "predictor": "trace_lag16_n_frames",
+      "rho": 0.60016738853978,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.00011104124705361538,
+      "predictor": "trace_lag4_V_max",
+      "rho": 0.5859411985892073,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.0001579670473671923,
+      "predictor": "trace_lag8_capacity_mAh",
+      "rho": 0.575271556126278,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.0001984823864385414,
+      "predictor": "trace_lag4_particle_norm_range",
+      "rho": 0.5681584611509917,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.00025105307846452193,
+      "predictor": "trace_lag8_mean_delta_prev",
+      "rho": -0.5606647651235518,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.00036230236929865817,
+      "predictor": "trace_lag2_delta_std_across_particles",
+      "rho": 0.5485974499689544,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.00036230236929865817,
+      "predictor": "trace_lag4_coulombic_efficiency_pct",
+      "rho": -0.5485974499689544,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.0005214311361867725,
+      "predictor": "trace_lag4_particle_norm_std",
+      "rho": 0.5361495337622034,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.0007702130239668879,
+      "predictor": "trace_lag16_particle_norm_range",
+      "rho": 0.5222570213709936,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.0007702130239668879,
+      "predictor": "trace_lag4_capacity_mAh",
+      "rho": -0.5222570213709936,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.0012501813941157276,
+      "predictor": "trace_lag16_coulombic_efficiency_pct",
+      "rho": -0.5041406063734151,
+      "target": "phase_slope_positive_fraction_protocol_residual"
+    },
+    {
+      "association_type": "context_residual",
+      "n": 38,
+      "p_value": 0.00164924148267246,
+      "predictor": "lag2_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.4933138547740853,
+      "target": "q80_transformed_fraction_delta"
+    }
+  ],
+  "top_precursor_event_enriched_mode_tests": [
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.004913087953663297,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 0.0262106856669547,
+      "positive_median": 0.018954183681597,
+      "positive_minus_negative_median": -0.0072565019853577,
+      "predictor": "trace_lag16_delta_std_across_particles"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.00630401901166511,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 0.2528089887640449,
+      "positive_median": 0.4382022471910112,
+      "positive_minus_negative_median": 0.1853932584269663,
+      "predictor": "trace_lag8_frames_percentile"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.00630401901166511,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 908.0,
+      "positive_median": 925.0,
+      "positive_minus_negative_median": 17.0,
+      "predictor": "trace_lag8_n_frames"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.011321966557313797,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 1.0,
+      "positive_median": 0.0,
+      "positive_minus_negative_median": -1.0,
+      "predictor": "trace_lag8_future_sync2_drop_within_8cycles"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.01345979898141518,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 4.200459,
+      "positive_median": 4.202003,
+      "positive_minus_negative_median": 0.0015439999999999898,
+      "predictor": "trace_lag16_V_max"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.014556071074700427,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 0.3033707865168539,
+      "positive_median": 0.4382022471910112,
+      "positive_minus_negative_median": 0.1348314606741573,
+      "predictor": "trace_lag16_frames_percentile"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.014556071074700427,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 913.0,
+      "positive_median": 925.0,
+      "positive_minus_negative_median": 12.0,
+      "predictor": "trace_lag16_n_frames"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.01693469539856862,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 98.65242860018937,
+      "positive_median": 98.2102232792842,
+      "positive_minus_negative_median": -0.44220532090517395,
+      "predictor": "trace_lag16_coulombic_efficiency_pct"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.01693469539856862,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 1.0473771133174274,
+      "positive_median": 1.0727853459555146,
+      "positive_minus_negative_median": 0.025408232638087114,
+      "predictor": "trace_lag2_particle_norm_mean"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.01899306778060453,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": -0.0172830241925139,
+      "positive_median": 0.0265678313963929,
+      "positive_minus_negative_median": 0.043850855588906806,
+      "predictor": "trace_lag2_mean_delta_prev"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.02126694659404268,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 0.6281793822546397,
+      "positive_median": 0.6399538715053725,
+      "positive_minus_negative_median": 0.011774489250732878,
+      "predictor": "trace_lag8_capacity_mAh"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.023413358680874394,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 0.2359550561797752,
+      "positive_median": 0.3539325842696629,
+      "positive_minus_negative_median": 0.1179775280898877,
+      "predictor": "trace_lag2_frames_percentile"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.023413358680874394,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 907.0,
+      "positive_median": 919.0,
+      "positive_minus_negative_median": 12.0,
+      "predictor": "trace_lag2_n_frames"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.03653398663412666,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 0.2283452018960393,
+      "positive_median": 0.0470147585211854,
+      "positive_minus_negative_median": -0.1813304433748539,
+      "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.04958028102131018,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 0.2359550561797752,
+      "positive_median": 0.3033707865168539,
+      "positive_minus_negative_median": 0.0674157303370787,
+      "predictor": "trace_lag4_frames_percentile"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.04958028102131018,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 907.0,
+      "positive_median": 913.0,
+      "positive_minus_negative_median": 6.0,
+      "predictor": "trace_lag4_n_frames"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.05198912440407842,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 1.0,
+      "positive_median": 1.0,
+      "positive_minus_negative_median": 0.0,
+      "predictor": "trace_lag2_future_any_drop_within_8cycles"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.05198912440407842,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 0.0,
+      "positive_median": 0.0,
+      "positive_minus_negative_median": 0.0,
+      "predictor": "trace_lag4_future_sync2_drop_within_8cycles"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.06029142777808021,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": 0.7216389115454925,
+      "positive_median": 0.420271562852098,
+      "positive_minus_negative_median": -0.30136734869339454,
+      "predictor": "lag8_trace_predprob_future_any_drop_within_8cycles"
+    },
+    {
+      "label": "is_event_enriched_mode",
+      "mannwhitney_p": 0.06029142777808021,
+      "n_negative": 39,
+      "n_positive": 13,
+      "negative_median": -0.0158745734882884,
+      "positive_median": 0.0295832371276841,
+      "positive_minus_negative_median": 0.045457810615972497,
+      "predictor": "trace_lag16_mean_delta_prev"
+    }
+  ],
+  "top_raw_spearman": [
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 0.0,
+      "predictor": "trace_lag0_any_abrupt_drop",
+      "rho": 1.0,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 8.43341531883091e-28,
+      "predictor": "trace_lag0_drop_count",
+      "rho": 0.9539392014169457,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 7.124043491529317e-17,
+      "predictor": "trace_lag0_max_abs_delta_prev",
+      "rho": 0.8687144661931929,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 8.810014976587948e-17,
+      "predictor": "trace_lag0_mean_abs_delta_prev",
+      "rho": 0.8675162387729717,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 8.810014976587948e-17,
+      "predictor": "trace_lag0_mean_delta_prev",
+      "rho": -0.8675162387729717,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 1.436292029163611e-13,
+      "predictor": "trace_lag8_future_sync2_drop_within_8cycles",
+      "rho": -0.8174061367718907,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 3.9378054208770826e-12,
+      "predictor": "trace_lag8_frames_percentile",
+      "rho": 0.7884620857070357,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 3.9378054208770826e-12,
+      "predictor": "trace_lag8_n_frames",
+      "rho": 0.7884620857070357,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 7.781890153973928e-12,
+      "predictor": "lag8_trace_predprob_future_any_drop_within_8cycles",
+      "rho": -0.7818855287540771,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 2.094539643023697e-11,
+      "predictor": "trace_lag16_frames_percentile",
+      "rho": 0.7719059047817525,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 2.094539643023697e-11,
+      "predictor": "trace_lag16_n_frames",
+      "rho": 0.7719059047817525,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 7.054728628769116e-10,
+      "predictor": "trace_lag2_future_any_drop_within_8cycles",
+      "rho": 0.7319250547113999,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "raw",
+      "n": 28,
+      "p_value": 1.6758509057992589e-09,
+      "predictor": "lag2_trace_predprob_future_sync2_drop_within_8cycles",
+      "rho": 0.870898967324386,
+      "target": "is_event_roi"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 2.0147007009401816e-09,
+      "predictor": "trace_lag2_frames_percentile",
+      "rho": 0.7184338809852697,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 2.0147007009401816e-09,
+      "predictor": "trace_lag2_n_frames",
+      "rho": 0.7184338809852697,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 2.179692536112486e-09,
+      "predictor": "trace_lag4_frames_percentile",
+      "rho": 0.7173895140968001,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 2.179692536112486e-09,
+      "predictor": "trace_lag4_n_frames",
+      "rho": 0.7173895140968001,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 2.460645484151958e-09,
+      "predictor": "trace_lag0_frames_percentile",
+      "rho": 0.7157717749389193,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 2.460645484151958e-09,
+      "predictor": "trace_lag0_n_frames",
+      "rho": 0.7157717749389193,
+      "target": "mode_review_priority"
+    },
+    {
+      "association_type": "raw",
+      "n": 52,
+      "p_value": 8.278771921163515e-09,
+      "predictor": "trace_lag0_particle_norm_cv",
+      "rho": -0.6989498290551583,
+      "target": "mode_review_priority"
+    }
+  ]
+}

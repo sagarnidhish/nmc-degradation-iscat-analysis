@@ -21,6 +21,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Phase-kinetics ROI rows/features: 52 / 40
 - Particle trace cycle rows/drop cycles: 89 / 4
 - Particle precursor event/control anchors: 4 / 24
+- ROI trace-fusion rows/predictors: 52 / 100
 - Precursor-informed review candidates: 47
 - Control-balanced QC sensitivity robust strata: 6
 
@@ -45,6 +46,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Optical phase-kinetics fits add transition-sharpness and Avrami-style descriptors: event-enriched residual modes have larger q70/q80 transformed-fraction deltas and faster q60/q70 logistic rates, while kinetic fit quality/rates remain strongly coupled to frame count.
 - The larger four-particle cycle table shows leakage-conscious early-warning signal for future abrupt drops: any-drop within 8 cycles has mean AUC 0.883 with empirical null p=0.002; synchronized 2+ drops are also detectable but with only two positive cycles.
 - Event-aligned precursor windows show lower pre-event capacity/CE and higher cross-particle delta dispersion versus matched non-event anchors; the strongest precursor window test is pre8_to_pre5 capacity_mAh with p=0.002.
+- ROI trace-fusion links lagged global particle-trace state to localized front behavior: strongest focused context-residual association is trace_lag2_particle_norm_range vs phase_slope_positive_fraction_protocol_residual, rho=0.725, p=2.688e-07.
 - Precursor-informed ROI review ranks 47 pending manual-QC candidates; the top candidate is cycle156_rank7_obj27 with score 5.527.
 
 ## Model Readout
@@ -275,6 +277,24 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - All-window event_cycle max_abs_delta_prev min_value: event-control 0.136, p=0.002
 - All-window pre8_to_pre5 capacity_mAh min_value: event-control -0.024, p=0.002
 - Guardrail: Precursor windows are aligned to four detected abrupt-drop cycles and matched non-event anchors from the four-particle cycle table. Results show cycle-level trace precursors for review and hypothesis generation, not localized phase-front motion or calibrated diffusion.
+
+## ROI Trace Fusion Audit
+
+- Fusion rows/predictors: 52 ROI rows, 100 lagged trace/context predictors
+- Focused residual association trace_lag2_particle_norm_range vs phase_slope_positive_fraction_protocol_residual: rho=0.725, p=2.688e-07, n=38
+- Focused residual association trace_lag2_particle_norm_std vs phase_slope_positive_fraction_protocol_residual: rho=0.725, p=2.688e-07, n=38
+- Focused residual association trace_lag4_delta_std_across_particles vs phase_slope_positive_fraction_protocol_residual: rho=-0.705, p=7.719e-07, n=38
+- Focused residual association lag16_trace_predprob_future_any_drop_within_8cycles vs phase_slope_positive_fraction_protocol_residual: rho=-0.652, p=9.324e-06, n=38
+- Focused residual association trace_lag4_particle_norm_cv vs phase_slope_positive_fraction_protocol_residual: rho=0.652, p=9.324e-06, n=38
+- Focused residual association trace_lag2_particle_norm_cv vs phase_slope_positive_fraction_protocol_residual: rho=0.641, p=1.450e-05, n=38
+- Focused residual association trace_lag16_frames_percentile vs phase_slope_positive_fraction_protocol_residual: rho=0.600, p=6.805e-05, n=38
+- Focused residual association trace_lag16_max_abs_delta_prev vs phase_slope_positive_fraction_protocol_residual: rho=0.600, p=6.805e-05, n=38
+- Event-enriched mode precursor test trace_lag16_delta_std_across_particles: median diff -0.007, p=0.005
+- Event-enriched mode precursor test trace_lag8_frames_percentile: median diff 0.185, p=0.006
+- Event-enriched mode precursor test trace_lag8_n_frames: median diff 17.000, p=0.006
+- Event-enriched mode precursor test trace_lag8_future_sync2_drop_within_8cycles: median diff -1.000, p=0.011
+- Event-enriched mode precursor test trace_lag16_V_max: median diff 0.002, p=0.013
+- Guardrail: Trace lags are cycle-level four-particle/echem summaries attached to selected ROI rows by cycle number. Associations are useful for linking global precursor state to ROI/front outcomes, but rows are not independent within cycle and this does not prove localized causality.
 
 ## Precursor-Informed ROI Review
 

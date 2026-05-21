@@ -4285,6 +4285,239 @@
     "fragmented_q70_mask": 17,
     "none": 5
   },
+  "roi_trace_fusion_audit": {
+    "context_residualized_against": [
+      "cycleNo",
+      "n_frames_percentile",
+      "V_mean",
+      "I_mean_mA"
+    ],
+    "guardrail": "Trace lags are cycle-level four-particle/echem summaries attached to selected ROI rows by cycle number. Associations are useful for linking global precursor state to ROI/front outcomes, but rows are not independent within cycle and this does not prove localized causality.",
+    "n_event_enriched_mode": 13,
+    "n_event_roi": 24,
+    "n_predictors": 100,
+    "n_roi_rows": 52,
+    "top_precursor_context_residual_spearman": [
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 2.688236369867674e-07,
+        "predictor": "trace_lag2_particle_norm_range",
+        "rho": 0.7246465506072899,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 2.688236369867674e-07,
+        "predictor": "trace_lag2_particle_norm_std",
+        "rho": 0.7246465506072899,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 7.719362340891743e-07,
+        "predictor": "trace_lag4_delta_std_across_particles",
+        "rho": -0.7050855394252526,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 9.324232558293843e-06,
+        "predictor": "lag16_trace_predprob_future_any_drop_within_8cycles",
+        "rho": -0.6517373271106054,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 9.324232558293843e-06,
+        "predictor": "trace_lag4_particle_norm_cv",
+        "rho": 0.6517373271106054,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 1.449591393480747e-05,
+        "predictor": "trace_lag2_particle_norm_cv",
+        "rho": 0.641067684647676,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 6.805406660184734e-05,
+        "predictor": "trace_lag16_frames_percentile",
+        "rho": 0.60016738853978,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 6.805406660184734e-05,
+        "predictor": "trace_lag16_max_abs_delta_prev",
+        "rho": 0.60016738853978,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 6.805406660184734e-05,
+        "predictor": "trace_lag16_n_frames",
+        "rho": 0.60016738853978,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 0.00011104124705361538,
+        "predictor": "trace_lag4_V_max",
+        "rho": 0.5859411985892073,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 0.0001579670473671923,
+        "predictor": "trace_lag8_capacity_mAh",
+        "rho": 0.575271556126278,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      },
+      {
+        "association_type": "context_residual",
+        "n": 38,
+        "p_value": 0.0001984823864385414,
+        "predictor": "trace_lag4_particle_norm_range",
+        "rho": 0.5681584611509917,
+        "target": "phase_slope_positive_fraction_protocol_residual"
+      }
+    ],
+    "top_precursor_event_enriched_mode_tests": [
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.004913087953663297,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 0.0262106856669547,
+        "positive_median": 0.018954183681597,
+        "positive_minus_negative_median": -0.0072565019853577,
+        "predictor": "trace_lag16_delta_std_across_particles"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.00630401901166511,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 0.2528089887640449,
+        "positive_median": 0.4382022471910112,
+        "positive_minus_negative_median": 0.1853932584269663,
+        "predictor": "trace_lag8_frames_percentile"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.00630401901166511,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 908.0,
+        "positive_median": 925.0,
+        "positive_minus_negative_median": 17.0,
+        "predictor": "trace_lag8_n_frames"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.011321966557313797,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 1.0,
+        "positive_median": 0.0,
+        "positive_minus_negative_median": -1.0,
+        "predictor": "trace_lag8_future_sync2_drop_within_8cycles"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.01345979898141518,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 4.200459,
+        "positive_median": 4.202003,
+        "positive_minus_negative_median": 0.0015439999999999898,
+        "predictor": "trace_lag16_V_max"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.014556071074700427,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 0.3033707865168539,
+        "positive_median": 0.4382022471910112,
+        "positive_minus_negative_median": 0.1348314606741573,
+        "predictor": "trace_lag16_frames_percentile"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.014556071074700427,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 913.0,
+        "positive_median": 925.0,
+        "positive_minus_negative_median": 12.0,
+        "predictor": "trace_lag16_n_frames"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.01693469539856862,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 98.65242860018937,
+        "positive_median": 98.2102232792842,
+        "positive_minus_negative_median": -0.44220532090517395,
+        "predictor": "trace_lag16_coulombic_efficiency_pct"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.01693469539856862,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 1.0473771133174274,
+        "positive_median": 1.0727853459555146,
+        "positive_minus_negative_median": 0.025408232638087114,
+        "predictor": "trace_lag2_particle_norm_mean"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.01899306778060453,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": -0.0172830241925139,
+        "positive_median": 0.0265678313963929,
+        "positive_minus_negative_median": 0.043850855588906806,
+        "predictor": "trace_lag2_mean_delta_prev"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.02126694659404268,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 0.6281793822546397,
+        "positive_median": 0.6399538715053725,
+        "positive_minus_negative_median": 0.011774489250732878,
+        "predictor": "trace_lag8_capacity_mAh"
+      },
+      {
+        "label": "is_event_enriched_mode",
+        "mannwhitney_p": 0.023413358680874394,
+        "n_negative": 39,
+        "n_positive": 13,
+        "negative_median": 0.2359550561797752,
+        "positive_median": 0.3539325842696629,
+        "positive_minus_negative_median": 0.1179775280898877,
+        "predictor": "trace_lag2_frames_percentile"
+      }
+    ]
+  },
   "spatiotemporal_degradation_graph": {
     "distance_gradient_tests": [
       {
