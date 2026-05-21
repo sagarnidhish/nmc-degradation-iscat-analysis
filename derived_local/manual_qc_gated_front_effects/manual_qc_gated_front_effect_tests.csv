@@ -1,0 +1,1 @@
+stratum,feature,n_event,n_control,event_median,control_median,median_event_minus_control,mannwhitney_u,mannwhitney_p,permutation_median_p,bootstrap_p05,bootstrap_p50,bootstrap_p95

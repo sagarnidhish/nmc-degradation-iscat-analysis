@@ -1,0 +1,24 @@
+{
+  "accepted_diffusion_role_counts": {},
+  "accepted_front_role_counts": {},
+  "guardrail": "Only manually accepted particle/front labels are eligible for gated front-effect tests. Current pending labels intentionally produce no accepted-front physics claims.",
+  "manual_qc_decision_counts": {
+    "pending": 52
+  },
+  "manual_qc_status_counts": {
+    "missing": 5,
+    "pending": 47
+  },
+  "n_effect_tests": 0,
+  "n_joined_roi": 52,
+  "n_manual_diffusion_accepted": 0,
+  "n_manual_front_effect_accepted": 0,
+  "n_pending_or_not_accepted": 52,
+  "outputs": {
+    "effect_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_gated_front_effects/manual_qc_gated_front_effect_tests.csv",
+    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_gated_front_effects/manual_qc_gated_joined.csv",
+    "pending_review_queue": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_gated_front_effects/manual_qc_pending_review_queue.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_gated_front_effects/manual_qc_gated_front_effects_summary.json"
+  },
+  "status": "ready_for_manual_labels"
+}

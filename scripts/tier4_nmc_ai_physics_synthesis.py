@@ -97,6 +97,7 @@ def main() -> None:
     cycle_region_modes = read_json(derived / "cycle_region_mode_context" / "cycle_region_mode_context_summary.json")
     prefix_forecast = read_json(derived / "prefix_roi_forecast" / "prefix_roi_forecast_summary.json")
     manual_qc_workbook = read_json(derived / "manual_qc_label_workbook" / "manual_qc_label_workbook_summary.json")
+    manual_qc_gated = read_json(derived / "manual_qc_gated_front_effects" / "manual_qc_gated_front_effects_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -259,6 +260,7 @@ def main() -> None:
         f"- Control-balanced front QC candidates: {first_summary(control_balanced_qc, 'n_selected_roi', 0)}",
         f"- Residual physics mode clusters: {first_summary(residual_modes, 'chosen_k', 0)}",
         f"- Manual-QC label workbook candidates: {first_summary(manual_qc_workbook, 'n_unique_roi', 0)}",
+        f"- Manual-QC gated accepted fronts: {first_summary(manual_qc_gated, 'n_manual_front_effect_accepted', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -276,6 +278,7 @@ def main() -> None:
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
         f"- A QC review packet prioritizes {first_summary(qc_packet, 'n_candidates', 0)} ROI/front candidates, a control-balanced front package adds {first_summary(control_balanced_qc, 'n_control_roi', 0)} control candidates, and the manual-QC label workbook deduplicates these into {first_summary(manual_qc_workbook, 'n_unique_roi', 0)} pending ROI labels.",
         f"- Control-balanced QC sensitivity keeps positive phase-front residuals robust in {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))} automatic strata, including the balanced selected panel; diffusion-proxy residuals remain non-significant in that balanced panel.",
+        f"- Manual-QC gated front-effect tests are status `{first_summary(manual_qc_gated, 'status', 'missing')}` with {first_summary(manual_qc_gated, 'n_manual_front_effect_accepted', 0)} accepted fronts, so no manual-QC-filtered diffusion/front claim is emitted yet.",
         "",
         "## Model Readout",
         "",
@@ -445,6 +448,14 @@ def main() -> None:
         f"- Manual-QC status counts: {first_summary(manual_qc_workbook, 'manual_qc_status_counts', {})}",
         f"- Guardrail: {first_summary(manual_qc_workbook, 'guardrail', 'This is a label template, not completed manual QC.')}",
         "",
+        "## Manual-QC Gated Front Effects",
+        "",
+        f"- Status: {first_summary(manual_qc_gated, 'status', 'missing')}",
+        f"- Joined ROI rows: {first_summary(manual_qc_gated, 'n_joined_roi', 0)}",
+        f"- Accepted front-effect rows: {first_summary(manual_qc_gated, 'n_manual_front_effect_accepted', 0)}",
+        f"- Accepted diffusion-interpretable rows: {first_summary(manual_qc_gated, 'n_manual_diffusion_accepted', 0)}",
+        f"- Guardrail: {first_summary(manual_qc_gated, 'guardrail', 'Manual-QC gate unavailable.')}",
+        "",
         "## Control-Balanced QC Sensitivity",
         "",
         f"- Robust positive phase-residual strata: {', '.join(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
@@ -525,6 +536,15 @@ def main() -> None:
             "manual_qc_status_counts": first_summary(manual_qc_workbook, "manual_qc_status_counts", {}),
             "source_counts": first_summary(manual_qc_workbook, "source_counts", {}),
             "guardrail": first_summary(manual_qc_workbook, "guardrail"),
+        },
+        "manual_qc_gated_front_effects": {
+            "status": first_summary(manual_qc_gated, "status"),
+            "n_joined_roi": first_summary(manual_qc_gated, "n_joined_roi"),
+            "n_manual_front_effect_accepted": first_summary(manual_qc_gated, "n_manual_front_effect_accepted"),
+            "n_manual_diffusion_accepted": first_summary(manual_qc_gated, "n_manual_diffusion_accepted"),
+            "manual_qc_status_counts": first_summary(manual_qc_gated, "manual_qc_status_counts", {}),
+            "manual_qc_decision_counts": first_summary(manual_qc_gated, "manual_qc_decision_counts", {}),
+            "guardrail": first_summary(manual_qc_gated, "guardrail"),
         },
         "control_balanced_front_qc_sensitivity": {
             "n_roi": first_summary(control_balanced_qc_sensitivity, "n_roi"),

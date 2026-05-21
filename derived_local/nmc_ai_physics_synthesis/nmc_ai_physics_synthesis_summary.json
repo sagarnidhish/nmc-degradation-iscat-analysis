@@ -2085,6 +2085,20 @@
       "stratum": "review_panel_no_auto_flags"
     }
   ],
+  "manual_qc_gated_front_effects": {
+    "guardrail": "Only manually accepted particle/front labels are eligible for gated front-effect tests. Current pending labels intentionally produce no accepted-front physics claims.",
+    "manual_qc_decision_counts": {
+      "pending": 52
+    },
+    "manual_qc_status_counts": {
+      "missing": 5,
+      "pending": 47
+    },
+    "n_joined_roi": 52,
+    "n_manual_diffusion_accepted": 0,
+    "n_manual_front_effect_accepted": 0,
+    "status": "ready_for_manual_labels"
+  },
   "manual_qc_label_workbook": {
     "guardrail": "This workbook is a manual-label template. It deduplicates review candidates and preserves pending status, but it does not assign accept/reject labels or validate diffusion.",
     "manual_qc_status_counts": {

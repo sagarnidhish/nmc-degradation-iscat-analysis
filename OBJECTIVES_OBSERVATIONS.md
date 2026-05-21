@@ -1246,3 +1246,27 @@ Key result:
 - Diffusion-proxy effects remain unstable and selection-sensitive. In the balanced selected set, diffusion-proxy residual median event-control is near zero and non-significant (Mann-Whitney p=0.901, permutation p=0.920).
 
 Interpretation: the phase-front directionality finding survives the control-balanced automatic review panel, which reduces concern that it is only an event-heavy QC selection artifact. The strictest balanced automatic subset is directionally consistent but underpowered. Diffusion remains guarded and should not be interpreted as calibrated Li diffusivity without manual QC and calibration.
+
+## 2026-05-21 Manual-QC Gated Front Effects Result
+
+Added and ran:
+
+`python scripts/tier4_manual_qc_gated_front_effects.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_gated_front_effects --n-bootstrap 1000 --n-permutation 1000`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_gated_front_effects`
+
+Local compact copy:
+
+`derived_local/manual_qc_gated_front_effects`
+
+Key result:
+
+- Added a conservative downstream gate that joins the manual-QC label workbook to the 52 automatic threshold-front ROI rows and recomputes front/diffusion statistics only for manually accepted fronts.
+- Current status is `ready_for_manual_labels`: 0 manually accepted front-effect rows and 0 diffusion-interpretable rows.
+- The joined gate table reports 47 pending workbook labels plus 5 automatic front rows missing from the label workbook; all 52 rows are pending or not accepted.
+- The effect-test CSV is intentionally empty apart from headers because no row currently satisfies `manual_qc_decision=accept`, `manual_particle_identity_ok=yes`, and `manual_front_mask_ok=yes`.
+- A pending review queue is written so the high-priority event/control rows can be reviewed without rebuilding the automatic analysis.
+
+Interpretation: this creates the hard reproducibility gate for final front/diffusion claims. Automatic analyses can continue to guide review, but publication-facing front-effect and diffusion statistics now require explicit manual acceptance labels before the gated script will emit tests.

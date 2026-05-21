@@ -15,6 +15,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Control-balanced front QC candidates: 40
 - Residual physics mode clusters: 4
 - Manual-QC label workbook candidates: 47
+- Manual-QC gated accepted fronts: 0
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -32,6 +33,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
 - A QC review packet prioritizes 30 ROI/front candidates, a control-balanced front package adds 24 control candidates, and the manual-QC label workbook deduplicates these into 47 pending ROI labels.
 - Control-balanced QC sensitivity keeps positive phase-front residuals robust in 6 automatic strata, including the balanced selected panel; diffusion-proxy residuals remain non-significant in that balanced panel.
+- Manual-QC gated front-effect tests are status `ready_for_manual_labels` with 0 accepted fronts, so no manual-QC-filtered diffusion/front claim is emitted yet.
 
 ## Model Readout
 
@@ -199,6 +201,14 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Priority tiers: {'high': 12, 'medium': 17, 'routine': 18}
 - Manual-QC status counts: {'pending': 47}
 - Guardrail: This workbook is a manual-label template. It deduplicates review candidates and preserves pending status, but it does not assign accept/reject labels or validate diffusion.
+
+## Manual-QC Gated Front Effects
+
+- Status: ready_for_manual_labels
+- Joined ROI rows: 52
+- Accepted front-effect rows: 0
+- Accepted diffusion-interpretable rows: 0
+- Guardrail: Only manually accepted particle/front labels are eligible for gated front-effect tests. Current pending labels intentionally produce no accepted-front physics claims.
 
 ## Control-Balanced QC Sensitivity
 
