@@ -31,6 +31,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Echem-shape-conditioned ROI/front rows/shape PCs: 52 / 6
 - Physics-consistency matrix ROI/cycles: 52 / 11
 - Cycle state-space rows/clusters: 89 / 4
+- Cycle-state ROI bridge rows/cycles: 52 / 11
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -64,6 +65,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Echem-shape-conditioned residual audit uses 45 shape features compressed to 6 PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p=0.004), while diffusion residuals remain non-significant and the shape-residual classifier is poor.
 - Physics-consistency claim matrix scores 52 ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; 2 rows are cross-modal high priority, but all 52 remain `manual_qc_required_no_physics_claim`.
 - Cycle state-space transition audit builds a 4-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p=0.016), the shuffled-fold classifier reaches mean AUC 0.781, and stricter temporal holdout reaches AUC 0.779 across 2 usable blocks.
+- Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to 11 cycles: top collapsed test cycle_state_pc2 vs mode_taxonomy_score, rho=0.855, permutation p=0.002.
 
 ## Model Readout
 
@@ -515,6 +517,28 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Transition 1->0: n=1, next future8 rate=1.000, step norm=8.756
 - Transition 1->1: n=56, next future8 rate=0.250, step norm=1.833
 - Guardrail: Cycle state-space clusters use four-particle trace summaries and echem-shape descriptors at cycle resolution. They are degradation-state hypotheses and early-warning covariates, not localized ROI/front validation or calibrated diffusion measurements.
+
+## Cycle State To ROI/Front Bridge
+
+- ROI rows/cycles joined: 52 / 11
+- Predictors/targets: 9 / 13
+- Row bridge cycle_state_pc2 vs physics_consistency_score: rho=0.702, permutation p=4.998e-04, n=52
+- Row bridge cycle_state_pc2 vs kinetic_transition_score: rho=0.695, permutation p=4.998e-04, n=52
+- Row bridge cycle_state_pc2 vs precursor_context_score: rho=0.687, permutation p=4.998e-04, n=47
+- Row bridge cycle_state_pc3 vs kinetic_transition_score: rho=0.598, permutation p=4.998e-04, n=52
+- Row bridge cycle_state_cluster vs kinetic_transition_score: rho=0.595, permutation p=4.998e-04, n=52
+- Cycle-collapsed bridge cycle_state_pc2 vs mode_taxonomy_score: rho=0.855, permutation p=0.002, n=11
+- Cycle-collapsed bridge cycle_state_pc2 vs physics_consistency_score: rho=0.836, permutation p=0.002, n=11
+- Cycle-collapsed bridge cycle_state_pc2 vs kinetic_transition_score: rho=0.764, permutation p=0.009, n=11
+- Cycle-collapsed bridge cycle_state_pc3 vs mode_taxonomy_score: rho=0.709, permutation p=0.021, n=11
+- Cycle-collapsed bridge cycle_state_pc3 vs kinetic_transition_score: rho=0.682, permutation p=0.026, n=11
+- Reference-centered bridge axis_step_ref_centered vs precursor_context_score_ref_centered: rho=0.790, permutation p=4.998e-04, n=47
+- Reference-centered bridge state_step_norm_ref_centered vs precursor_context_score_ref_centered: rho=0.712, permutation p=4.998e-04, n=47
+- Reference-centered bridge axis_step_ref_centered vs optical_change_score_ref_centered: rho=0.549, permutation p=4.998e-04, n=52
+- Reference-centered bridge axis_step_ref_centered vs front_direction_score_ref_centered: rho=0.451, permutation p=4.998e-04, n=52
+- Cycle-state cluster 1: ROI n=42, cycles=9, cross-modal priority fraction=0.238
+- Cycle-state cluster 0: ROI n=10, cycles=2, cross-modal priority fraction=0.000
+- Guardrail: Cycle-state to ROI/front bridge joins cycle-level state coordinates to selected automatic ROI rows. Row-level associations are not independent within cycle; reference-centered and cycle-collapsed tests are the stricter evidence. This does not create manual QC labels or calibrated diffusion claims.
 
 ## Top ROI/Echem Or Protocol Couplings
 

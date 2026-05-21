@@ -1745,3 +1745,28 @@ What changed:
 - The temporal holdout output is `cycle_state_future_drop_temporal_holdout.csv`, and the project synthesis now reports this guardrail alongside the shuffled-fold result.
 
 Interpretation: the cycle-level early-warning signal is not only an artifact of shuffled neighboring-cycle folds, but the usable chronological evidence is still sparse. Treat it as a promising degradation-state covariate for experiment prioritization and manual review, not as a deployable forecasting model.
+
+## 2026-05-21 Cycle State to ROI/Front Bridge
+
+Command:
+
+`python scripts/tier4_cycle_state_roi_bridge.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge --n-permutation 2000`
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge`
+
+Local synced output:
+
+`derived_local/cycle_state_roi_bridge`
+
+Key result:
+
+- Joined the 89-cycle state-space table to the 52 ROI physics-consistency rows across 11 ROI cycles, then added echem-shape-conditioned ROI/front residual targets.
+- Row-level bridge associations are strong but not independent within cycle: `cycle_state_pc2` vs `physics_consistency_score` rho=0.702, permutation p=0.0005; `cycle_state_pc2` vs `kinetic_transition_score` rho=0.695, p=0.0005.
+- The stricter cycle-collapsed check keeps the same story over 11 cycle points: `cycle_state_pc2` vs `mode_taxonomy_score` rho=0.855, permutation p=0.0020; `cycle_state_pc2` vs `physics_consistency_score` rho=0.836, p=0.0020; `cycle_state_pc2` vs `kinetic_transition_score` rho=0.764, p=0.0095.
+- Event-reference-centered checks show within-reference state-step associations with precursor/optical/front scores, led by `axis_step_ref_centered` vs `precursor_context_score_ref_centered` rho=0.790, p=0.0005, and `axis_step_ref_centered` vs `front_direction_score_ref_centered` rho=0.451, p=0.0005.
+- Cycle-state cluster 1 contains 42 ROI rows across 9 cycles and has cross-modal priority fraction 0.238; cluster 0 contains 10 ROI rows across 2 cycles and has cross-modal priority fraction 0.
+- The project synthesis now includes a Cycle State To ROI/Front Bridge section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: the cycle-level AI state coordinate is not isolated from localized ROI/front physics. PC2, already the strongest future-drop coordinate, also tracks the ROI physics-consistency/mode/kinetic scores after collapsing repeated ROI rows by cycle. This makes it a useful bridge variable for experiment prioritization and future model conditioning, while still not validating manual front labels, causal propagation, or calibrated diffusion.

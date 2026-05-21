@@ -1617,6 +1617,321 @@
     "n_cycles": 11,
     "n_xy_regions": 7
   },
+  "cycle_state_roi_bridge": {
+    "cluster_summary": [
+      {
+        "cross_modal_priority_fraction": 0.23809523809523808,
+        "cycle_state_cluster": 1,
+        "event_fraction": 0.42857142857142855,
+        "median_front_direction_score": 0.16130905960400255,
+        "median_kinetic_transition_score": 0.3702131069643749,
+        "median_mode_taxonomy_score": -0.09522904926887935,
+        "median_optical_change_score": 0.1289572569775963,
+        "median_phase_slope_positive_fraction_protocol_residual_shape_residual": 0.0279262108175641,
+        "median_physics_consistency_score": 0.3818421318470264,
+        "median_precursor_context_score": -0.08444996452197989,
+        "median_rollout_residual_score": 0.1107536776216325,
+        "n_cycles": 9,
+        "n_roi": 42
+      },
+      {
+        "cross_modal_priority_fraction": 0.0,
+        "cycle_state_cluster": 0,
+        "event_fraction": 0.6,
+        "median_front_direction_score": -0.3112980048460373,
+        "median_kinetic_transition_score": -0.47269192733191834,
+        "median_mode_taxonomy_score": -0.7411067542373126,
+        "median_optical_change_score": -0.11621741533712404,
+        "median_phase_slope_positive_fraction_protocol_residual_shape_residual": -0.0011027185480677,
+        "median_physics_consistency_score": -1.6945005774554684,
+        "median_precursor_context_score": -1.614260593004336,
+        "median_rollout_residual_score": -0.2469590152732507,
+        "n_cycles": 2,
+        "n_roi": 10
+      }
+    ],
+    "guardrail": "Cycle-state to ROI/front bridge joins cycle-level state coordinates to selected automatic ROI rows. Row-level associations are not independent within cycle; reference-centered and cycle-collapsed tests are the stricter evidence. This does not create manual QC labels or calibrated diffusion claims.",
+    "n_cycles": 11,
+    "n_predictors": 9,
+    "n_roi_rows": 52,
+    "n_targets": 13,
+    "top_cycle_collapsed_tests": [
+      {
+        "n": 11,
+        "permutation_p": 0.001999000499750125,
+        "predictor": "cycle_state_pc2",
+        "rho": 0.8545454545454546,
+        "scope": "cycle_collapsed",
+        "spearman_p": 0.0008066741521648987,
+        "target": "mode_taxonomy_score"
+      },
+      {
+        "n": 11,
+        "permutation_p": 0.001999000499750125,
+        "predictor": "cycle_state_pc2",
+        "rho": 0.8363636363636365,
+        "scope": "cycle_collapsed",
+        "spearman_p": 0.001333185079950856,
+        "target": "physics_consistency_score"
+      },
+      {
+        "n": 11,
+        "permutation_p": 0.009495252373813094,
+        "predictor": "cycle_state_pc2",
+        "rho": 0.7636363636363637,
+        "scope": "cycle_collapsed",
+        "spearman_p": 0.006233059747904751,
+        "target": "kinetic_transition_score"
+      },
+      {
+        "n": 11,
+        "permutation_p": 0.020989505247376312,
+        "predictor": "cycle_state_pc3",
+        "rho": 0.7090909090909092,
+        "scope": "cycle_collapsed",
+        "spearman_p": 0.014552051953727706,
+        "target": "mode_taxonomy_score"
+      },
+      {
+        "n": 11,
+        "permutation_p": 0.026486756621689155,
+        "predictor": "cycle_state_pc3",
+        "rho": 0.6818181818181819,
+        "scope": "cycle_collapsed",
+        "spearman_p": 0.020842853610945077,
+        "target": "kinetic_transition_score"
+      },
+      {
+        "n": 11,
+        "permutation_p": 0.03648175912043978,
+        "predictor": "cycle_state_cluster",
+        "rho": 0.6708203932499369,
+        "scope": "cycle_collapsed",
+        "spearman_p": 0.023856384540122042,
+        "target": "precursor_context_score"
+      },
+      {
+        "n": 11,
+        "permutation_p": 0.03948025987006497,
+        "predictor": "state_step_norm",
+        "rho": -0.6272727272727273,
+        "scope": "cycle_collapsed",
+        "spearman_p": 0.03884525362035332,
+        "target": "diffusion_proxy_abs_median_um2_per_s_protocol_residual_shape_residual"
+      },
+      {
+        "n": 11,
+        "permutation_p": 0.04097951024487756,
+        "predictor": "cycle_state_pc3",
+        "rho": 0.6454545454545455,
+        "scope": "cycle_collapsed",
+        "spearman_p": 0.03196279932801745,
+        "target": "physics_consistency_score"
+      },
+      {
+        "n": 11,
+        "permutation_p": 0.043478260869565216,
+        "predictor": "cycle_state_cluster",
+        "rho": 0.6708203932499369,
+        "scope": "cycle_collapsed",
+        "spearman_p": 0.023856384540122042,
+        "target": "kinetic_transition_score"
+      },
+      {
+        "n": 11,
+        "permutation_p": 0.04397801099450275,
+        "predictor": "cycle_state_pc2",
+        "rho": 0.6272727272727273,
+        "scope": "cycle_collapsed",
+        "spearman_p": 0.03884525362035332,
+        "target": "precursor_context_score"
+      }
+    ],
+    "top_reference_centered_tests": [
+      {
+        "n": 47,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "axis_step_ref_centered",
+        "rho": 0.7897328248203296,
+        "scope": "event_reference_centered",
+        "spearman_p": 4.169840901115107e-11,
+        "target": "precursor_context_score_ref_centered"
+      },
+      {
+        "n": 47,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "state_step_norm_ref_centered",
+        "rho": 0.7120270001492427,
+        "scope": "event_reference_centered",
+        "spearman_p": 2.001004285906936e-08,
+        "target": "precursor_context_score_ref_centered"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "axis_step_ref_centered",
+        "rho": 0.5489406670470397,
+        "scope": "event_reference_centered",
+        "spearman_p": 2.510954566961362e-05,
+        "target": "optical_change_score_ref_centered"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "axis_step_ref_centered",
+        "rho": 0.4507874513614972,
+        "scope": "event_reference_centered",
+        "spearman_p": 0.0007973875114391484,
+        "target": "front_direction_score_ref_centered"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_pc4_ref_centered",
+        "rho": -0.4305884580007371,
+        "scope": "event_reference_centered",
+        "spearman_p": 0.0014406396276726214,
+        "target": "phase_slope_positive_fraction_protocol_residual_shape_residual_ref_centered"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0009995002498750624,
+        "predictor": "future_any_drop_within_8cycles_ref_centered",
+        "rho": -0.4279637580127564,
+        "scope": "event_reference_centered",
+        "spearman_p": 0.001551663098127355,
+        "target": "optical_change_score_ref_centered"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0014992503748125937,
+        "predictor": "state_step_norm_ref_centered",
+        "rho": 0.477556510184827,
+        "scope": "event_reference_centered",
+        "spearman_p": 0.0003435841253269131,
+        "target": "optical_change_score_ref_centered"
+      },
+      {
+        "n": 47,
+        "permutation_p": 0.001999000499750125,
+        "predictor": "cycle_state_pc3_ref_centered",
+        "rho": -0.47530457615235544,
+        "scope": "event_reference_centered",
+        "spearman_p": 0.0007349587591461683,
+        "target": "precursor_context_score_ref_centered"
+      },
+      {
+        "n": 47,
+        "permutation_p": 0.0024987506246876563,
+        "predictor": "cycle_state_pc1_ref_centered",
+        "rho": -0.47530457615235544,
+        "scope": "event_reference_centered",
+        "spearman_p": 0.0007349587591461683,
+        "target": "precursor_context_score_ref_centered"
+      },
+      {
+        "n": 47,
+        "permutation_p": 0.0024987506246876563,
+        "predictor": "degradation_state_axis_ref_centered",
+        "rho": 0.47530457615235544,
+        "scope": "event_reference_centered",
+        "spearman_p": 0.0007349587591461683,
+        "target": "precursor_context_score_ref_centered"
+      }
+    ],
+    "top_row_tests": [
+      {
+        "n": 52,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_pc2",
+        "rho": 0.7021210910626728,
+        "scope": "roi_row",
+        "spearman_p": 6.628425696800781e-09,
+        "target": "physics_consistency_score"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_pc2",
+        "rho": 0.6949172103189004,
+        "scope": "roi_row",
+        "spearman_p": 1.093870927446296e-08,
+        "target": "kinetic_transition_score"
+      },
+      {
+        "n": 47,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_pc2",
+        "rho": 0.6865100223213823,
+        "scope": "roi_row",
+        "spearman_p": 9.970679228859009e-08,
+        "target": "precursor_context_score"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_pc3",
+        "rho": 0.5976648202779732,
+        "scope": "roi_row",
+        "spearman_p": 2.895475336275373e-06,
+        "target": "kinetic_transition_score"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_cluster",
+        "rho": 0.594968598153688,
+        "scope": "roi_row",
+        "spearman_p": 3.2936597760070436e-06,
+        "target": "kinetic_transition_score"
+      },
+      {
+        "n": 47,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_cluster",
+        "rho": 0.6167939547439613,
+        "scope": "roi_row",
+        "spearman_p": 3.897359013072846e-06,
+        "target": "precursor_context_score"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_pc2",
+        "rho": 0.5796551184185423,
+        "scope": "roi_row",
+        "spearman_p": 6.700365926846622e-06,
+        "target": "mode_taxonomy_score"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_pc3",
+        "rho": 0.5467230921612971,
+        "scope": "roi_row",
+        "spearman_p": 2.7485377792890103e-05,
+        "target": "physics_consistency_score"
+      },
+      {
+        "n": 47,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_pc3",
+        "rho": 0.5592494036584547,
+        "scope": "roi_row",
+        "spearman_p": 4.383670027688203e-05,
+        "target": "precursor_context_score"
+      },
+      {
+        "n": 52,
+        "permutation_p": 0.0004997501249375312,
+        "predictor": "cycle_state_cluster",
+        "rho": 0.4876791788144983,
+        "scope": "roi_row",
+        "spearman_p": 0.0002453578561555262,
+        "target": "physics_consistency_score"
+      }
+    ]
+  },
   "cycle_state_space_transition_audit": {
     "best_silhouette": 0.6338290444179706,
     "chosen_k": 4,

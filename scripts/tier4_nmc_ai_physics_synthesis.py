@@ -114,6 +114,7 @@ def main() -> None:
     physics_consistency = read_json(derived / "physics_consistency_claim_matrix" / "physics_consistency_claim_matrix_summary.json")
     rollout_calibration = read_json(derived / "probabilistic_rollout_calibration" / "probabilistic_rollout_calibration_summary.json")
     cycle_state_space = read_json(derived / "cycle_state_space_transition_audit" / "cycle_state_space_transition_audit_summary.json")
+    cycle_state_roi_bridge = read_json(derived / "cycle_state_roi_bridge" / "cycle_state_roi_bridge_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -227,6 +228,10 @@ def main() -> None:
     cycle_state_loadings = top_items(first_summary(cycle_state_space, "top_pc_loadings", []), 12)
     cycle_state_classifier = first_summary(cycle_state_space, "future_drop_classifier", {}) or {}
     cycle_state_temporal = cycle_state_classifier.get("temporal_holdout", {}) if isinstance(cycle_state_classifier, dict) else {}
+    cycle_state_roi_row_tests = top_items(first_summary(cycle_state_roi_bridge, "top_row_tests", []), 12)
+    cycle_state_roi_centered_tests = top_items(first_summary(cycle_state_roi_bridge, "top_reference_centered_tests", []), 12)
+    cycle_state_roi_collapsed_tests = top_items(first_summary(cycle_state_roi_bridge, "top_cycle_collapsed_tests", []), 12)
+    cycle_state_roi_clusters = top_items(first_summary(cycle_state_roi_bridge, "cluster_summary", []), 8)
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -336,6 +341,7 @@ def main() -> None:
         f"- Echem-shape-conditioned ROI/front rows/shape PCs: {first_summary(echem_shape_conditioned, 'n_rows', 0)} / {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)}",
         f"- Physics-consistency matrix ROI/cycles: {first_summary(physics_consistency, 'n_roi', 0)} / {first_summary(physics_consistency, 'n_cycles', 0)}",
         f"- Cycle state-space rows/clusters: {first_summary(cycle_state_space, 'n_cycles', 0)} / {first_summary(cycle_state_space, 'chosen_k', 0)}",
+        f"- Cycle-state ROI bridge rows/cycles: {first_summary(cycle_state_roi_bridge, 'n_roi_rows', 0)} / {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -369,6 +375,7 @@ def main() -> None:
         f"- Echem-shape-conditioned residual audit uses {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_shape_features_used', 0)} shape features compressed to {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)} PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p={fmt((echem_shape_conditioned_tests[0] if echem_shape_conditioned_tests else {}).get('p_value'))}), while diffusion residuals remain non-significant and the shape-residual classifier is poor.",
         f"- Physics-consistency claim matrix scores {first_summary(physics_consistency, 'n_roi', 0)} ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; {first_summary(physics_consistency, 'tier_counts', {}).get('cross_modal_high_priority', 0)} rows are cross-modal high priority, but all {first_summary(physics_consistency, 'n_roi', 0)} remain `manual_qc_required_no_physics_claim`.",
         f"- Cycle state-space transition audit builds a {first_summary(cycle_state_space, 'chosen_k', 0)}-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p={fmt((cycle_state_tests[0] if cycle_state_tests else {}).get('permutation_p'))}), the shuffled-fold classifier reaches mean AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}, and stricter temporal holdout reaches AUC {fmt(cycle_state_temporal.get('mean_roc_auc'))} across {fmt(cycle_state_temporal.get('n_evaluated_blocks'), 0)} usable blocks.",
+        f"- Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)} cycles: top collapsed test {((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('predictor', 'NA'))} vs {((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('target', 'NA'))}, rho={fmt((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('rho'))}, permutation p={fmt((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('permutation_p'))}.",
         "",
         "## Model Readout",
         "",
@@ -810,6 +817,31 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Cycle State To ROI/Front Bridge",
+        "",
+        f"- ROI rows/cycles joined: {first_summary(cycle_state_roi_bridge, 'n_roi_rows', 0)} / {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)}",
+        f"- Predictors/targets: {first_summary(cycle_state_roi_bridge, 'n_predictors', 0)} / {first_summary(cycle_state_roi_bridge, 'n_targets', 0)}",
+    ]
+    for row in cycle_state_roi_row_tests[:5]:
+        report_lines.append(
+            f"- Row bridge {row.get('predictor')} vs {row.get('target')}: rho={fmt(row.get('rho'))}, permutation p={fmt(row.get('permutation_p'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in cycle_state_roi_collapsed_tests[:5]:
+        report_lines.append(
+            f"- Cycle-collapsed bridge {row.get('predictor')} vs {row.get('target')}: rho={fmt(row.get('rho'))}, permutation p={fmt(row.get('permutation_p'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in cycle_state_roi_centered_tests[:4]:
+        report_lines.append(
+            f"- Reference-centered bridge {row.get('predictor')} vs {row.get('target')}: rho={fmt(row.get('rho'))}, permutation p={fmt(row.get('permutation_p'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in cycle_state_roi_clusters[:4]:
+        report_lines.append(
+            f"- Cycle-state cluster {row.get('cycle_state_cluster')}: ROI n={fmt(row.get('n_roi'), 0)}, cycles={fmt(row.get('n_cycles'), 0)}, cross-modal priority fraction={fmt(row.get('cross_modal_priority_fraction'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(cycle_state_roi_bridge, 'guardrail', 'Cycle-state ROI bridge unavailable.')}")
+
+    report_lines += [
+        "",
         "## Top ROI/Echem Or Protocol Couplings",
         "",
     ]
@@ -983,6 +1015,17 @@ def main() -> None:
             "top_transitions": cycle_state_transitions,
             "top_pc_loadings": cycle_state_loadings,
             "guardrail": first_summary(cycle_state_space, "guardrail"),
+        },
+        "cycle_state_roi_bridge": {
+            "n_roi_rows": first_summary(cycle_state_roi_bridge, "n_roi_rows"),
+            "n_cycles": first_summary(cycle_state_roi_bridge, "n_cycles"),
+            "n_predictors": first_summary(cycle_state_roi_bridge, "n_predictors"),
+            "n_targets": first_summary(cycle_state_roi_bridge, "n_targets"),
+            "top_row_tests": cycle_state_roi_row_tests,
+            "top_reference_centered_tests": cycle_state_roi_centered_tests,
+            "top_cycle_collapsed_tests": cycle_state_roi_collapsed_tests,
+            "cluster_summary": cycle_state_roi_clusters,
+            "guardrail": first_summary(cycle_state_roi_bridge, "guardrail"),
         },
         "echem_shape_conditioned_roi_front_effects": {
             "n_rows": first_summary(echem_shape_conditioned, "n_rows"),
