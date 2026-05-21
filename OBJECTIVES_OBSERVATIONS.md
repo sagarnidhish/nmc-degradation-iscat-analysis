@@ -537,3 +537,34 @@ Key result:
 - Overall relative MSE improvement is -4.23, and overall relative residual-MSE improvement is -9.09.
 
 Interpretation: the current selected ROI dataset is too small and too cycle-specific for a naive residual CNN to generalize across event cycles. This is an important negative result: larger neural video models should not be judged by raw next-frame MSE alone and should not be scaled until we add more ROI sequences, stronger event/echem conditioning, or train on broader non-event particle crops. For now, persistence plus physics descriptors/front tracking are more reliable baselines than a small supervised residual CNN.
+
+## 2026-05-21 Matched Control ROI Export And Comparison
+
+Added and ran:
+
+- `scripts/tier2_select_control_rois.py`
+- `scripts/tier3_compare_event_control_roi_sequences.py`
+
+Remote output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison`
+
+Local compact copies:
+
+- `derived_local/control_roi_selection`
+- `derived_local/control_roi_sequences`
+- `derived_local/event_control_roi_comparison`
+
+Key result:
+
+- Selected 16 matched non-event reconstructed control ROIs from adjacent source-movie segments: 8 from cycle 88 as controls for event cycle 86, and 8 from cycle 118 as controls for event cycle 116.
+- Exported the control ROIs as particle-region-only tensors using the same fixed 192x192 full-frame crop and 96x96 model-input format as the event ROIs.
+- Compared 11 selected event ROIs against 16 matched control ROIs.
+- Event ROIs show higher cumulative normalized crop change than controls: mean 0.01197 vs 0.00834, Cohen d 1.35, Mann-Whitney p 0.019.
+- Event ROIs show lower first-last frame correlation than controls: mean 0.9855 vs 0.9948, Cohen d -1.23, p 0.032.
+- Event ROIs show higher normalized intensity variation than controls: std mean 0.1391 vs 0.1309, Cohen d 0.924, p 0.028.
+- Raw mean-intensity delta is not strongly separated in this matched-control table, reinforcing that spatial/correlation/residual features are more sensitive than whole-crop mean changes.
+
+Interpretation: this broadens the modeling dataset beyond the synchronized-event ROIs and gives a direct matched-control degradation signature. The strongest event-vs-control differences are not simple average brightness shifts; they are higher spatial/temporal change, lower frame-to-frame structural persistence over the segment, and higher normalized spatial intensity variance. These control ROIs are automatic reconstructed candidates, so manual QC is still needed, but they are now usable as non-event particle-region model inputs and as controls for degradation-mode classifiers.
