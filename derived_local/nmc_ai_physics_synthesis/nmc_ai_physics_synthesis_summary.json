@@ -2490,6 +2490,331 @@
     ]
   },
   "derived_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived",
+  "diffusion_proxy_sanity_audit": {
+    "estimator_consensus_counts": {
+      "mixed": 6,
+      "negative": 5,
+      "positive": 1
+    },
+    "gate_counts": [
+      {
+        "criterion": "low_drift_relative_to_motion",
+        "fraction_pass": 1.0,
+        "n_pass": 12,
+        "n_total": 12
+      },
+      {
+        "criterion": "threshold_nonnegative",
+        "fraction_pass": 0.4166666666666667,
+        "n_pass": 5,
+        "n_total": 12
+      },
+      {
+        "criterion": "q70_bootstrap_positive",
+        "fraction_pass": 0.16666666666666666,
+        "n_pass": 2,
+        "n_total": 12
+      },
+      {
+        "criterion": "selected_nonnegative",
+        "fraction_pass": 0.08333333333333333,
+        "n_pass": 1,
+        "n_total": 12
+      },
+      {
+        "criterion": "selected_fit_good",
+        "fraction_pass": 0.08333333333333333,
+        "n_pass": 1,
+        "n_total": 12
+      },
+      {
+        "criterion": "manual_qc_accepted",
+        "fraction_pass": 0.0,
+        "n_pass": 0,
+        "n_total": 12
+      }
+    ],
+    "guardrail": "This audit checks whether optical radius-squared front proxies behave like calibrated diffusion estimates. Publication diffusion claims require manual QC plus positive, estimator-consistent, low-drift, threshold-robust slopes; otherwise values remain apparent optical-front proxies.",
+    "median_selected_diffusion_um2_per_s": -0.00036465860796445,
+    "median_threshold_diffusion_um2_per_s": -6.469866669313556e-07,
+    "n_automatic_positive_diffusion_proxy_candidates": 0,
+    "n_publication_diffusion_candidates": 0,
+    "n_selected_front_rois": 12,
+    "selected_front_cohort_counts": {
+      "NaN": 1,
+      "event": 11
+    },
+    "selected_positive_fraction": 0.08333333333333333,
+    "threshold_positive_fraction": 0.4166666666666667,
+    "top_automatic_candidates": [
+      {
+        "auto_qc_notes": "no automatic front-tracking warning",
+        "automatic_positive_diffusion_proxy_candidate": false,
+        "cohort_role": "event",
+        "cycleNo": 116.0,
+        "diffusion_proxy_median_um2_per_s": -1.0213507797221243e-06,
+        "drift_to_motion_ratio": 0.006143184198578792,
+        "estimator_consensus_sign": "negative",
+        "manual_qc_status": "pending",
+        "negative_estimator_count": 3,
+        "positive_estimator_count": 1,
+        "publication_diffusion_candidate": false,
+        "q70_bootstrap_positive": false,
+        "roi_id": "cycle116_rank1_obj6",
+        "selected_diffusion_um2_per_s": -0.0003345457369294,
+        "selected_nonnegative": false,
+        "selected_r2": 0.2150272000568991,
+        "selected_roi_id": "cycle116_front1_obj6",
+        "threshold_nonnegative": false
+      },
+      {
+        "auto_qc_notes": "no automatic front-tracking warning",
+        "automatic_positive_diffusion_proxy_candidate": false,
+        "cohort_role": "event",
+        "cycleNo": 116.0,
+        "diffusion_proxy_median_um2_per_s": -1.0648072999505855e-06,
+        "drift_to_motion_ratio": 0.004647744705860301,
+        "estimator_consensus_sign": "negative",
+        "manual_qc_status": "pending",
+        "negative_estimator_count": 3,
+        "positive_estimator_count": 1,
+        "publication_diffusion_candidate": false,
+        "q70_bootstrap_positive": false,
+        "roi_id": "cycle116_rank2_obj2",
+        "selected_diffusion_um2_per_s": -0.0005844643760043,
+        "selected_nonnegative": false,
+        "selected_r2": 0.2223745539602243,
+        "selected_roi_id": "cycle116_front2_obj2",
+        "threshold_nonnegative": false
+      },
+      {
+        "auto_qc_notes": "no automatic front-tracking warning",
+        "automatic_positive_diffusion_proxy_candidate": false,
+        "cohort_role": "event",
+        "cycleNo": 116.0,
+        "diffusion_proxy_median_um2_per_s": 2.138134172700789e-06,
+        "drift_to_motion_ratio": 0.004566847753201646,
+        "estimator_consensus_sign": "mixed",
+        "manual_qc_status": "pending",
+        "negative_estimator_count": 2,
+        "positive_estimator_count": 2,
+        "publication_diffusion_candidate": false,
+        "q70_bootstrap_positive": false,
+        "roi_id": "cycle116_rank3_obj9",
+        "selected_diffusion_um2_per_s": -0.000605354127449,
+        "selected_nonnegative": false,
+        "selected_r2": 0.2985903304518088,
+        "selected_roi_id": "cycle116_front3_obj9",
+        "threshold_nonnegative": true
+      },
+      {
+        "auto_qc_notes": "no automatic front-tracking warning",
+        "automatic_positive_diffusion_proxy_candidate": false,
+        "cohort_role": null,
+        "cycleNo": 116.0,
+        "diffusion_proxy_median_um2_per_s": null,
+        "drift_to_motion_ratio": 0.005831963290885312,
+        "estimator_consensus_sign": "mixed",
+        "manual_qc_status": "pending",
+        "negative_estimator_count": 2,
+        "positive_estimator_count": 1,
+        "publication_diffusion_candidate": false,
+        "q70_bootstrap_positive": false,
+        "roi_id": "cycle116_rank4_obj58",
+        "selected_diffusion_um2_per_s": -0.0003712043114096,
+        "selected_nonnegative": false,
+        "selected_r2": 0.2666960084294117,
+        "selected_roi_id": "cycle116_front4_obj58",
+        "threshold_nonnegative": false
+      },
+      {
+        "auto_qc_notes": "no automatic front-tracking warning",
+        "automatic_positive_diffusion_proxy_candidate": false,
+        "cohort_role": "event",
+        "cycleNo": 116.0,
+        "diffusion_proxy_median_um2_per_s": 4.588812077925554e-06,
+        "drift_to_motion_ratio": 0.005024814809409099,
+        "estimator_consensus_sign": "mixed",
+        "manual_qc_status": "pending",
+        "negative_estimator_count": 2,
+        "positive_estimator_count": 2,
+        "publication_diffusion_candidate": false,
+        "q70_bootstrap_positive": true,
+        "roi_id": "cycle116_rank7_obj37",
+        "selected_diffusion_um2_per_s": -0.000500037360841,
+        "selected_nonnegative": false,
+        "selected_r2": 0.612143252222972,
+        "selected_roi_id": "cycle116_front7_obj37",
+        "threshold_nonnegative": true
+      },
+      {
+        "auto_qc_notes": "low radius2 fit R2",
+        "automatic_positive_diffusion_proxy_candidate": false,
+        "cohort_role": "event",
+        "cycleNo": 116.0,
+        "diffusion_proxy_median_um2_per_s": -5.565758642594448e-06,
+        "drift_to_motion_ratio": 0.012138641681491619,
+        "estimator_consensus_sign": "mixed",
+        "manual_qc_status": "pending",
+        "negative_estimator_count": 2,
+        "positive_estimator_count": 2,
+        "publication_diffusion_candidate": false,
+        "q70_bootstrap_positive": false,
+        "roi_id": "cycle116_rank8_obj20",
+        "selected_diffusion_um2_per_s": 8.568452462034586e-05,
+        "selected_nonnegative": true,
+        "selected_r2": 0.0912367420705757,
+        "selected_roi_id": "cycle116_front8_obj20",
+        "threshold_nonnegative": false
+      },
+      {
+        "auto_qc_notes": "low radius2 fit R2",
+        "automatic_positive_diffusion_proxy_candidate": false,
+        "cohort_role": "event",
+        "cycleNo": 86.0,
+        "diffusion_proxy_median_um2_per_s": 1.0218222298568356e-06,
+        "drift_to_motion_ratio": 0.00989774623613,
+        "estimator_consensus_sign": "mixed",
+        "manual_qc_status": "pending",
+        "negative_estimator_count": 2,
+        "positive_estimator_count": 2,
+        "publication_diffusion_candidate": false,
+        "q70_bootstrap_positive": true,
+        "roi_id": "cycle86_rank3_obj5",
+        "selected_diffusion_um2_per_s": -0.000129274783391,
+        "selected_nonnegative": false,
+        "selected_r2": 0.0378847077603904,
+        "selected_roi_id": "cycle86_front3_obj5",
+        "threshold_nonnegative": true
+      },
+      {
+        "auto_qc_notes": "no automatic front-tracking warning",
+        "automatic_positive_diffusion_proxy_candidate": false,
+        "cohort_role": "event",
+        "cycleNo": 86.0,
+        "diffusion_proxy_median_um2_per_s": 4.202646411692796e-07,
+        "drift_to_motion_ratio": 0.005423146779637713,
+        "estimator_consensus_sign": "mixed",
+        "manual_qc_status": "pending",
+        "negative_estimator_count": 2,
+        "positive_estimator_count": 2,
+        "publication_diffusion_candidate": false,
+        "q70_bootstrap_positive": false,
+        "roi_id": "cycle86_rank4_obj9",
+        "selected_diffusion_um2_per_s": -0.0004306096227894,
+        "selected_nonnegative": false,
+        "selected_r2": 0.2577204821010488,
+        "selected_roi_id": "cycle86_front4_obj9",
+        "threshold_nonnegative": true
+      },
+      {
+        "auto_qc_notes": "low radius2 fit R2",
+        "automatic_positive_diffusion_proxy_candidate": false,
+        "cohort_role": "event",
+        "cycleNo": 86.0,
+        "diffusion_proxy_median_um2_per_s": 3.037250094731361e-07,
+        "drift_to_motion_ratio": 0.0059467987136543965,
+        "estimator_consensus_sign": "positive",
+        "manual_qc_status": "pending",
+        "negative_estimator_count": 1,
+        "positive_estimator_count": 3,
+        "publication_diffusion_candidate": false,
+        "q70_bootstrap_positive": false,
+        "roi_id": "cycle86_rank6_obj78",
+        "selected_diffusion_um2_per_s": -0.0003581129045193,
+        "selected_nonnegative": false,
+        "selected_r2": 0.1483056111459313,
+        "selected_roi_id": "cycle86_front6_obj78",
+        "threshold_nonnegative": true
+      },
+      {
+        "auto_qc_notes": "no automatic front-tracking warning",
+        "automatic_positive_diffusion_proxy_candidate": false,
+        "cohort_role": "event",
+        "cycleNo": 86.0,
+        "diffusion_proxy_median_um2_per_s": -1.2085253381264768e-06,
+        "drift_to_motion_ratio": 0.008187466834156058,
+        "estimator_consensus_sign": "negative",
+        "manual_qc_status": "pending",
+        "negative_estimator_count": 3,
+        "positive_estimator_count": 1,
+        "publication_diffusion_candidate": false,
+        "q70_bootstrap_positive": false,
+        "roi_id": "cycle86_rank8_obj17",
+        "selected_diffusion_um2_per_s": -0.0001889240909132,
+        "selected_nonnegative": false,
+        "selected_r2": 0.3040104967910901,
+        "selected_roi_id": "cycle86_front8_obj17",
+        "threshold_nonnegative": false
+      }
+    ],
+    "top_correlations": [
+      {
+        "abs_rho": 0.21818181818181823,
+        "n": 11,
+        "p_value": 0.5192482475549819,
+        "spearman_rho": 0.21818181818181823,
+        "x": "selected_r2",
+        "y": "mask_instability_score"
+      },
+      {
+        "abs_rho": 0.20909090909090913,
+        "n": 11,
+        "p_value": 0.5372209352113229,
+        "spearman_rho": -0.20909090909090913,
+        "x": "selected_r2",
+        "y": "front_quality_score"
+      },
+      {
+        "abs_rho": 0.18181818181818182,
+        "n": 11,
+        "p_value": 0.5926152128455002,
+        "spearman_rho": 0.18181818181818182,
+        "x": "selected_diffusion_um2_per_s",
+        "y": "threshold_robust_diffusion_score"
+      },
+      {
+        "abs_rho": 0.18181818181818182,
+        "n": 11,
+        "p_value": 0.5926152128455002,
+        "spearman_rho": 0.18181818181818182,
+        "x": "drift_to_motion_ratio",
+        "y": "threshold_robust_diffusion_score"
+      },
+      {
+        "abs_rho": 0.17272727272727276,
+        "n": 11,
+        "p_value": 0.611542384851237,
+        "spearman_rho": -0.17272727272727276,
+        "x": "selected_r2",
+        "y": "threshold_robust_diffusion_score"
+      },
+      {
+        "abs_rho": 0.15454545454545454,
+        "n": 11,
+        "p_value": 0.6500339654975801,
+        "spearman_rho": -0.15454545454545454,
+        "x": "selected_diffusion_um2_per_s",
+        "y": "front_quality_score"
+      },
+      {
+        "abs_rho": 0.15454545454545454,
+        "n": 11,
+        "p_value": 0.6500339654975801,
+        "spearman_rho": -0.15454545454545454,
+        "x": "drift_to_motion_ratio",
+        "y": "front_quality_score"
+      },
+      {
+        "abs_rho": 0.10000000000000002,
+        "n": 11,
+        "p_value": 0.7698749998921367,
+        "spearman_rho": -0.10000000000000002,
+        "x": "selected_diffusion_um2_per_s",
+        "y": "mask_instability_score"
+      }
+    ]
+  },
   "echem_shape_conditioned_roi_front_effects": {
     "guardrail": "Echem-shape conditioning uses low-dimensional PCA/ridge covariates on a small automatically selected ROI cohort. Surviving residuals are evidence that optical/front signals are not fully explained by measured within-cycle echem shape, but they are not causal proof or calibrated transport constants.",
     "model_summary": {
@@ -3677,44 +4002,44 @@
         "y": "first_last_corr"
       },
       {
-        "method": "persistence",
-        "n": 24,
-        "p_value": 0.0007906217319767437,
-        "spearman_rho": -0.6382608695652173,
+        "method": "velocity",
+        "n": 52,
+        "p_value": 0.00020379636846290763,
+        "spearman_rho": -0.4931272944591479,
         "x": "particle_mse_ratio_vs_persistence_velocity",
         "y": "cumulative_abs_first_last"
       },
       {
-        "method": "velocity",
-        "n": 24,
-        "p_value": 0.0007906217319767437,
-        "spearman_rho": -0.6382608695652173,
+        "method": "persistence",
+        "n": 52,
+        "p_value": 0.00020379636846290763,
+        "spearman_rho": -0.4931272944591479,
         "x": "particle_mse_ratio_vs_persistence_velocity",
         "y": "cumulative_abs_first_last"
       },
       {
         "method": "low_rank_dmd",
-        "n": 24,
-        "p_value": 0.0007906217319767437,
-        "spearman_rho": -0.6382608695652173,
+        "n": 52,
+        "p_value": 0.00020379636846290763,
+        "spearman_rho": -0.4931272944591479,
         "x": "particle_mse_ratio_vs_persistence_velocity",
         "y": "cumulative_abs_first_last"
       },
       {
         "method": "velocity",
         "n": 52,
-        "p_value": 0.002050865680947418,
-        "spearman_rho": 0.4179117220182703,
-        "x": "particle_mse_fraction_of_full_mean",
-        "y": "cumulative_abs_first_last"
+        "p_value": 0.001840969673945213,
+        "spearman_rho": 0.4218389823273286,
+        "x": "particle_mse_ratio_vs_persistence_velocity",
+        "y": "first_last_corr"
       },
       {
         "method": "persistence",
         "n": 52,
-        "p_value": 0.004118582084899029,
-        "spearman_rho": 0.39136002732007164,
-        "x": "particle_mse_mean",
-        "y": "cumulative_abs_first_last"
+        "p_value": 0.001840969673945213,
+        "spearman_rho": 0.4218389823273286,
+        "x": "particle_mse_ratio_vs_persistence_velocity",
+        "y": "first_last_corr"
       }
     ],
     "top_event_control_tests": [
@@ -3739,6 +4064,17 @@
         "n_control": 28,
         "n_event": 24,
         "p_value": 0.015010981362381602
+      },
+      {
+        "contrast": "event_minus_control",
+        "feature": "particle_mse_ratio_vs_persistence",
+        "median_control": 36.5687363782869,
+        "median_diff_event_minus_control": 16.639694079735037,
+        "median_event": 53.20843045802194,
+        "method": "low_rank_dmd",
+        "n_control": 28,
+        "n_event": 24,
+        "p_value": 0.02573399170228948
       },
       {
         "contrast": "event_minus_control",
@@ -3838,17 +4174,6 @@
         "n_control": 28,
         "n_event": 24,
         "p_value": 0.8905037348400978
-      },
-      {
-        "contrast": "event_minus_control",
-        "feature": "particle_mse_mean",
-        "median_control": 0.00025803700305004895,
-        "median_diff_event_minus_control": 3.0850958523842564e-05,
-        "median_event": 0.0002888879615738915,
-        "method": "velocity",
-        "n_control": 28,
-        "n_event": 24,
-        "p_value": 0.9195856457655296
       }
     ],
     "top_particle_difficulty_rois": [
@@ -8478,9 +8803,9 @@
       "status": "implemented_as_proxy"
     },
     {
-      "evidence": "Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across 7 thresholds with bootstrap slopes.",
-      "limitation": "Global threshold-robust phase slopes separate event/control ROIs, but QC-stratified diffusion proxies are inconsistent and conditioned diffusion-proxy residuals remain non-significant.",
-      "next_step": "Treat diffusion numbers as apparent optical-front proxies until microscope calibration, timebase, and front masks are manually validated.",
+      "evidence": "Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across 7 thresholds with bootstrap slopes; the stricter diffusion sanity audit finds 0 automatic positive candidates and 0 publication candidates.",
+      "limitation": "Global threshold-robust phase slopes separate event/control ROIs, but QC-stratified diffusion proxies are inconsistent, conditioned diffusion-proxy residuals remain non-significant, and selected-front radius-squared slopes fail sign/fit/manual-QC gates.",
+      "next_step": "Treat diffusion numbers as apparent optical-front proxies until microscope calibration, timebase, front masks, estimator agreement, and manual QC are jointly validated.",
       "requirement": "Extract diffusion coefficients",
       "status": "partial_proxy_only"
     },

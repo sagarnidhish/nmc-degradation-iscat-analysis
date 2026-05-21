@@ -1,0 +1,421 @@
+{
+  "n_selected_front_rois": 12,
+  "selected_front_cohort_counts": {
+    "event": 11,
+    "NaN": 1
+  },
+  "n_automatic_positive_diffusion_proxy_candidates": 0,
+  "n_publication_diffusion_candidates": 0,
+  "median_selected_diffusion_um2_per_s": -0.00036465860796445,
+  "median_threshold_diffusion_um2_per_s": -6.469866669313556e-07,
+  "selected_positive_fraction": 0.08333333333333333,
+  "threshold_positive_fraction": 0.4166666666666667,
+  "estimator_consensus_counts": {
+    "mixed": 6,
+    "negative": 5,
+    "positive": 1
+  },
+  "gate_counts": [
+    {
+      "criterion": "low_drift_relative_to_motion",
+      "n_pass": 12,
+      "n_total": 12,
+      "fraction_pass": 1.0
+    },
+    {
+      "criterion": "threshold_nonnegative",
+      "n_pass": 5,
+      "n_total": 12,
+      "fraction_pass": 0.4166666666666667
+    },
+    {
+      "criterion": "q70_bootstrap_positive",
+      "n_pass": 2,
+      "n_total": 12,
+      "fraction_pass": 0.16666666666666666
+    },
+    {
+      "criterion": "selected_nonnegative",
+      "n_pass": 1,
+      "n_total": 12,
+      "fraction_pass": 0.08333333333333333
+    },
+    {
+      "criterion": "selected_fit_good",
+      "n_pass": 1,
+      "n_total": 12,
+      "fraction_pass": 0.08333333333333333
+    },
+    {
+      "criterion": "manual_qc_accepted",
+      "n_pass": 0,
+      "n_total": 12,
+      "fraction_pass": 0.0
+    }
+  ],
+  "top_automatic_candidates": [
+    {
+      "selected_roi_id": "cycle116_front1_obj6",
+      "roi_id": "cycle116_rank1_obj6",
+      "cycleNo": 116.0,
+      "cohort_role": "event",
+      "selected_diffusion_um2_per_s": -0.0003345457369294,
+      "diffusion_proxy_median_um2_per_s": -1.0213507797221243e-06,
+      "selected_r2": 0.2150272000568991,
+      "drift_to_motion_ratio": 0.006143184198578792,
+      "positive_estimator_count": 1,
+      "negative_estimator_count": 3,
+      "estimator_consensus_sign": "negative",
+      "selected_nonnegative": false,
+      "threshold_nonnegative": false,
+      "q70_bootstrap_positive": false,
+      "automatic_positive_diffusion_proxy_candidate": false,
+      "publication_diffusion_candidate": false,
+      "manual_qc_status": "pending",
+      "auto_qc_notes": "no automatic front-tracking warning"
+    },
+    {
+      "selected_roi_id": "cycle116_front2_obj2",
+      "roi_id": "cycle116_rank2_obj2",
+      "cycleNo": 116.0,
+      "cohort_role": "event",
+      "selected_diffusion_um2_per_s": -0.0005844643760043,
+      "diffusion_proxy_median_um2_per_s": -1.0648072999505855e-06,
+      "selected_r2": 0.2223745539602243,
+      "drift_to_motion_ratio": 0.004647744705860301,
+      "positive_estimator_count": 1,
+      "negative_estimator_count": 3,
+      "estimator_consensus_sign": "negative",
+      "selected_nonnegative": false,
+      "threshold_nonnegative": false,
+      "q70_bootstrap_positive": false,
+      "automatic_positive_diffusion_proxy_candidate": false,
+      "publication_diffusion_candidate": false,
+      "manual_qc_status": "pending",
+      "auto_qc_notes": "no automatic front-tracking warning"
+    },
+    {
+      "selected_roi_id": "cycle116_front3_obj9",
+      "roi_id": "cycle116_rank3_obj9",
+      "cycleNo": 116.0,
+      "cohort_role": "event",
+      "selected_diffusion_um2_per_s": -0.000605354127449,
+      "diffusion_proxy_median_um2_per_s": 2.138134172700789e-06,
+      "selected_r2": 0.2985903304518088,
+      "drift_to_motion_ratio": 0.004566847753201646,
+      "positive_estimator_count": 2,
+      "negative_estimator_count": 2,
+      "estimator_consensus_sign": "mixed",
+      "selected_nonnegative": false,
+      "threshold_nonnegative": true,
+      "q70_bootstrap_positive": false,
+      "automatic_positive_diffusion_proxy_candidate": false,
+      "publication_diffusion_candidate": false,
+      "manual_qc_status": "pending",
+      "auto_qc_notes": "no automatic front-tracking warning"
+    },
+    {
+      "selected_roi_id": "cycle116_front4_obj58",
+      "roi_id": "cycle116_rank4_obj58",
+      "cycleNo": 116.0,
+      "cohort_role": null,
+      "selected_diffusion_um2_per_s": -0.0003712043114096,
+      "diffusion_proxy_median_um2_per_s": null,
+      "selected_r2": 0.2666960084294117,
+      "drift_to_motion_ratio": 0.005831963290885312,
+      "positive_estimator_count": 1,
+      "negative_estimator_count": 2,
+      "estimator_consensus_sign": "mixed",
+      "selected_nonnegative": false,
+      "threshold_nonnegative": false,
+      "q70_bootstrap_positive": false,
+      "automatic_positive_diffusion_proxy_candidate": false,
+      "publication_diffusion_candidate": false,
+      "manual_qc_status": "pending",
+      "auto_qc_notes": "no automatic front-tracking warning"
+    },
+    {
+      "selected_roi_id": "cycle116_front7_obj37",
+      "roi_id": "cycle116_rank7_obj37",
+      "cycleNo": 116.0,
+      "cohort_role": "event",
+      "selected_diffusion_um2_per_s": -0.000500037360841,
+      "diffusion_proxy_median_um2_per_s": 4.588812077925554e-06,
+      "selected_r2": 0.612143252222972,
+      "drift_to_motion_ratio": 0.005024814809409099,
+      "positive_estimator_count": 2,
+      "negative_estimator_count": 2,
+      "estimator_consensus_sign": "mixed",
+      "selected_nonnegative": false,
+      "threshold_nonnegative": true,
+      "q70_bootstrap_positive": true,
+      "automatic_positive_diffusion_proxy_candidate": false,
+      "publication_diffusion_candidate": false,
+      "manual_qc_status": "pending",
+      "auto_qc_notes": "no automatic front-tracking warning"
+    },
+    {
+      "selected_roi_id": "cycle116_front8_obj20",
+      "roi_id": "cycle116_rank8_obj20",
+      "cycleNo": 116.0,
+      "cohort_role": "event",
+      "selected_diffusion_um2_per_s": 8.568452462034586e-05,
+      "diffusion_proxy_median_um2_per_s": -5.565758642594448e-06,
+      "selected_r2": 0.0912367420705757,
+      "drift_to_motion_ratio": 0.012138641681491619,
+      "positive_estimator_count": 2,
+      "negative_estimator_count": 2,
+      "estimator_consensus_sign": "mixed",
+      "selected_nonnegative": true,
+      "threshold_nonnegative": false,
+      "q70_bootstrap_positive": false,
+      "automatic_positive_diffusion_proxy_candidate": false,
+      "publication_diffusion_candidate": false,
+      "manual_qc_status": "pending",
+      "auto_qc_notes": "low radius2 fit R2"
+    },
+    {
+      "selected_roi_id": "cycle86_front3_obj5",
+      "roi_id": "cycle86_rank3_obj5",
+      "cycleNo": 86.0,
+      "cohort_role": "event",
+      "selected_diffusion_um2_per_s": -0.000129274783391,
+      "diffusion_proxy_median_um2_per_s": 1.0218222298568356e-06,
+      "selected_r2": 0.0378847077603904,
+      "drift_to_motion_ratio": 0.00989774623613,
+      "positive_estimator_count": 2,
+      "negative_estimator_count": 2,
+      "estimator_consensus_sign": "mixed",
+      "selected_nonnegative": false,
+      "threshold_nonnegative": true,
+      "q70_bootstrap_positive": true,
+      "automatic_positive_diffusion_proxy_candidate": false,
+      "publication_diffusion_candidate": false,
+      "manual_qc_status": "pending",
+      "auto_qc_notes": "low radius2 fit R2"
+    },
+    {
+      "selected_roi_id": "cycle86_front4_obj9",
+      "roi_id": "cycle86_rank4_obj9",
+      "cycleNo": 86.0,
+      "cohort_role": "event",
+      "selected_diffusion_um2_per_s": -0.0004306096227894,
+      "diffusion_proxy_median_um2_per_s": 4.202646411692796e-07,
+      "selected_r2": 0.2577204821010488,
+      "drift_to_motion_ratio": 0.005423146779637713,
+      "positive_estimator_count": 2,
+      "negative_estimator_count": 2,
+      "estimator_consensus_sign": "mixed",
+      "selected_nonnegative": false,
+      "threshold_nonnegative": true,
+      "q70_bootstrap_positive": false,
+      "automatic_positive_diffusion_proxy_candidate": false,
+      "publication_diffusion_candidate": false,
+      "manual_qc_status": "pending",
+      "auto_qc_notes": "no automatic front-tracking warning"
+    },
+    {
+      "selected_roi_id": "cycle86_front6_obj78",
+      "roi_id": "cycle86_rank6_obj78",
+      "cycleNo": 86.0,
+      "cohort_role": "event",
+      "selected_diffusion_um2_per_s": -0.0003581129045193,
+      "diffusion_proxy_median_um2_per_s": 3.037250094731361e-07,
+      "selected_r2": 0.1483056111459313,
+      "drift_to_motion_ratio": 0.0059467987136543965,
+      "positive_estimator_count": 3,
+      "negative_estimator_count": 1,
+      "estimator_consensus_sign": "positive",
+      "selected_nonnegative": false,
+      "threshold_nonnegative": true,
+      "q70_bootstrap_positive": false,
+      "automatic_positive_diffusion_proxy_candidate": false,
+      "publication_diffusion_candidate": false,
+      "manual_qc_status": "pending",
+      "auto_qc_notes": "low radius2 fit R2"
+    },
+    {
+      "selected_roi_id": "cycle86_front8_obj17",
+      "roi_id": "cycle86_rank8_obj17",
+      "cycleNo": 86.0,
+      "cohort_role": "event",
+      "selected_diffusion_um2_per_s": -0.0001889240909132,
+      "diffusion_proxy_median_um2_per_s": -1.2085253381264768e-06,
+      "selected_r2": 0.3040104967910901,
+      "drift_to_motion_ratio": 0.008187466834156058,
+      "positive_estimator_count": 1,
+      "negative_estimator_count": 3,
+      "estimator_consensus_sign": "negative",
+      "selected_nonnegative": false,
+      "threshold_nonnegative": false,
+      "q70_bootstrap_positive": false,
+      "automatic_positive_diffusion_proxy_candidate": false,
+      "publication_diffusion_candidate": false,
+      "manual_qc_status": "pending",
+      "auto_qc_notes": "no automatic front-tracking warning"
+    }
+  ],
+  "top_event_control_tests": [
+    {
+      "feature": "selected_diffusion_um2_per_s",
+      "n_event": 11,
+      "n_control": 0,
+      "event_median": -0.0003581129045193,
+      "control_median": null,
+      "event_control_median_diff": null,
+      "mannwhitney_p": null
+    },
+    {
+      "feature": "selected_radius2_um2_per_s",
+      "n_event": 11,
+      "n_control": 0,
+      "event_median": -0.0014324516180774,
+      "control_median": null,
+      "event_control_median_diff": null,
+      "mannwhitney_p": null
+    },
+    {
+      "feature": "selected_r2",
+      "n_event": 11,
+      "n_control": 0,
+      "event_median": 0.2150272000568991,
+      "control_median": null,
+      "event_control_median_diff": null,
+      "mannwhitney_p": null
+    },
+    {
+      "feature": "drift_to_motion_ratio",
+      "n_event": 11,
+      "n_control": 0,
+      "event_median": 0.0059467987136543965,
+      "control_median": null,
+      "event_control_median_diff": null,
+      "mannwhitney_p": null
+    },
+    {
+      "feature": "positive_estimator_count",
+      "n_event": 11,
+      "n_control": 0,
+      "event_median": 2.0,
+      "control_median": null,
+      "event_control_median_diff": null,
+      "mannwhitney_p": null
+    },
+    {
+      "feature": "negative_estimator_count",
+      "n_event": 11,
+      "n_control": 0,
+      "event_median": 2.0,
+      "control_median": null,
+      "event_control_median_diff": null,
+      "mannwhitney_p": null
+    },
+    {
+      "feature": "diffusion_proxy_median_um2_per_s",
+      "n_event": 11,
+      "n_control": 0,
+      "event_median": -6.469866669313556e-07,
+      "control_median": null,
+      "event_control_median_diff": null,
+      "mannwhitney_p": null
+    },
+    {
+      "feature": "threshold_robust_diffusion_score",
+      "n_event": 11,
+      "n_control": 0,
+      "event_median": 0.2596153846153846,
+      "control_median": null,
+      "event_control_median_diff": null,
+      "mannwhitney_p": null
+    }
+  ],
+  "top_correlations": [
+    {
+      "x": "selected_r2",
+      "y": "mask_instability_score",
+      "n": 11,
+      "spearman_rho": 0.21818181818181823,
+      "p_value": 0.5192482475549819,
+      "abs_rho": 0.21818181818181823
+    },
+    {
+      "x": "selected_r2",
+      "y": "front_quality_score",
+      "n": 11,
+      "spearman_rho": -0.20909090909090913,
+      "p_value": 0.5372209352113229,
+      "abs_rho": 0.20909090909090913
+    },
+    {
+      "x": "selected_diffusion_um2_per_s",
+      "y": "threshold_robust_diffusion_score",
+      "n": 11,
+      "spearman_rho": 0.18181818181818182,
+      "p_value": 0.5926152128455002,
+      "abs_rho": 0.18181818181818182
+    },
+    {
+      "x": "drift_to_motion_ratio",
+      "y": "threshold_robust_diffusion_score",
+      "n": 11,
+      "spearman_rho": 0.18181818181818182,
+      "p_value": 0.5926152128455002,
+      "abs_rho": 0.18181818181818182
+    },
+    {
+      "x": "selected_r2",
+      "y": "threshold_robust_diffusion_score",
+      "n": 11,
+      "spearman_rho": -0.17272727272727276,
+      "p_value": 0.611542384851237,
+      "abs_rho": 0.17272727272727276
+    },
+    {
+      "x": "selected_diffusion_um2_per_s",
+      "y": "front_quality_score",
+      "n": 11,
+      "spearman_rho": -0.15454545454545454,
+      "p_value": 0.6500339654975801,
+      "abs_rho": 0.15454545454545454
+    },
+    {
+      "x": "drift_to_motion_ratio",
+      "y": "front_quality_score",
+      "n": 11,
+      "spearman_rho": -0.15454545454545454,
+      "p_value": 0.6500339654975801,
+      "abs_rho": 0.15454545454545454
+    },
+    {
+      "x": "selected_diffusion_um2_per_s",
+      "y": "mask_instability_score",
+      "n": 11,
+      "spearman_rho": -0.10000000000000002,
+      "p_value": 0.7698749998921367,
+      "abs_rho": 0.10000000000000002
+    },
+    {
+      "x": "drift_to_motion_ratio",
+      "y": "mask_instability_score",
+      "n": 11,
+      "spearman_rho": -0.10000000000000002,
+      "p_value": 0.7698749998921367,
+      "abs_rho": 0.10000000000000002
+    },
+    {
+      "x": "positive_estimator_count",
+      "y": "mask_instability_score",
+      "n": 11,
+      "spearman_rho": -0.08040302522073697,
+      "p_value": 0.8142099288205124,
+      "abs_rho": 0.08040302522073697
+    }
+  ],
+  "guardrail": "This audit checks whether optical radius-squared front proxies behave like calibrated diffusion estimates. Publication diffusion claims require manual QC plus positive, estimator-consistent, low-drift, threshold-robust slopes; otherwise values remain apparent optical-front proxies.",
+  "outputs": {
+    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_joined.csv",
+    "gate_counts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_gate_counts.csv",
+    "event_control_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_event_control_tests.csv",
+    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_correlations.csv"
+  }
+}

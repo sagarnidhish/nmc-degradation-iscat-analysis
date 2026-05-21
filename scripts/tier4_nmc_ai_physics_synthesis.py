@@ -117,6 +117,7 @@ def main() -> None:
     cycle_state_roi_bridge = read_json(derived / "cycle_state_roi_bridge" / "cycle_state_roi_bridge_summary.json")
     particle_mask = read_json(derived / "particle_mask_stability_audit" / "particle_mask_stability_audit_summary.json")
     masked_rollout = read_json(derived / "masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
+    diffusion_sanity = read_json(derived / "diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
     weak_label_benchmark = read_json(derived / "weak_label_degradation_benchmark" / "weak_label_degradation_benchmark_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
@@ -245,6 +246,9 @@ def main() -> None:
     masked_rollout_corr = top_items(first_summary(masked_rollout, "top_correlations", []), 12)
     masked_rollout_difficult = top_items(first_summary(masked_rollout, "top_particle_difficulty_rois", []), 12)
     masked_rollout_best_counts = first_summary(masked_rollout, "best_method_counts_inside_particle", {}) or {}
+    diffusion_sanity_gate = top_items(first_summary(diffusion_sanity, "gate_counts", []), 12)
+    diffusion_sanity_candidates = top_items(first_summary(diffusion_sanity, "top_automatic_candidates", []), 12)
+    diffusion_sanity_corr = top_items(first_summary(diffusion_sanity, "top_correlations", []), 8)
     weak_label_top_pos = top_items(first_summary(weak_label_benchmark, "top_positive_training_rows", []), 8)
     weak_label_top_neg = top_items(first_summary(weak_label_benchmark, "top_negative_training_rows", []), 8)
     weak_label_leakage = first_summary(weak_label_benchmark, "leakage_audit", {}) or {}
@@ -292,9 +296,9 @@ def main() -> None:
         evidence_row(
             "Extract diffusion coefficients",
             "partial_proxy_only",
-            f"Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across {len(first_summary(robust_fronts, 'threshold_quantiles', []))} thresholds with bootstrap slopes.",
-            "Global threshold-robust phase slopes separate event/control ROIs, but QC-stratified diffusion proxies are inconsistent and conditioned diffusion-proxy residuals remain non-significant.",
-            "Treat diffusion numbers as apparent optical-front proxies until microscope calibration, timebase, and front masks are manually validated.",
+            f"Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across {len(first_summary(robust_fronts, 'threshold_quantiles', []))} thresholds with bootstrap slopes; the stricter diffusion sanity audit finds {first_summary(diffusion_sanity, 'n_automatic_positive_diffusion_proxy_candidates', 0)} automatic positive candidates and {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)} publication candidates.",
+            "Global threshold-robust phase slopes separate event/control ROIs, but QC-stratified diffusion proxies are inconsistent, conditioned diffusion-proxy residuals remain non-significant, and selected-front radius-squared slopes fail sign/fit/manual-QC gates.",
+            "Treat diffusion numbers as apparent optical-front proxies until microscope calibration, timebase, front masks, estimator agreement, and manual QC are jointly validated.",
         ),
         evidence_row(
             "Identify degradation modes",
@@ -367,6 +371,7 @@ def main() -> None:
         f"- Cycle-state ROI bridge rows/cycles: {first_summary(cycle_state_roi_bridge, 'n_roi_rows', 0)} / {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)}",
         f"- Particle-mask stability ROI/frame rows: {first_summary(particle_mask, 'n_roi', 0)} / {first_summary(particle_mask, 'n_frames_total', 0)}",
         f"- Masked ROI rollout frame rows: {first_summary(masked_rollout, 'n_frame_metric_rows', 0)}",
+        f"- Diffusion sanity selected-front/publication candidates: {first_summary(diffusion_sanity, 'n_selected_front_rois', 0)} / {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
         f"- Weak-label benchmark trainable positives/negatives: {first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
@@ -381,6 +386,7 @@ def main() -> None:
         "- Cycles 86 and 116 remain the strongest synchronized event-timing regimes; cycles 60 and 156 provide stronger single-particle morphology/latent-movement examples.",
         "- Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.",
         "- Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.",
+        f"- Diffusion proxy sanity audit rejects calibrated-diffusion promotion for the selected high-resolution front set: {first_summary(diffusion_sanity, 'n_automatic_positive_diffusion_proxy_candidates', 0)} automatic positive candidates and {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)} publication candidates; median selected-front apparent D is {fmt(first_summary(diffusion_sanity, 'median_selected_diffusion_um2_per_s'))} um2/s and only {fmt(first_summary(diffusion_sanity, 'selected_positive_fraction'))} of selected fronts are nonnegative.",
         f"- Calibration metadata audit finds camera-timing datasets in {first_summary(calibration_metadata, 'n_h5_with_camera_timing', 0)} of {first_summary(calibration_metadata, 'n_h5_files', 0)} scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.",
         f"- Calibration claim-risk register audits {first_summary(calibration_claim_risk, 'n_claim_families', 0)} front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
@@ -621,6 +627,30 @@ def main() -> None:
             f"- {row.get('analysis')}: {row.get('claim_status')} - {row.get('recommended_wording')}"
         )
     report_lines.append(f"- Guardrail: {first_summary(calibration_claim_risk, 'guardrail', 'Calibration claim risk register unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Diffusion Proxy Sanity Audit",
+        "",
+        f"- Selected high-resolution front ROIs: {first_summary(diffusion_sanity, 'n_selected_front_rois', 0)}",
+        f"- Automatic positive diffusion-proxy candidates: {first_summary(diffusion_sanity, 'n_automatic_positive_diffusion_proxy_candidates', 0)}",
+        f"- Publication diffusion candidates after manual-QC gate: {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
+        f"- Median selected/threshold apparent D: {fmt(first_summary(diffusion_sanity, 'median_selected_diffusion_um2_per_s'))} / {fmt(first_summary(diffusion_sanity, 'median_threshold_diffusion_um2_per_s'))} um2/s",
+        f"- Estimator consensus counts: {first_summary(diffusion_sanity, 'estimator_consensus_counts', {})}",
+    ]
+    for row in diffusion_sanity_gate:
+        report_lines.append(
+            f"- Gate {row.get('criterion')}: {fmt(row.get('n_pass'), 0)}/{fmt(row.get('n_total'), 0)} pass ({fmt(row.get('fraction_pass'))})"
+        )
+    for row in diffusion_sanity_candidates[:6]:
+        report_lines.append(
+            f"- Candidate check {row.get('selected_roi_id')} ({row.get('cohort_role')}, cycle {fmt(row.get('cycleNo'), 0)}): selected D {fmt(row.get('selected_diffusion_um2_per_s'))}, threshold D {fmt(row.get('diffusion_proxy_median_um2_per_s'))}, selected R2 {fmt(row.get('selected_r2'))}, consensus {row.get('estimator_consensus_sign')}, manual {row.get('manual_qc_status')}"
+        )
+    for row in diffusion_sanity_corr[:4]:
+        report_lines.append(
+            f"- Diffusion-sanity link {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(diffusion_sanity, 'guardrail', 'Diffusion proxy sanity audit unavailable.')}")
 
     report_lines += [
         "",
@@ -1083,6 +1113,21 @@ def main() -> None:
             "top_group_tests": phase_kinetics_tests,
             "top_correlations": phase_kinetics_corr,
             "guardrail": first_summary(phase_kinetics, "guardrail"),
+        },
+        "diffusion_proxy_sanity_audit": {
+            "n_selected_front_rois": first_summary(diffusion_sanity, "n_selected_front_rois"),
+            "selected_front_cohort_counts": first_summary(diffusion_sanity, "selected_front_cohort_counts", {}),
+            "n_automatic_positive_diffusion_proxy_candidates": first_summary(diffusion_sanity, "n_automatic_positive_diffusion_proxy_candidates"),
+            "n_publication_diffusion_candidates": first_summary(diffusion_sanity, "n_publication_diffusion_candidates"),
+            "median_selected_diffusion_um2_per_s": first_summary(diffusion_sanity, "median_selected_diffusion_um2_per_s"),
+            "median_threshold_diffusion_um2_per_s": first_summary(diffusion_sanity, "median_threshold_diffusion_um2_per_s"),
+            "selected_positive_fraction": first_summary(diffusion_sanity, "selected_positive_fraction"),
+            "threshold_positive_fraction": first_summary(diffusion_sanity, "threshold_positive_fraction"),
+            "estimator_consensus_counts": first_summary(diffusion_sanity, "estimator_consensus_counts", {}),
+            "gate_counts": diffusion_sanity_gate,
+            "top_automatic_candidates": diffusion_sanity_candidates,
+            "top_correlations": diffusion_sanity_corr,
+            "guardrail": first_summary(diffusion_sanity, "guardrail"),
         },
         "masked_roi_rollout_audit": {
             "n_roi": first_summary(masked_rollout, "n_roi"),

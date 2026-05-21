@@ -1846,3 +1846,29 @@ Key result:
 
 Interpretation: this strengthens the ROI-only modeling guardrail. The full-crop conclusion that persistence is the strongest pixel predictor survives when scoring only accepted particle pixels, while the DMD residual becomes a sharper particle-local physics descriptor associated with cumulative optical change and event/control status. This still does not prove a deployable video model; it supports using masked residuals as interpretable degradation descriptors.
 
+## 2026-05-22 Diffusion Proxy Sanity Audit
+
+Added and ran:
+
+`scripts/tier4_diffusion_proxy_sanity_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit`
+
+Local compact copy:
+
+`derived_local/diffusion_proxy_sanity_audit`
+
+Key result:
+
+- Joined the 12 selected high-resolution front ROIs to threshold-robust front metrics, manual-QC status, and particle-mask stability descriptors.
+- The stricter diffusion gate produced 0 automatic positive diffusion-proxy candidates and 0 publication diffusion candidates.
+- Median selected-front apparent D was -3.65e-4 um2/s; the threshold-sweep median was -6.47e-7 um2/s.
+- Only 1 of 12 selected fronts had a nonnegative selected radius-squared diffusion proxy, only 1 of 12 met the selected-fit R2 gate, and 0 of 12 had accepted manual QC labels.
+- Estimator consensus was mixed for 6 fronts, negative for 5 fronts, and positive for 1 front. The one positive-consensus row still failed because the selected high-resolution radius-squared slope was negative and the fit was weak.
+- Drift relative to apparent motion was low for all 12 selected fronts, so the primary rejection is not stage drift; it is sign/estimator inconsistency, poor radius-squared fit quality, threshold sensitivity, and missing manual QC.
+- The project synthesis now includes a Diffusion Proxy Sanity Audit section and carries the gate counts into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this closes the current diffusion-claim loophole. The project can keep using radius/phase-front slopes as optical particle-region descriptors, but no calibrated diffusion coefficient should be reported from the current selected-front set. A publishable diffusion claim still needs raw microscope calibration provenance, validated timebase, accepted front masks, estimator agreement, and manual ROI QC.
+

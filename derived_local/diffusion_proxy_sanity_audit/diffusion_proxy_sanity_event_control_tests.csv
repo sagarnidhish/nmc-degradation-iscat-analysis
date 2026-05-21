@@ -1,0 +1,9 @@
+feature,n_event,n_control,event_median,control_median,event_control_median_diff,mannwhitney_p
+selected_diffusion_um2_per_s,11,0,-0.0003581129045193,,,
+selected_radius2_um2_per_s,11,0,-0.0014324516180774,,,
+selected_r2,11,0,0.2150272000568991,,,
+drift_to_motion_ratio,11,0,0.0059467987136543965,,,
+positive_estimator_count,11,0,2.0,,,
+negative_estimator_count,11,0,2.0,,,
+diffusion_proxy_median_um2_per_s,11,0,-6.469866669313556e-07,,,
+threshold_robust_diffusion_score,11,0,0.2596153846153846,,,

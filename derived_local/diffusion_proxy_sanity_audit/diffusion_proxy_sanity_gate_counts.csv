@@ -1,0 +1,7 @@
+criterion,n_pass,n_total,fraction_pass
+selected_nonnegative,1,12,0.08333333333333333
+threshold_nonnegative,5,12,0.4166666666666667
+selected_fit_good,1,12,0.08333333333333333
+low_drift_relative_to_motion,12,12,1.0
+q70_bootstrap_positive,2,12,0.16666666666666666
+manual_qc_accepted,0,12,0.0
