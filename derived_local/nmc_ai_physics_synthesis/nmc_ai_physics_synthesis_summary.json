@@ -1,12 +1,14 @@
 {
   "all_qc_rf_mean_roc_auc": 0.796875,
   "calibration_metadata_audit": {
-    "fps_median_across_h5": 0.09937929871365499,
-    "guardrail": "This audit verifies metadata evidence for timebase/spatial calibration. Camera timing is present in HDF5 files, but physical pixel-size evidence should be treated as slide-derived unless raw HDF5 attributes or microscope metadata explicitly confirm it.",
-    "n_h5_files": 33,
+    "fps_median_across_h5": 0.013331411250651681,
+    "guardrail": "This audit verifies metadata evidence for timebase/spatial calibration. Camera timing is present in sampled HDF5 files, but the sampled timing rows can represent sparse segment/cycle timing rather than true camera frame cadence. Physical pixel-size evidence should be treated as slide-derived unless raw HDF5 attributes or microscope metadata explicitly confirm it.",
+    "max_h5_files": 12,
+    "n_h5_discovered_before_cap": 33,
+    "n_h5_files": 12,
     "n_h5_with_calibration_attr_hits": 0,
-    "n_h5_with_camera_timing": 32,
-    "n_h5_with_movie": 32,
+    "n_h5_with_camera_timing": 12,
+    "n_h5_with_movie": 12,
     "n_pptx_calibration_hits": 3,
     "n_pptx_files_scanned": 3,
     "top_pptx_hits": [

@@ -19,7 +19,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Prefix feature-importance audit features: 54
 - Spatiotemporal degradation graph nodes/edges: 52 / 510
 - Phase-kinetics ROI rows/features: 52 / 40
-- Calibration metadata HDF5/camera-timing files: 33 / 32
+- Calibration metadata HDF5/camera-timing files: 12 / 12
 - Particle trace cycle rows/drop cycles: 89 / 4
 - Particle precursor event/control anchors: 4 / 24
 - ROI trace-fusion rows/predictors: 52 / 100
@@ -40,7 +40,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycles 86 and 116 remain the strongest synchronized event-timing regimes; cycles 60 and 156 provide stronger single-particle morphology/latent-movement examples.
 - Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.
 - Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.
-- Calibration metadata audit finds HDF5 camera timing in 32 of 33 HDF5 files, but no HDF5 pixel-size attributes; the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.
+- Calibration metadata audit finds camera-timing datasets in 12 of 12 sampled HDF5 files and no HDF5 pixel-size attributes; sampled timing can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
@@ -245,14 +245,14 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 ## Calibration Metadata Audit
 
-- HDF5 files/movie datasets/camera timing: 33 / 32 / 32
+- HDF5 files/movie datasets/camera timing: 12 / 12 / 12
 - HDF5 calibration-like attribute hits: 0
-- Median sampled HDF5 FPS: 0.099
+- Median sampled HDF5 timing FPS proxy: 0.013
 - PPTX files scanned/calibration hits: 3 / 3
 - PPTX hit Degradation Paper Outline.pptx slide 16: We also plot the minimum viable facet size based on the point spread function of the microscope as ~0.2um^2 (dotted line)(check value). ADD COMPARISON TO MANUFACTURER’S EXPECTED FACET SIZES. The consistency of facet size
 - PPTX hit Degradation Paper Outline.pptx slide 3: an improved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) act
 - PPTX hit Degradation Project.pptx slide 3: and wouldn’t cycle again. Switched to second cell… Cell 2: Cycled from pristine. No bubbles visible FOV: full field of view, including 4 drilled holes on left half, and undrilled holes on right half. Imaging camera expos
-- Guardrail: This audit verifies metadata evidence for timebase/spatial calibration. Camera timing is present in HDF5 files, but physical pixel-size evidence should be treated as slide-derived unless raw HDF5 attributes or microscope metadata explicitly confirm it.
+- Guardrail: This audit verifies metadata evidence for timebase/spatial calibration. Camera timing is present in sampled HDF5 files, but the sampled timing rows can represent sparse segment/cycle timing rather than true camera frame cadence. Physical pixel-size evidence should be treated as slide-derived unless raw HDF5 attributes or microscope metadata explicitly confirm it.
 
 ## Particle Trace Physics Audit
 
