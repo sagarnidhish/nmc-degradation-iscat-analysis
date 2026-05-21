@@ -1599,7 +1599,7 @@ Local compact copy:
 Key result:
 
 - Audited 11 front, mobility, kinetics, QC, and diffusion-like claim families; all 11 source tables are present.
-- Calibration evidence status is now explicit: 32/33 HDF5 files contain `camera_timing`, 0 HDF5 files expose spatial calibration attributes, and 3 PPTX calibration text hits provide slide-derived context.
+- Calibration evidence status is now explicit: 32/33 scanned HDF5 files contain `camera_timing`, 0 scanned HDF5 files expose spatial calibration attributes, and 3 PPTX calibration text hits provide slide-derived context.
 - The register classifies early front candidates and ROI/multi-cycle mobility as high-risk proxy-only or optical-front-proxy outputs.
 - Threshold-robust fronts and calibrated-front QC are marked as apparent um-scale proxies: phase-slope sign/fraction trends are useful optical readouts, but diffusion-like values remain apparent `um^2/s` proxies.
 - Protocol-conditioned front residuals and QC sensitivity tables are medium-risk guardrails, with the robust claim centered on phase-front direction residuals rather than diffusion magnitude.
