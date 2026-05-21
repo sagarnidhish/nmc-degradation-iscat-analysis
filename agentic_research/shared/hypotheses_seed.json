@@ -38,7 +38,7 @@
     {
       "id": "H6_apparent_transport_requires_validation",
       "statement": "Phase-boundary/front-motion and apparent diffusion extraction should be treated as readiness-ranked proxies until visual validation and spatial calibration are complete.",
-      "supports": ["recovery_qc"],
+      "supports": ["recovery_qc", "event_candidate_fronts"],
       "critical_tests": ["front_overlay_review", "monotonicity_filter", "calibration_metadata_check"],
       "risk": "Apparent coefficients can be physically misleading without calibration."
     }

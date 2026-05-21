@@ -3,6 +3,7 @@
     "available": {
       "echem_cycle_summary": true,
       "event_baselines": true,
+      "event_candidate_fronts": true,
       "event_cycle_table": true,
       "event_echem": true,
       "event_synchrony": true,
@@ -16,6 +17,7 @@
     "paths": {
       "echem_cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/echem_cycle_summary.csv",
       "event_baselines": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",
+      "event_candidate_fronts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/event_candidate_fronts_summary.json",
       "event_cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
       "event_echem": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_coupling_summary.json",
       "event_synchrony": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_synchrony/event_synchrony_summary.json",
@@ -44,9 +46,14 @@
       "priority": 3
     },
     {
+      "action": "Review candidate front overlays for cycles 86/116 and select validated ROIs for calibrated front tracking.",
+      "expected_output": "validated_front_candidates.csv and manual QC decisions",
+      "priority": 4
+    },
+    {
       "action": "Fit grouped degradation-mode clustering and hazard calibration.",
       "expected_output": "degradation_modes.csv, hazard_calibration.csv",
-      "priority": 4
+      "priority": 5
     }
   ],
   "observations": [
@@ -67,6 +74,12 @@
       "observation": "Synchronized event cycles are linked to unusually short frame-count regimes.",
       "strength": "moderate",
       "topic": "protocol_context"
+    },
+    {
+      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/event_candidate_fronts_summary.json",
+      "observation": "Detected 88 candidate particle/front regions; outputs are apparent front proxies, not calibrated diffusion coefficients.",
+      "strength": "exploratory",
+      "topic": "event_candidate_fronts"
     },
     {
       "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",

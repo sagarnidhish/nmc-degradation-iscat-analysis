@@ -39,6 +39,15 @@ def extract_observations(root: Path) -> List[Dict[str, Any]]:
             "evidence": str(derived / "event_protocol_context" / "event_protocol_context_summary.json"),
             "strength": "moderate",
         })
+
+    fronts = read_json(derived / "event_candidate_fronts" / "event_candidate_fronts_summary.json")
+    if fronts:
+        observations.append({
+            "topic": "event_candidate_fronts",
+            "observation": f"Detected {fronts.get('n_candidate_rows', 'unknown')} candidate particle/front regions; outputs are apparent front proxies, not calibrated diffusion coefficients.",
+            "evidence": str(derived / "event_candidate_fronts" / "event_candidate_fronts_summary.json"),
+            "strength": "exploratory",
+        })
     baselines = read_csv_if_exists(derived / "particle_event_targets" / "particle_event_feature_baselines.csv")
     if not baselines.empty and "f1" in baselines:
         observations.append({
@@ -72,6 +81,11 @@ def next_actions(observations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     })
     actions.append({
         "priority": 4,
+        "action": "Review candidate front overlays for cycles 86/116 and select validated ROIs for calibrated front tracking.",
+        "expected_output": "validated_front_candidates.csv and manual QC decisions",
+    })
+    actions.append({
+        "priority": 5,
         "action": "Fit grouped degradation-mode clustering and hazard calibration.",
         "expected_output": "degradation_modes.csv, hazard_calibration.csv",
     })
