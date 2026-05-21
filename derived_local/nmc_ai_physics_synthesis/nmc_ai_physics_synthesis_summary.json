@@ -6,12 +6,17 @@
   "n_event_reference_cycles": 4,
   "n_joined_roi": 52,
   "n_manual_qc_pending": 12,
+  "n_threshold_robust_front_roi": 52,
   "outputs": {
     "audit": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/completion_audit.csv",
     "report": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/NMC_AI_PHYSICS_SYNTHESIS.md",
     "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/nmc_ai_physics_synthesis_summary.json"
   },
   "persistence_best_all_cycles": true,
+  "protocol_conditioned_front_mean_balanced_accuracy": 0.3125,
+  "protocol_conditioned_front_mean_roc_auc": 0.453125,
+  "protocol_conditioned_front_residual_mean_balanced_accuracy": 0.3125,
+  "protocol_conditioned_front_residual_mean_roc_auc": 0.453125,
   "protocol_conditioned_residual_mean_balanced_accuracy": 0.6822916666666665,
   "protocol_conditioned_residual_mean_roc_auc": 0.671875,
   "requirement_audit": [
@@ -37,16 +42,16 @@
       "status": "implemented_with_guardrail"
     },
     {
-      "evidence": "Front/phase mobility descriptors and selected-front tracking exist; calibration table has 12 ROI rows.",
-      "limitation": "Front masks are automatic; all selected calibrated front ROIs remain manual-QC pending.",
+      "evidence": "Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers 52 ROI rows.",
+      "limitation": "Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics.",
       "next_step": "Manually review selected crop previews and lock accepted/rejected masks before publication-scale interpretation.",
       "requirement": "Track phase-boundary movement",
       "status": "implemented_as_proxy"
     },
     {
-      "evidence": "Provisional 0.096 um/px calibration and apparent diffusion proxies were computed for 12 front ROIs.",
-      "limitation": "The values are apparent optical-front contraction/expansion proxies, not validated diffusion coefficients.",
-      "next_step": "Confirm microscope calibration/timebase and validate front geometry before converting to mechanistic diffusion coefficients.",
+      "evidence": "Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across 7 thresholds with bootstrap slopes.",
+      "limitation": "Global threshold-robust phase slopes separate event/control ROIs, but conditioned diffusion-proxy residuals remain non-significant and front-only residual classifiers are poor.",
+      "next_step": "Treat diffusion numbers as apparent optical-front proxies until microscope calibration, timebase, and front masks are manually validated.",
       "requirement": "Extract diffusion coefficients",
       "status": "partial_proxy_only"
     },
@@ -58,8 +63,8 @@
       "status": "implemented_as_hypothesis_ranking"
     },
     {
-      "evidence": "Multi-cycle ROI echem coupling found strong frame-count/protocol correlations; protocol-conditioned residual tests still show event/control optical shifts.",
-      "limitation": "Residualization reduces but does not eliminate confounding and cannot prove causality with 52 automatic ROIs.",
+      "evidence": "Multi-cycle ROI echem coupling found strong frame-count/protocol correlations; protocol-conditioned residual tests still show event/control optical shifts and phase-front sign consistency.",
+      "limitation": "Residualization reduces but does not eliminate confounding, and front residual classifiers are not deployable with 52 automatic ROIs.",
       "next_step": "Use protocol-conditioned residuals as the default event-effect readout and expand after manual QC.",
       "requirement": "Correlate degradation with cycles, particle regions, and echem/protocol context",
       "status": "implemented_with_guardrail"
@@ -72,11 +77,11 @@
       "status": "implemented"
     },
     {
-      "evidence": "Local git commits exist through the latest echem coupling and this synthesis can be committed.",
-      "limitation": "Remote push must be verified separately because prior pushes were blocked by approval/network state.",
-      "next_step": "Attempt push after committing this synthesis and record the actual result.",
+      "evidence": "Scoped analysis scripts, compact derived outputs, and observations are committed and pushed after each completed increment.",
+      "limitation": "The synthesis report records workflow state at generation time; final push status should still be checked with git status and git log.",
+      "next_step": "Continue committing and pushing each new analysis increment with compact local artifacts only.",
       "requirement": "Keep GitHub updated",
-      "status": "local_commits_ready_remote_unverified"
+      "status": "implemented_with_verification"
     }
   ],
   "strict_logistic_mean_roc_auc": 0.625,
@@ -162,6 +167,88 @@
       "n_control": 28,
       "n_event": 24,
       "p_value": 0.04641714267682965
+    }
+  ],
+  "top_protocol_conditioned_front_tests": [
+    {
+      "control_mean": -0.029521211955649433,
+      "event_mean": 0.03444141394826048,
+      "event_minus_control": 0.06396262590390991,
+      "feature": "phase_slope_positive_fraction_protocol_residual",
+      "mannwhitney_u": 518.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.0008252166926316412
+    },
+    {
+      "control_mean": 0.029521211950479558,
+      "event_mean": -0.03444141394223366,
+      "event_minus_control": -0.06396262589271322,
+      "feature": "phase_slope_negative_fraction_protocol_residual",
+      "mannwhitney_u": 154.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.0008252166926316412
+    },
+    {
+      "control_mean": -0.04144270020688333,
+      "event_mean": 0.048349816908030474,
+      "event_minus_control": 0.0897925171149138,
+      "feature": "threshold_robust_phase_score_protocol_residual",
+      "mannwhitney_u": 383.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.39336304629272045
+    },
+    {
+      "control_mean": 1.8407786080281466e-07,
+      "event_mean": -2.1475750426994627e-07,
+      "event_minus_control": -3.9883536507276094e-07,
+      "feature": "diffusion_proxy_iqr_um2_per_s_protocol_residual",
+      "mannwhitney_u": 290.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.4036170587833805
+    },
+    {
+      "control_mean": 7.989490486101597e-05,
+      "event_mean": -9.321072233785027e-05,
+      "event_minus_control": -0.00017310562719886625,
+      "feature": "radius2_slope_iqr_px2_per_s_protocol_residual",
+      "mannwhitney_u": 290.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.4036170587833805
+    },
+    {
+      "control_mean": 4.470610595281934e-08,
+      "event_mean": -5.2157123611621446e-08,
+      "event_minus_control": -9.686322956444078e-08,
+      "feature": "phase_slope_iqr_per_s_protocol_residual",
+      "mannwhitney_u": 291.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.4140294738411484
+    },
+    {
+      "control_mean": 0.04559376004742558,
+      "event_mean": -0.053192720055329705,
+      "event_minus_control": -0.09878648010275529,
+      "feature": "radius2_slope_negative_fraction_protocol_residual",
+      "mannwhitney_u": 296.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.4681962466430366
+    },
+    {
+      "control_mean": -0.04559376004742555,
+      "event_mean": 0.05319272005532975,
+      "event_minus_control": 0.09878648010275529,
+      "feature": "radius2_slope_positive_fraction_protocol_residual",
+      "mannwhitney_u": 376.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.4681962466430366
     }
   ],
   "top_ranked_roi_candidates": [
@@ -372,6 +459,202 @@
       "p_value": 3.280386113784104e-06,
       "rho": 0.5950534715580754,
       "roi_feature": "dmd_minus_persistence_mse"
+    }
+  ],
+  "top_threshold_robust_front_by_event_tests": [
+    {
+      "control_mean": -3.764875775733032e-07,
+      "event_mean": 2.2065929659949973e-06,
+      "event_minus_control": 2.5830805435683004e-06,
+      "feature": "phase_slope_median_per_s",
+      "group": "event_reference_cycle",
+      "group_value": 156.0,
+      "mannwhitney_u": 48.0,
+      "n_control": 8,
+      "n_event": 6,
+      "p_value": 0.000666000666000666
+    },
+    {
+      "control_mean": 7.365141266186567e-07,
+      "event_mean": 2.2065929659949973e-06,
+      "event_minus_control": 1.4700788393763407e-06,
+      "feature": "phase_slope_abs_median_per_s",
+      "group": "event_reference_cycle",
+      "group_value": 156.0,
+      "mannwhitney_u": 46.0,
+      "n_control": 8,
+      "n_event": 6,
+      "p_value": 0.002664002664002664
+    },
+    {
+      "control_mean": -0.0021320671260799543,
+      "event_mean": -0.0001245236133076238,
+      "event_minus_control": 0.0020075435127723303,
+      "feature": "radius2_slope_median_px2_per_s",
+      "group": "event_reference_cycle",
+      "group_value": 86.0,
+      "mannwhitney_u": 44.0,
+      "n_control": 8,
+      "n_event": 6,
+      "p_value": 0.007992007992007992
+    },
+    {
+      "control_mean": -4.9122826584882145e-06,
+      "event_mean": -2.869024050607652e-07,
+      "event_minus_control": 4.625380253427449e-06,
+      "feature": "diffusion_proxy_median_um2_per_s",
+      "group": "event_reference_cycle",
+      "group_value": 86.0,
+      "mannwhitney_u": 44.0,
+      "n_control": 8,
+      "n_event": 6,
+      "p_value": 0.007992007992007992
+    },
+    {
+      "control_mean": 5.002244523277674e-06,
+      "event_mean": 8.688396985605157e-07,
+      "event_minus_control": -4.133404824717159e-06,
+      "feature": "diffusion_proxy_abs_median_um2_per_s",
+      "group": "event_reference_cycle",
+      "group_value": 86.0,
+      "mannwhitney_u": 5.0,
+      "n_control": 8,
+      "n_event": 6,
+      "p_value": 0.012654012654012654
+    },
+    {
+      "control_mean": 0.4642857142857143,
+      "event_mean": 1.0,
+      "event_minus_control": 0.5357142857142857,
+      "feature": "phase_slope_positive_fraction",
+      "group": "event_reference_cycle",
+      "group_value": 156.0,
+      "mannwhitney_u": 39.0,
+      "n_control": 8,
+      "n_event": 6,
+      "p_value": 0.026766133714376243
+    },
+    {
+      "control_mean": 0.43749999999999994,
+      "event_mean": 0.07852564102564101,
+      "event_minus_control": -0.3589743589743589,
+      "feature": "threshold_robust_diffusion_score",
+      "group": "event_reference_cycle",
+      "group_value": 86.0,
+      "mannwhitney_u": 10.0,
+      "n_control": 8,
+      "n_event": 6,
+      "p_value": 0.08069188905384389
+    },
+    {
+      "control_mean": 0.47716346153846156,
+      "event_mean": 0.7147435897435898,
+      "event_minus_control": 0.2375801282051282,
+      "feature": "threshold_robust_phase_score",
+      "group": "event_reference_cycle",
+      "group_value": 156.0,
+      "mannwhitney_u": 37.0,
+      "n_control": 8,
+      "n_event": 6,
+      "p_value": 0.10581321905267442
+    }
+  ],
+  "top_threshold_robust_front_tests": [
+    {
+      "control_mean": 1.4761752328818431e-06,
+      "event_mean": 2.569750761791768e-06,
+      "event_minus_control": 1.0935755289099247e-06,
+      "feature": "phase_slope_median_per_s",
+      "group": "all",
+      "group_value": NaN,
+      "mannwhitney_u": 466.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.01745185101635875
+    },
+    {
+      "control_mean": 1.7941757197938317e-06,
+      "event_mean": 2.5872952198356343e-06,
+      "event_minus_control": 7.931195000418026e-07,
+      "feature": "phase_slope_abs_median_per_s",
+      "group": "all",
+      "group_value": NaN,
+      "mannwhitney_u": 454.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.031022782808447467
+    },
+    {
+      "control_mean": 0.43784340659340676,
+      "event_mean": 0.593349358974359,
+      "event_minus_control": 0.15550595238095227,
+      "feature": "threshold_robust_phase_score",
+      "group": "all",
+      "group_value": NaN,
+      "mannwhitney_u": 448.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.04060265632931144
+    },
+    {
+      "control_mean": 0.8316326530612246,
+      "event_mean": 0.9702380952380952,
+      "event_minus_control": 0.13860544217687065,
+      "feature": "phase_slope_positive_fraction",
+      "group": "all",
+      "group_value": NaN,
+      "mannwhitney_u": 406.5,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.040605288275148914
+    },
+    {
+      "control_mean": -0.0008305331573882734,
+      "event_mean": -0.00033032094105594443,
+      "event_minus_control": 0.0005002122163323289,
+      "feature": "radius2_slope_median_px2_per_s",
+      "group": "all",
+      "group_value": NaN,
+      "mannwhitney_u": 398.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.25895351597420424
+    },
+    {
+      "control_mean": -1.9135483946225823e-06,
+      "event_mean": -7.610594481928962e-07,
+      "event_minus_control": 1.1524889464296862e-06,
+      "feature": "diffusion_proxy_median_um2_per_s",
+      "group": "all",
+      "group_value": NaN,
+      "mannwhitney_u": 398.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.25895351597420424
+    },
+    {
+      "control_mean": 2.6928452207261054e-06,
+      "event_mean": 2.2206287745693213e-06,
+      "event_minus_control": -4.7221644615678416e-07,
+      "feature": "diffusion_proxy_abs_median_um2_per_s",
+      "group": "all",
+      "group_value": NaN,
+      "mannwhitney_u": 313.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.6796062527235118
+    },
+    {
+      "control_mean": 0.5044642857142857,
+      "event_mean": 0.515625,
+      "event_minus_control": 0.011160714285714302,
+      "feature": "threshold_robust_diffusion_score",
+      "group": "all",
+      "group_value": NaN,
+      "mannwhitney_u": 335.0,
+      "n_control": 28,
+      "n_event": 24,
+      "p_value": 0.9926744720274594
     }
   ],
   "top_within_reference_tests": [

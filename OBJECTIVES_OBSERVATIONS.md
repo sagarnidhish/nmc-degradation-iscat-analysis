@@ -991,3 +991,29 @@ Key result:
 
 Interpretation: threshold-swept ROI fronts strengthen the phase-boundary movement evidence while keeping diffusion claims guarded. Bright-phase growth is robust to threshold choice and bootstrapping across the expanded event cohort, but apparent diffusion proxies are threshold- and control-sensitive. The strongest current physics claim is therefore phase/front mobility and optical-state change, not calibrated Li diffusion coefficients.
 
+## 2026-05-21 Protocol-Conditioned Front Effects
+
+Added and ran:
+
+`python scripts/tier4_protocol_conditioned_front_effects.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects`
+
+Local compact copy:
+
+`derived_local/protocol_conditioned_front_effects`
+
+Key result:
+
+- Joined the 52-ROI echem/protocol table with the threshold-robust front metrics and residualized 17 front features against frame-count percentile, protocol-block position, voltage/current summaries, duration, timing elapsed, and event-reference-cycle fixed effects.
+- Protocol/echem context explains substantial variance in several threshold-front descriptors: phase-slope positive/negative fraction 0.810, phase-slope median 0.576, q70 bootstrap phase slope 0.565, radius2/diffusion IQR 0.585, and phase-slope IQR 0.511.
+- Raw front metrics reproduce the threshold-front result: event phase-slope median 2.57e-6/s vs 1.48e-6/s, p=0.0175, and q70 bootstrap phase slope 2.53e-6/s vs 1.44e-6/s, p=0.0202.
+- After protocol/echem residualization, the strongest surviving event/control effect is the sign consistency of the phase front: phase-slope positive-fraction residual +0.06396, p=0.000825, with the matching negative-fraction residual -0.06396, p=0.000825.
+- Magnitude-based phase-front residuals weaken after conditioning: threshold-robust phase score residual p=0.393, phase-slope median residual p=0.563, and absolute phase-slope residual p=0.833.
+- Diffusion-related residuals remain non-significant: diffusion proxy median residual p=0.468, absolute diffusion proxy residual p=0.949, and threshold-robust diffusion score residual p=0.993.
+- Leave-event-reference-out logistic classification using only residualized front features is poor (mean ROC-AUC 0.453, balanced accuracy 0.312), so these front residuals should not be used as a standalone detector.
+
+Interpretation: protocol/echem conditioning sharpens the mechanistic guardrail. Event ROIs are more likely to retain a consistently positive bright-front trend after adjusting for acquisition/protocol context, but the magnitude of phase motion and all diffusion-like proxies are largely explained by context or are too noisy in the current automatic ROI set. The useful physics claim remains robust phase-front directionality and optical-state movement, not calibrated diffusion or standalone front-based event detection.
+

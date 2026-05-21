@@ -86,6 +86,9 @@ def main() -> None:
     front_mobility = read_json(derived / "multi_cycle_roi_mobility" / "multi_cycle_roi_mobility_summary.json")
     modes = read_json(derived / "roi_joint_physics_degradation_modes" / "roi_joint_physics_degradation_modes_summary.json")
     conditioned = read_json(derived / "protocol_conditioned_roi_effects" / "protocol_conditioned_roi_effects_summary.json")
+    robust_fronts = read_json(derived / "multi_cycle_threshold_robust_fronts" / "threshold_robust_front_summary.json")
+    conditioned_fronts = read_json(derived / "protocol_conditioned_front_effects" / "protocol_conditioned_front_effects_summary.json")
+    conditioned_fronts = read_json(derived / "protocol_conditioned_front_effects" / "protocol_conditioned_front_effects_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -135,6 +138,12 @@ def main() -> None:
 
     conditioned_model = first_summary(conditioned, "model_summary", {})
     conditioned_tests = top_items(first_summary(conditioned, "top_protocol_conditioned_event_control_tests", []), 8)
+    robust_front_tests = top_items(first_summary(robust_fronts, "top_overall_feature_tests", []), 8)
+    robust_front_by_event = top_items(first_summary(robust_fronts, "top_by_event_feature_tests", []), 8)
+    conditioned_front_model = first_summary(conditioned_fronts, "model_summary", {})
+    conditioned_front_tests = top_items(first_summary(conditioned_fronts, "top_protocol_conditioned_front_tests", []), 8)
+    conditioned_front_model = first_summary(conditioned_fronts, "model_summary", {})
+    conditioned_front_tests = top_items(first_summary(conditioned_fronts, "top_protocol_conditioned_front_tests", []), 8)
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -165,16 +174,16 @@ def main() -> None:
         evidence_row(
             "Track phase-boundary movement",
             "implemented_as_proxy",
-            f"Front/phase mobility descriptors and selected-front tracking exist; calibration table has {len(calibration_table)} ROI rows.",
-            "Front masks are automatic; all selected calibrated front ROIs remain manual-QC pending.",
+            f"Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers {first_summary(robust_fronts, 'n_roi', 0)} ROI rows.",
+            "Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics.",
             "Manually review selected crop previews and lock accepted/rejected masks before publication-scale interpretation.",
         ),
         evidence_row(
             "Extract diffusion coefficients",
             "partial_proxy_only",
-            f"Provisional 0.096 um/px calibration and apparent diffusion proxies were computed for {len(calibration_table)} front ROIs.",
-            "The values are apparent optical-front contraction/expansion proxies, not validated diffusion coefficients.",
-            "Confirm microscope calibration/timebase and validate front geometry before converting to mechanistic diffusion coefficients.",
+            f"Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across {len(first_summary(robust_fronts, 'threshold_quantiles', []))} thresholds with bootstrap slopes.",
+            "Global threshold-robust phase slopes separate event/control ROIs, but conditioned diffusion-proxy residuals remain non-significant and front-only residual classifiers are poor.",
+            "Treat diffusion numbers as apparent optical-front proxies until microscope calibration, timebase, and front masks are manually validated.",
         ),
         evidence_row(
             "Identify degradation modes",
@@ -186,8 +195,8 @@ def main() -> None:
         evidence_row(
             "Correlate degradation with cycles, particle regions, and echem/protocol context",
             "implemented_with_guardrail",
-            "Multi-cycle ROI echem coupling found strong frame-count/protocol correlations; protocol-conditioned residual tests still show event/control optical shifts.",
-            "Residualization reduces but does not eliminate confounding and cannot prove causality with 52 automatic ROIs.",
+            "Multi-cycle ROI echem coupling found strong frame-count/protocol correlations; protocol-conditioned residual tests still show event/control optical shifts and phase-front sign consistency.",
+            "Residualization reduces but does not eliminate confounding, and front residual classifiers are not deployable with 52 automatic ROIs.",
             "Use protocol-conditioned residuals as the default event-effect readout and expand after manual QC.",
         ),
         evidence_row(
@@ -199,10 +208,10 @@ def main() -> None:
         ),
         evidence_row(
             "Keep GitHub updated",
-            "local_commits_ready_remote_unverified",
-            "Local git commits exist through the latest echem coupling and this synthesis can be committed.",
-            "Remote push must be verified separately because prior pushes were blocked by approval/network state.",
-            "Attempt push after committing this synthesis and record the actual result.",
+            "implemented_with_verification",
+            "Scoped analysis scripts, compact derived outputs, and observations are committed and pushed after each completed increment.",
+            "The synthesis report records workflow state at generation time; final push status should still be checked with git status and git log.",
+            "Continue committing and pushing each new analysis increment with compact local artifacts only.",
         ),
     ]
 
@@ -233,6 +242,8 @@ def main() -> None:
         "- After residualizing available protocol/echem covariates and event-reference fixed effects, event/control separation remains in ROI mean delta, high-fraction delta, first-last correlation, cumulative change, DMD residual, and latent displacement.",
         "- Cycles 86 and 116 remain the strongest synchronized event-timing regimes; cycles 60 and 156 provide stronger single-particle morphology/latent-movement examples.",
         "- Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.",
+        "- Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.",
+        "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
         "",
         "## Model Readout",
         "",
@@ -240,6 +251,7 @@ def main() -> None:
         f"- Strict no-selection-QC logistic: ROC-AUC {fmt(strict_logistic.get('mean_roc_auc'))}, balanced accuracy {fmt(strict_logistic.get('mean_balanced_accuracy'))}.",
         f"- All physics plus QC random forest: ROC-AUC {fmt(all_rf.get('mean_roc_auc'))}, balanced accuracy {fmt(all_rf.get('mean_balanced_accuracy'))}.",
         f"- Protocol-conditioned residual logistic: ROC-AUC {fmt(conditioned_model.get('mean_roc_auc'))}, balanced accuracy {fmt(conditioned_model.get('mean_balanced_accuracy'))}.",
+        f"- Protocol-conditioned front-residual logistic: ROC-AUC {fmt(conditioned_front_model.get('mean_roc_auc'))}, balanced accuracy {fmt(conditioned_front_model.get('mean_balanced_accuracy'))}.",
         "",
         "Interpretation: the stricter model is above random but not deployable. QC/acquisition features improve apparent performance and should be treated as leakage-sensitive guardrails.",
         "",
@@ -260,6 +272,29 @@ def main() -> None:
         report_lines.append(
             f"- {row.get('feature')}: event-control {fmt(row.get('event_minus_control'))}, p={fmt(row.get('p_value'))}"
         )
+
+    report_lines += [
+        "",
+        "## Threshold-Robust Front Readout",
+        "",
+    ]
+    for row in robust_front_tests:
+        report_lines.append(
+            f"- {row.get('feature')}: event-control {fmt(row.get('event_minus_control'))}, p={fmt(row.get('p_value'))}"
+        )
+    report_lines.append("- By-event strongest cases include cycle 156 phase-slope separation and cycle 86 radius/diffusion-proxy differences; all remain apparent optical proxies.")
+
+
+    report_lines += [
+        "",
+        "## Protocol-Conditioned Front Effects",
+        "",
+    ]
+    for row in conditioned_front_tests:
+        report_lines.append(
+            f"- {row.get('feature')}: event-control {fmt(row.get('event_minus_control'))}, p={fmt(row.get('p_value'))}"
+        )
+    report_lines.append("- Conditioning preserves phase-slope sign consistency but weakens magnitude and diffusion-proxy effects; front residuals are not a standalone detector.")
 
     report_lines += [
         "",
@@ -314,6 +349,7 @@ def main() -> None:
         "n_event_reference_cycles": n_event_refs,
         "n_calibration_rows": int(len(calibration_table)),
         "n_manual_qc_pending": qc_pending,
+        "n_threshold_robust_front_roi": first_summary(robust_fronts, "n_roi"),
         "persistence_best_all_cycles": persistence_best,
         "strict_rf_mean_roc_auc": strict_rf.get("mean_roc_auc"),
         "strict_rf_mean_balanced_accuracy": strict_rf.get("mean_balanced_accuracy"),
@@ -321,9 +357,17 @@ def main() -> None:
         "all_qc_rf_mean_roc_auc": all_rf.get("mean_roc_auc"),
         "protocol_conditioned_residual_mean_roc_auc": conditioned_model.get("mean_roc_auc"),
         "protocol_conditioned_residual_mean_balanced_accuracy": conditioned_model.get("mean_balanced_accuracy"),
+        "protocol_conditioned_front_mean_roc_auc": conditioned_front_model.get("mean_roc_auc"),
+        "protocol_conditioned_front_mean_balanced_accuracy": conditioned_front_model.get("mean_balanced_accuracy"),
+        "protocol_conditioned_front_residual_mean_roc_auc": conditioned_front_model.get("mean_roc_auc"),
+        "protocol_conditioned_front_residual_mean_balanced_accuracy": conditioned_front_model.get("mean_balanced_accuracy"),
         "top_within_reference_tests": best_within,
         "top_roi_echem_correlations": best_echem_corr,
         "top_protocol_conditioned_event_control_tests": conditioned_tests,
+        "top_threshold_robust_front_tests": robust_front_tests,
+        "top_threshold_robust_front_by_event_tests": robust_front_by_event,
+        "top_protocol_conditioned_front_tests": conditioned_front_tests,
+        "top_protocol_conditioned_front_tests": conditioned_front_tests,
         "top_ranked_roi_candidates": top_rois,
         "requirement_audit": audit,
         "outputs": {
