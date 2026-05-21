@@ -1,0 +1,482 @@
+{
+  "descriptor_source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_descriptors.csv",
+  "feature_count": 34,
+  "feature_sets": {
+    "all_physics_plus_qc": [
+      "roi_norm_mean_delta",
+      "roi_norm_mean_slope",
+      "roi_norm_mean_slope_r2",
+      "high_fraction_delta",
+      "high_fraction_slope",
+      "low_fraction_delta",
+      "low_fraction_slope",
+      "high_radius2_delta_px2",
+      "high_radius2_slope_px2_per_frame",
+      "high_radius2_slope_um2_per_frame",
+      "centroid_path_px",
+      "first_last_corr",
+      "cumulative_abs_norm_change",
+      "temporal_diff_energy",
+      "stage_drift_xy_sampled",
+      "validation_score",
+      "front_quality_score",
+      "apparent_diffusion_proxy_ds_px2_per_frame",
+      "latent_path_length",
+      "latent_mean_step",
+      "latent_net_displacement",
+      "latent_component0_delta",
+      "latent_component1_delta",
+      "persistence_mse",
+      "persistence_mae",
+      "persistence_ssim",
+      "velocity_mse",
+      "velocity_mae",
+      "velocity_ssim",
+      "low_rank_dmd_mse",
+      "low_rank_dmd_mae",
+      "low_rank_dmd_ssim",
+      "dmd_minus_persistence_mse",
+      "velocity_minus_persistence_mse"
+    ],
+    "physics_no_selection_qc": [
+      "roi_norm_mean_delta",
+      "roi_norm_mean_slope",
+      "roi_norm_mean_slope_r2",
+      "high_fraction_delta",
+      "high_fraction_slope",
+      "low_fraction_delta",
+      "low_fraction_slope",
+      "high_radius2_delta_px2",
+      "high_radius2_slope_px2_per_frame",
+      "high_radius2_slope_um2_per_frame",
+      "centroid_path_px",
+      "first_last_corr",
+      "cumulative_abs_norm_change",
+      "temporal_diff_energy",
+      "apparent_diffusion_proxy_ds_px2_per_frame",
+      "latent_path_length",
+      "latent_mean_step",
+      "latent_net_displacement",
+      "latent_component0_delta",
+      "latent_component1_delta",
+      "persistence_mse",
+      "persistence_mae",
+      "persistence_ssim",
+      "velocity_mse",
+      "velocity_mae",
+      "velocity_ssim",
+      "low_rank_dmd_mse",
+      "low_rank_dmd_mae",
+      "low_rank_dmd_ssim",
+      "dmd_minus_persistence_mse",
+      "velocity_minus_persistence_mse"
+    ]
+  },
+  "features": [
+    "roi_norm_mean_delta",
+    "roi_norm_mean_slope",
+    "roi_norm_mean_slope_r2",
+    "high_fraction_delta",
+    "high_fraction_slope",
+    "low_fraction_delta",
+    "low_fraction_slope",
+    "high_radius2_delta_px2",
+    "high_radius2_slope_px2_per_frame",
+    "high_radius2_slope_um2_per_frame",
+    "centroid_path_px",
+    "first_last_corr",
+    "cumulative_abs_norm_change",
+    "temporal_diff_energy",
+    "stage_drift_xy_sampled",
+    "validation_score",
+    "front_quality_score",
+    "apparent_diffusion_proxy_ds_px2_per_frame",
+    "latent_path_length",
+    "latent_mean_step",
+    "latent_net_displacement",
+    "latent_component0_delta",
+    "latent_component1_delta",
+    "persistence_mse",
+    "persistence_mae",
+    "persistence_ssim",
+    "velocity_mse",
+    "velocity_mae",
+    "velocity_ssim",
+    "low_rank_dmd_mse",
+    "low_rank_dmd_mae",
+    "low_rank_dmd_ssim",
+    "dmd_minus_persistence_mse",
+    "velocity_minus_persistence_mse"
+  ],
+  "fold_metrics": [
+    {
+      "accuracy": 0.6428571428571429,
+      "average_precision": 0.6489417989417989,
+      "balanced_accuracy": 0.6666666666666667,
+      "feature_set": "all_physics_plus_qc",
+      "holdout_event_reference_cycle": 60.0,
+      "model": "logistic_l2",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 0.6875
+    },
+    {
+      "accuracy": 0.5714285714285714,
+      "average_precision": 0.5213675213675214,
+      "balanced_accuracy": 0.5625,
+      "feature_set": "all_physics_plus_qc",
+      "holdout_event_reference_cycle": 60.0,
+      "model": "random_forest",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 0.5625
+    },
+    {
+      "accuracy": 0.9285714285714286,
+      "average_precision": 1.0,
+      "balanced_accuracy": 0.9375,
+      "feature_set": "all_physics_plus_qc",
+      "holdout_event_reference_cycle": 86.0,
+      "model": "logistic_l2",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 1.0
+    },
+    {
+      "accuracy": 0.7142857142857143,
+      "average_precision": 0.7575757575757576,
+      "balanced_accuracy": 0.6875,
+      "feature_set": "all_physics_plus_qc",
+      "holdout_event_reference_cycle": 86.0,
+      "model": "random_forest",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 0.7083333333333333
+    },
+    {
+      "accuracy": 0.5,
+      "average_precision": 1.0,
+      "balanced_accuracy": 0.5833333333333334,
+      "feature_set": "all_physics_plus_qc",
+      "holdout_event_reference_cycle": 116.0,
+      "model": "logistic_l2",
+      "n_control_test": 4,
+      "n_event_test": 6,
+      "n_test": 10,
+      "n_train": 42,
+      "roc_auc": 1.0
+    },
+    {
+      "accuracy": 0.4,
+      "average_precision": 0.9583333333333333,
+      "balanced_accuracy": 0.5,
+      "feature_set": "all_physics_plus_qc",
+      "holdout_event_reference_cycle": 116.0,
+      "model": "random_forest",
+      "n_control_test": 4,
+      "n_event_test": 6,
+      "n_test": 10,
+      "n_train": 42,
+      "roc_auc": 0.9166666666666667
+    },
+    {
+      "accuracy": 0.2857142857142857,
+      "average_precision": 0.31193806193806195,
+      "balanced_accuracy": 0.25,
+      "feature_set": "all_physics_plus_qc",
+      "holdout_event_reference_cycle": 156.0,
+      "model": "logistic_l2",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 0.125
+    },
+    {
+      "accuracy": 1.0,
+      "average_precision": 1.0,
+      "balanced_accuracy": 1.0,
+      "feature_set": "all_physics_plus_qc",
+      "holdout_event_reference_cycle": 156.0,
+      "model": "random_forest",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 1.0
+    },
+    {
+      "accuracy": 0.5714285714285714,
+      "average_precision": 0.5092592592592593,
+      "balanced_accuracy": 0.5833333333333333,
+      "feature_set": "physics_no_selection_qc",
+      "holdout_event_reference_cycle": 60.0,
+      "model": "logistic_l2",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 0.6041666666666666
+    },
+    {
+      "accuracy": 0.5,
+      "average_precision": 0.4585368335368335,
+      "balanced_accuracy": 0.4583333333333333,
+      "feature_set": "physics_no_selection_qc",
+      "holdout_event_reference_cycle": 60.0,
+      "model": "random_forest",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 0.4583333333333333
+    },
+    {
+      "accuracy": 0.7142857142857143,
+      "average_precision": 0.9150793650793649,
+      "balanced_accuracy": 0.6666666666666666,
+      "feature_set": "physics_no_selection_qc",
+      "holdout_event_reference_cycle": 86.0,
+      "model": "logistic_l2",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 0.9375
+    },
+    {
+      "accuracy": 0.6428571428571429,
+      "average_precision": 0.5633089133089133,
+      "balanced_accuracy": 0.6041666666666666,
+      "feature_set": "physics_no_selection_qc",
+      "holdout_event_reference_cycle": 86.0,
+      "model": "random_forest",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 0.45833333333333326
+    },
+    {
+      "accuracy": 0.8,
+      "average_precision": 0.976190476190476,
+      "balanced_accuracy": 0.75,
+      "feature_set": "physics_no_selection_qc",
+      "holdout_event_reference_cycle": 116.0,
+      "model": "logistic_l2",
+      "n_control_test": 4,
+      "n_event_test": 6,
+      "n_test": 10,
+      "n_train": 42,
+      "roc_auc": 0.9583333333333334
+    },
+    {
+      "accuracy": 0.4,
+      "average_precision": 0.8551587301587301,
+      "balanced_accuracy": 0.5,
+      "feature_set": "physics_no_selection_qc",
+      "holdout_event_reference_cycle": 116.0,
+      "model": "random_forest",
+      "n_control_test": 4,
+      "n_event_test": 6,
+      "n_test": 10,
+      "n_train": 42,
+      "roc_auc": 0.75
+    },
+    {
+      "accuracy": 0.2857142857142857,
+      "average_precision": 0.2883930883930884,
+      "balanced_accuracy": 0.25,
+      "feature_set": "physics_no_selection_qc",
+      "holdout_event_reference_cycle": 156.0,
+      "model": "logistic_l2",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 0.0
+    },
+    {
+      "accuracy": 0.7142857142857143,
+      "average_precision": 0.9444444444444444,
+      "balanced_accuracy": 0.7291666666666667,
+      "feature_set": "physics_no_selection_qc",
+      "holdout_event_reference_cycle": 156.0,
+      "model": "random_forest",
+      "n_control_test": 8,
+      "n_event_test": 6,
+      "n_test": 14,
+      "n_train": 38,
+      "roc_auc": 0.9375
+    }
+  ],
+  "guardrail": "Leave-event-cycle-out prediction tests whether ROI physics descriptors generalize. It is not a deployable detector and excludes direct evidence/cycle labels to reduce leakage.",
+  "latent_source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/roi_latent_dynamics_summary.csv",
+  "model_summary": {
+    "all_physics_plus_qc:logistic_l2": {
+      "folds": 4,
+      "mean_average_precision": 0.7402199652199651,
+      "mean_balanced_accuracy": 0.609375,
+      "mean_roc_auc": 0.703125
+    },
+    "all_physics_plus_qc:random_forest": {
+      "folds": 4,
+      "mean_average_precision": 0.809319153069153,
+      "mean_balanced_accuracy": 0.6875,
+      "mean_roc_auc": 0.796875
+    },
+    "physics_no_selection_qc:logistic_l2": {
+      "folds": 4,
+      "mean_average_precision": 0.6722305472305472,
+      "mean_balanced_accuracy": 0.5625,
+      "mean_roc_auc": 0.625
+    },
+    "physics_no_selection_qc:random_forest": {
+      "folds": 4,
+      "mean_average_precision": 0.7053622303622304,
+      "mean_balanced_accuracy": 0.5729166666666667,
+      "mean_roc_auc": 0.6510416666666666
+    }
+  },
+  "n_control_roi": 28,
+  "n_event_roi": 24,
+  "n_roi": 52,
+  "outputs": {
+    "feature_importance_by_fold": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor/feature_importance_by_fold.csv",
+    "feature_importance_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor/feature_importance_summary.csv",
+    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor/multi_cycle_roi_event_predictor_features.csv",
+    "fold_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor/leave_event_cycle_out_metrics.csv",
+    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor/leave_event_cycle_out_predictions.csv"
+  },
+  "rollout_source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/roi_rollout_per_roi_metrics.csv",
+  "top_features": [
+    {
+      "abs_importance": 0.9308833553506729,
+      "feature": "stage_drift_xy_sampled",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.8952690353044699,
+      "feature": "roi_norm_mean_slope_r2",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.7360780641776029,
+      "feature": "front_quality_score",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.4461610220764817,
+      "feature": "centroid_path_px",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.407109484253129,
+      "feature": "roi_norm_mean_slope",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.2780703155749486,
+      "feature": "high_fraction_slope",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.26268567519137453,
+      "feature": "latent_mean_step",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.2626856388002942,
+      "feature": "latent_path_length",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.24544103327142042,
+      "feature": "roi_norm_mean_delta",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.2268942383597013,
+      "feature": "cumulative_abs_norm_change",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.21897438966271768,
+      "feature": "high_fraction_delta",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.19947953563736037,
+      "feature": "low_fraction_delta",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.18648276975626724,
+      "feature": "velocity_ssim",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.17637925149164652,
+      "feature": "latent_net_displacement",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.1733793743475741,
+      "feature": "validation_score",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.16584436210968317,
+      "feature": "persistence_ssim",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.16009137565367892,
+      "feature": "high_radius2_slope_um2_per_frame",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.16009137565367854,
+      "feature": "high_radius2_slope_px2_per_frame",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.10668551494520498,
+      "feature": "first_last_corr",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    },
+    {
+      "abs_importance": 0.10650841850732765,
+      "feature": "high_radius2_delta_px2",
+      "feature_set": "all_physics_plus_qc",
+      "model": "logistic_l2"
+    }
+  ]
+}

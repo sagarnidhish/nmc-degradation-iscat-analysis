@@ -840,3 +840,29 @@ Key result:
 - Top rollout/mobility difficulty ROIs include one active control (`cycle62_rank3_obj9`) and multiple event ROIs from cycles 156 and 60, with `cycle86_rank4_obj9` still present but no longer the top-ranked ROI in the broader cohort.
 
 Interpretation: the multi-cycle rollout analysis supports a guarded modeling conclusion. Next-frame persistence is a strong baseline and mostly measures short-term activity; the more useful AI/physics signal is the mismatch between simple dynamical models and ROI phase/mobility descriptors. Cycle 156 and cycle 60 contain the hardest high-mobility ROIs, while cycle 86 remains a structurally decorrelating synchronized-event regime and cycle 116 remains coherent/low-decorrelation.
+
+## 2026-05-21 Multi-Cycle ROI Event Predictor
+
+Added and ran:
+
+`python scripts/tier3_multicycle_roi_event_predictor.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor`
+
+Local compact copy:
+
+`derived_local/multi_cycle_roi_event_predictor`
+
+Key result:
+
+- Trained leakage-guarded event/control classifiers on the 52-ROI expanded cohort using leave-event-reference-cycle-out folds. Direct evidence score, event particle count, cycle number, and event-reference cycle were excluded from features.
+- Two feature sets were evaluated: `all_physics_plus_qc`, and `physics_no_selection_qc`, which removes stage drift, validation score, and front-quality score to reduce selection/acquisition leakage.
+- With all physics plus QC features, mean leave-cycle-out performance was modest: logistic mean ROC-AUC 0.703 / balanced accuracy 0.609; random forest mean ROC-AUC 0.797 / balanced accuracy 0.688.
+- The all-feature logistic model depended most on `stage_drift_xy_sampled`, `roi_norm_mean_slope_r2`, and `front_quality_score`, so that result is partly acquisition/selection-sensitive.
+- In the stricter `physics_no_selection_qc` setting, performance dropped but stayed above random on average: logistic mean ROC-AUC 0.625 / balanced accuracy 0.563; random forest mean ROC-AUC 0.651 / balanced accuracy 0.573.
+- The stricter physics features ranked ROI mean-slope fit quality, centroid path, cumulative absolute normalized change, rollout SSIM, ROI mean slope, ROI mean delta, high-fraction slope, first-last correlation, and latent path length among the leading descriptors.
+- Fold behavior is heterogeneous: cycle 86 and 116 are relatively separable in several folds, while cycle 156 reverses or depends strongly on model class.
+
+Interpretation: ROI physics and rollout descriptors contain some event/control signal, but the current 52-ROI cohort is not enough for a reliable event detector. The predictor is most useful as a ranking and ablation tool: it identifies which features are likely physical (`high_fraction_slope`, `cumulative_abs_norm_change`, `first_last_corr`, latent movement) and which are likely guardrail/artifact-sensitive (`stage_drift_xy_sampled`, validation/front-quality scores). This supports continuing with physics descriptor extraction and manual QC rather than claiming automated degradation detection.
