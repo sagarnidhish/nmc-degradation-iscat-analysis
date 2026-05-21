@@ -31,6 +31,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Echem-shape-conditioned ROI/front rows/shape PCs: 52 / 6
 - Physics-consistency matrix ROI/cycles: 52 / 11
 - Cycle state-space rows/clusters: 89 / 4
+- Cycle hazard warning evaluated cycles/events: 62 / 4
 - Cycle-state ROI bridge rows/cycles: 52 / 11
 - Particle-mask stability ROI/frame rows: 52 / 4992
 - Masked ROI rollout frame rows: 4992
@@ -75,6 +76,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Echem-shape-conditioned residual audit uses 45 shape features compressed to 6 PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p=0.004), while diffusion residuals remain non-significant and the shape-residual classifier is poor.
 - Physics-consistency claim matrix scores 52 ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; 2 rows are cross-modal high priority, but all 52 remain `manual_qc_required_no_physics_claim`.
 - Cycle state-space transition audit builds a 4-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p=0.016), the shuffled-fold classifier reaches mean AUC 0.781, and stricter temporal holdout reaches AUC 0.779 across 2 usable blocks.
+- Rolling-origin cycle hazard warning audit evaluates 62 cycles for future 8-cycle abrupt drops; best AUC is 0.783 with permutation p=0.048, and 8-cycle pre-event warnings hit 0.750 of event cycles.
 - Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to 11 cycles: top collapsed test cycle_state_pc2 vs mode_taxonomy_score, rho=0.855, permutation p=0.002.
 - Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction 0.000, accepted-area CV 0.042, centroid path 73.607 px; event/control mask instability is not significantly different in the current cohort.
 - Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for 52 of 52 ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho=0.637, p=3.909e-07).
@@ -724,6 +726,30 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Transition 1->0: n=1, next future8 rate=1.000, step norm=8.756
 - Transition 1->1: n=56, next future8 rate=0.250, step norm=1.833
 - Guardrail: Cycle state-space clusters use four-particle trace summaries and echem-shape descriptors at cycle resolution. They are degradation-state hypotheses and early-warning covariates, not localized ROI/front validation or calibrated diffusion measurements.
+
+## Cycle Hazard Warning Audit
+
+- Target/events: future_any_drop_within_8cycles / 4 event cycles [60.0, 86.0, 116.0, 156.0]
+- Rolling-origin purge/min-train/permutation nulls: 8 / 24 / 20
+- Feature set particle_trace_echem_with_acquisition: AUC 0.783, AP 0.573, Brier 0.313, balanced accuracy 0.789, n=62, positives=16
+- Feature set particle_trace_echem_no_acquisition: AUC 0.742, AP 0.490, Brier 0.393, balanced accuracy 0.705, n=62, positives=16
+- Feature set combined_with_cycle_state: AUC 0.739, AP 0.485, Brier 0.382, balanced accuracy 0.705, n=62, positives=16
+- Feature set particle_trace: AUC 0.637, AP 0.402, Brier 0.290, balanced accuracy 0.579, n=62, positives=16
+- Feature set echem_shape_cycle: AUC 0.306, AP 0.192, Brier 0.484, balanced accuracy 0.326, n=62, positives=16
+- Null check: observed AUC 0.783, null p95 0.581, empirical p=0.048
+- Lead-time 4 cycles: hit rate 0.500, median max probability 0.993, median lead 4.000 cycles
+- Lead-time 8 cycles: hit rate 0.750, median max probability 1.000, median lead 6.000 cycles
+- Lead-time 16 cycles: hit rate 0.750, median max probability 1.000, median lead 6.000 cycles
+- Ablation remove particle_trace: AUC 0.492, drop vs best 0.291
+- Ablation remove echem_shape: AUC 0.712, drop vs best 0.071
+- Ablation remove acquisition_context: AUC 0.742, drop vs best 0.041
+- Ablation remove cycle_echem: AUC 0.780, drop vs best 0.003
+- Warning probability link cycle_state_pc2: rho=0.456, p=1.958e-04, n=62
+- Warning probability link mean_abs_delta_prev: rho=-0.258, p=0.043, n=62
+- Warning probability link shape_V_q95: rho=-0.113, p=0.414, n=54
+- Warning probability link capacity_mAh: rho=-0.108, p=0.439, n=54
+- Warning probability link cycle_state_pc1: rho=-0.081, p=0.532, n=62
+- Guardrail: Rolling-origin cycle-level warning audit using particle trace/echem/state descriptors. It tests early-warning covariates, not localized ROI fronts, manual degradation labels, or calibrated diffusion.
 
 ## Cycle State To ROI/Front Bridge
 

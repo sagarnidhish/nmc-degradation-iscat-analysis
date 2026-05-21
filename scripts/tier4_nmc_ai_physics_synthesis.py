@@ -114,6 +114,7 @@ def main() -> None:
     physics_consistency = read_json(derived / "physics_consistency_claim_matrix" / "physics_consistency_claim_matrix_summary.json")
     rollout_calibration = read_json(derived / "probabilistic_rollout_calibration" / "probabilistic_rollout_calibration_summary.json")
     cycle_state_space = read_json(derived / "cycle_state_space_transition_audit" / "cycle_state_space_transition_audit_summary.json")
+    cycle_hazard_warning = read_json(derived / "cycle_hazard_warning_audit" / "cycle_hazard_warning_audit_summary.json")
     cycle_state_roi_bridge = read_json(derived / "cycle_state_roi_bridge" / "cycle_state_roi_bridge_summary.json")
     particle_mask = read_json(derived / "particle_mask_stability_audit" / "particle_mask_stability_audit_summary.json")
     masked_rollout = read_json(derived / "masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
@@ -235,6 +236,11 @@ def main() -> None:
     cycle_state_clusters = top_items(first_summary(cycle_state_space, "top_state_clusters", []), 8)
     cycle_state_transitions = top_items(first_summary(cycle_state_space, "top_transitions", []), 8)
     cycle_state_loadings = top_items(first_summary(cycle_state_space, "top_pc_loadings", []), 12)
+    cycle_hazard_feature_sets = top_items(first_summary(cycle_hazard_warning, "feature_set_summary", []), 8)
+    cycle_hazard_lead = top_items(first_summary(cycle_hazard_warning, "lead_time_summary", []), 8)
+    cycle_hazard_ablation = top_items(first_summary(cycle_hazard_warning, "top_group_ablation", []), 8)
+    cycle_hazard_corr = top_items(first_summary(cycle_hazard_warning, "top_probability_correlations", []), 8)
+    cycle_hazard_null = first_summary(cycle_hazard_warning, "permutation_null", {}) or {}
     cycle_state_classifier = first_summary(cycle_state_space, "future_drop_classifier", {}) or {}
     cycle_state_temporal = cycle_state_classifier.get("temporal_holdout", {}) if isinstance(cycle_state_classifier, dict) else {}
     cycle_state_roi_row_tests = top_items(first_summary(cycle_state_roi_bridge, "top_row_tests", []), 12)
@@ -393,6 +399,7 @@ def main() -> None:
         f"- Echem-shape-conditioned ROI/front rows/shape PCs: {first_summary(echem_shape_conditioned, 'n_rows', 0)} / {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)}",
         f"- Physics-consistency matrix ROI/cycles: {first_summary(physics_consistency, 'n_roi', 0)} / {first_summary(physics_consistency, 'n_cycles', 0)}",
         f"- Cycle state-space rows/clusters: {first_summary(cycle_state_space, 'n_cycles', 0)} / {first_summary(cycle_state_space, 'chosen_k', 0)}",
+        f"- Cycle hazard warning evaluated cycles/events: {((cycle_hazard_feature_sets[0] if cycle_hazard_feature_sets else {}).get('n_evaluated_cycles', 0))} / {first_summary(cycle_hazard_warning, 'n_event_cycles', 0)}",
         f"- Cycle-state ROI bridge rows/cycles: {first_summary(cycle_state_roi_bridge, 'n_roi_rows', 0)} / {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)}",
         f"- Particle-mask stability ROI/frame rows: {first_summary(particle_mask, 'n_roi', 0)} / {first_summary(particle_mask, 'n_frames_total', 0)}",
         f"- Masked ROI rollout frame rows: {first_summary(masked_rollout, 'n_frame_metric_rows', 0)}",
@@ -437,6 +444,7 @@ def main() -> None:
         f"- Echem-shape-conditioned residual audit uses {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_shape_features_used', 0)} shape features compressed to {first_summary(echem_shape_conditioned, 'shape_pca', {}).get('n_components', 0)} PCs; phase-slope positive-fraction residual remains the strongest event/control readout after shape conditioning (p={fmt((echem_shape_conditioned_tests[0] if echem_shape_conditioned_tests else {}).get('p_value'))}), while diffusion residuals remain non-significant and the shape-residual classifier is poor.",
         f"- Physics-consistency claim matrix scores {first_summary(physics_consistency, 'n_roi', 0)} ROI rows across front, optical-change, rollout, kinetics, precursor, echem-shape, and mode-taxonomy pillars; {first_summary(physics_consistency, 'tier_counts', {}).get('cross_modal_high_priority', 0)} rows are cross-modal high priority, but all {first_summary(physics_consistency, 'n_roi', 0)} remain `manual_qc_required_no_physics_claim`.",
         f"- Cycle state-space transition audit builds a {first_summary(cycle_state_space, 'chosen_k', 0)}-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p={fmt((cycle_state_tests[0] if cycle_state_tests else {}).get('permutation_p'))}), the shuffled-fold classifier reaches mean AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}, and stricter temporal holdout reaches AUC {fmt(cycle_state_temporal.get('mean_roc_auc'))} across {fmt(cycle_state_temporal.get('n_evaluated_blocks'), 0)} usable blocks.",
+        f"- Rolling-origin cycle hazard warning audit evaluates {((cycle_hazard_feature_sets[0] if cycle_hazard_feature_sets else {}).get('n_evaluated_cycles', 0))} cycles for future 8-cycle abrupt drops; best AUC is {fmt((cycle_hazard_feature_sets[0] if cycle_hazard_feature_sets else {}).get('roc_auc'))} with permutation p={fmt(cycle_hazard_null.get('empirical_p_ge_observed'))}, and 8-cycle pre-event warnings hit {fmt((cycle_hazard_lead[1] if len(cycle_hazard_lead) > 1 else {}).get('hit_rate'))} of event cycles.",
         f"- Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)} cycles: top collapsed test {((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('predictor', 'NA'))} vs {((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('target', 'NA'))}, rho={fmt((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('rho'))}, permutation p={fmt((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('permutation_p'))}.",
         f"- Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction {fmt(particle_mask_overall.get('median_fallback_frame_fraction'))}, accepted-area CV {fmt(particle_mask_overall.get('median_accepted_area_cv'))}, centroid path {fmt(particle_mask_overall.get('median_centroid_path_px'))} px; event/control mask instability is not significantly different in the current cohort.",
         f"- Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for {masked_rollout_best_counts.get('persistence', 0)} of {first_summary(masked_rollout, 'n_roi', 0)} ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho={fmt((masked_rollout_corr[0] if masked_rollout_corr else {}).get('spearman_rho'))}, p={fmt((masked_rollout_corr[0] if masked_rollout_corr else {}).get('p_value'))}).",
@@ -1061,6 +1069,36 @@ def main() -> None:
         )
     report_lines.append(f"- Guardrail: {first_summary(cycle_state_space, 'guardrail', 'Cycle state-space audit unavailable.')}")
 
+
+    report_lines += [
+        "",
+        "## Cycle Hazard Warning Audit",
+        "",
+        f"- Target/events: {first_summary(cycle_hazard_warning, 'target', 'NA')} / {first_summary(cycle_hazard_warning, 'n_event_cycles', 0)} event cycles {first_summary(cycle_hazard_warning, 'event_cycles', [])}",
+        f"- Rolling-origin purge/min-train/permutation nulls: {first_summary(cycle_hazard_warning, 'purge_cycles', 0)} / {first_summary(cycle_hazard_warning, 'min_train', 0)} / {cycle_hazard_null.get('n_permutations', 0)}",
+    ]
+    for row in cycle_hazard_feature_sets[:5]:
+        report_lines.append(
+            f"- Feature set {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, Brier {fmt(row.get('brier_score'))}, balanced accuracy {fmt(row.get('balanced_accuracy_top_rate'))}, n={fmt(row.get('n_evaluated_cycles'), 0)}, positives={fmt(row.get('n_positive'), 0)}"
+        )
+    if cycle_hazard_null:
+        report_lines.append(
+            f"- Null check: observed AUC {fmt(cycle_hazard_null.get('observed_auc'))}, null p95 {fmt(cycle_hazard_null.get('null_p95_auc'))}, empirical p={fmt(cycle_hazard_null.get('empirical_p_ge_observed'))}"
+        )
+    for row in cycle_hazard_lead:
+        report_lines.append(
+            f"- Lead-time {fmt(row.get('lookback_horizon_cycles'), 0)} cycles: hit rate {fmt(row.get('hit_rate'))}, median max probability {fmt(row.get('median_max_probability'))}, median lead {fmt(row.get('median_lead_cycles'))} cycles"
+        )
+    for row in cycle_hazard_ablation[:5]:
+        report_lines.append(
+            f"- Ablation remove {row.get('removed_group')}: AUC {fmt(row.get('roc_auc'))}, drop vs best {fmt(row.get('auc_drop_vs_best'))}"
+        )
+    for row in cycle_hazard_corr[:5]:
+        report_lines.append(
+            f"- Warning probability link {row.get('feature')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(cycle_hazard_warning, 'guardrail', 'Cycle hazard warning audit unavailable.')}")
+
     report_lines += [
         "",
         "## Cycle State To ROI/Front Bridge",
@@ -1346,6 +1384,22 @@ def main() -> None:
             "top_consistency_rows": physics_consistency_top,
             "top_event_tests": physics_consistency_tests,
             "guardrail": first_summary(physics_consistency, "guardrail"),
+        },
+        "cycle_hazard_warning_audit": {
+            "target": first_summary(cycle_hazard_warning, "target"),
+            "n_cycles": first_summary(cycle_hazard_warning, "n_cycles"),
+            "n_event_cycles": first_summary(cycle_hazard_warning, "n_event_cycles"),
+            "event_cycles": first_summary(cycle_hazard_warning, "event_cycles", []),
+            "purge_cycles": first_summary(cycle_hazard_warning, "purge_cycles"),
+            "min_train": first_summary(cycle_hazard_warning, "min_train"),
+            "feature_group_counts": first_summary(cycle_hazard_warning, "feature_group_counts", {}),
+            "feature_set_summary": cycle_hazard_feature_sets,
+            "best_feature_set": first_summary(cycle_hazard_warning, "best_feature_set"),
+            "permutation_null": cycle_hazard_null,
+            "lead_time_summary": cycle_hazard_lead,
+            "top_group_ablation": cycle_hazard_ablation,
+            "top_probability_correlations": cycle_hazard_corr,
+            "guardrail": first_summary(cycle_hazard_warning, "guardrail"),
         },
         "cycle_state_space_transition_audit": {
             "n_cycles": first_summary(cycle_state_space, "n_cycles"),

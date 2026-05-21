@@ -1,0 +1,230 @@
+{
+  "target": "future_any_drop_within_8cycles",
+  "n_cycles": 89,
+  "n_event_cycles": 4,
+  "event_cycles": [
+    60.0,
+    86.0,
+    116.0,
+    156.0
+  ],
+  "purge_cycles": 8,
+  "min_train": 24,
+  "feature_group_counts": {
+    "particle_trace": 38,
+    "acquisition_context": 6,
+    "cycle_echem": 6,
+    "echem_shape": 47,
+    "cycle_state": 11,
+    "other": 1
+  },
+  "feature_set_summary": [
+    {
+      "feature_set": "particle_trace_echem_with_acquisition",
+      "n_features": 97,
+      "n_evaluated_cycles": 62,
+      "n_positive": 16,
+      "positive_rate": 0.25806451612903225,
+      "roc_auc": 0.782608695652174,
+      "average_precision": 0.5733506541791495,
+      "brier_score": 0.31349864341976785,
+      "top_rate_threshold": 0.9677836997458311,
+      "balanced_accuracy_top_rate": 0.7894021739130435
+    },
+    {
+      "feature_set": "particle_trace_echem_no_acquisition",
+      "n_features": 91,
+      "n_evaluated_cycles": 62,
+      "n_positive": 16,
+      "positive_rate": 0.25806451612903225,
+      "roc_auc": 0.7418478260869567,
+      "average_precision": 0.49046065832167135,
+      "brier_score": 0.393378472834479,
+      "top_rate_threshold": 0.9860517225483604,
+      "balanced_accuracy_top_rate": 0.7051630434782609
+    },
+    {
+      "feature_set": "combined_with_cycle_state",
+      "n_features": 102,
+      "n_evaluated_cycles": 62,
+      "n_positive": 16,
+      "positive_rate": 0.25806451612903225,
+      "roc_auc": 0.7391304347826088,
+      "average_precision": 0.48538154761756064,
+      "brier_score": 0.38213895220105204,
+      "top_rate_threshold": 0.9894579729787059,
+      "balanced_accuracy_top_rate": 0.7051630434782609
+    },
+    {
+      "feature_set": "particle_trace",
+      "n_features": 38,
+      "n_evaluated_cycles": 62,
+      "n_positive": 16,
+      "positive_rate": 0.25806451612903225,
+      "roc_auc": 0.6372282608695652,
+      "average_precision": 0.40238196933398385,
+      "brier_score": 0.29048573851028986,
+      "top_rate_threshold": 0.8243014921869741,
+      "balanced_accuracy_top_rate": 0.5788043478260869
+    },
+    {
+      "feature_set": "echem_shape_cycle",
+      "n_features": 53,
+      "n_evaluated_cycles": 62,
+      "n_positive": 16,
+      "positive_rate": 0.25806451612903225,
+      "roc_auc": 0.30570652173913043,
+      "average_precision": 0.19246722502201039,
+      "brier_score": 0.4841392789108674,
+      "top_rate_threshold": 0.9062170434393498,
+      "balanced_accuracy_top_rate": 0.32608695652173914
+    }
+  ],
+  "best_feature_set": "particle_trace_echem_with_acquisition",
+  "permutation_null": {
+    "target": "future_any_drop_within_8cycles",
+    "observed_auc": 0.782608695652174,
+    "n_permutations": 20,
+    "null_mean_auc": 0.47780337929290057,
+    "null_p95_auc": 0.5814184397163121,
+    "empirical_p_ge_observed": 0.047619047619047616
+  },
+  "lead_time_summary": [
+    {
+      "lookback_horizon_cycles": 4,
+      "n_events": 4,
+      "hit_rate": 0.5,
+      "median_max_probability": 0.9934612923728008,
+      "median_lead_cycles": 4.0
+    },
+    {
+      "lookback_horizon_cycles": 8,
+      "n_events": 4,
+      "hit_rate": 0.75,
+      "median_max_probability": 0.9999224429545874,
+      "median_lead_cycles": 6.0
+    },
+    {
+      "lookback_horizon_cycles": 16,
+      "n_events": 4,
+      "hit_rate": 0.75,
+      "median_max_probability": 0.9999835606444029,
+      "median_lead_cycles": 6.0
+    }
+  ],
+  "top_group_ablation": [
+    {
+      "feature_set": "remove_particle_trace",
+      "n_features": 59,
+      "n_evaluated_cycles": 62,
+      "n_positive": 16,
+      "positive_rate": 0.25806451612903225,
+      "roc_auc": 0.49184782608695654,
+      "average_precision": 0.30228294221894964,
+      "brier_score": 0.3832064455496821,
+      "top_rate_threshold": 0.84958281416557,
+      "balanced_accuracy_top_rate": 0.4945652173913043,
+      "removed_group": "particle_trace",
+      "auc_drop_vs_best": 0.2907608695652174
+    },
+    {
+      "feature_set": "remove_echem_shape",
+      "n_features": 50,
+      "n_evaluated_cycles": 62,
+      "n_positive": 16,
+      "positive_rate": 0.25806451612903225,
+      "roc_auc": 0.7119565217391306,
+      "average_precision": 0.47520400700792736,
+      "brier_score": 0.21792295680851578,
+      "top_rate_threshold": 0.7181672208530958,
+      "balanced_accuracy_top_rate": 0.6630434782608696,
+      "removed_group": "echem_shape",
+      "auc_drop_vs_best": 0.07065217391304335
+    },
+    {
+      "feature_set": "remove_acquisition_context",
+      "n_features": 91,
+      "n_evaluated_cycles": 62,
+      "n_positive": 16,
+      "positive_rate": 0.25806451612903225,
+      "roc_auc": 0.7418478260869567,
+      "average_precision": 0.49046065832167135,
+      "brier_score": 0.393378472834479,
+      "top_rate_threshold": 0.9860517225483604,
+      "balanced_accuracy_top_rate": 0.7051630434782609,
+      "removed_group": "acquisition_context",
+      "auc_drop_vs_best": 0.040760869565217295
+    },
+    {
+      "feature_set": "remove_cycle_echem",
+      "n_features": 91,
+      "n_evaluated_cycles": 62,
+      "n_positive": 16,
+      "positive_rate": 0.25806451612903225,
+      "roc_auc": 0.779891304347826,
+      "average_precision": 0.5662253129043878,
+      "brier_score": 0.30414079038694114,
+      "top_rate_threshold": 0.9556754196945881,
+      "balanced_accuracy_top_rate": 0.7894021739130435,
+      "removed_group": "cycle_echem",
+      "auc_drop_vs_best": 0.0027173913043478937
+    }
+  ],
+  "top_probability_correlations": [
+    {
+      "feature": "cycle_state_pc2",
+      "n": 62,
+      "spearman_rho": 0.4559693787615522,
+      "p_value": 0.00019580877956764685
+    },
+    {
+      "feature": "mean_abs_delta_prev",
+      "n": 62,
+      "spearman_rho": -0.25822211038154996,
+      "p_value": 0.042726674220356524
+    },
+    {
+      "feature": "shape_V_q95",
+      "n": 54,
+      "spearman_rho": -0.11345571162555121,
+      "p_value": 0.41400844829755024
+    },
+    {
+      "feature": "capacity_mAh",
+      "n": 54,
+      "spearman_rho": -0.1075281113016962,
+      "p_value": 0.4389746376376199
+    },
+    {
+      "feature": "cycle_state_pc1",
+      "n": 62,
+      "spearman_rho": -0.08085920777618293,
+      "p_value": 0.53213309103371
+    },
+    {
+      "feature": "degradation_state_axis",
+      "n": 62,
+      "spearman_rho": 0.08085920777618293,
+      "p_value": 0.53213309103371
+    },
+    {
+      "feature": "particle_norm_range",
+      "n": 62,
+      "spearman_rho": -0.06622933481594226,
+      "p_value": 0.609043296470749
+    },
+    {
+      "feature": "frames_percentile",
+      "n": 62,
+      "spearman_rho": 0.04315949205782244,
+      "p_value": 0.7390758626736914
+    },
+    {
+      "feature": "coulombic_efficiency_pct",
+      "n": 54,
+      "spearman_rho": 0.013302839717934056,
+      "p_value": 0.923939679655036
+    }
+  ],
+  "guardrail": "Rolling-origin cycle-level warning audit using particle trace/echem/state descriptors. It tests early-warning covariates, not localized ROI fronts, manual degradation labels, or calibrated diffusion."
+}

@@ -2001,3 +2001,28 @@ Key result:
 - The project synthesis now includes a Masked Residual State Transfer Warning section and carries the compact summary into `nmc_ai_physics_synthesis_summary.json`.
 
 Interpretation: this addresses the direct masked-rollout future-warning underpowering by using the 11 video-backed cycles as a particle-local residual anchor and testing the transferred signature across all cycle-state rows. It is useful for hypothesis ranking and for choosing which cycles deserve new ROI/video extraction, but the weak leave-one-cycle anchor check means it is not a deployable warning model and not proof that unexported cycles have measured video residuals.
+
+## 2026-05-22 Cycle Hazard Warning Audit
+
+Added and ran:
+
+`scripts/tier4_cycle_hazard_warning_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_hazard_warning_audit --n-permutation 20`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_hazard_warning_audit`
+
+Local compact copy:
+
+`derived_local/cycle_hazard_warning_audit`
+
+Key result:
+
+- Built a rolling-origin warning audit for future abrupt particle drops within 8 cycles using the 89-cycle cycle-state table. Each prediction only trains on cycles at least 8 cycles before the test cycle; 62 cycles are evaluable after the min-train/class-balance gate.
+- Best feature set is particle trace + echem shape + acquisition context: AUC 0.783, average precision 0.573, top-rate balanced accuracy 0.789 across 16 positive future-drop cycles.
+- A short 20-permutation rolling-label null gives null mean AUC 0.478, null p95 0.581, empirical p=0.0476. This is a useful but still shallow null; a deeper rerun can raise the permutation count.
+- Warning lead-time audit hits 2/4 event cycles within 4 cycles and 3/4 event cycles within 8 or 16 cycles; median lead time is 6 cycles for the 8-cycle lookback. The first event at cycle 60 has no eligible prior predictions after the min-train gate.
+- Feature-group ablation shows the warning signal is mainly particle-trace driven: removing particle-trace features drops AUC by 0.291, while removing echem-shape drops 0.071, acquisition context 0.041, and cycle-level echem summaries 0.0027.
+- Warning probabilities correlate most with cycle_state_pc2 (rho=0.456, p=1.96e-4), linking the rolling warning model back to the earlier cycle-state manifold.
+
+Interpretation: this strengthens the cycle-level early-warning story using a stricter chronological protocol than the shuffled-fold classifier. The result supports particle-trace/echem warning covariates and review prioritization, but it is not a localized ROI/front detector and does not validate diffusion or degradation labels without manual QC.
