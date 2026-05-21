@@ -41,3 +41,18 @@ As of the latest check, the relevant pending jobs are:
 ## Current Interpretation
 
 The strongest route is a two-track program. For Alek_Jiho NMC degradation, focus first on cycle-level particle-event and electrochemical coupling because the provided CSV/PPT-derived tables already expose degradation structure. For SP videos, focus on ROI physical-observable and boundary-proxy forecasting because ordinary autoregressive pixel rollout has repeatedly plateaued. Pixel models remain useful when constrained by ROI, future EC controls, and physical losses, but the scientific claims should be made from validated observables and controls.
+
+## 2026-05-21 Event Synchrony Result
+
+A new lightweight synchrony analysis was added in `scripts/tier1_event_synchrony_analysis.py` and run on Isambard. It preserves each particle's number of abrupt-drop events while randomly permuting event cycles over that particle's observed cycle grid.
+
+Output directory: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_synchrony`
+
+Key result:
+
+- Three particles (`particle0`, `particle1`, `particle2`) event together at cycles 86 and 116.
+- Permutation p-value for observing a same-cycle maximum of 3 particles: 0.003300.
+- Permutation p-value for observing two cycles with at least two particles eventing: 0.016649.
+- Those synchronized cycles have low cycle-frame percentiles (cycle 86: 0.079; cycle 116: 0.011), so the next check is whether these cycles correspond to electrochemical/protocol changes rather than independent local particle failures.
+
+Interpretation: synchronized optical degradation timing is now a concrete hypothesis worth validating against echem capacity, dQ/dV, current/voltage protocol, and shuffled-cycle controls.
