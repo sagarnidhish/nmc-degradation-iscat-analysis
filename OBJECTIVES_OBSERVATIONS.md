@@ -1912,3 +1912,29 @@ Key result:
 
 Interpretation: this removes the main weakness of the previous selected-front diffusion sanity audit, which was event-heavy. Even after adding a balanced high-resolution control/event cohort, the radius-squared front proxies do not behave like calibrated diffusion coefficients. They remain useful optical front descriptors and QC priorities, not publishable transport constants.
 
+## 2026-05-22 Masked Rollout Cycle Warning Audit
+
+Added and ran:
+
+`scripts/tier4_masked_rollout_cycle_warning.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_rollout_cycle_warning --n-permutation 5000`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_rollout_cycle_warning`
+
+Local compact copy:
+
+`derived_local/masked_rollout_cycle_warning`
+
+Key result:
+
+- Collapsed masked particle-rollout residuals from 52 ROI rows to 11 observed ROI cycles and joined the larger particle-trace abrupt-drop/future-drop targets.
+- Tested 105 rollout-derived cycle features with 5,000 permutation checks per binary/correlation statistic.
+- Same-cycle abrupt drops show positive jumps in low-rank-DMD particle residuals versus the previous observed ROI cycle: top feature `low_rank_dmd_particle_mse_mean_max_delta_prev_observed_roi_cycle`, median positive-negative +0.00885, Mann-Whitney p=0.0381, permutation p=0.0144.
+- Another same-cycle abrupt-drop signal is `low_rank_dmd_particle_to_nonparticle_mse_ratio_mean_max_delta_prev_observed_roi_cycle`, median positive-negative +12.29, Mann-Whitney p=0.0190, permutation p=0.0156.
+- Future-warning tests are underpowered in the selected ROI-cycle set: only one observed ROI cycle is positive for future_any_drop_within_4/8/16 cycles, and there are zero future_sync2 positives.
+- Masked persistence particle/full-MSE fraction is strongly aligned with cycle-state PC2 and frame-count context across the 11 ROI cycles, e.g. rho=0.955 vs cycle_state_pc2 with permutation p=0.0002. This is a context/selection guardrail, not proof of a general early-warning detector.
+- Warning-ranked cycles are headed by 60 and 156, both same-cycle abrupt-drop cycles, followed by 62, 157, 158, and 86.
+
+Interpretation: masked particle-local rollout residuals are useful as same-cycle degradation-state descriptors and review-priority signals. The current selected ROI-cycle subset does not prove future early warning because future-positive counts are too sparse; expanding ROI extraction beyond event-centered windows is still required for a real warning model.
+
