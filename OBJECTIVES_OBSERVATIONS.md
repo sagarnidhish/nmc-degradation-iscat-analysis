@@ -678,3 +678,30 @@ Key result:
 - Top classifier coefficients rank cumulative absolute change positive, first-last correlation negative, and stage drift negative among the strongest separating features.
 
 Interpretation: expanded controls strengthen the feature-level evidence that event ROIs are more dynamically changing and less temporally correlated than nearby non-event particle-like controls. However, the poor pair-holdout classifier means the current feature set does not yet generalize robustly across event/control cycle pairs. This supports using event-control descriptors as physics evidence and guardrails, not as a final automated event detector.
+
+## 2026-05-21 ROI Phase-Boundary Mobility Proxies
+
+Added and ran:
+
+`scripts/tier3_roi_phase_boundary_mobility.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_phase_boundary_mobility`
+
+Local compact copy:
+
+`derived_local/roi_phase_boundary_mobility`
+
+Key result:
+
+- Computed threshold-front mobility proxies on the selected event ROI tensors and expanded matched controls: bright/high phase fraction slopes, mid-threshold front fraction, high/low apparent radius-squared changes, interface-density changes, centroid path, first-last correlation, and first-last absolute change.
+- Compared 11 event ROIs with 32 expanded control ROIs from cycles 88, 90, 92, and 118.
+- Event ROIs show faster high-phase fraction growth than controls: mean slope 3.36e-4 vs 1.54e-4 per frame, Mann-Whitney p=0.00097.
+- Event ROIs show larger first-last absolute change: 0.01213 vs 0.00828, p=0.00925, and lower first-last correlation: 0.9863 vs 0.9957, p=0.0118.
+- The apparent high-phase radius-squared change is larger for events: +7.01 px^2 vs -0.91 px^2, p=0.0100. This is a phase-boundary proxy only, not a calibrated diffusion coefficient.
+- Interface density increases slightly in event ROIs but decreases in controls: +0.00128 vs -0.00182, p=0.0241.
+- Cycle 86 event ROIs carry the strongest mobility signal: cumulative first-last change 0.01579 vs 0.00835 for its controls, first-last correlation 0.9754 vs 0.9957, and four of the top four mobility-ranked ROIs are cycle 86 events.
+- Cycle 116 event ROIs have high bright-fraction growth but much weaker decorrelation and mobility ranking, consistent with the earlier interpretation that cycle 116 is more coherent optical loss/contraction while cycle 86 is more dynamically heterogeneous.
+
+Interpretation: this gives a physics-facing bridge between video prediction residuals and phase-boundary language. The selected event ROIs, especially cycle 86, are not just harder to predict; their threshold-front geometry changes faster and loses structural correlation relative to expanded controls. These are still apparent optical front metrics from fixed particle crops, so they should be treated as calibrated-diffusion candidates only after spatial calibration and manual ROI QC.
