@@ -22,7 +22,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 ## Main Findings
 
 - Persistence is the strongest raw next-frame baseline; DMD/velocity/learned residual experiments are most useful as residual and latent descriptors.
-- Prefix-only cropped ROI forecasts predict later front-direction residual class best: random_forest at prefix 0.500 gives AUC 0.691, while permutation-null support is strongest for the front-positive residual target.
+- Prefix-only cropped ROI forecasts still rank the front-direction residual class highest: random_forest at prefix 0.500 gives AUC 0.691, but after excluding raw frame-index features the audited permutation null is not significant.
 - The 75%-prefix feature-importance audit is descriptive but not independently significant: pooled OOF AUC 0.447, null empirical p=0.714; strongest ablation groups are mean_intensity_trace, frame_texture_level.
 - ROI event/control optical differences survive event-reference-cycle centering, especially cumulative normalized change, first-last decorrelation, latent net displacement, high-fraction growth, and ROI mean trend.
 - Frame count and protocol-block position strongly couple to ROI dynamics, so echem/protocol context must be a model covariate and a guardrail.

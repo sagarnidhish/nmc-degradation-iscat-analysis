@@ -1287,6 +1287,8 @@ Local compact copy:
 
 Key result:
 
+- Reran the prefix-forecast table with a stricter feature guardrail that excludes raw `frame_index` features from the model feature set, then reran the feature-importance audit on the guarded prefix table.
+- The guarded prefix-only forecast still ranks the front-direction residual class highest: random forest at 50% prefix gives mean AUC 0.691, but the audited front-positive residual permutation null is no longer significant (observed AUC 0.476, null p95 0.668, empirical p=0.515).
 - Interpreted the 75% prefix logistic model for the later `front_positive_residual_binary` target using leave-event-reference-cycle-out predictions, permutation feature importance, feature-group ablation, coefficient summaries, univariate tests, and a 300-shuffle label null.
 - The audit used 52 ROI rows and 54 prefix features grouped into mean-intensity trace, bright/dark fractions, temporal change energy, frame/texture level, stage drift, and other prefix features.
 - The held-out pooled readout is not independently significant: pooled OOF AUC 0.447, balanced accuracy 0.489, null mean AUC 0.500, null p95 AUC 0.638, empirical p=0.714.
@@ -1304,7 +1306,7 @@ Updated and reran:
 
 Also updated and reran:
 
-`python scripts/tier4_prefix_roi_feature_importance.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance --n-permutation-repeats 40 --n-null 300`
+`python scripts/tier4_prefix_roi_feature_importance.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance --n-permutation-repeats 50 --n-null 300`
 
 Remote output directories:
 

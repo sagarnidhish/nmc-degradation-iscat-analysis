@@ -272,7 +272,7 @@ def main() -> None:
         "## Main Findings",
         "",
         "- Persistence is the strongest raw next-frame baseline; DMD/velocity/learned residual experiments are most useful as residual and latent descriptors.",
-        f"- Prefix-only cropped ROI forecasts predict later front-direction residual class best: {top_prefix_classifier.get('model', 'NA')} at prefix {fmt(top_prefix_classifier.get('prefix_fraction'))} gives AUC {fmt(top_prefix_classifier.get('mean_roc_auc'))}, while permutation-null support is strongest for the front-positive residual target.",
+        f"- Prefix-only cropped ROI forecasts still rank the front-direction residual class highest: {top_prefix_classifier.get('model', 'NA')} at prefix {fmt(top_prefix_classifier.get('prefix_fraction'))} gives AUC {fmt(top_prefix_classifier.get('mean_roc_auc'))}, but after excluding raw frame-index features the audited permutation null is not significant.",
         f"- The 75%-prefix feature-importance audit is descriptive but not independently significant: pooled OOF AUC {fmt(prefix_importance_model.get('pooled_oof_roc_auc'))}, null empirical p={fmt(prefix_importance_null.get('empirical_p_ge_observed'))}; strongest ablation groups are {', '.join(str(r.get('removed_group')) for r in prefix_importance_groups[:2]) or 'NA'}.",
         "- ROI event/control optical differences survive event-reference-cycle centering, especially cumulative normalized change, first-last decorrelation, latent net displacement, high-fraction growth, and ROI mean trend.",
         "- Frame count and protocol-block position strongly couple to ROI dynamics, so echem/protocol context must be a model covariate and a guardrail.",

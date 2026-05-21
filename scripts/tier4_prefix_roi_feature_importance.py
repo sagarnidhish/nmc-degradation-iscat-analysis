@@ -78,6 +78,8 @@ def feature_columns(df: pd.DataFrame) -> List[str]:
     for col in df.columns:
         if col in excluded or col.startswith("target_") or col.startswith("outcome_"):
             continue
+        if "frame_index" in col:
+            continue
         if not is_prefix_feature(col):
             continue
         vals = pd.to_numeric(df[col], errors="coerce")
