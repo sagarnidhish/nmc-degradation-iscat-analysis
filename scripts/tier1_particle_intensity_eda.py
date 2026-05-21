@@ -55,6 +55,20 @@ def detect_abrupt_drops(norm_series: pd.Series) -> Tuple[pd.Series, float]:
     return (delta < threshold).fillna(False), threshold
 
 
+def read_cycle_frames_csv(path: str) -> pd.DataFrame:
+    """Read cycle frame counts from either headered or legacy headerless CSV."""
+    df = pd.read_csv(path, encoding="utf-8-sig")
+    if "cycleNo" in df.columns:
+        return df
+
+    raw = pd.read_csv(path, encoding="utf-8-sig", header=None)
+    if raw.shape[1] < 2:
+        raise ValueError("cycleFrames.csv must have at least two columns")
+    raw = raw.iloc[:, :2].copy()
+    raw.columns = ["cycleNo", "n_frames"]
+    return raw
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--particles-csv", default="")
@@ -89,7 +103,7 @@ def main() -> None:
 
     try:
         particles_df = pd.read_csv(particles_path, encoding="utf-8-sig")
-        frames_df = pd.read_csv(frames_path, encoding="utf-8-sig")
+        frames_df = read_cycle_frames_csv(frames_path)
     except Exception as exc:
         print(f"Warning: Could not read input CSVs: {exc}")
         return
