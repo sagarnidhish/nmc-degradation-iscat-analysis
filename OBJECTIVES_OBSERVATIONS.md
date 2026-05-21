@@ -814,3 +814,29 @@ Key result:
 - Cycle 156 has the largest event-like latent movement among the candidate event cycles, consistent with the expanded cohort descriptor result that single-particle cycles carry stronger visible morphology.
 
 Interpretation: the expanded AI rollout confirms the project direction. Standard low-rank image rollout does not beat persistence, so the publishable signal should come from physically constrained descriptors: latent displacement, event/control front-mobility shifts, calibrated-but-provisional front tracking, and degradation-mode clustering. The stronger latent dynamics in cycles 60/156 make them useful morphology-training cases, while cycles 86/116 remain the strongest coordinated event-timing cases.
+
+## 2026-05-21 Multi-Cycle Rollout-Mobility Coupling
+
+Added and ran:
+
+`scripts/tier3_multicycle_rollout_mobility_coupling.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling`
+
+Local compact copy:
+
+`derived_local/multi_cycle_rollout_mobility_coupling`
+
+Key result:
+
+- Joined the 52-ROI multi-cycle mobility descriptor table with ROI-only rollout baselines and PCA-latent trajectory summaries.
+- Persistence remains the strongest raw predictor baseline; event and control ROIs do not separate cleanly by persistence MSE alone (event mean 1.10e-4 vs control 1.20e-4, p=0.762).
+- Event ROIs show a larger DMD failure ratio relative to persistence, but this is a trend rather than a significant global separation: DMD/persistence MSE ratio 20.49 vs 14.12, p=0.125.
+- The strongest coupling is between simple temporal activity and persistence error: temporal-diff energy vs persistence MSE Spearman rho=0.978, and temporal-diff energy vs persistence SSIM rho=-0.861. This is useful but mostly tautological, so persistence MSE should be treated as an activity proxy rather than a standalone degradation marker.
+- More physics-facing latent couplings are strong: cumulative first-last ROI change vs latent net displacement rho=0.889, first-last correlation vs latent net displacement rho=-0.885, and centroid path vs latent path length rho=0.701.
+- Integrated event evidence anticorrelates with latent net displacement (rho=-0.806) but correlates with velocity-model failure ratio (rho=0.711), suggesting synchronized-event cycles are not simply the largest latent movers; they are cycles where naive motion extrapolation becomes less reliable.
+- Top rollout/mobility difficulty ROIs include one active control (`cycle62_rank3_obj9`) and multiple event ROIs from cycles 156 and 60, with `cycle86_rank4_obj9` still present but no longer the top-ranked ROI in the broader cohort.
+
+Interpretation: the multi-cycle rollout analysis supports a guarded modeling conclusion. Next-frame persistence is a strong baseline and mostly measures short-term activity; the more useful AI/physics signal is the mismatch between simple dynamical models and ROI phase/mobility descriptors. Cycle 156 and cycle 60 contain the hardest high-mobility ROIs, while cycle 86 remains a structurally decorrelating synchronized-event regime and cycle 116 remains coherent/low-decorrelation.
