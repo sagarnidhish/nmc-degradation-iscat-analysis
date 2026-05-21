@@ -33,6 +33,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle state-space rows/clusters: 89 / 4
 - Cycle-state ROI bridge rows/cycles: 52 / 11
 - Particle-mask stability ROI/frame rows: 52 / 4992
+- Masked ROI rollout frame rows: 4992
 - Weak-label benchmark trainable positives/negatives: 3 / 4
 - Control-balanced QC sensitivity robust strata: 6
 
@@ -69,6 +70,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle state-space transition audit builds a 4-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p=0.016), the shuffled-fold classifier reaches mean AUC 0.781, and stricter temporal holdout reaches AUC 0.779 across 2 usable blocks.
 - Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to 11 cycles: top collapsed test cycle_state_pc2 vs mode_taxonomy_score, rho=0.855, permutation p=0.002.
 - Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction 0.000, accepted-area CV 0.042, centroid path 73.607 px; event/control mask instability is not significantly different in the current cohort.
+- Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for 52 of 52 ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho=0.637, p=3.909e-07).
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
 ## Model Readout
@@ -470,6 +472,33 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Undercoverage priority cycle156_rank7_obj27 persistence: q90 undercoverage 1.000, priority 3.471, role event
 - Undercoverage priority cycle156_rank2_obj2 low_rank_dmd: q90 undercoverage 0.781, priority 3.401, role event
 - Guardrail: Empirical residual quantiles are a calibration audit for ROI-only rollout baselines. They are not a generative uncertainty model, not calibrated diffusion, and not manual QC.
+
+## Masked ROI Rollout Audit
+
+- ROI/frame metric rows: 52 / 4992
+- Best method counts inside particle masks: {'persistence': 52}
+- DMD spectral radius: 1.002
+- persistence: particle-MSE median 1.146e-04, nonparticle-MSE median 7.408e-05, particle/nonparticle ratio median 1.461
+- velocity: particle-MSE median 2.595e-04, nonparticle-MSE median 2.040e-04, particle/nonparticle ratio median 1.317
+- low_rank_dmd: particle-MSE median 0.007, nonparticle-MSE median 0.001, particle/nonparticle ratio median 5.233
+- Masked rollout event/control low_rank_dmd particle_mse_mean: median event-control 0.003, p=0.015
+- Masked rollout event/control low_rank_dmd particle_mae_mean: median event-control 0.013, p=0.015
+- Masked rollout event/control low_rank_dmd nonparticle_mse_mean: median event-control 3.952e-04, p=0.048
+- Masked rollout event/control low_rank_dmd particle_to_nonparticle_mse_ratio_mean: median event-control -0.505, p=0.364
+- Masked rollout event/control velocity particle_mse_fraction_of_full_mean: median event-control 0.023, p=0.640
+- Masked rollout event/control persistence particle_mae_mean: median event-control 1.935e-06, p=0.720
+- Masked rollout/physics link persistence particle_mse_fraction_of_full_mean vs cumulative_abs_first_last: rho=0.637, p=3.909e-07, n=52
+- Masked rollout/physics link low_rank_dmd particle_mse_mean vs cumulative_abs_first_last: rho=0.603, p=2.273e-06, n=52
+- Masked rollout/physics link persistence particle_mse_fraction_of_full_mean vs first_last_corr: rho=-0.585, p=5.151e-06, n=52
+- Masked rollout/physics link persistence particle_to_nonparticle_mse_ratio_mean vs cumulative_abs_first_last: rho=0.567, p=1.170e-05, n=52
+- Masked rollout/physics link low_rank_dmd particle_to_nonparticle_mse_ratio_mean vs high_fraction_slope_per_s: rho=-0.555, p=1.995e-05, n=52
+- Masked rollout/physics link low_rank_dmd particle_mse_mean vs first_last_corr: rho=-0.544, p=3.088e-05, n=52
+- Particle-rollout difficult ROI cycle156_rank7_obj27 low_rank_dmd (event, cycle 156): particle MSE 0.022, particle/nonparticle ratio 6.368
+- Particle-rollout difficult ROI cycle86_rank8_obj17 low_rank_dmd (event, cycle 86): particle MSE 0.018, particle/nonparticle ratio 3.990
+- Particle-rollout difficult ROI cycle157_rank2_obj2 low_rank_dmd (control, cycle 157): particle MSE 0.016, particle/nonparticle ratio 8.877
+- Particle-rollout difficult ROI cycle156_rank2_obj2 low_rank_dmd (event, cycle 156): particle MSE 0.016, particle/nonparticle ratio 3.066
+- Particle-rollout difficult ROI cycle62_rank3_obj9 low_rank_dmd (control, cycle 62): particle MSE 0.015, particle/nonparticle ratio 8.474
+- Guardrail: Held-out rollout errors are scored inside automatic history-aware particle masks; this is not manual segmentation or a new learned video model.
 
 ## Particle Mask Stability Audit
 

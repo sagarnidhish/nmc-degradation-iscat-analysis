@@ -1821,3 +1821,28 @@ Key result:
 
 Interpretation: this turns the automatic evidence into a usable but heavily guarded AI benchmark manifest. The important result is not that we have enough labels to train a final model; it is that most automatic rows are not trustworthy labels yet. Future video models should use this manifest for provenance and split hygiene, while final degradation-mode labels still require manual QC.
 
+## 2026-05-21 Masked ROI Rollout Audit
+
+Added and ran:
+
+`scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv --mask-stability /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_stability_audit/particle_mask_stability_per_roi.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_roi_rollout_audit --rank 16 --train-fraction 0.67`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_roi_rollout_audit`
+
+Local compact copy:
+
+`derived_local/masked_roi_rollout_audit`
+
+Key result:
+
+- Re-scored 4,992 held-out frame/method rows inside the accepted particle support from the history-aware mask guardrail, with separate non-particle context metrics.
+- Persistence remains the best method inside the particle mask for all 52 ROIs. Median particle MSE: persistence 1.15e-4, velocity 2.60e-4, low-rank DMD 6.55e-3.
+- Low-rank DMD errors are much more particle-local than background-local: median particle/non-particle MSE ratio 5.23, versus 1.46 for persistence and 1.32 for velocity.
+- Event ROIs have higher low-rank-DMD particle error than controls: median event-control particle MSE +0.00342, Mann-Whitney p=0.0150; particle-MSE ratio versus persistence is also higher in event ROIs, median +16.64, p=0.0257.
+- Masked rollout errors link strongly to optical-change descriptors: low-rank-DMD particle MSE vs cumulative_abs_first_last rho=0.603, p=2.27e-6; persistence particle/full-MSE fraction vs cumulative_abs_first_last rho=0.637, p=3.91e-7.
+- High particle-rollout difficulty examples include `cycle156_rank7_obj27`, `cycle86_rank8_obj17`, and `cycle157_rank2_obj2`; these should stay high priority for manual QC and mode labeling.
+
+Interpretation: this strengthens the ROI-only modeling guardrail. The full-crop conclusion that persistence is the strongest pixel predictor survives when scoring only accepted particle pixels, while the DMD residual becomes a sharper particle-local physics descriptor associated with cumulative optical change and event/control status. This still does not prove a deployable video model; it supports using masked residuals as interpretable degradation descriptors.
+
