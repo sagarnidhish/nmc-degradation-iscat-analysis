@@ -1,0 +1,5 @@
+fold,holdout_event_reference_cycle,n_train_rows,n_test_rows,n_trainable_train,n_trainable_test,n_positive_train,n_negative_train,n_positive_test,n_negative_test,trainable_fold_status
+1,60.0,38,14,5,2,2,3,1,1,usable_binary_fold
+2,86.0,38,14,5,2,3,2,0,2,weak_label_class_missing_in_train_or_test
+3,116.0,42,10,6,1,3,3,0,1,weak_label_class_missing_in_train_or_test
+4,156.0,38,14,5,2,1,4,2,0,weak_label_class_missing_in_train_or_test

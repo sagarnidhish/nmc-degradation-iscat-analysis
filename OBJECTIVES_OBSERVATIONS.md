@@ -1796,3 +1796,28 @@ Key result:
 
 Interpretation: the selected tensors remain particle-region-only, and the automatic history-aware mask guardrail does not show event/control mask-instability leakage in the current cohort. This is not manual segmentation; it is a stability/fallback audit to keep ROI-only AI and front/phase physics claims honest under drift-correction blur.
 
+## 2026-05-21 Weak-Label Degradation Benchmark
+
+Command:
+
+`python scripts/tier4_weak_label_degradation_benchmark.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/weak_label_degradation_benchmark`
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/weak_label_degradation_benchmark`
+
+Local synced output:
+
+`derived_local/weak_label_degradation_benchmark`
+
+Key result:
+
+- Built a consensus weak-label manifest over the 52 selected ROI videos by joining sequence paths, physics-consistency tiers, residual mode labels, precursor review scores, cycle-state bridge coordinates, DMD rollout calibration, and particle-mask stability metrics.
+- Only 7 rows survive the conservative trainable weak-label filters: 3 `weak_event_enriched_front_mode` positives and 4 `weak_low_consistency_control` negatives. The remaining 45 rows are explicitly review-only or uncertain.
+- Label counts are: 19 `review_control_uncertain`, 15 `review_positive_uncertain`, 11 `review_uncertain`, 4 `weak_low_consistency_control`, and 3 `weak_event_enriched_front_mode`.
+- Leave-event-reference-cycle split audit creates 4 folds, but only the cycle-60 holdout fold has both weak positive and weak negative labels in train and test. The cycle-86, cycle-116, and cycle-156 holdouts are missing one weak class in the test set.
+- Top weak-positive rows are `cycle156_rank7_obj27`, `cycle156_rank8_obj10`, and `cycle60_rank6_obj26`. Top weak-negative rows include `cycle118_rank2_obj2`, `cycle90_rank3_obj4`, `cycle58_rank1_obj1`, and `cycle90_rank4_obj6`.
+- The project synthesis now includes a Weak-Label Degradation Benchmark section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this turns the automatic evidence into a usable but heavily guarded AI benchmark manifest. The important result is not that we have enough labels to train a final model; it is that most automatic rows are not trustworthy labels yet. Future video models should use this manifest for provenance and split hygiene, while final degradation-mode labels still require manual QC.
+

@@ -33,6 +33,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle state-space rows/clusters: 89 / 4
 - Cycle-state ROI bridge rows/cycles: 52 / 11
 - Particle-mask stability ROI/frame rows: 52 / 4992
+- Weak-label benchmark trainable positives/negatives: 3 / 4
 - Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
@@ -68,6 +69,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle state-space transition audit builds a 4-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p=0.016), the shuffled-fold classifier reaches mean AUC 0.781, and stricter temporal holdout reaches AUC 0.779 across 2 usable blocks.
 - Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to 11 cycles: top collapsed test cycle_state_pc2 vs mode_taxonomy_score, rho=0.855, permutation p=0.002.
 - Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction 0.000, accepted-area CV 0.042, centroid path 73.607 px; event/control mask instability is not significantly different in the current cohort.
+- Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
 ## Model Readout
 
@@ -613,6 +615,25 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Priority tiers: {'high': 12, 'medium': 17, 'routine': 18}
 - Manual-QC status counts: {'pending': 47}
 - Guardrail: This workbook is a manual-label template. It deduplicates review candidates and preserves pending status, but it does not assign accept/reject labels or validate diffusion.
+
+## Weak-Label Degradation Benchmark
+
+- ROI rows: 52
+- Trainable weak-label rows: 7
+- Positive/negative weak labels: 3 / 4
+- Label counts: {'review_control_uncertain': 19, 'review_positive_uncertain': 15, 'review_uncertain': 11, 'weak_event_enriched_front_mode': 3, 'weak_low_consistency_control': 4}
+- Leave-reference usable binary folds: 1 / 4
+- Weak positive cycle156_rank7_obj27 (event, cycle 156): physics score 5.790, mode optical_brightening_decorrelating_rollout_hard_front_positive
+- Weak positive cycle156_rank8_obj10 (event, cycle 156): physics score 3.925, mode optical_brightening_decorrelating_rollout_hard_front_positive
+- Weak positive cycle60_rank6_obj26 (event, cycle 60): physics score 1.683, mode optical_brightening_decorrelating_rollout_hard_front_positive
+- Weak negative cycle118_rank2_obj2 (control, cycle 118): physics score -3.012, mode near_baseline_or_context_like
+- Weak negative cycle90_rank3_obj4 (control, cycle 90): physics score -1.988, mode front_negative_high_apparent_front_proxy
+- Weak negative cycle58_rank1_obj1 (control, cycle 58): physics score -1.885, mode near_baseline_or_context_like
+- Weak negative cycle90_rank4_obj6 (control, cycle 90): physics score -1.493, mode front_negative_high_apparent_front_proxy
+- Split guardrail fold 2 holdout 86: weak_label_class_missing_in_train_or_test (0 positive / 2 negative test)
+- Split guardrail fold 3 holdout 116: weak_label_class_missing_in_train_or_test (0 positive / 1 negative test)
+- Split guardrail fold 4 holdout 156: weak_label_class_missing_in_train_or_test (2 positive / 0 negative test)
+- Guardrail: This benchmark contains weak consensus labels for model development and review prioritization only. It is not a manual-QC label set and must not be used to claim validated degradation modes or calibrated diffusion.
 
 ## Manual-QC Gated Front Effects
 

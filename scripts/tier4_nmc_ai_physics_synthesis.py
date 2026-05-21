@@ -116,6 +116,7 @@ def main() -> None:
     cycle_state_space = read_json(derived / "cycle_state_space_transition_audit" / "cycle_state_space_transition_audit_summary.json")
     cycle_state_roi_bridge = read_json(derived / "cycle_state_roi_bridge" / "cycle_state_roi_bridge_summary.json")
     particle_mask = read_json(derived / "particle_mask_stability_audit" / "particle_mask_stability_audit_summary.json")
+    weak_label_benchmark = read_json(derived / "weak_label_degradation_benchmark" / "weak_label_degradation_benchmark_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -238,6 +239,9 @@ def main() -> None:
     particle_mask_corr = top_items(first_summary(particle_mask, "top_correlations", []), 12)
     particle_mask_top = top_items(first_summary(particle_mask, "highest_instability_rois", []), 12)
     particle_mask_overall = first_summary(particle_mask, "overall", {}) or {}
+    weak_label_top_pos = top_items(first_summary(weak_label_benchmark, "top_positive_training_rows", []), 8)
+    weak_label_top_neg = top_items(first_summary(weak_label_benchmark, "top_negative_training_rows", []), 8)
+    weak_label_leakage = first_summary(weak_label_benchmark, "leakage_audit", {}) or {}
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -356,6 +360,7 @@ def main() -> None:
         f"- Cycle state-space rows/clusters: {first_summary(cycle_state_space, 'n_cycles', 0)} / {first_summary(cycle_state_space, 'chosen_k', 0)}",
         f"- Cycle-state ROI bridge rows/cycles: {first_summary(cycle_state_roi_bridge, 'n_roi_rows', 0)} / {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)}",
         f"- Particle-mask stability ROI/frame rows: {first_summary(particle_mask, 'n_roi', 0)} / {first_summary(particle_mask, 'n_frames_total', 0)}",
+        f"- Weak-label benchmark trainable positives/negatives: {first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
@@ -391,6 +396,7 @@ def main() -> None:
         f"- Cycle state-space transition audit builds a {first_summary(cycle_state_space, 'chosen_k', 0)}-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p={fmt((cycle_state_tests[0] if cycle_state_tests else {}).get('permutation_p'))}), the shuffled-fold classifier reaches mean AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}, and stricter temporal holdout reaches AUC {fmt(cycle_state_temporal.get('mean_roc_auc'))} across {fmt(cycle_state_temporal.get('n_evaluated_blocks'), 0)} usable blocks.",
         f"- Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)} cycles: top collapsed test {((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('predictor', 'NA'))} vs {((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('target', 'NA'))}, rho={fmt((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('rho'))}, permutation p={fmt((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('permutation_p'))}.",
         f"- Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction {fmt(particle_mask_overall.get('median_fallback_frame_fraction'))}, accepted-area CV {fmt(particle_mask_overall.get('median_accepted_area_cv'))}, centroid path {fmt(particle_mask_overall.get('median_centroid_path_px'))} px; event/control mask instability is not significantly different in the current cohort.",
+        f"- Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: {first_summary(weak_label_benchmark, 'n_trainable_weak_label_rows', 0)} trainable weak rows ({first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} positive / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)} negative), and only {weak_label_leakage.get('n_usable_binary_folds', 0)} leave-reference fold is class-balanced enough for binary evaluation.",
         "",
         "## Model Readout",
         "",
@@ -927,6 +933,30 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Weak-Label Degradation Benchmark",
+        "",
+        f"- ROI rows: {first_summary(weak_label_benchmark, 'n_roi_rows', 0)}",
+        f"- Trainable weak-label rows: {first_summary(weak_label_benchmark, 'n_trainable_weak_label_rows', 0)}",
+        f"- Positive/negative weak labels: {first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)}",
+        f"- Label counts: {first_summary(weak_label_benchmark, 'label_counts', {})}",
+        f"- Leave-reference usable binary folds: {weak_label_leakage.get('n_usable_binary_folds', 0)} / {weak_label_leakage.get('n_folds', 0)}",
+    ]
+    for row in weak_label_top_pos[:5]:
+        report_lines.append(
+            f"- Weak positive {row.get('roi_id')} ({row.get('cohort_role')}, cycle {fmt(row.get('cycleNo'), 0)}): physics score {fmt(row.get('physics_consistency_score'))}, mode {row.get('mode_label')}"
+        )
+    for row in weak_label_top_neg[:5]:
+        report_lines.append(
+            f"- Weak negative {row.get('roi_id')} ({row.get('cohort_role')}, cycle {fmt(row.get('cycleNo'), 0)}): physics score {fmt(row.get('physics_consistency_score'))}, mode {row.get('mode_label')}"
+        )
+    for row in weak_label_leakage.get('folds_with_missing_class', [])[:4]:
+        report_lines.append(
+            f"- Split guardrail fold {row.get('fold')} holdout {fmt(row.get('holdout_event_reference_cycle'), 0)}: {row.get('trainable_fold_status')} ({fmt(row.get('n_positive_test'), 0)} positive / {fmt(row.get('n_negative_test'), 0)} negative test)"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(weak_label_benchmark, 'guardrail', 'Weak labels are not manual QC labels.')}")
+
+    report_lines += [
+        "",
         "## Manual-QC Gated Front Effects",
         "",
         f"- Status: {first_summary(manual_qc_gated, 'status', 'missing')}",
@@ -1059,6 +1089,18 @@ def main() -> None:
             "top_transitions": cycle_state_transitions,
             "top_pc_loadings": cycle_state_loadings,
             "guardrail": first_summary(cycle_state_space, "guardrail"),
+        },
+        "weak_label_degradation_benchmark": {
+            "n_roi_rows": first_summary(weak_label_benchmark, "n_roi_rows"),
+            "n_trainable_weak_label_rows": first_summary(weak_label_benchmark, "n_trainable_weak_label_rows"),
+            "n_positive_weak_labels": first_summary(weak_label_benchmark, "n_positive_weak_labels"),
+            "n_negative_weak_labels": first_summary(weak_label_benchmark, "n_negative_weak_labels"),
+            "label_counts": first_summary(weak_label_benchmark, "label_counts", {}),
+            "confidence_counts": first_summary(weak_label_benchmark, "confidence_counts", {}),
+            "leakage_audit": weak_label_leakage,
+            "top_positive_training_rows": weak_label_top_pos,
+            "top_negative_training_rows": weak_label_top_neg,
+            "guardrail": first_summary(weak_label_benchmark, "guardrail"),
         },
         "particle_mask_stability_audit": {
             "n_roi": first_summary(particle_mask, "n_roi"),
