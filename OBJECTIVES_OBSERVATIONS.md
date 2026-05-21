@@ -1581,3 +1581,30 @@ Key result:
 - The project synthesis now carries the calibration metadata audit into `nmc_ai_physics_synthesis_summary.json` and the synthesis markdown.
 
 Interpretation: this improves the calibration evidence boundary. HDF5 timing metadata exists but must be interpreted cautiously for cadence; spatial calibration for the current um-scale front/diffusion proxies is still slide-derived, not raw-HDF5-confirmed. Diffusion values therefore remain apparent optical-front proxies until microscope metadata or manual provenance confirms both pixel size and the relevant timebase.
+
+## 2026-05-21 Calibration Claim Risk Register
+
+Added and ran:
+
+`python scripts/tier4_calibration_claim_risk_register.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_claim_risk_register`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_claim_risk_register`
+
+Local compact copy:
+
+`derived_local/calibration_claim_risk_register`
+
+Key result:
+
+- Audited 11 front, mobility, kinetics, QC, and diffusion-like claim families; all 11 source tables are present.
+- Calibration evidence status is now explicit: 32/33 HDF5 files contain `camera_timing`, 0 HDF5 files expose spatial calibration attributes, and 3 PPTX calibration text hits provide slide-derived context.
+- The register classifies early front candidates and ROI/multi-cycle mobility as high-risk proxy-only or optical-front-proxy outputs.
+- Threshold-robust fronts and calibrated-front QC are marked as apparent um-scale proxies: phase-slope sign/fraction trends are useful optical readouts, but diffusion-like values remain apparent `um^2/s` proxies.
+- Protocol-conditioned front residuals and QC sensitivity tables are medium-risk guardrails, with the robust claim centered on phase-front direction residuals rather than diffusion magnitude.
+- Manual-QC-gated front/diffusion effects remain publication-gate pending because there are no accepted manual labels yet.
+- The project synthesis now includes a Calibration Claim Risk Register section and carries the risk-register summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this is a useful paper-writing and future-analysis guardrail. It prevents accidental overclaiming by separating strong optical proxy evidence from calibrated transport claims. Current diffusion-like values should continue to be described as apparent optical-front proxies until spatial calibration, true frame cadence, particle/front masks, and manual QC are jointly validated.
+

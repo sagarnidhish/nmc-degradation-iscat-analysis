@@ -19,7 +19,8 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Prefix feature-importance audit features: 54
 - Spatiotemporal degradation graph nodes/edges: 52 / 510
 - Phase-kinetics ROI rows/features: 52 / 40
-- Calibration metadata HDF5/camera-timing files: 12 / 12
+- Calibration metadata HDF5/camera-timing files: 33 / 32
+- Calibration claim-risk families/source tables: 11 / 11
 - Particle trace cycle rows/drop cycles: 89 / 4
 - Particle precursor event/control anchors: 4 / 24
 - ROI trace-fusion rows/predictors: 52 / 100
@@ -40,7 +41,8 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycles 86 and 116 remain the strongest synchronized event-timing regimes; cycles 60 and 156 provide stronger single-particle morphology/latent-movement examples.
 - Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.
 - Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.
-- Calibration metadata audit finds camera-timing datasets in 12 of 12 sampled HDF5 files and no HDF5 pixel-size attributes; sampled timing can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.
+- Calibration metadata audit finds camera-timing datasets in 32 of 33 sampled HDF5 files and no HDF5 pixel-size attributes; sampled timing can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.
+- Calibration claim-risk register audits 11 front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
@@ -245,14 +247,28 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 ## Calibration Metadata Audit
 
-- HDF5 files/movie datasets/camera timing: 12 / 12 / 12
+- HDF5 files/movie datasets/camera timing: 33 / 32 / 32
 - HDF5 calibration-like attribute hits: 0
-- Median sampled HDF5 timing FPS proxy: 0.013
+- Median sampled HDF5 timing FPS proxy: 0.099
 - PPTX files scanned/calibration hits: 3 / 3
 - PPTX hit Degradation Paper Outline.pptx slide 16: We also plot the minimum viable facet size based on the point spread function of the microscope as ~0.2um^2 (dotted line)(check value). ADD COMPARISON TO MANUFACTURER’S EXPECTED FACET SIZES. The consistency of facet size
 - PPTX hit Degradation Paper Outline.pptx slide 3: an improved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) act
 - PPTX hit Degradation Project.pptx slide 3: and wouldn’t cycle again. Switched to second cell… Cell 2: Cycled from pristine. No bubbles visible FOV: full field of view, including 4 drilled holes on left half, and undrilled holes on right half. Imaging camera expos
 - Guardrail: This audit verifies metadata evidence for timebase/spatial calibration. Camera timing is present in sampled HDF5 files, but the sampled timing rows can represent sparse segment/cycle timing rather than true camera frame cadence. Physical pixel-size evidence should be treated as slide-derived unless raw HDF5 attributes or microscope metadata explicitly confirm it.
+
+## Calibration Claim Risk Register
+
+- Claim families/source tables: 11 / 11
+- Calibration evidence: 32 HDF5 timing files, 0 HDF5 spatial-calibration attrs, 3 PPTX hits
+- event_candidate_fronts: proxy_only - Use as automatic front-candidate ranking only; do not interpret as calibrated diffusion.
+- roi_phase_boundary_mobility: optical_front_proxy - Describe as apparent optical boundary mobility in cropped particle ROIs.
+- multi_cycle_roi_mobility: optical_front_proxy - Use for event/control morphology comparisons, not transport constants.
+- multi_cycle_threshold_robust_fronts: phase_sign_usable_diffusion_proxy_only - Phase-slope sign/fraction trends are usable optical proxies; diffusion numbers are apparent um^2/s proxies pending calibration provenance.
+- front_roi_calibration_qc: apparent_um_scale_proxy - Keep units as apparent um^2/s optical-front proxies and pair with QC flags/manual labels.
+- phase_kinetics_avrami: descriptive_optical_kinetics_proxy - Report as optical transition-sharpness/rate descriptors, not reaction constants.
+- manual_qc_gated_front_effects: publication_gate_pending - No manual-QC accepted front/diffusion claim should be made until this table is populated.
+- roi_front_qc_package: review_prioritization_only - Use to assign labels and inspect artifacts; it does not validate diffusion by itself.
+- Guardrail: This register audits wording risk, not numerical correctness. Current front/kinetic outputs are strongest as optical particle-region proxies; diffusion-like values remain apparent proxies until spatial calibration, true frame cadence, masks, and manual QC are jointly validated.
 
 ## Particle Trace Physics Audit
 

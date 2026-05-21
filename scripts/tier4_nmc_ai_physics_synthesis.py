@@ -102,6 +102,7 @@ def main() -> None:
     spatiotemporal_graph = read_json(derived / "spatiotemporal_degradation_graph" / "spatiotemporal_degradation_graph_summary.json")
     phase_kinetics = read_json(derived / "phase_kinetics_avrami" / "phase_kinetics_avrami_summary.json")
     calibration_metadata = read_json(derived / "calibration_metadata_audit" / "calibration_metadata_audit_summary.json")
+    calibration_claim_risk = read_json(derived / "calibration_claim_risk_register" / "calibration_claim_risk_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
     roi_trace_fusion = read_json(derived / "roi_trace_fusion_audit" / "roi_trace_fusion_audit_summary.json")
@@ -302,6 +303,7 @@ def main() -> None:
         f"- Spatiotemporal degradation graph nodes/edges: {first_summary(spatiotemporal_graph, 'n_nodes', 0)} / {first_summary(spatiotemporal_graph, 'n_edges', 0)}",
         f"- Phase-kinetics ROI rows/features: {first_summary(phase_kinetics, 'n_roi', 0)} / {first_summary(phase_kinetics, 'n_kinetic_features', 0)}",
         f"- Calibration metadata HDF5/camera-timing files: {first_summary(calibration_metadata, 'n_h5_files', 0)} / {first_summary(calibration_metadata, 'n_h5_with_camera_timing', 0)}",
+        f"- Calibration claim-risk families/source tables: {first_summary(calibration_claim_risk, 'n_claim_families', 0)} / {first_summary(calibration_claim_risk, 'n_source_tables_present', 0)}",
         f"- Particle trace cycle rows/drop cycles: {first_summary(particle_trace, 'n_cycle_rows', 0)} / {first_summary(particle_trace, 'n_any_drop_cycles', 0)}",
         f"- Particle precursor event/control anchors: {first_summary(particle_precursor, 'n_event_anchors', 0)} / {first_summary(particle_precursor, 'n_matched_control_anchors', 0)}",
         f"- ROI trace-fusion rows/predictors: {first_summary(roi_trace_fusion, 'n_roi_rows', 0)} / {first_summary(roi_trace_fusion, 'n_predictors', 0)}",
@@ -322,7 +324,8 @@ def main() -> None:
         "- Cycles 86 and 116 remain the strongest synchronized event-timing regimes; cycles 60 and 156 provide stronger single-particle morphology/latent-movement examples.",
         "- Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.",
         "- Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.",
-        f"- Calibration metadata audit finds camera-timing datasets in {first_summary(calibration_metadata, 'n_h5_with_camera_timing', 0)} of {first_summary(calibration_metadata, 'n_h5_files', 0)} sampled HDF5 files and no HDF5 pixel-size attributes; sampled timing can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.",
+        f"- Calibration metadata audit finds camera-timing datasets in {first_summary(calibration_metadata, 'n_h5_with_camera_timing', 0)} of {first_summary(calibration_metadata, 'n_h5_files', 0)} scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.",
+        f"- Calibration claim-risk register audits {first_summary(calibration_claim_risk, 'n_claim_families', 0)} front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
         f"- Automatic front-QC sensitivity keeps the positive phase-front residual in {len(robust_phase_strata)} strata: {', '.join(robust_phase_strata) if robust_phase_strata else 'none'}; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.",
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
@@ -541,6 +544,19 @@ def main() -> None:
             f"- PPTX hit {Path(str(row.get('pptx_path'))).name} slide {fmt(row.get('slide'), 0)}: {str(row.get('snippets', ''))[:220]}"
         )
     report_lines.append(f"- Guardrail: {first_summary(calibration_metadata, 'guardrail', 'Calibration metadata audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Calibration Claim Risk Register",
+        "",
+        f"- Claim families/source tables: {first_summary(calibration_claim_risk, 'n_claim_families', 0)} / {first_summary(calibration_claim_risk, 'n_source_tables_present', 0)}",
+        f"- Calibration evidence: {first_summary(calibration_claim_risk, 'calibration_evidence', {}).get('h5_files_with_camera_timing', 0)} HDF5 timing files, {first_summary(calibration_claim_risk, 'calibration_evidence', {}).get('h5_files_with_spatial_calibration_attrs', 0)} HDF5 spatial-calibration attrs, {first_summary(calibration_claim_risk, 'calibration_evidence', {}).get('pptx_calibration_hits', 0)} PPTX hits",
+    ]
+    for row in top_items(first_summary(calibration_claim_risk, 'high_risk_claim_families', []), 8):
+        report_lines.append(
+            f"- {row.get('analysis')}: {row.get('claim_status')} - {row.get('recommended_wording')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(calibration_claim_risk, 'guardrail', 'Calibration claim risk register unavailable.')}")
 
     report_lines += [
         "",
@@ -799,6 +815,15 @@ def main() -> None:
             "top_group_tests": phase_kinetics_tests,
             "top_correlations": phase_kinetics_corr,
             "guardrail": first_summary(phase_kinetics, "guardrail"),
+        },
+        "calibration_claim_risk_register": {
+            "n_claim_families": first_summary(calibration_claim_risk, "n_claim_families"),
+            "n_source_tables_present": first_summary(calibration_claim_risk, "n_source_tables_present"),
+            "claim_status_counts": first_summary(calibration_claim_risk, "claim_status_counts", {}),
+            "risk_level_counts": first_summary(calibration_claim_risk, "risk_level_counts", {}),
+            "high_risk_claim_families": first_summary(calibration_claim_risk, "high_risk_claim_families", []),
+            "calibration_evidence": first_summary(calibration_claim_risk, "calibration_evidence", {}),
+            "guardrail": first_summary(calibration_claim_risk, "guardrail"),
         },
         "calibration_metadata_audit": {
             "n_h5_discovered_before_cap": first_summary(calibration_metadata, "n_h5_discovered_before_cap"),

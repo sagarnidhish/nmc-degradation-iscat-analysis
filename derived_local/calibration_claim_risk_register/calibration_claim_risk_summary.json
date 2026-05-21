@@ -1,0 +1,85 @@
+{
+  "calibration_evidence": {
+    "h5_files_scanned": 33,
+    "h5_files_with_camera_timing": 32,
+    "h5_files_with_spatial_calibration_attrs": 0,
+    "pptx_calibration_hits": 3,
+    "spatial_status": "slide_derived_96nm_px",
+    "time_status": "h5_camera_timing_present_but_sparse_proxy"
+  },
+  "claim_status_counts": {
+    "apparent_um_scale_proxy": 1,
+    "conditioned_optical_proxy": 1,
+    "descriptive_optical_kinetics_proxy": 1,
+    "optical_front_proxy": 2,
+    "phase_sign_usable_diffusion_proxy_only": 1,
+    "proxy_only": 1,
+    "publication_gate_pending": 1,
+    "qc_guardrail": 2,
+    "review_prioritization_only": 1
+  },
+  "guardrail": "This register audits wording risk, not numerical correctness. Current front/kinetic outputs are strongest as optical particle-region proxies; diffusion-like values remain apparent proxies until spatial calibration, true frame cadence, masks, and manual QC are jointly validated.",
+  "high_risk_claim_families": [
+    {
+      "analysis": "event_candidate_fronts",
+      "claim_family": "early downsampled front candidates",
+      "claim_status": "proxy_only",
+      "recommended_wording": "Use as automatic front-candidate ranking only; do not interpret as calibrated diffusion."
+    },
+    {
+      "analysis": "roi_phase_boundary_mobility",
+      "claim_family": "selected ROI phase-boundary mobility",
+      "claim_status": "optical_front_proxy",
+      "recommended_wording": "Describe as apparent optical boundary mobility in cropped particle ROIs."
+    },
+    {
+      "analysis": "multi_cycle_roi_mobility",
+      "claim_family": "multi-cycle front/mobility descriptors",
+      "claim_status": "optical_front_proxy",
+      "recommended_wording": "Use for event/control morphology comparisons, not transport constants."
+    },
+    {
+      "analysis": "multi_cycle_threshold_robust_fronts",
+      "claim_family": "threshold-robust front and phase-slope readout",
+      "claim_status": "phase_sign_usable_diffusion_proxy_only",
+      "recommended_wording": "Phase-slope sign/fraction trends are usable optical proxies; diffusion numbers are apparent um^2/s proxies pending calibration provenance."
+    },
+    {
+      "analysis": "front_roi_calibration_qc",
+      "claim_family": "calibrated-front QC table",
+      "claim_status": "apparent_um_scale_proxy",
+      "recommended_wording": "Keep units as apparent um^2/s optical-front proxies and pair with QC flags/manual labels."
+    },
+    {
+      "analysis": "phase_kinetics_avrami",
+      "claim_family": "optical phase kinetics / Avrami-style descriptors",
+      "claim_status": "descriptive_optical_kinetics_proxy",
+      "recommended_wording": "Report as optical transition-sharpness/rate descriptors, not reaction constants."
+    },
+    {
+      "analysis": "manual_qc_gated_front_effects",
+      "claim_family": "manual-QC-gated front/diffusion effects",
+      "claim_status": "publication_gate_pending",
+      "recommended_wording": "No manual-QC accepted front/diffusion claim should be made until this table is populated."
+    },
+    {
+      "analysis": "roi_front_qc_package",
+      "claim_family": "manual visual review package",
+      "claim_status": "review_prioritization_only",
+      "recommended_wording": "Use to assign labels and inspect artifacts; it does not validate diffusion by itself."
+    }
+  ],
+  "n_claim_families": 11,
+  "n_source_tables_present": 11,
+  "outputs": {
+    "register": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_claim_risk_register/calibration_claim_risk_register.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_claim_risk_register/calibration_claim_risk_summary.json"
+  },
+  "risk_level_counts": {
+    "high": 3,
+    "low_for_review_high_for_physics_claim": 1,
+    "low_when_populated_high_now": 1,
+    "medium": 3,
+    "medium_high": 3
+  }
+}

@@ -3,12 +3,12 @@
 Metadata-only audit for spatial and time calibration evidence behind apparent front/diffusion proxies.
 
 - HDF5 files discovered before optional cap: 33
-- Max HDF5 files requested: 12
-- HDF5 files scanned: 12
-- HDF5 files with movie datasets: 12
-- HDF5 files with camera timing: 12
+- Max HDF5 files requested: 0
+- HDF5 files scanned: 33
+- HDF5 files with movie datasets: 32
+- HDF5 files with camera timing: 32
 - HDF5 files with calibration-like attributes: 0
-- Median sampled HDF5 timing FPS proxy: 0.013331411250651681
+- Median sampled HDF5 timing FPS proxy: 0.09937929871365499
 - PPTX files scanned/calibration hits: 3 / 3
 
 ## Interpretation
