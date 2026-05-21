@@ -1042,3 +1042,27 @@ Key result:
 
 Interpretation: this closes a practical review gap. The project now has a concrete, compact set of particle ROI/front panels for manual accept/reject labeling, rather than only CSV rankings. The high rate of fragmented masks reinforces the current guardrail: threshold-front and diffusion proxies are useful for hypothesis ranking, but calibrated diffusion or final degradation-mode labels require manual QC on these panels.
 
+## 2026-05-21 QC Review Packet
+
+Added and ran:
+
+`python scripts/tier4_qc_review_packet.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/qc_review_packet`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/qc_review_packet`
+
+Local compact copy:
+
+`derived_local/qc_review_packet`
+
+Key result:
+
+- Built a review-ready manifest of 30 prioritized ROI/front candidates using rollout-mobility difficulty, threshold-robust phase/diffusion proxy scores, protocol-conditioned front-direction residuals, and protocol-conditioned optical-shift residuals.
+- The packet includes 16 event candidates and 14 control candidates, with pending columns for `manual_qc_status`, `manual_qc_decision`, and `manual_qc_notes`.
+- Top review targets include `cycle60_rank3_obj9`, `cycle156_rank7_obj27`, `cycle156_rank2_obj2`, `cycle60_rank2_obj2`, `cycle156_rank1_obj1`, and the active control `cycle62_rank3_obj9`.
+- The manifest attaches available Isambard ROI preview and rollout-preview paths so manual inspection can be done without searching through derived folders.
+- Updated the tier4 synthesis to mention this QC packet as the next concrete guardrail before publication-scale front/diffusion claims.
+
+Interpretation: this does not replace manual QC, but it closes the workflow gap by turning the automatic rankings into an actionable review queue. The next scientific claim boundary is clear: accept/reject these particle/front masks before interpreting apparent diffusion proxies as physical transport estimates.
+

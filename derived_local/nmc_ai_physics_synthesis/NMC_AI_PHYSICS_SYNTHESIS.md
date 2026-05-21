@@ -23,6 +23,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.
 - Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
+- A QC review packet prioritizes 30 ROI/front candidates for manual accept/reject review before publication-scale diffusion claims.
 
 ## Model Readout
 
