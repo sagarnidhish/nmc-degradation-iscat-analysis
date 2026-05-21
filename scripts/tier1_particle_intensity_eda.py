@@ -88,8 +88,8 @@ def main() -> None:
         return
 
     try:
-        particles_df = pd.read_csv(particles_path)
-        frames_df = pd.read_csv(frames_path)
+        particles_df = pd.read_csv(particles_path, encoding="utf-8-sig")
+        frames_df = pd.read_csv(frames_path, encoding="utf-8-sig")
     except Exception as exc:
         print(f"Warning: Could not read input CSVs: {exc}")
         return

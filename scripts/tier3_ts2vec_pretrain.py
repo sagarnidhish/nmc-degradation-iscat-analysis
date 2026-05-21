@@ -139,7 +139,7 @@ class TS2VecEncoder(nn.Module):
 
 
 def hierarchical_contrastive_loss(z1: torch.Tensor, z2: torch.Tensor,
-                                   alpha: float = 0.5, temporal_unit: int = 0) -> torch.Tensor:
+                                   temporal_unit: int = 0) -> torch.Tensor:
     """
     TS2Vec hierarchical contrastive loss over temporal dimension.
     z1, z2: (B, D, T)
@@ -148,24 +148,28 @@ def hierarchical_contrastive_loss(z1: torch.Tensor, z2: torch.Tensor,
     d = 0
     while z1.size(-1) > 1:
         if d >= temporal_unit:
-            loss += instance_contrastive(z1) + instance_contrastive(z2)
-        # Average pooling to halve temporal resolution
+            loss += instance_contrastive(z1, z2)
         z1 = F.avg_pool1d(z1, kernel_size=2, stride=2, ceil_mode=True)
         z2 = F.avg_pool1d(z2, kernel_size=2, stride=2, ceil_mode=True)
         d += 1
-    loss += instance_contrastive(z1) + instance_contrastive(z2)
-    return loss / (2 * (d + 1))
+    loss += instance_contrastive(z1, z2)
+    return loss / (d + 1)
 
 
-def instance_contrastive(z: torch.Tensor, temperature: float = 0.5) -> torch.Tensor:
-    """Instance-level contrastive over batch: z (B, D, T) -> pooled (B, D)."""
-    B, D, _ = z.shape
-    zp = z.mean(dim=-1)
-    zp = F.normalize(zp, dim=1)
-    sim = torch.mm(zp, zp.T) / temperature
-    mask = torch.eye(B, device=z.device, dtype=torch.bool)
+def instance_contrastive(z1: torch.Tensor, z2: torch.Tensor, temperature: float = 0.5) -> torch.Tensor:
+    """NT-Xent loss: z1 and z2 are paired views, each (B, D, T). Positive = same-index pair."""
+    B = z1.size(0)
+    # Pool temporal dim -> (B, D)
+    z1p = F.normalize(z1.mean(dim=-1), dim=1)
+    z2p = F.normalize(z2.mean(dim=-1), dim=1)
+    # Concatenate: [z1; z2] -> (2B, D)
+    z = torch.cat([z1p, z2p], dim=0)
+    sim = torch.mm(z, z.T) / temperature
+    # Mask self-similarity
+    mask = torch.eye(2 * B, device=z.device, dtype=torch.bool)
     sim.masked_fill_(mask, float("-inf"))
-    labels = torch.arange(B, device=z.device)
+    # Positive for i (in z1 half) is i+B (in z2 half) and vice versa
+    labels = torch.cat([torch.arange(B, 2 * B), torch.arange(0, B)]).to(z.device)
     return F.cross_entropy(sim, labels)
 
 

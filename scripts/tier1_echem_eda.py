@@ -187,8 +187,34 @@ def main() -> None:
         "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/echemDF_full.csv",
         "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
     ])
+
+    # Fallback: concatenate individual per-session electrochemistry CSVs from dataset dirs
     if not csv_path:
-        print("Warning: echemDF_full.csv not found.")
+        import glob as _glob
+        indiv_csvs = sorted(_glob.glob(
+            "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/**/*electrochemistry.csv", recursive=True
+        ))
+        if indiv_csvs:
+            print(f"echemDF_full.csv not found. Merging {len(indiv_csvs)} individual echem CSVs...")
+            dfs = []
+            for i, p in enumerate(indiv_csvs):
+                try:
+                    df = pd.read_csv(p, encoding="utf-8-sig", low_memory=False)
+                    # Infer cycleNo from filename number prefix (e.g. "2_c2_x14..." -> crude proxy)
+                    if "cycleNo" not in df.columns:
+                        df["cycleNo"] = float(i * 10)
+                    df["addrs"] = p
+                    dfs.append(df)
+                except Exception as exc:
+                    print(f"  Warning: {p}: {exc}")
+            if dfs:
+                merged_csv = os.path.join(args.out_dir, "echem_merged.csv")
+                pd.concat(dfs, ignore_index=True).to_csv(merged_csv, index=False)
+                csv_path = merged_csv
+                print(f"Wrote merged echem: {merged_csv}")
+
+    if not csv_path:
+        print("Warning: No echem CSV found (echemDF_full.csv or individual *electrochemistry.csv).")
         return
     print(f"Reading: {csv_path}")
 
@@ -202,6 +228,7 @@ def main() -> None:
             csv_path,
             chunksize=args.chunksize,
             usecols=lambda c: c in usecols,
+            encoding="utf-8-sig",
             low_memory=False,
         )
     except Exception as exc:
@@ -209,8 +236,10 @@ def main() -> None:
         return
 
     for chunk_idx, chunk in enumerate(reader, 1):
-        if chunk.empty or "cycleNo" not in chunk.columns:
+        if chunk.empty or "Potential (V)" not in chunk.columns or "Current (mA)" not in chunk.columns:
             continue
+        if "cycleNo" not in chunk.columns:
+            chunk["cycleNo"] = float(chunk_idx)
         chunk["cycleNo"] = pd.to_numeric(chunk["cycleNo"], errors="coerce")
         chunk = chunk.dropna(subset=["cycleNo", "Potential (V)", "Current (mA)"])
         if chunk.empty:
