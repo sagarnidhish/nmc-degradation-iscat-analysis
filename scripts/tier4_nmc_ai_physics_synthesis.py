@@ -96,6 +96,7 @@ def main() -> None:
     residual_modes = read_json(derived / "residual_physics_mode_taxonomy" / "residual_physics_mode_taxonomy_summary.json")
     cycle_region_modes = read_json(derived / "cycle_region_mode_context" / "cycle_region_mode_context_summary.json")
     prefix_forecast = read_json(derived / "prefix_roi_forecast" / "prefix_roi_forecast_summary.json")
+    prefix_importance = read_json(derived / "prefix_roi_feature_importance" / "prefix_feature_importance_summary.json")
     manual_qc_workbook = read_json(derived / "manual_qc_label_workbook" / "manual_qc_label_workbook_summary.json")
     manual_qc_gated = read_json(derived / "manual_qc_gated_front_effects" / "manual_qc_gated_front_effects_summary.json")
 
@@ -159,6 +160,10 @@ def main() -> None:
     prefix_top_classification = top_items(first_summary(prefix_forecast, "top_classification", []), 10)
     prefix_top_regression = top_items(first_summary(prefix_forecast, "top_regression", []), 8)
     prefix_null = top_items(first_summary(prefix_forecast, "permutation_null", []), 5)
+    prefix_importance_model = first_summary(prefix_importance, "model_summary", {}) or {}
+    prefix_importance_null = first_summary(prefix_importance, "permutation_null", {}) or {}
+    prefix_importance_groups = top_items(first_summary(prefix_importance, "top_group_ablation", []), 6)
+    prefix_importance_features = top_items(first_summary(prefix_importance, "top_permutation_importance", []), 8)
     top_prefix_classifier = prefix_top_classification[0] if prefix_top_classification else {}
     top_residual_mode = residual_mode_enrichment[0] if residual_mode_enrichment else {}
     control_balanced_nonfragment = first_summary(control_balanced_qc, "nonfragmented_by_role", {}) or {}
@@ -261,12 +266,14 @@ def main() -> None:
         f"- Residual physics mode clusters: {first_summary(residual_modes, 'chosen_k', 0)}",
         f"- Manual-QC label workbook candidates: {first_summary(manual_qc_workbook, 'n_unique_roi', 0)}",
         f"- Manual-QC gated accepted fronts: {first_summary(manual_qc_gated, 'n_manual_front_effect_accepted', 0)}",
+        f"- Prefix feature-importance audit features: {first_summary(prefix_importance, 'n_features', 0)}",
         f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
         "",
         "- Persistence is the strongest raw next-frame baseline; DMD/velocity/learned residual experiments are most useful as residual and latent descriptors.",
         f"- Prefix-only cropped ROI forecasts predict later front-direction residual class best: {top_prefix_classifier.get('model', 'NA')} at prefix {fmt(top_prefix_classifier.get('prefix_fraction'))} gives AUC {fmt(top_prefix_classifier.get('mean_roc_auc'))}, while permutation-null support is strongest for the front-positive residual target.",
+        f"- The 75%-prefix feature-importance audit is descriptive but not independently significant: pooled OOF AUC {fmt(prefix_importance_model.get('pooled_oof_roc_auc'))}, null empirical p={fmt(prefix_importance_null.get('empirical_p_ge_observed'))}; strongest ablation groups are {', '.join(str(r.get('removed_group')) for r in prefix_importance_groups[:2]) or 'NA'}.",
         "- ROI event/control optical differences survive event-reference-cycle centering, especially cumulative normalized change, first-last decorrelation, latent net displacement, high-fraction growth, and ROI mean trend.",
         "- Frame count and protocol-block position strongly couple to ROI dynamics, so echem/protocol context must be a model covariate and a guardrail.",
         "- After residualizing available protocol/echem covariates and event-reference fixed effects, event/control separation remains in ROI mean delta, high-fraction delta, first-last correlation, cumulative change, DMD residual, and latent displacement.",
@@ -316,6 +323,25 @@ def main() -> None:
             f"- Regression {row.get('target')} {row.get('feature_set')} {row.get('model')} f={fmt(row.get('prefix_fraction'))}: MAE ratio vs median baseline {fmt(row.get('mean_mae_ratio_vs_baseline'))}, rho {fmt(row.get('mean_spearman_rho'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(prefix_forecast, 'guardrail', 'Small selected cohort; use as triage only.')}")
+
+    report_lines += [
+        "",
+        "## Prefix ROI Feature Importance",
+        "",
+        f"- Rows/features: {first_summary(prefix_importance, 'n_rows', 0)} / {first_summary(prefix_importance, 'n_features', 0)}",
+        f"- Model/target: {first_summary(prefix_importance, 'model', 'NA')} / {first_summary(prefix_importance, 'target', 'NA')}",
+        f"- Pooled OOF AUC: {fmt(prefix_importance_model.get('pooled_oof_roc_auc'))}; balanced accuracy {fmt(prefix_importance_model.get('pooled_oof_balanced_accuracy'))}",
+        f"- Null check: p95 AUC {fmt(prefix_importance_null.get('null_p95_auc'))}, empirical p={fmt(prefix_importance_null.get('empirical_p_ge_observed'))}",
+    ]
+    for row in prefix_importance_groups[:5]:
+        report_lines.append(
+            f"- Group ablation remove {row.get('removed_group')}: AUC drop {fmt(row.get('pooled_oof_auc_drop'))}, n_features={fmt(row.get('n_removed_features'), 0)}"
+        )
+    for row in prefix_importance_features[:6]:
+        report_lines.append(
+            f"- Feature permutation {row.get('feature')} ({row.get('feature_group')}): AUC drop {fmt(row.get('mean_auc_drop'))}, positive-fold fraction {fmt(row.get('positive_drop_fraction'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(prefix_importance, 'guardrail', 'Feature rankings are descriptive only.')}")
 
     report_lines += [
         "",
@@ -529,6 +555,20 @@ def main() -> None:
         "top_prefix_roi_classification": prefix_top_classification,
         "top_prefix_roi_regression": prefix_top_regression,
         "prefix_roi_permutation_null": prefix_null,
+        "prefix_roi_feature_importance": {
+            "n_roi": first_summary(prefix_importance, "n_roi"),
+            "n_rows": first_summary(prefix_importance, "n_rows"),
+            "prefix_fraction": first_summary(prefix_importance, "prefix_fraction"),
+            "target": first_summary(prefix_importance, "target"),
+            "model": first_summary(prefix_importance, "model"),
+            "n_features": first_summary(prefix_importance, "n_features"),
+            "feature_group_counts": first_summary(prefix_importance, "feature_group_counts", {}),
+            "model_summary": prefix_importance_model,
+            "permutation_null": prefix_importance_null,
+            "top_group_ablation": prefix_importance_groups,
+            "top_permutation_importance": prefix_importance_features,
+            "guardrail": first_summary(prefix_importance, "guardrail"),
+        },
         "manual_qc_label_workbook": {
             "n_unique_roi": first_summary(manual_qc_workbook, "n_unique_roi"),
             "role_counts": first_summary(manual_qc_workbook, "role_counts", {}),

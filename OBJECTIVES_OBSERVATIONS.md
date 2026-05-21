@@ -1270,3 +1270,61 @@ Key result:
 - A pending review queue is written so the high-priority event/control rows can be reviewed without rebuilding the automatic analysis.
 
 Interpretation: this creates the hard reproducibility gate for final front/diffusion claims. Automatic analyses can continue to guide review, but publication-facing front-effect and diffusion statistics now require explicit manual acceptance labels before the gated script will emit tests.
+
+## 2026-05-21 Prefix ROI Feature-Importance Audit
+
+Added and ran:
+
+`python scripts/tier4_prefix_roi_feature_importance.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance --n-permutation-repeats 50 --n-null 300`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance`
+
+Local compact copy:
+
+`derived_local/prefix_roi_feature_importance`
+
+Key result:
+
+- Interpreted the 75% prefix logistic model for the later `front_positive_residual_binary` target using leave-event-reference-cycle-out predictions, permutation feature importance, feature-group ablation, coefficient summaries, univariate tests, and a 300-shuffle label null.
+- The audit used 52 ROI rows and 54 prefix features grouped into mean-intensity trace, bright/dark fractions, temporal change energy, frame/texture level, stage drift, and other prefix features.
+- The held-out pooled readout is not independently significant: pooled OOF AUC 0.447, balanced accuracy 0.489, null mean AUC 0.500, null p95 AUC 0.638, empirical p=0.714.
+- Descriptively, removing `mean_intensity_trace` causes the largest AUC drop (0.171). The remaining group ablations are near-zero or negative, including `frame_texture_level` (-0.002), `stage_drift` (-0.023), `temporal_change_energy` (-0.048), and `bright_dark_fraction` (-0.074). Top permutation features include `stage_prefix_step_max`, `low_fraction_prefix_std`, `average_intensity_prefix_mean`, `average_intensity_prefix_last`, `roi_norm_mean_prefix_first`, and `first_q30_threshold`.
+- Univariate checks flag `stage_prefix_step_max`, `stage_prefix_net_drift`, and `prefix_temporal_absdiff_p95`, but these should be interpreted as acquisition/physics-triage signals rather than causal mechanisms.
+- The project synthesis now includes a dedicated Prefix ROI Feature Importance section and carries the full summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: the earlier prefix-forecast signal remains useful for triage, but this 75% logistic interpretability audit is mainly a guardrail. It points mainly to early mean-intensity trace features as descriptive contributors while showing that the pooled importance model does not clear a permutation-null test on the selected 52-ROI cohort.
+
+## 2026-05-21 Leakage-Clean Prefix Forecast Revision
+
+Updated and reran:
+
+`python scripts/tier4_prefix_roi_forecast.py --n-permutation 300`
+
+Also updated and reran:
+
+`python scripts/tier4_prefix_roi_feature_importance.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance --n-permutation-repeats 40 --n-null 300`
+
+Remote output directories:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast`
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance`
+
+Local compact copies:
+
+`derived_local/prefix_roi_forecast`
+
+`derived_local/prefix_roi_feature_importance`
+
+Key result:
+
+- Found and fixed an acquisition-leakage issue in prefix feature selection: `first_frame_index` and `last_frame_index` existed in the prefix feature table, and the old selector could include `first_frame_index` because it matched `first_*`.
+- Tightened `tier4_prefix_roi_forecast.py` and `tier4_prefix_roi_feature_importance.py` so strict prefix models exclude frame-index columns and use only visual ROI-prefix features plus the explicitly named context set when requested.
+- After removing frame-index leakage, the best front-positive residual classifier is still prefix-only random forest at 50% prefix, but weaker: mean fold ROC-AUC 0.691 and balanced accuracy 0.472. The audited prefix-only logistic null for the same target is no longer significant: observed AUC 0.476, null p95 0.668, empirical p=0.515.
+- Event-label and residual-mode prefix-only logistic nulls also remain non-significant after the cleanup: event-label observed AUC 0.563, empirical p=0.292; event-enriched-mode observed AUC 0.630, empirical p=0.189.
+- The strict visual-feature importance audit for the 75% logistic front-positive target gives pooled OOF AUC 0.447, balanced accuracy 0.489, null p95 AUC 0.638, empirical p=0.714. Mean-intensity trace features have the largest descriptive group-ablation drop, but the model does not clear the permutation null.
+- This revises the previous optimistic prefix interpretation: early particle-region video features may still triage front-direction behavior, but current evidence does not prove a robust leakage-clean predictor on the 52-ROI cohort.
+
+Interpretation: this is a useful negative/control result. It prevents an acquisition index from masquerading as image physics and narrows the credible claim to descriptive early-ROI intensity/texture associations. The next prefix-model step should use stricter leakage controls, more ROI rows, and preferably manual-QC-accepted particle/front labels before claiming deployable forecasting.

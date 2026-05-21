@@ -2135,34 +2135,184 @@
     "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/nmc_ai_physics_synthesis_summary.json"
   },
   "persistence_best_all_cycles": true,
-  "prefix_forecast_n_prefix_features": 58,
+  "prefix_forecast_n_prefix_features": 56,
   "prefix_forecast_n_roi": 52,
+  "prefix_roi_feature_importance": {
+    "feature_group_counts": {
+      "bright_dark_fraction": 14,
+      "frame_texture_level": 5,
+      "mean_intensity_trace": 18,
+      "stage_drift": 3,
+      "temporal_change_energy": 14
+    },
+    "guardrail": "Feature importance is computed on the small 52-ROI selected cohort with leave-event-reference-cycle-out folds. Treat it as mechanistic triage for early particle-region video signals, not causal proof or a deployable detector.",
+    "model": "logistic_l2",
+    "model_summary": {
+      "folds": 4,
+      "mean_fold_balanced_accuracy": 0.46597222222222223,
+      "mean_fold_roc_auc": 0.40694444444444444,
+      "n_oof": 52,
+      "pooled_oof_balanced_accuracy": 0.4893939393939394,
+      "pooled_oof_roc_auc": 0.44696969696969696
+    },
+    "n_features": 54,
+    "n_roi": 52,
+    "n_rows": 52,
+    "permutation_null": {
+      "empirical_p_ge_observed": 0.7142857142857143,
+      "model": "logistic_l2",
+      "n_permutations": 300,
+      "null_mean_auc": 0.4996919191919192,
+      "null_p95_auc": 0.6379545454545454,
+      "observed_pooled_oof_auc": 0.44696969696969696,
+      "prefix_fraction": 0.75,
+      "target": "front_positive_residual_binary"
+    },
+    "prefix_fraction": 0.75,
+    "target": "front_positive_residual_binary",
+    "top_group_ablation": [
+      {
+        "n_removed_features": 18,
+        "pooled_oof_auc_drop": 0.1712121212121212,
+        "pooled_oof_auc_without_group": 0.27575757575757576,
+        "pooled_oof_balanced_accuracy_without_group": 0.32727272727272727,
+        "remaining_features": 36,
+        "removed_group": "mean_intensity_trace"
+      },
+      {
+        "n_removed_features": 5,
+        "pooled_oof_auc_drop": -0.0015151515151514694,
+        "pooled_oof_auc_without_group": 0.44848484848484843,
+        "pooled_oof_balanced_accuracy_without_group": 0.5121212121212122,
+        "remaining_features": 49,
+        "removed_group": "frame_texture_level"
+      },
+      {
+        "n_removed_features": 3,
+        "pooled_oof_auc_drop": -0.022727272727272707,
+        "pooled_oof_auc_without_group": 0.46969696969696967,
+        "pooled_oof_balanced_accuracy_without_group": 0.4893939393939394,
+        "remaining_features": 51,
+        "removed_group": "stage_drift"
+      },
+      {
+        "n_removed_features": 14,
+        "pooled_oof_auc_drop": -0.048484848484848464,
+        "pooled_oof_auc_without_group": 0.4954545454545454,
+        "pooled_oof_balanced_accuracy_without_group": 0.5242424242424242,
+        "remaining_features": 40,
+        "removed_group": "temporal_change_energy"
+      },
+      {
+        "n_removed_features": 14,
+        "pooled_oof_auc_drop": -0.07424242424242417,
+        "pooled_oof_auc_without_group": 0.5212121212121211,
+        "pooled_oof_balanced_accuracy_without_group": 0.5348484848484849,
+        "remaining_features": 40,
+        "removed_group": "bright_dark_fraction"
+      }
+    ],
+    "top_permutation_importance": [
+      {
+        "feature": "stage_prefix_step_max",
+        "feature_group": "stage_drift",
+        "folds": 4,
+        "mean_auc_drop": 0.13232638888888892,
+        "mean_balanced_accuracy_drop": 0.0453125,
+        "median_auc_drop": 0.1175,
+        "positive_drop_fraction": 0.5
+      },
+      {
+        "feature": "low_fraction_prefix_std",
+        "feature_group": "bright_dark_fraction",
+        "folds": 4,
+        "mean_auc_drop": 0.00857638888888892,
+        "mean_balanced_accuracy_drop": -0.014499999999999997,
+        "median_auc_drop": 0.0,
+        "positive_drop_fraction": 0.25
+      },
+      {
+        "feature": "average_intensity_prefix_mean",
+        "feature_group": "mean_intensity_trace",
+        "folds": 4,
+        "mean_auc_drop": 0.008104166666666697,
+        "mean_balanced_accuracy_drop": 0.0,
+        "median_auc_drop": -0.0022222222222222044,
+        "positive_drop_fraction": 0.25
+      },
+      {
+        "feature": "average_intensity_prefix_last",
+        "feature_group": "mean_intensity_trace",
+        "folds": 4,
+        "mean_auc_drop": 0.007777777777777811,
+        "mean_balanced_accuracy_drop": 0.0,
+        "median_auc_drop": -0.0015555555555555412,
+        "positive_drop_fraction": 0.25
+      },
+      {
+        "feature": "roi_norm_mean_prefix_first",
+        "feature_group": "mean_intensity_trace",
+        "folds": 4,
+        "mean_auc_drop": 0.006944444444444476,
+        "mean_balanced_accuracy_drop": 0.0030555555555555575,
+        "median_auc_drop": -0.0005555555555555552,
+        "positive_drop_fraction": 0.5
+      },
+      {
+        "feature": "first_q30_threshold",
+        "feature_group": "bright_dark_fraction",
+        "folds": 4,
+        "mean_auc_drop": 0.006208333333333361,
+        "mean_balanced_accuracy_drop": 0.001111111111111114,
+        "median_auc_drop": -0.001555555555555554,
+        "positive_drop_fraction": 0.25
+      },
+      {
+        "feature": "high_fraction_prefix_slope",
+        "feature_group": "bright_dark_fraction",
+        "folds": 4,
+        "mean_auc_drop": 0.005805555555555583,
+        "mean_balanced_accuracy_drop": 0.0033611111111111133,
+        "median_auc_drop": 0.000472222222222235,
+        "positive_drop_fraction": 0.5
+      },
+      {
+        "feature": "first_frame_mean",
+        "feature_group": "frame_texture_level",
+        "folds": 4,
+        "mean_auc_drop": 0.0057708333333333596,
+        "mean_balanced_accuracy_drop": 0.002222222222222226,
+        "median_auc_drop": 0.000361111111111111,
+        "positive_drop_fraction": 0.5
+      }
+    ]
+  },
   "prefix_roi_permutation_null": [
     {
-      "empirical_p_ge_observed": 0.28542914171656686,
-      "n_permutations": 500,
-      "null_mean_auc": 0.5067076698103483,
-      "null_p95_auc": 0.6870960884353741,
-      "observed_mean_auc": 0.5729166666666666,
-      "prefix_fraction": 0.25,
+      "empirical_p_ge_observed": 0.292358803986711,
+      "n_permutations": 300,
+      "null_mean_auc": 0.5042253487253486,
+      "null_p95_auc": 0.675388321995465,
+      "observed_mean_auc": 0.5625,
+      "prefix_fraction": 0.75,
       "target": "is_event_roi"
     },
     {
-      "empirical_p_ge_observed": 0.18363273453093812,
-      "n_permutations": 500,
-      "null_mean_auc": 0.5042661274770204,
-      "null_p95_auc": 0.7126594065656565,
-      "observed_mean_auc": 0.6357104700854701,
+      "empirical_p_ge_observed": 0.1893687707641196,
+      "n_permutations": 300,
+      "null_mean_auc": 0.49884711172865936,
+      "null_p95_auc": 0.7149337121212122,
+      "observed_mean_auc": 0.6301549145299146,
       "prefix_fraction": 0.75,
       "target": "is_event_enriched_mode"
     },
     {
-      "empirical_p_ge_observed": 0.02594810379241517,
-      "n_permutations": 500,
-      "null_mean_auc": 0.4922943355024605,
-      "null_p95_auc": 0.6562996031746031,
-      "observed_mean_auc": 0.6868055555555556,
-      "prefix_fraction": 0.75,
+      "empirical_p_ge_observed": 0.5149501661129569,
+      "n_permutations": 300,
+      "null_mean_auc": 0.482030561771782,
+      "null_p95_auc": 0.6678505527210885,
+      "observed_mean_auc": 0.47638888888888886,
+      "prefix_fraction": 0.5,
       "target": "front_positive_residual_binary"
     }
   ],
@@ -2188,7 +2338,7 @@
       "status": "implemented"
     },
     {
-      "evidence": "Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, residual-CNN guardrails, and prefix-only ROI forecasts were run. Persistence is best across raw pixel rollouts: True; best prefix classifier target is front_positive_residual_binary with AUC 0.726.",
+      "evidence": "Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, residual-CNN guardrails, and prefix-only ROI forecasts were run. Persistence is best across raw pixel rollouts: True; best prefix classifier target is front_positive_residual_binary with AUC 0.691.",
       "limitation": "Learned/full rollout models do not yet beat persistence robustly; use residuals, latent paths, and prefix forecasts as physics descriptors rather than claiming superior pixel prediction.",
       "next_step": "Train cycle-conditioned probabilistic video models only after growing the ROI set and validating particle masks.",
       "requirement": "Next-frame prediction and rollout",
@@ -2378,35 +2528,17 @@
     {
       "feature_set": "prefix_only",
       "folds": 4,
-      "mean_balanced_accuracy": 0.5121527777777778,
-      "mean_roc_auc": 0.7256944444444444,
+      "mean_balanced_accuracy": 0.4722222222222222,
+      "mean_roc_auc": 0.6906249999999999,
       "model": "random_forest",
       "prefix_fraction": 0.5,
       "target": "front_positive_residual_binary"
     },
     {
-      "feature_set": "prefix_only",
-      "folds": 4,
-      "mean_balanced_accuracy": 0.546875,
-      "mean_roc_auc": 0.7121527777777777,
-      "model": "random_forest",
-      "prefix_fraction": 0.75,
-      "target": "front_positive_residual_binary"
-    },
-    {
-      "feature_set": "prefix_only",
-      "folds": 4,
-      "mean_balanced_accuracy": 0.6076388888888888,
-      "mean_roc_auc": 0.6868055555555556,
-      "model": "logistic_l2",
-      "prefix_fraction": 0.75,
-      "target": "front_positive_residual_binary"
-    },
-    {
-      "feature_set": "prefix_only",
+      "feature_set": "prefix_plus_context",
       "folds": 4,
       "mean_balanced_accuracy": 0.5857638888888889,
-      "mean_roc_auc": 0.6538194444444444,
+      "mean_roc_auc": 0.5236111111111111,
       "model": "random_forest",
       "prefix_fraction": 0.25,
       "target": "front_positive_residual_binary"
@@ -2414,35 +2546,62 @@
     {
       "feature_set": "prefix_only",
       "folds": 4,
-      "mean_balanced_accuracy": 0.5541666666666667,
-      "mean_roc_auc": 0.6475694444444444,
-      "model": "logistic_l2",
+      "mean_balanced_accuracy": 0.5336805555555556,
+      "mean_roc_auc": 0.5197916666666667,
+      "model": "random_forest",
       "prefix_fraction": 0.25,
-      "target": "front_positive_residual_binary"
-    },
-    {
-      "feature_set": "prefix_only",
-      "folds": 4,
-      "mean_balanced_accuracy": 0.6239583333333333,
-      "mean_roc_auc": 0.6347222222222222,
-      "model": "logistic_l2",
-      "prefix_fraction": 0.5,
       "target": "front_positive_residual_binary"
     },
     {
       "feature_set": "prefix_plus_context",
       "folds": 4,
-      "mean_balanced_accuracy": 0.5277777777777778,
-      "mean_roc_auc": 0.6131944444444445,
+      "mean_balanced_accuracy": 0.4635416666666667,
+      "mean_roc_auc": 0.5059027777777777,
       "model": "random_forest",
       "prefix_fraction": 0.5,
       "target": "front_positive_residual_binary"
     },
     {
+      "feature_set": "prefix_only",
+      "folds": 4,
+      "mean_balanced_accuracy": 0.4791666666666667,
+      "mean_roc_auc": 0.47638888888888886,
+      "model": "logistic_l2",
+      "prefix_fraction": 0.5,
+      "target": "front_positive_residual_binary"
+    },
+    {
+      "feature_set": "prefix_only",
+      "folds": 4,
+      "mean_balanced_accuracy": 0.5104166666666667,
+      "mean_roc_auc": 0.409375,
+      "model": "random_forest",
+      "prefix_fraction": 0.75,
+      "target": "front_positive_residual_binary"
+    },
+    {
+      "feature_set": "prefix_only",
+      "folds": 4,
+      "mean_balanced_accuracy": 0.46597222222222223,
+      "mean_roc_auc": 0.40694444444444444,
+      "model": "logistic_l2",
+      "prefix_fraction": 0.75,
+      "target": "front_positive_residual_binary"
+    },
+    {
+      "feature_set": "prefix_only",
+      "folds": 4,
+      "mean_balanced_accuracy": 0.3902777777777778,
+      "mean_roc_auc": 0.3871527777777778,
+      "model": "logistic_l2",
+      "prefix_fraction": 0.25,
+      "target": "front_positive_residual_binary"
+    },
+    {
       "feature_set": "prefix_plus_context",
       "folds": 4,
-      "mean_balanced_accuracy": 0.53125,
-      "mean_roc_auc": 0.6010416666666667,
+      "mean_balanced_accuracy": 0.484375,
+      "mean_roc_auc": 0.35555555555555557,
       "model": "random_forest",
       "prefix_fraction": 0.75,
       "target": "front_positive_residual_binary"
@@ -2450,17 +2609,8 @@
     {
       "feature_set": "prefix_plus_context",
       "folds": 4,
-      "mean_balanced_accuracy": 0.5302083333333333,
-      "mean_roc_auc": 0.5670138888888889,
-      "model": "random_forest",
-      "prefix_fraction": 0.25,
-      "target": "front_positive_residual_binary"
-    },
-    {
-      "feature_set": "prefix_plus_context",
-      "folds": 4,
-      "mean_balanced_accuracy": 0.4388888888888889,
-      "mean_roc_auc": 0.3923611111111111,
+      "mean_balanced_accuracy": 0.20972222222222223,
+      "mean_roc_auc": 0.31631944444444443,
       "model": "logistic_l2",
       "prefix_fraction": 0.25,
       "target": "front_positive_residual_binary"
@@ -2471,9 +2621,64 @@
       "feature_set": "prefix_plus_context",
       "folds": 4,
       "mean_baseline_median_mae": 1.1659684065934068,
-      "mean_mae": 0.48954431103307317,
-      "mean_mae_ratio_vs_baseline": 0.4193252935941105,
-      "mean_spearman_rho": 0.3735526078687852,
+      "mean_mae": 1.0592716202597638,
+      "mean_mae_ratio_vs_baseline": 0.9511939318245813,
+      "mean_spearman_rho": -0.05368043260973223,
+      "model": "random_forest",
+      "prefix_fraction": 0.25,
+      "target": "mode_review_priority"
+    },
+    {
+      "feature_set": "prefix_plus_context",
+      "folds": 4,
+      "mean_baseline_median_mae": 1.1659684065934068,
+      "mean_mae": 1.0915640049301112,
+      "mean_mae_ratio_vs_baseline": 0.978816490353302,
+      "mean_spearman_rho": 0.026907673128019095,
+      "model": "random_forest",
+      "prefix_fraction": 0.75,
+      "target": "mode_review_priority"
+    },
+    {
+      "feature_set": "prefix_plus_context",
+      "folds": 4,
+      "mean_baseline_median_mae": 1.1659684065934068,
+      "mean_mae": 1.0806693532771985,
+      "mean_mae_ratio_vs_baseline": 0.9892989640211264,
+      "mean_spearman_rho": -0.04576961290551165,
+      "model": "random_forest",
+      "prefix_fraction": 0.5,
+      "target": "mode_review_priority"
+    },
+    {
+      "feature_set": "prefix_only",
+      "folds": 4,
+      "mean_baseline_median_mae": 1.1659684065934068,
+      "mean_mae": 1.3674554283986156,
+      "mean_mae_ratio_vs_baseline": 1.207707191130374,
+      "mean_spearman_rho": 0.03251819723775836,
+      "model": "random_forest",
+      "prefix_fraction": 0.75,
+      "target": "mode_review_priority"
+    },
+    {
+      "feature_set": "prefix_only",
+      "folds": 4,
+      "mean_baseline_median_mae": 1.1659684065934068,
+      "mean_mae": 1.371980650464081,
+      "mean_mae_ratio_vs_baseline": 1.226684636380182,
+      "mean_spearman_rho": -0.1556607125106704,
+      "model": "random_forest",
+      "prefix_fraction": 0.25,
+      "target": "mode_review_priority"
+    },
+    {
+      "feature_set": "prefix_only",
+      "folds": 4,
+      "mean_baseline_median_mae": 1.1659684065934068,
+      "mean_mae": 1.4889501971281862,
+      "mean_mae_ratio_vs_baseline": 1.3286753627513281,
+      "mean_spearman_rho": -0.08527362387927795,
       "model": "random_forest",
       "prefix_fraction": 0.5,
       "target": "mode_review_priority"
@@ -2482,77 +2687,22 @@
       "feature_set": "prefix_plus_context",
       "folds": 4,
       "mean_baseline_median_mae": 1.1659684065934068,
-      "mean_mae": 0.5017819878934404,
-      "mean_mae_ratio_vs_baseline": 0.4259941725476769,
-      "mean_spearman_rho": 0.32570779077102296,
-      "model": "random_forest",
-      "prefix_fraction": 0.25,
-      "target": "mode_review_priority"
-    },
-    {
-      "feature_set": "prefix_only",
-      "folds": 4,
-      "mean_baseline_median_mae": 1.1659684065934068,
-      "mean_mae": 0.502940122213714,
-      "mean_mae_ratio_vs_baseline": 0.4289461139856854,
-      "mean_spearman_rho": 0.32168878071057394,
-      "model": "random_forest",
-      "prefix_fraction": 0.25,
-      "target": "mode_review_priority"
-    },
-    {
-      "feature_set": "prefix_only",
-      "folds": 4,
-      "mean_baseline_median_mae": 1.1659684065934068,
-      "mean_mae": 0.5049735815377642,
-      "mean_mae_ratio_vs_baseline": 0.43145878475762667,
-      "mean_spearman_rho": 0.362811532762824,
-      "model": "random_forest",
-      "prefix_fraction": 0.5,
-      "target": "mode_review_priority"
-    },
-    {
-      "feature_set": "prefix_plus_context",
-      "folds": 4,
-      "mean_baseline_median_mae": 1.1659684065934068,
-      "mean_mae": 0.5793041838790852,
-      "mean_mae_ratio_vs_baseline": 0.49067931049133445,
-      "mean_spearman_rho": 0.2582510317824496,
-      "model": "random_forest",
-      "prefix_fraction": 0.75,
-      "target": "mode_review_priority"
-    },
-    {
-      "feature_set": "prefix_only",
-      "folds": 4,
-      "mean_baseline_median_mae": 1.1659684065934068,
-      "mean_mae": 0.6128595615606476,
-      "mean_mae_ratio_vs_baseline": 0.5202085124242051,
-      "mean_spearman_rho": 0.26924214121071516,
-      "model": "random_forest",
-      "prefix_fraction": 0.75,
-      "target": "mode_review_priority"
-    },
-    {
-      "feature_set": "prefix_only",
-      "folds": 4,
-      "mean_baseline_median_mae": 1.1659684065934068,
-      "mean_mae": 2.8368110378233937,
-      "mean_mae_ratio_vs_baseline": 2.903706260854955,
-      "mean_spearman_rho": 0.030268090044208204,
-      "model": "ridge",
-      "prefix_fraction": 0.25,
-      "target": "mode_review_priority"
-    },
-    {
-      "feature_set": "prefix_plus_context",
-      "folds": 4,
-      "mean_baseline_median_mae": 1.1659684065934068,
-      "mean_mae": 3.210732929635425,
-      "mean_mae_ratio_vs_baseline": 3.162976679007703,
-      "mean_spearman_rho": 0.14575961556676326,
+      "mean_mae": 3.69950532384075,
+      "mean_mae_ratio_vs_baseline": 3.750145550993937,
+      "mean_spearman_rho": -0.00415545748067267,
       "model": "ridge",
       "prefix_fraction": 0.75,
+      "target": "mode_review_priority"
+    },
+    {
+      "feature_set": "prefix_only",
+      "folds": 4,
+      "mean_baseline_median_mae": 1.1659684065934068,
+      "mean_mae": 4.286614794245531,
+      "mean_mae_ratio_vs_baseline": 4.361853952603743,
+      "mean_spearman_rho": -0.14209927848812237,
+      "model": "ridge",
+      "prefix_fraction": 0.25,
       "target": "mode_review_priority"
     }
   ],

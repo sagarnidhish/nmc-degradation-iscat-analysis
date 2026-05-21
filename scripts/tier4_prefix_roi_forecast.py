@@ -344,7 +344,16 @@ def main() -> None:
 
     prefix_df = build_prefix_table(df)
     prefix_feature_cols = [c for c in feature_columns(prefix_df) if (
-        c.startswith("prefix_") or c.endswith("_prefix_first") or "_prefix_" in c or c.startswith("stage_prefix") or c.startswith("first_") or c.startswith("last_prefix")
+        "frame_index" not in c
+        and (
+            c.startswith("prefix_")
+            or c.endswith("_prefix_first")
+            or "_prefix_" in c
+            or c.startswith("stage_prefix")
+            or c.startswith("first_q")
+            or c.startswith("first_frame_mean")
+            or c.startswith("last_prefix")
+        )
     )]
     candidate_context_cols = [
         "cycleNo",
