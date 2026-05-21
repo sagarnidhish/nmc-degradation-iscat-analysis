@@ -18,6 +18,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 ## Main Findings
 
 - Persistence is the strongest raw next-frame baseline; DMD/velocity/learned residual experiments are most useful as residual and latent descriptors.
+- Prefix-only cropped ROI forecasts predict later front-direction residual class best: random_forest at prefix 0.500 gives AUC 0.726, while permutation-null support is strongest for the front-positive residual target.
 - ROI event/control optical differences survive event-reference-cycle centering, especially cumulative normalized change, first-last decorrelation, latent net displacement, high-fraction growth, and ROI mean trend.
 - Frame count and protocol-block position strongly couple to ROI dynamics, so echem/protocol context must be a model covariate and a guardrail.
 - After residualizing available protocol/echem covariates and event-reference fixed effects, event/control separation remains in ROI mean delta, high-fraction delta, first-last correlation, cumulative change, DMD residual, and latent displacement.
@@ -49,6 +50,27 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - roi_norm_mean_delta_centered_by_reference: event-control 0.010, p=8.084e-04
 - low_fraction_delta_centered_by_reference: event-control -0.046, p=9.843e-04
 - centroid_path_px_centered_by_reference: event-control -1.512, p=0.003
+
+## Prefix-Only ROI Forecasts
+
+- front_positive_residual_binary prefix_only random_forest f=0.500: AUC 0.726, balanced accuracy 0.512
+- front_positive_residual_binary prefix_only random_forest f=0.750: AUC 0.712, balanced accuracy 0.547
+- front_positive_residual_binary prefix_only logistic_l2 f=0.750: AUC 0.687, balanced accuracy 0.608
+- front_positive_residual_binary prefix_only random_forest f=0.250: AUC 0.654, balanced accuracy 0.586
+- front_positive_residual_binary prefix_only logistic_l2 f=0.250: AUC 0.648, balanced accuracy 0.554
+- front_positive_residual_binary prefix_only logistic_l2 f=0.500: AUC 0.635, balanced accuracy 0.624
+- front_positive_residual_binary prefix_plus_context random_forest f=0.500: AUC 0.613, balanced accuracy 0.528
+- front_positive_residual_binary prefix_plus_context random_forest f=0.750: AUC 0.601, balanced accuracy 0.531
+- front_positive_residual_binary prefix_plus_context random_forest f=0.250: AUC 0.567, balanced accuracy 0.530
+- front_positive_residual_binary prefix_plus_context logistic_l2 f=0.250: AUC 0.392, balanced accuracy 0.439
+- Null check is_event_roi f=0.250: observed AUC 0.573, null p95 0.687, empirical p=0.285
+- Null check is_event_enriched_mode f=0.750: observed AUC 0.636, null p95 0.713, empirical p=0.184
+- Null check front_positive_residual_binary f=0.750: observed AUC 0.687, null p95 0.656, empirical p=0.026
+- Regression mode_review_priority prefix_plus_context random_forest f=0.500: MAE ratio vs median baseline 0.419, rho 0.374
+- Regression mode_review_priority prefix_plus_context random_forest f=0.250: MAE ratio vs median baseline 0.426, rho 0.326
+- Regression mode_review_priority prefix_only random_forest f=0.250: MAE ratio vs median baseline 0.429, rho 0.322
+- Regression mode_review_priority prefix_only random_forest f=0.500: MAE ratio vs median baseline 0.431, rho 0.363
+- Guardrail: Prefix-only ROI forecasts use cropped particle-region sequences, but the cohort is small and selected around event-reference cycles; treat results as physics-signal triage, not a deployable predictor.
 
 ## Top Protocol-Conditioned Event Effects
 
@@ -168,7 +190,7 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 - Implement paper-inspired agentic workflows in separate Isambard folders: implemented. Evidence: agentic_research outputs plus derived tier1/tier2/tier3 experiment folders were created on Isambard and compact outputs synced locally. Limitation: The synthesis script summarizes the outputs but does not rerun the original literature analysis.
 - Focus on Alek_Jiho NMC degradation dataset on Isambard: implemented. Evidence: Synthesis reads Isambard derived directory with 52 ROI rows, 11 cycles, and 4 event-reference cycles. Limitation: The current multi-cycle ROI cohort is selected around event/reference cycles, not every raw video in the full dataset.
-- Next-frame prediction and rollout: implemented_with_guardrail. Evidence: Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, and residual-CNN guardrails were run. Persistence is best across cycles: True. Limitation: Learned/full rollout models do not yet beat persistence robustly; use residuals and latent paths as descriptors rather than claiming superior prediction.
+- Next-frame prediction and rollout: implemented_with_guardrail. Evidence: Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, residual-CNN guardrails, and prefix-only ROI forecasts were run. Persistence is best across raw pixel rollouts: True; best prefix classifier target is front_positive_residual_binary with AUC 0.726. Limitation: Learned/full rollout models do not yet beat persistence robustly; use residuals, latent paths, and prefix forecasts as physics descriptors rather than claiming superior pixel prediction.
 - Track phase-boundary movement: implemented_as_proxy. Evidence: Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers 52 ROI rows. Limitation: Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics and is robust in 5 automatic QC strata.
 - Extract diffusion coefficients: partial_proxy_only. Evidence: Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across 7 thresholds with bootstrap slopes. Limitation: Global threshold-robust phase slopes separate event/control ROIs, but QC-stratified diffusion proxies are inconsistent and conditioned diffusion-proxy residuals remain non-significant.
 - Identify degradation modes: implemented_as_hypothesis_ranking. Evidence: Joint physics/rollout/echem mode tables exist, residual taxonomy found 4 protocol-adjusted modes, and cycle/region context maps them across 11 cycles and 7 coarse regions. Limitation: Modes are unsupervised/automatic and tied to the selected ROI cohort; residual taxonomy silhouette is modest and cycle/region context is descriptive.

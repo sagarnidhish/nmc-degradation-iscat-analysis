@@ -94,6 +94,7 @@ def main() -> None:
     front_qc_sensitivity = read_json(derived / "front_qc_sensitivity" / "front_qc_sensitivity_summary.json")
     residual_modes = read_json(derived / "residual_physics_mode_taxonomy" / "residual_physics_mode_taxonomy_summary.json")
     cycle_region_modes = read_json(derived / "cycle_region_mode_context" / "cycle_region_mode_context_summary.json")
+    prefix_forecast = read_json(derived / "prefix_roi_forecast" / "prefix_roi_forecast_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -152,6 +153,10 @@ def main() -> None:
     cycle_region_context = top_items(first_summary(cycle_region_modes, "top_cycle_summaries", []), 8)
     spatial_region_context = top_items(first_summary(cycle_region_modes, "top_spatial_region_summaries", []), 8)
     mode_context_correlations = top_items(first_summary(cycle_region_modes, "top_context_correlations", []), 8)
+    prefix_top_classification = top_items(first_summary(prefix_forecast, "top_classification", []), 10)
+    prefix_top_regression = top_items(first_summary(prefix_forecast, "top_regression", []), 8)
+    prefix_null = top_items(first_summary(prefix_forecast, "permutation_null", []), 5)
+    top_prefix_classifier = prefix_top_classification[0] if prefix_top_classification else {}
     top_residual_mode = residual_mode_enrichment[0] if residual_mode_enrichment else {}
     control_balanced_nonfragment = first_summary(control_balanced_qc, "nonfragmented_by_role", {}) or {}
     front_qc_focus = top_items(first_summary(front_qc_sensitivity, "focus_tests", []), 25)
@@ -180,8 +185,8 @@ def main() -> None:
         evidence_row(
             "Next-frame prediction and rollout",
             "implemented_with_guardrail",
-            f"Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, and residual-CNN guardrails were run. Persistence is best across cycles: {persistence_best}.",
-            "Learned/full rollout models do not yet beat persistence robustly; use residuals and latent paths as descriptors rather than claiming superior prediction.",
+            f"Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, residual-CNN guardrails, and prefix-only ROI forecasts were run. Persistence is best across raw pixel rollouts: {persistence_best}; best prefix classifier target is {top_prefix_classifier.get('target', 'NA')} with AUC {fmt(top_prefix_classifier.get('mean_roc_auc'))}.",
+            "Learned/full rollout models do not yet beat persistence robustly; use residuals, latent paths, and prefix forecasts as physics descriptors rather than claiming superior pixel prediction.",
             "Train cycle-conditioned probabilistic video models only after growing the ROI set and validating particle masks.",
         ),
         evidence_row(
@@ -253,6 +258,7 @@ def main() -> None:
         "## Main Findings",
         "",
         "- Persistence is the strongest raw next-frame baseline; DMD/velocity/learned residual experiments are most useful as residual and latent descriptors.",
+        f"- Prefix-only cropped ROI forecasts predict later front-direction residual class best: {top_prefix_classifier.get('model', 'NA')} at prefix {fmt(top_prefix_classifier.get('prefix_fraction'))} gives AUC {fmt(top_prefix_classifier.get('mean_roc_auc'))}, while permutation-null support is strongest for the front-positive residual target.",
         "- ROI event/control optical differences survive event-reference-cycle centering, especially cumulative normalized change, first-last decorrelation, latent net displacement, high-fraction growth, and ROI mean trend.",
         "- Frame count and protocol-block position strongly couple to ROI dynamics, so echem/protocol context must be a model covariate and a guardrail.",
         "- After residualizing available protocol/echem covariates and event-reference fixed effects, event/control separation remains in ROI mean delta, high-fraction delta, first-last correlation, cumulative change, DMD residual, and latent displacement.",
@@ -281,6 +287,25 @@ def main() -> None:
         report_lines.append(
             f"- {row.get('feature')}: event-control {fmt(row.get('event_minus_control'))}, p={fmt(row.get('p_value'))}"
         )
+
+    report_lines += [
+        "",
+        "## Prefix-Only ROI Forecasts",
+        "",
+    ]
+    for row in prefix_top_classification:
+        report_lines.append(
+            f"- {row.get('target')} {row.get('feature_set')} {row.get('model')} f={fmt(row.get('prefix_fraction'))}: AUC {fmt(row.get('mean_roc_auc'))}, balanced accuracy {fmt(row.get('mean_balanced_accuracy'))}"
+        )
+    for row in prefix_null:
+        report_lines.append(
+            f"- Null check {row.get('target')} f={fmt(row.get('prefix_fraction'))}: observed AUC {fmt(row.get('observed_mean_auc'))}, null p95 {fmt(row.get('null_p95_auc'))}, empirical p={fmt(row.get('empirical_p_ge_observed'))}"
+        )
+    for row in prefix_top_regression[:4]:
+        report_lines.append(
+            f"- Regression {row.get('target')} {row.get('feature_set')} {row.get('model')} f={fmt(row.get('prefix_fraction'))}: MAE ratio vs median baseline {fmt(row.get('mean_mae_ratio_vs_baseline'))}, rho {fmt(row.get('mean_spearman_rho'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(prefix_forecast, 'guardrail', 'Small selected cohort; use as triage only.')}")
 
     report_lines += [
         "",
@@ -458,6 +483,11 @@ def main() -> None:
             "context_only_classifier": first_summary(cycle_region_modes, "context_only_classifier", {}),
         },
         "persistence_best_all_cycles": persistence_best,
+        "prefix_forecast_n_roi": first_summary(prefix_forecast, "n_roi"),
+        "prefix_forecast_n_prefix_features": first_summary(prefix_forecast, "n_prefix_features"),
+        "top_prefix_roi_classification": prefix_top_classification,
+        "top_prefix_roi_regression": prefix_top_regression,
+        "prefix_roi_permutation_null": prefix_null,
         "strict_rf_mean_roc_auc": strict_rf.get("mean_roc_auc"),
         "strict_rf_mean_balanced_accuracy": strict_rf.get("mean_balanced_accuracy"),
         "strict_logistic_mean_roc_auc": strict_logistic.get("mean_roc_auc"),

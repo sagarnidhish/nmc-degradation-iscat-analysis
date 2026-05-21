@@ -1170,3 +1170,29 @@ Key result:
 - Updated the tier4 synthesis to include the control-balanced QC package as the recommended manual review companion to the high-signal primary QC package.
 
 Interpretation: this closes a practical review-design gap rather than a scientific claim gap. We now have enough control-heavy visual panels to manually assess whether front-mask quality artifacts explain the apparent diffusion/control effects. It supports better manual QC and benchmark construction, but calibrated diffusion and final degradation labels remain guarded until those panels are reviewed.
+
+## 2026-05-21 Prefix ROI Forecast Result
+
+Added and ran:
+
+`python scripts/tier4_prefix_roi_forecast.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast --n-permutation 200`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast`
+
+Local compact copy:
+
+`derived_local/prefix_roi_forecast`
+
+Key result:
+
+- Built prefix-only features from cropped particle-region ROI videos using only the first 25%, 50%, or 75% of each ROI sequence. Features include early intensity slopes, high/low fraction changes, temporal difference energy, frame delta summaries, and stage drift proxies.
+- Evaluated leave-event-reference-cycle-out classifiers and regressors for event labels, residual mode labels, and later protocol-conditioned front-direction residual outcomes.
+- The clearest early-video signal is predicting whether the later protocol-conditioned phase-slope positive-fraction residual is positive. Prefix-only random forest at 50% prefix gives mean ROC-AUC 0.726; prefix-only logistic at 75% gives AUC 0.687 and balanced accuracy 0.608.
+- The front-positive residual logistic 75% prefix result passes a 200-shuffle permutation null: observed AUC 0.687, null mean 0.488, null p95 0.651, empirical p=0.0249.
+- Event-label prediction is less reliable under the same null: best audited prefix-only logistic AUC 0.573, empirical p=0.274. Event-enriched residual mode prediction is suggestive but not significant: AUC 0.636, empirical p=0.179.
+- Prefix features also predict residual-mode review priority better than a median baseline: prefix-only random forest at 25% prefix has mean MAE ratio 0.429 and mean Spearman rho 0.322; prefix-plus-context random forest at 50% has MAE ratio 0.424 and rho 0.365.
+- Continuous phase-front residual regression remains weak; classification of front-direction sign is more stable than predicting residual magnitude.
+
+Interpretation: early particle-region ROI video contains useful information about later front-direction behavior, not just final-cycle labels. This supports using prefix/past-observable models as physics-signal triage for front motion, while keeping the current guardrail that the selected 52-ROI cohort is too small and event-centered for deployable forecasting.
