@@ -433,3 +433,29 @@ Key result:
 - Cycle 116 has negative mean latent component-0 shift (-0.0565), while cycle 86 is positive on average (+0.0330).
 
 Interpretation: the first ROI-only rollout experiment shows that simple persistence is a hard baseline for these slowly varying selected particle crops, so future neural next-frame models must beat a strong near-static baseline and should report residual/difference metrics. The low-rank latent dynamics provide a compact physics-facing descriptor: synchronized event cycles 86 and 116 do not behave identically, with cycle 86 showing more latent movement and cycle 116 showing a more consistent negative latent shift. This supports treating degradation mode as a latent trajectory/phase-space problem rather than only a pixel MSE problem.
+
+## 2026-05-21 ROI Physics Descriptors And Mode Clustering
+
+Added and ran:
+
+`scripts/tier3_roi_physics_descriptors.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_physics_descriptors`
+
+Local compact copy:
+
+`derived_local/roi_physics_descriptors`
+
+Key result:
+
+- Extracted physics-facing descriptors from the 11 selected particle-region ROI sequences: ROI mean trends, high/low optical-state fractions, radial moments, apparent front-radius trends, apparent radius-squared slope proxies, temporal residual energy, and cumulative absolute change.
+- Small-sample KMeans selected k=3 with silhouette 0.311 using optical/front/dynamics descriptors.
+- Most selected ROIs are `near_static_or_mixed`: 3/5 ROIs in cycle 86 and 4/6 ROIs in cycle 116.
+- The remaining selected ROIs were assigned to brightening/expanding-front-like clusters: 2/5 in cycle 86 and 2/6 in cycle 116.
+- Cycle 86 has higher cumulative absolute crop change than cycle 116: 0.0151 vs 0.00937.
+- Cycle 86 has a more negative apparent diffusion/radius-squared proxy than cycle 116: -0.00202 vs -0.000640 normalized-image px^2/frame.
+- Cycle 116 has slightly larger temporal difference energy than cycle 86: 1.05e-4 vs 8.43e-5.
+
+Interpretation: the selected event ROIs do not show a single uniform degradation mode. The dominant behavior is slow near-static/mixed evolution, but a minority of ROIs show front-like brightening/expansion signatures. Cycle 86 appears more spatially/cumulatively active in the selected crops, while cycle 116 looks more temporally noisy but less net-displaced. These descriptors are still image-coordinate proxies; calibrated diffusion claims require spatial calibration, manual ROI validation, and time-base alignment.
