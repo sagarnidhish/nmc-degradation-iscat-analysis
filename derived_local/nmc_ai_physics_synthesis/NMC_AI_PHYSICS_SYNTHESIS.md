@@ -49,7 +49,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - The larger four-particle cycle table shows leakage-conscious early-warning signal for future abrupt drops: any-drop within 8 cycles has mean AUC 0.883 with empirical null p=0.002; synchronized 2+ drops are also detectable but with only two positive cycles.
 - Event-aligned precursor windows show lower pre-event capacity/CE and higher cross-particle delta dispersion versus matched non-event anchors; the strongest precursor window test is pre8_to_pre5 capacity_mAh with p=0.002.
 - ROI trace-fusion links lagged global particle-trace state to localized front behavior at the ROI-row level: strongest focused context-residual association is trace_lag2_particle_norm_range vs phase_slope_positive_fraction_protocol_residual, rho=0.725, p=2.688e-07.
-- Cycle-collapsed ROI trace-fusion null audit reduces 52 ROI rows to 11 cycle points; top surviving collapsed association is trace_lag8_frames_percentile vs mode_review_priority, rho=0.834, empirical p=0.002.
+- Cycle-collapsed ROI trace-fusion null audit reduces 52 ROI rows to 11 cycle points; top surviving collapsed association is trace_lag16_frames_percentile vs mode_review_priority, rho=0.813, empirical p=0.002.
 - Precursor-informed ROI review ranks 47 pending manual-QC candidates; the top candidate is cycle156_rank7_obj27 with score 5.527.
 - A visual review bundle now packages 12 top precursor-informed ROI candidates; 12 have at least one copied QC/preview asset and a contact sheet for manual inspection.
 
@@ -304,17 +304,17 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 - Cycle-collapsed points: 11 from 52 ROI rows
 - Event-reference cycles: 4
-- Predictors/permutations: 58 / 5000
-- Cycle-collapsed trace_lag8_frames_percentile vs mode_review_priority: rho 0.834, empirical p=0.002, n=11
-- Cycle-collapsed trace_lag8_n_frames vs mode_review_priority: rho 0.834, empirical p=0.002, n=11
-- Cycle-collapsed lag8_trace_predprob_future_any_drop_within_8cycles vs mode_review_priority: rho -0.827, empirical p=0.002, n=11
-- Cycle-collapsed trace_lag16_frames_percentile vs mode_review_priority: rho 0.813, empirical p=0.003, n=11
-- Cycle-collapsed trace_lag16_n_frames vs mode_review_priority: rho 0.813, empirical p=0.003, n=11
-- Cycle-collapsed trace_lag4_frames_percentile vs mode_review_priority: rho 0.745, empirical p=0.009, n=11
-- Reference-centered trace_lag8_particle_norm_mean vs phase_slope_median_per_s_protocol_residual: rho 0.918, empirical p=2.000e-04, n=11
-- Reference-centered trace_lag8_n_frames vs mode_review_priority: rho 0.881, empirical p=2.000e-04, n=11
-- Reference-centered trace_lag8_frames_percentile vs mode_review_priority: rho 0.858, empirical p=0.002, n=11
-- Reference-centered lag16_trace_predprob_future_any_drop_within_8cycles vs phase_slope_positive_fraction_protocol_residual: rho -0.809, empirical p=0.005, n=11
+- Predictors/permutations: 24 / 1000
+- Cycle-collapsed trace_lag16_frames_percentile vs mode_review_priority: rho 0.813, empirical p=0.002, n=11
+- Cycle-collapsed trace_lag8_frames_percentile vs mode_review_priority: rho 0.834, empirical p=0.003, n=11
+- Cycle-collapsed trace_lag8_n_frames vs mode_review_priority: rho 0.834, empirical p=0.005, n=11
+- Cycle-collapsed trace_lag16_n_frames vs mode_review_priority: rho 0.813, empirical p=0.007, n=11
+- Cycle-collapsed trace_lag16_n_frames vs q70_logistic_k_per_s: rho 0.740, empirical p=0.009, n=11
+- Cycle-collapsed trace_lag8_frames_percentile vs q70_logistic_k_per_s: rho 0.733, empirical p=0.014, n=11
+- Reference-centered trace_lag8_n_frames vs mode_review_priority: rho 0.881, empirical p=9.990e-04, n=11
+- Reference-centered trace_lag8_frames_percentile vs mode_review_priority: rho 0.858, empirical p=0.003, n=11
+- Reference-centered trace_lag16_frames_percentile vs threshold_robust_phase_score_protocol_residual: rho 0.781, empirical p=0.006, n=11
+- Reference-centered lag16_trace_predprob_future_any_drop_within_8cycles vs phase_slope_positive_fraction_protocol_residual: rho -0.809, empirical p=0.007, n=11
 - Guardrail: This audit collapses repeated ROI rows to one median point per cycle before testing trace/front associations. It is deliberately conservative for the 52-ROI cohort; surviving tests are stronger evidence, while lost tests indicate cycle-clustering sensitivity.
 
 ## Precursor-Informed ROI Review

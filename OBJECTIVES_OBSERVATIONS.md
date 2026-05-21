@@ -1524,9 +1524,9 @@ Key result:
 
 - Collapsed the 52 ROI trace-fusion rows to 11 median cycle points before retesting lagged trace/front associations with 1,000 permutation shuffles per test.
 - This is deliberately more conservative than the row-level fusion audit because it removes repeated ROI rows within the same cycle/reference context.
-- The strongest cycle-collapsed association is `lag8_trace_predprob_future_any_drop_within_8cycles` versus `mode_review_priority`: rho=-0.827, empirical p=0.0030, n=11.
+- The strongest cycle-collapsed association is `trace_lag16_frames_percentile` versus `mode_review_priority`: rho=0.813, empirical p=0.0020, n=11.
 - Several surviving collapsed associations involve frame-count or frame-count percentile terms, including lag8 and lag16 `n_frames`/`frames_percentile` versus `mode_review_priority`, which reinforces acquisition/protocol context as a guardrail.
-- A reference-centered variant still finds some strong associations, including `trace_lag8_particle_norm_mean` versus `phase_slope_median_per_s_protocol_residual`: rho=0.918, empirical p=0.0010, n=11.
+- A reference-centered variant still finds strong frame-count associations and one future-drop/front-residual association: `lag16_trace_predprob_future_any_drop_within_8cycles` versus `phase_slope_positive_fraction_protocol_residual` has rho=-0.809, empirical p=0.0070, n=11.
 - The original row-level `trace_lag2_particle_norm_range/std` association with `phase_slope_positive_fraction_protocol_residual` is not the top cycle-collapsed result, so it should be treated as cycle-cluster-sensitive linkage evidence rather than a standalone local causal precursor.
 
 Interpretation: this audit upgrades the trace-fusion story from a simple row-level association to a properly guarded result. Some lagged global trace/echem state still aligns with ROI/front/mode descriptors after cycle collapse, but the strongest surviving signals mix degradation-risk predictions, frame-count/protocol context, and mode/kinetic descriptors. This supports prioritization and hypothesis generation, not a calibrated propagation or diffusion claim.
