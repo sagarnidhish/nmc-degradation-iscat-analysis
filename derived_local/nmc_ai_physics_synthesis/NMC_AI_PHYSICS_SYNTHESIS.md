@@ -11,6 +11,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Event-reference cycles: 4
 - Calibrated front-QC ROI rows: 12
 - Manual-QC pending front ROIs: 12
+- ROI/front QC package candidates: 24
 
 ## Main Findings
 
@@ -117,7 +118,7 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 ## Recommended Next Experiments
 
-1. Manual QC the selected front/particle ROI previews and update the manifest with accepted/rejected labels.
+1. Manual QC the ROI/front package panels and update `manual_qc_status` with accepted/rejected labels.
 2. Expand the ROI cohort across more cycles after QC to reduce event-reference and protocol confounding.
 3. Recompute apparent diffusion/front-motion proxies only on QC-accepted fronts with confirmed spatial/time calibration.
 4. Convert the top ROI candidates into a labeled degradation-mode benchmark for future self-supervised video models.

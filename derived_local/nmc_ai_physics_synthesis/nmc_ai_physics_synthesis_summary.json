@@ -6,6 +6,7 @@
   "n_event_reference_cycles": 4,
   "n_joined_roi": 52,
   "n_manual_qc_pending": 12,
+  "n_roi_front_qc_package_candidates": 24,
   "n_threshold_robust_front_roi": 52,
   "outputs": {
     "audit": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/completion_audit.csv",
@@ -84,6 +85,12 @@
       "status": "implemented_with_verification"
     }
   ],
+  "roi_front_qc_flag_counts": {
+    "active_control": 1,
+    "diffusion_ci_crosses_zero": 6,
+    "fragmented_q70_mask": 17,
+    "none": 5
+  },
   "strict_logistic_mean_roc_auc": 0.625,
   "strict_rf_mean_balanced_accuracy": 0.5729166666666667,
   "strict_rf_mean_roc_auc": 0.6510416666666666,

@@ -88,7 +88,11 @@ def main() -> None:
     conditioned = read_json(derived / "protocol_conditioned_roi_effects" / "protocol_conditioned_roi_effects_summary.json")
     robust_fronts = read_json(derived / "multi_cycle_threshold_robust_fronts" / "threshold_robust_front_summary.json")
     conditioned_fronts = read_json(derived / "protocol_conditioned_front_effects" / "protocol_conditioned_front_effects_summary.json")
+    qc_packet = read_json(derived / "qc_review_packet" / "qc_review_packet_summary.json")
+    qc_package = read_json(derived / "roi_front_qc_package" / "roi_front_qc_package_summary.json")
     conditioned_fronts = read_json(derived / "protocol_conditioned_front_effects" / "protocol_conditioned_front_effects_summary.json")
+    qc_packet = read_json(derived / "qc_review_packet" / "qc_review_packet_summary.json")
+    qc_package = read_json(derived / "roi_front_qc_package" / "roi_front_qc_package_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -176,7 +180,7 @@ def main() -> None:
             "implemented_as_proxy",
             f"Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers {first_summary(robust_fronts, 'n_roi', 0)} ROI rows.",
             "Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics.",
-            "Manually review selected crop previews and lock accepted/rejected masks before publication-scale interpretation.",
+            f"Use the generated QC review packet with {first_summary(qc_packet, 'n_candidates', 0)} prioritized candidates to record accept/reject decisions.",
         ),
         evidence_row(
             "Extract diffusion coefficients",
@@ -233,6 +237,7 @@ def main() -> None:
         f"- Event-reference cycles: {n_event_refs}",
         f"- Calibrated front-QC ROI rows: {len(calibration_table)}",
         f"- Manual-QC pending front ROIs: {qc_pending}",
+        f"- ROI/front QC package candidates: {first_summary(qc_package, 'n_selected_roi', 0)}",
         "",
         "## Main Findings",
         "",
@@ -244,6 +249,7 @@ def main() -> None:
         "- Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.",
         "- Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
+        f"- A QC review packet prioritizes {first_summary(qc_packet, 'n_candidates', 0)} ROI/front candidates for manual accept/reject review before publication-scale diffusion claims.",
         "",
         "## Model Readout",
         "",
@@ -328,7 +334,7 @@ def main() -> None:
         "",
         "## Recommended Next Experiments",
         "",
-        "1. Manual QC the selected front/particle ROI previews and update the manifest with accepted/rejected labels.",
+        "1. Manual QC the ROI/front package panels and update `manual_qc_status` with accepted/rejected labels.",
         "2. Expand the ROI cohort across more cycles after QC to reduce event-reference and protocol confounding.",
         "3. Recompute apparent diffusion/front-motion proxies only on QC-accepted fronts with confirmed spatial/time calibration.",
         "4. Convert the top ROI candidates into a labeled degradation-mode benchmark for future self-supervised video models.",
@@ -350,6 +356,9 @@ def main() -> None:
         "n_calibration_rows": int(len(calibration_table)),
         "n_manual_qc_pending": qc_pending,
         "n_threshold_robust_front_roi": first_summary(robust_fronts, "n_roi"),
+        "n_qc_review_candidates": first_summary(qc_packet, "n_candidates"),
+        "n_roi_front_qc_package_candidates": first_summary(qc_package, "n_selected_roi"),
+        "roi_front_qc_flag_counts": first_summary(qc_package, "flag_counts", {}),
         "persistence_best_all_cycles": persistence_best,
         "strict_rf_mean_roc_auc": strict_rf.get("mean_roc_auc"),
         "strict_rf_mean_balanced_accuracy": strict_rf.get("mean_balanced_accuracy"),
@@ -367,7 +376,9 @@ def main() -> None:
         "top_threshold_robust_front_tests": robust_front_tests,
         "top_threshold_robust_front_by_event_tests": robust_front_by_event,
         "top_protocol_conditioned_front_tests": conditioned_front_tests,
+        "top_qc_review_candidates": top_items(first_summary(qc_packet, "top_candidates", []), 8),
         "top_protocol_conditioned_front_tests": conditioned_front_tests,
+        "top_qc_review_candidates": top_items(first_summary(qc_packet, "top_candidates", []), 8),
         "top_ranked_roi_candidates": top_rois,
         "requirement_audit": audit,
         "outputs": {

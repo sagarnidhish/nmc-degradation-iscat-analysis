@@ -1017,3 +1017,28 @@ Key result:
 
 Interpretation: protocol/echem conditioning sharpens the mechanistic guardrail. Event ROIs are more likely to retain a consistently positive bright-front trend after adjusting for acquisition/protocol context, but the magnitude of phase motion and all diffusion-like proxies are largely explained by context or are too noisy in the current automatic ROI set. The useful physics claim remains robust phase-front directionality and optical-state movement, not calibrated diffusion or standalone front-based event detection.
 
+## 2026-05-21 ROI Front QC Package
+
+Added and ran:
+
+`python scripts/tier4_roi_front_qc_package.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_front_qc_package --top-n 24`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_front_qc_package`
+
+Local compact copy:
+
+`derived_local/roi_front_qc_package`
+
+Key result:
+
+- Built a compact manual-review package for 24 high-priority particle ROI/front candidates selected from rollout/mobility difficulty, threshold-robust phase/front rankings, diffusion-proxy magnitude, and protocol-conditioned phase-front sign residuals.
+- The corrected package includes 18 event ROIs and 6 controls, including the active control `cycle62_rank3_obj9`, plus event candidates from cycles 60, 86, 116, and 156.
+- For each ROI, generated a QC panel with first/middle/last/delta ROI frames, q70 bright-front contour overlays, and the central ROI guard mask; wrote `roi_front_qc_index.html` and `roi_front_qc_manifest.csv` with `manual_qc_status=pending`.
+- Automatic review flags show why manual QC is necessary: 17/24 candidates have fragmented q70 masks, 6/24 have q70 radius-slope bootstrap confidence intervals crossing zero, 1/24 is explicitly flagged as an active control, and only 5/24 have no automatic review flags.
+- Top review targets include `cycle60_rank3_obj9`, active control `cycle62_rank3_obj9`, `cycle156_rank6_obj3`, `cycle88_rank4_obj8`, `cycle60_rank2_obj2`, `cycle156_rank5_obj4`, `cycle156_rank2_obj2`, `cycle156_rank7_obj27`, `cycle116_rank1_obj6`, and `cycle86_rank4_obj9`.
+- Updated the tier4 synthesis report so the completion audit now points to the QC package as the next manual validation artifact.
+
+Interpretation: this closes a practical review gap. The project now has a concrete, compact set of particle ROI/front panels for manual accept/reject labeling, rather than only CSV rankings. The high rate of fragmented masks reinforces the current guardrail: threshold-front and diffusion proxies are useful for hypothesis ranking, but calibrated diffusion or final degradation-mode labels require manual QC on these panels.
+
