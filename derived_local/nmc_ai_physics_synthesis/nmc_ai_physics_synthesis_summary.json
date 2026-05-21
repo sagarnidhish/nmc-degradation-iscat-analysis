@@ -1,0 +1,359 @@
+{
+  "all_qc_rf_mean_roc_auc": 0.796875,
+  "derived_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived",
+  "n_calibration_rows": 12,
+  "n_cycles": 11,
+  "n_event_reference_cycles": 4,
+  "n_joined_roi": 52,
+  "n_manual_qc_pending": 12,
+  "outputs": {
+    "audit": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/completion_audit.csv",
+    "report": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/NMC_AI_PHYSICS_SYNTHESIS.md",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis/nmc_ai_physics_synthesis_summary.json"
+  },
+  "persistence_best_all_cycles": true,
+  "requirement_audit": [
+    {
+      "evidence": "agentic_research outputs plus derived tier1/tier2/tier3 experiment folders were created on Isambard and compact outputs synced locally.",
+      "limitation": "The synthesis script summarizes the outputs but does not rerun the original literature analysis.",
+      "next_step": "Keep the agentic folders as provenance and use this synthesis as the project-level index.",
+      "requirement": "Implement paper-inspired agentic workflows in separate Isambard folders",
+      "status": "implemented"
+    },
+    {
+      "evidence": "Synthesis reads Isambard derived directory with 52 ROI rows, 11 cycles, and 4 event-reference cycles.",
+      "limitation": "The current multi-cycle ROI cohort is selected around event/reference cycles, not every raw video in the full dataset.",
+      "next_step": "Expand ROI extraction to all cycles after manual QC stabilizes particle identity selection.",
+      "requirement": "Focus on Alek_Jiho NMC degradation dataset on Isambard",
+      "status": "implemented"
+    },
+    {
+      "evidence": "Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, and residual-CNN guardrails were run. Persistence is best across cycles: True.",
+      "limitation": "Learned/full rollout models do not yet beat persistence robustly; use residuals and latent paths as descriptors rather than claiming superior prediction.",
+      "next_step": "Train cycle-conditioned probabilistic video models only after growing the ROI set and validating particle masks.",
+      "requirement": "Next-frame prediction and rollout",
+      "status": "implemented_with_guardrail"
+    },
+    {
+      "evidence": "Front/phase mobility descriptors and selected-front tracking exist; calibration table has 12 ROI rows.",
+      "limitation": "Front masks are automatic; all selected calibrated front ROIs remain manual-QC pending.",
+      "next_step": "Manually review selected crop previews and lock accepted/rejected masks before publication-scale interpretation.",
+      "requirement": "Track phase-boundary movement",
+      "status": "implemented_as_proxy"
+    },
+    {
+      "evidence": "Provisional 0.096 um/px calibration and apparent diffusion proxies were computed for 12 front ROIs.",
+      "limitation": "The values are apparent optical-front contraction/expansion proxies, not validated diffusion coefficients.",
+      "next_step": "Confirm microscope calibration/timebase and validate front geometry before converting to mechanistic diffusion coefficients.",
+      "requirement": "Extract diffusion coefficients",
+      "status": "partial_proxy_only"
+    },
+    {
+      "evidence": "Joint physics/rollout/echem degradation mode tables and multi-cycle ROI mobility rankings exist.",
+      "limitation": "Modes are unsupervised/automatic and tied to the selected ROI cohort.",
+      "next_step": "Use the top-ranked ROI list for manual labeling, then refit supervised or semi-supervised degradation-mode models.",
+      "requirement": "Identify degradation modes",
+      "status": "implemented_as_hypothesis_ranking"
+    },
+    {
+      "evidence": "Multi-cycle ROI echem coupling found strong frame-count/protocol correlations and within-reference event/control optical shifts.",
+      "limitation": "Protocol/frame-count confounding is strong; correlations are not causal physics.",
+      "next_step": "Use echem/protocol covariates in downstream models and avoid raw detector claims without conditioning.",
+      "requirement": "Correlate degradation with cycles, particle regions, and echem/protocol context",
+      "status": "implemented_with_guardrail"
+    },
+    {
+      "evidence": "OBJECTIVES_OBSERVATIONS.md contains chronological experiment summaries and guardrails.",
+      "limitation": "It is long and narrative; the new synthesis is the compact index.",
+      "next_step": "Append this tier4 synthesis result to the observations file after each major rerun.",
+      "requirement": "Keep objectives and observations updated",
+      "status": "implemented"
+    },
+    {
+      "evidence": "Local git commits exist through the latest echem coupling and this synthesis can be committed.",
+      "limitation": "Remote push must be verified separately because prior pushes were blocked by approval/network state.",
+      "next_step": "Attempt push after committing this synthesis and record the actual result.",
+      "requirement": "Keep GitHub updated",
+      "status": "local_commits_ready_remote_unverified"
+    }
+  ],
+  "strict_logistic_mean_roc_auc": 0.625,
+  "strict_rf_mean_balanced_accuracy": 0.5729166666666667,
+  "strict_rf_mean_roc_auc": 0.6510416666666666,
+  "top_ranked_roi_candidates": [
+    {
+      "cohort_role": "control",
+      "cumulative_abs_first_last": 0.0394897200167179,
+      "cycleNo": 62.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "dmd_mse_ratio_vs_persistence": 44.02864202261132,
+      "event_reference_cycle": 60.0,
+      "first_last_corr": 0.8235944518090812,
+      "high_fraction_slope_per_s": 3.250456142885664e-06,
+      "latent_net_displacement": 5.199330806732178,
+      "latent_path_length": 14.523822784423828,
+      "persistence_mse": 8.728122452339449e-05,
+      "roi_id": "cycle62_rank3_obj9",
+      "rollout_mobility_difficulty_score": 3.057692307692308
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_first_last": 0.0476934053003788,
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "dmd_mse_ratio_vs_persistence": 28.219506897201967,
+      "event_reference_cycle": 156.0,
+      "first_last_corr": 0.8783012282705677,
+      "high_fraction_slope_per_s": 3.2944787174310696e-06,
+      "latent_net_displacement": 4.641040802001953,
+      "latent_path_length": 19.836877822875977,
+      "persistence_mse": 0.0001043279169152,
+      "roi_id": "cycle156_rank5_obj4",
+      "rollout_mobility_difficulty_score": 3.0384615384615383
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_first_last": 0.060945488512516,
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "dmd_mse_ratio_vs_persistence": 17.688335389151,
+      "event_reference_cycle": 156.0,
+      "first_last_corr": 0.8532744525665208,
+      "high_fraction_slope_per_s": 1.8938086475318184e-06,
+      "latent_net_displacement": 3.542245864868164,
+      "latent_path_length": 22.51093482971192,
+      "persistence_mse": 0.0002836388389368,
+      "roi_id": "cycle156_rank7_obj27",
+      "rollout_mobility_difficulty_score": 3.019230769230769
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_first_last": 0.0451105311512947,
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "dmd_mse_ratio_vs_persistence": 47.53565379467046,
+      "event_reference_cycle": 156.0,
+      "first_last_corr": 0.911386155315358,
+      "high_fraction_slope_per_s": 3.2458497123701337e-06,
+      "latent_net_displacement": 4.170186996459961,
+      "latent_path_length": 19.32914924621582,
+      "persistence_mse": 9.607309118564444e-05,
+      "roi_id": "cycle156_rank2_obj2",
+      "rollout_mobility_difficulty_score": 2.865384615384616
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_first_last": 0.03590939193964,
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "dmd_mse_ratio_vs_persistence": 15.715955036647744,
+      "event_reference_cycle": 60.0,
+      "first_last_corr": 0.8693920360382953,
+      "high_fraction_slope_per_s": 3.56790626961385e-06,
+      "latent_net_displacement": 4.303770542144775,
+      "latent_path_length": 22.6298942565918,
+      "persistence_mse": 0.0001236483637967,
+      "roi_id": "cycle60_rank3_obj9",
+      "rollout_mobility_difficulty_score": 2.846153846153846
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_first_last": 0.0480567663908004,
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "dmd_mse_ratio_vs_persistence": 9.515123096249894,
+      "event_reference_cycle": 60.0,
+      "first_last_corr": 0.8344286417451272,
+      "high_fraction_slope_per_s": 1.5122221316547535e-06,
+      "latent_net_displacement": 2.149290084838867,
+      "latent_path_length": 16.147092819213867,
+      "persistence_mse": 0.0002904538964685,
+      "roi_id": "cycle60_rank6_obj26",
+      "rollout_mobility_difficulty_score": 2.615384615384616
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_first_last": 0.036674365401268,
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "dmd_mse_ratio_vs_persistence": 21.989886125396644,
+      "event_reference_cycle": 60.0,
+      "first_last_corr": 0.843922762808349,
+      "high_fraction_slope_per_s": 7.404400996871604e-07,
+      "latent_net_displacement": 4.038924217224121,
+      "latent_path_length": 14.73573112487793,
+      "persistence_mse": 0.0001316549019065,
+      "roi_id": "cycle60_rank4_obj5",
+      "rollout_mobility_difficulty_score": 2.596153846153846
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_first_last": 0.0451687537133693,
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "dmd_mse_ratio_vs_persistence": 20.670715314603388,
+      "event_reference_cycle": 156.0,
+      "first_last_corr": 0.902474052423648,
+      "high_fraction_slope_per_s": 2.0633059720247663e-06,
+      "latent_net_displacement": 4.554489612579346,
+      "latent_path_length": 19.65669822692871,
+      "persistence_mse": 9.961399871372124e-05,
+      "roi_id": "cycle156_rank8_obj10",
+      "rollout_mobility_difficulty_score": 2.519230769230769
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_first_last": 0.0187912229448556,
+      "cycleNo": 86.0,
+      "degradation_mode_hypothesis": "synchronized_persistent_drop_low_frame_count",
+      "dmd_mse_ratio_vs_persistence": 13.646695603001175,
+      "event_reference_cycle": 86.0,
+      "first_last_corr": 0.9761626362204234,
+      "high_fraction_slope_per_s": 5.387279228579849e-06,
+      "latent_net_displacement": 1.5880976915359497,
+      "latent_path_length": 18.20458030700684,
+      "persistence_mse": 0.0001307200993778,
+      "roi_id": "cycle86_rank4_obj9",
+      "rollout_mobility_difficulty_score": 2.3269230769230766
+    },
+    {
+      "cohort_role": "event",
+      "cumulative_abs_first_last": 0.0284551549702882,
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "dmd_mse_ratio_vs_persistence": 19.443828110667507,
+      "event_reference_cycle": 60.0,
+      "first_last_corr": 0.9042864481677793,
+      "high_fraction_slope_per_s": 1.9181429601235163e-06,
+      "latent_net_displacement": 2.731466293334961,
+      "latent_path_length": 19.44740295410156,
+      "persistence_mse": 0.0001112566010306,
+      "roi_id": "cycle60_rank2_obj2",
+      "rollout_mobility_difficulty_score": 2.307692307692308
+    }
+  ],
+  "top_roi_echem_correlations": [
+    {
+      "echem_feature": "n_frames_percentile",
+      "n": 52,
+      "p_value": 1.3400105956209215e-11,
+      "rho": 0.7764711628578677,
+      "roi_feature": "latent_net_displacement"
+    },
+    {
+      "echem_feature": "n_frames_percentile",
+      "n": 52,
+      "p_value": 9.500675602746318e-11,
+      "rho": 0.75563438958091,
+      "roi_feature": "cumulative_abs_norm_change"
+    },
+    {
+      "echem_feature": "n_frames_percentile",
+      "n": 52,
+      "p_value": 7.503878587410245e-09,
+      "rho": -0.7003566687387334,
+      "roi_feature": "first_last_corr"
+    },
+    {
+      "echem_feature": "n_frames_percentile",
+      "n": 52,
+      "p_value": 9.707037329700142e-09,
+      "rho": 0.6966542668754723,
+      "roi_feature": "latent_path_length"
+    },
+    {
+      "echem_feature": "n_frames_percentile",
+      "n": 52,
+      "p_value": 9.707037329700142e-09,
+      "rho": 0.6966542668754723,
+      "roi_feature": "latent_mean_step"
+    },
+    {
+      "echem_feature": "cycles_from_block_start",
+      "n": 52,
+      "p_value": 1.6349199157369377e-06,
+      "rho": 0.609336254352502,
+      "roi_feature": "latent_mean_step"
+    },
+    {
+      "echem_feature": "cycles_from_block_start",
+      "n": 52,
+      "p_value": 1.6349199157369377e-06,
+      "rho": 0.609336254352502,
+      "roi_feature": "latent_path_length"
+    },
+    {
+      "echem_feature": "n_frames_percentile",
+      "n": 52,
+      "p_value": 3.280386113784104e-06,
+      "rho": 0.5950534715580754,
+      "roi_feature": "dmd_minus_persistence_mse"
+    }
+  ],
+  "top_within_reference_tests": [
+    {
+      "control_mean": -0.0043992287446079,
+      "event_mean": 0.0051324335353759,
+      "event_minus_control": 0.0095316622799838,
+      "feature": "cumulative_abs_norm_change_centered_by_reference",
+      "mannwhitney_u": 565.0,
+      "p_value": 2.737765737450264e-05
+    },
+    {
+      "control_mean": 0.0125996057862541,
+      "event_mean": -0.0146995400839632,
+      "event_minus_control": -0.0272991458702173,
+      "feature": "first_last_corr_centered_by_reference",
+      "mannwhitney_u": 145.0,
+      "p_value": 0.0004709850279392
+    },
+    {
+      "control_mean": -0.3902926597364095,
+      "event_mean": 0.4553414363591444,
+      "event_minus_control": 0.845634096095554,
+      "feature": "latent_net_displacement_centered_by_reference",
+      "mannwhitney_u": 523.0,
+      "p_value": 0.0006186230005695
+    },
+    {
+      "control_mean": -0.0220469913549602,
+      "event_mean": 0.0257214899141202,
+      "event_minus_control": 0.0477684812690804,
+      "feature": "high_fraction_delta_centered_by_reference",
+      "mannwhitney_u": 521.5,
+      "p_value": 0.0006839664932382
+    },
+    {
+      "control_mean": -2.5549124326759807e-05,
+      "event_mean": 2.980731171455312e-05,
+      "event_minus_control": 5.535643604131292e-05,
+      "feature": "roi_norm_mean_slope_centered_by_reference",
+      "mannwhitney_u": 521.0,
+      "p_value": 0.0007076343922668
+    },
+    {
+      "control_mean": -0.0044661213472789,
+      "event_mean": 0.0052104749051587,
+      "event_minus_control": 0.0096765962524377,
+      "feature": "roi_norm_mean_delta_centered_by_reference",
+      "mannwhitney_u": 519.0,
+      "p_value": 0.0008084281619433
+    },
+    {
+      "control_mean": 0.0214122167740673,
+      "event_mean": -0.0249809195697451,
+      "event_minus_control": -0.0463931363438124,
+      "feature": "low_fraction_delta_centered_by_reference",
+      "mannwhitney_u": 156.0,
+      "p_value": 0.0009843330478716
+    },
+    {
+      "control_mean": 0.697806627738056,
+      "event_mean": -0.8141077323610663,
+      "event_minus_control": -1.5119143600991225,
+      "feature": "centroid_path_px_centered_by_reference",
+      "mannwhitney_u": 171.0,
+      "p_value": 0.0025319856912629
+    }
+  ]
+}

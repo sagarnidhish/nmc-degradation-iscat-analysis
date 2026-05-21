@@ -892,3 +892,30 @@ Key result:
 
 Interpretation: the new coupling analysis makes the main caveat explicit. ROI morphology, rollout descriptors, and apparent event separability are strongly conditioned by frame count and protocol-block position, so echem/protocol metadata should be used as covariates and guardrails. At the same time, event-vs-control optical shifts survive within-reference centering, supporting a physically useful signal that should be advanced through manual QC, cycle-conditioned models, and echem-aware validation rather than a raw automated detector claim.
 
+## 2026-05-21 NMC AI Physics Synthesis
+
+Added and ran:
+
+`python scripts/tier4_nmc_ai_physics_synthesis.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis`
+
+Local compact copy:
+
+`derived_local/nmc_ai_physics_synthesis`
+
+Key result:
+
+- Generated a top-level synthesis report and requirement-by-requirement completion audit from the Isambard derived outputs.
+- The current evidence base contains 52 multi-cycle ROI/echem rows, 11 cycles, 4 event-reference cycles, and 12 calibrated front-QC ROI rows.
+- Persistence is confirmed as the best raw cycle-level MSE baseline across the expanded rollout cohort; DMD, velocity, PCA latent trajectories, PCA-ridge, and residual-CNN runs are most useful as residual and latent physics descriptors.
+- Strict no-selection-QC event ranking remains only modest: random forest mean ROC-AUC 0.651 / balanced accuracy 0.573, logistic mean ROC-AUC 0.625 / balanced accuracy 0.562. The all-feature random forest reaches ROC-AUC 0.797 / balanced accuracy 0.688, but that includes QC/acquisition-sensitive features.
+- The strongest within-reference event/control optical separations remain cumulative normalized change, first-last decorrelation, latent net displacement, high-fraction growth, and ROI mean trend.
+- The strongest ROI/echem/protocol couplings are frame-count percentile versus latent displacement, cumulative absolute change, first-last correlation, and DMD failure over persistence, reinforcing protocol/frame-count confounding as a central guardrail.
+- The highest-priority ROI candidates for manual review include `cycle62_rank3_obj9` as an active control and event ROIs from cycles 156, 60, and 86.
+- The synthesis explicitly classifies diffusion extraction as `partial_proxy_only`: provisional 0.096 um/px apparent optical-front proxies exist, but calibrated diffusion coefficients are not yet validated because all front ROIs remain manual-QC pending.
+
+Interpretation: the project now has an auditable top-level index tying the requested goals to concrete outputs and limitations. The core AI/physics workflow is implemented as computational hypothesis generation: next-frame/rollout baselines, ROI latent dynamics, phase/front mobility proxies, degradation-mode rankings, and echem/protocol coupling. The remaining scientific gap is not more unconditioned modeling; it is manual ROI/front QC, broader cycle coverage, and echem/protocol-conditioned validation before making calibrated diffusion or deployable detector claims.
+
