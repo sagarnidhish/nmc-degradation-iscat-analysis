@@ -14,6 +14,8 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - ROI/front QC package candidates: 24
 - Control-balanced front QC candidates: 40
 - Residual physics mode clusters: 4
+- Manual-QC label workbook candidates: 47
+- Control-balanced QC sensitivity robust strata: 6
 
 ## Main Findings
 
@@ -28,7 +30,8 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
-- A QC review packet prioritizes 30 ROI/front candidates, and a control-balanced front package adds 24 control candidates for manual accept/reject review before publication-scale diffusion claims.
+- A QC review packet prioritizes 30 ROI/front candidates, a control-balanced front package adds 24 control candidates, and the manual-QC label workbook deduplicates these into 47 pending ROI labels.
+- Control-balanced QC sensitivity keeps positive phase-front residuals robust in 6 automatic strata, including the balanced selected panel; diffusion-proxy residuals remain non-significant in that balanced panel.
 
 ## Model Readout
 
@@ -125,6 +128,9 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - q70_phase_ci_excludes_zero phase-sign residual: median event-control 0.088, bootstrap p05 0.047, MW p=1.065e-04, permutation p=9.995e-04
 - Diffusion-proxy separations do not remain globally robust; review-panel diffusion differences are selection-biased and still require manual QC.
 - Control-balanced QC augmentation selects 40 ROIs (16 event / 24 control), with non-fragmented counts {'control': 4, 'event': 6}.
+- Control-balanced sensitivity balanced_qc_not_fragmented phase-sign residual: event/control 6/4, median event-control 0.083, bootstrap p05 -0.004, MW p=0.139, permutation p=0.046.
+- Control-balanced sensitivity balanced_qc_selected phase-sign residual: event/control 16/24, median event-control 0.091, bootstrap p05 0.047, MW p=0.003, permutation p=0.008.
+- Control-balanced robust positive phase-residual strata: all_front_rois, balanced_qc_selected, complete_threshold_sweep, original_qc_selected, q70_phase_ci_excludes_zero, q70_phase_ci_positive.
 
 ## Residual Physics Mode Taxonomy
 
@@ -185,6 +191,19 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - cycle62_rank4_obj1 (control, cycle 62): optical_loss_rollout_hard, priority 2.923
 - cycle60_rank2_obj2 (event, cycle 60): optical_brightening_decorrelating_rollout_hard_front_positive, priority 2.923
 - cycle58_rank3_obj9 (control, cycle 58): near_baseline_or_context_like, priority 2.913
+
+## Manual QC Label Workbook
+
+- Deduplicated ROI candidates: 47
+- Role counts: {'control': 24, 'event': 23}
+- Priority tiers: {'high': 12, 'medium': 17, 'routine': 18}
+- Manual-QC status counts: {'pending': 47}
+- Guardrail: This workbook is a manual-label template. It deduplicates review candidates and preserves pending status, but it does not assign accept/reject labels or validate diffusion.
+
+## Control-Balanced QC Sensitivity
+
+- Robust positive phase-residual strata: all_front_rois, balanced_qc_selected, complete_threshold_sweep, original_qc_selected, q70_phase_ci_excludes_zero, q70_phase_ci_positive
+- Guardrail: Control-balanced QC sensitivity compares the original event-heavy review panel with the augmented event/control-balanced panel. It audits selection bias in phase-front directionality, but remains an automatic candidate review and not a manual accept/reject QC result.
 
 ## Completion Audit
 

@@ -1196,3 +1196,53 @@ Key result:
 - Continuous phase-front residual regression remains weak; classification of front-direction sign is more stable than predicting residual magnitude.
 
 Interpretation: early particle-region ROI video contains useful information about later front-direction behavior, not just final-cycle labels. This supports using prefix/past-observable models as physics-signal triage for front motion, while keeping the current guardrail that the selected 52-ROI cohort is too small and event-centered for deployable forecasting.
+
+## 2026-05-21 Manual QC Label Workbook Result
+
+Added and ran:
+
+`python scripts/tier4_manual_qc_label_workbook.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_label_workbook`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_label_workbook`
+
+Local compact copy:
+
+`derived_local/manual_qc_label_workbook`
+
+Key result:
+
+- Built a single deduplicated manual-QC label template from the primary visual front-QC package, the control-balanced front-QC package, and the ranked QC review packet.
+- The workbook contains 47 unique ROI/front candidates: 24 controls and 23 events.
+- Priority tiers are 12 high, 17 medium, and 18 routine candidates.
+- Source coverage is 40 control-balanced visual-QC rows, 24 primary visual-QC rows, and 30 ranked review-packet rows.
+- All 47 labels remain `manual_qc_status=pending`; the script deliberately does not assign accept/reject decisions.
+- The label template adds columns for `manual_particle_identity_ok`, `manual_front_mask_ok`, `manual_diffusion_interpretable`, reviewer, and review date so accepted fronts can later be joined back to diffusion/front analyses without hand-merging manifests.
+
+Interpretation: this closes the label-provenance gap between the automatic analyses and eventual manual review. It does not validate diffusion or degradation labels, but it creates the authoritative table needed to convert visual QC decisions into a reproducible accepted-front subset.
+
+## 2026-05-21 Control-Balanced Front QC Sensitivity V2
+
+Added and ran:
+
+`python scripts/tier4_control_balanced_front_qc_sensitivity.py --n-bootstrap 1000 --n-permutation 1000`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_qc_sensitivity`
+
+Local compact copy:
+
+`derived_local/control_balanced_front_qc_sensitivity`
+
+Key result:
+
+- Added a second front-QC sensitivity analysis that compares the original high-signal QC package with the control-balanced augmentation.
+- The all-front result is unchanged: phase-slope positive-fraction protocol residual remains event-shifted by median event-control 0.047, bootstrap p05 0.034, Mann-Whitney p=0.000825, and permutation p=0.03696.
+- The control-balanced selected review set has usable event/control composition (16 event / 24 control) and preserves the phase-sign residual separation: median event-control 0.091, bootstrap p05 0.047, Mann-Whitney p=0.00288, permutation p=0.00799.
+- The balanced non-fragmented subset now contains both roles (6 event / 4 control). It keeps the expected direction for phase-sign residual (median event-control 0.083, permutation p=0.04595), but the bootstrap p05 is slightly negative and the subset is too small for a strong claim.
+- The original strict non-fragmented and no-auto-flag subsets are event-only (7/0 and 5/0), so they cannot support event/control testing. This confirms that the control-balanced review design is necessary before manual QC labels can be used for final filtering.
+- Diffusion-proxy effects remain unstable and selection-sensitive. In the balanced selected set, diffusion-proxy residual median event-control is near zero and non-significant (Mann-Whitney p=0.901, permutation p=0.920).
+
+Interpretation: the phase-front directionality finding survives the control-balanced automatic review panel, which reduces concern that it is only an event-heavy QC selection artifact. The strictest balanced automatic subset is directionally consistent but underpowered. Diffusion remains guarded and should not be interpreted as calibrated Li diffusivity without manual QC and calibration.

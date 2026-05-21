@@ -92,9 +92,11 @@ def main() -> None:
     qc_package = read_json(derived / "roi_front_qc_package" / "roi_front_qc_package_summary.json")
     control_balanced_qc = read_json(derived / "control_balanced_front_qc_package" / "control_balanced_front_qc_summary.json")
     front_qc_sensitivity = read_json(derived / "front_qc_sensitivity" / "front_qc_sensitivity_summary.json")
+    control_balanced_qc_sensitivity = read_json(derived / "control_balanced_front_qc_sensitivity" / "control_balanced_front_qc_sensitivity_summary.json")
     residual_modes = read_json(derived / "residual_physics_mode_taxonomy" / "residual_physics_mode_taxonomy_summary.json")
     cycle_region_modes = read_json(derived / "cycle_region_mode_context" / "cycle_region_mode_context_summary.json")
     prefix_forecast = read_json(derived / "prefix_roi_forecast" / "prefix_roi_forecast_summary.json")
+    manual_qc_workbook = read_json(derived / "manual_qc_label_workbook" / "manual_qc_label_workbook_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -162,6 +164,8 @@ def main() -> None:
     front_qc_focus = top_items(first_summary(front_qc_sensitivity, "focus_tests", []), 25)
     front_qc_strata = top_items(first_summary(front_qc_sensitivity, "strata", []), 12)
     robust_phase_strata = first_summary(front_qc_sensitivity, "robust_positive_phase_residual_strata", [])
+    balanced_qc_focus = first_summary(control_balanced_qc_sensitivity, "focus_tests", []) or []
+    balanced_robust_phase_strata = first_summary(control_balanced_qc_sensitivity, "robust_positive_phase_residual_strata", [])
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -254,6 +258,8 @@ def main() -> None:
         f"- ROI/front QC package candidates: {first_summary(qc_package, 'n_selected_roi', 0)}",
         f"- Control-balanced front QC candidates: {first_summary(control_balanced_qc, 'n_selected_roi', 0)}",
         f"- Residual physics mode clusters: {first_summary(residual_modes, 'chosen_k', 0)}",
+        f"- Manual-QC label workbook candidates: {first_summary(manual_qc_workbook, 'n_unique_roi', 0)}",
+        f"- Control-balanced QC sensitivity robust strata: {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
         "",
         "## Main Findings",
         "",
@@ -268,7 +274,8 @@ def main() -> None:
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
         f"- Automatic front-QC sensitivity keeps the positive phase-front residual in {len(robust_phase_strata)} strata: {', '.join(robust_phase_strata) if robust_phase_strata else 'none'}; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.",
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
-        f"- A QC review packet prioritizes {first_summary(qc_packet, 'n_candidates', 0)} ROI/front candidates, and a control-balanced front package adds {first_summary(control_balanced_qc, 'n_control_roi', 0)} control candidates for manual accept/reject review before publication-scale diffusion claims.",
+        f"- A QC review packet prioritizes {first_summary(qc_packet, 'n_candidates', 0)} ROI/front candidates, a control-balanced front package adds {first_summary(control_balanced_qc, 'n_control_roi', 0)} control candidates, and the manual-QC label workbook deduplicates these into {first_summary(manual_qc_workbook, 'n_unique_roi', 0)} pending ROI labels.",
+        f"- Control-balanced QC sensitivity keeps positive phase-front residuals robust in {len(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))} automatic strata, including the balanced selected panel; diffusion-proxy residuals remain non-significant in that balanced panel.",
         "",
         "## Model Readout",
         "",
@@ -358,6 +365,13 @@ def main() -> None:
     report_lines.append(
         f"- Control-balanced QC augmentation selects {first_summary(control_balanced_qc, 'n_selected_roi', 0)} ROIs ({first_summary(control_balanced_qc, 'n_event_roi', 0)} event / {first_summary(control_balanced_qc, 'n_control_roi', 0)} control), with non-fragmented counts {control_balanced_nonfragment}."
     )
+    for row in balanced_qc_focus:
+        if row.get("feature") == "phase_slope_positive_fraction_protocol_residual" and row.get("stratum") in {"balanced_qc_selected", "balanced_qc_not_fragmented"}:
+            report_lines.append(
+                f"- Control-balanced sensitivity {row.get('stratum')} phase-sign residual: event/control {fmt(row.get('n_event'), 0)}/{fmt(row.get('n_control'), 0)}, median event-control {fmt(row.get('median_event_minus_control'))}, bootstrap p05 {fmt(row.get('bootstrap_p05'))}, MW p={fmt(row.get('mannwhitney_p'))}, permutation p={fmt(row.get('permutation_median_p'))}."
+            )
+    if balanced_robust_phase_strata:
+        report_lines.append(f"- Control-balanced robust positive phase-residual strata: {', '.join(balanced_robust_phase_strata)}.")
 
     report_lines += [
         "",
@@ -423,6 +437,19 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Manual QC Label Workbook",
+        "",
+        f"- Deduplicated ROI candidates: {first_summary(manual_qc_workbook, 'n_unique_roi', 0)}",
+        f"- Role counts: {first_summary(manual_qc_workbook, 'role_counts', {})}",
+        f"- Priority tiers: {first_summary(manual_qc_workbook, 'review_priority_tier_counts', {})}",
+        f"- Manual-QC status counts: {first_summary(manual_qc_workbook, 'manual_qc_status_counts', {})}",
+        f"- Guardrail: {first_summary(manual_qc_workbook, 'guardrail', 'This is a label template, not completed manual QC.')}",
+        "",
+        "## Control-Balanced QC Sensitivity",
+        "",
+        f"- Robust positive phase-residual strata: {', '.join(first_summary(control_balanced_qc_sensitivity, 'robust_positive_phase_residual_strata', []))}",
+        f"- Guardrail: {first_summary(control_balanced_qc_sensitivity, 'interpretation', 'Automatic sensitivity only; not manual QC.')}",
+        "",
         "## Completion Audit",
         "",
     ]
@@ -471,6 +498,9 @@ def main() -> None:
         "front_qc_robust_positive_phase_residual_strata": robust_phase_strata,
         "front_qc_sensitivity_strata": front_qc_strata,
         "front_qc_sensitivity_focus_tests": front_qc_focus,
+        "control_balanced_front_qc_sensitivity_n_roi": first_summary(control_balanced_qc_sensitivity, "n_roi"),
+        "control_balanced_front_qc_robust_positive_phase_residual_strata": balanced_robust_phase_strata,
+        "control_balanced_front_qc_sensitivity_focus_tests": balanced_qc_focus,
         "residual_physics_mode_chosen_k": first_summary(residual_modes, "chosen_k"),
         "residual_physics_mode_cluster_stability": first_summary(residual_modes, "cluster_stability", {}),
         "residual_physics_mode_best_silhouette": first_summary(residual_modes, "cluster_selection", {}).get("best", {}).get("silhouette"),
@@ -488,6 +518,21 @@ def main() -> None:
         "top_prefix_roi_classification": prefix_top_classification,
         "top_prefix_roi_regression": prefix_top_regression,
         "prefix_roi_permutation_null": prefix_null,
+        "manual_qc_label_workbook": {
+            "n_unique_roi": first_summary(manual_qc_workbook, "n_unique_roi"),
+            "role_counts": first_summary(manual_qc_workbook, "role_counts", {}),
+            "review_priority_tier_counts": first_summary(manual_qc_workbook, "review_priority_tier_counts", {}),
+            "manual_qc_status_counts": first_summary(manual_qc_workbook, "manual_qc_status_counts", {}),
+            "source_counts": first_summary(manual_qc_workbook, "source_counts", {}),
+            "guardrail": first_summary(manual_qc_workbook, "guardrail"),
+        },
+        "control_balanced_front_qc_sensitivity": {
+            "n_roi": first_summary(control_balanced_qc_sensitivity, "n_roi"),
+            "n_event_roi": first_summary(control_balanced_qc_sensitivity, "n_event_roi"),
+            "n_control_roi": first_summary(control_balanced_qc_sensitivity, "n_control_roi"),
+            "robust_positive_phase_residual_strata": first_summary(control_balanced_qc_sensitivity, "robust_positive_phase_residual_strata", []),
+            "interpretation": first_summary(control_balanced_qc_sensitivity, "interpretation"),
+        },
         "strict_rf_mean_roc_auc": strict_rf.get("mean_roc_auc"),
         "strict_rf_mean_balanced_accuracy": strict_rf.get("mean_balanced_accuracy"),
         "strict_logistic_mean_roc_auc": strict_logistic.get("mean_roc_auc"),
