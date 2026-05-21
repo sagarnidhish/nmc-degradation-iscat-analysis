@@ -2,67 +2,67 @@
   "crop_size_full": 192,
   "cycle_summary": {
     "116.0": {
-      "mean_norm_roi_delta": -0.0007337269683678945,
+      "mean_norm_roi_delta": -0.0007340932885805765,
       "mean_roi_delta": -12.14697265625,
-      "mean_stage_drift_xy_sampled": 0.2499999999999318,
-      "n_roi_sequences": 6
-    },
-    "118.0": {
-      "mean_norm_roi_delta": -0.001081930473446846,
-      "mean_roi_delta": -18.1287841796875,
-      "mean_stage_drift_xy_sampled": 0.2500000000000227,
-      "n_roi_sequences": 4
-    },
-    "156.0": {
-      "mean_norm_roi_delta": 0.030045326178272564,
-      "mean_roi_delta": 663.292236328125,
-      "mean_stage_drift_xy_sampled": 0.2121320343559321,
-      "n_roi_sequences": 6
-    },
-    "157.0": {
-      "mean_norm_roi_delta": -0.01755824312567711,
-      "mean_roi_delta": -470.98779296875,
-      "mean_stage_drift_xy_sampled": 0.22360679774997896,
-      "n_roi_sequences": 4
-    },
-    "158.0": {
-      "mean_norm_roi_delta": 0.005685536190867424,
-      "mean_roi_delta": 147.421142578125,
-      "mean_stage_drift_xy_sampled": 0.24999999999993178,
-      "n_roi_sequences": 4
-    },
-    "58.0": {
-      "mean_norm_roi_delta": -2.35140323638916e-05,
-      "mean_roi_delta": -0.3118896484375,
-      "mean_stage_drift_xy_sampled": 0.2236067977500298,
-      "n_roi_sequences": 4
-    },
-    "60.0": {
-      "mean_norm_roi_delta": 0.00016263499855995178,
-      "mean_roi_delta": 2.9912923177083335,
-      "mean_stage_drift_xy_sampled": 0.18027756377328777,
-      "n_roi_sequences": 6
-    },
-    "62.0": {
-      "mean_norm_roi_delta": 0.0009680390357971191,
-      "mean_roi_delta": 15.2962646484375,
-      "mean_stage_drift_xy_sampled": 0.2500000000000909,
-      "n_roi_sequences": 4
-    },
-    "86.0": {
-      "mean_norm_roi_delta": 0.00019059330224990845,
-      "mean_roi_delta": 3.4881184895833335,
       "mean_stage_drift_xy_sampled": 0.22360679774992812,
       "n_roi_sequences": 6
     },
+    "118.0": {
+      "mean_norm_roi_delta": -0.001081937924027443,
+      "mean_roi_delta": -18.1287841796875,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 4
+    },
+    "156.0": {
+      "mean_norm_roi_delta": 0.03005378507077694,
+      "mean_roi_delta": 663.292236328125,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 6
+    },
+    "157.0": {
+      "mean_norm_roi_delta": -0.01755175180733204,
+      "mean_roi_delta": -470.98779296875,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 4
+    },
+    "158.0": {
+      "mean_norm_roi_delta": 0.00568322092294693,
+      "mean_roi_delta": 147.421142578125,
+      "mean_stage_drift_xy_sampled": 0.18027756377319315,
+      "n_roi_sequences": 4
+    },
+    "58.0": {
+      "mean_norm_roi_delta": -2.4069100618362427e-05,
+      "mean_roi_delta": -0.3118896484375,
+      "mean_stage_drift_xy_sampled": 0.2692582403567336,
+      "n_roi_sequences": 4
+    },
+    "60.0": {
+      "mean_norm_roi_delta": 0.00016235684355099997,
+      "mean_roi_delta": 2.9912923177083335,
+      "mean_stage_drift_xy_sampled": 0.2236067977500298,
+      "n_roi_sequences": 6
+    },
+    "62.0": {
+      "mean_norm_roi_delta": 0.0009680241346359253,
+      "mean_roi_delta": 15.2962646484375,
+      "mean_stage_drift_xy_sampled": 0.2121320343560125,
+      "n_roi_sequences": 4
+    },
+    "86.0": {
+      "mean_norm_roi_delta": 0.00019067650039990744,
+      "mean_roi_delta": 3.4881184895833335,
+      "mean_stage_drift_xy_sampled": 0.2499999999999318,
+      "n_roi_sequences": 6
+    },
     "88.0": {
-      "mean_norm_roi_delta": -0.00031178444623947144,
+      "mean_norm_roi_delta": -0.00031160004436969757,
       "mean_roi_delta": -6.5919189453125,
-      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "mean_stage_drift_xy_sampled": 0.18027756377319315,
       "n_roi_sequences": 4
     },
     "90.0": {
-      "mean_norm_roi_delta": -0.0004220884293317795,
+      "mean_norm_roi_delta": -0.00042227283120155334,
       "mean_roi_delta": -6.2725830078125,
       "mean_stage_drift_xy_sampled": 0.2500000000000227,
       "n_roi_sequences": 4
@@ -72,5 +72,5 @@
   "n_roi_sequences": 52,
   "output_size": 96,
   "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort/multi_cycle_roi_table.csv",
-  "samples_per_roi": 64
+  "samples_per_roi": 96
 }

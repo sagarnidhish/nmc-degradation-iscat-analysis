@@ -759,3 +759,35 @@ Key result:
 - The top expanded-cohort physics-ranked ROIs are mostly cycle 156 event ROIs (`cycle156_rank7_obj27`, `cycle156_rank5_obj4`, `cycle156_rank8_obj10`, `cycle156_rank2_obj2`), followed by cycle 60 and the known cycle 86 ROI `cycle86_rank4_obj9`.
 
 Interpretation: expanding beyond the synchronized cycles changes the story. Cycles 86/116 remain the strongest coordinated degradation-event candidates, but cycles 60/156 have stronger local optical dynamics and may be better for learning particle-region degradation morphology. The useful AI program is therefore two-track: use synchronized cycles for event/protocol/degradation timing, and use the expanded single+sync ROI cohort for front/mobility morphology, rollout residuals, and degradation-mode discovery. All expanded ROIs are still automatic candidates and need manual particle/front QC before mechanistic claims.
+
+## 2026-05-21 Multi-Cycle ROI Cohort And Mobility
+
+Added and ran:
+
+- `scripts/tier3_build_multicycle_roi_cohort.py`
+- `scripts/tier3_multicycle_roi_mobility_summary.py`
+
+Remote output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_mobility`
+
+Local compact copies:
+
+- `derived_local/multi_cycle_roi_cohort`
+- `derived_local/multi_cycle_roi_sequences`
+- `derived_local/multi_cycle_roi_mobility`
+
+Key result:
+
+- Built an automatic multi-cycle ROI cohort beyond the synchronized cycles: 52 ROIs total, with 24 event ROIs and 28 matched controls.
+- Event cycles included 60, 86, 116, and 156. Matched controls came from cycles 58/62 for 60, 88/90 for 86, 118 for 116, and 157/158 for 156.
+- Exported all 52 ROIs as fixed 192x192 full-frame padded crops and 96-frame, 96x96 model tensors.
+- Overall multi-cycle events have higher timing-normalized high-phase growth than controls: 2.55e-6/s vs 1.45e-6/s, Mann-Whitney p=0.0143.
+- Cycle-specific signals differ by degradation mode. Cycle 86 events show strong structural decorrelation and interface growth relative to controls: first-last correlation 0.9750 vs 0.9955, cumulative first-last change 0.0161 vs 0.0090, and interface-density delta +0.00404 vs -0.00247, all p=0.000666 in the small per-cycle test.
+- Cycle 156 events show the largest optical-state shift: normalized ROI mean delta +0.0301 vs -0.00593 for controls and high-phase growth 2.24e-6/s vs -4.06e-7/s, both p=0.000666.
+- Cycle 60 is more ambiguous because adjacent controls also show large activity; this is a useful guardrail against overinterpreting single-particle events without more controls or manual QC.
+- Top multi-cycle mobility-ranked event ROIs are dominated by cycle 156 and cycle 60, while the previously important `cycle86_rank4_obj9` remains high-ranked but no longer dominates the full multi-cycle cohort.
+
+Interpretation: the analysis now has a broader event/control ROI dataset instead of relying only on cycles 86 and 116. The physics picture is heterogeneous: cycle 86 looks like structural/front disorder, cycle 116 remains coherent optical loss with weak decorrelation, cycle 156 is a strong brightening/phase-growth case, and cycle 60 needs caution because controls are also active. This cohort is now ready for broader rollout modeling and cycle-conditioned degradation-mode learning.
