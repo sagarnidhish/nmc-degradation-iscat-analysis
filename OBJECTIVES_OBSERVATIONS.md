@@ -568,3 +568,28 @@ Key result:
 - Raw mean-intensity delta is not strongly separated in this matched-control table, reinforcing that spatial/correlation/residual features are more sensitive than whole-crop mean changes.
 
 Interpretation: this broadens the modeling dataset beyond the synchronized-event ROIs and gives a direct matched-control degradation signature. The strongest event-vs-control differences are not simple average brightness shifts; they are higher spatial/temporal change, lower frame-to-frame structural persistence over the segment, and higher normalized spatial intensity variance. These control ROIs are automatic reconstructed candidates, so manual QC is still needed, but they are now usable as non-event particle-region model inputs and as controls for degradation-mode classifiers.
+
+## 2026-05-21 Event-Control ROI Classifier Guardrail
+
+Added and ran:
+
+`scripts/tier3_event_control_roi_classifier.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_classifier`
+
+Local compact copy:
+
+`derived_local/event_control_roi_classifier`
+
+Key result:
+
+- Trained a small logistic classifier to separate selected event ROIs from matched non-event control ROIs using particle-only descriptors.
+- Evaluation used pair holdout: train on one event/control pair and test on the other, so the model cannot simply memorize one source movie.
+- The classifier did not generalize across event/control pairs. Mean accuracy was 0.404, mean ROC AUC 0.0208, and mean average precision 0.277.
+- Held out pair 86/88: accuracy 0.308 and ROC AUC 0.0.
+- Held out pair 116/118: accuracy 0.500 and ROC AUC 0.0417.
+- The largest average positive coefficients were cumulative absolute normalized change and normalized intensity standard deviation; first-last correlation had a negative coefficient, consistent with the matched-control univariate screen.
+
+Interpretation: event/control ROI descriptors are promising as univariate degradation signatures, but they do not yet form a cycle-general classifier. This is a useful guardrail: cycle/source/protocol effects are strong, and robust event-vs-control classification will require more source movies, more non-event controls, and probably echem/protocol conditioning. The current best use of these features is ranked hypothesis generation and matched-control evidence, not a deployed classifier.
