@@ -34,7 +34,9 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle-state ROI bridge rows/cycles: 52 / 11
 - Particle-mask stability ROI/frame rows: 52 / 4992
 - Masked ROI rollout frame rows: 4992
+- Masked rollout cycle-warning ROI cycles/features: 11 / 105
 - Diffusion sanity selected-front/publication candidates: 12 / 0
+- Control-balanced high-res front tracking/sanity candidates: 40 / 0
 - Weak-label benchmark trainable positives/negatives: 3 / 4
 - Control-balanced QC sensitivity robust strata: 6
 
@@ -50,6 +52,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.
 - Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.
 - Diffusion proxy sanity audit rejects calibrated-diffusion promotion for the selected high-resolution front set: 0 automatic positive candidates and 0 publication candidates; median selected-front apparent D is -3.647e-04 um2/s and only 0.083 of selected fronts are nonnegative.
+- Control-balanced high-resolution front tracking expands this check to 40 ROIs ({'control': 24, 'event': 16}); it still yields 0 automatic positive diffusion candidates and event/control selected-D separation remains non-significant (top p=0.314).
 - Calibration metadata audit finds camera-timing datasets in 32 of 33 scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.
 - Calibration claim-risk register audits 11 front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
@@ -73,6 +76,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to 11 cycles: top collapsed test cycle_state_pc2 vs mode_taxonomy_score, rho=0.855, permutation p=0.002.
 - Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction 0.000, accepted-area CV 0.042, centroid path 73.607 px; event/control mask instability is not significantly different in the current cohort.
 - Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for 52 of 52 ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho=0.637, p=3.909e-07).
+- Cycle-collapsed masked-rollout warning audit covers 11 observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p=0.014), while future-drop evaluation is underpowered with only 1 positive 8-cycle warning case.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
 ## Model Readout
@@ -311,6 +315,31 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Diffusion-sanity link drift_to_motion_ratio vs threshold_robust_diffusion_score: rho=0.182, p=0.593, n=11
 - Guardrail: This audit checks whether optical radius-squared front proxies behave like calibrated diffusion estimates. Publication diffusion claims require manual QC plus positive, estimator-consistent, low-drift, threshold-robust slopes; otherwise values remain apparent optical-front proxies.
 
+## Control-Balanced Front Tracking And Diffusion Sanity
+
+- High-resolution tracked ROIs: 40
+- Cohort counts: {'control': 24, 'event': 16}
+- Automatic/publication diffusion candidates: 0 / 0
+- Median selected/threshold apparent D: -1.029e-04 / -1.021e-06 um2/s
+- Estimator consensus counts: {'negative': 15, 'mixed': 14, 'positive': 11}
+- Balanced gate low_drift_relative_to_motion: 40/40 pass (1.000)
+- Balanced gate threshold_nonnegative: 16/40 pass (0.400)
+- Balanced gate q70_bootstrap_positive: 9/40 pass (0.225)
+- Balanced gate selected_nonnegative: 8/40 pass (0.200)
+- Balanced gate selected_fit_good: 1/40 pass (0.025)
+- Balanced gate manual_qc_accepted: 0/40 pass (0.000)
+- Balanced event/control diffusion_proxy_median_um2_per_s: median diff 1.195e-06, p=0.314, n=16/24
+- Balanced event/control threshold_robust_diffusion_score: median diff 0.019, p=0.456, n=16/24
+- Balanced event/control drift_to_motion_ratio: median diff -0.001, p=0.516, n=16/24
+- Balanced event/control selected_diffusion_um2_per_s: median diff -4.076e-05, p=0.858, n=16/24
+- Balanced event/control selected_radius2_um2_per_s: median diff -1.630e-04, p=0.858, n=16/24
+- Balanced candidate check cycle156_front8_obj10 (event, cycle 156): selected D 5.881e-05, selected R2 0.068, consensus positive, manual pending
+- Balanced candidate check cycle157_front2_obj2 (control, cycle 157): selected D 6.320e-06, selected R2 6.553e-04, consensus positive, manual pending
+- Balanced candidate check cycle157_front4_obj8 (control, cycle 157): selected D -2.030e-05, selected R2 0.003, consensus positive, manual pending
+- Balanced candidate check cycle158_front2_obj1 (control, cycle 158): selected D -3.503e-05, selected R2 0.030, consensus positive, manual pending
+- Balanced candidate check cycle58_front4_obj2 (control, cycle 58): selected D -2.425e-04, selected R2 0.046, consensus positive, manual pending
+- Guardrail: This audit checks whether optical radius-squared front proxies behave like calibrated diffusion estimates. Publication diffusion claims require manual QC plus positive, estimator-consistent, low-drift, threshold-robust slopes; otherwise values remain apparent optical-front proxies.
+
 ## Particle Trace Physics Audit
 
 - Cycle rows/range: 89 rows, cycles 2.000-158.000
@@ -499,6 +528,30 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Undercoverage priority cycle156_rank7_obj27 persistence: q90 undercoverage 1.000, priority 3.471, role event
 - Undercoverage priority cycle156_rank2_obj2 low_rank_dmd: q90 undercoverage 0.781, priority 3.401, role event
 - Guardrail: Empirical residual quantiles are a calibration audit for ROI-only rollout baselines. They are not a generative uncertainty model, not calibrated diffusion, and not manual QC.
+
+## Masked Rollout Cycle Warning
+
+- ROI cycles/features/permutations: 11 / 105 / 5000
+- Target positive counts: {'any_abrupt_drop': 4, 'synchronized_drop_2plus': 2, 'future_any_drop_within_4cycles': 1, 'future_any_drop_within_8cycles': 1, 'future_any_drop_within_16cycles': 1, 'future_sync2_drop_within_4cycles': 0, 'future_sync2_drop_within_8cycles': 0, 'future_sync2_drop_within_16cycles': 0}
+- Target test any_abrupt_drop low_rank_dmd_particle_mse_mean_max_delta_prev_observed_roi_cycle: median positive-negative 0.009, MW p=0.038, permutation p=0.014, n=4/6
+- Target test any_abrupt_drop low_rank_dmd_particle_to_nonparticle_mse_ratio_mean_max_delta_prev_observed_roi_cycle: median positive-negative 12.290, MW p=0.019, permutation p=0.016, n=4/6
+- Target test synchronized_drop_2plus low_rank_dmd_particle_to_nonparticle_mse_ratio_mean_median_delta_prev_observed_roi_cycle: median positive-negative -2.591, MW p=0.044, permutation p=0.022, n=2/8
+- Target test synchronized_drop_2plus low_rank_dmd_particle_mse_fraction_of_full_mean_median_delta_prev_observed_roi_cycle: median positive-negative -0.425, MW p=0.044, permutation p=0.024, n=2/8
+- Target test any_abrupt_drop low_rank_dmd_nonparticle_mse_mean_max_delta_prev_observed_roi_cycle: median positive-negative 0.002, MW p=0.038, permutation p=0.024, n=4/6
+- Target test synchronized_drop_2plus low_rank_dmd_particle_mse_fraction_of_full_mean_median: median positive-negative -0.430, MW p=0.073, permutation p=0.036, n=2/9
+- Cycle context link persistence_particle_mse_fraction_of_full_mean_max vs cycle_state_pc2: rho=0.955, p=4.989e-06, permutation p=2.000e-04, n=11
+- Cycle context link persistence_particle_mse_fraction_of_full_mean_median_rolling2_mean vs frames_percentile: rho=0.927, p=4.052e-05, permutation p=2.000e-04, n=11
+- Cycle context link persistence_particle_mse_fraction_of_full_mean_median vs cycle_state_pc2: rho=0.909, p=1.056e-04, permutation p=3.999e-04, n=11
+- Cycle context link persistence_particle_to_nonparticle_mse_ratio_mean_median_rolling2_mean vs frames_percentile: rho=0.890, p=2.380e-04, permutation p=3.999e-04, n=11
+- Cycle context link persistence_particle_to_nonparticle_mse_ratio_mean_median vs cycle_state_pc2: rho=0.900, p=1.600e-04, permutation p=5.999e-04, n=11
+- Cycle context link persistence_particle_mse_fraction_of_full_mean_max vs frames_percentile: rho=0.904, p=1.332e-04, permutation p=7.998e-04, n=11
+- Warning-ranked cycle 60: score 3.091, abrupt_drop=1, future8=0, n_roi=6
+- Warning-ranked cycle 156: score 3.091, abrupt_drop=1, future8=0, n_roi=6
+- Warning-ranked cycle 62: score 2.818, abrupt_drop=0, future8=0, n_roi=4
+- Warning-ranked cycle 157: score 2.727, abrupt_drop=0, future8=0, n_roi=4
+- Warning-ranked cycle 158: score 2.545, abrupt_drop=0, future8=0, n_roi=4
+- Warning-ranked cycle 86: score 2.273, abrupt_drop=1, future8=0, n_roi=6
+- Guardrail: Cycle-level audit from selected masked ROI rollout residuals; small selected cycle set, no deployable warning model.
 
 ## Masked ROI Rollout Audit
 
@@ -711,7 +764,7 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Next-frame prediction and rollout: implemented_with_guardrail. Evidence: Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, residual-CNN guardrails, and prefix-only ROI forecasts were run. Persistence is best across raw pixel rollouts: True; best prefix classifier target is front_positive_residual_binary with AUC 0.691. Limitation: Learned/full rollout models do not yet beat persistence robustly; use residuals, latent paths, and prefix forecasts as physics descriptors rather than claiming superior pixel prediction.
 - Select and guard particle-region-only ROIs: implemented_with_guardrail. Evidence: Model inputs use cropped ROI tensors and the particle-mask stability audit covers 52 ROI rows / 4992 frames; median fallback fraction is 0.000. Limitation: The audit uses automatic contrast/history masks and is not a manual segmentation of each particle boundary.
 - Track phase-boundary movement: implemented_as_proxy. Evidence: Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers 52 ROI rows. Limitation: Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics and is robust in 5 automatic QC strata.
-- Extract diffusion coefficients: partial_proxy_only. Evidence: Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across 7 thresholds with bootstrap slopes; the stricter diffusion sanity audit finds 0 automatic positive candidates and 0 publication candidates. Limitation: Global threshold-robust phase slopes separate event/control ROIs, but QC-stratified diffusion proxies are inconsistent, conditioned diffusion-proxy residuals remain non-significant, and selected-front radius-squared slopes fail sign/fit/manual-QC gates.
+- Extract diffusion coefficients: partial_proxy_only. Evidence: Provisional 0.096 um/px apparent diffusion proxies were computed and stress-tested across 7 thresholds with bootstrap slopes; the stricter diffusion sanity audit finds 0 automatic positive candidates and 0 publication candidates; the control-balanced high-resolution rerun tracks 40 ROIs and still finds 0 publication candidates. Limitation: Global threshold-robust phase slopes separate event/control ROIs, but QC-stratified diffusion proxies are inconsistent, conditioned diffusion-proxy residuals remain non-significant, and selected-front radius-squared slopes fail sign/fit/manual-QC gates.
 - Identify degradation modes: implemented_as_hypothesis_ranking. Evidence: Joint physics/rollout/echem mode tables exist, residual taxonomy found 4 protocol-adjusted modes, and cycle/region context maps them across 11 cycles and 7 coarse regions. Limitation: Modes are unsupervised/automatic and tied to the selected ROI cohort; residual taxonomy silhouette is modest and cycle/region context is descriptive.
 - Correlate degradation with cycles, particle regions, and echem/protocol context: implemented_with_guardrail. Evidence: Multi-cycle ROI echem coupling found strong frame-count/protocol correlations; protocol-conditioned residual tests still show event/control optical shifts and phase-front sign consistency. Limitation: Residualization reduces but does not eliminate confounding, and front residual classifiers are not deployable with 52 automatic ROIs.
 - Keep objectives and observations updated: implemented. Evidence: OBJECTIVES_OBSERVATIONS.md contains chronological experiment summaries and guardrails. Limitation: It is long and narrative; the new synthesis is the compact index.

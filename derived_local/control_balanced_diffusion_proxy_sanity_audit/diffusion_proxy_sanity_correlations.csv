@@ -1,0 +1,17 @@
+x,y,n,spearman_rho,p_value,abs_rho
+selected_diffusion_um2_per_s,mask_instability_score,40,-0.3590994371482177,0.02286867077705812,0.3590994371482177
+drift_to_motion_ratio,mask_instability_score,40,-0.3538461538461539,0.02509244722848571,0.3538461538461539
+selected_r2,mask_instability_score,40,0.1452157598499062,0.3712929964069445,0.1452157598499062
+selected_diffusion_um2_per_s,front_quality_score,40,-0.09568480300187618,0.5569859143523525,0.09568480300187618
+positive_estimator_count,mask_instability_score,40,-0.07112516236043753,0.6627468766663388,0.07112516236043753
+selected_diffusion_um2_per_s,threshold_robust_diffusion_score,40,0.06731448418531435,0.679824349505685,0.06731448418531435
+positive_estimator_count,threshold_robust_diffusion_score,40,0.055601560135081135,0.7332782787096191,0.055601560135081135
+selected_r2,threshold_robust_diffusion_score,40,-0.055485160604631496,0.7338162660444085,0.055485160604631496
+positive_estimator_count,front_quality_score,40,-0.053319002832439885,0.7438506805255688,0.053319002832439885
+drift_to_motion_ratio,threshold_robust_diffusion_score,40,-0.05285642203114642,0.745999004737324,0.05285642203114642
+drift_to_motion_ratio,front_quality_score,40,-0.027204502814258912,0.8676602562501676,0.027204502814258912
+selected_r2,front_quality_score,40,0.016510318949343343,0.9194583447410326,0.016510318949343343
+selected_diffusion_um2_per_s,fallback_frame_fraction,40,,,
+selected_r2,fallback_frame_fraction,40,,,
+positive_estimator_count,fallback_frame_fraction,40,,,
+drift_to_motion_ratio,fallback_frame_fraction,40,,,

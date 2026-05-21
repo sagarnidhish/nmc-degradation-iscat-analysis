@@ -1872,3 +1872,43 @@ Key result:
 
 Interpretation: this closes the current diffusion-claim loophole. The project can keep using radius/phase-front slopes as optical particle-region descriptors, but no calibrated diffusion coefficient should be reported from the current selected-front set. A publishable diffusion claim still needs raw microscope calibration provenance, validated timebase, accepted front masks, estimator agreement, and manual ROI QC.
 
+## 2026-05-22 Control-Balanced High-Resolution Front Tracking
+
+Added and ran:
+
+`scripts/tier4_control_balanced_front_tracking_table.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking_table`
+
+Then ran the existing high-resolution tracker, provisional calibration, and diffusion sanity gate on the generated 40-row balanced table:
+
+`python scripts/tier3_track_selected_front_rois.py --roi-table /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking_table/control_balanced_front_rois_for_tracking.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking --crop-size-full 192 --baseline-frames 5`
+
+`python scripts/tier3_front_roi_calibration_qc.py --front-tracking-csv /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking/selected_front_roi_tracking_summary.csv --joint-modes-csv /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_calibration_qc --top-n 40`
+
+`python scripts/tier4_diffusion_proxy_sanity_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --front-calibration-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_calibration_qc --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_diffusion_proxy_sanity_audit`
+
+Remote output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking_table`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_calibration_qc`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_diffusion_proxy_sanity_audit`
+
+Local compact copies:
+
+- `derived_local/control_balanced_front_tracking_table`
+- `derived_local/control_balanced_front_tracking`
+- `derived_local/control_balanced_front_calibration_qc`
+- `derived_local/control_balanced_diffusion_proxy_sanity_audit`
+
+Key result:
+
+- The bridge table resolved all 40 control-balanced QC ROIs into high-resolution tracker inputs: 24 controls and 16 events, with 0 missing front/object coordinate rows.
+- High-resolution tracking completed for all 40 ROIs. Most cycle-level mean radius-squared slopes remained negative or near zero; fit quality was generally weak outside a few contracting fronts.
+- The balanced diffusion sanity audit again produced 0 automatic positive diffusion-proxy candidates and 0 publication diffusion candidates.
+- Gate counts on the balanced cohort: low drift 40/40, threshold nonnegative 16/40, q70 bootstrap positive 9/40, selected nonnegative 8/40, selected-fit R2 1/40, manual-QC accepted 0/40.
+- Median selected-front apparent D was -1.03e-4 um2/s; median threshold-sweep apparent D was -1.02e-6 um2/s.
+- Event/control tests were not significant for selected diffusion proxy: median event-control selected D -4.08e-5 um2/s, Mann-Whitney p=0.858. Threshold median D was also not significant, p=0.314.
+- The project synthesis now includes a Control-Balanced Front Tracking And Diffusion Sanity section and carries the summary into `nmc_ai_physics_synthesis_summary.json`.
+
+Interpretation: this removes the main weakness of the previous selected-front diffusion sanity audit, which was event-heavy. Even after adding a balanced high-resolution control/event cohort, the radius-squared front proxies do not behave like calibrated diffusion coefficients. They remain useful optical front descriptors and QC priorities, not publishable transport constants.
+

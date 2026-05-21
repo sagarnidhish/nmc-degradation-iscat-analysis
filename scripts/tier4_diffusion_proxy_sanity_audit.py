@@ -139,6 +139,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
     parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit")
+    parser.add_argument("--front-calibration-dir", default=None)
     parser.add_argument("--min-r2", type=float, default=0.50)
     parser.add_argument("--max-drift-ratio", type=float, default=0.25)
     args = parser.parse_args()
@@ -147,8 +148,9 @@ def main() -> None:
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
 
-    selected = read_csv(derived / "front_roi_calibration_qc" / "calibrated_front_tracking.csv")
-    qc = read_csv(derived / "front_roi_calibration_qc" / "front_roi_qc_calibration.csv")
+    front_calibration_dir = Path(args.front_calibration_dir) if args.front_calibration_dir else derived / "front_roi_calibration_qc"
+    selected = read_csv(front_calibration_dir / "calibrated_front_tracking.csv")
+    qc = read_csv(front_calibration_dir / "front_roi_qc_calibration.csv")
     threshold = read_csv(derived / "multi_cycle_threshold_robust_fronts" / "threshold_robust_front_summary.csv")
     masks = read_csv(derived / "particle_mask_stability_audit" / "particle_mask_stability_per_roi.csv")
 
@@ -276,6 +278,7 @@ def main() -> None:
             "otherwise values remain apparent optical-front proxies."
         ),
         "outputs": {
+            "front_calibration_dir": str(front_calibration_dir),
             "joined": str(joined_path),
             "gate_counts": str(gate_path),
             "event_control_tests": str(tests_path),

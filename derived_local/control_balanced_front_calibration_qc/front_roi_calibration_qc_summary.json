@@ -1,0 +1,415 @@
+{
+  "calibration_source": "Battery_Degradation_Project/Degradation Paper Outline.pptx slide 3: improved microscope design offers 96 nm pixel size and 180x120 um FoV",
+  "calibration_status": "provisional_from_project_slides",
+  "guardrail": "The 96 nm/px calibration comes from project-slide text and should be confirmed against raw microscope metadata before publication-scale claims.",
+  "n_front_rois": 40,
+  "n_qc_rois": 40,
+  "outputs": {
+    "calibrated_front_tracking": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_calibration_qc/calibrated_front_tracking.csv",
+    "front_roi_qc_calibration": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_calibration_qc/front_roi_qc_calibration.csv"
+  },
+  "pixel_area_um2": 0.009216,
+  "pixel_size_um": 0.096,
+  "top_qc_rois": [
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.0005000373608410802,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 116.0,
+      "joint_degradation_score": 0.1280619444880397,
+      "joint_mode_name": "lower_residual_comparison_mode",
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0020001494433643224,
+      "radius2_slope_r2": 0.612143252222972
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00040819996217446596,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 86.0,
+      "joint_degradation_score": -0.7735151267667235,
+      "joint_mode_name": "lower_residual_comparison_mode",
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0016327998486978638,
+      "radius2_slope_r2": 0.1583809804094795
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00024091557839958067,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 86.0,
+      "joint_degradation_score": -1.5242953137706174,
+      "joint_mode_name": "lower_residual_comparison_mode",
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0009636623135983246,
+      "radius2_slope_r2": 0.1629754480732897
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00047614679162334445,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 58.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0019045871664933778,
+      "radius2_slope_r2": 0.4715103442310421
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00024249503215861308,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 58.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0009699801286344533,
+      "radius2_slope_r2": 0.0464959105354588
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.000715949566890072,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 58.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0028637982675602885,
+      "radius2_slope_r2": 0.4941175723622125
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": 1.4339652752444313e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 60.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": 5.7358611009779104e-05,
+      "radius2_slope_r2": 0.0009244415765347
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00016212895177781793,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 60.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0006485158071112745,
+      "radius2_slope_r2": 0.0726171186550763
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -6.644277103106488e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 60.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00026577108412426234,
+      "radius2_slope_r2": 0.0034638530624636
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": 8.099162231826124e-06,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 60.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": 3.239664892730634e-05,
+      "radius2_slope_r2": 0.00025187983658
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": 0.00017776579436845703,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 60.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": 0.0007110631774738307,
+      "radius2_slope_r2": 0.026433278037361
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -7.257135534636165e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 60.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00029028542138544936,
+      "radius2_slope_r2": 0.0157462665702511
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -5.1706079757080066e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 62.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00020682431902832303,
+      "radius2_slope_r2": 0.0030251706562672
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.0002307796881444652,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 62.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0009231187525778636,
+      "radius2_slope_r2": 0.0900468863573038
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": 3.191429289804595e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 62.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": 0.00012765717159218565,
+      "radius2_slope_r2": 0.0027213888046516
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": 0.00021826838474433332,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 62.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": 0.0008730735389773361,
+      "radius2_slope_r2": 0.0493871148807443
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00035811290451936154,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 86.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0014324516180774462,
+      "radius2_slope_r2": 0.1483056111459313
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00013615132139729234,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 88.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0005446052855891694,
+      "radius2_slope_r2": 0.0456338714115981
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": 0.00023967795601851586,
+      "auto_qc_notes": "small active-front area",
+      "cycleNo": 88.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": 0.0009587118240740663,
+      "radius2_slope_r2": 0.2014212542735514
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -4.651078435999488e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 88.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00018604313743998045,
+      "radius2_slope_r2": 0.0111569605170388
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.0002741594204974095,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 88.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00109663768198964,
+      "radius2_slope_r2": 0.2109520588269856
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00037999854550333347,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 90.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0015199941820133339,
+      "radius2_slope_r2": 0.1358897516391021
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.0003477960839154669,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 90.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0013911843356618702,
+      "radius2_slope_r2": 0.1773063705863008
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00022077734555027404,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 90.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0008831093822010971,
+      "radius2_slope_r2": 0.0890348705572117
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.0005233225573642624,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 118.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0020932902294570513,
+      "radius2_slope_r2": 0.234258801723971
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.0003506123663552112,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 118.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0014024494654208447,
+      "radius2_slope_r2": 0.3305164674794809
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00028096394422020806,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 156.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.001123855776880835,
+      "radius2_slope_r2": 0.1938384584023161
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": 5.881079200375849e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 156.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": 0.00023524316801503396,
+      "radius2_slope_r2": 0.0683510943052313
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.0002627206313327687,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 156.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0010508825253310748,
+      "radius2_slope_r2": 0.1696420000041157
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00010298030376903967,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 156.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0004119212150761614,
+      "radius2_slope_r2": 0.0844023674508354
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00016943667202945012,
+      "auto_qc_notes": "no automatic front-tracking warning",
+      "cycleNo": 156.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0006777466881178016,
+      "radius2_slope_r2": 0.2692539888489289
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -9.056873804874948e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 156.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00036227495219500063,
+      "radius2_slope_r2": 0.0558785356748627
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -8.07641197760121e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 157.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.0003230564791040484,
+      "radius2_slope_r2": 0.0547334548928688
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -2.0298227441248975e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 157.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -8.119290976499866e-05,
+      "radius2_slope_r2": 0.0027816991685576
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -3.420175096766085e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 157.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00013680700387064617,
+      "radius2_slope_r2": 0.048250462021445
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": 6.319510570332058e-06,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 157.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": 2.527804228132915e-05,
+      "radius2_slope_r2": 0.0006553264008419
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -0.00010283262765209395,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 158.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00041133051060837856,
+      "radius2_slope_r2": 0.0602685656215089
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -5.370162677080197e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 158.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00021480650708320973,
+      "radius2_slope_r2": 0.0970463514936256
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -4.854083339918315e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 158.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00019416333359673448,
+      "radius2_slope_r2": 0.0124993743975924
+    },
+    {
+      "apparent_diffusion_proxy_full_um2_per_s": -3.502833084357396e-05,
+      "auto_qc_notes": "low radius2 fit R2",
+      "cycleNo": 158.0,
+      "joint_degradation_score": NaN,
+      "joint_mode_name": NaN,
+      "manual_qc_status": "pending",
+      "radius2_slope_full_um2_per_s": -0.00014011332337429862,
+      "radius2_slope_r2": 0.0302994613498016
+    }
+  ]
+}
