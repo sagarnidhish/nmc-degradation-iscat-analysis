@@ -1066,3 +1066,28 @@ Key result:
 
 Interpretation: this does not replace manual QC, but it closes the workflow gap by turning the automatic rankings into an actionable review queue. The next scientific claim boundary is clear: accept/reject these particle/front masks before interpreting apparent diffusion proxies as physical transport estimates.
 
+## 2026-05-21 Residual Physics Mode Taxonomy
+
+Added and ran:
+
+`python scripts/tier4_residual_physics_mode_taxonomy.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residual_physics_mode_taxonomy`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residual_physics_mode_taxonomy`
+
+Local compact copy:
+
+`derived_local/residual_physics_mode_taxonomy`
+
+Key result:
+
+- Built a protocol-adjusted unsupervised taxonomy from 52 automatic ROI rows using optical residuals, latent/rollout difficulty, protocol-conditioned front residuals, and QC-priority context.
+- Model selection chose k=4 with a modest silhouette of 0.204 and mean seed-stability ARI of 0.935, so the result should be treated as a review taxonomy rather than a final mechanism map.
+- The strongest event-enriched mode is `optical_brightening_decorrelating_rollout_hard_front_positive`: 13 ROIs, 11 events, event fraction 0.846, Fisher p=0.00282. Its top cycles are 60, 156, 62, and 86.
+- Other modes are `optical_loss_rollout_hard` (5 ROIs, event fraction 0.40), `near_baseline_or_context_like` (24 ROIs, event fraction 0.33), and `front_negative_high_apparent_front_proxy` (10 ROIs, event fraction 0.30).
+- Top residual-mode review targets include `cycle60_rank3_obj9`, `cycle60_rank6_obj26`, `cycle60_rank4_obj5`, active control `cycle62_rank3_obj9`, `cycle156_rank7_obj27`, `cycle157_rank2_obj2`, `cycle156_rank5_obj4`, `cycle62_rank4_obj1`, `cycle60_rank2_obj2`, and `cycle58_rank3_obj9`.
+- Updated the tier4 synthesis to include this taxonomy in the degradation-mode audit and machine-readable summary.
+
+Interpretation: the current mode taxonomy points to a reproducible event-enriched pattern combining protocol-adjusted optical brightening, decorrelation, rollout difficulty, and positive front-direction residuals. This is useful for manual review and benchmark labeling, but the labels remain computational hypotheses from automatic particle/front candidates until QC decisions are recorded.
+

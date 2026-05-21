@@ -7,6 +7,7 @@
   "n_joined_roi": 52,
   "n_manual_qc_pending": 12,
   "n_qc_review_candidates": 30,
+  "n_residual_physics_mode_roi": 52,
   "n_roi_front_qc_package_candidates": 24,
   "n_threshold_robust_front_roi": 52,
   "outputs": {
@@ -58,8 +59,8 @@
       "status": "partial_proxy_only"
     },
     {
-      "evidence": "Joint physics/rollout/echem degradation mode tables and multi-cycle ROI mobility rankings exist.",
-      "limitation": "Modes are unsupervised/automatic and tied to the selected ROI cohort.",
+      "evidence": "Joint physics/rollout/echem mode tables exist, and residual taxonomy found 4 protocol-adjusted modes; top mode optical_brightening_decorrelating_rollout_hard_front_positive has event fraction 0.846.",
+      "limitation": "Modes are unsupervised/automatic and tied to the selected ROI cohort; residual taxonomy silhouette is modest and needs manual QC labels.",
       "next_step": "Use the top-ranked ROI list for manual labeling, then refit supervised or semi-supervised degradation-mode models.",
       "requirement": "Identify degradation modes",
       "status": "implemented_as_hypothesis_ranking"
@@ -84,6 +85,134 @@
       "next_step": "Continue committing and pushing each new analysis increment with compact local artifacts only.",
       "requirement": "Keep GitHub updated",
       "status": "implemented_with_verification"
+    }
+  ],
+  "residual_physics_mode_best_silhouette": 0.20381789641866613,
+  "residual_physics_mode_chosen_k": 4,
+  "residual_physics_mode_cluster_stability": {
+    "max_adjusted_rand_index": 1.0,
+    "mean_adjusted_rand_index": 0.9345445541688896,
+    "min_adjusted_rand_index": 0.6122478539746221,
+    "n_repeats": 20,
+    "rows": [
+      {
+        "adjusted_rand_index": 0.6122478539746221,
+        "seed": 30
+      },
+      {
+        "adjusted_rand_index": 0.9368740098545097,
+        "seed": 31
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 32
+      },
+      {
+        "adjusted_rand_index": 0.9368740098545097,
+        "seed": 33
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 34
+      },
+      {
+        "adjusted_rand_index": 0.8783986668657984,
+        "seed": 35
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 36
+      },
+      {
+        "adjusted_rand_index": 0.8783986668657984,
+        "seed": 37
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 38
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 39
+      },
+      {
+        "adjusted_rand_index": 0.9120887863479057,
+        "seed": 40
+      },
+      {
+        "adjusted_rand_index": 0.7064459618890995,
+        "seed": 41
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 42
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 43
+      },
+      {
+        "adjusted_rand_index": 0.8783986668657984,
+        "seed": 44
+      },
+      {
+        "adjusted_rand_index": 0.9511644608597517,
+        "seed": 45
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 46
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 47
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 48
+      },
+      {
+        "adjusted_rand_index": 1.0,
+        "seed": 49
+      }
+    ]
+  },
+  "residual_physics_mode_enrichment": [
+    {
+      "event_fraction": 0.8461538461538461,
+      "fisher_p_value": 0.0028177653798874876,
+      "mode_label": "optical_brightening_decorrelating_rollout_hard_front_positive",
+      "n_control": 2,
+      "n_event": 11,
+      "n_roi": 13,
+      "top_cycles": "60.0;156.0;62.0;86.0"
+    },
+    {
+      "event_fraction": 0.4,
+      "fisher_p_value": 1.0,
+      "mode_label": "optical_loss_rollout_hard",
+      "n_control": 3,
+      "n_event": 2,
+      "n_roi": 5,
+      "top_cycles": "157.0;156.0;62.0"
+    },
+    {
+      "event_fraction": 0.3333333333333333,
+      "fisher_p_value": 0.10245123379526372,
+      "mode_label": "near_baseline_or_context_like",
+      "n_control": 16,
+      "n_event": 8,
+      "n_roi": 24,
+      "top_cycles": "86.0;58.0;118.0;116.0"
+    },
+    {
+      "event_fraction": 0.3,
+      "fisher_p_value": 0.3086998282737143,
+      "mode_label": "front_negative_high_apparent_front_proxy",
+      "n_control": 7,
+      "n_event": 3,
+      "n_roi": 10,
+      "top_cycles": "88.0;90.0;116.0;60.0"
     }
   ],
   "roi_front_qc_flag_counts": {
@@ -619,6 +748,108 @@
       "persistence_mse": 0.0001112566010306,
       "roi_id": "cycle60_rank2_obj2",
       "rollout_mobility_difficulty_score": 2.307692307692308
+    }
+  ],
+  "top_residual_mode_review_rois": [
+    {
+      "cohort_role": "event",
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "mode_label": "optical_brightening_decorrelating_rollout_hard_front_positive",
+      "mode_review_priority": 3.673076923076923,
+      "qc_priority_score": 5.322115384615385,
+      "roi_id": "cycle60_rank3_obj9",
+      "rollout_mobility_difficulty_score": 2.846153846153846
+    },
+    {
+      "cohort_role": "event",
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "mode_label": "optical_brightening_decorrelating_rollout_hard_front_positive",
+      "mode_review_priority": 3.5961538461538463,
+      "qc_priority_score": 4.552884615384615,
+      "roi_id": "cycle60_rank6_obj26",
+      "rollout_mobility_difficulty_score": 2.615384615384616
+    },
+    {
+      "cohort_role": "event",
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "mode_label": "optical_brightening_decorrelating_rollout_hard_front_positive",
+      "mode_review_priority": 3.4807692307692304,
+      "qc_priority_score": 4.802884615384616,
+      "roi_id": "cycle60_rank4_obj5",
+      "rollout_mobility_difficulty_score": 2.596153846153846
+    },
+    {
+      "cohort_role": "control",
+      "cycleNo": 62.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "mode_label": "optical_brightening_decorrelating_rollout_hard_front_positive",
+      "mode_review_priority": 3.307692307692308,
+      "qc_priority_score": 4.903846153846154,
+      "roi_id": "cycle62_rank3_obj9",
+      "rollout_mobility_difficulty_score": 3.057692307692308
+    },
+    {
+      "cohort_role": "event",
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "mode_label": "optical_brightening_decorrelating_rollout_hard_front_positive",
+      "mode_review_priority": 3.2596153846153846,
+      "qc_priority_score": 5.264423076923077,
+      "roi_id": "cycle156_rank7_obj27",
+      "rollout_mobility_difficulty_score": 3.019230769230769
+    },
+    {
+      "cohort_role": "control",
+      "cycleNo": 157.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "mode_label": "optical_loss_rollout_hard",
+      "mode_review_priority": 3.105769230769231,
+      "qc_priority_score": 4.875,
+      "roi_id": "cycle157_rank2_obj2",
+      "rollout_mobility_difficulty_score": 1.8846153846153844
+    },
+    {
+      "cohort_role": "event",
+      "cycleNo": 156.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "mode_label": "optical_brightening_decorrelating_rollout_hard_front_positive",
+      "mode_review_priority": 2.932692307692308,
+      "qc_priority_score": 4.9375,
+      "roi_id": "cycle156_rank5_obj4",
+      "rollout_mobility_difficulty_score": 3.0384615384615383
+    },
+    {
+      "cohort_role": "control",
+      "cycleNo": 62.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "mode_label": "optical_loss_rollout_hard",
+      "mode_review_priority": 2.923076923076923,
+      "qc_priority_score": 4.091346153846154,
+      "roi_id": "cycle62_rank4_obj1",
+      "rollout_mobility_difficulty_score": 2.1346153846153846
+    },
+    {
+      "cohort_role": "event",
+      "cycleNo": 60.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "mode_label": "optical_brightening_decorrelating_rollout_hard_front_positive",
+      "mode_review_priority": 2.923076923076923,
+      "qc_priority_score": 5.1730769230769225,
+      "roi_id": "cycle60_rank2_obj2",
+      "rollout_mobility_difficulty_score": 2.307692307692308
+    },
+    {
+      "cohort_role": "control",
+      "cycleNo": 58.0,
+      "degradation_mode_hypothesis": "single_persistent_drop_needs_roi_qc",
+      "mode_label": "near_baseline_or_context_like",
+      "mode_review_priority": 2.9134615384615383,
+      "qc_priority_score": 3.3701923076923075,
+      "roi_id": "cycle58_rank3_obj9",
+      "rollout_mobility_difficulty_score": 2.0961538461538463
     }
   ],
   "top_roi_echem_correlations": [

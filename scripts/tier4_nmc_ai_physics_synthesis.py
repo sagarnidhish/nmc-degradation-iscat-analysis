@@ -90,6 +90,7 @@ def main() -> None:
     conditioned_fronts = read_json(derived / "protocol_conditioned_front_effects" / "protocol_conditioned_front_effects_summary.json")
     qc_packet = read_json(derived / "qc_review_packet" / "qc_review_packet_summary.json")
     qc_package = read_json(derived / "roi_front_qc_package" / "roi_front_qc_package_summary.json")
+    residual_modes = read_json(derived / "residual_physics_mode_taxonomy" / "residual_physics_mode_taxonomy_summary.json")
 
     rollout_cycle = read_csv(derived / "multi_cycle_roi_rollout_baselines" / "roi_rollout_cycle_method_summary.csv")
     echem_corr = read_csv(derived / "multi_cycle_roi_echem_coupling" / "roi_echem_spearman_correlations.csv")
@@ -143,6 +144,9 @@ def main() -> None:
     robust_front_by_event = top_items(first_summary(robust_fronts, "top_by_event_feature_tests", []), 8)
     conditioned_front_model = first_summary(conditioned_fronts, "model_summary", {})
     conditioned_front_tests = top_items(first_summary(conditioned_fronts, "top_protocol_conditioned_front_tests", []), 8)
+    residual_mode_enrichment = top_items(first_summary(residual_modes, "mode_enrichment", []), 8)
+    residual_mode_top_rois = top_items(first_summary(residual_modes, "top_review_rois", []), 10)
+    top_residual_mode = residual_mode_enrichment[0] if residual_mode_enrichment else {}
 
     qc_pending = 0
     if not calibration_table.empty and "manual_qc_status" in calibration_table.columns:
@@ -187,8 +191,8 @@ def main() -> None:
         evidence_row(
             "Identify degradation modes",
             "implemented_as_hypothesis_ranking",
-            "Joint physics/rollout/echem degradation mode tables and multi-cycle ROI mobility rankings exist.",
-            "Modes are unsupervised/automatic and tied to the selected ROI cohort.",
+            f"Joint physics/rollout/echem mode tables exist, and residual taxonomy found {first_summary(residual_modes, 'chosen_k', 0)} protocol-adjusted modes; top mode {top_residual_mode.get('mode_label', 'NA')} has event fraction {fmt(top_residual_mode.get('event_fraction'))}.",
+            "Modes are unsupervised/automatic and tied to the selected ROI cohort; residual taxonomy silhouette is modest and needs manual QC labels.",
             "Use the top-ranked ROI list for manual labeling, then refit supervised or semi-supervised degradation-mode models.",
         ),
         evidence_row(
@@ -233,6 +237,7 @@ def main() -> None:
         f"- Calibrated front-QC ROI rows: {len(calibration_table)}",
         f"- Manual-QC pending front ROIs: {qc_pending}",
         f"- ROI/front QC package candidates: {first_summary(qc_package, 'n_selected_roi', 0)}",
+        f"- Residual physics mode clusters: {first_summary(residual_modes, 'chosen_k', 0)}",
         "",
         "## Main Findings",
         "",
@@ -244,6 +249,7 @@ def main() -> None:
         "- Apparent front tracking currently indicates optical-front contraction/loss more than clean expanding diffusion fronts.",
         "- Threshold sweeps show robust event/control differences in phase-fraction slope, but radius-derived diffusion proxies remain weaker and threshold-sensitive.",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
+        f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
         f"- A QC review packet prioritizes {first_summary(qc_packet, 'n_candidates', 0)} ROI/front candidates for manual accept/reject review before publication-scale diffusion claims.",
         "",
         "## Model Readout",
@@ -299,6 +305,20 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Residual Physics Mode Taxonomy",
+        "",
+        f"- Selected k={first_summary(residual_modes, 'chosen_k', 'NA')} with silhouette={fmt(first_summary(residual_modes, 'cluster_selection', {}).get('best', {}).get('silhouette'))} and mean seed-stability ARI={fmt(first_summary(residual_modes, 'cluster_stability', {}).get('mean_adjusted_rand_index'))}.",
+    ]
+    for row in residual_mode_enrichment:
+        report_lines.append(
+            f"- {row.get('mode_label')}: n={fmt(row.get('n_roi'), 0)}, event fraction {fmt(row.get('event_fraction'))}, p={fmt(row.get('fisher_p_value'))}, cycles {row.get('top_cycles')}"
+        )
+    report_lines.append(
+        f"- Guardrail: {first_summary(residual_modes, 'guardrail', 'Treat these as computational hypotheses pending manual QC.')}"
+    )
+
+    report_lines += [
+        "",
         "## Top ROI/Echem Or Protocol Couplings",
         "",
     ]
@@ -315,6 +335,16 @@ def main() -> None:
     for row in top_rois:
         report_lines.append(
             f"- {row.get('roi_id')} ({row.get('cohort_role')}, cycle {fmt(row.get('cycleNo'), 0)}): rollout/mobility score {fmt(row.get('rollout_mobility_difficulty_score'))}, latent path {fmt(row.get('latent_path_length'))}, first-last corr {fmt(row.get('first_last_corr'))}"
+        )
+
+    report_lines += [
+        "",
+        "## Residual-Mode Review Priorities",
+        "",
+    ]
+    for row in residual_mode_top_rois:
+        report_lines.append(
+            f"- {row.get('roi_id')} ({row.get('cohort_role')}, cycle {fmt(row.get('cycleNo'), 0)}): {row.get('mode_label')}, priority {fmt(row.get('mode_review_priority'))}"
         )
 
     report_lines += [
@@ -354,6 +384,12 @@ def main() -> None:
         "n_qc_review_candidates": first_summary(qc_packet, "n_candidates"),
         "n_roi_front_qc_package_candidates": first_summary(qc_package, "n_selected_roi"),
         "roi_front_qc_flag_counts": first_summary(qc_package, "flag_counts", {}),
+        "n_residual_physics_mode_roi": first_summary(residual_modes, "n_roi"),
+        "residual_physics_mode_chosen_k": first_summary(residual_modes, "chosen_k"),
+        "residual_physics_mode_cluster_stability": first_summary(residual_modes, "cluster_stability", {}),
+        "residual_physics_mode_best_silhouette": first_summary(residual_modes, "cluster_selection", {}).get("best", {}).get("silhouette"),
+        "residual_physics_mode_enrichment": residual_mode_enrichment,
+        "top_residual_mode_review_rois": residual_mode_top_rois,
         "persistence_best_all_cycles": persistence_best,
         "strict_rf_mean_roc_auc": strict_rf.get("mean_roc_auc"),
         "strict_rf_mean_balanced_accuracy": strict_rf.get("mean_balanced_accuracy"),
