@@ -3629,6 +3629,32 @@ Interpretation:
 
 This audit is an important guardrail. Cycle-level echem descriptors explain substantial structure in kymograph energy and mask/front proxies, and source+echem residualization removes most of the strongest raw clean-pre contrast/mask signal. The remaining residual evidence is a modest front-radius/front-radius-squared slope hint rather than a calibrated diffusion or phase-boundary result. These outputs support manual front QC and better source/echem matched sampling; they argue against presenting the current automatic optical signals as standalone causal precursors or deployable warnings.
 
+
+## 2026-05-22 Source-Balanced Pre-Event Echem-Matched Residual Audit
+
+Added `scripts/tier4_source_balanced_pre_event_echem_matched_residual_audit.py` and ran it on Isambard. This audit consumes the echem/front joined table, explicitly pairs near-pre ROI rows to control rows using source/acquisition/context plus cycle-level echem descriptors, then tests the source+echem residual front/kymograph outcomes.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit`
+- `derived_local/source_balanced_pre_event_echem_matched_residual_audit`
+
+Cohort/result snapshot:
+
+- Input table: 128 ROI rows, 64 cycles, 14 source movies.
+- Matching used 54 descriptors: 15 context/acquisition/baseline features and 39 cycle-level echem features.
+- Outcome table tests 51 raw, source-context residual, and source+echem residual front/mask/kymograph features.
+- Pair counts are 32 for most source-penalized/global comparisons; same-source pairs exist for near-vs-mid (20), near-vs-post/control (12), and near-vs-any-non-near (32), but not for near-vs-far.
+- The strongest source+echem residual matched row is same-source near-vs-mid `apparent_diffusion_q70_um2_per_norm_time`: n=14 valid pairs, residual median near-minus-control difference 0.930, positive fraction 0.929, sign-flip p=0.0010.
+- Same-source near-vs-mid `front_radius_q70_slope_px_per_norm_time` also remains positive after source+echem conditioning: n=14, residual median difference 1.427 px/norm time, p=0.0030.
+- Same-source near-vs-any-non-near `apparent_diffusion_q70_um2_per_norm_time` remains positive: n=16, residual median difference 0.665, p=0.0030.
+- The best near-vs-far source+echem residual row is `front_radius2_slope_px2_per_norm_time` under source-penalized echem/context matching: n=20, residual median difference 10.58 px^2/norm time, positive fraction 0.700, sign-flip p=0.0090.
+- Near-vs-post/control residual signs can differ for some features, especially q70 front/apparent-diffusion residuals under source-penalized matching, which keeps this as a review/hypothesis-prioritization result rather than a monotone precursor claim.
+
+Interpretation:
+
+This extends the echem/front guardrail into explicit matched residual testing. It supports a review-worthy residual front/apparent-diffusion-like signal in same-source near-vs-mid and near-vs-any controls, while the near-vs-far result still depends on cross-source matching because the raw source lattice lacks same-source far controls. The guarded conclusion is narrower than the raw readouts: source/echem-conditioned front-radius and apparent-diffusion proxies remain promising manual-QC targets, but they are still automatic optical residuals, not calibrated diffusion coefficients, validated phase boundaries, or causal warning models.
+
 ## 2026-05-22 Source-Balanced Pre-Event Echem-Matched Far-Control Audit
 
 Added `scripts/tier4_source_balanced_pre_event_echem_matched_far_control_audit.py` and ran it on Isambard. This audit targets the raw source-lattice gap that no source contains both near-pre and far-pre rows. It uses the next-best control design: nearest far-pre controls matched by source class plus crop/acquisition context, with an echem-augmented variant using cycle-level regime descriptors.
