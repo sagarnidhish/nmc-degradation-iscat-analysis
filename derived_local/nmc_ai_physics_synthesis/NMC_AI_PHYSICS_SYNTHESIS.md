@@ -40,6 +40,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Masked residual state-transfer anchor/full cycles: 11 / 89
 - Transfer-ranked reconstructed cycles/ROI rows: 12 / 48
 - Transfer-ranked masked rollout ROI/frame rows: 48 / 4608
+- Transfer-ranked front physics ROI/cycles: 48 / 12
 - Cross-cohort rollout transfer selected/transfer ROIs: 11 / 48
 - Diffusion sanity selected-front/publication candidates: 12 / 0
 - Control-balanced high-res front tracking/sanity candidates: 40 / 0
@@ -86,6 +87,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle-collapsed masked-rollout warning audit covers 11 observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p=0.014), while future-drop evaluation is underpowered with only 1 positive 8-cycle warning case.
 - Masked residual state-transfer warning expands the masked-residual signature from 11 video-backed cycles to 89 cycle-state rows; the transferred score separates future 8-cycle drops (AUC 0.708, permutation p=0.004), but anchor leave-one-cycle transfer is weak (rho=-0.155, p=0.650) and cycle-state PC2 remains the stronger direct future8 baseline (AUC 0.772).
 - Transfer-ranked ROI reconstruction converts that state-transfer hypothesis list back into direct video crops: 12 cycles yielded 960 reconstructed components and 48 ROI rows; masked rollout on the exported crops again picks persistence as best for 48 of 48 ROIs, while low-rank DMD particle residuals remain much larger than nonparticle context.
+- Transfer-ranked front physics audit links those crops to phase/front proxies across 48 ROIs; strongest ROI-level future8 association is radius2_slope_positive_fraction with median positive-negative 0.857, AUC 0.781, and permutation p=3.999e-04; radius/diffusion-like values remain apparent optical-front proxies only.
 - Cross-cohort rollout transfer audit shows the late transfer-ranked crops are a distinct video-dynamics domain: selected-cohort DMD evaluated on transfer-ranked ROIs has median particle MSE 0.020, 3.494x the transfer-internal DMD baseline (p=3.277e-09), while pooled training is close to transfer-internal (1.061x).
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
@@ -611,6 +613,48 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Transfer-ranked ROI candidate cycle 146 obj 4: validation score 25.085, mean abs z 13.691, future8=0
 - Transfer-ranked ROI candidate cycle 146 obj 3: validation score 24.258, mean abs z 20.728, future8=0
 - Guardrail: Automatic transfer-ranked ROI candidates reconstructed from sampled HDF5 cycle segments; compatible with particle-region sequence export, but not manual annotations or validated fronts. Held-out rollout errors are scored inside automatic history-aware particle masks; this is not manual segmentation or a new learned video model.
+
+## Transfer-Ranked Front Physics Audit
+
+- Threshold-front ROI/cycles/quantiles: 48 / 12 / 7
+- Front-physics target positives: {'any_abrupt_drop': 8, 'future_any_drop_within_16cycles': 36, 'future_any_drop_within_8cycles': 28}
+- Front target future_any_drop_within_8cycles radius2_slope_positive_fraction: median positive-negative 0.857, AUC 0.781, permutation p=3.999e-04, n=28/20
+- Front target future_any_drop_within_8cycles radius2_slope_median_px2_per_s: median positive-negative 0.002, AUC 0.846, permutation p=5.999e-04, n=28/20
+- Front target future_any_drop_within_8cycles q70_radius2_slope_bootstrap_p50_px2_per_s: median positive-negative 0.002, AUC 0.827, permutation p=7.998e-04, n=28/20
+- Front target future_any_drop_within_8cycles diffusion_proxy_median_um2_per_s: median positive-negative 5.147e-06, AUC 0.846, permutation p=9.998e-04, n=28/20
+- Front target any_abrupt_drop roi_norm_mean_delta_last_minus_first: median positive-negative 0.008, AUC 0.684, permutation p=9.998e-04, n=8/40
+- Front target future_any_drop_within_8cycles persistence_particle_mse_mean: median positive-negative 6.220e-04, AUC 0.945, permutation p=0.002, n=28/20
+- Front target future_any_drop_within_8cycles q70_phase_slope_bootstrap_p50: median positive-negative -1.709e-06, AUC 0.759, permutation p=0.003, n=28/20
+- Front target future_any_drop_within_8cycles phase_slope_median_per_s: median positive-negative -1.805e-06, AUC 0.770, permutation p=0.004, n=28/20
+- Front/residual link roi_norm_mean_delta_last_minus_first vs roi_mean_delta_last_minus_first: rho=0.965, p=1.998e-28, n=48
+- Front/residual link persistence_particle_mse_mean vs future_any_drop_within_8cycles: rho=0.760, p=3.886e-10, n=48
+- Front/residual link radius2_slope_median_px2_per_s vs persistence_particle_mse_mean: rho=0.724, p=6.169e-09, n=48
+- Front/residual link diffusion_proxy_median_um2_per_s vs persistence_particle_mse_mean: rho=0.724, p=6.169e-09, n=48
+- Front/residual link q70_radius2_slope_bootstrap_p50_px2_per_s vs persistence_particle_mse_mean: rho=0.703, p=2.481e-08, n=48
+- Front/residual link q70_radius2_slope_bootstrap_p50_px2_per_s vs low_rank_dmd_particle_mse_mean: rho=0.679, p=1.156e-07, n=48
+- Cycle-collapsed front target future_any_drop_within_8cycles persistence_particle_mse_mean: median positive-negative 5.592e-04, AUC 0.971, permutation p=0.058, n=7/5
+- Cycle-collapsed front target future_any_drop_within_16cycles diffusion_proxy_abs_median_um2_per_s: median positive-negative 3.253e-06, AUC 0.926, permutation p=0.063, n=9/3
+- Cycle-collapsed front target future_any_drop_within_8cycles threshold_robust_diffusion_score: median positive-negative -0.294, AUC 0.743, permutation p=0.065, n=7/5
+- Cycle-collapsed front target future_any_drop_within_8cycles q70_radius2_slope_bootstrap_p50_px2_per_s: median positive-negative 0.003, AUC 0.886, permutation p=0.086, n=7/5
+- Cycle-collapsed front target future_any_drop_within_8cycles radius2_slope_median_px2_per_s: median positive-negative 0.003, AUC 0.886, permutation p=0.089, n=7/5
+- Cycle-collapsed front target future_any_drop_within_8cycles diffusion_proxy_median_um2_per_s: median positive-negative 6.872e-06, AUC 0.886, permutation p=0.092, n=7/5
+- Transfer front cycle 40: phase slope 1.580e-06, apparent D median 1.685e-06, phase score 0.661, n=4
+- Transfer front cycle 116: phase slope 3.254e-06, apparent D median -1.678e-06, phase score 0.969, n=4
+- Transfer front cycle 146: phase slope 2.641e-06, apparent D median -5.688e-06, phase score 0.609, n=4
+- Transfer front cycle 147: phase slope 3.909e-06, apparent D median -6.335e-06, phase score 0.729, n=4
+- Transfer front cycle 148: phase slope 3.377e-06, apparent D median -4.354e-06, phase score 0.812, n=4
+- Transfer front cycle 150: phase slope 2.471e-06, apparent D median 1.369e-06, phase score 1.010, n=4
+- Transfer front cycle 151: phase slope 1.226e-06, apparent D median 4.742e-06, phase score 0.398, n=4
+- Transfer front cycle 152: phase slope -1.547e-07, apparent D median 5.194e-06, phase score -0.047, n=4
+- Front-physics review ROI cycle151_rank4_obj2: score 3.479, future8=1, phase score 1.260, apparent D 9.838e-06, DMD particle MSE 0.012
+- Front-physics review ROI cycle150_rank1_obj3: score 3.104, future8=1, phase score 1.260, apparent D 5.160e-06, DMD particle MSE 0.006
+- Front-physics review ROI cycle152_rank5_obj2: score 3.104, future8=1, phase score 0.885, apparent D 1.171e-05, DMD particle MSE 0.011
+- Front-physics review ROI cycle156_rank3_obj2: score 2.990, future8=0, phase score 1.198, apparent D 1.925e-06, DMD particle MSE 0.013
+- Front-physics review ROI cycle151_rank4_obj3: score 2.833, future8=1, phase score 0.760, apparent D 3.555e-06, DMD particle MSE 0.014
+- Front-physics review ROI cycle154_rank6_obj2: score 2.813, future8=1, phase score 0.531, apparent D 1.407e-05, DMD particle MSE 0.012
+- Front-physics review ROI cycle146_rank2_obj1: score 2.771, future8=0, phase score 0.885, apparent D -5.805e-06, DMD particle MSE 0.006
+- Front-physics review ROI cycle153_rank7_obj4: score 2.760, future8=1, phase score 0.594, apparent D 1.101e-05, DMD particle MSE 0.013
+- Guardrail: Transfer-ranked front descriptors are automatic optical phase/radius proxies from ROI crops. Diffusion-like values are apparent front-motion descriptors, not calibrated transport coefficients, and the cohort is warning-ranked rather than an event/control design.
 
 ## Cross-Cohort Rollout Transfer
 

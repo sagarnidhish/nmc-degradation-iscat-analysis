@@ -2086,3 +2086,32 @@ Key result:
 - Even internal DMD remains worse than persistence in both cohorts, so the result should guide cohort-aware residual modeling and domain adaptation rather than support a deployable low-rank video predictor.
 
 Interpretation: this adds a stricter model-generalization test around next-frame/rollout work. The late warning-window crops are not just more of the same selected event/control videos; they require either cohort-aware training, pooled training, or stronger learned dynamics before rollout errors can be interpreted as robust degradation physics.
+
+## 2026-05-22 Transfer-Ranked Front Physics Audit
+
+Added and ran transfer-ranked threshold/front extraction, then joined those phase/front proxies back to warning-ranked ROI crops, masked rollout residuals, and future-drop labels:
+
+`python scripts/tier3_multicycle_threshold_robust_fronts.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_threshold_robust_fronts`
+
+`python scripts/tier4_transfer_ranked_front_physics_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit --n-permutation 5000`
+
+Remote output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_threshold_robust_fronts`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit`
+
+Local compact copies:
+
+- `derived_local/transfer_ranked_threshold_robust_fronts`
+- `derived_local/transfer_ranked_front_physics_audit`
+
+Key result:
+
+- The audit covers 48 transfer-ranked ROI crops across 12 warning-ranked cycles with 5,000 permutation tests.
+- Future 8-cycle positive rows are common in this warning-ranked panel: 28/48 ROI rows and 7/12 cycles.
+- Persistence particle MSE is the strongest ROI-level future8-associated front/residual feature in the joined table: Spearman rho=0.760 versus future8 status and the top target test gives a large positive median difference with permutation support.
+- Radius-squared/front-motion proxies correlate strongly with masked rollout residual difficulty: radius2 slope and apparent diffusion-proxy median correlate with low-rank-DMD particle MSE at rho=0.674, and q70 radius2 bootstrap slope correlates at rho=0.679.
+- Transfer-ranked cycles 116 and 150 have especially high threshold-robust phase scores, while late-window cycles 151-156 show mixed apparent diffusion signs. This reinforces the earlier guardrail that the values are optical-front proxies, not calibrated Li diffusion coefficients.
+- The review-priority table ranks ROIs that jointly combine transfer score, phase/front proxy strength, rollout residual difficulty, and future-drop context for manual inspection.
+
+Interpretation: this connects the cycle-level warning loop back to front/phase physics on direct video crops. It supports using transfer-ranked ROIs for hypothesis ranking and domain-adapted rollout/front modeling, but it still does not justify calibrated diffusion or manual front claims without QC labels and calibration confirmation.
