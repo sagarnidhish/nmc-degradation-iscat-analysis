@@ -2866,3 +2866,26 @@ Key result:
 - The composite score correlates with radius2 slope after source residualization (rho 0.404, p = 4.31e-04) and has high-stratum shifts in rollout residual and radius/diffusion-proxy features, but it does not validate a clean contraction mechanism: front-contraction composite linkage is negative after source residualization (rho -0.398), and diffusion proxy quantities remain apparent/guarded.
 
 Interpretation: this audit prevents overclaiming. Exact particle-region descriptors are useful warning/review features, but the mechanistic story is not simply clean optical-front contraction or calibrated diffusion. The next strongest interpretation is a source/context-sensitive optical-change mode with rollout-residual and radius-proxy associations that needs manual QC and calibration before physical mechanism claims.
+
+## 2026-05-22 Signed Optical-Loss Mechanism Audit
+
+Added `scripts/tier4_signed_optical_loss_mechanism_audit.py` and ran it on Isambard to turn the contraction/loss hypothesis into explicit signed axes: signed optical loss, front contraction, rollout difficulty, echem degraded state, and a combined loss-mechanism axis.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit`
+
+Local compact copy:
+
+`derived_local/signed_optical_loss_mechanism_audit`
+
+Key result:
+
+- The audit covers 172 total rows and 72 future16-evaluable rows over 24 cycles and 9 sources.
+- For future16, the combined loss-mechanism axis is very separable (AUC 0.989/AP 0.997, p=6.79e-9), but it has moderate source eta2 0.556 and therefore remains a guarded synthesis statistic.
+- Future16 is also separated by the echem degraded-state axis (AUC 0.821/AP 0.939, eta2 0.055) and the signed optical-loss axis (AUC 0.815/AP 0.940, eta2 0.684).
+- Leave-source axis models show all loss-mechanism axes together reach future16 AUC 0.927/AP 0.984; echem-only reaches AUC 0.789 and optical-loss-only reaches AUC 0.732.
+- Future8 behaves differently: the best leave-source axis model is optical plus front contraction (AUC 0.797), and the front-contraction axis alone reaches AUC 0.750, suggesting short-horizon labels are more front-motion dominated than future16.
+- Mechanism clustering yields an echem-degraded-state-dominant group (39 rows, future16 rate 0.795, future8 rate 0.718), a front-contraction-dominant group (30 rows, future16 rate 0.767, future8 rate 0.167), and a tiny rollout-difficulty-dominant source-local group (3 rows, future16/future8 rate 1.0).
+
+Interpretation: this is the clearest signed-mechanism split so far. Future16 looks like a combined echem-degraded plus optical-loss state, while future8 is more tied to front-contraction/proxy motion. The result is still not a deployable warning or calibrated transport model because weak labels, automatic masks, source structure, and absent manual QC remain limiting.
