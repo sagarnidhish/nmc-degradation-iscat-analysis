@@ -2591,3 +2591,26 @@ Key result:
 - The emitted `agentic_next_experiment_specs.json` gives success criteria and do-not-claim guardrails for the top five next analyses.
 
 Interpretation: the paper-inspired agentic layer is now implemented as an auditable planning and prioritization tool over our real derived evidence, not a free-form LLM report. It points to the next best computational step as acquisition-residualized video+echem future16 modeling, while explicitly preserving the strongest guardrails: no calibrated diffusion claim without accepted masks/calibration, no deployable warning model from weak labels alone, and no mechanistic future8 claim while acquisition/context remains dominant.
+
+## 2026-05-22 Echem Residual-Dictionary Fusion Audit
+
+Added `scripts/tier4_echem_residual_dictionary_fusion_audit.py` and ran it on Isambard to test whether label-free residual-dictionary video descriptors become more useful after conditioning on echem regime and acquisition/context variables. Before rerunning this audit, I repaired the residual-dictionary output table to the full 172 ROI rows after a bounded diagnostic run had temporarily overwritten the remote feature CSV with a 45-row subset.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_residual_dictionary_fusion_audit`
+
+Local compact copy:
+
+`derived_local/echem_residual_dictionary_fusion_audit`
+
+Key result:
+
+- The refreshed fusion audit covers 172 ROI videos across 34 cycles, matching the repaired residual-dictionary table.
+- For future8 labels, acquisition/context alone reaches AUC 1.000/AP 1.000, confirming that this weak label is strongly cohort/context encoded.
+- Residual dictionary plus echem/context reaches future8 AUC 0.917/AP 0.958, improving over residual dictionary alone by +0.248 AUC and +0.430 Spearman rho, but still below the acquisition-only upper confound.
+- Residual dictionary plus echem/context improves future16 over residual dictionary alone by +0.196 AUC and +0.276 Spearman rho; residual dictionary + handcrafted + echem improves future16 over residual dictionary + handcrafted by +0.230 AUC.
+- Echem/context also improves raw PCA-video future8 strongly (+0.347 AUC), showing that much of the gain is context conditioning rather than uniquely residual-dictionary physics.
+- Regression readouts support echem as a context bridge for residual descriptors: particle heterogeneity (`particle_norm_cv`) improves from poor residual-dictionary-only regression to residual_dictionary_plus_echem R2 0.327 / Spearman 0.815, while handcrafted scalars remain strongest for that target.
+
+Interpretation: echem/acquisition conditioning makes residual-basis video descriptors more predictive for weak future labels and particle-state readouts, but the perfect acquisition-context future8 score is a hard leakage/design guardrail. The useful claim is representation conditioning for review prioritization and model design, not deployable early warning or causal echem mechanism proof.

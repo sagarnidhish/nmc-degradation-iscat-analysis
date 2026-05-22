@@ -111,6 +111,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Residual dictionary embedding learns label-free next-frame residual bases over 172 ROI videos; residual-dictionary future8 AUC is 0.663 with p=0.005, and residual_dictionary_plus_handcrafted reaches AUC 0.771.
+- Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to 0.917, while acquisition/context alone reaches 1.000; treat this as context-sensitive representation evidence rather than deployable warning.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
@@ -1120,6 +1121,32 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Residual-dictionary regression residual_energy_mean residual_dictionary_plus_handcrafted: R2 0.992, rho 0.992, n=172
 - Residual-dictionary regression dictionary_recon_error_mse_mean residual_dictionary_plus_handcrafted: R2 0.990, rho 0.988, n=172
 - Guardrail: The residual dictionary is label-free and uses automatic ROI crops. It is a fast temporal-residual representation audit for model design and review prioritization, not a deployable detector, manual front label, or calibrated diffusion measurement.
+
+## Echem Residual-Dictionary Fusion Audit
+
+- Rows/cycles: 172 / 34
+- Feature set sizes: {'acquisition_context': 11, 'echem_regime': 75, 'handcrafted_plus_echem': 148, 'handcrafted_scalar': 62, 'pca_video': 16, 'pca_video_plus_echem': 102, 'residual_dictionary': 39, 'residual_dictionary_handcrafted_echem': 187, 'residual_dictionary_plus_echem': 125, 'residual_dictionary_plus_handcrafted': 101}
+- Echem-resdict classification future_any_drop_within_8cycles acquisition_context: AUC 1.000, AP 1.000, p=0.002, n=72
+- Echem-resdict classification future_any_drop_within_8cycles residual_dictionary_plus_echem: AUC 0.917, AP 0.958, p=0.002, n=72
+- Echem-resdict classification future_any_drop_within_8cycles residual_dictionary_handcrafted_echem: AUC 0.917, AP 0.958, p=0.002, n=72
+- Echem-resdict classification future_any_drop_within_8cycles pca_video_plus_echem: AUC 0.917, AP 0.958, p=0.002, n=72
+- Echem-resdict classification future_any_drop_within_8cycles handcrafted_plus_echem: AUC 0.917, AP 0.958, p=0.002, n=72
+- Echem-resdict classification future_any_drop_within_8cycles handcrafted_scalar: AUC 0.829, AP 0.876, p=0.002, n=72
+- Echem-resdict classification future_any_drop_within_8cycles residual_dictionary_plus_handcrafted: AUC 0.796, AP 0.823, p=NA, n=72
+- Echem-resdict classification future_any_drop_within_16cycles handcrafted_plus_echem: AUC 0.781, AP 0.945, p=0.004, n=72
+- Echem-resdict delta future_any_drop_within_8cycles pca_video_plus_echem_minus_pca_video: delta AUC 0.347, delta rho 0.601, delta R2 NA
+- Echem-resdict delta future_any_drop_within_8cycles residual_dictionary_plus_echem_minus_residual_dictionary: delta AUC 0.248, delta rho 0.430, delta R2 NA
+- Echem-resdict delta future_any_drop_within_16cycles residual_dictionary_handcrafted_echem_minus_residual_dictionary_plus_handcrafted: delta AUC 0.230, delta rho 0.324, delta R2 NA
+- Echem-resdict delta future_any_drop_within_16cycles residual_dictionary_plus_echem_minus_residual_dictionary: delta AUC 0.196, delta rho 0.276, delta R2 NA
+- Echem-resdict delta future_any_drop_within_16cycles handcrafted_plus_echem_minus_handcrafted_scalar: delta AUC 0.179, delta rho 0.252, delta R2 NA
+- Echem-resdict delta future_any_drop_within_8cycles residual_dictionary_plus_echem_minus_echem_regime: delta AUC 0.174, delta rho 0.300, delta R2 NA
+- Echem-resdict delta future_any_drop_within_16cycles pca_video_plus_echem_minus_pca_video: delta AUC 0.143, delta rho 0.201, delta R2 NA
+- Echem-resdict delta future_any_drop_within_8cycles residual_dictionary_handcrafted_echem_minus_residual_dictionary_plus_handcrafted: delta AUC 0.121, delta rho 0.210, delta R2 NA
+- Echem-resdict regression residual_energy_mean residual_dictionary: R2 0.992, rho 0.994, n=172
+- Echem-resdict regression particle_norm_cv handcrafted_scalar: R2 0.963, rho 0.980, n=172
+- Echem-resdict regression particle_norm_cv residual_dictionary_plus_handcrafted: R2 0.961, rho 0.978, n=172
+- Echem-resdict regression residual_energy_mean residual_dictionary_plus_handcrafted: R2 0.979, rho 0.973, n=172
+- Guardrail: Fusion uses weak cycle labels, automatic ROI crops, and echem/acquisition covariates. It tests representation conditioning and review prioritization, not deployable warning, manual particle/front labels, causal echem mechanism, or calibrated diffusion.
 
 ## Agentic Current Hypothesis Tournament
 

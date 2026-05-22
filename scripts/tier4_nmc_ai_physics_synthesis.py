@@ -148,6 +148,7 @@ def main() -> None:
     balanced_spatial_propagation = read_json(derived / "balanced_spatial_front_propagation_audit" / "balanced_spatial_front_propagation_summary.json")
     masked_video_embedding = read_json(derived / "masked_video_embedding_audit" / "masked_video_embedding_audit_summary.json")
     residual_dictionary_embedding = read_json(derived / "residual_dictionary_embedding_audit" / "residual_dictionary_embedding_summary.json")
+    echem_residual_dictionary_fusion = read_json(derived / "echem_residual_dictionary_fusion_audit" / "echem_residual_dictionary_summary.json")
     agentic_current = read_json(derived / "agentic_current_hypothesis_tournament" / "agentic_current_hypothesis_tournament_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
@@ -393,6 +394,11 @@ def main() -> None:
     agentic_current_specs = top_items(first_summary(agentic_current, "experiment_specs", []), 5)
     residual_dict_future8 = next((r for r in residual_dict_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "residual_dictionary"), {})
     residual_dict_plus_future8 = next((r for r in residual_dict_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "residual_dictionary_plus_handcrafted"), {})
+    echem_resdict_class = top_items(first_summary(echem_residual_dictionary_fusion, "top_classification_metrics", []), 10)
+    echem_resdict_reg = top_items(first_summary(echem_residual_dictionary_fusion, "top_regression_metrics", []), 8)
+    echem_resdict_deltas = top_items(first_summary(echem_residual_dictionary_fusion, "top_feature_set_deltas", []), 10)
+    echem_resdict_acq_future8 = next((r for r in echem_resdict_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "acquisition_context"), {})
+    echem_resdict_res_future8 = next((r for r in echem_resdict_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "residual_dictionary_plus_echem"), {})
     balanced_future_top_acq_resid = balanced_future_acq_resid[0] if balanced_future_acq_resid else {}
     temporal_future8 = (first_summary(temporal_directionality, "best_future8_model", []) or [{}])[0]
     temporal_past8 = (first_summary(temporal_directionality, "best_past8_model", []) or [{}])[0]
@@ -635,6 +641,7 @@ def main() -> None:
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
         f"- Residual dictionary embedding learns label-free next-frame residual bases over {first_summary(residual_dictionary_embedding, 'n_embedding_rows', 0)} ROI videos; residual-dictionary future8 AUC is {fmt(residual_dict_future8.get('roc_auc'))} with p={fmt(residual_dict_future8.get('empirical_p_ge_observed'))}, and residual_dictionary_plus_handcrafted reaches AUC {fmt(residual_dict_plus_future8.get('roc_auc'))}.",
+        f"- Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to {fmt(echem_resdict_res_future8.get('roc_auc'))}, while acquisition/context alone reaches {fmt(echem_resdict_acq_future8.get('roc_auc'))}; treat this as context-sensitive representation evidence rather than deployable warning.",
         f"- Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as {first_summary(agentic_current, 'top_hypothesis', {}).get('title', 'NA')} with score {fmt(first_summary(agentic_current, 'top_hypothesis', {}).get('tournament_score'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
         f"- Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with {temporal_future8.get('model', 'NA')} AUC {fmt(temporal_future8.get('pooled_oof_roc_auc'))}/AP {fmt(temporal_future8.get('pooled_oof_average_precision'))}, beating circular time-shift labels at empirical p={fmt(temporal_shift_null.get('empirical_p_ge_observed'))}; reversed labels remain nontrivial (best AUC {fmt(temporal_reversed8.get('pooled_oof_roc_auc'))}) and past8 is underpowered with {temporal_past8_counts.get('1', 0)} positives.",
@@ -1527,6 +1534,28 @@ def main() -> None:
             f"- Residual-dictionary regression {row.get('target')} {row.get('feature_set')}: R2 {fmt(row.get('r2'))}, rho {fmt(row.get('spearman_rho'))}, n={fmt(row.get('n_eval'), 0)}"
         )
     report_lines.append(f"- Guardrail: {first_summary(residual_dictionary_embedding, 'guardrail', 'Residual dictionary embedding unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Echem Residual-Dictionary Fusion Audit",
+        "",
+        f"- Rows/cycles: {first_summary(echem_residual_dictionary_fusion, 'n_rows', 0)} / {first_summary(echem_residual_dictionary_fusion, 'n_cycles', 0)}",
+        f"- Feature set sizes: {first_summary(echem_residual_dictionary_fusion, 'feature_set_sizes', {})}",
+    ]
+    for row in echem_resdict_class[:8]:
+        report_lines.append(
+            f"- Echem-resdict classification {row.get('target')} {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, p={fmt(row.get('empirical_p_ge_observed'))}, n={fmt(row.get('n_eval'), 0)}"
+        )
+    for row in echem_resdict_deltas[:8]:
+        report_lines.append(
+            f"- Echem-resdict delta {row.get('target')} {row.get('comparison')}: delta AUC {fmt(row.get('delta_roc_auc'))}, delta rho {fmt(row.get('delta_spearman_rho'))}, delta R2 {fmt(row.get('delta_r2'))}"
+        )
+    for row in echem_resdict_reg[:4]:
+        report_lines.append(
+            f"- Echem-resdict regression {row.get('target')} {row.get('feature_set')}: R2 {fmt(row.get('r2'))}, rho {fmt(row.get('spearman_rho'))}, n={fmt(row.get('n_eval'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(echem_residual_dictionary_fusion, 'guardrail', 'Echem residual dictionary fusion unavailable.')}")
+
     report_lines += [
         "",
         "## Agentic Current Hypothesis Tournament",
@@ -2150,6 +2179,16 @@ def main() -> None:
             "top_regression_metrics": residual_dict_reg,
             "top_feature_set_deltas": residual_dict_deltas,
             "guardrail": first_summary(residual_dictionary_embedding, "guardrail"),
+        },
+        "echem_residual_dictionary_fusion_audit": {
+            "n_rows": first_summary(echem_residual_dictionary_fusion, "n_rows"),
+            "n_cycles": first_summary(echem_residual_dictionary_fusion, "n_cycles"),
+            "embedding_cohort_counts": first_summary(echem_residual_dictionary_fusion, "embedding_cohort_counts", {}),
+            "feature_set_sizes": first_summary(echem_residual_dictionary_fusion, "feature_set_sizes", {}),
+            "top_classification_metrics": echem_resdict_class,
+            "top_regression_metrics": echem_resdict_reg,
+            "top_feature_set_deltas": echem_resdict_deltas,
+            "guardrail": first_summary(echem_residual_dictionary_fusion, "guardrail"),
         },
         "agentic_current_hypothesis_tournament": {
             "n_hypotheses": first_summary(agentic_current, "n_hypotheses"),
