@@ -4147,6 +4147,7 @@ def main() -> None:
             "event_relative_bin_counts": first_summary(source_balanced_pre_event_optical_flow_transport, "event_relative_bin_counts", {}),
             "method_summary": first_summary(source_balanced_pre_event_optical_flow_transport, "method_summary", []),
             "top_event_tests": optical_flow_top_tests,
+            "top_source_residual_event_tests": optical_flow_source_resid_tests,
             "best_source_residual_test": optical_flow_source_resid_best,
             "guardrail": first_summary(source_balanced_pre_event_optical_flow_transport, "guardrail"),
         },

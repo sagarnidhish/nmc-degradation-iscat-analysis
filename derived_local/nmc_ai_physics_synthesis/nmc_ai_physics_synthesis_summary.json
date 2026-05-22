@@ -42615,6 +42615,22 @@
         "target": "near_vs_any_non_near",
         "transform": "raw"
       }
+    ],
+    "top_source_residual_event_tests": [
+      {
+        "average_precision": 0.39881617918083423,
+        "direction": "higher_in_positive",
+        "feature": "abs_radial_flow_mean",
+        "median_positive_minus_negative": 1.087515987945363e-07,
+        "mwu_p": 0.02529316526212857,
+        "n": 128,
+        "n_positive": 32,
+        "oriented_auc": 0.6324869791666666,
+        "spearman_p": 0.02452064027727565,
+        "spearman_rho": 0.19873653380024325,
+        "target": "near_vs_any_non_near",
+        "transform": "source_residual"
+      }
     ]
   },
   "source_balanced_pre_event_roi_sequences": {
