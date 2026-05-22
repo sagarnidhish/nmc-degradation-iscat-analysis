@@ -3751,3 +3751,26 @@ Cohort/result snapshot:
 Interpretation:
 
 This is a coherence stress test for the front-motion hypothesis. It shows that unpaired event-bin front consensus is not strong enough on its own, while matched same-source near-vs-mid and source/echem-matched comparisons preserve a coherent outward-front signal. The result supports prioritizing front-consensus candidates for manual QC, but it remains automatic optical evidence rather than calibrated diffusion, validated phase-boundary tracking, particle identity, or causal degradation proof.
+
+## 2026-05-22 Source-Balanced Pre-Event Consensus Visual Packet
+
+Added `scripts/tier4_source_balanced_pre_event_consensus_visual_packet.py` and ran it on Isambard. This converts the consensus review queue into a visual manual-QC packet by rendering frame strips, stable-mask overlays, and radial-kymograph/front-trace plots for the top-ranked candidates, plus a contact sheet and a manifest linking visual assets back to ROI IDs and proxy scores.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_consensus_visual_packet`
+- `derived_local/source_balanced_pre_event_consensus_visual_packet`
+
+Cohort/result snapshot:
+
+- The queue contains 128 candidates; the packet requested and rendered the top 24.
+- Rendered candidates span 8 source movies.
+- For each candidate, the packet writes a frame-strip PNG, a stable-mask overlay PNG, and a radial-kymograph/front-trace PNG.
+- Created contact sheet `consensus_visual_contact_sheet.png` from the top frame strips.
+- Event-bin composition of rendered candidates is 19 near-pre rows, 1 mid-pre row, 1 far-pre row, 2 post-event rows, and 1 no-near-event control row, preserving a small amount of control/context material while focusing manual effort on near-pre candidates.
+- Top visual candidate is `source_balanced_cycle151_rank28_obj1_17_c2_x10_HighHighCOV_150723`: consensus rank 1, near-pre, score 0.932, matched-positive support count 56, front radius2 slope 16.47 px^2/norm time, source+echem residual front slope 1.17 px/norm time.
+- The prior top review-packet candidate `source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723` is rank 2 in the visual packet, score 0.906, matched-positive support count 55.
+
+Interpretation:
+
+This is the practical handoff from automatic AI/physics evidence to manual QC. It does not add a new model claim; it makes the highest-priority candidates inspectable with synchronized scalar evidence, frame strips, mask overlays, and radial kymographs. The packet should be used to decide which ROIs have interpretable particle/front behavior and which are artifacts or ambiguous crops. It assigns no labels and does not validate particle identity, front masks, calibrated diffusion, phase-boundary motion, degradation causality, or deployable warnings.
