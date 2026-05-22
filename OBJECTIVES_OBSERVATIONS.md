@@ -4127,3 +4127,29 @@ Results:
 Interpretation: early particle-crop observables strongly forecast later optical-observable evolution across held-out sources, so observable forecasting is a viable AI task for this dataset. But these forecastable dynamics are not, by themselves, a strong near-pre degradation detector. Use them as physically interpretable rollout/uncertainty descriptors and as inputs to manual-QC review, not as standalone evidence for degradation causality or diffusion.
 
 Guardrail: the audit uses automatic source-balanced particle crops and held-out-tail optical observables. It does not validate particle identity, phase-boundary motion, calibrated diffusion coefficients, or degradation causality.
+
+## 2026-05-22 Source-Balanced Pre-Event Optical-Flow Transport Audit
+
+Added `scripts/tier4_source_balanced_pre_event_optical_flow_transport_audit.py` and ran it on Isambard to estimate apparent particle-local transport from the 128 source-balanced pre-event ROI sequences. The audit uses a history-derived stable particle mask, computes dense Farneback optical flow on normalized ROI crops, and summarizes held-out-tail motion inside the particle mask, boundary band, and context.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_optical_flow_transport_audit`
+- `derived_local/source_balanced_pre_event_optical_flow_transport_audit`
+- `source_balanced_pre_event_optical_flow_transport_per_roi.csv`
+- `source_balanced_pre_event_optical_flow_transport_frame_samples.csv`
+- `source_balanced_pre_event_optical_flow_transport_event_tests.csv`
+- `source_balanced_pre_event_optical_flow_transport_source_summary.csv`
+- `source_balanced_pre_event_optical_flow_transport_summary.json`
+
+Results:
+
+- Processed 128 of 128 ROI rows with 0 failures across 64 cycles and 14 sources.
+- Median particle-mask fraction is 0.204, median particle flow magnitude is 7.39e-07, and the median particle/context flow ratio is 87.25. The absolute scale is normalized-image optical flow, not physical velocity.
+- The strongest raw event-relative signal is higher near-pre-event radial apparent motion: `abs_radial_flow_mean` for near-pre-event versus any non-near row has AUC 0.756, AP 0.596, median positive-negative 3.38e-07, and MW p=1.54e-05.
+- Near-pre-event versus post/control is similar: `abs_radial_flow_mean` AUC 0.760, AP 0.778, median positive-negative 3.37e-07, and MW p=7.05e-05.
+- Source residualization weakens but does not erase the lead row: source-residual `abs_radial_flow_mean` near-pre-event versus any non-near row has AUC 0.632, AP 0.399, median positive-negative 1.09e-07, and MW p=0.0253.
+
+Interpretation: near-pre-event particle crops show stronger apparent radial image motion and curl-like flow than non-near rows, consistent with a particle-local instability/readiness proxy. The source-residual drop means this should be treated as a candidate transport descriptor, not a source-invariant mechanism claim. It is useful for ranking manual-QC candidates and for fusing with phase-kinetic/front evidence.
+
+Guardrail: apparent optical-flow transport is computed inside history-derived automatic masks on normalized ROI crops. It is an image-motion proxy only; it is not calibrated particle velocity, phase-boundary velocity, material flux, diffusion, or causal event evidence.

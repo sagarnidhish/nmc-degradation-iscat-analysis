@@ -148,6 +148,7 @@ def main() -> None:
     source_balanced_pre_event_sequence_audit = read_json(derived / "source_balanced_pre_event_sequence_audit" / "source_balanced_pre_event_sequence_audit_summary.json")
     source_balanced_pre_event_rollout = read_json(derived / "source_balanced_pre_event_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
     source_balanced_pre_event_masked_rollout = read_json(derived / "source_balanced_pre_event_masked_rollout_benchmark" / "source_balanced_pre_event_masked_rollout_summary.json")
+    source_balanced_pre_event_optical_flow = read_json(derived / "source_balanced_pre_event_optical_flow_transport_audit" / "source_balanced_pre_event_optical_flow_transport_summary.json")
     source_balanced_pre_event_mask_front = read_json(derived / "source_balanced_pre_event_mask_front_audit" / "source_balanced_mask_front_summary.json")
     source_balanced_pre_event_readout = read_json(derived / "source_balanced_pre_event_readout_audit" / "source_balanced_pre_event_readout_summary.json")
     source_balanced_pre_event_trajectory = read_json(derived / "source_balanced_pre_event_trajectory_audit" / "source_balanced_pre_event_trajectory_summary.json")
@@ -204,6 +205,7 @@ def main() -> None:
     acquisition_residualized_video_echem = read_json(derived / "acquisition_residualized_video_echem_warning" / "acquisition_residualized_video_echem_summary.json")
     residualized_future8_video_physics = read_json(derived / "residualized_future8_video_physics_benchmark" / "residualized_future8_video_physics_summary.json")
     source_balanced_pre_event_observable_forecast = read_json(derived / "source_balanced_pre_event_observable_forecast" / "source_balanced_pre_event_observable_forecast_summary.json")
+    source_balanced_pre_event_optical_flow_transport = read_json(derived / "source_balanced_pre_event_optical_flow_transport_audit" / "source_balanced_pre_event_optical_flow_transport_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
@@ -493,12 +495,16 @@ def main() -> None:
     source_balanced_pre_event_rollout_top = top_items(first_summary(source_balanced_pre_event_rollout, "top_roi_feature_tests", []), 12)
     source_balanced_pre_event_masked_rollout_methods = top_items(first_summary(source_balanced_pre_event_masked_rollout, "method_summary", []), 8)
     source_balanced_pre_event_masked_rollout_tests = top_items(first_summary(source_balanced_pre_event_masked_rollout, "top_event_tests", []), 12)
+    source_balanced_pre_event_flow_tests = top_items(first_summary(source_balanced_pre_event_optical_flow, "top_event_tests", []), 12)
+    source_balanced_pre_event_flow_method = (first_summary(source_balanced_pre_event_optical_flow, "method_summary", []) or [{}])[0]
     source_balanced_pre_event_mask_top = top_items(first_summary(source_balanced_pre_event_mask_front, "top_roi_feature_tests", []), 12)
     source_balanced_pre_event_readout_best = top_items(first_summary(source_balanced_pre_event_readout, "best_by_target_transform", []), 24)
     source_balanced_pre_event_readout_clean = top_items(first_summary(source_balanced_pre_event_readout, "best_source_residual_clean_pre_readouts", []), 8)
     source_balanced_pre_event_rollout_best = source_balanced_pre_event_rollout_top[0] if source_balanced_pre_event_rollout_top else {}
     source_balanced_pre_event_masked_rollout_best_method = first_summary(source_balanced_pre_event_masked_rollout, "best_method_by_median_particle_gain", {}) or {}
     source_balanced_pre_event_masked_rollout_best_test = source_balanced_pre_event_masked_rollout_tests[0] if source_balanced_pre_event_masked_rollout_tests else {}
+    source_balanced_pre_event_flow_best_test = source_balanced_pre_event_flow_tests[0] if source_balanced_pre_event_flow_tests else {}
+    source_balanced_pre_event_flow_sr_best = first_summary(source_balanced_pre_event_optical_flow, "best_source_residual_test", {}) or next((r for r in source_balanced_pre_event_flow_tests if r.get("transform") == "source_residual"), {})
     source_balanced_pre_event_mask_physics = [
         row for row in source_balanced_pre_event_mask_top
         if any(key in str(row.get("feature", "")) for key in ("masked_", "front_", "mask_", "apparent_diffusion"))
@@ -734,6 +740,11 @@ def main() -> None:
     observable_forecast_source_metrics = top_items(first_summary(source_balanced_pre_event_observable_forecast, "source_heldout_top_metrics", []), 12)
     observable_forecast_event_diag = top_items(first_summary(source_balanced_pre_event_observable_forecast, "event_relative_diagnostics", []), 12)
     observable_forecast_incremental = top_items(first_summary(source_balanced_pre_event_observable_forecast, "incremental_over_echem", []), 12)
+    optical_flow_top_tests = top_items(first_summary(source_balanced_pre_event_optical_flow_transport, "top_event_tests", []), 16)
+    optical_flow_source_resid_best = first_summary(source_balanced_pre_event_optical_flow_transport, "best_source_residual_test", {}) or next((r for r in optical_flow_top_tests if r.get("transform") == "source_residual"), {})
+    optical_flow_source_resid_tests = [optical_flow_source_resid_best] if optical_flow_source_resid_best else []
+    optical_flow_method_summary = (first_summary(source_balanced_pre_event_optical_flow_transport, "method_summary", []) or [{}])[0]
+    optical_flow_best = optical_flow_top_tests[0] if optical_flow_top_tests else {}
     acq_echem_cycle_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized"), {})
     acq_echem_cycle_bal_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized_cycle_balanced"), {})
     acq_echem_cycle_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
@@ -2207,6 +2218,9 @@ def main() -> None:
         f"- Top pre-event rollout future-label row: {source_balanced_pre_event_rollout_best.get('target', 'NA')} {source_balanced_pre_event_rollout_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_rollout_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_rollout_best.get('average_precision'))}, source eta2 {fmt(source_balanced_pre_event_rollout_best.get('source_eta2'))}",
         f"- Masked held-out rollout benchmark rows/cycles/sources/failures: {first_summary(source_balanced_pre_event_masked_rollout, 'n_ok', 0)} / {first_summary(source_balanced_pre_event_masked_rollout, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_masked_rollout, 'n_sources', 0)} / {first_summary(source_balanced_pre_event_masked_rollout, 'n_failed', 0)}; best median particle baseline {source_balanced_pre_event_masked_rollout_best_method.get('method', 'NA')} median MSE {fmt(source_balanced_pre_event_masked_rollout_best_method.get('particle_mse_median'))}",
         f"- Top masked held-out event test: {source_balanced_pre_event_masked_rollout_best_test.get('target', 'NA')} {source_balanced_pre_event_masked_rollout_best_test.get('feature', 'NA')} {source_balanced_pre_event_masked_rollout_best_test.get('transform', 'NA')} AUC {fmt(source_balanced_pre_event_masked_rollout_best_test.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_masked_rollout_best_test.get('average_precision'))}, median positive-negative {fmt(source_balanced_pre_event_masked_rollout_best_test.get('median_positive_minus_negative'))}, p={fmt(source_balanced_pre_event_masked_rollout_best_test.get('mwu_p'))}",
+        f"- Optical-flow transport rows/cycles/sources/failures: {first_summary(source_balanced_pre_event_optical_flow, 'n_ok', 0)} / {first_summary(source_balanced_pre_event_optical_flow, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_optical_flow, 'n_sources', 0)} / {first_summary(source_balanced_pre_event_optical_flow, 'n_failed', 0)}; method {first_summary(source_balanced_pre_event_optical_flow, 'flow_method', 'NA')}, median particle/context flow ratio {fmt(source_balanced_pre_event_flow_method.get('median_particle_context_flow_ratio'))}",
+        f"- Top optical-flow event test: {source_balanced_pre_event_flow_best_test.get('target', 'NA')} {source_balanced_pre_event_flow_best_test.get('feature', 'NA')} {source_balanced_pre_event_flow_best_test.get('transform', 'NA')} AUC {fmt(source_balanced_pre_event_flow_best_test.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_flow_best_test.get('average_precision'))}, median positive-negative {fmt(source_balanced_pre_event_flow_best_test.get('median_positive_minus_negative'))}, p={fmt(source_balanced_pre_event_flow_best_test.get('mwu_p'))}",
+        f"- Best source-residual optical-flow row: {source_balanced_pre_event_flow_sr_best.get('target', 'NA')} {source_balanced_pre_event_flow_sr_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_flow_sr_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_flow_sr_best.get('average_precision'))}, p={fmt(source_balanced_pre_event_flow_sr_best.get('mwu_p'))}",
         f"- Top pre-event mask/front future-label row: {source_balanced_pre_event_mask_best.get('target', 'NA')} {source_balanced_pre_event_mask_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_mask_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_mask_best.get('average_precision'))}, source eta2 {fmt(source_balanced_pre_event_mask_best.get('source_eta2'))}",
         f"- Event-relative bins: {first_summary(source_balanced_pre_event_readout, 'event_relative_bin_counts', {})}",
         f"- Best source-residual clean-pre readout: {source_balanced_pre_event_clean_best.get('target', 'NA')} {source_balanced_pre_event_clean_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_clean_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_clean_best.get('average_precision'))}, p={fmt(source_balanced_pre_event_clean_best.get('mwu_p'))}",
@@ -2341,6 +2355,26 @@ def main() -> None:
             f"- Observable prefix+echem minus echem {row.get('target', 'NA')} {row.get('group_col', 'NA')}: delta rho {fmt(row.get('delta_spearman_prefix_plus_echem_minus_echem'))}, delta MAE {fmt(row.get('delta_mae_prefix_plus_echem_minus_echem'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(source_balanced_pre_event_observable_forecast, 'guardrail', 'Source-balanced pre-event observable forecast unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Source-Balanced Pre-Event Optical-Flow Transport Audit",
+        "",
+        f"- Rows OK/failed/cycles/sources: {first_summary(source_balanced_pre_event_optical_flow_transport, 'n_ok', 0)} / {first_summary(source_balanced_pre_event_optical_flow_transport, 'n_failed', 0)} / {first_summary(source_balanced_pre_event_optical_flow_transport, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_optical_flow_transport, 'n_sources', 0)}",
+        f"- Flow method/event bins: {first_summary(source_balanced_pre_event_optical_flow_transport, 'flow_method', 'NA')} / {first_summary(source_balanced_pre_event_optical_flow_transport, 'event_relative_bin_counts', {})}",
+        f"- Median particle/context flow magnitude and ratio: {fmt(optical_flow_method_summary.get('median_particle_flow_mag'))} / {fmt(optical_flow_method_summary.get('median_context_flow_mag'))} / {fmt(optical_flow_method_summary.get('median_particle_context_flow_ratio'))}",
+        f"- Top optical-flow transport row: {optical_flow_best.get('target', 'NA')} {optical_flow_best.get('feature', 'NA')} {optical_flow_best.get('transform', 'NA')} AUC {fmt(optical_flow_best.get('oriented_auc'))}, AP {fmt(optical_flow_best.get('average_precision'))}, MW p={fmt(optical_flow_best.get('mwu_p'))}, median positive-negative {fmt(optical_flow_best.get('median_positive_minus_negative'))}",
+        f"- Best source-residual optical-flow row in top set: {optical_flow_source_resid_best.get('target', 'NA')} {optical_flow_source_resid_best.get('feature', 'NA')} AUC {fmt(optical_flow_source_resid_best.get('oriented_auc'))}, AP {fmt(optical_flow_source_resid_best.get('average_precision'))}, MW p={fmt(optical_flow_source_resid_best.get('mwu_p'))}",
+    ]
+    for row in optical_flow_top_tests[:10]:
+        report_lines.append(
+            f"- Optical-flow event test {row.get('target', 'NA')} {row.get('feature', 'NA')} {row.get('transform', 'NA')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, p={fmt(row.get('mwu_p'))}, rho {fmt(row.get('spearman_rho'))}"
+        )
+    for row in optical_flow_source_resid_tests[:5]:
+        report_lines.append(
+            f"- Optical-flow source-residual test {row.get('target', 'NA')} {row.get('feature', 'NA')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, p={fmt(row.get('mwu_p'))}, rho {fmt(row.get('spearman_rho'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_pre_event_optical_flow_transport, 'guardrail', 'Source-balanced pre-event optical-flow transport audit unavailable.')}")
 
     report_lines += [
         "",
@@ -3551,6 +3585,20 @@ def main() -> None:
                 "outputs": first_summary(source_balanced_pre_event_masked_rollout, "outputs", {}),
                 "guardrail": first_summary(source_balanced_pre_event_masked_rollout, "guardrail"),
             },
+            "optical_flow_transport_audit": {
+                "n_input_rows": first_summary(source_balanced_pre_event_optical_flow, "n_input_rows"),
+                "n_ok": first_summary(source_balanced_pre_event_optical_flow, "n_ok"),
+                "n_failed": first_summary(source_balanced_pre_event_optical_flow, "n_failed"),
+                "n_cycles": first_summary(source_balanced_pre_event_optical_flow, "n_cycles"),
+                "n_sources": first_summary(source_balanced_pre_event_optical_flow, "n_sources"),
+                "flow_method": first_summary(source_balanced_pre_event_optical_flow, "flow_method"),
+                "event_relative_bin_counts": first_summary(source_balanced_pre_event_optical_flow, "event_relative_bin_counts", {}),
+                "method_summary": first_summary(source_balanced_pre_event_optical_flow, "method_summary", []),
+                "top_event_tests": source_balanced_pre_event_flow_tests,
+                "best_source_residual_test": source_balanced_pre_event_flow_sr_best,
+                "outputs": first_summary(source_balanced_pre_event_optical_flow, "outputs", {}),
+                "guardrail": first_summary(source_balanced_pre_event_optical_flow, "guardrail"),
+            },
             "mask_front_summary": {
                 "n_roi_sequences": first_summary(source_balanced_pre_event_mask_front, "n_roi_sequences"),
                 "n_cycles": first_summary(source_balanced_pre_event_mask_front, "n_cycles"),
@@ -4088,6 +4136,19 @@ def main() -> None:
             "event_relative_diagnostics": observable_forecast_event_diag,
             "incremental_over_echem": observable_forecast_incremental,
             "guardrail": first_summary(source_balanced_pre_event_observable_forecast, "guardrail"),
+        },
+        "source_balanced_pre_event_optical_flow_transport_audit": {
+            "n_input_rows": first_summary(source_balanced_pre_event_optical_flow_transport, "n_input_rows"),
+            "n_ok": first_summary(source_balanced_pre_event_optical_flow_transport, "n_ok"),
+            "n_failed": first_summary(source_balanced_pre_event_optical_flow_transport, "n_failed"),
+            "n_cycles": first_summary(source_balanced_pre_event_optical_flow_transport, "n_cycles"),
+            "n_sources": first_summary(source_balanced_pre_event_optical_flow_transport, "n_sources"),
+            "flow_method": first_summary(source_balanced_pre_event_optical_flow_transport, "flow_method"),
+            "event_relative_bin_counts": first_summary(source_balanced_pre_event_optical_flow_transport, "event_relative_bin_counts", {}),
+            "method_summary": first_summary(source_balanced_pre_event_optical_flow_transport, "method_summary", []),
+            "top_event_tests": optical_flow_top_tests,
+            "best_source_residual_test": optical_flow_source_resid_best,
+            "guardrail": first_summary(source_balanced_pre_event_optical_flow_transport, "guardrail"),
         },
         "source_domain_video_echem_adaptation_audit": {
             "n_rows": first_summary(source_domain_video_echem, "n_rows"),

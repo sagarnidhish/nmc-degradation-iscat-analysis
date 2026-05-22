@@ -1360,6 +1360,9 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Top pre-event rollout future-label row: future_any_drop_within_16cycles roi_norm_mean_delta_last_minus_first AUC 0.628, AP 0.620, source eta2 0.414
 - Masked held-out rollout benchmark rows/cycles/sources/failures: 128 / 64 / 14 / 0; best median particle baseline persistence median MSE 0.001
 - Top masked held-out event test: near_vs_post_control persistence_particle_mse raw AUC 0.662, AP 0.619, median positive-negative 6.750e-04, p=0.013
+- Optical-flow transport rows/cycles/sources/failures: 128 / 64 / 14 / 0; method farneback, median particle/context flow ratio 87.251
+- Top optical-flow event test: near_vs_any_non_near abs_radial_flow_mean raw AUC 0.756, AP 0.596, median positive-negative 3.381e-07, p=1.543e-05
+- Best source-residual optical-flow row: near_vs_any_non_near abs_radial_flow_mean AUC 0.632, AP 0.399, p=0.025
 - Top pre-event mask/front future-label row: future_any_drop_within_16cycles masked_minus_background_mean_slope AUC 0.624, AP 0.655, source eta2 0.578
 - Event-relative bins: {'far_pre_event_17_32': 22, 'mid_pre_event_9_16': 22, 'near_pre_event_1_8': 32, 'no_near_event_control': 12, 'post_event_1_16': 40}
 - Best source-residual clean-pre readout: clean_pre_1_8_vs_post_control front_radius_q60_slope_px_per_norm_time AUC 0.660, AP 0.665, p=0.083
@@ -1506,6 +1509,26 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Observable prefix+echem minus echem tail_particle_mean_delta cycleNo: delta rho 0.390, delta MAE -0.041
 - Observable prefix+echem minus echem tail_particle_minus_background_delta cycleNo: delta rho 0.352, delta MAE -0.049
 - Guardrail: This forecasts held-out-tail optical observables from automatic source-balanced particle crops. It does not validate particle identity, phase-boundary motion, diffusion coefficients, or degradation causality.
+
+## Source-Balanced Pre-Event Optical-Flow Transport Audit
+
+- Rows OK/failed/cycles/sources: 128 / 0 / 64 / 14
+- Flow method/event bins: farneback / {'far_pre_event_17_32': 22, 'mid_pre_event_9_16': 22, 'near_pre_event_1_8': 32, 'no_near_event_control': 12, 'post_event_1_16': 40}
+- Median particle/context flow magnitude and ratio: 7.392e-07 / 8.570e-09 / 87.251
+- Top optical-flow transport row: near_vs_any_non_near abs_radial_flow_mean raw AUC 0.756, AP 0.596, MW p=1.543e-05, median positive-negative 3.381e-07
+- Best source-residual optical-flow row in top set: near_vs_any_non_near abs_radial_flow_mean AUC 0.632, AP 0.399, MW p=0.025
+- Optical-flow event test near_vs_any_non_near abs_radial_flow_mean raw: AUC 0.756, AP 0.596, p=1.543e-05, rho 0.384
+- Optical-flow event test near_vs_any_non_near abs_radial_flow_q90 raw: AUC 0.755, AP 0.605, p=1.663e-05, rho 0.382
+- Optical-flow event test near_vs_post_control abs_radial_flow_mean raw: AUC 0.760, AP 0.778, p=7.052e-05, rho 0.437
+- Optical-flow event test near_vs_post_control abs_radial_flow_q90 raw: AUC 0.754, AP 0.763, p=1.034e-04, rho 0.427
+- Optical-flow event test near_vs_any_non_near curl_q90 raw: AUC 0.715, AP 0.577, p=2.905e-04, rho 0.322
+- Optical-flow event test near_vs_mid_pre abs_radial_flow_q90 raw: AUC 0.788, AP 0.822, p=3.640e-04, rho 0.491
+- Optical-flow event test near_vs_any_non_near curl_mean raw: AUC 0.710, AP 0.538, p=3.985e-04, rho 0.314
+- Optical-flow event test near_vs_any_non_near particle_flow_mag_mean raw: AUC 0.702, AP 0.536, p=6.390e-04, rho 0.303
+- Optical-flow event test near_vs_mid_pre abs_radial_flow_mean raw: AUC 0.774, AP 0.806, p=7.018e-04, rho 0.467
+- Optical-flow event test near_vs_post_control abs_radial_flow_slope raw: AUC 0.721, AP 0.707, p=7.360e-04, rho -0.371
+- Optical-flow source-residual test near_vs_any_non_near abs_radial_flow_mean: AUC 0.632, AP 0.399, p=0.025, rho 0.199
+- Guardrail: Apparent optical-flow transport is computed inside history-derived automatic particle masks on normalized ROI crops. It is an image-motion proxy for hypothesis ranking, not calibrated particle velocity, phase-boundary velocity, material flux, or diffusion.
 
 ## Source-Balanced Degradation Mode Audit
 
