@@ -1,0 +1,92 @@
+[
+  {
+    "rank": 1,
+    "hypothesis_id": "H1",
+    "title": "Echem-conditioned video residuals are the best longer-horizon weak-label signal",
+    "next_experiment": "Run an acquisition-residualized video+echem future16 audit with leave-source and leave-cycle splits.",
+    "suggested_script": "tier4_acquisition_residualized_video_echem_warning.py",
+    "minimum_success_evidence": "Require the video+echem gain to persist under cycle-balanced acquisition residualization and source-cohort holdouts.",
+    "required_guardrails": [
+      "leave-cycle or leave-source split where applicable",
+      "explicit acquisition/context controls",
+      "manual-QC gate before calibrated diffusion or validated degradation-mode claims"
+    ],
+    "do_not_claim": [
+      "calibrated lithium diffusion without accepted calibration and front masks",
+      "deployable warning model from weak labels alone",
+      "causal degradation mechanism from acquisition-confounded future8 labels"
+    ]
+  },
+  {
+    "rank": 2,
+    "hypothesis_id": "H2",
+    "title": "Short-horizon future8 labels are acquisition/context dominated",
+    "next_experiment": "Build a residualized future8 benchmark that removes acquisition/context signal before testing video physics features.",
+    "suggested_script": "tier4_residualized_future8_video_physics_benchmark.py",
+    "minimum_success_evidence": "A future8 model must remain above null after acquisition, frame-count, cohort-role, and source-movie residualization.",
+    "required_guardrails": [
+      "leave-cycle or leave-source split where applicable",
+      "explicit acquisition/context controls",
+      "manual-QC gate before calibrated diffusion or validated degradation-mode claims"
+    ],
+    "do_not_claim": [
+      "calibrated lithium diffusion without accepted calibration and front masks",
+      "deployable warning model from weak labels alone",
+      "causal degradation mechanism from acquisition-confounded future8 labels"
+    ]
+  },
+  {
+    "rank": 3,
+    "hypothesis_id": "H4",
+    "title": "Manual QC on the top cycle-156 panel is the highest-yield lab-in-the-loop step",
+    "next_experiment": "Complete the cycle-156 manual QC mini-batch and rerun manual-QC-gated front/echem effects.",
+    "suggested_script": "tier4_manual_qc_gated_front_effects.py",
+    "minimum_success_evidence": "If manual review rejects the possible-accept candidates or accepts the artifact foil, current automatic physics support is over-weighted.",
+    "required_guardrails": [
+      "leave-cycle or leave-source split where applicable",
+      "explicit acquisition/context controls",
+      "manual-QC gate before calibrated diffusion or validated degradation-mode claims"
+    ],
+    "do_not_claim": [
+      "calibrated lithium diffusion without accepted calibration and front masks",
+      "deployable warning model from weak labels alone",
+      "causal degradation mechanism from acquisition-confounded future8 labels"
+    ]
+  },
+  {
+    "rank": 4,
+    "hypothesis_id": "H7",
+    "title": "Cycle-state transitions can organize ROI degradation modes",
+    "next_experiment": "Join cycle-state transition features to ROI mode counts and run leave-cycle mode-frequency prediction.",
+    "suggested_script": "tier4_cycle_state_mode_frequency_bridge.py",
+    "minimum_success_evidence": "Cycle-state modes must predict held-out ROI mode frequencies better than cycle number and acquisition context alone.",
+    "required_guardrails": [
+      "leave-cycle or leave-source split where applicable",
+      "explicit acquisition/context controls",
+      "manual-QC gate before calibrated diffusion or validated degradation-mode claims"
+    ],
+    "do_not_claim": [
+      "calibrated lithium diffusion without accepted calibration and front masks",
+      "deployable warning model from weak labels alone",
+      "causal degradation mechanism from acquisition-confounded future8 labels"
+    ]
+  },
+  {
+    "rank": 5,
+    "hypothesis_id": "H3",
+    "title": "Generic video embeddings underperform physics-aware temporal descriptors",
+    "next_experiment": "Train or approximate an echem/context-conditioned residual objective and compare it against handcrafted scalars.",
+    "suggested_script": "tier4_echem_conditioned_residual_dictionary.py",
+    "minimum_success_evidence": "Show that a learned objective beats handcrafted features under leave-cycle splits without acquisition leakage.",
+    "required_guardrails": [
+      "leave-cycle or leave-source split where applicable",
+      "explicit acquisition/context controls",
+      "manual-QC gate before calibrated diffusion or validated degradation-mode claims"
+    ],
+    "do_not_claim": [
+      "calibrated lithium diffusion without accepted calibration and front masks",
+      "deployable warning model from weak labels alone",
+      "causal degradation mechanism from acquisition-confounded future8 labels"
+    ]
+  }
+]

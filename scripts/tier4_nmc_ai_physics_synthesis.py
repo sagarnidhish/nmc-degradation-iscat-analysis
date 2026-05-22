@@ -148,6 +148,7 @@ def main() -> None:
     balanced_spatial_propagation = read_json(derived / "balanced_spatial_front_propagation_audit" / "balanced_spatial_front_propagation_summary.json")
     masked_video_embedding = read_json(derived / "masked_video_embedding_audit" / "masked_video_embedding_audit_summary.json")
     residual_dictionary_embedding = read_json(derived / "residual_dictionary_embedding_audit" / "residual_dictionary_embedding_summary.json")
+    agentic_current = read_json(derived / "agentic_current_hypothesis_tournament" / "agentic_current_hypothesis_tournament_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
     diffusion_sanity = read_json(derived / "diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
@@ -388,6 +389,8 @@ def main() -> None:
     residual_dict_class = top_items(first_summary(residual_dictionary_embedding, "top_classification_metrics", []), 8)
     residual_dict_reg = top_items(first_summary(residual_dictionary_embedding, "top_regression_metrics", []), 8)
     residual_dict_deltas = top_items(first_summary(residual_dictionary_embedding, "top_feature_set_deltas", []), 8)
+    agentic_current_top = top_items(first_summary(agentic_current, "top_three", []), 3)
+    agentic_current_specs = top_items(first_summary(agentic_current, "experiment_specs", []), 5)
     residual_dict_future8 = next((r for r in residual_dict_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "residual_dictionary"), {})
     residual_dict_plus_future8 = next((r for r in residual_dict_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "residual_dictionary_plus_handcrafted"), {})
     balanced_future_top_acq_resid = balanced_future_acq_resid[0] if balanced_future_acq_resid else {}
@@ -632,6 +635,7 @@ def main() -> None:
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
         f"- Residual dictionary embedding learns label-free next-frame residual bases over {first_summary(residual_dictionary_embedding, 'n_embedding_rows', 0)} ROI videos; residual-dictionary future8 AUC is {fmt(residual_dict_future8.get('roc_auc'))} with p={fmt(residual_dict_future8.get('empirical_p_ge_observed'))}, and residual_dictionary_plus_handcrafted reaches AUC {fmt(residual_dict_plus_future8.get('roc_auc'))}.",
+        f"- Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as {first_summary(agentic_current, 'top_hypothesis', {}).get('title', 'NA')} with score {fmt(first_summary(agentic_current, 'top_hypothesis', {}).get('tournament_score'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
         f"- Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with {temporal_future8.get('model', 'NA')} AUC {fmt(temporal_future8.get('pooled_oof_roc_auc'))}/AP {fmt(temporal_future8.get('pooled_oof_average_precision'))}, beating circular time-shift labels at empirical p={fmt(temporal_shift_null.get('empirical_p_ge_observed'))}; reversed labels remain nontrivial (best AUC {fmt(temporal_reversed8.get('pooled_oof_roc_auc'))}) and past8 is underpowered with {temporal_past8_counts.get('1', 0)} positives.",
         f"- Balanced spatial front-propagation audit builds {first_summary(balanced_spatial_propagation, 'n_edges', 0)} spatial kNN edges over {first_summary(balanced_spatial_propagation, 'n_nodes', 0)} balanced ROI nodes; nearest next-cycle front descriptors autocorrelate strongly ({spatial_prop_top_autocorr.get('feature', 'NA')} rho={fmt(spatial_prop_top_autocorr.get('spearman_src_dst'))}, p_perm={fmt(spatial_prop_top_autocorr.get('empirical_p_abs_ge_observed'))}) and same future8-label homophily is high ({fmt(spatial_prop_top_homophily.get('observed_same_future8_fraction'))}), but automatic ROI identity and cycle-level labels keep this as spatial hypothesis ranking.",
@@ -1523,6 +1527,22 @@ def main() -> None:
             f"- Residual-dictionary regression {row.get('target')} {row.get('feature_set')}: R2 {fmt(row.get('r2'))}, rho {fmt(row.get('spearman_rho'))}, n={fmt(row.get('n_eval'), 0)}"
         )
     report_lines.append(f"- Guardrail: {first_summary(residual_dictionary_embedding, 'guardrail', 'Residual dictionary embedding unavailable.')}")
+    report_lines += [
+        "",
+        "## Agentic Current Hypothesis Tournament",
+        "",
+        f"- Hypotheses ranked: {first_summary(agentic_current, 'n_hypotheses', 0)}",
+        f"- Paper-inspired roles: {first_summary(agentic_current, 'paper_inspiration', {})}",
+    ]
+    for row in agentic_current_top:
+        report_lines.append(
+            f"- Rank {fmt(row.get('rank'), 0)} {row.get('title')}: score {fmt(row.get('tournament_score'))}; next experiment: {row.get('next_experiment')}"
+        )
+    for row in agentic_current_specs[:3]:
+        report_lines.append(
+            f"- Next spec {fmt(row.get('rank'), 0)}: script {row.get('suggested_script')} with success evidence: {row.get('minimum_success_evidence')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(agentic_current, 'guardrail', 'Agentic current hypothesis tournament unavailable.')}")
     for row in balanced_future_acq_resid[:6]:
         report_lines.append(
             f"- Acquisition-context residual feature {row.get('feature')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, AUC {fmt(row.get('oriented_auc'))}, MW p={fmt(row.get('mannwhitney_p'))}"
@@ -2130,6 +2150,14 @@ def main() -> None:
             "top_regression_metrics": residual_dict_reg,
             "top_feature_set_deltas": residual_dict_deltas,
             "guardrail": first_summary(residual_dictionary_embedding, "guardrail"),
+        },
+        "agentic_current_hypothesis_tournament": {
+            "n_hypotheses": first_summary(agentic_current, "n_hypotheses"),
+            "top_hypothesis": first_summary(agentic_current, "top_hypothesis", {}),
+            "top_three": agentic_current_top,
+            "experiment_specs": agentic_current_specs,
+            "paper_inspiration": first_summary(agentic_current, "paper_inspiration", {}),
+            "guardrail": first_summary(agentic_current, "guardrail"),
         },
         "active_learning_qc_prioritization": {
             "n_candidate_rows": first_summary(active_learning_qc, "n_candidate_rows"),

@@ -2569,3 +2569,25 @@ Key result:
 - The residual dictionary correctly reconstructs its own residual-energy quantities under leave-cycle regression (rho about 0.997-0.999 for residual energy and reconstruction-error targets), which validates the feature extraction pipeline but is not an external degradation result.
 
 Interpretation: a label-free next-frame residual basis is more informative than raw video PCA for future8 weak-label triage, but it does not beat the simpler hand-engineered particle/mask temporal descriptors. This suggests the next neural-video step should not merely learn a generic residual basis; it should be echem/context-conditioned or trained with a physics-aware objective around front motion and particle-local residual timing.
+
+## 2026-05-22 Agentic Current Hypothesis Tournament
+
+Added `scripts/tier4_agentic_current_hypothesis_tournament.py` and ran it on Isambard to turn the three new Nature AI-scientist papers into a concrete project tool: generator-style hypothesis cards, skeptical guardrail scoring, tournament ranking, and machine-readable next-experiment specs grounded in the latest NMC photometry evidence.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/agentic_current_hypothesis_tournament`
+
+Local compact copy:
+
+`derived_local/agentic_current_hypothesis_tournament`
+
+Key result:
+
+- The tournament ranks 8 current hypotheses using evidence support, novelty, falsifiability, implementability, guardrail penalty, and cost.
+- Rank 1 is echem-conditioned video residuals for longer-horizon weak-label signal: future16 video+echem AUC 0.754 versus echem-only AUC 0.505, empirical p=0.002. The next proposed experiment is an acquisition-residualized video+echem future16 audit with leave-source and leave-cycle splits.
+- Rank 2 is the skeptical confound hypothesis: future8 is acquisition/context dominated, with acquisition/context AUC 1.000 versus video-all AUC 0.823. The next proposed experiment is a residualized future8 benchmark before using that label mechanistically.
+- Rank 3 is the lab-in-the-loop QC hypothesis: review the cycle-156 mini-batch first because the ledger has 47 pending candidates, including 3 possible-accept-first and 4 artifact/reject-first candidates, with cycle 156 containing both high-support candidates and an artifact foil.
+- The emitted `agentic_next_experiment_specs.json` gives success criteria and do-not-claim guardrails for the top five next analyses.
+
+Interpretation: the paper-inspired agentic layer is now implemented as an auditable planning and prioritization tool over our real derived evidence, not a free-form LLM report. It points to the next best computational step as acquisition-residualized video+echem future16 modeling, while explicitly preserving the strongest guardrails: no calibrated diffusion claim without accepted masks/calibration, no deployable warning model from weak labels alone, and no mechanistic future8 claim while acquisition/context remains dominant.

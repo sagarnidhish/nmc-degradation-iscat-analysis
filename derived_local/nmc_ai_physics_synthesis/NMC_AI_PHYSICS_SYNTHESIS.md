@@ -111,6 +111,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Residual dictionary embedding learns label-free next-frame residual bases over 172 ROI videos; residual-dictionary future8 AUC is 0.663 with p=0.005, and residual_dictionary_plus_handcrafted reaches AUC 0.771.
+- Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
 - Balanced spatial front-propagation audit builds 414 spatial kNN edges over 72 balanced ROI nodes; nearest next-cycle front descriptors autocorrelate strongly (radius2_slope_median_px2_per_s rho=0.594, p_perm=9.990e-04) and same future8-label homophily is high (0.867), but automatic ROI identity and cycle-level labels keep this as spatial hypothesis ranking.
@@ -1119,6 +1120,18 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Residual-dictionary regression residual_energy_mean residual_dictionary_plus_handcrafted: R2 0.992, rho 0.992, n=172
 - Residual-dictionary regression dictionary_recon_error_mse_mean residual_dictionary_plus_handcrafted: R2 0.990, rho 0.988, n=172
 - Guardrail: The residual dictionary is label-free and uses automatic ROI crops. It is a fast temporal-residual representation audit for model design and review prioritization, not a deployable detector, manual front label, or calibrated diffusion measurement.
+
+## Agentic Current Hypothesis Tournament
+
+- Hypotheses ranked: 8
+- Paper-inspired roles: {'robin': 'lab-in-the-loop agents that generate, analyze, and update hypotheses', 'co_scientist': 'asynchronous generation, critique, tournament-style ranking, and refinement', 'empirical_software': 'guarded code/execution workflow with explicit evaluation criteria'}
+- Rank 1 Echem-conditioned video residuals are the best longer-horizon weak-label signal: score 0.598; next experiment: Run an acquisition-residualized video+echem future16 audit with leave-source and leave-cycle splits.
+- Rank 2 Short-horizon future8 labels are acquisition/context dominated: score 0.594; next experiment: Build a residualized future8 benchmark that removes acquisition/context signal before testing video physics features.
+- Rank 3 Manual QC on the top cycle-156 panel is the highest-yield lab-in-the-loop step: score 0.557; next experiment: Complete the cycle-156 manual QC mini-batch and rerun manual-QC-gated front/echem effects.
+- Next spec 1: script tier4_acquisition_residualized_video_echem_warning.py with success evidence: Require the video+echem gain to persist under cycle-balanced acquisition residualization and source-cohort holdouts.
+- Next spec 2: script tier4_residualized_future8_video_physics_benchmark.py with success evidence: A future8 model must remain above null after acquisition, frame-count, cohort-role, and source-movie residualization.
+- Next spec 3: script tier4_manual_qc_gated_front_effects.py with success evidence: If manual review rejects the possible-accept candidates or accepts the artifact foil, current automatic physics support is over-weighted.
+- Guardrail: This tournament ranks next analyses from existing automatic evidence. It does not create manual QC labels, does not validate a deployable degradation detector, and does not license calibrated diffusion claims.
 - Acquisition-context residual feature radius2_slope_median_px2_per_s: median positive-negative 9.596e-05, AUC 0.552, MW p=0.447
 - Acquisition-context residual feature diffusion_proxy_median_um2_per_s: median positive-negative 2.211e-07, AUC 0.552, MW p=0.447
 - Acquisition-context residual feature q70_radius2_slope_bootstrap_p50_px2_per_s: median positive-negative -4.025e-05, AUC 0.552, MW p=0.454

@@ -3922,6 +3922,201 @@
       }
     ]
   },
+  "agentic_current_hypothesis_tournament": {
+    "experiment_specs": [
+      {
+        "do_not_claim": [
+          "calibrated lithium diffusion without accepted calibration and front masks",
+          "deployable warning model from weak labels alone",
+          "causal degradation mechanism from acquisition-confounded future8 labels"
+        ],
+        "hypothesis_id": "H1",
+        "minimum_success_evidence": "Require the video+echem gain to persist under cycle-balanced acquisition residualization and source-cohort holdouts.",
+        "next_experiment": "Run an acquisition-residualized video+echem future16 audit with leave-source and leave-cycle splits.",
+        "rank": 1,
+        "required_guardrails": [
+          "leave-cycle or leave-source split where applicable",
+          "explicit acquisition/context controls",
+          "manual-QC gate before calibrated diffusion or validated degradation-mode claims"
+        ],
+        "suggested_script": "tier4_acquisition_residualized_video_echem_warning.py",
+        "title": "Echem-conditioned video residuals are the best longer-horizon weak-label signal"
+      },
+      {
+        "do_not_claim": [
+          "calibrated lithium diffusion without accepted calibration and front masks",
+          "deployable warning model from weak labels alone",
+          "causal degradation mechanism from acquisition-confounded future8 labels"
+        ],
+        "hypothesis_id": "H2",
+        "minimum_success_evidence": "A future8 model must remain above null after acquisition, frame-count, cohort-role, and source-movie residualization.",
+        "next_experiment": "Build a residualized future8 benchmark that removes acquisition/context signal before testing video physics features.",
+        "rank": 2,
+        "required_guardrails": [
+          "leave-cycle or leave-source split where applicable",
+          "explicit acquisition/context controls",
+          "manual-QC gate before calibrated diffusion or validated degradation-mode claims"
+        ],
+        "suggested_script": "tier4_residualized_future8_video_physics_benchmark.py",
+        "title": "Short-horizon future8 labels are acquisition/context dominated"
+      },
+      {
+        "do_not_claim": [
+          "calibrated lithium diffusion without accepted calibration and front masks",
+          "deployable warning model from weak labels alone",
+          "causal degradation mechanism from acquisition-confounded future8 labels"
+        ],
+        "hypothesis_id": "H4",
+        "minimum_success_evidence": "If manual review rejects the possible-accept candidates or accepts the artifact foil, current automatic physics support is over-weighted.",
+        "next_experiment": "Complete the cycle-156 manual QC mini-batch and rerun manual-QC-gated front/echem effects.",
+        "rank": 3,
+        "required_guardrails": [
+          "leave-cycle or leave-source split where applicable",
+          "explicit acquisition/context controls",
+          "manual-QC gate before calibrated diffusion or validated degradation-mode claims"
+        ],
+        "suggested_script": "tier4_manual_qc_gated_front_effects.py",
+        "title": "Manual QC on the top cycle-156 panel is the highest-yield lab-in-the-loop step"
+      },
+      {
+        "do_not_claim": [
+          "calibrated lithium diffusion without accepted calibration and front masks",
+          "deployable warning model from weak labels alone",
+          "causal degradation mechanism from acquisition-confounded future8 labels"
+        ],
+        "hypothesis_id": "H7",
+        "minimum_success_evidence": "Cycle-state modes must predict held-out ROI mode frequencies better than cycle number and acquisition context alone.",
+        "next_experiment": "Join cycle-state transition features to ROI mode counts and run leave-cycle mode-frequency prediction.",
+        "rank": 4,
+        "required_guardrails": [
+          "leave-cycle or leave-source split where applicable",
+          "explicit acquisition/context controls",
+          "manual-QC gate before calibrated diffusion or validated degradation-mode claims"
+        ],
+        "suggested_script": "tier4_cycle_state_mode_frequency_bridge.py",
+        "title": "Cycle-state transitions can organize ROI degradation modes"
+      },
+      {
+        "do_not_claim": [
+          "calibrated lithium diffusion without accepted calibration and front masks",
+          "deployable warning model from weak labels alone",
+          "causal degradation mechanism from acquisition-confounded future8 labels"
+        ],
+        "hypothesis_id": "H3",
+        "minimum_success_evidence": "Show that a learned objective beats handcrafted features under leave-cycle splits without acquisition leakage.",
+        "next_experiment": "Train or approximate an echem/context-conditioned residual objective and compare it against handcrafted scalars.",
+        "rank": 5,
+        "required_guardrails": [
+          "leave-cycle or leave-source split where applicable",
+          "explicit acquisition/context controls",
+          "manual-QC gate before calibrated diffusion or validated degradation-mode claims"
+        ],
+        "suggested_script": "tier4_echem_conditioned_residual_dictionary.py",
+        "title": "Generic video embeddings underperform physics-aware temporal descriptors"
+      }
+    ],
+    "guardrail": "This tournament ranks next analyses from existing automatic evidence. It does not create manual QC labels, does not validate a deployable degradation detector, and does not license calibrated diffusion claims.",
+    "n_hypotheses": 8,
+    "paper_inspiration": {
+      "co_scientist": "asynchronous generation, critique, tournament-style ranking, and refinement",
+      "empirical_software": "guarded code/execution workflow with explicit evaluation criteria",
+      "robin": "lab-in-the-loop agents that generate, analyze, and update hypotheses"
+    },
+    "top_hypothesis": {
+      "claim": "Longer-horizon future-drop signal is strongest when optical video descriptors are conditioned by echem regime.",
+      "cost_penalty": 0.25,
+      "evidence_bullets": [
+        "future16 video+echem AUC 0.754 versus echem-only AUC 0.505",
+        "future16 video+echem empirical p 0.002",
+        "Masked residual signatures also become interpretable when echem features are included in prior fusion audits."
+      ],
+      "evidence_support": 0.7492982456140351,
+      "falsifiability": 0.86,
+      "falsification_test": "Require the video+echem gain to persist under cycle-balanced acquisition residualization and source-cohort holdouts.",
+      "generator_agent": "multimodal_evidence_agent",
+      "guardrail_penalty": 0.38,
+      "human_review_need": 0.0,
+      "hypothesis_id": "H1",
+      "implementability": 0.8,
+      "next_experiment": "Run an acquisition-residualized video+echem future16 audit with leave-source and leave-cycle splits.",
+      "novelty": 0.72,
+      "rank": 1,
+      "suggested_script": "tier4_acquisition_residualized_video_echem_warning.py",
+      "title": "Echem-conditioned video residuals are the best longer-horizon weak-label signal",
+      "tournament_score": 0.5975894736842106
+    },
+    "top_three": [
+      {
+        "claim": "Longer-horizon future-drop signal is strongest when optical video descriptors are conditioned by echem regime.",
+        "cost_penalty": 0.25,
+        "evidence_bullets": [
+          "future16 video+echem AUC 0.754 versus echem-only AUC 0.505",
+          "future16 video+echem empirical p 0.002",
+          "Masked residual signatures also become interpretable when echem features are included in prior fusion audits."
+        ],
+        "evidence_support": 0.7492982456140351,
+        "falsifiability": 0.86,
+        "falsification_test": "Require the video+echem gain to persist under cycle-balanced acquisition residualization and source-cohort holdouts.",
+        "generator_agent": "multimodal_evidence_agent",
+        "guardrail_penalty": 0.38,
+        "human_review_need": 0.0,
+        "hypothesis_id": "H1",
+        "implementability": 0.8,
+        "next_experiment": "Run an acquisition-residualized video+echem future16 audit with leave-source and leave-cycle splits.",
+        "novelty": 0.72,
+        "rank": 1,
+        "suggested_script": "tier4_acquisition_residualized_video_echem_warning.py",
+        "title": "Echem-conditioned video residuals are the best longer-horizon weak-label signal",
+        "tournament_score": 0.5975894736842106
+      },
+      {
+        "claim": "The future8 weak label is partly a cohort-design or acquisition proxy, so it should not drive mechanistic claims alone.",
+        "cost_penalty": 0.15,
+        "evidence_bullets": [
+          "future8 acquisition/context AUC 1.000 versus video-all AUC 0.823",
+          "Prior context audits repeatedly flag frame count and protocol position as central confounders.",
+          "This explains why high future8 performance can coexist with weak physical interpretability."
+        ],
+        "evidence_support": 0.6618441358024691,
+        "falsifiability": 0.92,
+        "falsification_test": "A future8 model must remain above null after acquisition, frame-count, cohort-role, and source-movie residualization.",
+        "generator_agent": "skeptical_confound_agent",
+        "guardrail_penalty": 0.18,
+        "human_review_need": 0.0,
+        "hypothesis_id": "H2",
+        "implementability": 0.88,
+        "next_experiment": "Build a residualized future8 benchmark that removes acquisition/context signal before testing video physics features.",
+        "novelty": 0.55,
+        "rank": 2,
+        "suggested_script": "tier4_residualized_future8_video_physics_benchmark.py",
+        "title": "Short-horizon future8 labels are acquisition/context dominated",
+        "tournament_score": 0.5939532407407407
+      },
+      {
+        "claim": "The next human intervention should be a small targeted cycle-156 review because it maximizes cross-modal support and artifact contrast.",
+        "cost_penalty": 0.7,
+        "evidence_bullets": [
+          "QC ledger has 47 pending candidates, 3 possible-accept-first and 4 artifact/reject-first candidates.",
+          "Cycle 156 contains all current possible-accept-first candidates plus a strong artifact-risk foil.",
+          "This mirrors a lab-in-the-loop discovery loop: rank candidates, inspect, feed labels back into models."
+        ],
+        "evidence_support": 0.76,
+        "falsifiability": 0.95,
+        "falsification_test": "If manual review rejects the possible-accept candidates or accepts the artifact foil, current automatic physics support is over-weighted.",
+        "generator_agent": "lab_in_loop_qc_agent",
+        "guardrail_penalty": 0.1,
+        "human_review_need": 1.0,
+        "hypothesis_id": "H4",
+        "implementability": 0.6,
+        "next_experiment": "Complete the cycle-156 manual QC mini-batch and rerun manual-QC-gated front/echem effects.",
+        "novelty": 0.5,
+        "rank": 3,
+        "suggested_script": "tier4_manual_qc_gated_front_effects.py",
+        "title": "Manual QC on the top cycle-156 panel is the highest-yield lab-in-the-loop step",
+        "tournament_score": 0.5569999999999999
+      }
+    ]
+  },
   "all_qc_rf_mean_roc_auc": 0.796875,
   "apparent_diffusion_calibration_bounds": {
     "calibration_correlations": [
