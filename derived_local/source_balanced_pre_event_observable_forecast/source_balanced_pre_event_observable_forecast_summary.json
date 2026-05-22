@@ -1,0 +1,556 @@
+{
+  "decision": {
+    "best_incremental_over_echem": {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.051310914922849636,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.615930003662333,
+      "group_col": "source_stem",
+      "target": "tail_contrast_delta"
+    },
+    "best_leave_source_metric": {
+      "group_col": "source_stem",
+      "mae": 0.003196226200210102,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.9541204939199854,
+      "spearman_p": 9.253428921938227e-65,
+      "spearman_rho": 0.9485041659036806,
+      "target": "tail_contrast_delta"
+    },
+    "interpretation": "Prefix observables are useful only if leave-source forecasts beat context/echem baselines and remain interpretable; otherwise they are review descriptors.",
+    "status": "guarded_observable_forecast_audit"
+  },
+  "event_relative_diagnostics": [
+    {
+      "average_precision": 0.36378576584321903,
+      "direction": "higher_near_pre",
+      "n": 128,
+      "n_near_pre": 32,
+      "oriented_auc": 0.5491536458333334,
+      "source_centered_median_near_minus_other": 0.0037279180916628945,
+      "target": "tail_particle_mean_delta"
+    },
+    {
+      "average_precision": 0.32376086370367696,
+      "direction": "higher_near_pre",
+      "n": 128,
+      "n_near_pre": 32,
+      "oriented_auc": 0.5205078125,
+      "source_centered_median_near_minus_other": 0.0036078739578573257,
+      "target": "tail_particle_minus_background_delta"
+    },
+    {
+      "average_precision": 0.3723981560968469,
+      "direction": "lower_near_pre",
+      "n": 128,
+      "n_near_pre": 32,
+      "oriented_auc": 0.5328776041666666,
+      "source_centered_median_near_minus_other": -0.0012559686708349012,
+      "target": "tail_contrast_delta"
+    },
+    {
+      "average_precision": 0.2607801524711101,
+      "direction": "lower_near_pre",
+      "n": 128,
+      "n_near_pre": 32,
+      "oriented_auc": 0.5406901041666666,
+      "source_centered_median_near_minus_other": -0.09960056325038895,
+      "target": "tail_front_radius_q70_delta"
+    },
+    {
+      "average_precision": 0.2942992342539824,
+      "direction": "lower_near_pre",
+      "n": 128,
+      "n_near_pre": 32,
+      "oriented_auc": 0.5445963541666667,
+      "source_centered_median_near_minus_other": -5.740703085261192,
+      "target": "tail_front_radius2_slope"
+    },
+    {
+      "average_precision": 0.3092245547243772,
+      "direction": "lower_near_pre",
+      "n": 128,
+      "n_near_pre": 32,
+      "oriented_auc": 0.5279947916666667,
+      "source_centered_median_near_minus_other": -5.923722006474058e-06,
+      "target": "tail_frame_diff_energy"
+    }
+  ],
+  "feature_set_sizes": {
+    "context": {
+      "categorical": 3,
+      "numeric": 15
+    },
+    "echem_context": {
+      "categorical": 3,
+      "numeric": 27
+    },
+    "prefix_observables": {
+      "categorical": 0,
+      "numeric": 10
+    },
+    "prefix_plus_echem_context": {
+      "categorical": 3,
+      "numeric": 37
+    }
+  },
+  "guardrail": "This forecasts held-out-tail optical observables from automatic source-balanced particle crops. It does not validate particle identity, phase-boundary motion, diffusion coefficients, or degradation causality.",
+  "incremental_over_echem": [
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.051310914922849636,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.615930003662333,
+      "group_col": "source_stem",
+      "target": "tail_contrast_delta"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.006602076128166243,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.4391308826222303,
+      "group_col": "source_stem",
+      "target": "tail_particle_mean_delta"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.06263480329492595,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.43548571690166626,
+      "group_col": "cycleNo",
+      "target": "tail_contrast_delta"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.04928338055349572,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.3915777787950924,
+      "group_col": "source_stem",
+      "target": "tail_particle_minus_background_delta"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.040807453171552086,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.3895005493499357,
+      "group_col": "cycleNo",
+      "target": "tail_particle_mean_delta"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.048825221681277,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.35156679179637423,
+      "group_col": "cycleNo",
+      "target": "tail_particle_minus_background_delta"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.07788186152556587,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.2804774766526277,
+      "group_col": "source_stem",
+      "target": "tail_front_radius_q70_delta"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.0770724406773372,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.18325970518220108,
+      "group_col": "cycleNo",
+      "target": "tail_front_radius_q70_delta"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.7145173121467252,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.15547747665262773,
+      "group_col": "source_stem",
+      "target": "tail_front_radius2_slope"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.3047182258677985,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.12095998901300126,
+      "group_col": "cycleNo",
+      "target": "tail_front_radius2_slope"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -0.00023444570587430693,
+      "delta_spearman_prefix_plus_echem_minus_echem": 0.06779321552829148,
+      "group_col": "cycleNo",
+      "target": "tail_frame_diff_energy"
+    },
+    {
+      "delta_mae_prefix_plus_echem_minus_echem": -1.9344558398403115e-05,
+      "delta_spearman_prefix_plus_echem_minus_echem": -0.037121177440029296,
+      "group_col": "source_stem",
+      "target": "tail_frame_diff_energy"
+    }
+  ],
+  "n_cycles": 64,
+  "n_failures": 0,
+  "n_rows": 128,
+  "n_sources": 14,
+  "outputs": {
+    "event_diagnostics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_event_diagnostics.csv",
+    "failures": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_failures.csv",
+    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_features.csv",
+    "incremental": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_incremental.csv",
+    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_metrics.csv",
+    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_predictions.csv"
+  },
+  "prefix_fraction": 0.6,
+  "source_heldout_top_metrics": [
+    {
+      "group_col": "source_stem",
+      "mae": 0.003196226200210102,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.9541204939199854,
+      "spearman_p": 9.253428921938227e-65,
+      "spearman_rho": 0.9485041659036806,
+      "target": "tail_contrast_delta"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 0.0036573865378874766,
+      "model": "prefix_plus_echem_context",
+      "n": 128,
+      "r2": 0.9378972988359358,
+      "spearman_p": 4.622607723117261e-62,
+      "spearman_rho": 0.943010666544589,
+      "target": "tail_contrast_delta"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 0.003242549858717033,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.9327149344164002,
+      "spearman_p": 2.3376113936541093e-45,
+      "spearman_rho": 0.892344579747299,
+      "target": "tail_particle_mean_delta"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 0.004315869878803863,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.8541540902735455,
+      "spearman_p": 6.092515678952095e-32,
+      "spearman_rho": 0.8171923640358908,
+      "target": "tail_particle_minus_background_delta"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 0.009169151876853812,
+      "model": "prefix_plus_echem_context",
+      "n": 128,
+      "r2": -1.124303412068362,
+      "spearman_p": 1.3568484689019618e-25,
+      "spearman_rho": 0.7625663797839223,
+      "target": "tail_particle_mean_delta"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 0.012558518963808964,
+      "model": "prefix_plus_echem_context",
+      "n": 128,
+      "r2": -3.2638056102662283,
+      "spearman_p": 7.034748882349538e-17,
+      "spearman_rho": 0.6526220014649331,
+      "target": "tail_particle_minus_background_delta"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 0.34479409048681176,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.3066760835673359,
+      "spearman_p": 9.92549459692992e-11,
+      "spearman_rho": 0.5324059238234755,
+      "target": "tail_front_radius_q70_delta"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 24.80646436726176,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": -0.035737100919020603,
+      "spearman_p": 1.3368026992318073e-06,
+      "spearman_rho": 0.4121784013916865,
+      "target": "tail_front_radius2_slope"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 0.3777960827874456,
+      "model": "prefix_plus_echem_context",
+      "n": 128,
+      "r2": 0.22699785944136408,
+      "spearman_p": 1.661137455307408e-06,
+      "spearman_rho": 0.40880791063907707,
+      "target": "tail_front_radius_q70_delta"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 0.010807468868836826,
+      "model": "context",
+      "n": 128,
+      "r2": -0.043270456356095055,
+      "spearman_p": 4.799199532122924e-06,
+      "spearman_rho": 0.3917952298113898,
+      "target": "tail_particle_minus_background_delta"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 0.019098918478784498,
+      "model": "context",
+      "n": 128,
+      "r2": -0.7290212092200166,
+      "spearman_p": 7.78935999273003e-05,
+      "spearman_rho": 0.3419703351034609,
+      "target": "tail_contrast_delta"
+    },
+    {
+      "group_col": "source_stem",
+      "mae": 0.05496830146073711,
+      "model": "echem_context",
+      "n": 128,
+      "r2": -206.84623998166754,
+      "spearman_p": 0.00016430463884445045,
+      "spearman_rho": 0.32708066288225596,
+      "target": "tail_contrast_delta"
+    }
+  ],
+  "targets": [
+    "tail_particle_mean_delta",
+    "tail_particle_minus_background_delta",
+    "tail_contrast_delta",
+    "tail_front_radius_q70_delta",
+    "tail_front_radius2_slope",
+    "tail_frame_diff_energy"
+  ],
+  "top_metrics": [
+    {
+      "group_col": "cycleNo",
+      "mae": 0.0032926645511084235,
+      "model": "prefix_plus_echem_context",
+      "n": 128,
+      "r2": 0.9440826393035401,
+      "spearman_p": 1.6059514269226463e-65,
+      "spearman_rho": 0.9499519318806078,
+      "target": "tail_contrast_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.0030255300533932926,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.9590902701720906,
+      "spearman_p": 6.991175494296646e-65,
+      "spearman_rho": 0.9487387841054751,
+      "target": "tail_contrast_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.003025643247663682,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.9470648347016766,
+      "spearman_p": 1.216823227977915e-50,
+      "spearman_rho": 0.9121383446255263,
+      "target": "tail_particle_mean_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.003816619517223361,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.892191007782777,
+      "spearman_p": 2.0691142639835852e-39,
+      "spearman_rho": 0.8642590642739424,
+      "target": "tail_particle_minus_background_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.004518897080561137,
+      "model": "prefix_plus_echem_context",
+      "n": 128,
+      "r2": 0.798830791104342,
+      "spearman_p": 1.305717876790242e-38,
+      "spearman_rho": 0.8599157663431605,
+      "target": "tail_particle_mean_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.004881109182019677,
+      "model": "prefix_plus_echem_context",
+      "n": 128,
+      "r2": 0.8442284767956031,
+      "spearman_p": 5.282602666613542e-32,
+      "spearman_rho": 0.8176501556491484,
+      "target": "tail_particle_minus_background_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.33643489357898626,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.3421067304216068,
+      "spearman_p": 2.5039028989878035e-12,
+      "spearman_rho": 0.5687145211499725,
+      "target": "tail_front_radius_q70_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 22.529027727985255,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.09370663492638232,
+      "spearman_p": 1.3151901902204482e-11,
+      "spearman_rho": 0.5528863761215894,
+      "target": "tail_front_radius2_slope"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.013586075729820943,
+      "model": "context",
+      "n": 128,
+      "r2": 0.08985957454870463,
+      "spearman_p": 1.4146703193100303e-11,
+      "spearman_rho": 0.5521710767258743,
+      "target": "tail_contrast_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.34233112742458127,
+      "model": "prefix_plus_echem_context",
+      "n": 128,
+      "r2": 0.337790058908618,
+      "spearman_p": 1.781280993353196e-11,
+      "spearman_rho": 0.5498992858450833,
+      "target": "tail_front_radius_q70_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.06592746784603437,
+      "model": "echem_context",
+      "n": 128,
+      "r2": -408.2382475562672,
+      "spearman_p": 5.23294724803054e-10,
+      "spearman_rho": 0.5144662149789415,
+      "target": "tail_contrast_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.04532635025211322,
+      "model": "echem_context",
+      "n": 128,
+      "r2": -205.31431416520772,
+      "spearman_p": 2.1078698403827553e-08,
+      "spearman_rho": 0.47041521699322475,
+      "target": "tail_particle_mean_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.05370633086329668,
+      "model": "echem_context",
+      "n": 128,
+      "r2": -396.0545193487915,
+      "spearman_p": 2.9496868804556952e-08,
+      "spearman_rho": 0.4660833638527742,
+      "target": "tail_particle_minus_background_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 23.16431340151721,
+      "model": "prefix_plus_echem_context",
+      "n": 128,
+      "r2": 0.11344999276219281,
+      "spearman_p": 5.145335235384824e-08,
+      "spearman_rho": 0.458775865226149,
+      "target": "tail_front_radius2_slope"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.010884739695877318,
+      "model": "context",
+      "n": 128,
+      "r2": 0.1307947474762251,
+      "spearman_p": 5.872847690756088e-07,
+      "spearman_rho": 0.42461888848196294,
+      "target": "tail_particle_mean_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.010240703027039,
+      "model": "context",
+      "n": 128,
+      "r2": 0.08584589233558526,
+      "spearman_p": 3.352220263728023e-06,
+      "spearman_rho": 0.39765496246108767,
+      "target": "tail_particle_minus_background_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.00012064160135879693,
+      "model": "context",
+      "n": 128,
+      "r2": 0.004856061552330426,
+      "spearman_p": 1.3862064085951193e-05,
+      "spearman_rho": 0.3737868522248673,
+      "target": "tail_frame_diff_energy"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.4194035681019185,
+      "model": "echem_context",
+      "n": 128,
+      "r2": 0.10981712289520396,
+      "spearman_p": 2.075979225098017e-05,
+      "spearman_rho": 0.3666395806628822,
+      "target": "tail_front_radius_q70_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.00010262696450192396,
+      "model": "prefix_plus_echem_context",
+      "n": 128,
+      "r2": 0.13044591850088583,
+      "spearman_p": 4.501727895969916e-05,
+      "spearman_rho": 0.3524480406518952,
+      "target": "tail_frame_diff_energy"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 23.469031627385007,
+      "model": "echem_context",
+      "n": 128,
+      "r2": 0.14460781724824112,
+      "spearman_p": 9.629563661142917e-05,
+      "spearman_rho": 0.33781587621314774,
+      "target": "tail_front_radius2_slope"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.44322657384949893,
+      "model": "context",
+      "n": 128,
+      "r2": 0.015756349544063686,
+      "spearman_p": 0.000703015011452495,
+      "spearman_rho": 0.2956704358176158,
+      "target": "tail_front_radius_q70_delta"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 0.0003370726703762309,
+      "model": "echem_context",
+      "n": 128,
+      "r2": -54.12955457718189,
+      "spearman_p": 0.0011277402177915735,
+      "spearman_rho": 0.28465482512360374,
+      "target": "tail_frame_diff_energy"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 24.667584859205185,
+      "model": "context",
+      "n": 128,
+      "r2": -0.01915929106885339,
+      "spearman_p": 0.001144680657905548,
+      "spearman_rho": 0.2843000366233291,
+      "target": "tail_front_radius2_slope"
+    },
+    {
+      "group_col": "cycleNo",
+      "mae": 9.636352872146486e-05,
+      "model": "prefix_observables",
+      "n": 128,
+      "r2": 0.1335912083848929,
+      "spearman_p": 0.0025393988699722457,
+      "spearman_rho": 0.26463216443874743,
+      "target": "tail_frame_diff_energy"
+    }
+  ]
+}

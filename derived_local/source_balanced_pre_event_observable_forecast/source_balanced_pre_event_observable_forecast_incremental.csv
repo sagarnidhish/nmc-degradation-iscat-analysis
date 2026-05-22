@@ -1,0 +1,13 @@
+target,group_col,delta_spearman_prefix_plus_echem_minus_echem,delta_mae_prefix_plus_echem_minus_echem
+tail_contrast_delta,source_stem,0.615930003662333,-0.051310914922849636
+tail_particle_mean_delta,source_stem,0.4391308826222303,-0.006602076128166243
+tail_contrast_delta,cycleNo,0.43548571690166626,-0.06263480329492595
+tail_particle_minus_background_delta,source_stem,0.3915777787950924,-0.04928338055349572
+tail_particle_mean_delta,cycleNo,0.3895005493499357,-0.040807453171552086
+tail_particle_minus_background_delta,cycleNo,0.35156679179637423,-0.048825221681277
+tail_front_radius_q70_delta,source_stem,0.2804774766526277,-0.07788186152556587
+tail_front_radius_q70_delta,cycleNo,0.18325970518220108,-0.0770724406773372
+tail_front_radius2_slope,source_stem,0.15547747665262773,-0.7145173121467252
+tail_front_radius2_slope,cycleNo,0.12095998901300126,-0.3047182258677985
+tail_frame_diff_energy,cycleNo,0.06779321552829148,-0.00023444570587430693
+tail_frame_diff_energy,source_stem,-0.037121177440029296,-1.9344558398403115e-05

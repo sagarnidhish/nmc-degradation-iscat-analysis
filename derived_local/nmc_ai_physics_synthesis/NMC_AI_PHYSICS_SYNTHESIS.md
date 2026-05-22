@@ -1479,6 +1479,34 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Event-distance trajectory source_residual front_radius_q60_slope_px_per_norm_time: rho 0.166, permutation p=0.191, near-far median 0.278
 - Event-distance trajectory event_residual mask_area_fraction_slope: rho 0.135, permutation p=0.191, near-far median 0.006
 
+## Source-Balanced Pre-Event Observable Forecast
+
+- Rows/cycles/sources: 128 / 64 / 14; prefix fraction 0.600
+- Feature set sizes: {'context': {'categorical': 3, 'numeric': 15}, 'echem_context': {'categorical': 3, 'numeric': 27}, 'prefix_observables': {'categorical': 0, 'numeric': 10}, 'prefix_plus_echem_context': {'categorical': 3, 'numeric': 37}}
+- Best leave-source observable forecast: prefix_observables predicts tail_contrast_delta with rho 0.949, R2 0.954, MAE 0.003
+- Best prefix+echem incremental row: tail_contrast_delta source_stem delta rho 0.616, delta MAE -0.051
+- Observable forecast leave-source tail_contrast_delta prefix_observables: rho 0.949, R2 0.954, MAE 0.003
+- Observable forecast leave-source tail_contrast_delta prefix_plus_echem_context: rho 0.943, R2 0.938, MAE 0.004
+- Observable forecast leave-source tail_particle_mean_delta prefix_observables: rho 0.892, R2 0.933, MAE 0.003
+- Observable forecast leave-source tail_particle_minus_background_delta prefix_observables: rho 0.817, R2 0.854, MAE 0.004
+- Observable forecast leave-source tail_particle_mean_delta prefix_plus_echem_context: rho 0.763, R2 -1.124, MAE 0.009
+- Observable forecast leave-source tail_particle_minus_background_delta prefix_plus_echem_context: rho 0.653, R2 -3.264, MAE 0.013
+- Observable forecast leave-source tail_front_radius_q70_delta prefix_observables: rho 0.532, R2 0.307, MAE 0.345
+- Observable forecast leave-source tail_front_radius2_slope prefix_observables: rho 0.412, R2 -0.036, MAE 24.806
+- Observable event-relative diagnostic tail_particle_mean_delta: AUC 0.549, AP 0.364, source-centered near-minus-other 0.004
+- Observable event-relative diagnostic tail_particle_minus_background_delta: AUC 0.521, AP 0.324, source-centered near-minus-other 0.004
+- Observable event-relative diagnostic tail_contrast_delta: AUC 0.533, AP 0.372, source-centered near-minus-other -0.001
+- Observable event-relative diagnostic tail_front_radius_q70_delta: AUC 0.541, AP 0.261, source-centered near-minus-other -0.100
+- Observable event-relative diagnostic tail_front_radius2_slope: AUC 0.545, AP 0.294, source-centered near-minus-other -5.741
+- Observable event-relative diagnostic tail_frame_diff_energy: AUC 0.528, AP 0.309, source-centered near-minus-other -5.924e-06
+- Observable prefix+echem minus echem tail_contrast_delta source_stem: delta rho 0.616, delta MAE -0.051
+- Observable prefix+echem minus echem tail_particle_mean_delta source_stem: delta rho 0.439, delta MAE -0.007
+- Observable prefix+echem minus echem tail_contrast_delta cycleNo: delta rho 0.435, delta MAE -0.063
+- Observable prefix+echem minus echem tail_particle_minus_background_delta source_stem: delta rho 0.392, delta MAE -0.049
+- Observable prefix+echem minus echem tail_particle_mean_delta cycleNo: delta rho 0.390, delta MAE -0.041
+- Observable prefix+echem minus echem tail_particle_minus_background_delta cycleNo: delta rho 0.352, delta MAE -0.049
+- Guardrail: This forecasts held-out-tail optical observables from automatic source-balanced particle crops. It does not validate particle identity, phase-boundary motion, diffusion coefficients, or degradation causality.
+
 ## Source-Balanced Degradation Mode Audit
 
 - Rows/cycles/sources/features: 96 / 48 / 14 / 18

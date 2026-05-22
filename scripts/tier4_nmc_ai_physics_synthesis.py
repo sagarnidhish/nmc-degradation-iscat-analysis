@@ -203,6 +203,7 @@ def main() -> None:
     acquisition_residualized_video = read_json(derived / "acquisition_residualized_video_physics_benchmark" / "acquisition_residualized_summary.json")
     acquisition_residualized_video_echem = read_json(derived / "acquisition_residualized_video_echem_warning" / "acquisition_residualized_video_echem_summary.json")
     residualized_future8_video_physics = read_json(derived / "residualized_future8_video_physics_benchmark" / "residualized_future8_video_physics_summary.json")
+    source_balanced_pre_event_observable_forecast = read_json(derived / "source_balanced_pre_event_observable_forecast" / "source_balanced_pre_event_observable_forecast_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
@@ -727,6 +728,12 @@ def main() -> None:
     future8_fused_cohort = future8_decision.get("fused_source_cohort_metric", {}) or {}
     future8_echem_cohort = future8_decision.get("echem_source_cohort_metric", {}) or {}
     future8_acq_cohort = future8_decision.get("acquisition_source_cohort_metric", {}) or {}
+    observable_forecast_decision = first_summary(source_balanced_pre_event_observable_forecast, "decision", {}) or {}
+    observable_forecast_best = observable_forecast_decision.get("best_leave_source_metric", {}) or {}
+    observable_forecast_incremental_best = observable_forecast_decision.get("best_incremental_over_echem", {}) or {}
+    observable_forecast_source_metrics = top_items(first_summary(source_balanced_pre_event_observable_forecast, "source_heldout_top_metrics", []), 12)
+    observable_forecast_event_diag = top_items(first_summary(source_balanced_pre_event_observable_forecast, "event_relative_diagnostics", []), 12)
+    observable_forecast_incremental = top_items(first_summary(source_balanced_pre_event_observable_forecast, "incremental_over_echem", []), 12)
     acq_echem_cycle_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized"), {})
     acq_echem_cycle_bal_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized_cycle_balanced"), {})
     acq_echem_cycle_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
@@ -2311,6 +2318,29 @@ def main() -> None:
         report_lines.append(
             f"- Event-distance trajectory {row.get('transform', 'NA')} {row.get('feature', 'NA')}: rho {fmt(row.get('spearman_rho_vs_event_proximity'))}, permutation p={fmt(row.get('within_source_permutation_abs_rho_p'))}, near-far median {fmt(row.get('near_minus_far_median'))}"
         )
+
+    report_lines += [
+        "",
+        "## Source-Balanced Pre-Event Observable Forecast",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_balanced_pre_event_observable_forecast, 'n_rows', 0)} / {first_summary(source_balanced_pre_event_observable_forecast, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_observable_forecast, 'n_sources', 0)}; prefix fraction {fmt(first_summary(source_balanced_pre_event_observable_forecast, 'prefix_fraction'))}",
+        f"- Feature set sizes: {first_summary(source_balanced_pre_event_observable_forecast, 'feature_set_sizes', {})}",
+        f"- Best leave-source observable forecast: {observable_forecast_best.get('model', 'NA')} predicts {observable_forecast_best.get('target', 'NA')} with rho {fmt(observable_forecast_best.get('spearman_rho'))}, R2 {fmt(observable_forecast_best.get('r2'))}, MAE {fmt(observable_forecast_best.get('mae'))}",
+        f"- Best prefix+echem incremental row: {observable_forecast_incremental_best.get('target', 'NA')} {observable_forecast_incremental_best.get('group_col', 'NA')} delta rho {fmt(observable_forecast_incremental_best.get('delta_spearman_prefix_plus_echem_minus_echem'))}, delta MAE {fmt(observable_forecast_incremental_best.get('delta_mae_prefix_plus_echem_minus_echem'))}",
+    ]
+    for row in observable_forecast_source_metrics[:8]:
+        report_lines.append(
+            f"- Observable forecast leave-source {row.get('target', 'NA')} {row.get('model', 'NA')}: rho {fmt(row.get('spearman_rho'))}, R2 {fmt(row.get('r2'))}, MAE {fmt(row.get('mae'))}"
+        )
+    for row in observable_forecast_event_diag[:8]:
+        report_lines.append(
+            f"- Observable event-relative diagnostic {row.get('target', 'NA')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, source-centered near-minus-other {fmt(row.get('source_centered_median_near_minus_other'))}"
+        )
+    for row in observable_forecast_incremental[:6]:
+        report_lines.append(
+            f"- Observable prefix+echem minus echem {row.get('target', 'NA')} {row.get('group_col', 'NA')}: delta rho {fmt(row.get('delta_spearman_prefix_plus_echem_minus_echem'))}, delta MAE {fmt(row.get('delta_mae_prefix_plus_echem_minus_echem'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_pre_event_observable_forecast, 'guardrail', 'Source-balanced pre-event observable forecast unavailable.')}")
 
     report_lines += [
         "",
@@ -4045,6 +4075,19 @@ def main() -> None:
             "top_metrics": future8_top_metrics,
             "key_deltas": future8_key_deltas,
             "guardrail": first_summary(residualized_future8_video_physics, "guardrail"),
+        },
+        "source_balanced_pre_event_observable_forecast": {
+            "n_rows": first_summary(source_balanced_pre_event_observable_forecast, "n_rows"),
+            "n_cycles": first_summary(source_balanced_pre_event_observable_forecast, "n_cycles"),
+            "n_sources": first_summary(source_balanced_pre_event_observable_forecast, "n_sources"),
+            "prefix_fraction": first_summary(source_balanced_pre_event_observable_forecast, "prefix_fraction"),
+            "targets": first_summary(source_balanced_pre_event_observable_forecast, "targets", []),
+            "feature_set_sizes": first_summary(source_balanced_pre_event_observable_forecast, "feature_set_sizes", {}),
+            "decision": observable_forecast_decision,
+            "source_heldout_top_metrics": observable_forecast_source_metrics,
+            "event_relative_diagnostics": observable_forecast_event_diag,
+            "incremental_over_echem": observable_forecast_incremental,
+            "guardrail": first_summary(source_balanced_pre_event_observable_forecast, "guardrail"),
         },
         "source_domain_video_echem_adaptation_audit": {
             "n_rows": first_summary(source_domain_video_echem, "n_rows"),

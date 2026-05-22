@@ -4097,3 +4097,33 @@ Results:
 Interpretation: the current future8 warning label is dominated by acquisition/context and echem structure, not by an independent source-robust optical physics mechanism. Future8 should remain a guardrail/context label, while physics claims should focus on longer-horizon future16, pre-event, manual-QC, and source-invariant tracks.
 
 Guardrail: this benchmark is a falsification/control test. It blocks using future8 video/optical metrics as standalone degradation physics evidence unless future runs pass source/source-cohort holdout, acquisition residualization, cycle balancing, source-stratified permutation, and incremental echem comparisons.
+
+
+## 2026-05-22 Source-Balanced Pre-Event Observable Forecast
+
+Added `scripts/tier4_source_balanced_pre_event_observable_forecast.py` and ran it on Isambard. This audit forecasts held-out-tail physical observables from the first 60% of each source-balanced pre-event particle crop, then compares prefix-observable models against persistence, context, echem-context, and prefix+echem models under leave-source and leave-cycle splits.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast`
+- `derived_local/source_balanced_pre_event_observable_forecast`
+- `source_balanced_pre_event_observable_forecast_features.csv`
+- `source_balanced_pre_event_observable_forecast_metrics.csv`
+- `source_balanced_pre_event_observable_forecast_predictions.csv`
+- `source_balanced_pre_event_observable_forecast_incremental.csv`
+- `source_balanced_pre_event_observable_forecast_event_diagnostics.csv`
+- `source_balanced_pre_event_observable_forecast_summary.json`
+
+Results:
+
+- Evaluated 128 ROI sequences across 64 cycles and 14 sources with 0 failures.
+- Best leave-source forecast is `prefix_observables` predicting `tail_contrast_delta`: Spearman rho 0.949, R2 0.954, MAE 0.00320.
+- Prefix observables also forecast `tail_particle_mean_delta` under leave-source: rho 0.892, R2 0.933, MAE 0.00324.
+- Prefix observables forecast `tail_particle_minus_background_delta` under leave-source: rho 0.817, R2 0.854, MAE 0.00432.
+- Front-tail observables are weaker but nonzero: `tail_front_radius_q70_delta` leave-source prefix model has rho 0.532, R2 0.307, MAE 0.345; `tail_front_radius2_slope` has rho 0.412 but negative R2.
+- Prefix+echem improves over echem context for some rank correlations, led by `tail_contrast_delta` under leave-source with delta rho 0.616 and delta MAE -0.051.
+- Event-relative diagnostics are weak after source-centering: near-pre AUCs range only 0.520-0.549 across tail particle mean, contrast, front radius, radius2 slope, and frame-difference energy.
+
+Interpretation: early particle-crop observables strongly forecast later optical-observable evolution across held-out sources, so observable forecasting is a viable AI task for this dataset. But these forecastable dynamics are not, by themselves, a strong near-pre degradation detector. Use them as physically interpretable rollout/uncertainty descriptors and as inputs to manual-QC review, not as standalone evidence for degradation causality or diffusion.
+
+Guardrail: the audit uses automatic source-balanced particle crops and held-out-tail optical observables. It does not validate particle identity, phase-boundary motion, calibrated diffusion coefficients, or degradation causality.
