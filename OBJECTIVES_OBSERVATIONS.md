@@ -4502,3 +4502,31 @@ Interpretation: history/fallback masks are not just a post-hoc QC metric; they i
 
 Guardrail: this is an automatic particle-mask ablation and compact latent-linear rollout benchmark. It uses history/fallback particle support for robustness under drift-correction blur, but it does not provide manual segmentation, validated phase-boundary velocities, or calibrated diffusion coefficients.
 
+## 2026-05-22 Rollout Front/Mode Coupling Audit
+
+Added `scripts/tier4_rollout_front_mode_coupling_audit.py` and ran it on Isambard to connect the history/fallback particle-only rollout residuals to front, phase-kinetic, transport, and unsupervised mode descriptors. This addresses the key interpretability question left by the rollout ablation: whether prediction residuals behave like physically meaningful optical/front changes or only like mask/source artifacts.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_front_mode_coupling_audit`
+- `derived_local/rollout_front_mode_coupling_audit`
+- `rollout_front_mode_coupling_merged.csv`
+- `rollout_front_mode_coupling_feature_tests.csv`
+- `rollout_front_mode_coupling_correlations.csv`
+- `rollout_front_mode_coupling_mode_summary.csv`
+- `rollout_front_mode_coupling_review_queue.csv`
+- `rollout_front_mode_coupling_summary.json`
+
+Results:
+
+- Joined 128 source-balanced ROI rows across 64 cycles, 14 sources, and 2 automatic physics modes.
+- Source-residual rollout/physics correlations support a real link between particle-only prediction error and optical physics descriptors. The strongest source-residual link is `persistence_rollout_hybrid_mse` versus `observable_tail_score` with Spearman rho 0.421 and p=7.29e-07.
+- Additional source-residual links connect rollout residuals to `abs_radial_flow_mean` around rho 0.306 for hybrid rollout MSE and rho 0.292 for history-mask rollout MSE, and to `transport_mechanism_score` with rho 0.301 for hybrid rollout MSE.
+- Raw future8/near-pre feature tests still rank the existing multimodal review scores highest: `qc_review_score` AUC 0.831/AP 0.719, `masked_minus_bg_slope` AUC 0.816/AP 0.634, and `transport_mechanism_score` AUC 0.783/AP 0.654.
+- The coupled mode summary shows mode 0 has larger median latent-linear gain (0.300) and higher one-step hybrid residual (6.50e-05), while mode 1 has lower latent gain (0.0707) and lower one-step residual (1.05e-05), with broadly similar future-event fractions. This makes the mode split more useful as a residual/physics texture state than as a direct degradation label.
+- The review queue now prioritizes rows where rollout residual, latent gain, transport score, and front kinetic score jointly stand out after source centering. It includes known near-pre future-positive rows such as `source_balanced_cycle110_rank12_obj1_12_c2_x10_070723`, `source_balanced_cycle108_rank11_obj1_12_c2_x10_070723`, `source_balanced_cycle152_rank29_obj2_17_c2_x10_HighHighCOV_150723`, and `source_balanced_cycle58_rank52_obj2_7_c2_x10_290623`, plus discordant controls/far-pre rows that are useful for falsification.
+
+Interpretation: particle-only rollout residuals are not just generic prediction errors. After source-centering, they align with observable-tail, radial-flow, and transport descriptors, which supports using rollout residual maps as a physically interpretable review signal. The coupling is still automatic and mixed with mask/phase-state variation, so it strengthens review prioritization rather than unblocking calibrated phase-boundary or diffusion claims.
+
+Guardrail: this audit couples automatic particle-only rollout residuals to automatic front/phase/transport/mode descriptors. It nominates physically interpretable review rows and source-robust associations, but does not validate manual phase boundaries or calibrated diffusion coefficients.
+

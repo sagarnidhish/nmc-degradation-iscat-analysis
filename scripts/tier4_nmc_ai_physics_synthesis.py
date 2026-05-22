@@ -133,6 +133,7 @@ def main() -> None:
     particle_mask = read_json(derived / "particle_mask_stability_audit" / "particle_mask_stability_audit_summary.json")
     particle_mask_history_fallback = read_json(derived / "particle_mask_history_fallback_audit" / "particle_mask_history_fallback_summary.json")
     history_fallback_rollout_ablation = read_json(derived / "history_fallback_masked_rollout_ablation" / "history_fallback_masked_rollout_ablation_summary.json")
+    rollout_front_mode_coupling = read_json(derived / "rollout_front_mode_coupling_audit" / "rollout_front_mode_coupling_summary.json")
     masked_rollout = read_json(derived / "masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
     masked_cycle_warning = read_json(derived / "masked_rollout_cycle_warning" / "masked_rollout_cycle_warning_summary.json")
     masked_residual_timing = read_json(derived / "masked_residual_transition_timing" / "masked_residual_transition_timing_summary.json")
@@ -396,6 +397,11 @@ def main() -> None:
     history_fallback_rollout_tests = top_items(first_summary(history_fallback_rollout_ablation, "top_event_tests", []), 16)
     history_fallback_rollout_methods = top_items(first_summary(history_fallback_rollout_ablation, "method_summary", []), 8)
     history_fallback_rollout_sources = top_items(first_summary(history_fallback_rollout_ablation, "source_summary_top", []), 12)
+    rollout_front_mode_tests = top_items(first_summary(rollout_front_mode_coupling, "top_feature_tests", []), 16)
+    rollout_front_mode_source_corr = top_items(first_summary(rollout_front_mode_coupling, "top_source_residual_correlations", []), 16)
+    rollout_front_mode_raw_corr = top_items(first_summary(rollout_front_mode_coupling, "top_raw_correlations", []), 12)
+    rollout_front_mode_modes = top_items(first_summary(rollout_front_mode_coupling, "mode_summary", []), 8)
+    rollout_front_mode_queue = top_items(first_summary(rollout_front_mode_coupling, "top_review_queue", []), 12)
     masked_rollout_methods = top_items(first_summary(masked_rollout, "method_summary", []), 8)
     masked_rollout_tests = top_items(first_summary(masked_rollout, "top_event_control_tests", []), 12)
     masked_rollout_corr = top_items(first_summary(masked_rollout, "top_correlations", []), 12)
@@ -3397,6 +3403,30 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Rollout Front/Mode Coupling Audit",
+        "",
+        f"- Status/rows/sources/cycles/modes: {first_summary(rollout_front_mode_coupling, 'overall_status', 'unavailable')} / {first_summary(rollout_front_mode_coupling, 'n_rows', 0)} / {first_summary(rollout_front_mode_coupling, 'n_sources', 0)} / {first_summary(rollout_front_mode_coupling, 'n_cycles', 0)} / {first_summary(rollout_front_mode_coupling, 'n_modes', 0)}",
+    ]
+    for row in rollout_front_mode_source_corr[:8]:
+        report_lines.append(
+            f"- Source-residual rollout/physics link {row.get('rollout_feature', 'NA')} vs {row.get('physics_feature', 'NA')}: rho {fmt(row.get('spearman_rho'))}, p {fmt(row.get('spearman_p'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in rollout_front_mode_tests[:6]:
+        report_lines.append(
+            f"- Coupled feature test {row.get('target', 'NA')} {row.get('feature', 'NA')} ({row.get('transform', 'NA')}): AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, med delta {fmt(row.get('median_positive_minus_negative'))}, p {fmt(row.get('mwu_p'))}"
+        )
+    for row in rollout_front_mode_modes[:4]:
+        report_lines.append(
+            f"- Coupled mode {row.get('mode', 'NA')}: n={fmt(row.get('n_roi'), 0)}, near {fmt(row.get('near_pre_fraction'))}, future8 {fmt(row.get('future8_fraction'))}, median latent gain {fmt(row.get('median_latent_gain_history'))}, median transport/front {fmt(row.get('median_transport_score'))}/{fmt(row.get('median_front_kinetic_score'))}"
+        )
+    for row in rollout_front_mode_queue[:5]:
+        report_lines.append(
+            f"- Coupled review ROI {row.get('roi_id', 'NA')}: score {fmt(row.get('rollout_front_review_score'))}, bin {row.get('event_relative_bin', 'NA')}, one-step MSE {fmt(row.get('one_step_hybrid_mse'))}, latent gain {fmt(row.get('latent_linear_gain_vs_persistence_history'))}, transport/front {fmt(row.get('transport_mechanism_score'))}/{fmt(row.get('front_kinetic_score'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(rollout_front_mode_coupling, 'guardrail', 'Rollout front/mode coupling audit unavailable.')}")
+
+    report_lines += [
+        "",
         "## Physics Consistency Claim Matrix",
         "",
         f"- ROI/cycles: {first_summary(physics_consistency, 'n_roi', 0)} / {first_summary(physics_consistency, 'n_cycles', 0)}",
@@ -4924,6 +4954,20 @@ def main() -> None:
             "source_summary_top": history_fallback_rollout_sources,
             "outputs": first_summary(history_fallback_rollout_ablation, "outputs", {}),
             "guardrail": first_summary(history_fallback_rollout_ablation, "guardrail"),
+        },
+        "rollout_front_mode_coupling_audit": {
+            "overall_status": first_summary(rollout_front_mode_coupling, "overall_status"),
+            "n_rows": first_summary(rollout_front_mode_coupling, "n_rows"),
+            "n_sources": first_summary(rollout_front_mode_coupling, "n_sources"),
+            "n_cycles": first_summary(rollout_front_mode_coupling, "n_cycles"),
+            "n_modes": first_summary(rollout_front_mode_coupling, "n_modes"),
+            "top_feature_tests": rollout_front_mode_tests,
+            "top_source_residual_correlations": rollout_front_mode_source_corr,
+            "top_raw_correlations": rollout_front_mode_raw_corr,
+            "mode_summary": rollout_front_mode_modes,
+            "top_review_queue": rollout_front_mode_queue,
+            "outputs": first_summary(rollout_front_mode_coupling, "outputs", {}),
+            "guardrail": first_summary(rollout_front_mode_coupling, "guardrail"),
         },
         "cycle_state_roi_bridge": {
             "n_roi_rows": first_summary(cycle_state_roi_bridge, "n_roi_rows"),

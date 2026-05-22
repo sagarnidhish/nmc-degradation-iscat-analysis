@@ -2589,6 +2589,32 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Ablation source 9_c2_x10_010723: n=10, median fallback 0.370, latent gain history/hybrid 0.074/-0.155
 - Guardrail: This is an automatic particle-mask ablation and compact latent-linear rollout benchmark. It uses history/fallback particle support for robustness under drift-correction blur, but it does not provide manual segmentation, validated phase-boundary velocities, or calibrated diffusion coefficients.
 
+## Rollout Front/Mode Coupling Audit
+
+- Status/rows/sources/cycles/modes: rollout_front_mode_coupling_audit_ready / 128 / 14 / 64 / 2
+- Source-residual rollout/physics link persistence_rollout_hybrid_mse vs observable_tail_score: rho 0.421, p 7.285e-07, n=128
+- Source-residual rollout/physics link fallback_frame_fraction vs observable_tail_score: rho 0.402, p 2.537e-06, n=128
+- Source-residual rollout/physics link persistence_rollout_history_mse vs observable_tail_score: rho 0.399, p 3.080e-06, n=128
+- Source-residual rollout/physics link one_step_hybrid_mse vs observable_tail_score: rho 0.332, p 1.259e-04, n=128
+- Source-residual rollout/physics link fallback_frame_fraction vs masked_minus_bg_slope: rho 0.312, p 3.425e-04, n=128
+- Source-residual rollout/physics link persistence_rollout_history_mse vs q75_phase_fraction_delta: rho -0.311, p 3.588e-04, n=128
+- Source-residual rollout/physics link persistence_rollout_hybrid_mse vs abs_radial_flow_mean: rho 0.306, p 4.536e-04, n=128
+- Source-residual rollout/physics link persistence_rollout_hybrid_mse vs abs_radial_flow_mean_source_residual: rho 0.306, p 4.536e-04, n=128
+- Coupled feature test future8 qc_review_score (raw): AUC 0.831, AP 0.719, med delta 0.262, p 2.154e-08
+- Coupled feature test near_pre qc_review_score (raw): AUC 0.831, AP 0.719, med delta 0.262, p 2.154e-08
+- Coupled feature test future8 masked_minus_bg_slope (raw): AUC 0.816, AP 0.634, med delta 0.004, p 8.993e-08
+- Coupled feature test near_pre masked_minus_bg_slope (raw): AUC 0.816, AP 0.634, med delta 0.004, p 8.993e-08
+- Coupled feature test future8 transport_mechanism_score (raw): AUC 0.783, AP 0.654, med delta 0.217, p 1.712e-06
+- Coupled feature test near_pre transport_mechanism_score (raw): AUC 0.783, AP 0.654, med delta 0.217, p 1.712e-06
+- Coupled mode 0: n=60, near 0.267, future8 0.267, median latent gain 0.300, median transport/front 0.487/0.496
+- Coupled mode 1: n=68, near 0.235, future8 0.235, median latent gain 0.071, median transport/front 0.468/0.527
+- Coupled review ROI source_balanced_cycle38_rank42_obj2_5_c2_x10_260623: score 3.493, bin far_pre_event_17_32, one-step MSE 1.398e-04, latent gain -0.282, transport/front 0.807/0.687
+- Coupled review ROI source_balanced_cycle2_rank31_obj2_2_c2_x14_200623: score 3.482, bin no_near_event_control, one-step MSE 8.875e-05, latent gain 0.524, transport/front 0.609/0.832
+- Coupled review ROI source_balanced_cycle110_rank12_obj1_12_c2_x10_070723: score 3.472, bin near_pre_event_1_8, one-step MSE 1.993e-04, latent gain 0.576, transport/front 0.714/0.555
+- Coupled review ROI source_balanced_cycle96_rank5_obj1_11_c2_x10_050723: score 3.457, bin post_event_1_16, one-step MSE 4.955e-05, latent gain 0.459, transport/front 0.710/0.801
+- Coupled review ROI source_balanced_cycle124_rank15_obj2_14_c2_x10_HighCOV_110723: score 3.296, bin post_event_1_16, one-step MSE 4.594e-04, latent gain 0.595, transport/front 0.748/0.548
+- Guardrail: This audit couples automatic particle-only rollout residuals to automatic front/phase/transport/mode descriptors. It nominates physically interpretable review rows and source-robust associations, but does not validate manual phase boundaries or calibrated diffusion coefficients.
+
 ## Physics Consistency Claim Matrix
 
 - ROI/cycles: 52 / 11
