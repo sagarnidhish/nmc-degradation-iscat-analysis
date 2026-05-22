@@ -110,6 +110,7 @@ def main() -> None:
     current_claim_readiness = read_json(derived / "current_claim_readiness_matrix" / "current_claim_readiness_summary.json")
     diffusion_unblock_sensitivity = read_json(derived / "diffusion_unblock_sensitivity_audit" / "diffusion_unblock_sensitivity_summary.json")
     targeted_diffusion_blocker = read_json(derived / "targeted_diffusion_blocker_diagnostic" / "targeted_diffusion_blocker_diagnostic_summary.json")
+    cycle78_diffusion_remeasurement = read_json(derived / "cycle78_diffusion_remeasurement_audit" / "cycle78_diffusion_remeasurement_summary.json")
     cross_modal_consensus = read_json(derived / "cross_modal_degradation_consensus" / "cross_modal_degradation_consensus_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
@@ -951,6 +952,8 @@ def main() -> None:
     targeted_diffusion_actions = top_items(first_summary(targeted_diffusion_blocker, "action_counts", []), 8)
     targeted_diffusion_candidates = top_items(first_summary(targeted_diffusion_blocker, "top_remeasurement_candidates", []), 10)
     targeted_diffusion_nearest = first_summary(targeted_diffusion_blocker, "nearest_diffusion_candidate", {}) or {}
+    cycle78_diffusion_target = first_summary(cycle78_diffusion_remeasurement, "target_summary", {}) or {}
+    cycle78_diffusion_context = top_items(first_summary(cycle78_diffusion_remeasurement, "context_summary", []), 8)
     cross_modal_top = top_items(first_summary(cross_modal_consensus, "top_cycles", []), 12)
     cross_modal_classes = top_items(first_summary(cross_modal_consensus, "class_summary", []), 8)
     cross_modal_contrasts = top_items(first_summary(cross_modal_consensus, "target_contrasts", []), 12)
@@ -1616,6 +1619,21 @@ def main() -> None:
             f"- Targeted diffusion candidate {row.get('roi_id')}: action {row.get('diagnostic_action')}, score {fmt(row.get('targeted_remeasurement_score'))}, max positive-fit R2 {fmt(row.get('max_positive_fit_r2'))}, source percentile {fmt(row.get('median_D_um2_per_s_same_source_percentile'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(targeted_diffusion_blocker, 'guardrail', 'Targeted diffusion blocker diagnostic unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Cycle 78 Diffusion Remeasurement Audit",
+        "",
+        f"- Status/target/context ROIs/variant rows/bootstrap: {first_summary(cycle78_diffusion_remeasurement, 'overall_status', 'unavailable')} / {first_summary(cycle78_diffusion_remeasurement, 'target_status', 'NA')} / {first_summary(cycle78_diffusion_remeasurement, 'n_context_rois', 0)} / {first_summary(cycle78_diffusion_remeasurement, 'n_variant_rows', 0)} / {first_summary(cycle78_diffusion_remeasurement, 'n_bootstrap', 0)}",
+        f"- Target {first_summary(cycle78_diffusion_remeasurement, 'target_roi_id', 'NA')}: default q70 D {fmt(cycle78_diffusion_target.get('default_q70_D_um2_per_s'))} um2/s, bootstrap p05/p95 {fmt(cycle78_diffusion_target.get('default_q70_D_p05_um2_per_s'))}/{fmt(cycle78_diffusion_target.get('default_q70_D_p95_um2_per_s'))}, positive CI {cycle78_diffusion_target.get('default_q70_positive_ci', 'NA')}",
+        f"- Target robustness: median D {fmt(cycle78_diffusion_target.get('median_D_um2_per_s'))} um2/s, positive-D fraction {fmt(cycle78_diffusion_target.get('positive_D_fraction'))}, positive-CI fraction {fmt(cycle78_diffusion_target.get('positive_ci_fraction'))}, max radius2 R2 {fmt(cycle78_diffusion_target.get('max_radius2_r2'))}",
+        f"- Same-source context percentiles: default q70 D {fmt(cycle78_diffusion_target.get('default_q70_D_um2_per_s_context_percentile'))}, q70 R2 {fmt(cycle78_diffusion_target.get('default_q70_radius2_r2_context_percentile'))}, positive-CI fraction {fmt(cycle78_diffusion_target.get('positive_ci_fraction_context_percentile'))}",
+    ]
+    for row in cycle78_diffusion_context:
+        report_lines.append(
+            f"- Cycle78 context {row.get('roi_id', 'NA')} ({row.get('context_role', 'NA')}): q70 D {fmt(row.get('default_q70_D_um2_per_s'))}, q70 positive CI {row.get('default_q70_positive_ci', 'NA')}, pos-CI fraction {fmt(row.get('positive_ci_fraction'))}, max R2 {fmt(row.get('max_radius2_r2'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(cycle78_diffusion_remeasurement, 'guardrail', 'Cycle 78 diffusion remeasurement audit unavailable.')}")
 
     report_lines += [
         "",
@@ -5163,6 +5181,20 @@ def main() -> None:
             "top_remeasurement_candidates": targeted_diffusion_candidates,
             "outputs": first_summary(targeted_diffusion_blocker, "outputs", {}),
             "guardrail": first_summary(targeted_diffusion_blocker, "guardrail"),
+        },
+        "cycle78_diffusion_remeasurement_audit": {
+            "overall_status": first_summary(cycle78_diffusion_remeasurement, "overall_status"),
+            "target_roi_id": first_summary(cycle78_diffusion_remeasurement, "target_roi_id"),
+            "target_status": first_summary(cycle78_diffusion_remeasurement, "target_status"),
+            "n_context_rois": first_summary(cycle78_diffusion_remeasurement, "n_context_rois"),
+            "n_variant_rows": first_summary(cycle78_diffusion_remeasurement, "n_variant_rows"),
+            "n_bootstrap": first_summary(cycle78_diffusion_remeasurement, "n_bootstrap"),
+            "block_len": first_summary(cycle78_diffusion_remeasurement, "block_len"),
+            "pixel_size_um_assumed": first_summary(cycle78_diffusion_remeasurement, "pixel_size_um_assumed"),
+            "target_summary": cycle78_diffusion_target,
+            "context_summary": cycle78_diffusion_context,
+            "outputs": first_summary(cycle78_diffusion_remeasurement, "outputs", {}),
+            "guardrail": first_summary(cycle78_diffusion_remeasurement, "guardrail"),
         },
         "cross_modal_degradation_consensus": {
             "n_cycles": first_summary(cross_modal_consensus, "n_cycles"),

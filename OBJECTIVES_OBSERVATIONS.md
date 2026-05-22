@@ -4530,3 +4530,30 @@ Interpretation: particle-only rollout residuals are not just generic prediction 
 
 Guardrail: this audit couples automatic particle-only rollout residuals to automatic front/phase/transport/mode descriptors. It nominates physically interpretable review rows and source-robust associations, but does not validate manual phase boundaries or calibrated diffusion coefficients.
 
+## 2026-05-22 Cycle 78 Diffusion Remeasurement Audit
+
+Added `scripts/tier4_cycle78_diffusion_remeasurement_audit.py` and ran it on Isambard for the current nearest diffusion follow-up candidate, `cycle78_rank22_obj2` from source `9_c2_x10_010723`. This directly follows the targeted diffusion blocker diagnostic by remeasuring the q70 front-radius2 slope with multiple threshold quantiles, central support masks, baseline windows, time windows, and contiguous-block bootstrap confidence intervals.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit`
+- `derived_local/cycle78_diffusion_remeasurement_audit`
+- `cycle78_diffusion_remeasurement_per_variant.csv`
+- `cycle78_diffusion_remeasurement_roi_summary.csv`
+- `cycle78_diffusion_remeasurement_context_manifest.csv`
+- `cycle78_diffusion_remeasurement_summary.json`
+- `plots/cycle78_rank22_obj2_q70_remeasurement.png`
+
+Results:
+
+- The audit covers 5 same-source context ROIs and 1260 threshold/mask/window variants using 200 contiguous-block bootstrap resamples per variant.
+- For the target `cycle78_rank22_obj2`, the default full-window q70 estimate is D = 3.457e-06 um2/s, bootstrap p05 = 1.953e-06 and p95 = 5.380e-06 um2/s, so the automatic q70 positive-CI gate passes in this remeasurement packet.
+- The target remains the strongest same-source local context row: default q70 D percentile 0.9, q70 R2 percentile 0.9, median D percentile 0.9, positive-CI fraction percentile 0.9.
+- Across all 252 variants for the target, median D is 3.288e-06 um2/s, positive-D fraction is 0.738, positive-CI fraction is 0.397, and max radius2 fit R2 is 0.849.
+- Neighboring cycle-78 objects do not show the same default q70 positive-CI behavior: `cycle78_rank22_obj1` has default q70 D -2.212e-06 and `cycle78_rank22_obj3` has default q70 D -4.307e-07, both with negative/overlapping bootstrap CIs.
+- The later same-source context `cycle84_rank23_obj2` and previous `cycle76_rank8_obj2` also fail the default q70 positive-CI gate, despite some positive-D threshold variants.
+
+Interpretation: this is the first targeted automatic remeasurement that clears the specific q70 positive-CI blocker for the leading cycle-78 diffusion candidate. It strengthens `cycle78_rank22_obj2` as a manual-front/QC priority and suggests the front-radius2 expansion is object-specific rather than a whole-source/cycle artifact. It still does not make a publication-ready diffusion claim because manual front identity, spatial calibration provenance, and broader control-balanced separability remain guardrails.
+
+Guardrail: automatic threshold/mask/window remeasurement only; does not accept manual labels, validate front identity, or create calibrated diffusion coefficients.
+

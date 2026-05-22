@@ -580,6 +580,19 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Targeted diffusion candidate cycle116_rank7_obj37: action fit_quality_blocked_retrack_front, score 18.124, max positive-fit R2 0.131, source percentile 0.750
 - Guardrail: This diagnostic ranks diffusion-blocker follow-up candidates using existing automatic threshold/front tables. It does not accept manual labels, relax readiness gates, or emit calibrated diffusion coefficients.
 
+## Cycle 78 Diffusion Remeasurement Audit
+
+- Status/target/context ROIs/variant rows/bootstrap: cycle78_diffusion_remeasurement_ready / q70_positive_ci_passed_automatically / 5 / 1260 / 200
+- Target cycle78_rank22_obj2: default q70 D 3.457e-06 um2/s, bootstrap p05/p95 1.953e-06/5.380e-06, positive CI True
+- Target robustness: median D 3.288e-06 um2/s, positive-D fraction 0.738, positive-CI fraction 0.397, max radius2 R2 0.849
+- Same-source context percentiles: default q70 D 0.900, q70 R2 0.900, positive-CI fraction 0.900
+- Cycle78 context cycle76_rank8_obj2 (same_source_prev_cycle_same_object_rank): q70 D 6.405e-07, q70 positive CI False, pos-CI fraction 0.171, max R2 0.801
+- Cycle78 context cycle78_rank22_obj1 (same_cycle_neighbor_object): q70 D -2.212e-06, q70 positive CI False, pos-CI fraction 0.060, max R2 0.742
+- Cycle78 context cycle78_rank22_obj2 (target_nearest_diffusion_candidate): q70 D 3.457e-06, q70 positive CI True, pos-CI fraction 0.397, max R2 0.849
+- Cycle78 context cycle78_rank22_obj3 (same_cycle_neighbor_object): q70 D -4.307e-07, q70 positive CI False, pos-CI fraction 0.230, max R2 0.874
+- Cycle78 context cycle84_rank23_obj2 (same_source_later_cycle_same_object_rank): q70 D -2.448e-07, q70 positive CI False, pos-CI fraction 0.155, max R2 0.687
+- Guardrail: Automatic threshold/mask/window remeasurement only; does not accept manual labels, validate front identity, or create calibrated diffusion coefficients.
+
 ## Cross-Modal Degradation Consensus
 
 - Cycles scored/with votes: 89 / 53
