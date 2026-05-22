@@ -1300,7 +1300,7 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Near-pre-event spatial readout: leave-cycle AUC 0.763/AP 0.536; leave-source AUC 0.759/AP 0.515
 - Clean pre16 vs post/control all-video leave-cycle readout: AUC 0.723/AP 0.759
 - Any-pre vs post/control all-video leave-source guardrail: AUC 0.463/AP 0.645
-- Top near-pre scalar: NA / NA AUC NA, AP NA, p=NA
+- Top scalar test: target_any_pre_vs_post_control frame_diff_mse_p95 / raw AUC 0.632, AP 0.778, p=0.011
 - Guardrail: Event-relative sequence features are computed from automatic fixed particle crops and labels are derived from abrupt-event cycle proximity. Positive readouts indicate pre/post/control optical-dynamics separation for follow-up QC and modeling, not validated precursors, particle identities, phase boundaries, diffusion coefficients, or causal degradation mechanisms.
 - Event-relative model target_any_pre_vs_post_control cycleNo all_video: AUC 0.637, AP 0.758, n=128
 - Event-relative model target_any_pre_vs_post_control cycleNo spatial: AUC 0.608, AP 0.701, n=128

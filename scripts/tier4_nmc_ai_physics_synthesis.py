@@ -460,7 +460,7 @@ def main() -> None:
     source_balanced_pre_event_near_cycle = next((r for r in source_balanced_pre_event_audit_models if r.get("target") == "target_near_pre_vs_rest" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "spatial"), {})
     source_balanced_pre_event_clean_cycle = next((r for r in source_balanced_pre_event_audit_models if r.get("target") == "target_pre16_clean_vs_post_control" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "all_video"), {})
     source_balanced_pre_event_any_source = next((r for r in source_balanced_pre_event_audit_models if r.get("target") == "target_any_pre_vs_post_control" and r.get("group_col") == "source_stem" and r.get("feature_set") == "all_video"), {})
-    source_balanced_pre_event_near_scalar = next((r for r in source_balanced_pre_event_audit_scalars if r.get("target") == "target_near_pre_vs_rest"), {})
+    source_balanced_pre_event_scalar_best = source_balanced_pre_event_audit_scalars[0] if source_balanced_pre_event_audit_scalars else {}
     source_balanced_pre_event_rollout_top = top_items(first_summary(source_balanced_pre_event_rollout, "top_roi_feature_tests", []), 12)
     source_balanced_pre_event_mask_top = top_items(first_summary(source_balanced_pre_event_mask_front, "top_roi_feature_tests", []), 12)
     source_balanced_pre_event_readout_best = top_items(first_summary(source_balanced_pre_event_readout, "best_by_target_transform", []), 24)
@@ -1969,7 +1969,7 @@ def main() -> None:
         f"- Near-pre-event spatial readout: leave-cycle AUC {fmt(source_balanced_pre_event_near_cycle.get('roc_auc'))}/AP {fmt(source_balanced_pre_event_near_cycle.get('average_precision'))}; leave-source AUC {fmt(source_balanced_pre_event_near_source.get('roc_auc'))}/AP {fmt(source_balanced_pre_event_near_source.get('average_precision'))}",
         f"- Clean pre16 vs post/control all-video leave-cycle readout: AUC {fmt(source_balanced_pre_event_clean_cycle.get('roc_auc'))}/AP {fmt(source_balanced_pre_event_clean_cycle.get('average_precision'))}",
         f"- Any-pre vs post/control all-video leave-source guardrail: AUC {fmt(source_balanced_pre_event_any_source.get('roc_auc'))}/AP {fmt(source_balanced_pre_event_any_source.get('average_precision'))}",
-        f"- Top near-pre scalar: {source_balanced_pre_event_near_scalar.get('feature', 'NA')} / {source_balanced_pre_event_near_scalar.get('transform', 'NA')} AUC {fmt(source_balanced_pre_event_near_scalar.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_near_scalar.get('average_precision'))}, p={fmt(source_balanced_pre_event_near_scalar.get('mannwhitney_p'))}",
+        f"- Top scalar test: {source_balanced_pre_event_scalar_best.get('target', 'NA')} {source_balanced_pre_event_scalar_best.get('feature', 'NA')} / {source_balanced_pre_event_scalar_best.get('transform', 'NA')} AUC {fmt(source_balanced_pre_event_scalar_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_scalar_best.get('average_precision'))}, p={fmt(source_balanced_pre_event_scalar_best.get('mannwhitney_p'))}",
         f"- Guardrail: {first_summary(source_balanced_pre_event_sequence_audit, 'guardrail', 'Source-balanced pre-event sequence audit unavailable.')}",
     ]
     for row in source_balanced_pre_event_audit_models[:8]:
