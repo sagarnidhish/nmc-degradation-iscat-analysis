@@ -1,0 +1,15 @@
+source_stem,n_rows,near_pre_rows,mid_pre_rows,far_pre_rows,post_control_rows,has_near_mid_ladder,has_near_far_ladder,has_near_post_ladder
+12_c2_x10_070723,10,8,2,0,0,True,False,False
+17_c2_x10_HighHighCOV_150723,10,8,2,0,0,True,False,False
+9_c2_x10_010723,10,8,0,0,2,False,False,True
+6_c2_x10_270623_2,10,4,6,0,0,True,False,False
+7_c2_x10_290623,8,4,0,0,4,False,False,True
+16_c2_x10_HighHighCOV_130723,10,0,8,2,0,False,False,False
+11_c2_x10_050723,10,0,2,0,8,False,False,False
+5_c2_x10_260623,10,0,2,8,0,False,False,False
+2_c2_x14_200623,10,0,0,0,10,False,False,False
+8_c2_x10_300623,10,0,0,0,10,False,False,False
+10_c2_x10_030723,8,0,0,0,8,False,False,False
+14_c2_x10_HighCOV_110723,8,0,0,0,8,False,False,False
+4_c2_x10_240623,10,0,0,8,2,False,False,False
+15_c2_x5_HighCOV_120723,4,0,0,4,0,False,False,False

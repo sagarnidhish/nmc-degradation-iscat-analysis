@@ -3515,6 +3515,30 @@ Interpretation:
 
 This audit tightens the pre-event claim. Matched counterfactuals preserve a near-pre optical/mask-contrast signal, but they weaken the apparent-diffusion interpretation and leave front-slope evidence underpowered. The most defensible current statement is that source-balanced near-pre crops show review-worthy mask/contrast and some front-motion hints after observed-context matching; calibrated diffusion and phase-boundary claims still require manual QC and stronger matched same-source coverage.
 
+## 2026-05-22 Source-Balanced Pre-Event Same-Source Ladder Audit
+
+Added `scripts/tier4_source_balanced_pre_event_same_source_ladder_audit.py` and ran it on Isambard. This audit addresses the matched-counterfactual limitation that near-pre versus far-pre had no same-source pairs by asking a narrower within-source question: where a source contains near-pre rows plus mid-pre, post-event, or no-near-event controls, do automatic physics descriptors move consistently along that local event-relative ladder?
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit`
+- `derived_local/source_balanced_pre_event_same_source_ladder_audit`
+
+Cohort/result snapshot:
+
+- Input table: 128 ROI rows, 64 cycles, 14 source movies.
+- Same-source ladder coverage is sparse: 5 sources have near-pre rows, 3 have near+mid-pre ladders, 2 have near+post/control ladders, and 0 have near+far-pre ladders.
+- Pair counts: 32 near-vs-any-non-near same-source pairs, 20 near-vs-mid-pre same-source pairs, and 12 near-vs-post/control same-source pairs.
+- Near-vs-any local controls: `mask_centroid_path_px` median near-control difference 0.784 px, sign-flip p=0.0020.
+- Near-vs-any local controls: `front_radius_q60_slope_px_per_norm_time` median difference 1.769 px/norm time, p=0.0060.
+- Near-vs-any local controls: `apparent_diffusion_q70_um2_per_norm_time` median difference 0.666 um2/norm time, p=0.0040, but this is conditional on reused same-source local controls and should stay guarded.
+- Near-vs-mid-pre same-source pairs are stronger for q70 apparent diffusion and front slope, but only across 3 sources and no same-source far-pre anchors.
+- Continuous within-source event-proximity clocks remain weak: top physics clock is q60 front-slope rho 0.109, p=0.417.
+
+Interpretation:
+
+This is a useful guardrail rather than a final mechanism. Strict same-source local pairing preserves near-pre front/mask/apparent-mobility differences when mid-pre or post/control anchors exist, but the event-relative ladder is sparse and lacks same-source far-pre controls. The result supports manual-QC follow-up on same-source near-pre fronts, while the weak continuous clocks and reused controls prevent calibrated diffusion, phase-boundary, or causal precursor claims.
+
 ## 2026-05-22 Source-Balanced Pre-Event Radial Kymograph Audit
 
 Added `scripts/tier4_source_balanced_pre_event_radial_kymograph_audit.py` and ran it on Isambard. This audit extracts radial intensity kymographs from the source-balanced pre-event ROI tensors, tracks an automatic radial gradient-front over normalized time, and renders review kymograph PNGs for the top-ranked candidates.
