@@ -3919,30 +3919,7 @@ Interpretation: this audit turns the phase-kinetics/front-QC layers into an acti
 
 ## 2026-05-22 Source-Balanced Pre-Event Front/Kinetic Source-Null Audit
 
-Added `scripts/tier4_source_balanced_pre_event_front_kinetic_null_audit.py` and ran it on Isambard. This audit tests whether the front/kinetic concordance queue survives source-aware null checks by applying raw, source-residual, and within-source-rank transforms, then comparing observed AUC/correlation against source-stratified label shuffles.
-
-Outputs:
-
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit`
-- `derived_local/source_balanced_pre_event_front_kinetic_null_audit`
-
-Results:
-
-- Tested 9 concordance/kinetic/front/QC features over 128 ROI rows and 14 sources.
-- Used 50 source-stratified permutations per test and no bootstrap resampling in the committed fast audit; p-values therefore have coarse resolution and should be treated as directional guardrails.
-- Strongest null-tested row is near-vs-mid-pre raw `kinetic_evidence_score`: AUC 0.820, AP 0.889, source-stratified permutation p = 0.0196, null AUC median 0.694, null AUC p95 0.775, but only 3 eligible mixed-label sources.
-- Near-vs-any-non-near raw `masked_minus_bg_slope` also survives the coarse null: AUC 0.816, AP 0.634, p = 0.0196, null AUC median 0.750, p95 0.801, 5 eligible sources.
-- Near-vs-any-non-near raw `front_kinetic_concordance_score` reaches AUC 0.768/AP 0.526, p = 0.0392, null AUC median 0.704, p95 0.741, 5 eligible sources.
-- Source-residual versions are much weaker: near-vs-any-non-near `kinetic_evidence_score` source-residual AUC 0.598 and near-vs-post/control `front_kinetic_concordance_score` source-residual AUC 0.591.
-- The top event-proximity row is within-source-rank `strict_qc_priority_score`, rho = -0.450, p = 0.0405, source-stratified permutation p = 0.0196; the sign indicates this strict front-QC score is not a simple closer-to-event clock.
-
-Interpretation:
-
-This audit supports the kinetic/concordance queue as a source-aware manual-review target, especially for near-vs-mid and near-vs-any contrasts, but also shows that much of the effect weakens after source residualization and that eligible mixed-label source counts are small. The result should be used as a prioritization guardrail, not as proof of source-invariant precursor prediction, phase-boundary motion, diffusion, or causality.
-
-## 2026-05-22 Source-Balanced Pre-Event Front/Kinetic Null Audit
-
-Added `scripts/tier4_source_balanced_pre_event_front_kinetic_null_audit.py` and ran it on Isambard. This audit stress-tests the front/kinetic concordance score and component features with source-stratified label permutations, source-residual transforms, and within-source-rank transforms so that raw near-pre separation is not mistaken for source composition.
+Added `scripts/tier4_source_balanced_pre_event_front_kinetic_null_audit.py` and ran it on Isambard. This audit stress-tests the front/kinetic concordance score and component features with raw, source-residual, and within-source-rank transforms, then compares observed AUC/correlation against source-stratified label shuffles so raw near-pre separation is not mistaken for source composition.
 
 Outputs:
 
@@ -3954,11 +3931,11 @@ Outputs:
 
 Results:
 
-- Tested 128 ROI rows, 14 sources, and 9 front/kinetic/QC features with 50 source-stratified permutations per test.
-- The strongest source-aware target row is near-vs-mid-pre raw `kinetic_evidence_score`: AUC 0.820, AP 0.889, median difference 0.969, source-stratified permutation p = 0.0196.
-- Near-vs-any-non-near raw `masked_minus_bg_slope` also survives the source-stratified null: AUC 0.816, AP 0.634, median difference 0.00376, permutation p = 0.0196, null AUC p95 = 0.801.
-- Near-vs-any-non-near raw `front_kinetic_concordance_score` remains positive but weaker: AUC 0.768, permutation p = 0.0392.
-- Source-residual and within-source-rank transforms are weaker than raw rows, which keeps source composition as an active guardrail rather than a solved problem.
-- Proximity tests find the strongest source-aware trend in within-source-rank `strict_qc_priority_score` versus event proximity: rho = -0.450, permutation p = 0.0196, based on the rendered/strict-QC subset.
+- Tested 128 ROI rows, 14 sources, and 9 front/kinetic/QC features with 50 source-stratified permutations per test and no bootstrap resampling in the committed fast audit; p-values therefore have coarse resolution and should be treated as directional guardrails.
+- Strongest null-tested row is near-vs-mid-pre raw `kinetic_evidence_score`: AUC 0.820, AP 0.889, median difference 0.969, source-stratified permutation p = 0.0196, null AUC median 0.694, null AUC p95 0.775, but only 3 eligible mixed-label sources.
+- Near-vs-any-non-near raw `masked_minus_bg_slope` also survives the coarse null: AUC 0.816, AP 0.634, median difference 0.00376, p = 0.0196, null AUC median 0.750, p95 0.801, 5 eligible sources.
+- Near-vs-any-non-near raw `front_kinetic_concordance_score` remains positive but weaker: AUC 0.768, AP 0.526, p = 0.0392, null AUC median 0.704, p95 0.741, 5 eligible sources.
+- Source-residual versions are much weaker: near-vs-any-non-near `kinetic_evidence_score` source-residual AUC 0.598 and near-vs-post/control `front_kinetic_concordance_score` source-residual AUC 0.591.
+- The top event-proximity row is within-source-rank `strict_qc_priority_score`, rho = -0.450, source-stratified permutation p = 0.0196; the sign indicates this strict front-QC score is not a simple closer-to-event clock.
 
-Interpretation: masked optical kinetics are the most robust part of the current front/kinetic evidence under source-aware nulls. The composite concordance score is useful for review prioritization, but the weakened source-residual/rank rows mean it should not be treated as source-invariant physics, manual front validation, causal degradation proof, or calibrated diffusion evidence.
+Interpretation: masked optical kinetics are the most robust part of the current front/kinetic evidence under source-aware nulls. The composite concordance score is useful for review prioritization, but the weakened source-residual/rank rows and small mixed-label source counts mean it should not be treated as source-invariant physics, manual front validation, causal degradation proof, or calibrated diffusion evidence.
