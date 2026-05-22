@@ -3400,6 +3400,29 @@ Interpretation:
 
 The event-relative export makes the pre-event question more concrete. Raw optical contrast strongly separates near-pre-event from post/control bins, but it is still source structured. After source residualization, the surviving signal shifts to front-radius/slope and apparent-diffusion-like proxies with moderate AUC and weaker p-values. This is useful physics triage: it suggests pre-event organization in crop-local front geometry, while keeping the claim guarded because masks/fronts are automatic and not calibrated phase boundaries or diffusion coefficients.
 
+## 2026-05-22 Source-Balanced Pre-Event Directionality Audit
+
+Added `scripts/tier4_source_balanced_pre_event_directionality_audit.py` and ran it on Isambard as a ROI-level complement to the cycle-collapsed event-distance trajectory audit. The audit merges pre-event sequence features with rollout/mask/front readouts and compares clean near-pre-event, near-versus-far-pre-event, and post-versus-control readouts while tracking whether features correlate with pre-event and post-event clocks.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit`
+- `derived_local/source_balanced_pre_event_directionality_audit`
+
+Cohort/result snapshot:
+
+- Input table: 128 ROI rows, 64 cycles, 14 source movies, and 57 tested rollout/front/mask/heterogeneity features.
+- Top pre-event clock feature is raw `spatial_std_slope`: pre-event Spearman rho 0.436, p=8.12e-05; post-event rho 0.289.
+- Raw `masked_minus_background_mean_slope` also increases as the event approaches: pre-event rho 0.379, p=7.46e-04; post-event rho 0.213.
+- Near-pre versus far-pre raw `spatial_std_slope` is strong: AUC 0.801/AP 0.853, pre-clock rho 0.436.
+- Clean near-pre versus post/control source-residual readout remains `front_radius_q60_slope_px_per_norm_time`: AUC 0.660/AP 0.665, pre-clock rho 0.206, post-clock rho -0.278.
+- Source-residual near-pre versus far-pre apparent q70 diffusion/front proxy remains moderate: AUC 0.681/AP 0.648, pre-clock rho 0.201, post-clock rho -0.120.
+- The fast synthesis run uses descriptive clock statistics with permutations disabled by default after 199/499-permutation ROI-level runs proved too slow for routine integration; the stricter cycle-collapsed trajectory audit remains the permutation-backed event-distance check.
+
+Interpretation:
+
+The ROI-level directionality screen agrees with the previous readouts: heterogeneity and mask/background contrast strengthen as sampled cycles approach abrupt events, but those strongest raw signals are source structured. Source-normalized front and apparent-diffusion proxies point in the expected direction with only moderate effect sizes. This supports pre-event review prioritization and follow-up manual front QC, not causal precursor or calibrated diffusion claims.
+
 ## 2026-05-22 Source-Balanced Pre-Event Event-Distance Trajectory Audit
 
 Added `scripts/tier4_source_balanced_pre_event_trajectory_audit.py` and ran it on Isambard using the source-balanced pre-event readout feature table. This audit collapses the two automatic ROI proposals per sampled cycle into one cycle-level row before testing whether rollout/front/mask/diffusion-like proxies change monotonically as sampled cycles approach abrupt optical event cycles.
