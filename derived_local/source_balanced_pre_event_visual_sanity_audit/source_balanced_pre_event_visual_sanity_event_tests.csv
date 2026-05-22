@@ -1,0 +1,17 @@
+comparison,feature,n_near,n_control,near_median,control_median,near_minus_control_median,mannwhitney_p
+near_vs_rendered_non_near,stable_mask_edge_fraction,19,5,0.031103074141048823,0.02748643761301989,0.0036166365280289325,0.4767171252402479
+near_vs_rendered_non_near,visual_sanity_score,19,5,0.590322939806,0.5720210634461006,0.01830187635989944,0.6792772444946358
+near_vs_rendered_non_near,centroid_path_px,19,5,26.03955603281651,28.794846734127287,-2.755290701310777,0.6792772444946358
+near_vs_rendered_non_near,focus_laplacian_var_median,19,5,0.0029708966954222937,0.0029372784837975396,3.3618211624754195e-05,1.0
+near_vs_rendered_non_near,stable_mask_fraction,19,5,,,,
+near_vs_rendered_non_near,front_trace_slope_px_per_norm_time,12,1,,,,
+near_vs_rendered_non_near,front_trace_r2,12,1,,,,
+near_vs_rendered_non_near,front_trace_monotonic_fraction,12,1,,,,
+near_vs_rendered_post_control,visual_sanity_score,19,3,0.590322939806,0.5362728174354411,0.05405012237055895,0.19090909090909094
+near_vs_rendered_post_control,centroid_path_px,19,3,26.03955603281651,33.11899864873659,-7.079442615920083,0.30779220779220784
+near_vs_rendered_post_control,stable_mask_edge_fraction,19,3,0.031103074141048823,0.02748643761301989,0.0036166365280289325,0.4435277910876727
+near_vs_rendered_post_control,focus_laplacian_var_median,19,3,0.0029708966954222937,0.0027500615920145726,0.00022083510340772114,0.7181818181818184
+near_vs_rendered_post_control,stable_mask_fraction,19,3,,,,
+near_vs_rendered_post_control,front_trace_slope_px_per_norm_time,12,0,,,,
+near_vs_rendered_post_control,front_trace_r2,12,0,,,,
+near_vs_rendered_post_control,front_trace_monotonic_fraction,12,0,,,,
