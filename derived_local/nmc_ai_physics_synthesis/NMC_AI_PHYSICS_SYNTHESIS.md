@@ -111,6 +111,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Automatic QC triage surrogate ranks the same pending-review bottleneck without assigning labels: 6 likely interpretable candidates, 10 artifact-risk candidates, and 20 diffusion-guardrail rows; top likely ROI is cycle156_rank7_obj27 and top artifact-risk ROI is cycle156_rank5_obj4.
 - QC decision evidence ledger converts the 47 pending labels into explicit reviewer actions without assigning labels: {'high_priority_review': 5, 'review_artifact_or_reject_first': 4, 'review_but_diffusion_guarded': 16, 'review_for_possible_accept_first': 3, 'routine_pending_review': 19}; top possible-accept ROI is cycle156_rank7_obj27, while top artifact/reject-first ROI is cycle156_rank5_obj4.
 - Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
+- Source-balanced ROI expansion attacks the remaining cohort-breadth bottleneck: it samples 48 cycles across 14 source movies, including 41 cycle/source pairs not already in video cohorts, and proposes 96 automatic ROI rows for follow-up sequence export/QC.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC 0.849 versus PCA-video 0.569 and handcrafted scalar 0.828; future16 learned_all remains weak at AUC 0.538 versus handcrafted 0.680.
@@ -1082,6 +1083,32 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - QC cycle 157: n=4, possible accept=0, artifact-first=1, max score 0.710
 - QC cycle 116: n=5, possible accept=0, artifact-first=0, max score 0.645
 - Guardrail: This ledger does not assign manual QC labels. It prioritizes pending particle/front candidates for human review using existing automatic evidence and keeps all physics claims guarded until particle identity, front mask, and calibration checks are manually accepted.
+
+## Source-Balanced ROI Expansion Manifest
+
+- Ranked/selected/sampled cycles: 89 / 48 / 48
+- Sources selected: 14
+- New cycle/source pairs versus existing video cohorts: 41
+- Reconstructed candidates/ROI rows/missing cycles: 2880 / 96 / 0
+- Selected label counts: {'future16_positive': 24, 'future8_positive': 14, 'same_cycle_drop': 0}
+- Selection reason counts: {'future16_negative': 10, 'future16_positive': 8, 'source_fill': 17, 'source_representative': 13}
+- Expansion source 10_c2_x10_030723: selected 2, new 2, future16+ 0, candidates 120
+- Expansion source 11_c2_x10_050723: selected 3, new 3, future16+ 2, candidates 180
+- Expansion source 12_c2_x10_070723: selected 4, new 2, future16+ 4, candidates 240
+- Expansion source 14_c2_x10_HighCOV_110723: selected 4, new 4, future16+ 0, candidates 240
+- Expansion source 15_c2_x5_HighCOV_120723: selected 3, new 3, future16+ 0, candidates 180
+- Expansion source 16_c2_x10_HighHighCOV_130723: selected 4, new 4, future16+ 3, candidates 240
+- Expansion source 17_c2_x10_HighHighCOV_150723: selected 3, new 0, future16+ 3, candidates 180
+- Expansion source 2_c2_x14_200623: selected 4, new 4, future16+ 0, candidates 240
+- Expansion source 4_c2_x10_240623: selected 4, new 4, future16+ 0, candidates 240
+- Expansion source 5_c2_x10_260623: selected 3, new 3, future16+ 0, candidates 180
+- Expansion ROI candidate cycle 92 10_c2_x10_030723 rank 1: score 25.929, future16 0, existing cohort False
+- Expansion ROI candidate cycle 92 10_c2_x10_030723 rank 2: score 24.775, future16 0, existing cohort False
+- Expansion ROI candidate cycle 94 10_c2_x10_030723 rank 1: score 25.611, future16 0, existing cohort False
+- Expansion ROI candidate cycle 94 10_c2_x10_030723 rank 2: score 24.428, future16 0, existing cohort False
+- Expansion ROI candidate cycle 98 11_c2_x10_050723 rank 2: score 25.035, future16 0, existing cohort False
+- Expansion ROI candidate cycle 98 11_c2_x10_050723 rank 1: score 23.986, future16 0, existing cohort False
+- Guardrail: Source-balanced expansion candidates are automatic proposals from sampled HDF5 frames. They reduce source/cycle selection bias for follow-up ROI export and manual QC, but do not validate particle identity, fronts, diffusion, or degradation mechanisms.
 
 ## Balanced Future-Drop Direct-Video ROI Audit
 

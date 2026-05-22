@@ -141,6 +141,7 @@ def main() -> None:
     automatic_qc_triage = read_json(derived / "automatic_qc_triage_surrogate" / "automatic_qc_triage_surrogate_summary.json")
     qc_decision_ledger = read_json(derived / "qc_decision_evidence_ledger" / "qc_decision_evidence_ledger_summary.json")
     balanced_future_reconstruction = read_json(derived / "balanced_future_roi_reconstruction" / "balanced_future_roi_reconstruction_summary.json")
+    source_balanced_expansion = read_json(derived / "source_balanced_roi_expansion_manifest" / "source_balanced_roi_expansion_summary.json")
     balanced_future_sequences = read_json(derived / "balanced_future_roi_sequences" / "selected_roi_sequence_summary.json")
     balanced_future_fronts = read_json(derived / "balanced_future_threshold_robust_fronts" / "threshold_robust_front_summary.json")
     balanced_future_rollout = read_json(derived / "balanced_future_masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
@@ -385,6 +386,8 @@ def main() -> None:
     qc_decision_artifact = top_items(first_summary(qc_decision_ledger, "top_artifact_queue", []), 8)
     qc_decision_cycles = top_items(first_summary(qc_decision_ledger, "cycle_summary", []), 8)
     qc_decision_actions = first_summary(qc_decision_ledger, "decision_action_counts", {}) or {}
+    source_balanced_expansion_sources = top_items(first_summary(source_balanced_expansion, "source_coverage", []), 20)
+    source_balanced_expansion_top = top_items(first_summary(source_balanced_expansion, "top_roi_rows", []), 12)
     balanced_future_oof = top_items(first_summary(balanced_future_physics, "cycle_group_oof_metrics", []), 6)
     balanced_future_null = first_summary(balanced_future_physics, "permutation_null", {}) or {}
     balanced_future_roi_tests = top_items(first_summary(balanced_future_physics, "top_roi_feature_tests", []), 12)
@@ -794,6 +797,7 @@ def main() -> None:
         f"- Automatic QC triage surrogate ranks the same pending-review bottleneck without assigning labels: {first_summary(automatic_qc_triage, 'likely_interpretable_count', 0)} likely interpretable candidates, {first_summary(automatic_qc_triage, 'artifact_risk_count', 0)} artifact-risk candidates, and {first_summary(automatic_qc_triage, 'diffusion_guardrail_count', 0)} diffusion-guardrail rows; top likely ROI is {(auto_qc_likely[0] if auto_qc_likely else {}).get('roi_id', 'NA')} and top artifact-risk ROI is {(auto_qc_artifact[0] if auto_qc_artifact else {}).get('roi_id', 'NA')}.",
         f"- QC decision evidence ledger converts the 47 pending labels into explicit reviewer actions without assigning labels: {qc_decision_actions}; top possible-accept ROI is {(qc_decision_accept[0] if qc_decision_accept else {}).get('roi_id', 'NA')}, while top artifact/reject-first ROI is {(qc_decision_artifact[0] if qc_decision_artifact else {}).get('roi_id', 'NA')}.",
         f"- Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling {first_summary(balanced_future_reconstruction, 'n_cycles_sampled', 0)} cycles and {first_summary(balanced_future_physics, 'n_roi', 0)} ROI rows with equal weak future8 positives/negatives; leave-cycle {balanced_future_best_oof.get('model', 'NA')} reaches AUC {fmt(balanced_future_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(balanced_future_best_oof.get('pooled_oof_average_precision'))}, permutation p={fmt(balanced_future_null.get('empirical_p_ge_observed'))}. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.",
+        f"- Source-balanced ROI expansion attacks the remaining cohort-breadth bottleneck: it samples {first_summary(source_balanced_expansion, 'n_sampled_cycles', 0)} cycles across {first_summary(source_balanced_expansion, 'n_sources_selected', 0)} source movies, including {first_summary(source_balanced_expansion, 'n_new_selected_cycles', 0)} cycle/source pairs not already in video cohorts, and proposes {first_summary(source_balanced_expansion, 'n_roi_rows', 0)} automatic ROI rows for follow-up sequence export/QC.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
         f"- Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC {fmt(learned_residual_future8.get('roc_auc'))} versus PCA-video {fmt(learned_residual_pca_future8.get('roc_auc'))} and handcrafted scalar {fmt(learned_residual_hand_future8.get('roc_auc'))}; future16 learned_all remains weak at AUC {fmt(learned_residual_future16.get('roc_auc'))} versus handcrafted {fmt(learned_residual_hand_future16.get('roc_auc'))}.",
@@ -1655,6 +1659,27 @@ def main() -> None:
             f"- QC cycle {fmt(row.get('cycleNo'), 0)}: n={fmt(row.get('n_candidates'), 0)}, possible accept={fmt(row.get('n_review_for_accept'), 0)}, artifact-first={fmt(row.get('n_artifact_first'), 0)}, max score {fmt(row.get('max_decision_score'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(qc_decision_ledger, 'guardrail', 'QC decision evidence ledger unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Source-Balanced ROI Expansion Manifest",
+        "",
+        f"- Ranked/selected/sampled cycles: {first_summary(source_balanced_expansion, 'n_ranked_cycles', 0)} / {first_summary(source_balanced_expansion, 'n_selected_cycles', 0)} / {first_summary(source_balanced_expansion, 'n_sampled_cycles', 0)}",
+        f"- Sources selected: {first_summary(source_balanced_expansion, 'n_sources_selected', 0)}",
+        f"- New cycle/source pairs versus existing video cohorts: {first_summary(source_balanced_expansion, 'n_new_selected_cycles', 0)}",
+        f"- Reconstructed candidates/ROI rows/missing cycles: {first_summary(source_balanced_expansion, 'n_reconstructed_candidates', 0)} / {first_summary(source_balanced_expansion, 'n_roi_rows', 0)} / {first_summary(source_balanced_expansion, 'n_missing_cycles', 0)}",
+        f"- Selected label counts: {first_summary(source_balanced_expansion, 'selected_label_counts', {})}",
+        f"- Selection reason counts: {first_summary(source_balanced_expansion, 'selection_reason_counts', {})}",
+    ]
+    for row in source_balanced_expansion_sources[:10]:
+        report_lines.append(
+            f"- Expansion source {row.get('source_stem')}: selected {fmt(row.get('selected_cycles'), 0)}, new {fmt(row.get('new_cycles'), 0)}, future16+ {fmt(row.get('future16_positive'), 0)}, candidates {fmt(row.get('total_candidates'), 0)}"
+        )
+    for row in source_balanced_expansion_top[:6]:
+        report_lines.append(
+            f"- Expansion ROI candidate cycle {fmt(row.get('cycleNo'), 0)} {row.get('source_stem')} rank {fmt(row.get('object_candidate_rank'), 0)}: score {fmt(row.get('validation_score'))}, future16 {fmt(row.get('future_any_drop_within_16cycles'), 0)}, existing cohort {row.get('already_in_existing_video_cohort')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_expansion, 'guardrail', 'Source-balanced expansion manifest unavailable.')}")
 
     report_lines += [
         "",
@@ -2607,6 +2632,20 @@ def main() -> None:
             "top_transition_correlations": transfer_ranked_timing_transition_corr,
             "top_near_transition_residual_rois": transfer_ranked_timing_top_rois,
             "guardrail": first_summary(transfer_ranked_residual_timing, "guardrail"),
+        },
+        "source_balanced_roi_expansion_manifest": {
+            "n_ranked_cycles": first_summary(source_balanced_expansion, "n_ranked_cycles"),
+            "n_selected_cycles": first_summary(source_balanced_expansion, "n_selected_cycles"),
+            "n_sampled_cycles": first_summary(source_balanced_expansion, "n_sampled_cycles"),
+            "n_new_selected_cycles": first_summary(source_balanced_expansion, "n_new_selected_cycles"),
+            "n_sources_selected": first_summary(source_balanced_expansion, "n_sources_selected"),
+            "n_reconstructed_candidates": first_summary(source_balanced_expansion, "n_reconstructed_candidates"),
+            "n_roi_rows": first_summary(source_balanced_expansion, "n_roi_rows"),
+            "selected_label_counts": first_summary(source_balanced_expansion, "selected_label_counts", {}),
+            "selection_reason_counts": first_summary(source_balanced_expansion, "selection_reason_counts", {}),
+            "source_coverage": source_balanced_expansion_sources,
+            "top_roi_rows": source_balanced_expansion_top,
+            "guardrail": first_summary(source_balanced_expansion, "guardrail"),
         },
         "balanced_future_roi_physics_audit": {
             "n_cycles_sampled": first_summary(balanced_future_reconstruction, "n_cycles_sampled"),

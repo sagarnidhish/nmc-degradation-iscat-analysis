@@ -2983,3 +2983,24 @@ Key result:
 - Future8 remains context dominated: echem/context and context-augmented feature sets are near AUC 0.917 under leave-cycle, while conditioned residual dictionary alone is weak for future8.
 
 Interpretation: the useful representation is not raw learned video residuals alone. Residual dictionary modes become more informative after subtracting echem/acquisition-predictable structure, especially for longer-horizon future16 and leave-source transfer. This supports a context-conditioned residual objective for future AI models, but it remains a weak-label, automatic-mask, non-calibrated audit rather than a deployable warning or causal degradation mechanism.
+
+## 2026-05-22 Source-Balanced ROI Expansion Manifest
+
+Added and ran:
+
+`scripts/tier4_source_balanced_roi_expansion_manifest.py`
+
+Output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest`
+- `derived_local/source_balanced_roi_expansion_manifest`
+
+Key result:
+
+- The expansion pass uses the full 89-cycle cycle-state table rather than only the 30 highest-ranked warning cycles.
+- It selected and sampled 48 cycle segments across 14 source movies, with no missing HDF5 segments.
+- 41 selected cycle/source pairs are new relative to the existing multi-cycle, transfer-ranked, balanced-future, and control video cohorts.
+- The sampled segments produced 2,880 automatic particle-like candidates and a compact 96-row ROI expansion table with the top 2 candidates per cycle.
+- The selected cycle set includes 24 future16-positive cycles and 14 future8-positive cycles, plus source representatives and future16-negative controls. Source coverage spans early normal-COV movies, HighCOV movies, and HighHighCOV movies.
+
+Interpretation: this directly addresses the cohort-breadth bottleneck in the current video/physics analyses. It does not claim validated particles, fronts, diffusion, or degradation mechanisms; it creates a source-balanced expansion manifest for follow-up ROI sequence export, mask/front QC, and source-transfer tests on a broader direct-video cohort.
