@@ -2249,3 +2249,29 @@ Key result:
 - The strongest mask-stability contrast is accepted-centroid max step, positive-negative +2.15 px, Mann-Whitney p=0.175. Mask instability score is also non-significant (positive-negative +0.033, p=0.461).
 
 Interpretation: this is a useful artifact guardrail for the balanced future-drop audit. The weak future8 signal in the balanced direct-video cohort is not explained by a simple difference in mask fallback, fragmentation, or aggregate mask instability between positive and negative rows.
+
+## 2026-05-22 Balanced Future Context/Region Confound Audit
+
+Added and ran a context/region guardrail on the balanced future-drop ROI table:
+
+`python scripts/tier4_balanced_future_context_region_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_context_region_audit`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_context_region_audit`
+
+Local compact copy:
+
+`derived_local/balanced_future_context_region_audit`
+
+Key result:
+
+- Audited 72 ROI rows across 24 balanced weak future8 cycles, with 36 positive and 36 negative ROI rows.
+- Separated acquisition/spatial context (`source_stem`, local segment, stage drift, object x/y/area, frame indices, spatial bins) from design context (`cycleNo`, balanced rank, transferred warning score, selection subrole).
+- Acquisition context alone predicts weak future8 labels strongly: random forest AUC=0.851 and AP=0.888; logistic L2 AUC=0.823 and AP=0.846.
+- Design context is perfect by construction: AUC/AP=1.0, confirming selection metadata must not be used as deployment features.
+- Physics-only scoring reaches AUC=0.711 and AP=0.683; physics plus acquisition context reaches AUC=0.887 and AP=0.896.
+- After residualizing physics features against acquisition context, top front/radius/diffusion residuals are non-significant: radius2 residual AUC=0.552, p=0.447; apparent diffusion residual AUC=0.552, p=0.447.
+- Spatial bin label enrichment is not significant: x-bin p=1.0, y-bin p=0.846, xy-region p=0.982.
+
+Interpretation: the balanced future-drop physics signal is useful for review prioritization, but it is not yet a context-independent detector. More balanced acquisition design and manual ROI/front QC are needed before claiming direct video physics as a deployable degradation predictor.

@@ -98,6 +98,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Active-learning QC prioritization merges manual-QC, precursor, weak-model, front, and timing evidence into 97 review candidates; 47 have visual assets and 4 are immediate manual-QC picks, led by cycle116_rank7_obj37. No manual labels are assigned.
 - Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
+- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
@@ -762,6 +763,8 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Masked rollout best-method counts: {'persistence': 72}
 - Mask stability ROI/frames: 72 / 6912; overall {'median_fallback_frame_fraction': 0.0, 'median_accepted_area_cv': 0.07390347879875156, 'median_centroid_path_px': 133.39177039942166, 'median_mask_instability_score': 1.4906788486948246}
 - Mask stability role summary: [{'cohort_role': 'future8_negative', 'n_roi': 36, 'fallback_frame_fraction': 0.0, 'accepted_area_cv': 0.07014676858327966, 'accepted_centroid_path_px': 132.55635556011174, 'mask_instability_score': 1.4676753658649946}, {'cohort_role': 'future8_positive', 'n_roi': 36, 'fallback_frame_fraction': 0.0, 'accepted_area_cv': 0.07785297724433327, 'accepted_centroid_path_px': 135.94103030938612, 'mask_instability_score': 1.5007457893873566}]
+- Context-only / physics-only / physics+acquisition best AUC: 0.851 / 0.716 / 0.887
+- Design-context best AUC: 1.000 (includes selection metadata such as balanced rank/subrole and warning score)
 - Balanced future OOF logistic_l2: AUC 0.716, AP 0.761, scored 72 rows (36/36 pos/neg)
 - Balanced future OOF random_forest: AUC 0.673, AP 0.736, scored 72 rows (36/36 pos/neg)
 - Balanced future permutation null logistic_l2: observed AUC 0.716, null mean 0.489, p95 0.701, empirical p=0.049
@@ -785,6 +788,26 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Balanced future mask-stability candidate_area_cv: future8 positive-negative 0.005, MW p=0.414, n=36/36
 - Balanced future mask-stability mask_instability_score: future8 positive-negative 0.033, MW p=0.461, n=36/36
 - Balanced future mask-stability low_area_fraction: future8 positive-negative 0.000, MW p=0.569, n=36/36
+- Balanced future context OOF acquisition_context_only logistic_l2: AUC 0.823, AP 0.846
+- Balanced future context OOF acquisition_context_only random_forest: AUC 0.851, AP 0.888
+- Balanced future context OOF design_context_only logistic_l2: AUC 1.000, AP 1.000
+- Balanced future context OOF design_context_only random_forest: AUC 1.000, AP 1.000
+- Balanced future context OOF physics_only logistic_l2: AUC 0.711, AP 0.683
+- Balanced future context OOF physics_only random_forest: AUC 0.689, AP 0.690
+- Balanced future context OOF physics_plus_acquisition_context logistic_l2: AUC 0.887, AP 0.896
+- Balanced future context OOF physics_plus_acquisition_context random_forest: AUC 0.786, AP 0.841
+- Balanced future context OOF physics_plus_design_context logistic_l2: AUC 1.000, AP 1.000
+- Balanced future context OOF physics_plus_design_context random_forest: AUC 1.000, AP 1.000
+- Acquisition-context residual feature radius2_slope_median_px2_per_s: median positive-negative 9.596e-05, AUC 0.552, MW p=0.447
+- Acquisition-context residual feature diffusion_proxy_median_um2_per_s: median positive-negative 2.211e-07, AUC 0.552, MW p=0.447
+- Acquisition-context residual feature q70_radius2_slope_bootstrap_p50_px2_per_s: median positive-negative -4.025e-05, AUC 0.552, MW p=0.454
+- Acquisition-context residual feature threshold_robust_diffusion_score: median positive-negative -0.002, AUC 0.549, MW p=0.481
+- Acquisition-context residual feature phase_slope_positive_fraction: median positive-negative 0.086, AUC 0.543, MW p=0.532
+- Acquisition-context residual feature threshold_robust_phase_score: median positive-negative -0.002, AUC 0.522, MW p=0.748
+- Spatial region test y_bin: chi2=0.333, p=0.846, regions=3
+- Spatial region test xy_region: chi2=1.511, p=0.982, regions=8
+- Spatial region test x_bin: chi2=0.000, p=1.000, regions=3
+- Context guardrail: Context/region audit tests whether balanced future8 ROI signal is explainable by acquisition context or spatial position. It still uses weak cycle labels and automatic ROI candidates.
 - Front-script guardrail: Diffusion values are apparent optical-front proxies computed as slope(radius^2) * pixel_size_um^2 / 4. They are not validated Li diffusion coefficients and require manual front QC.
 - Audit guardrail: Balanced direct-video ROI audit uses weak cycle-level future8 labels projected to automatic particle-region candidates. Cycle-group splits and cycle-collapsed tests reduce leakage, but this is still review-prioritization evidence, not manual QC or deployable detection.
 

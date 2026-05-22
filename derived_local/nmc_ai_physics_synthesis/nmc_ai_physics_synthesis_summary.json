@@ -3924,6 +3924,301 @@
   },
   "all_qc_rf_mean_roc_auc": 0.796875,
   "balanced_future_roi_physics_audit": {
+    "context_region_audit": {
+      "best_acquisition_context_only": {
+        "feature_set": "acquisition_context_only",
+        "group_col": "cycleNo",
+        "model": "random_forest",
+        "n_negative_scored": 36,
+        "n_positive_scored": 36,
+        "n_scored": 72,
+        "pooled_oof_average_precision": 0.8875921757035699,
+        "pooled_oof_roc_auc": 0.8510802469135802
+      },
+      "best_design_context_only": {
+        "feature_set": "design_context_only",
+        "group_col": "cycleNo",
+        "model": "logistic_l2",
+        "n_negative_scored": 36,
+        "n_positive_scored": 36,
+        "n_scored": 72,
+        "pooled_oof_average_precision": 1.0,
+        "pooled_oof_roc_auc": 1.0
+      },
+      "best_physics_plus_acquisition_context": {
+        "feature_set": "physics_plus_acquisition_context",
+        "group_col": "cycleNo",
+        "model": "logistic_l2",
+        "n_negative_scored": 36,
+        "n_positive_scored": 36,
+        "n_scored": 72,
+        "pooled_oof_average_precision": 0.895998189652921,
+        "pooled_oof_roc_auc": 0.8865740740740741
+      },
+      "cycle_group_oof_metrics": [
+        {
+          "feature_set": "acquisition_context_only",
+          "group_col": "cycleNo",
+          "model": "logistic_l2",
+          "n_negative_scored": 36,
+          "n_positive_scored": 36,
+          "n_scored": 72,
+          "pooled_oof_average_precision": 0.8457246900593868,
+          "pooled_oof_roc_auc": 0.8233024691358024
+        },
+        {
+          "feature_set": "acquisition_context_only",
+          "group_col": "cycleNo",
+          "model": "random_forest",
+          "n_negative_scored": 36,
+          "n_positive_scored": 36,
+          "n_scored": 72,
+          "pooled_oof_average_precision": 0.8875921757035699,
+          "pooled_oof_roc_auc": 0.8510802469135802
+        },
+        {
+          "feature_set": "design_context_only",
+          "group_col": "cycleNo",
+          "model": "logistic_l2",
+          "n_negative_scored": 36,
+          "n_positive_scored": 36,
+          "n_scored": 72,
+          "pooled_oof_average_precision": 1.0,
+          "pooled_oof_roc_auc": 1.0
+        },
+        {
+          "feature_set": "design_context_only",
+          "group_col": "cycleNo",
+          "model": "random_forest",
+          "n_negative_scored": 36,
+          "n_positive_scored": 36,
+          "n_scored": 72,
+          "pooled_oof_average_precision": 1.0,
+          "pooled_oof_roc_auc": 1.0
+        },
+        {
+          "feature_set": "physics_only",
+          "group_col": "cycleNo",
+          "model": "logistic_l2",
+          "n_negative_scored": 36,
+          "n_positive_scored": 36,
+          "n_scored": 72,
+          "pooled_oof_average_precision": 0.6825415368191718,
+          "pooled_oof_roc_auc": 0.7106481481481481
+        },
+        {
+          "feature_set": "physics_only",
+          "group_col": "cycleNo",
+          "model": "random_forest",
+          "n_negative_scored": 36,
+          "n_positive_scored": 36,
+          "n_scored": 72,
+          "pooled_oof_average_precision": 0.6901733077770005,
+          "pooled_oof_roc_auc": 0.6890432098765433
+        },
+        {
+          "feature_set": "physics_plus_acquisition_context",
+          "group_col": "cycleNo",
+          "model": "logistic_l2",
+          "n_negative_scored": 36,
+          "n_positive_scored": 36,
+          "n_scored": 72,
+          "pooled_oof_average_precision": 0.895998189652921,
+          "pooled_oof_roc_auc": 0.8865740740740741
+        },
+        {
+          "feature_set": "physics_plus_acquisition_context",
+          "group_col": "cycleNo",
+          "model": "random_forest",
+          "n_negative_scored": 36,
+          "n_positive_scored": 36,
+          "n_scored": 72,
+          "pooled_oof_average_precision": 0.8408608511707139,
+          "pooled_oof_roc_auc": 0.7862654320987653
+        },
+        {
+          "feature_set": "physics_plus_design_context",
+          "group_col": "cycleNo",
+          "model": "logistic_l2",
+          "n_negative_scored": 36,
+          "n_positive_scored": 36,
+          "n_scored": 72,
+          "pooled_oof_average_precision": 1.0,
+          "pooled_oof_roc_auc": 1.0
+        },
+        {
+          "feature_set": "physics_plus_design_context",
+          "group_col": "cycleNo",
+          "model": "random_forest",
+          "n_negative_scored": 36,
+          "n_positive_scored": 36,
+          "n_scored": 72,
+          "pooled_oof_average_precision": 1.0,
+          "pooled_oof_roc_auc": 1.0
+        }
+      ],
+      "guardrail": "Context/region audit tests whether balanced future8 ROI signal is explainable by acquisition context or spatial position. It still uses weak cycle labels and automatic ROI candidates.",
+      "n_cycles": 24,
+      "n_roi": 72,
+      "spatial_region_tests": [
+        {
+          "chi2": 0.3333333333333333,
+          "n_regions": 3,
+          "p_value": 0.8464817248906141,
+          "region_col": "y_bin",
+          "table": {
+            "0": {
+              "high": 12,
+              "low": 11,
+              "mid": 13
+            },
+            "1": {
+              "high": 12,
+              "low": 13,
+              "mid": 11
+            }
+          }
+        },
+        {
+          "chi2": 1.511111111111111,
+          "n_regions": 8,
+          "p_value": 0.9819224988347934,
+          "region_col": "xy_region",
+          "table": {
+            "0": {
+              "high_high": 2,
+              "high_low": 3,
+              "high_mid": 7,
+              "low_low": 7,
+              "low_mid": 5,
+              "mid_high": 10,
+              "mid_low": 1,
+              "mid_mid": 1
+            },
+            "1": {
+              "high_high": 2,
+              "high_low": 3,
+              "high_mid": 7,
+              "low_low": 8,
+              "low_mid": 4,
+              "mid_high": 10,
+              "mid_low": 2,
+              "mid_mid": 0
+            }
+          }
+        },
+        {
+          "chi2": 0.0,
+          "n_regions": 3,
+          "p_value": 1.0,
+          "region_col": "x_bin",
+          "table": {
+            "0": {
+              "high": 12,
+              "low": 12,
+              "mid": 12
+            },
+            "1": {
+              "high": 12,
+              "low": 12,
+              "mid": 12
+            }
+          }
+        }
+      ],
+      "top_acquisition_context_residual_feature_tests": [
+        {
+          "feature": "radius2_slope_median_px2_per_s",
+          "mannwhitney_p": 0.4471323252601691,
+          "median_positive_minus_negative": 9.596473103511e-05,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.5524691358024691,
+          "residual_feature": "radius2_slope_median_px2_per_s_context_residual"
+        },
+        {
+          "feature": "diffusion_proxy_median_um2_per_s",
+          "mannwhitney_p": 0.4471323252601691,
+          "median_positive_minus_negative": 2.211027403047927e-07,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.5524691358024691,
+          "residual_feature": "diffusion_proxy_median_um2_per_s_context_residual"
+        },
+        {
+          "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+          "mannwhitney_p": 0.4538920069656692,
+          "median_positive_minus_negative": -4.0248805358313185e-05,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.5516975308641975,
+          "residual_feature": "q70_radius2_slope_bootstrap_p50_px2_per_s_context_residual"
+        },
+        {
+          "feature": "threshold_robust_diffusion_score",
+          "mannwhitney_p": 0.4814993472493241,
+          "median_positive_minus_negative": -0.002061213102638293,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.5486111111111112,
+          "residual_feature": "threshold_robust_diffusion_score_context_residual"
+        },
+        {
+          "feature": "phase_slope_positive_fraction",
+          "mannwhitney_p": 0.5319335991781662,
+          "median_positive_minus_negative": 0.08559303922631573,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.5432098765432098,
+          "residual_feature": "phase_slope_positive_fraction_context_residual"
+        },
+        {
+          "feature": "threshold_robust_phase_score",
+          "mannwhitney_p": 0.7482291433855858,
+          "median_positive_minus_negative": -0.0016601429669344386,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.5223765432098766,
+          "residual_feature": "threshold_robust_phase_score_context_residual"
+        },
+        {
+          "feature": "mask_instability_score",
+          "mannwhitney_p": 0.7567792425320674,
+          "median_positive_minus_negative": -0.27844708552668074,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.5216049382716049,
+          "residual_feature": "mask_instability_score_context_residual"
+        },
+        {
+          "feature": "low_rank_dmd_particle_mse_fraction_of_full_mean",
+          "mannwhitney_p": 0.7653592168411057,
+          "median_positive_minus_negative": 0.0844153127194811,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.5208333333333334,
+          "residual_feature": "low_rank_dmd_particle_mse_fraction_of_full_mean_context_residual"
+        },
+        {
+          "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+          "mannwhitney_p": 0.8174104078538141,
+          "median_positive_minus_negative": -0.1507594900928259,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.5162037037037037,
+          "residual_feature": "velocity_particle_to_nonparticle_mse_ratio_mean_context_residual"
+        },
+        {
+          "feature": "persistence_particle_to_nonparticle_mse_ratio_mean",
+          "mannwhitney_p": 0.8525798194003164,
+          "median_positive_minus_negative": -0.09232945222889566,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.5131172839506173,
+          "residual_feature": "persistence_particle_to_nonparticle_mse_ratio_mean_context_residual"
+        }
+      ]
+    },
     "cycle_group_oof_metrics": [
       {
         "group_col": "cycleNo",

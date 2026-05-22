@@ -134,6 +134,7 @@ def main() -> None:
     balanced_future_fronts = read_json(derived / "balanced_future_threshold_robust_fronts" / "threshold_robust_front_summary.json")
     balanced_future_rollout = read_json(derived / "balanced_future_masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
     balanced_future_mask = read_json(derived / "balanced_future_particle_mask_stability" / "particle_mask_stability_audit_summary.json")
+    balanced_future_context = read_json(derived / "balanced_future_context_region_audit" / "balanced_future_context_region_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
     diffusion_sanity = read_json(derived / "diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
@@ -327,6 +328,13 @@ def main() -> None:
     balanced_future_mask_roles = top_items(first_summary(balanced_future_mask, "role_summary", []), 6)
     balanced_future_mask_tests = top_items(first_summary(balanced_future_mask, "top_future_label_tests", []), 8)
     balanced_future_mask_top_test = balanced_future_mask_tests[0] if balanced_future_mask_tests else {}
+    balanced_future_context_oof = top_items(first_summary(balanced_future_context, "cycle_group_oof_metrics", []), 12)
+    balanced_future_best_acq_context = first_summary(balanced_future_context, "best_acquisition_context_only", {}) or {}
+    balanced_future_best_design_context = first_summary(balanced_future_context, "best_design_context_only", {}) or {}
+    balanced_future_best_context_physics = first_summary(balanced_future_context, "best_physics_plus_acquisition_context", {}) or {}
+    balanced_future_acq_resid = top_items(first_summary(balanced_future_context, "top_acquisition_context_residual_feature_tests", []), 10)
+    balanced_future_spatial_tests = top_items(first_summary(balanced_future_context, "spatial_region_tests", []), 8)
+    balanced_future_top_acq_resid = balanced_future_acq_resid[0] if balanced_future_acq_resid else {}
     multicohort_best_oof = max(multicohort_oof, key=lambda r: (float(r.get("pooled_oof_roc_auc") or float("nan")) if r.get("pooled_oof_roc_auc") is not None else float("nan"))) if multicohort_oof else {}
     cross_cohort_shift = top_items(first_summary(cross_cohort_rollout, "domain_shift", []), 12)
     cross_cohort_corr = top_items(first_summary(cross_cohort_rollout, "top_correlations", []), 12)
@@ -525,6 +533,7 @@ def main() -> None:
         f"- Active-learning QC prioritization merges manual-QC, precursor, weak-model, front, and timing evidence into {first_summary(active_learning_qc, 'n_candidate_rows', 0)} review candidates; {first_summary(active_learning_qc, 'n_rows_with_visual_asset', 0)} have visual assets and {active_qc_tiers.get('immediate_manual_qc', 0)} are immediate manual-QC picks, led by {(active_qc_top[0] if active_qc_top else {}).get('roi_id', 'NA')}. No manual labels are assigned.",
         f"- Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling {first_summary(balanced_future_reconstruction, 'n_cycles_sampled', 0)} cycles and {first_summary(balanced_future_physics, 'n_roi', 0)} ROI rows with equal weak future8 positives/negatives; leave-cycle {balanced_future_best_oof.get('model', 'NA')} reaches AUC {fmt(balanced_future_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(balanced_future_best_oof.get('pooled_oof_average_precision'))}, permutation p={fmt(balanced_future_null.get('empirical_p_ge_observed'))}. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
+        f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
         f"- Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p={fmt((masked_residual_timing_align[0] if masked_residual_timing_align else {}).get('empirical_p_distance_le_observed'))}), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.",
         f"- Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: {first_summary(weak_label_benchmark, 'n_trainable_weak_label_rows', 0)} trainable weak rows ({first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} positive / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)} negative), and only {weak_label_leakage.get('n_usable_binary_folds', 0)} leave-reference fold is class-balanced enough for binary evaluation.",
         "",
@@ -1140,6 +1149,8 @@ def main() -> None:
         f"- Masked rollout best-method counts: {balanced_future_rollout_best_counts}",
         f"- Mask stability ROI/frames: {first_summary(balanced_future_mask, 'n_roi', 0)} / {first_summary(balanced_future_mask, 'n_frames_total', 0)}; overall {balanced_future_mask_overall}",
         f"- Mask stability role summary: {balanced_future_mask_roles}",
+        f"- Context-only / physics-only / physics+acquisition best AUC: {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))} / {fmt(balanced_future_best_oof.get('pooled_oof_roc_auc'))} / {fmt(balanced_future_best_context_physics.get('pooled_oof_roc_auc'))}",
+        f"- Design-context best AUC: {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))} (includes selection metadata such as balanced rank/subrole and warning score)",
     ]
     for row in balanced_future_oof:
         report_lines.append(
@@ -1160,6 +1171,19 @@ def main() -> None:
         report_lines.append(
             f"- Balanced future mask-stability {row.get('feature')}: future8 positive-negative {fmt(row.get('median_diff_event_minus_control'))}, MW p={fmt(row.get('p_value'))}, n={fmt(row.get('n_event'), 0)}/{fmt(row.get('n_control'), 0)}"
         )
+    for row in balanced_future_context_oof:
+        report_lines.append(
+            f"- Balanced future context OOF {row.get('feature_set')} {row.get('model')}: AUC {fmt(row.get('pooled_oof_roc_auc'))}, AP {fmt(row.get('pooled_oof_average_precision'))}"
+        )
+    for row in balanced_future_acq_resid[:6]:
+        report_lines.append(
+            f"- Acquisition-context residual feature {row.get('feature')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, AUC {fmt(row.get('oriented_auc'))}, MW p={fmt(row.get('mannwhitney_p'))}"
+        )
+    for row in balanced_future_spatial_tests:
+        report_lines.append(
+            f"- Spatial region test {row.get('region_col')}: chi2={fmt(row.get('chi2'))}, p={fmt(row.get('p_value'))}, regions={fmt(row.get('n_regions'), 0)}"
+        )
+    report_lines.append(f"- Context guardrail: {first_summary(balanced_future_context, 'guardrail', 'Balanced future context/region audit unavailable.')}")
     report_lines.append(f"- Front-script guardrail: {first_summary(balanced_future_fronts, 'diffusion_guardrail', 'Balanced future fronts unavailable.')}")
     report_lines.append(f"- Audit guardrail: {first_summary(balanced_future_physics, 'guardrail', 'Balanced future physics audit unavailable.')}")
 
@@ -1649,6 +1673,17 @@ def main() -> None:
                 "overall": balanced_future_mask_overall,
                 "role_summary": balanced_future_mask_roles,
                 "top_future_label_tests": balanced_future_mask_tests,
+            },
+            "context_region_audit": {
+                "n_roi": first_summary(balanced_future_context, "n_roi"),
+                "n_cycles": first_summary(balanced_future_context, "n_cycles"),
+                "best_acquisition_context_only": balanced_future_best_acq_context,
+                "best_design_context_only": balanced_future_best_design_context,
+                "best_physics_plus_acquisition_context": balanced_future_best_context_physics,
+                "cycle_group_oof_metrics": balanced_future_context_oof,
+                "top_acquisition_context_residual_feature_tests": balanced_future_acq_resid,
+                "spatial_region_tests": balanced_future_spatial_tests,
+                "guardrail": first_summary(balanced_future_context, "guardrail"),
             },
             "front_diffusion_guardrail": first_summary(balanced_future_fronts, "diffusion_guardrail"),
             "guardrail": first_summary(balanced_future_physics, "guardrail"),

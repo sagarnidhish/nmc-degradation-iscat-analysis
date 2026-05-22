@@ -1,0 +1,11 @@
+feature_set,model,group_col,n_scored,n_positive_scored,n_negative_scored,pooled_oof_roc_auc,pooled_oof_average_precision
+acquisition_context_only,logistic_l2,cycleNo,72,36,36,0.8233024691358024,0.8457246900593868
+acquisition_context_only,random_forest,cycleNo,72,36,36,0.8510802469135802,0.8875921757035699
+design_context_only,logistic_l2,cycleNo,72,36,36,1.0,1.0
+design_context_only,random_forest,cycleNo,72,36,36,1.0,1.0
+physics_only,logistic_l2,cycleNo,72,36,36,0.7106481481481481,0.6825415368191718
+physics_only,random_forest,cycleNo,72,36,36,0.6890432098765433,0.6901733077770005
+physics_plus_acquisition_context,logistic_l2,cycleNo,72,36,36,0.8865740740740741,0.895998189652921
+physics_plus_acquisition_context,random_forest,cycleNo,72,36,36,0.7862654320987653,0.8408608511707139
+physics_plus_design_context,logistic_l2,cycleNo,72,36,36,1.0,1.0
+physics_plus_design_context,random_forest,cycleNo,72,36,36,1.0,1.0

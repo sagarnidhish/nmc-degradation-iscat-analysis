@@ -1,0 +1,4 @@
+region_col,n_regions,chi2,p_value,table
+y_bin,3,0.3333333333333333,0.8464817248906141,"{0: {'low': 11, 'mid': 13, 'high': 12}, 1: {'low': 13, 'mid': 11, 'high': 12}}"
+xy_region,8,1.511111111111111,0.9819224988347934,"{0: {'high_high': 2, 'high_low': 3, 'high_mid': 7, 'low_low': 7, 'low_mid': 5, 'mid_high': 10, 'mid_low': 1, 'mid_mid': 1}, 1: {'high_high': 2, 'high_low': 3, 'high_mid': 7, 'low_low': 8, 'low_mid': 4, 'mid_high': 10, 'mid_low': 2, 'mid_mid': 0}}"
+x_bin,3,0.0,1.0,"{0: {'low': 12, 'mid': 12, 'high': 12}, 1: {'low': 12, 'mid': 12, 'high': 12}}"
