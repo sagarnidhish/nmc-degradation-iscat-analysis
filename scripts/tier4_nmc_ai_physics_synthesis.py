@@ -137,6 +137,7 @@ def main() -> None:
     multicohort_future_drop = read_json(derived / "multicohort_future_drop_model" / "multicohort_future_drop_model_summary.json")
     active_learning_qc = read_json(derived / "active_learning_qc_prioritization" / "active_learning_qc_summary.json")
     automatic_qc_triage = read_json(derived / "automatic_qc_triage_surrogate" / "automatic_qc_triage_surrogate_summary.json")
+    qc_decision_ledger = read_json(derived / "qc_decision_evidence_ledger" / "qc_decision_evidence_ledger_summary.json")
     balanced_future_reconstruction = read_json(derived / "balanced_future_roi_reconstruction" / "balanced_future_roi_reconstruction_summary.json")
     balanced_future_sequences = read_json(derived / "balanced_future_roi_sequences" / "selected_roi_sequence_summary.json")
     balanced_future_fronts = read_json(derived / "balanced_future_threshold_robust_fronts" / "threshold_robust_front_summary.json")
@@ -355,6 +356,11 @@ def main() -> None:
     auto_qc_artifact = top_items(first_summary(automatic_qc_triage, "top_artifact_risk", []), 12)
     auto_qc_tests = top_items(first_summary(automatic_qc_triage, "top_feature_tests", []), 12)
     auto_qc_corr = top_items(first_summary(automatic_qc_triage, "top_correlations", []), 12)
+    qc_decision_top = top_items(first_summary(qc_decision_ledger, "top_review_queue", []), 12)
+    qc_decision_accept = top_items(first_summary(qc_decision_ledger, "top_possible_accept_queue", []), 8)
+    qc_decision_artifact = top_items(first_summary(qc_decision_ledger, "top_artifact_queue", []), 8)
+    qc_decision_cycles = top_items(first_summary(qc_decision_ledger, "cycle_summary", []), 8)
+    qc_decision_actions = first_summary(qc_decision_ledger, "decision_action_counts", {}) or {}
     balanced_future_oof = top_items(first_summary(balanced_future_physics, "cycle_group_oof_metrics", []), 6)
     balanced_future_null = first_summary(balanced_future_physics, "permutation_null", {}) or {}
     balanced_future_roi_tests = top_items(first_summary(balanced_future_physics, "top_roi_feature_tests", []), 12)
@@ -554,6 +560,7 @@ def main() -> None:
         f"- Multi-cohort future-drop model rows/features: {first_summary(multicohort_future_drop, 'n_roi_rows', 0)} / {first_summary(multicohort_future_drop, 'n_features', 0)}",
         f"- Active-learning QC candidates/visual/immediate: {first_summary(active_learning_qc, 'n_candidate_rows', 0)} / {first_summary(active_learning_qc, 'n_rows_with_visual_asset', 0)} / {active_qc_tiers.get('immediate_manual_qc', 0)}",
         f"- Automatic QC triage surrogate candidates/likely/artifact/diffusion-guardrail: {first_summary(automatic_qc_triage, 'n_candidates', 0)} / {first_summary(automatic_qc_triage, 'likely_interpretable_count', 0)} / {first_summary(automatic_qc_triage, 'artifact_risk_count', 0)} / {first_summary(automatic_qc_triage, 'diffusion_guardrail_count', 0)}",
+        f"- QC decision evidence ledger candidates/action tiers: {first_summary(qc_decision_ledger, 'n_candidates', 0)} / {qc_decision_actions}",
         f"- Balanced future-drop ROI rows/cycles/features: {first_summary(balanced_future_physics, 'n_roi', 0)} / {first_summary(balanced_future_physics, 'n_cycles', 0)} / {first_summary(balanced_future_physics, 'n_features', 0)}",
         f"- Cross-cohort rollout transfer selected/transfer ROIs: {first_summary(cross_cohort_rollout, 'n_selected_roi', 0)} / {first_summary(cross_cohort_rollout, 'n_transfer_ranked_roi', 0)}",
         f"- Diffusion sanity selected-front/publication candidates: {first_summary(diffusion_sanity, 'n_selected_front_rois', 0)} / {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
@@ -614,6 +621,7 @@ def main() -> None:
         f"- Multi-cohort future-drop model combines selected and transfer-ranked ROI physics features across {first_summary(multicohort_future_drop, 'n_roi_rows', 0)} rows / {first_summary(multicohort_future_drop, 'n_features', 0)} features; leave-cycle random forest reaches AUC {fmt(multicohort_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(multicohort_best_oof.get('pooled_oof_average_precision'))} with {fmt(multicohort_null.get('n_permutation'), 0)}-permutation p={fmt(multicohort_null.get('empirical_p_ge_observed'))}, but leave-cohort transfer is not evaluable because the selected cohort has no positive future8 labels.",
         f"- Active-learning QC prioritization merges manual-QC, precursor, weak-model, front, and timing evidence into {first_summary(active_learning_qc, 'n_candidate_rows', 0)} review candidates; {first_summary(active_learning_qc, 'n_rows_with_visual_asset', 0)} have visual assets and {active_qc_tiers.get('immediate_manual_qc', 0)} are immediate manual-QC picks, led by {(active_qc_top[0] if active_qc_top else {}).get('roi_id', 'NA')}. No manual labels are assigned.",
         f"- Automatic QC triage surrogate ranks the same pending-review bottleneck without assigning labels: {first_summary(automatic_qc_triage, 'likely_interpretable_count', 0)} likely interpretable candidates, {first_summary(automatic_qc_triage, 'artifact_risk_count', 0)} artifact-risk candidates, and {first_summary(automatic_qc_triage, 'diffusion_guardrail_count', 0)} diffusion-guardrail rows; top likely ROI is {(auto_qc_likely[0] if auto_qc_likely else {}).get('roi_id', 'NA')} and top artifact-risk ROI is {(auto_qc_artifact[0] if auto_qc_artifact else {}).get('roi_id', 'NA')}.",
+        f"- QC decision evidence ledger converts the 47 pending labels into explicit reviewer actions without assigning labels: {qc_decision_actions}; top possible-accept ROI is {(qc_decision_accept[0] if qc_decision_accept else {}).get('roi_id', 'NA')}, while top artifact/reject-first ROI is {(qc_decision_artifact[0] if qc_decision_artifact else {}).get('roi_id', 'NA')}.",
         f"- Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling {first_summary(balanced_future_reconstruction, 'n_cycles_sampled', 0)} cycles and {first_summary(balanced_future_physics, 'n_roi', 0)} ROI rows with equal weak future8 positives/negatives; leave-cycle {balanced_future_best_oof.get('model', 'NA')} reaches AUC {fmt(balanced_future_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(balanced_future_best_oof.get('pooled_oof_average_precision'))}, permutation p={fmt(balanced_future_null.get('empirical_p_ge_observed'))}. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
@@ -1414,6 +1422,28 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## QC Decision Evidence Ledger",
+        "",
+        f"- Candidate/manual-status rows: {first_summary(qc_decision_ledger, 'n_candidates', 0)} / {first_summary(qc_decision_ledger, 'manual_status_counts', {})}",
+        f"- Decision action counts: {qc_decision_actions}",
+        f"- Visual-asset candidates: {first_summary(qc_decision_ledger, 'n_visual_asset_candidates', 0)}",
+    ]
+    for row in qc_decision_accept[:5]:
+        report_lines.append(
+            f"- QC possible-accept ROI {row.get('roi_id')}: rank {fmt(row.get('qc_decision_rank'), 0)}, score {fmt(row.get('qc_decision_priority_score'))}, risk {fmt(row.get('automatic_artifact_risk_score'))}, cycle {fmt(row.get('cycleNo'), 0)}, reasons {row.get('decision_reason_tags')}"
+        )
+    for row in qc_decision_artifact[:5]:
+        report_lines.append(
+            f"- QC artifact/reject-first ROI {row.get('roi_id')}: artifact score {fmt(row.get('artifact_review_priority_score'))}, risk {fmt(row.get('automatic_artifact_risk_score'))}, cycle {fmt(row.get('cycleNo'), 0)}, reasons {row.get('decision_reason_tags')}"
+        )
+    for row in qc_decision_cycles[:5]:
+        report_lines.append(
+            f"- QC cycle {fmt(row.get('cycleNo'), 0)}: n={fmt(row.get('n_candidates'), 0)}, possible accept={fmt(row.get('n_review_for_accept'), 0)}, artifact-first={fmt(row.get('n_artifact_first'), 0)}, max score {fmt(row.get('max_decision_score'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(qc_decision_ledger, 'guardrail', 'QC decision evidence ledger unavailable.')}")
+
+    report_lines += [
+        "",
         "## Balanced Future-Drop Direct-Video ROI Audit",
         "",
         f"- Reconstructed cycles/candidates/ROI rows: {first_summary(balanced_future_reconstruction, 'n_cycles_sampled', 0)} / {first_summary(balanced_future_reconstruction, 'n_reconstructed_candidates', 0)} / {first_summary(balanced_future_reconstruction, 'n_roi_rows', 0)}",
@@ -2083,6 +2113,17 @@ def main() -> None:
             "top_feature_tests": auto_qc_tests,
             "top_correlations": auto_qc_corr,
             "guardrail": first_summary(automatic_qc_triage, "guardrail"),
+        },
+        "qc_decision_evidence_ledger": {
+            "n_candidates": first_summary(qc_decision_ledger, "n_candidates"),
+            "manual_status_counts": first_summary(qc_decision_ledger, "manual_status_counts", {}),
+            "decision_action_counts": qc_decision_actions,
+            "n_visual_asset_candidates": first_summary(qc_decision_ledger, "n_visual_asset_candidates"),
+            "top_review_queue": qc_decision_top,
+            "top_possible_accept_queue": qc_decision_accept,
+            "top_artifact_queue": qc_decision_artifact,
+            "cycle_summary": qc_decision_cycles,
+            "guardrail": first_summary(qc_decision_ledger, "guardrail"),
         },
         "multicohort_future_drop_model": {
             "n_roi_rows": first_summary(multicohort_future_drop, "n_roi_rows"),

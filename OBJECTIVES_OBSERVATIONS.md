@@ -2524,3 +2524,25 @@ Key result:
 - Scalar video descriptors outperform raw video PCA components for future labels in this small table: future8 video-scalar AUC 0.816 versus video-embedding-only AUC 0.569. The current PCA embedding is useful but not yet a sufficient learned video representation.
 
 Interpretation: masked-video representations add meaningful weak-label degradation signal over echem alone, and echem helps video descriptors for longer-horizon future16 and masked-residual-signature modeling. However, acquisition/context can dominate future8 labels, so the result should guide representation design, balanced sampling, and review prioritization rather than deployment or causal mechanism claims.
+
+## 2026-05-22 QC Decision Evidence Ledger
+
+Added `scripts/tier4_qc_decision_evidence_ledger.py` and ran it on Isambard to consolidate the manual-QC workbook, automatic QC triage surrogate, physics-consistency matrix, active-learning queue, and available future-drop/front evidence into a reviewer-facing decision ledger. This does not assign manual labels; it turns the remaining QC bottleneck into explicit review actions with claim guardrails.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/qc_decision_evidence_ledger`
+
+Local compact copy:
+
+`derived_local/qc_decision_evidence_ledger`
+
+Key result:
+
+- The ledger covers all 47 pending manual-QC candidates, and all 47 have at least one visual asset path.
+- Decision actions are: 3 `review_for_possible_accept_first`, 5 `high_priority_review`, 4 `review_artifact_or_reject_first`, 16 `review_but_diffusion_guarded`, and 19 `routine_pending_review`.
+- The top possible-accept queue is `cycle156_rank7_obj27`, `cycle156_rank8_obj10`, and `cycle156_rank2_obj2`; all combine automatic likely-interpretable status with cross-modal physics support and front/diffusion-proxy candidate evidence.
+- The top artifact/reject-first queue is led by `cycle156_rank5_obj4`, followed by `cycle86_rank4_obj9`, `cycle157_rank2_obj2`, `cycle158_rank2_obj1`, and `cycle86_rank5_obj8`.
+- Cycle 156 is the highest-yield immediate review group because it contains all three possible-accept-first candidates plus the strongest artifact-risk counterexample.
+
+Interpretation: this reduces the manual-QC bottleneck without pretending to automate acceptance. The immediate practical next review is a small cycle-156 panel: accept/reject `cycle156_rank7_obj27`, `cycle156_rank8_obj10`, and `cycle156_rank2_obj2` first, then inspect `cycle156_rank5_obj4` as an artifact-risk foil. No calibrated diffusion or validated degradation-mode claim is allowed until manual particle identity and front-mask checks are recorded.

@@ -45,6 +45,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Multi-cohort future-drop model rows/features: 59 / 44
 - Active-learning QC candidates/visual/immediate: 97 / 47 / 4
 - Automatic QC triage surrogate candidates/likely/artifact/diffusion-guardrail: 47 / 6 / 10 / 20
+- QC decision evidence ledger candidates/action tiers: 47 / {'high_priority_review': 5, 'review_artifact_or_reject_first': 4, 'review_but_diffusion_guarded': 16, 'review_for_possible_accept_first': 3, 'routine_pending_review': 19}
 - Balanced future-drop ROI rows/cycles/features: 72 / 24 / 26
 - Cross-cohort rollout transfer selected/transfer ROIs: 11 / 48
 - Diffusion sanity selected-front/publication candidates: 12 / 0
@@ -105,6 +106,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Multi-cohort future-drop model combines selected and transfer-ranked ROI physics features across 59 rows / 44 features; leave-cycle random forest reaches AUC 0.886/AP 0.914 with 40-permutation p=0.024, but leave-cohort transfer is not evaluable because the selected cohort has no positive future8 labels.
 - Active-learning QC prioritization merges manual-QC, precursor, weak-model, front, and timing evidence into 97 review candidates; 47 have visual assets and 4 are immediate manual-QC picks, led by cycle116_rank7_obj37. No manual labels are assigned.
 - Automatic QC triage surrogate ranks the same pending-review bottleneck without assigning labels: 6 likely interpretable candidates, 10 artifact-risk candidates, and 20 diffusion-guardrail rows; top likely ROI is cycle156_rank7_obj27 and top artifact-risk ROI is cycle156_rank5_obj4.
+- QC decision evidence ledger converts the 47 pending labels into explicit reviewer actions without assigning labels: {'high_priority_review': 5, 'review_artifact_or_reject_first': 4, 'review_but_diffusion_guarded': 16, 'review_for_possible_accept_first': 3, 'routine_pending_review': 19}; top possible-accept ROI is cycle156_rank7_obj27, while top artifact/reject-first ROI is cycle156_rank5_obj4.
 - Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
@@ -1013,6 +1015,26 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Auto-QC correlation surrogate_front_mask_score vs automatic_artifact_risk_score: rho=-0.507, p=2.773e-04, n=47
 - Auto-QC correlation surrogate_diffusion_interpretability_score vs automatic_qc_surrogate_score: rho=0.483, p=5.824e-04, n=47
 - Guardrail: Automatic QC triage surrogate preserves manual_qc_status as pending. It ranks candidate review priority from existing automatic/visual QC diagnostics and must not be treated as manual particle identity, front-mask, or diffusion-interpretable labels.
+
+## QC Decision Evidence Ledger
+
+- Candidate/manual-status rows: 47 / {'pending': 47}
+- Decision action counts: {'high_priority_review': 5, 'review_artifact_or_reject_first': 4, 'review_but_diffusion_guarded': 16, 'review_for_possible_accept_first': 3, 'routine_pending_review': 19}
+- Visual-asset candidates: 47
+- QC possible-accept ROI cycle156_rank7_obj27: rank 1, score 0.948, risk 0.000, cycle 156, reasons auto_likely_interpretable;cross_modal_high_priority;multi_pillar_support;front_mask_candidate;diffusion_proxy_candidate;visual_assets_available
+- QC possible-accept ROI cycle156_rank8_obj10: rank 2, score 0.889, risk 0.000, cycle 156, reasons auto_likely_interpretable;cross_modal_review_priority;multi_pillar_support;front_mask_candidate;diffusion_proxy_candidate;visual_assets_available
+- QC possible-accept ROI cycle156_rank2_obj2: rank 3, score 0.888, risk 0.125, cycle 156, reasons auto_likely_interpretable;cross_modal_high_priority;multi_pillar_support;front_mask_candidate;diffusion_proxy_candidate;visual_assets_available
+- QC artifact/reject-first ROI cycle156_rank5_obj4: artifact score 0.920, risk 0.625, cycle 156, reasons artifact_risk_review;cross_modal_review_priority;multi_pillar_support;front_mask_candidate;artifact_guardrail_needed;diffusion_claim_guardrail;visual_assets_available
+- QC artifact/reject-first ROI cycle86_rank4_obj9: artifact score 0.865, risk 0.500, cycle 86, reasons artifact_risk_review;cross_modal_review_priority;artifact_guardrail_needed;diffusion_claim_guardrail;visual_assets_available
+- QC artifact/reject-first ROI cycle157_rank2_obj2: artifact score 0.794, risk 0.625, cycle 157, reasons artifact_risk_review;artifact_guardrail_needed;diffusion_claim_guardrail;visual_assets_available
+- QC artifact/reject-first ROI cycle158_rank2_obj1: artifact score 0.787, risk 0.500, cycle 158, reasons artifact_risk_review;cross_modal_review_priority;multi_pillar_support;artifact_guardrail_needed;diffusion_claim_guardrail;visual_assets_available
+- QC artifact/reject-first ROI cycle86_rank5_obj8: artifact score 0.768, risk 0.500, cycle 86, reasons artifact_risk_review;artifact_guardrail_needed;diffusion_claim_guardrail;visual_assets_available
+- QC cycle 156: n=6, possible accept=3, artifact-first=1, max score 0.948
+- QC cycle 60: n=6, possible accept=0, artifact-first=1, max score 0.776
+- QC cycle 62: n=4, possible accept=0, artifact-first=1, max score 0.733
+- QC cycle 157: n=4, possible accept=0, artifact-first=1, max score 0.710
+- QC cycle 116: n=5, possible accept=0, artifact-first=0, max score 0.645
+- Guardrail: This ledger does not assign manual QC labels. It prioritizes pending particle/front candidates for human review using existing automatic evidence and keeps all physics claims guarded until particle identity, front mask, and calibration checks are manually accepted.
 
 ## Balanced Future-Drop Direct-Video ROI Audit
 
