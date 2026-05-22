@@ -102,6 +102,7 @@ def main() -> None:
     spatiotemporal_graph = read_json(derived / "spatiotemporal_degradation_graph" / "spatiotemporal_degradation_graph_summary.json")
     phase_kinetics = read_json(derived / "phase_kinetics_avrami" / "phase_kinetics_avrami_summary.json")
     calibration_metadata = read_json(derived / "calibration_metadata_audit" / "calibration_metadata_audit_summary.json")
+    calibration_provenance = read_json(derived / "calibration_provenance_evidence_audit" / "calibration_provenance_summary.json")
     calibration_claim_risk = read_json(derived / "calibration_claim_risk_register" / "calibration_claim_risk_summary.json")
     apparent_diffusion_calibration = read_json(derived / "apparent_diffusion_calibration_bounds" / "apparent_diffusion_calibration_bounds_summary.json")
     diffusion_physics_consistency = read_json(derived / "diffusion_physics_consistency_audit" / "diffusion_physics_consistency_summary.json")
@@ -1088,6 +1089,7 @@ def main() -> None:
         f"- Spatiotemporal degradation graph nodes/edges: {first_summary(spatiotemporal_graph, 'n_nodes', 0)} / {first_summary(spatiotemporal_graph, 'n_edges', 0)}",
         f"- Phase-kinetics ROI rows/features: {first_summary(phase_kinetics, 'n_roi', 0)} / {first_summary(phase_kinetics, 'n_kinetic_features', 0)}",
         f"- Calibration metadata HDF5/camera-timing files: {first_summary(calibration_metadata, 'n_h5_files', 0)} / {first_summary(calibration_metadata, 'n_h5_with_camera_timing', 0)}",
+        f"- Calibration provenance status: {first_summary(calibration_provenance, 'provenance_status', 'missing')} with {first_summary(calibration_provenance, 'n_near_96nm_px_statements', 0)} near-96 nm/px statements",
         f"- Calibration claim-risk families/source tables: {first_summary(calibration_claim_risk, 'n_claim_families', 0)} / {first_summary(calibration_claim_risk, 'n_source_tables_present', 0)}",
         f"- Particle trace cycle rows/drop cycles: {first_summary(particle_trace, 'n_cycle_rows', 0)} / {first_summary(particle_trace, 'n_any_drop_cycles', 0)}",
         f"- Particle precursor event/control anchors: {first_summary(particle_precursor, 'n_event_anchors', 0)} / {first_summary(particle_precursor, 'n_matched_control_anchors', 0)}",
@@ -1136,6 +1138,7 @@ def main() -> None:
         f"- Diffusion proxy sanity audit rejects calibrated-diffusion promotion for the selected high-resolution front set: {first_summary(diffusion_sanity, 'n_automatic_positive_diffusion_proxy_candidates', 0)} automatic positive candidates and {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)} publication candidates; median selected-front apparent D is {fmt(first_summary(diffusion_sanity, 'median_selected_diffusion_um2_per_s'))} um2/s and only {fmt(first_summary(diffusion_sanity, 'selected_positive_fraction'))} of selected fronts are nonnegative.",
         f"- Control-balanced high-resolution front tracking expands this check to {first_summary(control_balanced_front_tracking, 'n_tracked_rois', 0)} ROIs ({first_summary(control_balanced_diffusion_sanity, 'selected_front_cohort_counts', {})}); it still yields {first_summary(control_balanced_diffusion_sanity, 'n_automatic_positive_diffusion_proxy_candidates', 0)} automatic positive diffusion candidates and event/control selected-D separation remains non-significant (top p={fmt((control_balanced_diffusion_tests[0] if control_balanced_diffusion_tests else {}).get('mannwhitney_p'))}).",
         f"- Calibration metadata audit finds camera-timing datasets in {first_summary(calibration_metadata, 'n_h5_with_camera_timing', 0)} of {first_summary(calibration_metadata, 'n_h5_files', 0)} scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.",
+        f"- Calibration provenance evidence audit scans {first_summary(calibration_provenance, 'n_h5_files_scanned', 0)} raw HDF5 files and {first_summary(calibration_provenance, 'n_files_inventoried', 0)} total provenance files; status is `{first_summary(calibration_provenance, 'provenance_status', 'missing')}` with highest near-scale evidence `{first_summary(calibration_provenance, 'highest_scale_evidence_strength', 'none')}`, so 96 nm/px remains supported by slides/project text rather than primary raw microscope metadata.",
         f"- Calibration claim-risk register audits {first_summary(calibration_claim_risk, 'n_claim_families', 0)} front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.",
         f"- Apparent diffusion calibration-bounds audit maps all {first_summary(apparent_diffusion_calibration, 'n_roi_with_h5_timing', 0)} balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is {fmt(first_summary(apparent_diffusion_calibration, 'median_roi_elapsed_to_h5_median_ratio'))}, q70 median apparent D at 96 nm/px is {fmt(first_summary(apparent_diffusion_calibration, 'median_q70_apparent_D_h5median_um2_per_s'))} um2/s, and q70 future8 separation is non-significant (top p={fmt(apparent_diffusion_q70_test.get('mannwhitney_p'))}).",
         f"- Diffusion physics-consistency audit collapses {first_summary(diffusion_physics_consistency, 'n_threshold_rows', 0)} threshold rows to {first_summary(diffusion_physics_consistency, 'n_roi', 0)} ROI gates: {first_summary(diffusion_physics_consistency, 'n_automatic_diffusion_physics_consistent', 0)} automatic ROI passes the internal physics gate and {first_summary(diffusion_physics_consistency, 'n_publication_ready_diffusion_candidates', 0)} pass publication-ready diffusion gates; median radius2 fit R2 is only {fmt(first_summary(diffusion_physics_consistency, 'median_radius2_fit_r2'))}.",
@@ -1446,6 +1449,23 @@ def main() -> None:
             f"- PPTX hit {Path(str(row.get('pptx_path'))).name} slide {fmt(row.get('slide'), 0)}: {str(row.get('snippets', ''))[:220]}"
         )
     report_lines.append(f"- Guardrail: {first_summary(calibration_metadata, 'guardrail', 'Calibration metadata audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Calibration Provenance Evidence Audit",
+        "",
+        f"- Provenance status: {first_summary(calibration_provenance, 'provenance_status', 'missing')}",
+        f"- Files inventoried / HDF5 scanned: {first_summary(calibration_provenance, 'n_files_inventoried', 0)} / {first_summary(calibration_provenance, 'n_h5_files_scanned', 0)}",
+        f"- Raw HDF5 calibration-like / explicit spatial-scale statements: {first_summary(calibration_provenance, 'n_raw_h5_calibration_like_statements', 0)} / {first_summary(calibration_provenance, 'n_raw_h5_spatial_scale_statements', 0)}",
+        f"- Near-96 nm/px / contradictory statements: {first_summary(calibration_provenance, 'n_near_96nm_px_statements', 0)} / {first_summary(calibration_provenance, 'n_contradictory_scale_statements', 0)}",
+        f"- Highest near-scale evidence: {first_summary(calibration_provenance, 'highest_scale_evidence_strength', 'none')}",
+        f"- Raw movie spatial shapes: {first_summary(calibration_provenance, 'unique_movie_spatial_shapes', [])}",
+    ]
+    for row in top_items(first_summary(calibration_provenance, 'near_96nm_px_examples', []), 3):
+        report_lines.append(
+            f"- Near-scale example {Path(str(row.get('relative_path'))).name} {row.get('statement_type')}: {fmt(row.get('inferred_nm_per_px'))} nm/px from {row.get('evidence_strength')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(calibration_provenance, 'interpretation', 'Calibration provenance evidence audit unavailable.')}")
 
     report_lines += [
         "",
@@ -5297,6 +5317,19 @@ def main() -> None:
             "target_contrasts": cross_modal_contrasts,
             "top_cycles": cross_modal_top,
             "guardrail": first_summary(cross_modal_consensus, "score_guardrail"),
+        },
+        "calibration_provenance_evidence_audit": {
+            "provenance_status": first_summary(calibration_provenance, "provenance_status"),
+            "n_files_inventoried": first_summary(calibration_provenance, "n_files_inventoried"),
+            "n_h5_files_scanned": first_summary(calibration_provenance, "n_h5_files_scanned"),
+            "n_raw_h5_calibration_like_statements": first_summary(calibration_provenance, "n_raw_h5_calibration_like_statements"),
+            "n_raw_h5_spatial_scale_statements": first_summary(calibration_provenance, "n_raw_h5_spatial_scale_statements"),
+            "n_near_96nm_px_statements": first_summary(calibration_provenance, "n_near_96nm_px_statements"),
+            "n_contradictory_scale_statements": first_summary(calibration_provenance, "n_contradictory_scale_statements"),
+            "highest_scale_evidence_strength": first_summary(calibration_provenance, "highest_scale_evidence_strength"),
+            "unique_movie_spatial_shapes": first_summary(calibration_provenance, "unique_movie_spatial_shapes", []),
+            "near_96nm_px_examples": top_items(first_summary(calibration_provenance, "near_96nm_px_examples", []), 5),
+            "interpretation": first_summary(calibration_provenance, "interpretation"),
         },
         "calibration_metadata_audit": {
             "n_h5_discovered_before_cap": first_summary(calibration_metadata, "n_h5_discovered_before_cap"),

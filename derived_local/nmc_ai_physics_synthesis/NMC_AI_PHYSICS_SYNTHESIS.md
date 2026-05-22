@@ -20,6 +20,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Spatiotemporal degradation graph nodes/edges: 52 / 510
 - Phase-kinetics ROI rows/features: 52 / 40
 - Calibration metadata HDF5/camera-timing files: 33 / 32
+- Calibration provenance status: slide_or_project_text_supported_but_raw_metadata_blocked with 21 near-96 nm/px statements
 - Calibration claim-risk families/source tables: 11 / 11
 - Particle trace cycle rows/drop cycles: 89 / 4
 - Particle precursor event/control anchors: 4 / 24
@@ -68,6 +69,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Diffusion proxy sanity audit rejects calibrated-diffusion promotion for the selected high-resolution front set: 0 automatic positive candidates and 0 publication candidates; median selected-front apparent D is -3.647e-04 um2/s and only 0.083 of selected fronts are nonnegative.
 - Control-balanced high-resolution front tracking expands this check to 40 ROIs ({'control': 24, 'event': 16}); it still yields 0 automatic positive diffusion candidates and event/control selected-D separation remains non-significant (top p=0.314).
 - Calibration metadata audit finds camera-timing datasets in 32 of 33 scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.
+- Calibration provenance evidence audit scans 33 raw HDF5 files and 61 total provenance files; status is `slide_or_project_text_supported_but_raw_metadata_blocked` with highest near-scale evidence `slide_text`, so 96 nm/px remains supported by slides/project text rather than primary raw microscope metadata.
 - Calibration claim-risk register audits 11 front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.
 - Apparent diffusion calibration-bounds audit maps all 72 balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is 1.002, q70 median apparent D at 96 nm/px is 4.322e-08 um2/s, and q70 future8 separation is non-significant (top p=0.175).
 - Diffusion physics-consistency audit collapses 504 threshold rows to 72 ROI gates: 1 automatic ROI passes the internal physics gate and 0 pass publication-ready diffusion gates; median radius2 fit R2 is only 0.055.
@@ -372,6 +374,19 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - PPTX hit Degradation Paper Outline.pptx slide 3: an improved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) act
 - PPTX hit Degradation Project.pptx slide 3: and wouldn’t cycle again. Switched to second cell… Cell 2: Cycled from pristine. No bubbles visible FOV: full field of view, including 4 drilled holes on left half, and undrilled holes on right half. Imaging camera expos
 - Guardrail: This audit verifies metadata evidence for timebase/spatial calibration. Camera timing is present in sampled HDF5 files, but the sampled timing rows can represent sparse segment/cycle timing rather than true camera frame cadence. Physical pixel-size evidence should be treated as slide-derived unless raw HDF5 attributes or microscope metadata explicitly confirm it.
+
+## Calibration Provenance Evidence Audit
+
+- Provenance status: slide_or_project_text_supported_but_raw_metadata_blocked
+- Files inventoried / HDF5 scanned: 61 / 33
+- Raw HDF5 calibration-like / explicit spatial-scale statements: 0 / 0
+- Near-96 nm/px / contradictory statements: 21 / 0
+- Highest near-scale evidence: slide_text
+- Raw movie spatial shapes: [[1200, 1920]]
+- Near-scale example Charge Photometry Meeting 1902.pptx fov_width_div_movie_width: 93.750 nm/px from slide_text
+- Near-scale example Charge Photometry Meeting 1902.pptx fov_height_div_movie_height: 100.000 nm/px from slide_text
+- Near-scale example Degradation Paper Outline.pptx explicit_nm_per_pixel: 96.000 nm/px from slide_text
+- Guardrail: The 96 nm/px assumption is supported only by slide/project-text evidence and by FoV divided by raw movie dimensions being approximately compatible with that scale. No raw HDF5 attribute or microscope metadata statement was found, so calibrated diffusion constants remain blocked; use apparent optical-front units.
 
 ## Calibration Claim Risk Register
 
