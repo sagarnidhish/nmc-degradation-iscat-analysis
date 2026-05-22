@@ -172,7 +172,7 @@ def main() -> None:
     parser.add_argument("--readout-features", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_features.csv")
     parser.add_argument("--sequence-features", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_features.csv")
     parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit")
-    parser.add_argument("--n-perm", type=int, default=0)
+    parser.add_argument("--n-perm", type=int, default=250)
     parser.add_argument("--seed", type=int, default=20260522)
     args = parser.parse_args()
 
@@ -272,7 +272,7 @@ def main() -> None:
         "best_pre_event_clock_features": clean_json(best_pre_clock.to_dict("records")),
         "best_pre_vs_post_clock_asymmetry": clean_json(best_asymmetry.to_dict("records")),
         "outputs": {k: str(v) for k, v in paths.items()},
-        "guardrail": "Temporal directionality uses automatic pre-event ROI crops and weak event-relative bins. AUC and event-clock rows are descriptive readouts; optional within-source clock permutations can be enabled with --n-perm. This tests whether optical/front/rollout proxies are ordered around event time; it does not validate causal precursors, particle identity, calibrated phase boundaries, or diffusion coefficients.",
+        "guardrail": "Temporal directionality uses automatic pre-event ROI crops, weak event-relative bins, and within-source clock permutations. AUC rows remain descriptive readouts. This tests whether optical/front/rollout proxies are ordered around event time; it does not validate causal precursors, particle identity, calibrated phase boundaries, or diffusion coefficients.",
     }
     paths["summary"].write_text(json.dumps(clean_json(summary), indent=2, sort_keys=True) + "\n")
     (out / "README.md").write_text(

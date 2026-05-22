@@ -3400,6 +3400,29 @@ Interpretation:
 
 The event-relative export makes the pre-event question more concrete. Raw optical contrast strongly separates near-pre-event from post/control bins, but it is still source structured. After source residualization, the surviving signal shifts to front-radius/slope and apparent-diffusion-like proxies with moderate AUC and weaker p-values. This is useful physics triage: it suggests pre-event organization in crop-local front geometry, while keeping the claim guarded because masks/fronts are automatic and not calibrated phase boundaries or diffusion coefficients.
 
+## 2026-05-22 Source-Balanced Pre-Event Source-Invariant Mechanism Audit
+
+Added `scripts/tier4_source_balanced_pre_event_source_invariant_audit.py` and ran it on Isambard against the source-balanced pre-event readout feature table. This audit tests whether interpretable feature families preserve event-relative signal under leave-source evaluation after simple source-confound handling.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit`
+- `derived_local/source_balanced_pre_event_source_invariant_audit`
+
+Cohort/result snapshot:
+
+- Input table: 128 ROI rows, 64 cycles, 14 source movies, 47 interpretable features.
+- Targets: clean near-pre-event versus post/control, and near-pre-event versus far-pre-event.
+- Clean near-pre versus post/control is led by the combined physics-front feature family after source-mean residualization: leave-source AUC 0.694/AP 0.660, rho 0.327.
+- ROI intensity after source-mean residualization is close behind for clean-pre: AUC 0.681/AP 0.594, so residualized intensity drift remains a guardrail.
+- Near-pre versus far-pre is strongest for physics-front features under source-residual handling: leave-source AUC 0.744/AP 0.711, rho 0.416.
+- Raw univariate clean-pre is still dominated by `masked_minus_background_mean_slope`, AUC 0.797/AP 0.749/source eta2 0.578.
+- The low-source-eta2 model set is not physically convincing for clean-pre; its best row is object-context guardrail at AUC 0.573, so source-invariant signal is not simply solved by dropping high-eta features.
+
+Interpretation:
+
+The source-invariant audit strengthens a narrow physics hypothesis: pre-event organization is most consistently carried by front/mask/apparent-diffusion feature families when source structure is handled in the model. It also exposes an important guardrail: intensity and object-context terms can still perform under some transforms, so these models are mechanism-ranking tools for manual QC and follow-up, not deployable warning models or validated phase-boundary/diffusion measurements.
+
 ## 2026-05-22 Source-Balanced Pre-Event Directionality Audit
 
 Added `scripts/tier4_source_balanced_pre_event_directionality_audit.py` and ran it on Isambard as a ROI-level complement to the cycle-collapsed event-distance trajectory audit. The audit merges pre-event sequence features with rollout/mask/front readouts and compares clean near-pre-event, near-versus-far-pre-event, and post-versus-control readouts while tracking whether features correlate with pre-event and post-event clocks.
@@ -3412,16 +3435,16 @@ Outputs:
 Cohort/result snapshot:
 
 - Input table: 128 ROI rows, 64 cycles, 14 source movies, and 57 tested rollout/front/mask/heterogeneity features.
-- Top pre-event clock feature is raw `spatial_std_slope`: pre-event Spearman rho 0.436, p=8.12e-05; post-event rho 0.289.
-- Raw `masked_minus_background_mean_slope` also increases as the event approaches: pre-event rho 0.379, p=7.46e-04; post-event rho 0.213.
-- Near-pre versus far-pre raw `spatial_std_slope` is strong: AUC 0.801/AP 0.853, pre-clock rho 0.436.
-- Clean near-pre versus post/control source-residual readout remains `front_radius_q60_slope_px_per_norm_time`: AUC 0.660/AP 0.665, pre-clock rho 0.206, post-clock rho -0.278.
-- Source-residual near-pre versus far-pre apparent q70 diffusion/front proxy remains moderate: AUC 0.681/AP 0.648, pre-clock rho 0.201, post-clock rho -0.120.
-- The fast synthesis run uses descriptive clock statistics with permutations disabled by default after 199/499-permutation ROI-level runs proved too slow for routine integration; the stricter cycle-collapsed trajectory audit remains the permutation-backed event-distance check.
+- Reran with 250 source-stratified clock permutations.
+- Raw spatial/intensity clocks are strong descriptively but source structured: `spatial_std_slope` has pre-event rho = 0.436 and nominal p = 8.12e-05, but source-stratified permutation p = 0.769.
+- Raw `masked_minus_background_mean_slope` also increases as the event approaches: pre-event rho = 0.379, nominal p = 7.46e-04, but source-stratified permutation p = 0.785.
+- Physics-facing source-residual clock: `apparent_diffusion_q70_um2_per_norm_time` has pre-event rho = 0.201, source-stratified permutation p = 0.024, post-event rho = -0.120, and near-pre versus far-pre AUC = 0.681/AP = 0.648.
+- Equivalent px-scale apparent diffusion proxy has pre-event rho = 0.201 and source-stratified permutation p = 0.032.
+- Clean near-pre versus post/control source-residual readout remains `front_radius_q60_slope_px_per_norm_time`: AUC = 0.660/AP = 0.665, pre-clock rho = 0.206, post-clock rho = -0.278.
 
 Interpretation:
 
-The ROI-level directionality screen agrees with the previous readouts: heterogeneity and mask/background contrast strengthen as sampled cycles approach abrupt events, but those strongest raw signals are source structured. Source-normalized front and apparent-diffusion proxies point in the expected direction with only moderate effect sizes. This supports pre-event review prioritization and follow-up manual front QC, not causal precursor or calibrated diffusion claims.
+The permutation-enabled ROI-level directionality screen separates raw visual clock effects from source-normalized physics proxies. The strongest raw heterogeneity and mask/background clocks do not survive source-stratified clock permutation, while the apparent q70 diffusion-like proxy retains a modest source-residual pre-event ordering and weak post-event washout. This supports pre-event review prioritization and follow-up manual front QC, not causal precursor, calibrated diffusion, or validated phase-boundary claims.
 
 ## 2026-05-22 Source-Balanced Pre-Event Event-Distance Trajectory Audit
 

@@ -74,7 +74,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cross-modal consensus ranks cycles 86, 116 as synchronized multimodal degradation candidates; the top cycle has 4 modal votes and consensus score 0.813, while the score remains an audit statistic rather than a calibrated probability.
 - Echem/optical breakpoint audit tests 84 cycle-level echem/trace features around synchronized cycles [86.0, 116.0]; strongest event-centered shift is state_step_norm_delta_prev over +/-4 cycles (scaled shift -2.263, bootstrap p=0.002).
 - Echem-optical regime atlas organizes 89 cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is pos_dq_abs_peak_voltage vs multimodal_outlier_without_trace_drop (median shift 0.050, p=1.453e-04), and top continuous link is shape_dVdt_abs_p95 vs cross_modal_consensus_score (rho=0.617).
-- Echem-conditioned optical predictor shows the clearest echem gain for high_particle_norm_cv_q75 under cycle_block_cv: echem_regime_minus_acquisition changes AUC by 0.152; same-cycle synchronized candidates remain acquisition/context dominated and underpowered.
+- Echem-conditioned optical predictor shows the clearest echem gain for high_cross_modal_consensus_q75 under leave_one_cycle: echem_regime_minus_acquisition changes AUC by 0.113; same-cycle synchronized candidates remain acquisition/context dominated and underpowered.
 - Echem-conditioned ROI rollout/front audit joins 72 ROI rows across 24 cycles; strongest leave-cycle echem gain is transferred_masked_residual_signature echem_regime_minus_acquisition with delta Spearman 0.450 and delta R2 0.626.
 - Echem-video embedding fusion tests 172 masked-video rows across 34 cycles; top fusion delta is future_any_drop_within_8cycles video_plus_echem_acquisition_minus_echem_regime with delta AUC 0.284 and delta Spearman 0.492.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
@@ -116,7 +116,8 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Source-balanced pre-event sequence audit exports 128 event-relative particle crops and finds near-pre-event spatial video structure under leave-source AUC 0.759/AP 0.515, while broader any-pre transfer remains weak at AUC 0.463.
 - Pre-event rollout/mask audits on those crops find top future16 ROI signals in roi_norm_mean_delta_last_minus_first AUC 0.628 and masked_minus_background_mean_slope AUC 0.624; event-relative clean-pre source-residual readout peaks at front_radius_q60_slope_px_per_norm_time AUC 0.660.
 - Pre-event event-distance trajectory audit collapses duplicate ROI proposals to 38 cycle rows and tests monotonic approach-to-event physics proxies; the leading source-residual physics trend is apparent_diffusion_q70_px2_per_norm_time with rho 0.272 and source-stratified permutation p=0.064.
-- Pre-event directionality audit keeps ROI-level rows and compares pre-event versus post-event clocks: top pre-clock feature spatial_std_slope has rho 0.436, while the best source-residual clean-pre readout is front_radius_q60_slope_px_per_norm_time at AUC 0.660; descriptive only because fast clock permutations are disabled by default.
+- Pre-event directionality audit keeps ROI-level rows and compares pre-event versus post-event clocks with 250 source-stratified clock permutations: physics-facing pre-clock feature apparent_diffusion_q70_um2_per_norm_time has rho 0.201, permutation p=0.024, while the best source-residual clean-pre readout is front_radius_q60_slope_px_per_norm_time at AUC 0.660.
+- Pre-event source-invariant audit tests interpretable feature families under leave-source splits; clean-pre is led by physics_front_combo / source_mean_resid_2 at AUC 0.694, while near-vs-far is led by physics_front_combo / source_residual at AUC 0.744.
 - Source-balanced ROI sequence export converts that manifest into 96 particle-region crop tensors across 48 cycles and 14 sources with 0 export failures; the fast rollout audit finds strongest future16 ROI signal in roi_norm_mean_delta_last_minus_first at AUC 0.626, while prediction-error features are highly source-structured.
 - A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across 96 ROI tensors; top future16 mask/front proxy is masked_minus_background_mean_slope at AUC 0.690/AP 0.696, but source eta2 is 0.634.
 - A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.631/AP 0.634, and best within-source-rank proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.656/AP 0.677.
@@ -516,29 +517,29 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 ## Echem-Conditioned Optical Predictor
 
-- Cycles/targets: 89 / 5
+- Cycles/targets: 89 / 7
 - Feature set sizes: {'acquisition_context': 7, 'cycle_state_upper_bound': 14, 'echem_plus_acquisition': 56, 'echem_regime': 49}
-- Echem feature-set delta cycle_block_cv high_particle_norm_cv_q75 echem_regime_minus_acquisition: delta AUC 0.152, base 0.482, comparison 0.634
-- Echem feature-set delta cycle_block_cv high_particle_norm_cv_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.127, base 0.482, comparison 0.609
-- Echem feature-set delta cycle_block_cv future_any_drop_within_8cycles echem_regime_minus_acquisition: delta AUC 0.124, base 0.316, comparison 0.440
-- Echem feature-set delta rolling_origin_block future_any_drop_within_8cycles echem_regime_minus_acquisition: delta AUC 0.112, base 0.463, comparison 0.574
-- Echem feature-set delta rolling_origin_block future_any_drop_within_8cycles echem_plus_acquisition_minus_acquisition: delta AUC 0.076, base 0.463, comparison 0.539
-- Echem feature-set delta cycle_block_cv high_cross_modal_consensus_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.074, base 0.730, comparison 0.804
-- Echem feature-set delta cycle_block_cv high_roi_phase_slope_abs_q75 echem_regime_minus_acquisition: delta AUC 0.056, base 0.944, comparison 1.000
-- Echem feature-set delta cycle_block_cv high_roi_phase_slope_abs_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.046, base 0.944, comparison 0.991
-- Echem feature-set delta rolling_origin_block high_particle_norm_cv_q75 echem_regime_minus_acquisition: delta AUC 0.036, base 0.371, comparison 0.407
-- Echem feature-set delta cycle_block_cv high_cross_modal_consensus_q75 echem_regime_minus_acquisition: delta AUC 0.030, base 0.730, comparison 0.760
-- Echem-conditioned metric cycle_block_cv high_roi_phase_slope_abs_q75 echem_regime: AUC 1.000, AP 1.000, n=24, positives=6
-- Echem-conditioned metric cycle_block_cv high_roi_phase_slope_abs_q75 echem_plus_acquisition: AUC 0.991, AP 0.976, n=24, positives=6
-- Echem-conditioned metric cycle_block_cv high_roi_phase_slope_abs_q75 acquisition_context: AUC 0.944, AP 0.735, n=24, positives=6
-- Echem-conditioned metric cycle_block_cv high_roi_phase_slope_abs_q75 cycle_state_upper_bound: AUC 0.926, AP 0.766, n=24, positives=6
-- Echem-conditioned metric cycle_block_cv high_state_step_norm_q75 cycle_state_upper_bound: AUC 0.857, AP 0.745, n=88, positives=22
-- Echem-conditioned metric cycle_block_cv high_cross_modal_consensus_q75 cycle_state_upper_bound: AUC 0.846, AP 0.716, n=89, positives=23
-- Echem-conditioned metric cycle_block_cv high_cross_modal_consensus_q75 echem_plus_acquisition: AUC 0.804, AP 0.632, n=89, positives=23
-- Echem-conditioned metric cycle_block_cv high_cross_modal_consensus_q75 echem_regime: AUC 0.760, AP 0.424, n=89, positives=23
-- Echem-conditioned metric cycle_block_cv high_cross_modal_consensus_q75 acquisition_context: AUC 0.730, AP 0.620, n=89, positives=23
-- Echem-conditioned metric cycle_block_cv high_particle_norm_cv_q75 cycle_state_upper_bound: AUC 0.659, AP 0.434, n=89, positives=23
-- Guardrail: This is a cycle-level weak-label model comparison with blocked cycle-CV and rolling-origin block splits. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics. Rare 2-4 positive targets are excluded from the model-comparison table, and the permutation null shuffles labels against held-out prediction scores rather than retraining every permutation.
+- Echem feature-set delta leave_one_cycle high_cross_modal_consensus_q75 echem_regime_minus_acquisition: delta AUC 0.113, base 0.686, comparison 0.799
+- Echem feature-set delta leave_one_cycle high_particle_norm_cv_q75 echem_regime_minus_acquisition: delta AUC 0.113, base 0.527, comparison 0.640
+- Echem feature-set delta leave_one_cycle high_cross_modal_consensus_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.111, base 0.686, comparison 0.797
+- Echem feature-set delta leave_one_cycle high_particle_norm_cv_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.103, base 0.527, comparison 0.630
+- Echem feature-set delta rolling_origin high_particle_norm_cv_q75 echem_regime_minus_acquisition: delta AUC 0.084, base 0.525, comparison 0.609
+- Echem feature-set delta rolling_origin high_cross_modal_consensus_q75 echem_regime_minus_acquisition: delta AUC 0.067, base 0.625, comparison 0.692
+- Echem feature-set delta rolling_origin high_particle_norm_cv_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.052, base 0.525, comparison 0.577
+- Echem feature-set delta leave_one_cycle high_roi_phase_slope_abs_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.046, base 0.944, comparison 0.991
+- Echem feature-set delta leave_one_cycle high_roi_phase_slope_abs_q75 echem_regime_minus_acquisition: delta AUC 0.037, base 0.944, comparison 0.981
+- Echem feature-set delta rolling_origin high_cross_modal_consensus_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.014, base 0.625, comparison 0.639
+- Echem-conditioned metric leave_one_cycle synchronized_multimodal_candidate cycle_state_upper_bound: AUC 0.994, AP 0.833, n=89, positives=2
+- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 echem_plus_acquisition: AUC 0.991, AP 0.976, n=24, positives=6
+- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 echem_regime: AUC 0.981, AP 0.958, n=24, positives=6
+- Echem-conditioned metric leave_one_cycle synchronized_multimodal_candidate acquisition_context: AUC 0.966, AP 0.325, n=89, positives=2
+- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 acquisition_context: AUC 0.944, AP 0.735, n=24, positives=6
+- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 cycle_state_upper_bound: AUC 0.944, AP 0.735, n=24, positives=6
+- Echem-conditioned metric leave_one_cycle high_state_step_norm_q75 cycle_state_upper_bound: AUC 0.899, AP 0.835, n=88, positives=22
+- Echem-conditioned metric leave_one_cycle high_cross_modal_consensus_q75 cycle_state_upper_bound: AUC 0.829, AP 0.684, n=89, positives=23
+- Echem-conditioned metric leave_one_cycle future_any_drop_within_8cycles cycle_state_upper_bound: AUC 0.808, AP 0.530, n=89, positives=20
+- Echem-conditioned metric leave_one_cycle high_cross_modal_consensus_q75 echem_regime: AUC 0.799, AP 0.522, n=89, positives=23
+- Guardrail: This is a cycle-level weak-label model comparison. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics.
 
 ## Echem-Conditioned ROI Rollout/Front Audit
 
@@ -1324,11 +1325,16 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Top trajectory physics trend: source_residual apparent_diffusion_q70_px2_per_norm_time rho 0.272, p=0.120, source-stratified permutation p=0.064, near-far median 8.259
 - Trajectory guardrail: Cycle-level event-distance trajectories reduce duplicate ROI counting and test monotonic pre-event organization, but automatic crops/masks and sparse full far-mid-near event trajectories mean these are physics triage signals, not calibrated phase boundaries, diffusion coefficients, or causal degradation forecasts.
 - Directionality rows/cycles/sources/features: 128 / 64 / 14 / 57
-- Top pre-event clock feature: raw spatial_std_slope pre rho 0.436, p=8.115e-05, post rho 0.289
+- Top physics-facing pre-event clock feature: source_residual apparent_diffusion_q70_um2_per_norm_time pre rho 0.201, p=0.176, permutation p=0.024, post rho -0.120
 - Top pre/post clock asymmetry: raw frame_diff_mse_slope |pre|-|post| rho delta 0.227
 - Directionality near-pre vs far-pre: raw spatial_std_slope AUC 0.801, AP 0.853, pre rho 0.436
 - Directionality clean-pre source-residual readout: front_radius_q60_slope_px_per_norm_time AUC 0.660, AP 0.665, pre rho 0.206, post rho -0.278
-- Directionality guardrail: Temporal directionality uses automatic pre-event ROI crops and weak event-relative bins. AUC and event-clock rows are descriptive readouts; optional within-source clock permutations can be enabled with --n-perm. This tests whether optical/front/rollout proxies are ordered around event time; it does not validate causal precursors, particle identity, calibrated phase boundaries, or diffusion coefficients.
+- Directionality guardrail: Temporal directionality uses automatic pre-event ROI crops, weak event-relative bins, and within-source clock permutations. AUC rows remain descriptive readouts. This tests whether optical/front/rollout proxies are ordered around event time; it does not validate causal precursors, particle identity, calibrated phase boundaries, or diffusion coefficients.
+- Source-invariant rows/cycles/sources/features: 128 / 64 / 14 / 47
+- Source-invariant clean-pre best: physics_front_combo source_mean_resid_2 leave-source AUC 0.694, AP 0.660, rho 0.327
+- Source-invariant near-vs-far best: physics_front_combo source_residual leave-source AUC 0.744, AP 0.711, rho 0.416
+- Source-invariant low-source-eta clean guardrail: object_context_guardrail source_confound_filter_0.25 AUC 0.573, max eta2 0.270
+- Source-invariant guardrail: Leave-source source-invariant pre-event models use automatic ROI features and weak event-relative labels. Source residual/rank transforms are analysis-time normalizations. These results nominate pre-event mechanism families for review; they are not causal precursors, deployable warnings, manual particle identities, calibrated phase boundaries, or diffusion coefficients.
 - Guardrail: Event-relative readouts use automatic ROI crops and weak event-distance bins. They test pre/post/control organization of optical/front/rollout proxies, not manual particle identity, causal mechanism, calibrated phase boundaries, or diffusion coefficients.
 - Event-relative readout clean_pre_1_16_vs_post_control raw mask_area_fraction_iqr: AUC 0.683, AP 0.661, p=0.001, eta2 0.384
 - Event-relative readout clean_pre_1_16_vs_post_control source_residual front_radius_q80_median_px: AUC 0.645, AP 0.570, p=0.010, eta2 4.321e-33
