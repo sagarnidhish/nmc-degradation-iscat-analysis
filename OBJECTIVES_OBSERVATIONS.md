@@ -3116,3 +3116,24 @@ Cohort/result snapshot:
 Interpretation:
 
 The source-balanced crop cohort contains a reproducible automatic mask/intensity contrast slope associated with future16 drops, stronger than the raw ROI mean drift in this audit. However, the strongest mask/front proxy is still source-structured, and the masks/front radii are crop-local automatic sanity proxies from resized tensors, not manual particle masks or calibrated diffusion measurements. Treat this as a useful QC/mechanism triage feature, not a standalone morphology claim.
+
+## 2026-05-22 Source-Balanced Mask/Front Source-Residual Audit
+
+Added and ran:
+
+`scripts/tier4_source_balanced_mask_front_source_residual_audit.py`
+
+Output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_source_residual_audit`
+- `derived_local/source_balanced_mask_front_source_residual_audit`
+
+Key result:
+
+- Tested 54 source-balanced mask/front/crop descriptors across 96 ROI rows, 48 cycles, and 14 sources with raw, source-mean-only, source-residual, within-source z, and within-source rank transforms.
+- The raw future16 best remains `masked_minus_background_mean_slope` at AUC 0.690/AP 0.696, but source eta2 is 0.634, confirming that this is strongly source structured.
+- Source-mean-only coordinates and intensity summaries can score even higher, e.g. `object_y_full_approx` future16 AUC 0.798, proving that source/design structure can dominate apparent weak-label performance if left uncontrolled.
+- After source residualization, the best future16 feature switches to `front_radius_q80_slope_px_per_norm_time`, AUC 0.631/AP 0.634, source eta2 ~0, p=0.122.
+- Within-source rank gives the same q80 front-slope feature AUC 0.656/AP 0.677, source eta2 0.078, p=0.062.
+
+Interpretation: source residualization demotes the strongest raw optical-contrast signal and leaves only modest front-radius slope evidence. That is still useful: it identifies `front_radius_q80_slope_px_per_norm_time` as a source-robust front/morphology hypothesis for QC and future modeling. It does not validate calibrated phase-boundary motion or diffusion because labels are weak, fronts are automatic, and significance is borderline.

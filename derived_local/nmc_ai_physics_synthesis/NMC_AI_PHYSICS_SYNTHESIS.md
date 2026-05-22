@@ -114,6 +114,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Source-balanced ROI expansion attacks the remaining cohort-breadth bottleneck: it samples 48 cycles across 14 source movies, including 41 cycle/source pairs not already in video cohorts, and proposes 96 automatic ROI rows for follow-up sequence export/QC.
 - Source-balanced ROI sequence export converts that manifest into 96 particle-region crop tensors across 48 cycles and 14 sources with 0 export failures; the fast rollout audit finds strongest future16 ROI signal in roi_norm_mean_delta_last_minus_first at AUC 0.626, while prediction-error features are highly source-structured.
 - A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across 96 ROI tensors; top future16 mask/front proxy is masked_minus_background_mean_slope at AUC 0.690/AP 0.696, but source eta2 is 0.634.
+- A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.631/AP 0.634, and best within-source-rank proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.656/AP 0.677.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC 0.849 versus PCA-video 0.569 and handcrafted scalar 0.828; future16 learned_all remains weak at AUC 0.538 versus handcrafted 0.680.
@@ -1172,6 +1173,14 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source-balanced mask/front source 15_c2_x5_HighCOV_120723: ROI 6, cycles 3, q70 radius slope 0.186, future16 seq 0
 - Source-balanced mask/front source 16_c2_x10_HighHighCOV_130723: ROI 8, cycles 4, q70 radius slope 0.032, future16 seq 6
 - Guardrail: Automatic crop-local masks/front radii are source-balanced sanity proxies from resized ROI tensors; they are not manual particle masks, not calibrated fronts, and apparent diffusion uses an approximate 0.192 um/output-pixel scale.
+
+## Source-Balanced Mask/Front Source-Residual Audit
+
+- Rows/features/sources: 96 / 54 / 14
+- Best raw future16 feature: masked_minus_background_mean_slope AUC 0.690, source eta2 0.634
+- Best source-residual future16 feature: front_radius_q80_slope_px_per_norm_time AUC 0.631, AP 0.634, p=0.122
+- Best within-source-rank future16 feature: front_radius_q80_slope_px_per_norm_time AUC 0.656, AP 0.677, p=0.062
+- Guardrail: Source residualization tests whether automatic mask/front proxies survive source structure. Passing this audit would still be weak-label, automatic-mask evidence; failing it means the feature is useful mainly for QC/source triage.
 
 ## Balanced Future-Drop Direct-Video ROI Audit
 
