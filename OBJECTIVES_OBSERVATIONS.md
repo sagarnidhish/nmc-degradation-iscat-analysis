@@ -2669,13 +2669,14 @@ Local compact copy:
 
 Key result:
 
-- The audit covers 172 ROI rows, 34 cycles, and 12 source movies, with both leave-cycle and leave-source splits.
-- Under leave-cycle future16 evaluation, acquisition-residualized video+echem reaches AUC 0.788, AP 0.932, empirical p=0.002, versus acquisition/context-only AUC 0.727. This is a context-resistant gain over the cycle-holdout baseline.
+- The audit covers 172 ROI rows, 34 cycles, and 12 source movies, with leave-cycle, leave-source, and source-cohort-key splits.
+- Under leave-cycle future16 evaluation, acquisition-residualized video+echem reaches AUC 0.788, AP 0.932, empirical p=0.002, versus acquisition/context-only AUC 0.727. The cycle-balanced residualized mode gives the same AUC/AP in this table, so the cycle-holdout signal is not driven by repeated-cycle weighting.
 - In the same leave-cycle setting, residualized video+echem beats raw echem-only by +0.136 AUC and raw video-only by +0.091 AUC, supporting the paper-inspired multimodal conditioning hypothesis.
 - Under leave-source future16 evaluation, the signal does not transfer: acquisition-residualized video+echem falls to AUC 0.527, while acquisition/context-only is AUC 0.697. This makes source/movie domain shift a major guardrail.
+- Under the stricter source-cohort-key holdout, cycle-balanced residualized video+echem reaches only AUC 0.560/AP 0.837, empirical p=0.248, below acquisition/context-only AUC 0.782. This fails the source-cohort transfer criterion for a deployable warning claim.
 - Residualized video-only collapses under leave-cycle future16 (AUC 0.469), so the useful residualized signal is mainly electrochemically conditioned, not generic optical video structure alone.
 
-Interpretation: the top tournament experiment is now executed. Echem+video carries future16 weak-label signal beyond linear acquisition context when held out by cycle, but it is not yet source-transferable. The next defensible modeling step is source-domain adaptation or source-balanced sampling before any warning-model claim; the current result should guide representation design and review prioritization only.
+Interpretation: the top tournament experiment is now executed with its stricter cycle-balanced/source-cohort guardrail. Echem+video carries future16 weak-label signal beyond linear acquisition context when held out by cycle, but it is not yet source- or source-cohort-transferable. The next defensible modeling step is source-domain adaptation or source-balanced sampling before any warning-model claim; the current result should guide representation design and review prioritization only.
 
 ## 2026-05-22 Source-Domain Video/Echem Adaptation Audit
 

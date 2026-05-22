@@ -1756,7 +1756,9 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Rows/cycles/sources: 172 / 34 / 12
 - Feature set sizes: {'acquisition_context': 40, 'echem_regime': 57, 'video_all': 64, 'video_embedding': 16, 'video_plus_echem': 121, 'video_scalar': 48}
 - Leave-cycle future16 residualized video+echem: AUC 0.788, AP 0.932, p=0.002; acquisition-only AUC 0.727
+- Cycle-balanced leave-cycle future16 residualized video+echem: AUC 0.788, AP 0.932, p=0.002
 - Leave-source future16 residualized video+echem: AUC 0.527, AP 0.848, p=0.371; acquisition-only AUC 0.697
+- Source-cohort future16 cycle-balanced residualized video+echem: AUC 0.560, AP 0.837, p=0.248; acquisition-only AUC 0.782
 - Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_minus_echem_regime_raw: delta AUC 0.136, delta rho 0.191
 - Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_cycle_balanced_minus_echem_regime_raw: delta AUC 0.136, delta rho 0.191
 - Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_raw_minus_echem_regime_raw: delta AUC 0.099, delta rho 0.140

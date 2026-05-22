@@ -705,9 +705,12 @@ def main() -> None:
     acq_echem_metrics = top_items(first_summary(acquisition_residualized_video_echem, "top_metrics", []), 48)
     acq_echem_deltas = top_items(first_summary(acquisition_residualized_video_echem, "top_deltas", []), 40)
     acq_echem_cycle_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized"), {})
+    acq_echem_cycle_bal_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized_cycle_balanced"), {})
     acq_echem_cycle_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
     acq_echem_source_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "source_stem" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized"), {})
     acq_echem_source_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "source_stem" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
+    acq_echem_sourcecohort_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "source_cohort_key" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized_cycle_balanced"), {})
+    acq_echem_sourcecohort_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "source_cohort_key" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
     source_domain_metrics = top_items(first_summary(source_domain_video_echem, "top_metrics", []), 24)
     source_domain_deltas = top_items(first_summary(source_domain_video_echem, "top_deltas", []), 24)
     source_domain_sources = top_items(first_summary(source_domain_video_echem, "source_summary", []), 12)
@@ -2514,7 +2517,9 @@ def main() -> None:
         f"- Rows/cycles/sources: {first_summary(acquisition_residualized_video_echem, 'n_rows', 0)} / {first_summary(acquisition_residualized_video_echem, 'n_cycles', 0)} / {first_summary(acquisition_residualized_video_echem, 'n_sources', 0)}",
         f"- Feature set sizes: {first_summary(acquisition_residualized_video_echem, 'feature_set_sizes', {})}",
         f"- Leave-cycle future16 residualized video+echem: AUC {fmt(acq_echem_cycle_future16.get('roc_auc'))}, AP {fmt(acq_echem_cycle_future16.get('average_precision'))}, p={fmt(acq_echem_cycle_future16.get('empirical_p_ge_observed'))}; acquisition-only AUC {fmt(acq_echem_cycle_acq_future16.get('roc_auc'))}",
+        f"- Cycle-balanced leave-cycle future16 residualized video+echem: AUC {fmt(acq_echem_cycle_bal_future16.get('roc_auc'))}, AP {fmt(acq_echem_cycle_bal_future16.get('average_precision'))}, p={fmt(acq_echem_cycle_bal_future16.get('empirical_p_ge_observed'))}",
         f"- Leave-source future16 residualized video+echem: AUC {fmt(acq_echem_source_future16.get('roc_auc'))}, AP {fmt(acq_echem_source_future16.get('average_precision'))}, p={fmt(acq_echem_source_future16.get('empirical_p_ge_observed'))}; acquisition-only AUC {fmt(acq_echem_source_acq_future16.get('roc_auc'))}",
+        f"- Source-cohort future16 cycle-balanced residualized video+echem: AUC {fmt(acq_echem_sourcecohort_future16.get('roc_auc'))}, AP {fmt(acq_echem_sourcecohort_future16.get('average_precision'))}, p={fmt(acq_echem_sourcecohort_future16.get('empirical_p_ge_observed'))}; acquisition-only AUC {fmt(acq_echem_sourcecohort_acq_future16.get('roc_auc'))}",
     ]
     for row in acq_echem_deltas[:8]:
         report_lines.append(
@@ -3921,6 +3926,8 @@ def main() -> None:
             "feature_set_sizes": first_summary(acquisition_residualized_video_echem, "feature_set_sizes", {}),
             "top_metrics": acq_echem_metrics,
             "top_deltas": acq_echem_deltas,
+            "strict_cycle_balanced_source_cohort_metrics": first_summary(acquisition_residualized_video_echem, "strict_cycle_balanced_source_cohort_metrics", []),
+            "strict_cycle_balanced_source_cohort_deltas": first_summary(acquisition_residualized_video_echem, "strict_cycle_balanced_source_cohort_deltas", []),
             "guardrail": first_summary(acquisition_residualized_video_echem, "guardrail"),
         },
         "source_domain_video_echem_adaptation_audit": {

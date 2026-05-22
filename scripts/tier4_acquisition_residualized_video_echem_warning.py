@@ -62,6 +62,14 @@ def available_numeric(df: pd.DataFrame, cols: Iterable[str], min_nonnull: int = 
 
 def add_cohort_indicators(df: pd.DataFrame) -> pd.DataFrame:
     out = df.copy()
+    if {"source_stem", "embedding_cohort", "cohort_role"}.issubset(out.columns):
+        out["source_cohort_key"] = (
+            out["source_stem"].fillna("missing").astype(str)
+            + "::"
+            + out["embedding_cohort"].fillna("missing").astype(str)
+            + "::"
+            + out["cohort_role"].fillna("missing").astype(str)
+        )
     for col in ["embedding_cohort", "cohort_role", "selection_subrole", "source_stem"]:
         if col not in out.columns:
             continue
@@ -201,6 +209,7 @@ def residualize_train_test(
     x_test: pd.DataFrame,
     ctx_train: pd.DataFrame,
     ctx_test: pd.DataFrame,
+    sample_weight: np.ndarray | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     numeric_train = x_train.apply(pd.to_numeric, errors="coerce")
     numeric_test = x_test.apply(pd.to_numeric, errors="coerce")
@@ -220,7 +229,7 @@ def residualize_train_test(
     ctx_test_arr = ctx_pipe.transform(ctx_test)
 
     model = Ridge(alpha=2.0)
-    model.fit(ctx_train_arr, y_train)
+    model.fit(ctx_train_arr, y_train, sample_weight=sample_weight)
     train_res = pd.DataFrame(
         y_train - model.predict(ctx_train_arr),
         index=x_train.index,
@@ -232,6 +241,18 @@ def residualize_train_test(
         columns=[f"{col}_acq_resid" for col in keep],
     )
     return train_res, test_res
+
+
+def cycle_balanced_weights(df: pd.DataFrame, train_mask: pd.Series) -> np.ndarray:
+    if "cycleNo" not in df.columns:
+        return np.ones(int(train_mask.sum()), dtype=float)
+    cycles = df.loc[train_mask, "cycleNo"].fillna("missing").astype(str)
+    counts = cycles.value_counts()
+    weights = cycles.map(lambda c: 1.0 / float(counts[c])).to_numpy(dtype=float)
+    mean = float(np.mean(weights)) if len(weights) else 1.0
+    if mean > 0:
+        weights = weights / mean
+    return weights
 
 
 def grouped_predictions(
@@ -260,10 +281,11 @@ def grouped_predictions(
             meta["status"] = "skipped_train_size_or_class"
             rows.extend(meta.to_dict("records"))
             continue
+        sample_weight = cycle_balanced_weights(df, train) if mode.endswith("_cycle_balanced") else None
         if mode == "raw":
             x_train = df.loc[train, feature_cols]
             x_test = df.loc[test, feature_cols]
-        elif mode == "acquisition_residualized":
+        elif mode in {"acquisition_residualized", "acquisition_residualized_cycle_balanced"}:
             if not acquisition_cols:
                 meta["predicted_probability"] = np.nan
                 meta["status"] = "skipped_no_acquisition_context"
@@ -274,6 +296,7 @@ def grouped_predictions(
                 df.loc[test, feature_cols],
                 df.loc[train, acquisition_cols],
                 df.loc[test, acquisition_cols],
+                sample_weight=sample_weight,
             )
             if x_train.shape[1] == 0:
                 meta["predicted_probability"] = np.nan
@@ -283,7 +306,10 @@ def grouped_predictions(
         else:
             raise ValueError(mode)
         model = classifier(seed)
-        model.fit(x_train, y[train].astype(int))
+        fit_kwargs = {}
+        if sample_weight is not None:
+            fit_kwargs["logisticregression__sample_weight"] = sample_weight
+        model.fit(x_train, y[train].astype(int), **fit_kwargs)
         meta["predicted_probability"] = model.predict_proba(x_test)[:, 1]
         meta["status"] = "ok"
         rows.extend(meta.to_dict("records"))
@@ -352,6 +378,11 @@ def deltas(metrics_df: pd.DataFrame) -> pd.DataFrame:
         ("video_all", "acquisition_context", "acquisition_residualized"),
         ("video_plus_echem", "video_all", "acquisition_residualized"),
         ("video_plus_echem", "echem_regime", "acquisition_residualized"),
+        ("video_plus_echem", "acquisition_context", "acquisition_residualized_cycle_balanced"),
+        ("echem_regime", "acquisition_context", "acquisition_residualized_cycle_balanced"),
+        ("video_all", "acquisition_context", "acquisition_residualized_cycle_balanced"),
+        ("video_plus_echem", "video_all", "acquisition_residualized_cycle_balanced"),
+        ("video_plus_echem", "echem_regime", "acquisition_residualized_cycle_balanced"),
     ]
     for target in sorted(metrics_df["target"].dropna().unique()):
         for group_col in sorted(metrics_df["group_col"].dropna().unique()):
@@ -401,7 +432,7 @@ def main() -> None:
         t for t in ["future_any_drop_within_8cycles", "future_any_drop_within_16cycles"]
         if t in df.columns and pd.to_numeric(df[t], errors="coerce").isin([0, 1]).sum() >= 16
     ]
-    group_cols = [c for c in ["cycleNo", "source_stem"] if c in df.columns]
+    group_cols = [c for c in ["cycleNo", "source_stem", "source_cohort_key"] if c in df.columns]
 
     prediction_frames = []
     metric_rows = []
@@ -409,7 +440,11 @@ def main() -> None:
     for target in targets:
         for group_col in group_cols:
             for feature_set, cols in feature_sets.items():
-                modes = ["raw"] if feature_set == "acquisition_context" else ["raw", "acquisition_residualized"]
+                modes = (
+                    ["raw"]
+                    if feature_set == "acquisition_context"
+                    else ["raw", "acquisition_residualized", "acquisition_residualized_cycle_balanced"]
+                )
                 for mode in modes:
                     pred = grouped_predictions(df, cols, target, group_col, args.seed, mode, acquisition_cols)
                     pred["target"] = target
@@ -422,7 +457,7 @@ def main() -> None:
                     if (
                         target == "future_any_drop_within_16cycles"
                         and feature_set in {"acquisition_context", "echem_regime", "video_all", "video_plus_echem"}
-                        and mode in {"raw", "acquisition_residualized"}
+                        and mode in {"raw", "acquisition_residualized", "acquisition_residualized_cycle_balanced"}
                     ):
                         null = permutation_null(pred, met["roc_auc"], args.seed, args.n_permutation)
                         null.update({
@@ -458,6 +493,15 @@ def main() -> None:
     null_df.to_csv(paths["permutation_null"], index=False)
 
     top = metrics_df.sort_values(["target", "group_col", "roc_auc", "average_precision"], ascending=[True, True, False, False])
+    strict_future16 = metrics_df[
+        (metrics_df["target"] == "future_any_drop_within_16cycles")
+        & (metrics_df["feature_set"] == "video_plus_echem")
+        & (metrics_df["mode"] == "acquisition_residualized_cycle_balanced")
+    ].sort_values(["group_col"])
+    strict_deltas = delta_df[
+        (delta_df["target"] == "future_any_drop_within_16cycles")
+        & delta_df["comparison"].str.startswith("video_plus_echem_acquisition_residualized_cycle_balanced", na=False)
+    ] if not delta_df.empty else pd.DataFrame()
     summary = clean_json({
         "n_rows": int(len(df)),
         "n_cycles": int(df["cycleNo"].nunique()),
@@ -466,7 +510,9 @@ def main() -> None:
         "group_cols": group_cols,
         "feature_set_sizes": {k: len(v) for k, v in feature_sets.items()},
         "top_metrics": top.to_dict("records"),
-        "top_deltas": delta_df.head(40).to_dict("records") if not delta_df.empty else [],
+        "top_deltas": delta_df.head(60).to_dict("records") if not delta_df.empty else [],
+        "strict_cycle_balanced_source_cohort_metrics": strict_future16.to_dict("records"),
+        "strict_cycle_balanced_source_cohort_deltas": strict_deltas.to_dict("records"),
         "guardrail": "This audit residualizes candidate video/echem features against acquisition/context inside each held-out fold. It tests context-resistant weak-label signal for prioritizing next analyses, not deployable warning, causal mechanism, manual QC labels, or calibrated diffusion.",
         "outputs": {k: str(v) for k, v in paths.items()},
     })
@@ -477,7 +523,8 @@ def main() -> None:
         f"- Rows: {summary['n_rows']}\n"
         f"- Cycles: {summary['n_cycles']}\n"
         f"- Sources: {summary['n_sources']}\n"
-        f"- Feature sets: {summary['feature_set_sizes']}\n\n"
+        f"- Feature sets: {summary['feature_set_sizes']}\n"
+        f"- Strict future16 metrics: {len(summary['strict_cycle_balanced_source_cohort_metrics'])} cycle-balanced residualized video+echem rows\n\n"
         f"Guardrail: {summary['guardrail']}\n"
     )
 
