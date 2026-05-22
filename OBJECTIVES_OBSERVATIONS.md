@@ -3986,3 +3986,26 @@ Results:
 - Each rendered row has a frame strip, mask overlay, radial kymograph, and contact-sheet entry. The top visual row is still `source_balanced_cycle80_rank62_obj2_9_c2_x10_010723`, the strict-front-gate candidate.
 
 Interpretation: this closes the biggest practical handoff gap for manual QC. The reviewer can now inspect one contact sheet plus per-ROI strip/overlay/kymograph assets for the exact decision queue that controls whether front, phase-boundary, and diffusion-proxy evidence should be trusted. The packet still assigns no labels and does not validate particle identity, front masks, calibrated diffusion, or causality.
+
+## 2026-05-22 Source-Balanced Pre-Event Blinded Manual-QC Workbook
+
+Added `scripts/tier4_source_balanced_pre_event_manual_qc_blind_workbook.py` and ran it on Isambard. This takes the top-40 rendered manual-QC visual packet and creates a randomized reviewer-facing workbook plus a separate hidden key so manual front/phase labels can be collected without exposing event timing, source, cycle, ROI ID, or automatic action tier during scoring.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook`
+- `derived_local/source_balanced_pre_event_manual_qc_blind_workbook`
+- `source_balanced_pre_event_manual_qc_blinded_workbook.csv`
+- `source_balanced_pre_event_manual_qc_blinded_key.csv`
+- `source_balanced_pre_event_manual_qc_blinded_review.html`
+- `source_balanced_pre_event_manual_qc_rubric.json`
+- `source_balanced_pre_event_manual_qc_blind_summary.json`
+
+Results:
+
+- Built 40 blinded review rows from 40 rendered candidates using seed 20260522.
+- The reviewer-facing workbook contains image paths and label fields only; validation confirmed it does not include `roi_id`, `source_stem`, `cycleNo`, `event_relative_bin`, or `manual_qc_action_tier`.
+- The hidden key preserves 12 sources, event bins (23 near-pre, 4 mid-pre, 4 far-pre, 6 post-event, 3 no-near-event controls), and action tiers (1 strict-front, 5 front/kinetic-first, 8 kinetic-only, 11 front-only, 4 context-control concordant, 11 routine/low-concordance).
+- Rubric fields explicitly ask for particle identity, front-like motion, front direction, phase-boundary interpretability, particle-local kinetic signal, artifact/drift risk, diffusion interpretation permission, and final manual decision.
+
+Interpretation: this is the missing bridge from automatic physics proxies to defensible manual validation. It prevents automatic ranking and event proximity from biasing the first scoring pass, while retaining a hidden key for post-label enrichment tests. It still assigns no labels and keeps diffusion claims blocked unless manual review supports particle identity, front mask quality, and front-motion interpretability.

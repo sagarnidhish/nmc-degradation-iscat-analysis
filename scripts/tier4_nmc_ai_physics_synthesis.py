@@ -105,6 +105,7 @@ def main() -> None:
     calibration_claim_risk = read_json(derived / "calibration_claim_risk_register" / "calibration_claim_risk_summary.json")
     apparent_diffusion_calibration = read_json(derived / "apparent_diffusion_calibration_bounds" / "apparent_diffusion_calibration_bounds_summary.json")
     diffusion_physics_consistency = read_json(derived / "diffusion_physics_consistency_audit" / "diffusion_physics_consistency_summary.json")
+    diffusion_claim_readiness = read_json(derived / "diffusion_claim_readiness_audit" / "diffusion_claim_readiness_summary.json")
     cross_modal_consensus = read_json(derived / "cross_modal_degradation_consensus" / "cross_modal_degradation_consensus_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
@@ -169,6 +170,7 @@ def main() -> None:
     source_balanced_pre_event_front_kinetic_null = read_json(derived / "source_balanced_pre_event_front_kinetic_null_audit" / "source_balanced_pre_event_front_kinetic_null_summary.json")
     source_balanced_pre_event_manual_qc_decision = read_json(derived / "source_balanced_pre_event_manual_qc_decision_packet" / "source_balanced_pre_event_manual_qc_decision_summary.json")
     source_balanced_pre_event_manual_qc_visual = read_json(derived / "source_balanced_pre_event_manual_qc_visual_packet" / "source_balanced_pre_event_manual_qc_visual_summary.json")
+    source_balanced_pre_event_manual_qc_blind = read_json(derived / "source_balanced_pre_event_manual_qc_blind_workbook" / "source_balanced_pre_event_manual_qc_blind_summary.json")
     source_balanced_pre_event_multimodal = read_json(derived / "source_balanced_pre_event_multimodal_predictor" / "source_balanced_pre_event_multimodal_summary.json")
     source_balanced_pre_event_strict_qc_gated_front = read_json(derived / "source_balanced_pre_event_strict_qc_gated_front_audit" / "source_balanced_pre_event_strict_qc_gated_front_summary.json")
     source_balanced_pre_event_physics_modes = read_json(derived / "source_balanced_pre_event_physics_mode_taxonomy" / "source_balanced_pre_event_physics_mode_summary.json")
@@ -610,6 +612,8 @@ def main() -> None:
     source_balanced_pre_event_manual_qc_visual_actions = first_summary(source_balanced_pre_event_manual_qc_visual, "action_tier_counts_rendered", {}) or {}
     source_balanced_pre_event_manual_qc_visual_bins = first_summary(source_balanced_pre_event_manual_qc_visual, "event_relative_bin_counts_rendered", {}) or {}
     source_balanced_pre_event_manual_qc_visual_best = source_balanced_pre_event_manual_qc_visual_top[0] if source_balanced_pre_event_manual_qc_visual_top else {}
+    source_balanced_pre_event_manual_qc_blind_actions = first_summary(source_balanced_pre_event_manual_qc_blind, "action_tier_counts_hidden_key", {}) or {}
+    source_balanced_pre_event_manual_qc_blind_bins = first_summary(source_balanced_pre_event_manual_qc_blind, "event_relative_bin_counts_hidden_key", {}) or {}
     source_balanced_pre_event_multimodal_best = top_items(first_summary(source_balanced_pre_event_multimodal, "best_by_target", []), 24)
     source_balanced_pre_event_multimodal_deltas = top_items(first_summary(source_balanced_pre_event_multimodal, "best_family_deltas", []), 16)
     source_balanced_pre_event_multimodal_best_row = source_balanced_pre_event_multimodal_best[0] if source_balanced_pre_event_multimodal_best else {}
@@ -843,6 +847,8 @@ def main() -> None:
     diffusion_physics_candidates = top_items(first_summary(diffusion_physics_consistency, "top_consistent_candidates", []), 8)
     diffusion_physics_top_scores = top_items(first_summary(diffusion_physics_consistency, "top_physics_scores", []), 8)
     diffusion_physics_source_summary = top_items(first_summary(diffusion_physics_consistency, "source_summary", []), 12)
+    diffusion_claim_top_candidates = top_items(first_summary(diffusion_claim_readiness, "top_candidates", []), 8)
+    diffusion_claim_hard_blockers = top_items(first_summary(diffusion_claim_readiness, "hard_blockers", []), 12)
     cross_modal_top = top_items(first_summary(cross_modal_consensus, "top_cycles", []), 12)
     cross_modal_classes = top_items(first_summary(cross_modal_consensus, "class_summary", []), 8)
     cross_modal_contrasts = top_items(first_summary(cross_modal_consensus, "target_contrasts", []), 12)
@@ -1081,6 +1087,7 @@ def main() -> None:
         f"- Pre-event front/kinetic source-null audit stress-tests {first_summary(source_balanced_pre_event_front_kinetic_null, 'n_features_tested', 0)} concordance/kinetic/front features with {first_summary(source_balanced_pre_event_front_kinetic_null, 'n_permutations', 0)} source-stratified permutations; best row is {source_balanced_pre_event_fk_null_best.get('target', 'NA')} {source_balanced_pre_event_fk_null_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_fk_null_best.get('oriented_auc'))}, coarse perm p={fmt(source_balanced_pre_event_fk_null_best.get('source_stratified_perm_p_auc_ge_observed'))}.",
         f"- Pre-event manual-QC decision packet consolidates {first_summary(source_balanced_pre_event_manual_qc_decision, 'n_rows', 0)} ROI rows, {first_summary(source_balanced_pre_event_manual_qc_decision, 'n_visual_asset_rows', 0)} rendered visual-asset rows, and source-null evidence into action tiers; top action is {source_balanced_pre_event_manual_qc_best.get('manual_qc_action_tier', 'NA')} for {source_balanced_pre_event_manual_qc_best.get('roi_id', 'NA')} at decision score {fmt(source_balanced_pre_event_manual_qc_best.get('manual_qc_decision_score'))}.",
         f"- Manual-QC visual packet renders {first_summary(source_balanced_pre_event_manual_qc_visual, 'n_rendered', 0)} queue rows across {first_summary(source_balanced_pre_event_manual_qc_visual, 'n_sources_rendered', 0)} sources and action tiers {source_balanced_pre_event_manual_qc_visual_actions}; contact sheet {first_summary(source_balanced_pre_event_manual_qc_visual, 'contact_sheet', 'NA')}.",
+        f"- Blinded manual-QC workbook randomizes {first_summary(source_balanced_pre_event_manual_qc_blind, 'n_blinded_rows', 0)} rendered candidates with seed {first_summary(source_balanced_pre_event_manual_qc_blind, 'seed', 'NA')}; reviewer-facing rows hide source/cycle/event/action metadata while the hidden key preserves action tiers {source_balanced_pre_event_manual_qc_blind_actions}.",
         f"- Pre-event multimodal leave-source predictor compares echem/front/QC/phase-kinetic families; best row is {source_balanced_pre_event_multimodal_best_row.get('target', 'NA')} {source_balanced_pre_event_multimodal_best_row.get('feature_family', 'NA')} {source_balanced_pre_event_multimodal_best_row.get('method', 'NA')} AUC {fmt(source_balanced_pre_event_multimodal_best_row.get('roc_auc'))}/AP {fmt(source_balanced_pre_event_multimodal_best_row.get('average_precision'))}, while the best kinetics-vs-front delta is dAUC {fmt(source_balanced_pre_event_multimodal_delta_best.get('roc_auc_delta'))}.",
         f"- Pre-event strict QC-gated front audit reduces {first_summary(source_balanced_pre_event_strict_qc_gated_front, 'n_candidates', 0)} rendered candidates to {first_summary(source_balanced_pre_event_strict_qc_gated_front, 'n_manual_front_review_candidates', 0)} automatic manual-front-review candidate and {first_summary(source_balanced_pre_event_strict_qc_gated_front, 'n_automatic_diffusion_claim_candidates', 0)} automatic diffusion-claim candidates; the surviving review candidate is {source_balanced_pre_event_strict_qc_best.get('roi_id', 'NA')} with strict QC score {fmt(source_balanced_pre_event_strict_qc_best.get('strict_qc_priority_score'))}.",
         f"- Pre-event physics-mode taxonomy clusters source-residual front/diffusion/heterogeneity features into k={fmt(first_summary(source_balanced_pre_event_physics_modes, 'chosen_k'), 0)} broad states but finds no strong near-pre enrichment (best Fisher p={fmt(source_balanced_pre_event_mode_enrich_best.get('fisher_p'))}), so continuous front/diffusion clocks remain more informative than coarse modes for this cohort.",
@@ -1390,6 +1397,22 @@ def main() -> None:
             f"- Diffusion consistency correlation {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
         )
     report_lines.append(f"- Guardrail: {first_summary(diffusion_physics_consistency, 'guardrail', 'Diffusion physics consistency audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Diffusion Claim Readiness Audit",
+        "",
+        f"- Overall status: {first_summary(diffusion_claim_readiness, 'overall_status', 'unavailable')}",
+        f"- Criteria / hard blockers / publication-ready candidates: {first_summary(diffusion_claim_readiness, 'n_criteria', 0)} / {first_summary(diffusion_claim_readiness, 'n_hard_blockers', 0)} / {first_summary(diffusion_claim_readiness, 'n_publication_ready_candidates', 0)}",
+        f"- Status counts: {first_summary(diffusion_claim_readiness, 'status_counts', {})}",
+    ]
+    for blocker in diffusion_claim_hard_blockers[:8]:
+        report_lines.append(f"- Hard blocker: {blocker}")
+    for row in diffusion_claim_top_candidates[:4]:
+        report_lines.append(
+            f"- Readiness candidate {row.get('roi_id')}: source {row.get('candidate_source')}, cycle {fmt(row.get('cycleNo'), 0)}, publication_ready={row.get('publication_ready')}, blockers={row.get('blockers')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(diffusion_claim_readiness, 'guardrail', 'Diffusion claim readiness audit unavailable.')}")
 
     report_lines += [
         "",
@@ -2248,6 +2271,8 @@ def main() -> None:
         f"- Manual-QC visual packet rendered/action-tiers/event-bins: {first_summary(source_balanced_pre_event_manual_qc_visual, 'n_rendered', 0)} / {source_balanced_pre_event_manual_qc_visual_actions} / {source_balanced_pre_event_manual_qc_visual_bins}; contact sheet: {first_summary(source_balanced_pre_event_manual_qc_visual, 'contact_sheet', 'NA')}",
         f"- Top manual-QC visual candidate: rank {fmt(source_balanced_pre_event_manual_qc_visual_best.get('manual_qc_rank'), 0)} {source_balanced_pre_event_manual_qc_visual_best.get('roi_id', 'NA')} action {source_balanced_pre_event_manual_qc_visual_best.get('manual_qc_action_tier', 'NA')} status {source_balanced_pre_event_manual_qc_visual_best.get('manual_visual_render_status', 'NA')}",
         f"- Manual-QC visual guardrail: {first_summary(source_balanced_pre_event_manual_qc_visual, 'guardrail', 'Source-balanced pre-event manual-QC visual packet unavailable.')}",
+        f"- Blinded manual-QC workbook rows/sources/action tiers: {first_summary(source_balanced_pre_event_manual_qc_blind, 'n_blinded_rows', 0)} / {first_summary(source_balanced_pre_event_manual_qc_blind, 'n_sources_hidden_key', 0)} / {source_balanced_pre_event_manual_qc_blind_actions}; event bins {source_balanced_pre_event_manual_qc_blind_bins}",
+        f"- Blinded manual-QC workbook guardrail: {first_summary(source_balanced_pre_event_manual_qc_blind, 'guardrail', 'Source-balanced pre-event blinded manual-QC workbook unavailable.')}",
         f"- Manual-QC decision guardrail: {first_summary(source_balanced_pre_event_manual_qc_decision, 'guardrail', 'Source-balanced pre-event manual-QC decision packet unavailable.')}",
         f"- Multimodal predictor rows/cycles/sources: {first_summary(source_balanced_pre_event_multimodal, 'n_rows', 0)} / {first_summary(source_balanced_pre_event_multimodal, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_multimodal, 'n_sources', 0)}; feature family sizes {first_summary(source_balanced_pre_event_multimodal, 'feature_family_sizes', {})}",
         f"- Top multimodal leave-source row: {source_balanced_pre_event_multimodal_best_row.get('target', 'NA')} {source_balanced_pre_event_multimodal_best_row.get('feature_family', 'NA')} {source_balanced_pre_event_multimodal_best_row.get('method', 'NA')} n={fmt(source_balanced_pre_event_multimodal_best_row.get('n_eval'), 0)}, AUC {fmt(source_balanced_pre_event_multimodal_best_row.get('roc_auc'))}, AP {fmt(source_balanced_pre_event_multimodal_best_row.get('average_precision'))}, source eta2 mean/max {fmt(source_balanced_pre_event_multimodal_best_row.get('mean_raw_source_eta2'))}/{fmt(source_balanced_pre_event_multimodal_best_row.get('max_raw_source_eta2'))}",
@@ -3716,6 +3741,17 @@ def main() -> None:
                 "outputs": first_summary(source_balanced_pre_event_manual_qc_visual, "outputs", {}),
                 "guardrail": first_summary(source_balanced_pre_event_manual_qc_visual, "guardrail"),
             },
+            "manual_qc_blind_workbook": {
+                "seed": first_summary(source_balanced_pre_event_manual_qc_blind, "seed"),
+                "n_input_rows": first_summary(source_balanced_pre_event_manual_qc_blind, "n_input_rows"),
+                "n_blinded_rows": first_summary(source_balanced_pre_event_manual_qc_blind, "n_blinded_rows"),
+                "n_sources_hidden_key": first_summary(source_balanced_pre_event_manual_qc_blind, "n_sources_hidden_key"),
+                "action_tier_counts_hidden_key": source_balanced_pre_event_manual_qc_blind_actions,
+                "event_relative_bin_counts_hidden_key": source_balanced_pre_event_manual_qc_blind_bins,
+                "review_fields": first_summary(source_balanced_pre_event_manual_qc_blind, "review_fields", []),
+                "outputs": first_summary(source_balanced_pre_event_manual_qc_blind, "outputs", {}),
+                "guardrail": first_summary(source_balanced_pre_event_manual_qc_blind, "guardrail"),
+            },
             "multimodal_predictor": {
                 "n_rows": first_summary(source_balanced_pre_event_multimodal, "n_rows"),
                 "n_cycles": first_summary(source_balanced_pre_event_multimodal, "n_cycles"),
@@ -4393,6 +4429,18 @@ def main() -> None:
             "top_correlations": diffusion_physics_corr,
             "source_summary": diffusion_physics_source_summary,
             "guardrail": first_summary(diffusion_physics_consistency, "guardrail"),
+        },
+        "diffusion_claim_readiness_audit": {
+            "overall_status": first_summary(diffusion_claim_readiness, "overall_status"),
+            "n_criteria": first_summary(diffusion_claim_readiness, "n_criteria"),
+            "n_hard_blockers": first_summary(diffusion_claim_readiness, "n_hard_blockers"),
+            "status_counts": first_summary(diffusion_claim_readiness, "status_counts", {}),
+            "hard_blockers": diffusion_claim_hard_blockers,
+            "n_candidate_rows": first_summary(diffusion_claim_readiness, "n_candidate_rows"),
+            "n_automatic_consistent_candidates": first_summary(diffusion_claim_readiness, "n_automatic_consistent_candidates"),
+            "n_publication_ready_candidates": first_summary(diffusion_claim_readiness, "n_publication_ready_candidates"),
+            "top_candidates": diffusion_claim_top_candidates,
+            "guardrail": first_summary(diffusion_claim_readiness, "guardrail"),
         },
         "cross_modal_degradation_consensus": {
             "n_cycles": first_summary(cross_modal_consensus, "n_cycles"),

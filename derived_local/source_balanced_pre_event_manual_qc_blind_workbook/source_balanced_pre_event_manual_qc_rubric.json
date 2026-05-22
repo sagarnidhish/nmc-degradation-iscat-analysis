@@ -1,0 +1,12 @@
+{
+  "artifact_or_drift_issue": "none/minor/major/uncertain.",
+  "diffusion_interpretation_allowed": "yes/no/uncertain: yes only if particle identity and front trace are strong enough for follow-up calibration.",
+  "front_direction": "outward/inward/oscillatory/none/uncertain.",
+  "front_like_motion_present": "yes/no/uncertain: strip and radial kymograph show coherent spatial boundary movement.",
+  "front_motion_confidence_0_3": "0 none, 1 weak, 2 plausible, 3 strong.",
+  "kinetic_signal_particle_local": "yes/no/uncertain: intensity dynamics are localized to the particle mask rather than background/drift.",
+  "overall_manual_decision": "accept_front_proxy/reject_artifact/kinetic_only/front_only/context_control/uncertain.",
+  "particle_identity_confidence_0_3": "0 none, 1 weak, 2 plausible, 3 strong.",
+  "particle_identity_ok": "yes/no/uncertain: crop contains a stable particle-region signal throughout the sequence.",
+  "phase_boundary_interpretable": "yes/no/uncertain: front-like motion could be discussed as a phase-boundary proxy."
+}
