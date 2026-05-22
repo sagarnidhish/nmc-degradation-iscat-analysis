@@ -145,6 +145,9 @@ def main() -> None:
     source_balanced_pre_event_sampling = read_json(derived / "source_balanced_pre_event_sampling_manifest" / "source_balanced_pre_event_sampling_summary.json")
     source_balanced_pre_event_sequences = read_json(derived / "source_balanced_pre_event_roi_sequences" / "selected_roi_sequence_summary.json")
     source_balanced_pre_event_sequence_audit = read_json(derived / "source_balanced_pre_event_sequence_audit" / "source_balanced_pre_event_sequence_audit_summary.json")
+    source_balanced_pre_event_rollout = read_json(derived / "source_balanced_pre_event_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
+    source_balanced_pre_event_mask_front = read_json(derived / "source_balanced_pre_event_mask_front_audit" / "source_balanced_mask_front_summary.json")
+    source_balanced_pre_event_readout = read_json(derived / "source_balanced_pre_event_readout_audit" / "source_balanced_pre_event_readout_summary.json")
     source_balanced_sequences = read_json(derived / "source_balanced_roi_sequences" / "selected_roi_sequence_summary.json")
     source_balanced_sequence_rollout = read_json(derived / "source_balanced_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
     source_balanced_mask_front = read_json(derived / "source_balanced_mask_front_sanity_audit" / "source_balanced_mask_front_summary.json")
@@ -458,6 +461,17 @@ def main() -> None:
     source_balanced_pre_event_clean_cycle = next((r for r in source_balanced_pre_event_audit_models if r.get("target") == "target_pre16_clean_vs_post_control" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "all_video"), {})
     source_balanced_pre_event_any_source = next((r for r in source_balanced_pre_event_audit_models if r.get("target") == "target_any_pre_vs_post_control" and r.get("group_col") == "source_stem" and r.get("feature_set") == "all_video"), {})
     source_balanced_pre_event_near_scalar = next((r for r in source_balanced_pre_event_audit_scalars if r.get("target") == "target_near_pre_vs_rest"), {})
+    source_balanced_pre_event_rollout_top = top_items(first_summary(source_balanced_pre_event_rollout, "top_roi_feature_tests", []), 12)
+    source_balanced_pre_event_mask_top = top_items(first_summary(source_balanced_pre_event_mask_front, "top_roi_feature_tests", []), 12)
+    source_balanced_pre_event_readout_best = top_items(first_summary(source_balanced_pre_event_readout, "best_by_target_transform", []), 24)
+    source_balanced_pre_event_readout_clean = top_items(first_summary(source_balanced_pre_event_readout, "best_source_residual_clean_pre_readouts", []), 8)
+    source_balanced_pre_event_rollout_best = source_balanced_pre_event_rollout_top[0] if source_balanced_pre_event_rollout_top else {}
+    source_balanced_pre_event_mask_physics = [
+        row for row in source_balanced_pre_event_mask_top
+        if any(key in str(row.get("feature", "")) for key in ("masked_", "front_", "mask_", "apparent_diffusion"))
+    ]
+    source_balanced_pre_event_mask_best = source_balanced_pre_event_mask_physics[0] if source_balanced_pre_event_mask_physics else (source_balanced_pre_event_mask_top[0] if source_balanced_pre_event_mask_top else {})
+    source_balanced_pre_event_clean_best = source_balanced_pre_event_readout_clean[0] if source_balanced_pre_event_readout_clean else {}
     source_balanced_degmode_clusters = top_items(first_summary(source_balanced_degradation_modes, "cluster_summary", []), 12)
     source_balanced_degmode_enrichment = top_items(first_summary(source_balanced_degradation_modes, "top_enrichment", []), 24)
     source_balanced_degmode_representatives = top_items(first_summary(source_balanced_degradation_modes, "representatives", []), 12)
@@ -891,6 +905,7 @@ def main() -> None:
         f"- Source-balanced ROI expansion attacks the remaining cohort-breadth bottleneck: it samples {first_summary(source_balanced_expansion, 'n_sampled_cycles', 0)} cycles across {first_summary(source_balanced_expansion, 'n_sources_selected', 0)} source movies, including {first_summary(source_balanced_expansion, 'n_new_selected_cycles', 0)} cycle/source pairs not already in video cohorts, and proposes {first_summary(source_balanced_expansion, 'n_roi_rows', 0)} automatic ROI rows for follow-up sequence export/QC.",
         f"- Source-balanced pre-event sampling addresses the future-specificity gap directly: it reconstructs {first_summary(source_balanced_pre_event_sampling, 'n_roi_rows', 0)} automatic ROI proposals from {first_summary(source_balanced_pre_event_sampling, 'n_sampled_cycles', 0)} event-relative cycles across {first_summary(source_balanced_pre_event_sampling, 'n_sources_selected', 0)} sources, with cycle bins {source_balanced_pre_event_bins} and {first_summary(source_balanced_pre_event_sampling, 'n_new_selected_cycles', 0)} new cycle/source pairs.",
         f"- Source-balanced pre-event sequence audit exports {first_summary(source_balanced_pre_event_sequences, 'n_roi_sequences', 0)} event-relative particle crops and finds near-pre-event spatial video structure under leave-source AUC {fmt(source_balanced_pre_event_near_source.get('roc_auc'))}/AP {fmt(source_balanced_pre_event_near_source.get('average_precision'))}, while broader any-pre transfer remains weak at AUC {fmt(source_balanced_pre_event_any_source.get('roc_auc'))}.",
+        f"- Pre-event rollout/mask audits on those crops find top future16 ROI signals in {source_balanced_pre_event_rollout_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_rollout_best.get('oriented_auc'))} and {source_balanced_pre_event_mask_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_mask_best.get('oriented_auc'))}; event-relative clean-pre source-residual readout peaks at {source_balanced_pre_event_clean_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_clean_best.get('oriented_auc'))}.",
         f"- Source-balanced ROI sequence export converts that manifest into {first_summary(source_balanced_sequences, 'n_roi_sequences', 0)} particle-region crop tensors across {first_summary(source_balanced_sequences, 'n_cycles', 0)} cycles and {first_summary(source_balanced_sequences, 'n_sources', 0)} sources with {first_summary(source_balanced_sequences, 'n_failed', 0)} export failures; the fast rollout audit finds strongest future16 ROI signal in {source_balanced_rollout_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_rollout_top16.get('oriented_auc'))}, while prediction-error features are highly source-structured.",
         f"- A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across {first_summary(source_balanced_mask_front, 'n_roi_sequences', 0)} ROI tensors; top future16 mask/front proxy is {source_balanced_mask_front_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_top16.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_top16.get('average_precision'))}, but source eta2 is {fmt(source_balanced_mask_front_top16.get('source_eta2'))}.",
         f"- A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is {source_balanced_mask_front_resid_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_resid_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_resid_best.get('average_precision'))}, and best within-source-rank proxy is {source_balanced_mask_front_rank_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_rank_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_rank_best.get('average_precision'))}.",
@@ -1960,6 +1975,22 @@ def main() -> None:
     for row in source_balanced_pre_event_audit_models[:8]:
         report_lines.append(
             f"- Event-relative model {row.get('target', 'NA')} {row.get('group_col', 'NA')} {row.get('feature_set', 'NA')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, n={fmt(row.get('n_eval'), 0)}"
+        )
+
+    report_lines += [
+        "",
+        "## Source-Balanced Pre-Event Rollout, Mask/Front, and Event-Relative Readout",
+        "",
+        f"- Rollout audit rows/cycles/sources: {first_summary(source_balanced_pre_event_rollout, 'n_roi_sequences', 0)} / {first_summary(source_balanced_pre_event_rollout, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_rollout, 'n_sources', 0)}",
+        f"- Top pre-event rollout future-label row: {source_balanced_pre_event_rollout_best.get('target', 'NA')} {source_balanced_pre_event_rollout_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_rollout_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_rollout_best.get('average_precision'))}, source eta2 {fmt(source_balanced_pre_event_rollout_best.get('source_eta2'))}",
+        f"- Top pre-event mask/front future-label row: {source_balanced_pre_event_mask_best.get('target', 'NA')} {source_balanced_pre_event_mask_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_mask_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_mask_best.get('average_precision'))}, source eta2 {fmt(source_balanced_pre_event_mask_best.get('source_eta2'))}",
+        f"- Event-relative bins: {first_summary(source_balanced_pre_event_readout, 'event_relative_bin_counts', {})}",
+        f"- Best source-residual clean-pre readout: {source_balanced_pre_event_clean_best.get('target', 'NA')} {source_balanced_pre_event_clean_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_clean_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_clean_best.get('average_precision'))}, p={fmt(source_balanced_pre_event_clean_best.get('mwu_p'))}",
+        f"- Guardrail: {first_summary(source_balanced_pre_event_readout, 'guardrail', 'Source-balanced pre-event readout unavailable.')}",
+    ]
+    for row in source_balanced_pre_event_readout_best[:10]:
+        report_lines.append(
+            f"- Event-relative readout {row.get('target', 'NA')} {row.get('transform', 'NA')} {row.get('feature', 'NA')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, p={fmt(row.get('mwu_p'))}, eta2 {fmt(row.get('source_eta2_after_transform'))}"
         )
 
     report_lines += [
@@ -3128,6 +3159,31 @@ def main() -> None:
             "top_model_metrics": source_balanced_pre_event_audit_models,
             "top_scalar_tests": source_balanced_pre_event_audit_scalars,
             "guardrail": first_summary(source_balanced_pre_event_sequence_audit, "guardrail"),
+        },
+        "source_balanced_pre_event_rollout_mask_readout": {
+            "rollout_summary": {
+                "n_roi_sequences": first_summary(source_balanced_pre_event_rollout, "n_roi_sequences"),
+                "n_cycles": first_summary(source_balanced_pre_event_rollout, "n_cycles"),
+                "n_sources": first_summary(source_balanced_pre_event_rollout, "n_sources"),
+                "top_roi_feature_tests": source_balanced_pre_event_rollout_top,
+                "guardrail": first_summary(source_balanced_pre_event_rollout, "guardrail"),
+            },
+            "mask_front_summary": {
+                "n_roi_sequences": first_summary(source_balanced_pre_event_mask_front, "n_roi_sequences"),
+                "n_cycles": first_summary(source_balanced_pre_event_mask_front, "n_cycles"),
+                "n_sources": first_summary(source_balanced_pre_event_mask_front, "n_sources"),
+                "top_roi_feature_tests": source_balanced_pre_event_mask_top,
+                "guardrail": first_summary(source_balanced_pre_event_mask_front, "guardrail"),
+            },
+            "event_relative_readout": {
+                "n_rows": first_summary(source_balanced_pre_event_readout, "n_rows"),
+                "n_cycles": first_summary(source_balanced_pre_event_readout, "n_cycles"),
+                "n_sources": first_summary(source_balanced_pre_event_readout, "n_sources"),
+                "event_relative_bin_counts": first_summary(source_balanced_pre_event_readout, "event_relative_bin_counts", {}),
+                "best_by_target_transform": source_balanced_pre_event_readout_best,
+                "best_source_residual_clean_pre_readouts": source_balanced_pre_event_readout_clean,
+                "guardrail": first_summary(source_balanced_pre_event_readout, "guardrail"),
+            },
         },
         "source_balanced_future_specific_residual_audit": {
             "n_rows": first_summary(source_balanced_future_specific_residual, "n_rows"),

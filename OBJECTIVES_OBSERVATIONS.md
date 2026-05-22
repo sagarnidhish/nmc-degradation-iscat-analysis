@@ -3369,3 +3369,33 @@ Cohort/result snapshot:
 Interpretation:
 
 The new pre-event tensors make the earlier future-specificity gap actionable. There is a localized near-pre-event spatial/heterogeneity signal that survives held-out-source testing, but it does not generalize as a broad all-pre-event warning axis. The physics-facing hypothesis is therefore narrower: the final 1-8 cycles before abrupt event windows may show increasing particle-crop spatial heterogeneity/front disorder. This remains automatic-crop, event-proximity evidence, not validated phase-boundary motion, diffusion, particle identity, or causal forecasting.
+
+## 2026-05-22 Source-Balanced Pre-Event Rollout/Mask/Event-Relative Readout
+
+Exported the source-balanced pre-event proposal manifest into particle-region crop tensors on Isambard and ran rollout, mask/front, and event-relative readout audits. The NPZ tensors remain remote; compact manifests and feature summaries are mirrored locally.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_rollout_audit`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_mask_front_audit`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit`
+- `derived_local/source_balanced_pre_event_roi_sequences` (manifest/summary only; NPZ tensors stay remote)
+- `derived_local/source_balanced_pre_event_sequence_rollout_audit`
+- `derived_local/source_balanced_pre_event_mask_front_audit`
+- `derived_local/source_balanced_pre_event_readout_audit`
+
+Cohort/result snapshot:
+
+- Exported 128/128 particle-region crop tensors across 64 cycles and 14 source movies, with 0 export failures.
+- Future-label counts on exported sequences: 32 future8 positives and 66 future16 positives.
+- Rollout audit top future16 ROI row: `roi_norm_mean_delta_last_minus_first`, AUC 0.628/AP 0.620, but source eta2 0.414.
+- Mask/front audit top future16 ROI rows: `roi_norm_mean_delta_last_minus_first` AUC 0.628/AP 0.620 and `masked_minus_background_mean_slope` AUC 0.624/AP 0.655; both remain source structured.
+- Event-relative readout clean near-pre-event (1-8 cycles) versus post/control: raw `masked_minus_background_mean_slope` is strong, AUC 0.797/AP 0.749, p=5.48e-06, but source eta2 0.578.
+- Best source-residual clean near-pre-event readout: `front_radius_q60_slope_px_per_norm_time`, AUC 0.660/AP 0.665, p=0.083, eta2 approximately zero.
+- Clean pre-event 1-16 versus post/control source-residual readout: `front_radius_q80_median_px`, AUC 0.645/AP 0.570, p=0.010, eta2 approximately zero.
+- Near-pre versus far-pre source-residual apparent diffusion/front proxy: `apparent_diffusion_q70_px2_per_norm_time`, AUC 0.681/AP 0.648, p=0.077, eta2 approximately zero.
+
+Interpretation:
+
+The event-relative export makes the pre-event question more concrete. Raw optical contrast strongly separates near-pre-event from post/control bins, but it is still source structured. After source residualization, the surviving signal shifts to front-radius/slope and apparent-diffusion-like proxies with moderate AUC and weaker p-values. This is useful physics triage: it suggests pre-event organization in crop-local front geometry, while keeping the claim guarded because masks/fronts are automatic and not calibrated phase boundaries or diffusion coefficients.
