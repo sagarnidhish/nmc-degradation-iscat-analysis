@@ -114,6 +114,7 @@ def main() -> None:
     within_cycle_echem = read_json(derived / "within_cycle_echem_shape_audit" / "within_cycle_echem_shape_audit_summary.json")
     echem_shape_conditioned = read_json(derived / "echem_shape_conditioned_roi_front_effects" / "echem_shape_conditioned_roi_front_effects_summary.json")
     echem_optical_breakpoint = read_json(derived / "echem_optical_breakpoint_audit" / "echem_optical_breakpoint_audit_summary.json")
+    echem_optical_regime = read_json(derived / "echem_optical_regime_atlas" / "echem_optical_regime_atlas_summary.json")
     physics_consistency = read_json(derived / "physics_consistency_claim_matrix" / "physics_consistency_claim_matrix_summary.json")
     rollout_calibration = read_json(derived / "probabilistic_rollout_calibration" / "probabilistic_rollout_calibration_summary.json")
     cycle_state_space = read_json(derived / "cycle_state_space_transition_audit" / "cycle_state_space_transition_audit_summary.json")
@@ -252,6 +253,12 @@ def main() -> None:
     echem_breakpoint_global = top_items(first_summary(echem_optical_breakpoint, "top_global_breakpoints", []), 8)
     echem_breakpoint_event_ranks = top_items(first_summary(echem_optical_breakpoint, "event_cycle_breakpoint_ranks", []), 12)
     echem_breakpoint_top = echem_breakpoint_event[0] if echem_breakpoint_event else {}
+    echem_regime_summary = top_items(first_summary(echem_optical_regime, "regime_summary", []), 8)
+    echem_regime_binary = top_items(first_summary(echem_optical_regime, "top_binary_tests", []), 12)
+    echem_regime_corr = top_items(first_summary(echem_optical_regime, "top_correlations", []), 12)
+    echem_regime_top_cycles = top_items(first_summary(echem_optical_regime, "top_cycles", []), 12)
+    echem_regime_top_binary = echem_regime_binary[0] if echem_regime_binary else {}
+    echem_regime_top_corr = echem_regime_corr[0] if echem_regime_corr else {}
     physics_consistency_top = top_items(first_summary(physics_consistency, "top_consistency_rows", []), 12)
     physics_consistency_tests = top_items(first_summary(physics_consistency, "top_event_tests", []), 12)
     rollout_calibration_coverage = top_items(first_summary(rollout_calibration, "coverage_summary", []), 30)
@@ -551,6 +558,7 @@ def main() -> None:
         f"- Apparent diffusion calibration-bounds audit maps all {first_summary(apparent_diffusion_calibration, 'n_roi_with_h5_timing', 0)} balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is {fmt(first_summary(apparent_diffusion_calibration, 'median_roi_elapsed_to_h5_median_ratio'))}, q70 median apparent D at 96 nm/px is {fmt(first_summary(apparent_diffusion_calibration, 'median_q70_apparent_D_h5median_um2_per_s'))} um2/s, and q70 future8 separation is non-significant (top p={fmt(apparent_diffusion_q70_test.get('mannwhitney_p'))}).",
         f"- Cross-modal consensus ranks cycles {cross_modal_sync_cycle_labels} as synchronized multimodal degradation candidates; the top cycle has {fmt(cross_modal_top_cycle.get('n_modal_votes'), 0)} modal votes and consensus score {fmt(cross_modal_top_cycle.get('cross_modal_consensus_score'))}, while the score remains an audit statistic rather than a calibrated probability.",
         f"- Echem/optical breakpoint audit tests {first_summary(echem_optical_breakpoint, 'n_features_tested', 0)} cycle-level echem/trace features around synchronized cycles {first_summary(echem_optical_breakpoint, 'event_cycles', [])}; strongest event-centered shift is {echem_breakpoint_top.get('feature', 'NA')} over +/-{fmt(echem_breakpoint_top.get('window_cycles'), 0)} cycles (scaled shift {fmt(echem_breakpoint_top.get('event_median_scaled_shift'))}, bootstrap p={fmt(echem_breakpoint_top.get('bootstrap_p_abs_vs_control_centers'))}).",
+        f"- Echem-optical regime atlas organizes {first_summary(echem_optical_regime, 'n_cycles', 0)} cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is {echem_regime_top_binary.get('feature', 'NA')} vs {echem_regime_top_binary.get('target', 'NA')} (median shift {fmt(echem_regime_top_binary.get('median_positive_minus_negative'))}, p={fmt(echem_regime_top_binary.get('mannwhitney_p'))}), and top continuous link is {echem_regime_top_corr.get('feature', 'NA')} vs {echem_regime_top_corr.get('target', 'NA')} (rho={fmt(echem_regime_top_corr.get('spearman_rho'))}).",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
         f"- Automatic front-QC sensitivity keeps the positive phase-front residual in {len(robust_phase_strata)} strata: {', '.join(robust_phase_strata) if robust_phase_strata else 'none'}; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.",
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
@@ -879,6 +887,31 @@ def main() -> None:
             f"- Global echem breakpoint candidate cycle {fmt(row.get('center_cycle'), 0)} {row.get('feature')}: scaled shift {fmt(row.get('post_minus_pre_iqr_scaled'))}, rank {fmt(row.get('rank_abs_shift_desc'), 0)}, pre/post n={fmt(row.get('n_pre'), 0)}/{fmt(row.get('n_post'), 0)}"
         )
     report_lines.append(f"- Guardrail: {first_summary(echem_optical_breakpoint, 'guardrail', 'Echem optical breakpoint audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Echem Optical Regime Atlas",
+        "",
+        f"- Cycles/features: {first_summary(echem_optical_regime, 'n_cycles', 0)} / {first_summary(echem_optical_regime, 'n_echem_features', 0)}",
+        f"- Missing echem-shape cycles: {first_summary(echem_optical_regime, 'n_cycles_missing_echem_shape', 0)}; extreme-or-missing CE cycles: {first_summary(echem_optical_regime, 'n_cycles_extreme_or_missing_ce', 0)}",
+    ]
+    for row in echem_regime_summary:
+        report_lines.append(
+            f"- Echem PC1 regime {row.get('echem_pc1_tertile')}: n={fmt(row.get('n_cycles'), 0)}, median cycle {fmt(row.get('median_cycle'))}, median consensus {fmt(row.get('median_cross_modal_score'))}, future8 rate {fmt(row.get('future8_rate'))}, extreme/missing CE rate {fmt(row.get('echem_ce_extreme_or_missing_rate'))}"
+        )
+    for row in echem_regime_binary[:8]:
+        report_lines.append(
+            f"- Echem binary contrast {row.get('feature')} vs {row.get('target')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, p={fmt(row.get('mannwhitney_p'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in echem_regime_corr[:8]:
+        report_lines.append(
+            f"- Echem optical link {row.get('feature')} vs {row.get('target')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    for row in echem_regime_top_cycles[:6]:
+        report_lines.append(
+            f"- Echem-optical priority cycle {fmt(row.get('cycleNo'), 0)}: score {fmt(row.get('echem_optical_priority_score'))}, regime {row.get('echem_pc1_tertile')}, consensus {fmt(row.get('cross_modal_consensus_score'))}, class {row.get('consensus_class')}, CE-flag={fmt(row.get('echem_ce_extreme_or_missing'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(echem_optical_regime, 'guardrail', 'Echem optical regime atlas unavailable.')}")
 
     report_lines += [
         "",
@@ -2108,6 +2141,17 @@ def main() -> None:
             "top_global_breakpoints": echem_breakpoint_global,
             "event_cycle_breakpoint_ranks": echem_breakpoint_event_ranks,
             "guardrail": first_summary(echem_optical_breakpoint, "guardrail"),
+        },
+        "echem_optical_regime_atlas": {
+            "n_cycles": first_summary(echem_optical_regime, "n_cycles"),
+            "n_echem_features": first_summary(echem_optical_regime, "n_echem_features"),
+            "n_cycles_missing_echem_shape": first_summary(echem_optical_regime, "n_cycles_missing_echem_shape"),
+            "n_cycles_extreme_or_missing_ce": first_summary(echem_optical_regime, "n_cycles_extreme_or_missing_ce"),
+            "regime_summary": echem_regime_summary,
+            "top_binary_tests": echem_regime_binary,
+            "top_correlations": echem_regime_corr,
+            "top_cycles": echem_regime_top_cycles,
+            "guardrail": first_summary(echem_optical_regime, "guardrail"),
         },
         "calibration_claim_risk_register": {
             "n_claim_families": first_summary(calibration_claim_risk, "n_claim_families"),

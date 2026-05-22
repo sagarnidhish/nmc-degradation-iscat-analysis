@@ -1,0 +1,1031 @@
+{
+  "guardrail": "This atlas uses echem shape and dQ/dV-like proxy descriptors to organize optical degradation hypotheses. It is not calibrated dQ/dV, not a mechanistic phase diagram, and does not remove the acquisition/frame-count confounder by itself.",
+  "n_cycles": 89,
+  "n_cycles_extreme_or_missing_ce": 10,
+  "n_cycles_missing_echem_shape": 8,
+  "n_echem_features": 44,
+  "outputs": {
+    "binary_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_binary_tests.csv",
+    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_correlations.csv",
+    "cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_cycle_table.csv",
+    "regime_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_summary_by_pc1_tertile.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_atlas_summary.json",
+    "top_cycles": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_top_cycles.csv"
+  },
+  "pca_loadings": [
+    {
+      "component": "echem_regime_pc1",
+      "explained_variance_fraction": 0.8951134673672325,
+      "top_loadings": [
+        {
+          "feature": "coulombic_efficiency_pct",
+          "loading": 0.5636749420148326
+        },
+        {
+          "feature": "coulombic_inefficiency_pct",
+          "loading": -0.5636749420148326
+        },
+        {
+          "feature": "signed_charge_fraction",
+          "loading": -0.5200109221021305
+        },
+        {
+          "feature": "charge_discharge_capacity_gap_mAh",
+          "loading": -0.29229750367195456
+        },
+        {
+          "feature": "shape_I_neg_fraction",
+          "loading": 0.04426817509779451
+        },
+        {
+          "feature": "shape_I_pos_fraction",
+          "loading": -0.0442681750977945
+        },
+        {
+          "feature": "voltage_peak_hysteresis_proxy",
+          "loading": 0.028505907373903613
+        },
+        {
+          "feature": "pos_dq_abs_midV_frac",
+          "loading": -0.024958366411581775
+        },
+        {
+          "feature": "pos_dq_abs_highV_frac",
+          "loading": 0.024739833939085194
+        },
+        {
+          "feature": "dqdv_entropy_asymmetry",
+          "loading": -0.021515762348773292
+        }
+      ]
+    },
+    {
+      "component": "echem_regime_pc2",
+      "explained_variance_fraction": 0.09267682656004478,
+      "top_loadings": [
+        {
+          "feature": "charge_discharge_capacity_abs_gap_mAh",
+          "loading": 0.8734679568445048
+        },
+        {
+          "feature": "signed_charge_fraction",
+          "loading": 0.3304033024373948
+        },
+        {
+          "feature": "coulombic_inefficiency_pct",
+          "loading": -0.18911072180973082
+        },
+        {
+          "feature": "coulombic_efficiency_pct",
+          "loading": 0.18911072180973065
+        },
+        {
+          "feature": "charge_discharge_capacity_gap_mAh",
+          "loading": 0.15068579452580178
+        },
+        {
+          "feature": "pos_dq_abs_midV_frac",
+          "loading": -0.07666847946872461
+        },
+        {
+          "feature": "pos_dq_abs_highV_frac",
+          "loading": 0.07613253512699593
+        },
+        {
+          "feature": "lowV_charge_discharge_imbalance",
+          "loading": 0.07121867435681961
+        },
+        {
+          "feature": "neg_dq_abs_lowV_frac",
+          "loading": -0.06768992633134124
+        },
+        {
+          "feature": "pos_dq_abs_peak_voltage",
+          "loading": 0.047396946352443944
+        }
+      ]
+    },
+    {
+      "component": "echem_regime_pc3",
+      "explained_variance_fraction": 0.006052315898196821,
+      "top_loadings": [
+        {
+          "feature": "shape_I_neg_fraction",
+          "loading": -0.31154828268401974
+        },
+        {
+          "feature": "shape_I_pos_fraction",
+          "loading": 0.3115482826840197
+        },
+        {
+          "feature": "shape_dVdt_sign_consistency",
+          "loading": -0.30573824555740864
+        },
+        {
+          "feature": "voltage_peak_hysteresis_proxy",
+          "loading": 0.18934805044018962
+        },
+        {
+          "feature": "all_dq_abs_lowV_frac",
+          "loading": 0.18188046254858564
+        },
+        {
+          "feature": "all_dq_abs_entropy",
+          "loading": 0.1638094033431681
+        },
+        {
+          "feature": "shape_V_mean",
+          "loading": 0.16347851723689014
+        },
+        {
+          "feature": "neg_dq_abs_entropy",
+          "loading": 0.15799721117872695
+        },
+        {
+          "feature": "capacity_fade_from_first_mAh",
+          "loading": -0.15516870649115813
+        },
+        {
+          "feature": "capacity_fraction_of_first",
+          "loading": 0.15516870649115688
+        }
+      ]
+    },
+    {
+      "component": "echem_regime_pc4",
+      "explained_variance_fraction": 0.00336151853358504,
+      "top_loadings": [
+        {
+          "feature": "shape_I_neg_fraction",
+          "loading": 0.592614841289567
+        },
+        {
+          "feature": "shape_I_pos_fraction",
+          "loading": -0.5926148412895664
+        },
+        {
+          "feature": "echem_outlier_score",
+          "loading": 0.14362393680909893
+        },
+        {
+          "feature": "shape_dVdt_sign_consistency",
+          "loading": 0.13549673171964632
+        },
+        {
+          "feature": "voltage_peak_hysteresis_proxy",
+          "loading": 0.11928768144755833
+        },
+        {
+          "feature": "shape_V_std",
+          "loading": 0.10326351171304901
+        },
+        {
+          "feature": "neg_dq_abs_entropy",
+          "loading": 0.10139702947623497
+        },
+        {
+          "feature": "capacity_fade_from_first_mAh",
+          "loading": -0.09856566710451051
+        },
+        {
+          "feature": "capacity_fraction_of_first",
+          "loading": 0.09856566710450948
+        },
+        {
+          "feature": "capacity_mAh",
+          "loading": 0.09856566710450938
+        }
+      ]
+    }
+  ],
+  "regime_summary": [
+    {
+      "abrupt_drop_rate": 0.10344827586206896,
+      "echem_ce_extreme_or_missing_rate": 0.27586206896551724,
+      "echem_pc1_tertile": "pc1_mid",
+      "future8_rate": 0.3793103448275862,
+      "mean_modal_votes": 1.0,
+      "median_capacity_mAh": 0.6391710499937513,
+      "median_cross_modal_score": 0.5422862555202171,
+      "median_cycle": 102.0,
+      "median_echem_outlier_score": 0.47407407407407404,
+      "median_frame_percentile": 0.4382022471910112,
+      "n_cycles": 29,
+      "sync_drop_rate": 0.034482758620689655
+    },
+    {
+      "abrupt_drop_rate": 0.0,
+      "echem_ce_extreme_or_missing_rate": 0.03333333333333333,
+      "echem_pc1_tertile": "pc1_high",
+      "future8_rate": 0.16666666666666666,
+      "mean_modal_votes": 1.0,
+      "median_capacity_mAh": 0.6455714766959801,
+      "median_cross_modal_score": 0.5269314950377685,
+      "median_cycle": 53.0,
+      "median_echem_outlier_score": 0.37283950617283945,
+      "median_frame_percentile": 0.42134831460674155,
+      "n_cycles": 30,
+      "sync_drop_rate": 0.0
+    },
+    {
+      "abrupt_drop_rate": 0.03333333333333333,
+      "echem_ce_extreme_or_missing_rate": 0.03333333333333333,
+      "echem_pc1_tertile": "pc1_low",
+      "future8_rate": 0.13333333333333333,
+      "mean_modal_votes": 0.8333333333333334,
+      "median_capacity_mAh": 0.8517457423452671,
+      "median_cross_modal_score": 0.429319305285839,
+      "median_cycle": 135.0,
+      "median_echem_outlier_score": 0.6777777777777778,
+      "median_frame_percentile": 0.6853932584269663,
+      "n_cycles": 30,
+      "sync_drop_rate": 0.03333333333333333
+    }
+  ],
+  "top_binary_tests": [
+    {
+      "feature": "pos_dq_abs_peak_voltage",
+      "mannwhitney_p": 0.00014532057005003994,
+      "median_negative": 3.825,
+      "median_positive": 3.875,
+      "median_positive_minus_negative": 0.04999999999999982,
+      "n": 81,
+      "n_positive": 3,
+      "target": "multimodal_outlier_without_trace_drop"
+    },
+    {
+      "feature": "all_dq_abs_peak_voltage",
+      "mannwhitney_p": 0.005382129405938753,
+      "median_negative": 3.825,
+      "median_positive": 3.875,
+      "median_positive_minus_negative": 0.04999999999999982,
+      "n": 81,
+      "n_positive": 3,
+      "target": "multimodal_outlier_without_trace_drop"
+    },
+    {
+      "feature": "shape_charge_mAh_abs",
+      "mannwhitney_p": 0.029989972339305702,
+      "median_negative": 1.3081105578408212,
+      "median_positive": 1.2828312982254717,
+      "median_positive_minus_negative": -0.025279259615349492,
+      "n": 81,
+      "n_positive": 15,
+      "target": "future_any_drop_within_8cycles"
+    },
+    {
+      "feature": "capacity_fade_from_first_mAh",
+      "mannwhitney_p": 0.032863377042361794,
+      "median_negative": 0.010490382522642894,
+      "median_positive": 0.024191923602179144,
+      "median_positive_minus_negative": 0.01370154107953625,
+      "n": 81,
+      "n_positive": 15,
+      "target": "future_any_drop_within_8cycles"
+    },
+    {
+      "feature": "capacity_fraction_of_first",
+      "mannwhitney_p": 0.032863377042361794,
+      "median_negative": 0.9841478355119182,
+      "median_positive": 0.9634432441908478,
+      "median_positive_minus_negative": -0.020704591321070387,
+      "n": 81,
+      "n_positive": 15,
+      "target": "future_any_drop_within_8cycles"
+    },
+    {
+      "feature": "capacity_mAh",
+      "mannwhitney_p": 0.032863377042361794,
+      "median_negative": 0.6512730334783625,
+      "median_positive": 0.6375714923988263,
+      "median_positive_minus_negative": -0.01370154107953625,
+      "n": 81,
+      "n_positive": 15,
+      "target": "future_any_drop_within_8cycles"
+    },
+    {
+      "feature": "shape_charge_mAh_neg_abs",
+      "mannwhitney_p": 0.033872153668032534,
+      "median_negative": 0.6512525123060061,
+      "median_positive": 0.6375422710488503,
+      "median_positive_minus_negative": -0.013710241257155809,
+      "n": 81,
+      "n_positive": 15,
+      "target": "future_any_drop_within_8cycles"
+    },
+    {
+      "feature": "dqdv_entropy_asymmetry",
+      "mannwhitney_p": 0.03932214424068387,
+      "median_negative": -0.4119247371422594,
+      "median_positive": -0.3850026234135293,
+      "median_positive_minus_negative": 0.0269221137287301,
+      "n": 81,
+      "n_positive": 15,
+      "target": "future_any_drop_within_8cycles"
+    },
+    {
+      "feature": "pos_dq_abs_peak_voltage",
+      "mannwhitney_p": 0.04451940146854572,
+      "median_negative": 3.825,
+      "median_positive": 3.825,
+      "median_positive_minus_negative": 0.0,
+      "n": 81,
+      "n_positive": 15,
+      "target": "future_any_drop_within_8cycles"
+    },
+    {
+      "feature": "charge_discharge_capacity_abs_gap_mAh",
+      "mannwhitney_p": 0.04988279418659166,
+      "median_negative": 0.008451635490462961,
+      "median_positive": 0.38636046847019023,
+      "median_positive_minus_negative": 0.37790883297972727,
+      "n": 81,
+      "n_positive": 3,
+      "target": "multimodal_outlier_without_trace_drop"
+    },
+    {
+      "feature": "cycle_index_rank",
+      "mannwhitney_p": 0.057170993219342964,
+      "median_negative": 0.48314606741573035,
+      "median_positive": 0.5674157303370786,
+      "median_positive_minus_negative": 0.08426966292134824,
+      "n": 89,
+      "n_positive": 20,
+      "target": "future_any_drop_within_8cycles"
+    },
+    {
+      "feature": "neg_dq_abs_entropy",
+      "mannwhitney_p": 0.06032262033520277,
+      "median_negative": 2.6720940352022757,
+      "median_positive": 2.6557152451370567,
+      "median_positive_minus_negative": -0.01637879006521903,
+      "n": 81,
+      "n_positive": 15,
+      "target": "future_any_drop_within_8cycles"
+    },
+    {
+      "feature": "all_dq_abs_midV_frac",
+      "mannwhitney_p": 0.0653539615564932,
+      "median_negative": 0.6709816933988193,
+      "median_positive": 0.4871972093302296,
+      "median_positive_minus_negative": -0.18378448406858972,
+      "n": 81,
+      "n_positive": 3,
+      "target": "multimodal_outlier_without_trace_drop"
+    },
+    {
+      "feature": "echem_outlier_score",
+      "mannwhitney_p": 0.06980575271413433,
+      "median_negative": 0.47901234567901235,
+      "median_positive": 0.7555555555555556,
+      "median_positive_minus_negative": 0.2765432098765433,
+      "n": 81,
+      "n_positive": 3,
+      "target": "multimodal_outlier_without_trace_drop"
+    },
+    {
+      "feature": "pos_dq_abs_highV_frac",
+      "mannwhitney_p": 0.07885607126113456,
+      "median_negative": 0.4019165354057951,
+      "median_positive": 0.4581850021962,
+      "median_positive_minus_negative": 0.056268466790404925,
+      "n": 81,
+      "n_positive": 3,
+      "target": "multimodal_outlier_without_trace_drop"
+    },
+    {
+      "feature": "cycle_index_rank",
+      "mannwhitney_p": 0.08319292143841849,
+      "median_negative": 0.48314606741573035,
+      "median_positive": 0.7808988764044944,
+      "median_positive_minus_negative": 0.29775280898876405,
+      "n": 89,
+      "n_positive": 4,
+      "target": "multimodal_outlier_without_trace_drop"
+    },
+    {
+      "feature": "pos_dq_abs_midV_frac",
+      "mannwhitney_p": 0.08373183309892171,
+      "median_negative": 0.5964884637523871,
+      "median_positive": 0.5407731274274813,
+      "median_positive_minus_negative": -0.05571533632490577,
+      "n": 81,
+      "n_positive": 3,
+      "target": "multimodal_outlier_without_trace_drop"
+    },
+    {
+      "feature": "shape_charge_mAh_pos",
+      "mannwhitney_p": 0.10719068820452307,
+      "median_negative": 0.6572879279935512,
+      "median_positive": 0.6472369404039278,
+      "median_positive_minus_negative": -0.010050987589623417,
+      "n": 81,
+      "n_positive": 15,
+      "target": "future_any_drop_within_8cycles"
+    },
+    {
+      "feature": "shape_dVdt_abs_p95",
+      "mannwhitney_p": 0.131944501253133,
+      "median_negative": 0.0064385075082688,
+      "median_positive": 0.0096248843380274,
+      "median_positive_minus_negative": 0.0031863768297586,
+      "n": 81,
+      "n_positive": 2,
+      "target": "synchronized_drop_2plus"
+    },
+    {
+      "feature": "shape_dVdt_abs_p95",
+      "mannwhitney_p": 0.131944501253133,
+      "median_negative": 0.0064385075082688,
+      "median_positive": 0.0096248843380274,
+      "median_positive_minus_negative": 0.0031863768297586,
+      "n": 81,
+      "n_positive": 2,
+      "target": "synchronized_multimodal_candidate"
+    }
+  ],
+  "top_correlations": [
+    {
+      "feature": "shape_dVdt_abs_p95",
+      "n": 81,
+      "p_value": 8.505108947111237e-10,
+      "spearman_rho": 0.6171105302183395,
+      "target": "cross_modal_consensus_score"
+    },
+    {
+      "feature": "all_dq_abs_midV_frac",
+      "n": 81,
+      "p_value": 0.00018730253938761547,
+      "spearman_rho": -0.4035366053395693,
+      "target": "particle_norm_cv"
+    },
+    {
+      "feature": "pos_dq_abs_highV_frac",
+      "n": 81,
+      "p_value": 0.0002852821264209225,
+      "spearman_rho": 0.39291098075931535,
+      "target": "particle_norm_cv"
+    },
+    {
+      "feature": "all_dq_abs_peak_voltage",
+      "n": 80,
+      "p_value": 0.00029944916443531744,
+      "spearman_rho": -0.39397629012881924,
+      "target": "max_abs_delta_prev"
+    },
+    {
+      "feature": "pos_dq_abs_midV_frac",
+      "n": 81,
+      "p_value": 0.0003354670668481748,
+      "spearman_rho": -0.3887217068812343,
+      "target": "particle_norm_cv"
+    },
+    {
+      "feature": "neg_dq_abs_peak_frac",
+      "n": 81,
+      "p_value": 0.0003934704160971572,
+      "spearman_rho": -0.38454372484649046,
+      "target": "particle_norm_cv"
+    },
+    {
+      "feature": "shape_dVdt_abs_p95",
+      "n": 81,
+      "p_value": 0.0005997342097965641,
+      "spearman_rho": 0.3732276631067434,
+      "target": "n_modal_votes"
+    },
+    {
+      "feature": "echem_regime_pc3",
+      "n": 89,
+      "p_value": 0.0006112461145288441,
+      "spearman_rho": 0.3562579003177497,
+      "target": "particle_norm_cv"
+    },
+    {
+      "feature": "echem_regime_pc4",
+      "n": 89,
+      "p_value": 0.0007109890150288166,
+      "spearman_rho": -0.35224719101123597,
+      "target": "cross_modal_consensus_score"
+    },
+    {
+      "feature": "all_dq_abs_entropy",
+      "n": 81,
+      "p_value": 0.0009725485304149748,
+      "spearman_rho": 0.3597242531914447,
+      "target": "particle_norm_cv"
+    },
+    {
+      "feature": "shape_V_std",
+      "n": 81,
+      "p_value": 0.001053554581884585,
+      "spearman_rho": 0.3574320089940041,
+      "target": "particle_norm_cv"
+    },
+    {
+      "feature": "shape_charge_mAh_abs",
+      "n": 81,
+      "p_value": 0.0011809139352552435,
+      "spearman_rho": -0.35413279132791325,
+      "target": "cross_modal_consensus_score"
+    },
+    {
+      "feature": "echem_regime_pc3",
+      "n": 24,
+      "p_value": 0.0012059039024496891,
+      "spearman_rho": 0.6208695652173912,
+      "target": "roi_phase_slope_abs_median_per_s"
+    },
+    {
+      "feature": "shape_charge_mAh_neg_abs",
+      "n": 81,
+      "p_value": 0.001250611341374361,
+      "spearman_rho": -0.35246160794941284,
+      "target": "cross_modal_consensus_score"
+    },
+    {
+      "feature": "echem_regime_pc2",
+      "n": 24,
+      "p_value": 0.0013082882304887007,
+      "spearman_rho": 0.617391304347826,
+      "target": "roi_phase_slope_abs_median_per_s"
+    },
+    {
+      "feature": "capacity_fade_from_first_mAh",
+      "n": 81,
+      "p_value": 0.001360070193630886,
+      "spearman_rho": 0.35000000000000003,
+      "target": "cross_modal_consensus_score"
+    },
+    {
+      "feature": "capacity_fraction_of_first",
+      "n": 81,
+      "p_value": 0.001360070193630886,
+      "spearman_rho": -0.35000000000000003,
+      "target": "cross_modal_consensus_score"
+    },
+    {
+      "feature": "capacity_mAh",
+      "n": 81,
+      "p_value": 0.001360070193630886,
+      "spearman_rho": -0.35000000000000003,
+      "target": "cross_modal_consensus_score"
+    },
+    {
+      "feature": "neg_dq_abs_midV_frac",
+      "n": 18,
+      "p_value": 0.0015871002439845374,
+      "spearman_rho": -0.6883384932920537,
+      "target": "roi_phase_slope_abs_median_per_s"
+    },
+    {
+      "feature": "midV_charge_discharge_imbalance",
+      "n": 18,
+      "p_value": 0.0018996026438905023,
+      "spearman_rho": 0.6800825593395253,
+      "target": "roi_phase_slope_abs_median_per_s"
+    }
+  ],
+  "top_cycles": [
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": 0.2598849929976063,
+      "capacity_mAh": 0.4018784230033991,
+      "consensus_class": "multimodal_outlier_without_trace_drop",
+      "coulombic_efficiency_pct": 46.81331631510453,
+      "cross_modal_consensus_score": 0.6463997608683184,
+      "cycleNo": 150,
+      "echem_ce_extreme_or_missing": 1,
+      "echem_optical_priority_score": 0.9386600083229297,
+      "echem_outlier_score": 0.7555555555555556,
+      "echem_pc1_tertile": "pc1_low",
+      "echem_regime_pc1": -262.8380832887767,
+      "echem_regime_pc2": 102.60768925366628,
+      "frames_percentile": 0.848314606741573,
+      "future_any_drop_within_8cycles": 1,
+      "highV_charge_discharge_imbalance": -0.14118601624638477,
+      "n_modal_votes": 3,
+      "state_state_step_norm": 29.647137869789937,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": -0.1999999999999993
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": null,
+      "capacity_mAh": null,
+      "consensus_class": "multimodal_outlier_without_trace_drop",
+      "coulombic_efficiency_pct": null,
+      "cross_modal_consensus_score": 0.6252469725648413,
+      "cycleNo": 151,
+      "echem_ce_extreme_or_missing": 1,
+      "echem_optical_priority_score": 0.9269343718079673,
+      "echem_outlier_score": null,
+      "echem_pc1_tertile": "pc1_mid",
+      "echem_regime_pc1": -0.26045721593506915,
+      "echem_regime_pc2": -2.572168381502243,
+      "frames_percentile": 0.8314606741573034,
+      "future_any_drop_within_8cycles": 1,
+      "highV_charge_discharge_imbalance": null,
+      "n_modal_votes": 3,
+      "state_state_step_norm": 28.533194056224296,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": null
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": -0.21162812746316195,
+      "capacity_mAh": 0.8733915434641674,
+      "consensus_class": "multimodal_outlier_without_trace_drop",
+      "coulombic_efficiency_pct": 179.33998347782418,
+      "cross_modal_consensus_score": 0.5645102487330952,
+      "cycleNo": 126,
+      "echem_ce_extreme_or_missing": 1,
+      "echem_optical_priority_score": 0.798799795709908,
+      "echem_outlier_score": 0.9802469135802468,
+      "echem_pc1_tertile": "pc1_high",
+      "echem_regime_pc1": 323.72052125899154,
+      "echem_regime_pc2": 83.76607765580843,
+      "frames_percentile": 0.7078651685393258,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.6939933339039386,
+      "n_modal_votes": 3,
+      "state_state_step_norm": 25.535815332623,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.4499999999999993
+    },
+    {
+      "any_abrupt_drop": 1,
+      "capacity_fade_from_first_mAh": -0.16265117229687653,
+      "capacity_mAh": 0.824414588297882,
+      "consensus_class": "synchronized_multimodal_degradation_candidate",
+      "coulombic_efficiency_pct": 98.39927188340005,
+      "cross_modal_consensus_score": 0.7951514188778093,
+      "cycleNo": 116,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.7921159157114214,
+      "echem_outlier_score": 0.5580246913580247,
+      "echem_pc1_tertile": "pc1_low",
+      "echem_regime_pc1": -1.7779631342639857,
+      "echem_regime_pc2": -1.196798825359506,
+      "frames_percentile": 0.0112359550561797,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.1657004071693598,
+      "n_modal_votes": 4,
+      "state_state_step_norm": 13.563520693660344,
+      "synchronized_drop_2plus": 1,
+      "voltage_peak_hysteresis_proxy": 0.15000000000000036
+    },
+    {
+      "any_abrupt_drop": 1,
+      "capacity_fade_from_first_mAh": 0.038598962613276444,
+      "capacity_mAh": 0.623164453387729,
+      "consensus_class": "synchronized_multimodal_degradation_candidate",
+      "coulombic_efficiency_pct": 98.59700920601584,
+      "cross_modal_consensus_score": 0.8126999459104489,
+      "cycleNo": 86,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.7811756768685607,
+      "echem_outlier_score": 0.5111111111111111,
+      "echem_pc1_tertile": "pc1_mid",
+      "echem_regime_pc1": -0.6042727704944596,
+      "echem_regime_pc2": -2.6588697865608792,
+      "frames_percentile": 0.0786516853932584,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.2983946849221528,
+      "n_modal_votes": 4,
+      "state_state_step_norm": 8.521464254560303,
+      "synchronized_drop_2plus": 1,
+      "voltage_peak_hysteresis_proxy": 0.15000000000000036
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": -0.1694396133152296,
+      "capacity_mAh": 0.831203029316235,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 99.25550518434362,
+      "cross_modal_consensus_score": 0.6492858679943373,
+      "cycleNo": 112,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.7773310508329235,
+      "echem_outlier_score": 0.4,
+      "echem_pc1_tertile": "pc1_high",
+      "echem_regime_pc1": 2.0754063156920184,
+      "echem_regime_pc2": -2.5357511566041326,
+      "frames_percentile": 0.1404494382022472,
+      "future_any_drop_within_8cycles": 1,
+      "highV_charge_discharge_imbalance": 0.1672573604915994,
+      "n_modal_votes": 2,
+      "state_state_step_norm": 8.756170712128581,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.20000000000000018
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": -0.16286273887264224,
+      "capacity_mAh": 0.8246261548736477,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 98.56526636456609,
+      "cross_modal_consensus_score": 0.6210497900874848,
+      "cycleNo": 118,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.728856606010164,
+      "echem_outlier_score": 0.5901234567901235,
+      "echem_pc1_tertile": "pc1_mid",
+      "echem_regime_pc1": -1.0341007710954404,
+      "echem_regime_pc2": -1.4901996796550674,
+      "frames_percentile": 0.0786516853932584,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.1710502837767815,
+      "n_modal_votes": 2,
+      "state_state_step_norm": 7.277462750010905,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.20000000000000018
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": 0.03520050636527716,
+      "capacity_mAh": 0.6265629096357282,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 98.49423902936768,
+      "cross_modal_consensus_score": 0.7100667532723229,
+      "cycleNo": 76,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.7273206471708344,
+      "echem_outlier_score": 0.5308641975308641,
+      "echem_pc1_tertile": "pc1_low",
+      "echem_regime_pc1": -1.086569600341836,
+      "echem_regime_pc2": -2.476163591791534,
+      "frames_percentile": 0.2022471910112359,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.2929352957053001,
+      "n_modal_votes": 2,
+      "state_state_step_norm": 4.530712836386308,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.15000000000000036
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": -0.15844611222782268,
+      "capacity_mAh": 0.8202095282288281,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 99.05867704193368,
+      "cross_modal_consensus_score": 0.7091560885205925,
+      "cycleNo": 125,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.7070038714233471,
+      "echem_outlier_score": 0.46913580246913583,
+      "echem_pc1_tertile": "pc1_high",
+      "echem_regime_pc1": 1.2349677705223108,
+      "echem_regime_pc2": -2.358586516238105,
+      "frames_percentile": 0.7415730337078652,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.1774130076606127,
+      "n_modal_votes": 2,
+      "state_state_step_norm": 5.178836359034327,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.20000000000000018
+    },
+    {
+      "any_abrupt_drop": 1,
+      "capacity_fade_from_first_mAh": null,
+      "capacity_mAh": null,
+      "consensus_class": "trace_event_low_modal_support",
+      "coulombic_efficiency_pct": null,
+      "cross_modal_consensus_score": 0.568138865483918,
+      "cycleNo": 156,
+      "echem_ce_extreme_or_missing": 1,
+      "echem_optical_priority_score": 0.7019279877425945,
+      "echem_outlier_score": null,
+      "echem_pc1_tertile": "pc1_mid",
+      "echem_regime_pc1": -0.26067703857980906,
+      "echem_regime_pc2": -2.5705043176139464,
+      "frames_percentile": 0.9101123595505618,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": null,
+      "n_modal_votes": 2,
+      "state_state_step_norm": 6.385183479815459,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": null
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": -0.21628766763233953,
+      "capacity_mAh": 0.8780510836333449,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 99.12879514014308,
+      "cross_modal_consensus_score": 0.6485122944815467,
+      "cycleNo": 127,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.6809449047276763,
+      "echem_outlier_score": 0.5037037037037038,
+      "echem_pc1_tertile": "pc1_high",
+      "echem_regime_pc1": 1.573199236683345,
+      "echem_regime_pc2": -2.356495718991454,
+      "frames_percentile": 0.7191011235955056,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.15053575349963194,
+      "n_modal_votes": 1,
+      "state_state_step_norm": 26.47603610986759,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.20000000000000018
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": 0.035164099638105295,
+      "capacity_mAh": 0.6265993163629001,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 99.00844061867976,
+      "cross_modal_consensus_score": 0.611098871807764,
+      "cycleNo": 110,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.6785454419349549,
+      "echem_outlier_score": 0.3037037037037037,
+      "echem_pc1_tertile": "pc1_high",
+      "echem_regime_pc1": 0.7984054952655293,
+      "echem_regime_pc2": -3.062658698063421,
+      "frames_percentile": 0.1179775280898876,
+      "future_any_drop_within_8cycles": 1,
+      "highV_charge_discharge_imbalance": 0.2888680873750798,
+      "n_modal_votes": 2,
+      "state_state_step_norm": 3.726419147611593,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.15000000000000036
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": 0.03529539062359688,
+      "capacity_mAh": 0.6264680253774085,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 97.9904725551036,
+      "cross_modal_consensus_score": 0.5930616145518888,
+      "cycleNo": 96,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.678395061728395,
+      "echem_outlier_score": 0.5753086419753086,
+      "echem_pc1_tertile": "pc1_low",
+      "echem_regime_pc1": -3.6199245341848005,
+      "echem_regime_pc2": -1.7633450481008388,
+      "frames_percentile": 0.0224719101123595,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.3033774983989041,
+      "n_modal_votes": 2,
+      "state_state_step_norm": 3.568710314025355,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.15000000000000036
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": -0.20880810097933966,
+      "capacity_mAh": 0.8705715169803451,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 98.5852666034628,
+      "cross_modal_consensus_score": 0.599774152201058,
+      "cycleNo": 130,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.6732934841549073,
+      "echem_outlier_score": 0.6345679012345679,
+      "echem_pc1_tertile": "pc1_mid",
+      "echem_regime_pc1": -1.0212213867341227,
+      "echem_regime_pc2": -1.3903291158830828,
+      "frames_percentile": 0.6853932584269663,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.1496033950041754,
+      "n_modal_votes": 2,
+      "state_state_step_norm": 2.278544488589542,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.20000000000000018
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": 0.04016712393199684,
+      "capacity_mAh": 0.6215962920690086,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 98.49084541838673,
+      "cross_modal_consensus_score": 0.653099512589666,
+      "cycleNo": 106,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.660133797399715,
+      "echem_outlier_score": 0.5111111111111111,
+      "echem_pc1_tertile": "pc1_low",
+      "echem_regime_pc1": -1.0822364545777974,
+      "echem_regime_pc2": -2.57125460168132,
+      "frames_percentile": 0.0337078651685393,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.2980497747511848,
+      "n_modal_votes": 2,
+      "state_state_step_norm": 2.242120563650745,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.15000000000000036
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": -0.20745431525624314,
+      "capacity_mAh": 0.8692177312572485,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 98.41242448803447,
+      "cross_modal_consensus_score": 0.5386964414797567,
+      "cycleNo": 131,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.6518389260898625,
+      "echem_outlier_score": 0.6962962962962962,
+      "echem_pc1_tertile": "pc1_low",
+      "echem_regime_pc1": -1.780365703221577,
+      "echem_regime_pc2": -1.0817329189940597,
+      "frames_percentile": 0.6629213483146067,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.15561333773686847,
+      "n_modal_votes": 1,
+      "state_state_step_norm": 4.992798913749088,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.20000000000000018
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": null,
+      "capacity_mAh": null,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": null,
+      "cross_modal_consensus_score": 0.5746173679528156,
+      "cycleNo": 152,
+      "echem_ce_extreme_or_missing": 1,
+      "echem_optical_priority_score": 0.6471527068437181,
+      "echem_outlier_score": null,
+      "echem_pc1_tertile": "pc1_mid",
+      "echem_regime_pc1": -0.2605011804640172,
+      "echem_regime_pc2": -2.571835568724584,
+      "frames_percentile": 0.8202247191011236,
+      "future_any_drop_within_8cycles": 1,
+      "highV_charge_discharge_imbalance": null,
+      "n_modal_votes": 1,
+      "state_state_step_norm": 1.6389462244070354,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": null
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": 0.028257439948008,
+      "capacity_mAh": 0.6335059760529974,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 97.30886282905732,
+      "cross_modal_consensus_score": 0.5160301341897263,
+      "cycleNo": 44,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.6466099824714057,
+      "echem_outlier_score": 0.671604938271605,
+      "echem_pc1_tertile": "pc1_low",
+      "echem_regime_pc1": -5.127776732282996,
+      "echem_regime_pc2": -1.4604719171075344,
+      "frames_percentile": 0.4382022471910112,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.2598945392099158,
+      "n_modal_votes": 1,
+      "state_state_step_norm": 7.805796952936225,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.15000000000000036
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": -0.1847727995324443,
+      "capacity_mAh": 0.8465362155334497,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 94.75651022551988,
+      "cross_modal_consensus_score": 0.5240337128483498,
+      "cycleNo": 146,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.6451559918788383,
+      "echem_outlier_score": 0.8246913580246913,
+      "echem_pc1_tertile": "pc1_low",
+      "echem_regime_pc1": -18.406594358203,
+      "echem_regime_pc2": 5.224130953235505,
+      "frames_percentile": 0.8876404494382022,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.17935392546184598,
+      "n_modal_votes": 1,
+      "state_state_step_norm": 2.834328402176376,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.20000000000000018
+    },
+    {
+      "any_abrupt_drop": 0,
+      "capacity_fade_from_first_mAh": -0.20963525951851147,
+      "capacity_mAh": 0.8713986755195169,
+      "consensus_class": "low_consensus",
+      "coulombic_efficiency_pct": 98.18959526246968,
+      "cross_modal_consensus_score": 0.5432225633158942,
+      "cycleNo": 128,
+      "echem_ce_extreme_or_missing": 0,
+      "echem_optical_priority_score": 0.6381571646552919,
+      "echem_outlier_score": 0.7506172839506172,
+      "echem_pc1_tertile": "pc1_low",
+      "echem_regime_pc1": -3.0344076968823717,
+      "echem_regime_pc2": -0.5503958919755804,
+      "frames_percentile": 0.6853932584269663,
+      "future_any_drop_within_8cycles": 0,
+      "highV_charge_discharge_imbalance": 0.14895033070760627,
+      "n_modal_votes": 2,
+      "state_state_step_norm": 1.633830586879799,
+      "synchronized_drop_2plus": 0,
+      "voltage_peak_hysteresis_proxy": 0.20000000000000018
+    }
+  ]
+}

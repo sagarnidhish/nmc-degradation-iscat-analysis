@@ -2409,4 +2409,27 @@ Key result:
 - The global breakpoint scan ranks late cycles around 149/150 as the largest electrochemical slope breakpoints, especially coulombic-efficiency and capacity/dQ features. This supports treating cycles 150/151 as late-stage echem transition candidates rather than assuming all electrochemical structure is concentrated at optical event cycles 86/116.
 
 Interpretation: cycles 86/116 are not just isolated optical drops; they sit near measurable cycle-state/echem trajectory changes. However, the largest electrochemical breakpoints occur later near 149/150, so the mechanistic story is multi-stage: early synchronized optical degradation candidates plus later electrochemical trajectory collapse/outlier behavior. This remains a cycle-level association audit, not proof of causality or calibrated transport.
+## 2026-05-22 Echem Optical Regime Atlas
+
+Added `scripts/tier4_echem_optical_regime_atlas.py` and ran it on Isambard to organize cycle-level optical degradation evidence by electrochemical regime descriptors. The script joins the cycle-state/echem-shape table, cross-modal degradation consensus, balanced ROI-front physics, and temporal-directionality summaries, then derives charge/discharge capacity asymmetry, voltage peak hysteresis proxies, voltage-bin dQ/dV-proxy allocation, robust echem PCA axes, and an echem-optical priority score.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas`
+
+Local compact copy:
+
+`derived_local/echem_optical_regime_atlas`
+
+Key result:
+
+- The atlas covers 89 cycles and 44 echem-regime features; 8 cycles have missing echem-shape values and 10 cycles have extreme-or-missing coulombic-efficiency fields, which are now explicit flags.
+- Echem PC1 is dominated by coulombic-efficiency / signed charge imbalance terms, so it is best treated as an electrochemical-regime plus data-quality axis rather than a pure material state coordinate.
+- The PC1-mid regime has the highest future8 rate: 0.379 versus 0.167 in PC1-high and 0.133 in PC1-low. It also has the highest median cross-modal consensus score (0.542).
+- Multimodal outliers without current trace drops show a higher positive dQ-proxy peak voltage: `pos_dq_abs_peak_voltage` median +0.050 V versus other cycles, p=1.45e-4; `all_dq_abs_peak_voltage` gives the same +0.050 V shift, p=0.00538.
+- Future8-positive cycles have lower capacity/charge throughput: `capacity_fraction_of_first` median shift -0.0207 (p=0.0329), `capacity_fade_from_first_mAh` shift +0.0137 mAh (p=0.0329), and `shape_charge_mAh_abs` shift -0.0253 mAh (p=0.0300).
+- The strongest continuous echem-optical link is `shape_dVdt_abs_p95` versus cross-modal consensus score (rho=0.617, p=8.51e-10); it also correlates with modal vote count (rho=0.373, p=6.00e-4).
+- Top echem-optical priority cycles are 150, 151, 126, 116, and 86. Cycles 150/151 remain late warning-window multimodal outliers, while 86/116 remain synchronized multimodal optical degradation candidates.
+
+Interpretation: the echem regime atlas supports a multi-stage degradation picture. Synchronized optical events at 86/116 sit in a broader echem/trace transition landscape, while late cycles 150/151 look like electrochemical-regime outliers with future-drop risk but no same-cycle trace drop. The atlas is useful for hypothesis ranking and model conditioning, not calibrated dQ/dV, mechanistic phase-diagram proof, or diffusion validation.
 

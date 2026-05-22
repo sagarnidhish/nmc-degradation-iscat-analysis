@@ -69,6 +69,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Apparent diffusion calibration-bounds audit maps all 72 balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is 1.002, q70 median apparent D at 96 nm/px is 4.322e-08 um2/s, and q70 future8 separation is non-significant (top p=0.175).
 - Cross-modal consensus ranks cycles 86, 116 as synchronized multimodal degradation candidates; the top cycle has 4 modal votes and consensus score 0.813, while the score remains an audit statistic rather than a calibrated probability.
 - Echem/optical breakpoint audit tests 84 cycle-level echem/trace features around synchronized cycles [86.0, 116.0]; strongest event-centered shift is state_step_norm_delta_prev over +/-4 cycles (scaled shift -2.263, bootstrap p=0.002).
+- Echem-optical regime atlas organizes 89 cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is pos_dq_abs_peak_voltage vs multimodal_outlier_without_trace_drop (median shift 0.050, p=1.453e-04), and top continuous link is shape_dVdt_abs_p95 vs cross_modal_consensus_score (rho=0.617).
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
@@ -409,6 +410,37 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Global echem breakpoint candidate cycle 150 all_dq_abs_entropy_rolling5_slope: scaled shift -194.381, rank 1, pre/post n=12/2
 - Global echem breakpoint candidate cycle 150 all_dq_abs_entropy_rolling5_slope: scaled shift -193.995, rank 1, pre/post n=8/2
 - Guardrail: Cycle-level echem/optical breakpoint audit uses compact derived cycle features and weak optical event labels. It tests temporal co-occurrence and trajectory shifts, not causality, manual ROI validation, or calibrated material transport.
+
+## Echem Optical Regime Atlas
+
+- Cycles/features: 89 / 44
+- Missing echem-shape cycles: 8; extreme-or-missing CE cycles: 10
+- Echem PC1 regime pc1_mid: n=29, median cycle 102.000, median consensus 0.542, future8 rate 0.379, extreme/missing CE rate 0.276
+- Echem PC1 regime pc1_high: n=30, median cycle 53.000, median consensus 0.527, future8 rate 0.167, extreme/missing CE rate 0.033
+- Echem PC1 regime pc1_low: n=30, median cycle 135.000, median consensus 0.429, future8 rate 0.133, extreme/missing CE rate 0.033
+- Echem binary contrast pos_dq_abs_peak_voltage vs multimodal_outlier_without_trace_drop: median positive-negative 0.050, p=1.453e-04, n=81
+- Echem binary contrast all_dq_abs_peak_voltage vs multimodal_outlier_without_trace_drop: median positive-negative 0.050, p=0.005, n=81
+- Echem binary contrast shape_charge_mAh_abs vs future_any_drop_within_8cycles: median positive-negative -0.025, p=0.030, n=81
+- Echem binary contrast capacity_fade_from_first_mAh vs future_any_drop_within_8cycles: median positive-negative 0.014, p=0.033, n=81
+- Echem binary contrast capacity_fraction_of_first vs future_any_drop_within_8cycles: median positive-negative -0.021, p=0.033, n=81
+- Echem binary contrast capacity_mAh vs future_any_drop_within_8cycles: median positive-negative -0.014, p=0.033, n=81
+- Echem binary contrast shape_charge_mAh_neg_abs vs future_any_drop_within_8cycles: median positive-negative -0.014, p=0.034, n=81
+- Echem binary contrast dqdv_entropy_asymmetry vs future_any_drop_within_8cycles: median positive-negative 0.027, p=0.039, n=81
+- Echem optical link shape_dVdt_abs_p95 vs cross_modal_consensus_score: rho=0.617, p=8.505e-10, n=81
+- Echem optical link all_dq_abs_midV_frac vs particle_norm_cv: rho=-0.404, p=1.873e-04, n=81
+- Echem optical link pos_dq_abs_highV_frac vs particle_norm_cv: rho=0.393, p=2.853e-04, n=81
+- Echem optical link all_dq_abs_peak_voltage vs max_abs_delta_prev: rho=-0.394, p=2.994e-04, n=80
+- Echem optical link pos_dq_abs_midV_frac vs particle_norm_cv: rho=-0.389, p=3.355e-04, n=81
+- Echem optical link neg_dq_abs_peak_frac vs particle_norm_cv: rho=-0.385, p=3.935e-04, n=81
+- Echem optical link shape_dVdt_abs_p95 vs n_modal_votes: rho=0.373, p=5.997e-04, n=81
+- Echem optical link echem_regime_pc3 vs particle_norm_cv: rho=0.356, p=6.112e-04, n=89
+- Echem-optical priority cycle 150: score 0.939, regime pc1_low, consensus 0.646, class multimodal_outlier_without_trace_drop, CE-flag=1
+- Echem-optical priority cycle 151: score 0.927, regime pc1_mid, consensus 0.625, class multimodal_outlier_without_trace_drop, CE-flag=1
+- Echem-optical priority cycle 126: score 0.799, regime pc1_high, consensus 0.565, class multimodal_outlier_without_trace_drop, CE-flag=1
+- Echem-optical priority cycle 116: score 0.792, regime pc1_low, consensus 0.795, class synchronized_multimodal_degradation_candidate, CE-flag=0
+- Echem-optical priority cycle 86: score 0.781, regime pc1_mid, consensus 0.813, class synchronized_multimodal_degradation_candidate, CE-flag=0
+- Echem-optical priority cycle 112: score 0.777, regime pc1_high, consensus 0.649, class low_consensus, CE-flag=0
+- Guardrail: This atlas uses echem shape and dQ/dV-like proxy descriptors to organize optical degradation hypotheses. It is not calibrated dQ/dV, not a mechanistic phase diagram, and does not remove the acquisition/frame-count confounder by itself.
 
 ## Diffusion Proxy Sanity Audit
 
