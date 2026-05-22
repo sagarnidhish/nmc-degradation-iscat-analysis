@@ -1358,6 +1358,8 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 - Rollout audit rows/cycles/sources: 128 / 64 / 14
 - Top pre-event rollout future-label row: future_any_drop_within_16cycles roi_norm_mean_delta_last_minus_first AUC 0.628, AP 0.620, source eta2 0.414
+- Masked held-out rollout benchmark rows/cycles/sources/failures: 128 / 64 / 14 / 0; best median particle baseline persistence median MSE 0.001
+- Top masked held-out event test: near_vs_post_control persistence_particle_mse raw AUC 0.662, AP 0.619, median positive-negative 6.750e-04, p=0.013
 - Top pre-event mask/front future-label row: future_any_drop_within_16cycles masked_minus_background_mean_slope AUC 0.624, AP 0.655, source eta2 0.578
 - Event-relative bins: {'far_pre_event_17_32': 22, 'mid_pre_event_9_16': 22, 'near_pre_event_1_8': 32, 'no_near_event_control': 12, 'post_event_1_16': 40}
 - Best source-residual clean-pre readout: clean_pre_1_8_vs_post_control front_radius_q60_slope_px_per_norm_time AUC 0.660, AP 0.665, p=0.083

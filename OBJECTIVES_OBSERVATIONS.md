@@ -4042,3 +4042,30 @@ Interpretation:
 
 - The current project can responsibly report optical-front/apparent-motion proxy analyses and use the ranked candidate ledger for manual review.
 - It should not report calibrated material diffusion coefficients until raw spatial calibration, timestamp semantics, manual particle/front labels, and the control-balanced sanity gates pass.
+
+## 2026-05-22 Source-Balanced Pre-Event Masked Rollout Benchmark
+
+Added `scripts/tier4_source_balanced_pre_event_masked_rollout_benchmark.py` and ran it on Isambard as a particle-region-only held-out-tail benchmark for the 128 source-balanced pre-event ROI sequences. The benchmark derives a stable particle mask only from the history frames, trains/sets baselines on the first 60% of each ROI sequence, and scores the held-out tail inside the particle mask and surrounding context.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark`
+- `derived_local/source_balanced_pre_event_masked_rollout_benchmark`
+- `source_balanced_pre_event_masked_rollout_per_roi.csv`
+- `source_balanced_pre_event_masked_rollout_frame_samples.csv`
+- `source_balanced_pre_event_masked_rollout_method_summary.csv`
+- `source_balanced_pre_event_masked_rollout_event_tests.csv`
+- `source_balanced_pre_event_masked_rollout_source_summary.csv`
+- `source_balanced_pre_event_masked_rollout_summary.json`
+
+Results:
+
+- Processed 128 of 128 ROI rows with 0 failures across 64 cycles and 14 sources.
+- Persistence is still the strongest median particle-region baseline: median particle MSE 0.00149, mean particle MSE 0.00312, and 0 non-persistence wins by the median-gain criterion.
+- Velocity, pixel-linear, particle-mean-drift, and radial-profile-trend baselines do not beat persistence overall; their median particle-MSE ratios versus persistence are 15.10, 2.40, 1.31, and 1.32, respectively.
+- The strongest event-relative signal is not better rollout but higher held-out particle error near events: `persistence_particle_mse` for near-pre-event versus post/control has AUC 0.662, AP 0.619, median positive-negative 0.000675, and MW p=0.0134.
+- Near-pre-event versus any non-near row also shows higher particle/context persistence error ratio and higher persistence particle MSE with raw AUC around 0.62.
+
+Interpretation: the held-out-tail experiment strengthens the earlier modeling conclusion. For these slowly varying particle crops, persistence is a hard baseline and simple trend models are not credible simulators. The useful physics-facing signal is the localized prediction difficulty: near-pre-event particles are harder to persist inside a history-derived particle mask, especially versus post/control rows. This supports using masked rollout residual energy as an instability/readiness descriptor, not as a calibrated phase-boundary tracker or diffusion estimator.
+
+Guardrail: this benchmark uses history-derived automatic particle masks and held-out future frames within ROI crops. It does not provide manual segmentation, calibrated phase-boundary motion, material diffusion coefficients, or causal event evidence.

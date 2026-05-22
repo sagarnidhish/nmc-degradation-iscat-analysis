@@ -49951,6 +49951,252 @@
         }
       ]
     },
+    "masked_rollout_benchmark": {
+      "best_method_by_median_particle_gain": {
+        "method": "persistence",
+        "particle_mse_gain_vs_persistence_median": 0.0,
+        "particle_mse_mean": 0.003116806463893457,
+        "particle_mse_median": 0.0014861117404862563,
+        "particle_mse_ratio_vs_persistence_median": 1.0,
+        "wins_vs_persistence": 0
+      },
+      "event_relative_bin_counts": {
+        "far_pre_event_17_32": 22,
+        "mid_pre_event_9_16": 22,
+        "near_pre_event_1_8": 32,
+        "no_near_event_control": 12,
+        "post_event_1_16": 40
+      },
+      "guardrail": "Rollouts use history-derived automatic particle masks and held-out future frames within each ROI crop. They test interpretable particle-region prediction baselines, not manual segmentation, calibrated phase-boundary motion, or material diffusion.",
+      "method_summary": [
+        {
+          "method": "persistence",
+          "particle_mse_gain_vs_persistence_median": 0.0,
+          "particle_mse_mean": 0.003116806463893457,
+          "particle_mse_median": 0.0014861117404862563,
+          "particle_mse_ratio_vs_persistence_median": 1.0,
+          "wins_vs_persistence": 0
+        },
+        {
+          "method": "velocity",
+          "particle_mse_gain_vs_persistence_median": -14.103872545945823,
+          "particle_mse_mean": 0.036513239153749676,
+          "particle_mse_median": 0.026576120898134055,
+          "particle_mse_ratio_vs_persistence_median": 15.103872545945823,
+          "wins_vs_persistence": 0
+        },
+        {
+          "method": "pixel_linear",
+          "particle_mse_gain_vs_persistence_median": -1.4010986020939282,
+          "particle_mse_mean": 0.006069527239107848,
+          "particle_mse_median": 0.003681353390210646,
+          "particle_mse_ratio_vs_persistence_median": 2.401098602093928,
+          "wins_vs_persistence": 0
+        },
+        {
+          "method": "particle_mean_drift",
+          "particle_mse_gain_vs_persistence_median": -0.31217721636574103,
+          "particle_mse_mean": 0.0038750479626235945,
+          "particle_mse_median": 0.0019306535384024464,
+          "particle_mse_ratio_vs_persistence_median": 1.312177216365741,
+          "wins_vs_persistence": 2
+        },
+        {
+          "method": "radial_profile_trend",
+          "particle_mse_gain_vs_persistence_median": -0.3240785011524414,
+          "particle_mse_mean": 0.003789561225699005,
+          "particle_mse_median": 0.002086199280961827,
+          "particle_mse_ratio_vs_persistence_median": 1.3240785011524414,
+          "wins_vs_persistence": 2
+        }
+      ],
+      "n_cycles": 64,
+      "n_failed": 0,
+      "n_input_rows": 128,
+      "n_ok": 128,
+      "n_sources": 14,
+      "outputs": {
+        "event_tests_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_event_tests.csv",
+        "failures_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_failures.csv",
+        "frame_samples_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_frame_samples.csv",
+        "method_summary_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_method_summary.csv",
+        "per_roi_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_per_roi.csv",
+        "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/README.md",
+        "source_summary_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_source_summary.csv",
+        "summary_json": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_summary.json"
+      },
+      "top_event_tests": [
+        {
+          "average_precision": 0.6188209476546704,
+          "direction": "higher_in_positive",
+          "feature": "persistence_particle_mse",
+          "median_positive_minus_negative": 0.0006750457312271704,
+          "mwu_p": 0.013393147791856587,
+          "n": 84,
+          "n_positive": 32,
+          "oriented_auc": 0.6616586538461539,
+          "spearman_p": 0.012326949902347287,
+          "spearman_rho": 0.2719679533106391,
+          "target": "near_vs_post_control",
+          "transform": "raw"
+        },
+        {
+          "average_precision": 0.5435638164113147,
+          "direction": "higher_in_positive",
+          "feature": "particle_vs_context_persistence_mse_ratio",
+          "median_positive_minus_negative": 8.28838145507202,
+          "mwu_p": 0.01770071010070033,
+          "n": 84,
+          "n_positive": 32,
+          "oriented_auc": 0.6550480769230769,
+          "spearman_p": 0.016551420817199562,
+          "spearman_rho": 0.26084658719012965,
+          "target": "near_vs_post_control",
+          "transform": "raw"
+        },
+        {
+          "average_precision": 0.5909614185762788,
+          "direction": "higher_in_positive",
+          "feature": "pixel_linear_particle_mse_gain_vs_persistence",
+          "median_positive_minus_negative": 0.2628834410076981,
+          "mwu_p": 0.03695321905865617,
+          "n": 84,
+          "n_positive": 32,
+          "oriented_auc": 0.6364182692307692,
+          "spearman_p": 0.035724856898644096,
+          "spearman_rho": 0.22950455539596684,
+          "target": "near_vs_post_control",
+          "transform": "raw"
+        },
+        {
+          "average_precision": 0.37275704479892174,
+          "direction": "higher_in_positive",
+          "feature": "particle_vs_context_persistence_mse_ratio",
+          "median_positive_minus_negative": 7.145021623534177,
+          "mwu_p": 0.04202310042879411,
+          "n": 128,
+          "n_positive": 32,
+          "oriented_auc": 0.6204427083333334,
+          "spearman_p": 0.04126896730155653,
+          "spearman_rho": 0.18066957618203935,
+          "target": "near_vs_any_non_near",
+          "transform": "raw"
+        },
+        {
+          "average_precision": 0.4754282424996557,
+          "direction": "higher_in_positive",
+          "feature": "persistence_particle_mse",
+          "median_positive_minus_negative": 0.0005831075819111254,
+          "mwu_p": 0.04728193783009638,
+          "n": 128,
+          "n_positive": 32,
+          "oriented_auc": 0.6175130208333334,
+          "spearman_p": 0.04654981319539117,
+          "spearman_rho": 0.1762749108154492,
+          "target": "near_vs_any_non_near",
+          "transform": "raw"
+        },
+        {
+          "average_precision": 0.7720002259132168,
+          "direction": "higher_in_positive",
+          "feature": "pixel_linear_particle_mse_gain_vs_persistence",
+          "median_positive_minus_negative": 0.35051412889012834,
+          "mwu_p": 0.06581712809496845,
+          "n": 54,
+          "n_positive": 32,
+          "oriented_auc": 0.6491477272727273,
+          "spearman_p": 0.06393149038365262,
+          "spearman_rho": 0.2539067888313082,
+          "target": "near_vs_mid_pre",
+          "transform": "raw"
+        },
+        {
+          "average_precision": 0.7203931778712164,
+          "direction": "higher_in_positive",
+          "feature": "radial_profile_trend_particle_mse_gain_vs_persistence",
+          "median_positive_minus_negative": 0.057668337266470804,
+          "mwu_p": 0.07115951417335278,
+          "n": 54,
+          "n_positive": 32,
+          "oriented_auc": 0.6463068181818182,
+          "spearman_p": 0.06933968476851451,
+          "spearman_rho": 0.24907046904404517,
+          "target": "near_vs_mid_pre",
+          "transform": "source_residual"
+        },
+        {
+          "average_precision": 0.7955543077787077,
+          "direction": "lower_in_positive",
+          "feature": "radial_gain_minus_velocity_gain",
+          "median_positive_minus_negative": -3.7284416720291533,
+          "mwu_p": 0.07115951417335278,
+          "n": 54,
+          "n_positive": 32,
+          "oriented_auc": 0.6463068181818181,
+          "spearman_p": 0.06933968476851451,
+          "spearman_rho": 0.24907046904404517,
+          "target": "near_vs_far_pre",
+          "transform": "source_residual"
+        },
+        {
+          "average_precision": 0.7956075330357374,
+          "direction": "higher_in_positive",
+          "feature": "velocity_particle_mse_gain_vs_persistence",
+          "median_positive_minus_negative": 3.709563870965904,
+          "mwu_p": 0.07396114061651742,
+          "n": 54,
+          "n_positive": 32,
+          "oriented_auc": 0.6448863636363635,
+          "spearman_p": 0.0721773212936331,
+          "spearman_rho": 0.24665230915041367,
+          "target": "near_vs_far_pre",
+          "transform": "source_residual"
+        },
+        {
+          "average_precision": 0.45999164358239497,
+          "direction": "higher_in_positive",
+          "feature": "pixel_linear_particle_mse_gain_vs_persistence",
+          "median_positive_minus_negative": 0.1775087161720441,
+          "mwu_p": 0.08957961817407746,
+          "n": 128,
+          "n_positive": 32,
+          "oriented_auc": 0.6005859375,
+          "spearman_p": 0.08912087751769515,
+          "spearman_rho": 0.15088351091959504,
+          "target": "near_vs_any_non_near",
+          "transform": "raw"
+        },
+        {
+          "average_precision": 0.7688014468337885,
+          "direction": "higher_in_positive",
+          "feature": "persistence_particle_mse",
+          "median_positive_minus_negative": 0.0004134112761680223,
+          "mwu_p": 0.09976006921338015,
+          "n": 54,
+          "n_positive": 32,
+          "oriented_auc": 0.6335227272727274,
+          "spearman_p": 0.0983326699786872,
+          "spearman_rho": 0.2273070300013616,
+          "target": "near_vs_far_pre",
+          "transform": "raw"
+        },
+        {
+          "average_precision": 0.665692799992856,
+          "direction": "higher_in_positive",
+          "feature": "best_nonpersistence_particle_gain",
+          "median_positive_minus_negative": 0.06101406399476765,
+          "mwu_p": 0.15135427845938765,
+          "n": 54,
+          "n_positive": 32,
+          "oriented_auc": 0.6164772727272727,
+          "spearman_p": 0.15062061946932026,
+          "spearman_rho": 0.19828911127778354,
+          "target": "near_vs_mid_pre",
+          "transform": "source_residual"
+        }
+      ],
+      "train_fraction": 0.6
+    },
     "matched_counterfactual_audit": {
       "context_features": [
         "cycleNo",

@@ -147,6 +147,7 @@ def main() -> None:
     source_balanced_pre_event_sequences = read_json(derived / "source_balanced_pre_event_roi_sequences" / "selected_roi_sequence_summary.json")
     source_balanced_pre_event_sequence_audit = read_json(derived / "source_balanced_pre_event_sequence_audit" / "source_balanced_pre_event_sequence_audit_summary.json")
     source_balanced_pre_event_rollout = read_json(derived / "source_balanced_pre_event_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
+    source_balanced_pre_event_masked_rollout = read_json(derived / "source_balanced_pre_event_masked_rollout_benchmark" / "source_balanced_pre_event_masked_rollout_summary.json")
     source_balanced_pre_event_mask_front = read_json(derived / "source_balanced_pre_event_mask_front_audit" / "source_balanced_mask_front_summary.json")
     source_balanced_pre_event_readout = read_json(derived / "source_balanced_pre_event_readout_audit" / "source_balanced_pre_event_readout_summary.json")
     source_balanced_pre_event_trajectory = read_json(derived / "source_balanced_pre_event_trajectory_audit" / "source_balanced_pre_event_trajectory_summary.json")
@@ -488,10 +489,14 @@ def main() -> None:
     source_balanced_pre_event_any_source = next((r for r in source_balanced_pre_event_audit_models if r.get("target") == "target_any_pre_vs_post_control" and r.get("group_col") == "source_stem" and r.get("feature_set") == "all_video"), {})
     source_balanced_pre_event_scalar_best = source_balanced_pre_event_audit_scalars[0] if source_balanced_pre_event_audit_scalars else {}
     source_balanced_pre_event_rollout_top = top_items(first_summary(source_balanced_pre_event_rollout, "top_roi_feature_tests", []), 12)
+    source_balanced_pre_event_masked_rollout_methods = top_items(first_summary(source_balanced_pre_event_masked_rollout, "method_summary", []), 8)
+    source_balanced_pre_event_masked_rollout_tests = top_items(first_summary(source_balanced_pre_event_masked_rollout, "top_event_tests", []), 12)
     source_balanced_pre_event_mask_top = top_items(first_summary(source_balanced_pre_event_mask_front, "top_roi_feature_tests", []), 12)
     source_balanced_pre_event_readout_best = top_items(first_summary(source_balanced_pre_event_readout, "best_by_target_transform", []), 24)
     source_balanced_pre_event_readout_clean = top_items(first_summary(source_balanced_pre_event_readout, "best_source_residual_clean_pre_readouts", []), 8)
     source_balanced_pre_event_rollout_best = source_balanced_pre_event_rollout_top[0] if source_balanced_pre_event_rollout_top else {}
+    source_balanced_pre_event_masked_rollout_best_method = first_summary(source_balanced_pre_event_masked_rollout, "best_method_by_median_particle_gain", {}) or {}
+    source_balanced_pre_event_masked_rollout_best_test = source_balanced_pre_event_masked_rollout_tests[0] if source_balanced_pre_event_masked_rollout_tests else {}
     source_balanced_pre_event_mask_physics = [
         row for row in source_balanced_pre_event_mask_top
         if any(key in str(row.get("feature", "")) for key in ("masked_", "front_", "mask_", "apparent_diffusion"))
@@ -2184,6 +2189,8 @@ def main() -> None:
         "",
         f"- Rollout audit rows/cycles/sources: {first_summary(source_balanced_pre_event_rollout, 'n_roi_sequences', 0)} / {first_summary(source_balanced_pre_event_rollout, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_rollout, 'n_sources', 0)}",
         f"- Top pre-event rollout future-label row: {source_balanced_pre_event_rollout_best.get('target', 'NA')} {source_balanced_pre_event_rollout_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_rollout_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_rollout_best.get('average_precision'))}, source eta2 {fmt(source_balanced_pre_event_rollout_best.get('source_eta2'))}",
+        f"- Masked held-out rollout benchmark rows/cycles/sources/failures: {first_summary(source_balanced_pre_event_masked_rollout, 'n_ok', 0)} / {first_summary(source_balanced_pre_event_masked_rollout, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_masked_rollout, 'n_sources', 0)} / {first_summary(source_balanced_pre_event_masked_rollout, 'n_failed', 0)}; best median particle baseline {source_balanced_pre_event_masked_rollout_best_method.get('method', 'NA')} median MSE {fmt(source_balanced_pre_event_masked_rollout_best_method.get('particle_mse_median'))}",
+        f"- Top masked held-out event test: {source_balanced_pre_event_masked_rollout_best_test.get('target', 'NA')} {source_balanced_pre_event_masked_rollout_best_test.get('feature', 'NA')} {source_balanced_pre_event_masked_rollout_best_test.get('transform', 'NA')} AUC {fmt(source_balanced_pre_event_masked_rollout_best_test.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_masked_rollout_best_test.get('average_precision'))}, median positive-negative {fmt(source_balanced_pre_event_masked_rollout_best_test.get('median_positive_minus_negative'))}, p={fmt(source_balanced_pre_event_masked_rollout_best_test.get('mwu_p'))}",
         f"- Top pre-event mask/front future-label row: {source_balanced_pre_event_mask_best.get('target', 'NA')} {source_balanced_pre_event_mask_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_mask_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_mask_best.get('average_precision'))}, source eta2 {fmt(source_balanced_pre_event_mask_best.get('source_eta2'))}",
         f"- Event-relative bins: {first_summary(source_balanced_pre_event_readout, 'event_relative_bin_counts', {})}",
         f"- Best source-residual clean-pre readout: {source_balanced_pre_event_clean_best.get('target', 'NA')} {source_balanced_pre_event_clean_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_clean_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_clean_best.get('average_precision'))}, p={fmt(source_balanced_pre_event_clean_best.get('mwu_p'))}",
@@ -3472,6 +3479,20 @@ def main() -> None:
                 "n_sources": first_summary(source_balanced_pre_event_rollout, "n_sources"),
                 "top_roi_feature_tests": source_balanced_pre_event_rollout_top,
                 "guardrail": first_summary(source_balanced_pre_event_rollout, "guardrail"),
+            },
+            "masked_rollout_benchmark": {
+                "n_input_rows": first_summary(source_balanced_pre_event_masked_rollout, "n_input_rows"),
+                "n_ok": first_summary(source_balanced_pre_event_masked_rollout, "n_ok"),
+                "n_failed": first_summary(source_balanced_pre_event_masked_rollout, "n_failed"),
+                "n_cycles": first_summary(source_balanced_pre_event_masked_rollout, "n_cycles"),
+                "n_sources": first_summary(source_balanced_pre_event_masked_rollout, "n_sources"),
+                "train_fraction": first_summary(source_balanced_pre_event_masked_rollout, "train_fraction"),
+                "event_relative_bin_counts": first_summary(source_balanced_pre_event_masked_rollout, "event_relative_bin_counts", {}),
+                "best_method_by_median_particle_gain": source_balanced_pre_event_masked_rollout_best_method,
+                "method_summary": source_balanced_pre_event_masked_rollout_methods,
+                "top_event_tests": source_balanced_pre_event_masked_rollout_tests,
+                "outputs": first_summary(source_balanced_pre_event_masked_rollout, "outputs", {}),
+                "guardrail": first_summary(source_balanced_pre_event_masked_rollout, "guardrail"),
             },
             "mask_front_summary": {
                 "n_roi_sequences": first_summary(source_balanced_pre_event_mask_front, "n_roi_sequences"),
