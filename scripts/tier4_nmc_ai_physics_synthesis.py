@@ -113,6 +113,7 @@ def main() -> None:
     cycle78_diffusion_remeasurement = read_json(derived / "cycle78_diffusion_remeasurement_audit" / "cycle78_diffusion_remeasurement_summary.json")
     post_remeasurement_diffusion_gate = read_json(derived / "post_remeasurement_diffusion_gate_audit" / "post_remeasurement_diffusion_gate_summary.json")
     cycle78_front_identity_review = read_json(derived / "cycle78_front_identity_review_packet" / "cycle78_front_identity_review_summary.json")
+    cycle78_component_retracking = read_json(derived / "cycle78_component_front_retracking_audit" / "cycle78_component_front_retracking_summary.json")
     cross_modal_consensus = read_json(derived / "cross_modal_degradation_consensus" / "cross_modal_degradation_consensus_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
@@ -960,6 +961,10 @@ def main() -> None:
     post_remeasurement_target = first_summary(post_remeasurement_diffusion_gate, "target_remeasurement_evidence", {}) or {}
     post_remeasurement_publication_blockers = first_summary(post_remeasurement_diffusion_gate, "remaining_publication_blockers", []) or []
     cycle78_front_identity_target = first_summary(cycle78_front_identity_review, "target_summary", {}) or {}
+    cycle78_component_raw = first_summary(cycle78_component_retracking, "target_raw", {}) or {}
+    cycle78_component_largest = first_summary(cycle78_component_retracking, "target_largest_component", {}) or {}
+    cycle78_component_central = first_summary(cycle78_component_retracking, "target_central_component", {}) or {}
+    cycle78_component_top3 = first_summary(cycle78_component_retracking, "target_top3_components", {}) or {}
     cross_modal_top = top_items(first_summary(cross_modal_consensus, "top_cycles", []), 12)
     cross_modal_classes = top_items(first_summary(cross_modal_consensus, "class_summary", []), 8)
     cross_modal_contrasts = top_items(first_summary(cross_modal_consensus, "target_contrasts", []), 12)
@@ -1668,6 +1673,18 @@ def main() -> None:
         f"- Outputs: manifest {first_summary(cycle78_front_identity_review, 'outputs', {}).get('manifest', 'NA')}; HTML {first_summary(cycle78_front_identity_review, 'outputs', {}).get('html', 'NA')}",
     ]
     report_lines.append(f"- Guardrail: {first_summary(cycle78_front_identity_review, 'guardrail', 'Cycle 78 front identity review packet unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Cycle 78 Component Front Retracking Audit",
+        "",
+        f"- Status/target/context ROIs/strategy rows: {first_summary(cycle78_component_retracking, 'overall_status', 'unavailable')} / {first_summary(cycle78_component_retracking, 'target_roi_id', 'NA')} / {first_summary(cycle78_component_retracking, 'n_context_rois', 0)} / {first_summary(cycle78_component_retracking, 'n_strategy_rows', 0)}",
+        f"- Largest component preserves positive slope/improves R2: {first_summary(cycle78_component_retracking, 'largest_component_preserves_positive_slope', 'NA')} / {first_summary(cycle78_component_retracking, 'largest_component_improves_r2', 'NA')}",
+        f"- Target raw q70: slope {fmt(cycle78_component_raw.get('radius2_slope_px2_per_sample'))} px2/sample, R2 {fmt(cycle78_component_raw.get('radius2_slope_r2'))}, centroid path {fmt(cycle78_component_raw.get('centroid_path_px'))} px, area median {fmt(cycle78_component_raw.get('area_px_median'))}",
+        f"- Target largest-component q70: slope {fmt(cycle78_component_largest.get('radius2_slope_px2_per_sample'))} px2/sample, R2 {fmt(cycle78_component_largest.get('radius2_slope_r2'))}, centroid path {fmt(cycle78_component_largest.get('centroid_path_px'))} px, area median {fmt(cycle78_component_largest.get('area_px_median'))}",
+        f"- Target central/top3 q70 R2: {fmt(cycle78_component_central.get('radius2_slope_r2'))} / {fmt(cycle78_component_top3.get('radius2_slope_r2'))}; front flags remain {cycle78_component_raw.get('front_identity_flags', 'NA')}",
+    ]
+    report_lines.append(f"- Guardrail: {first_summary(cycle78_component_retracking, 'guardrail', 'Cycle 78 component retracking audit unavailable.')}")
 
     report_lines += [
         "",
@@ -5255,6 +5272,20 @@ def main() -> None:
             "target_summary": cycle78_front_identity_target,
             "outputs": first_summary(cycle78_front_identity_review, "outputs", {}),
             "guardrail": first_summary(cycle78_front_identity_review, "guardrail"),
+        },
+        "cycle78_component_front_retracking_audit": {
+            "overall_status": first_summary(cycle78_component_retracking, "overall_status"),
+            "target_roi_id": first_summary(cycle78_component_retracking, "target_roi_id"),
+            "n_context_rois": first_summary(cycle78_component_retracking, "n_context_rois"),
+            "n_strategy_rows": first_summary(cycle78_component_retracking, "n_strategy_rows"),
+            "largest_component_preserves_positive_slope": first_summary(cycle78_component_retracking, "largest_component_preserves_positive_slope"),
+            "largest_component_improves_r2": first_summary(cycle78_component_retracking, "largest_component_improves_r2"),
+            "target_raw": cycle78_component_raw,
+            "target_largest_component": cycle78_component_largest,
+            "target_central_component": cycle78_component_central,
+            "target_top3_components": cycle78_component_top3,
+            "outputs": first_summary(cycle78_component_retracking, "outputs", {}),
+            "guardrail": first_summary(cycle78_component_retracking, "guardrail"),
         },
         "cross_modal_degradation_consensus": {
             "n_cycles": first_summary(cross_modal_consensus, "n_cycles"),

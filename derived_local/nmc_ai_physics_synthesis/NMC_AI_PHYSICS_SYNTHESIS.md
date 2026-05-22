@@ -618,6 +618,15 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Outputs: manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_front_identity_review_packet/cycle78_front_identity_review_manifest.csv; HTML /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_front_identity_review_packet/cycle78_front_identity_review.html
 - Guardrail: Review packet and automatic front-identity metrics only; manual fields are blank and no diffusion/front labels are accepted.
 
+## Cycle 78 Component Front Retracking Audit
+
+- Status/target/context ROIs/strategy rows: cycle78_component_front_retracking_ready / cycle78_rank22_obj2 / 5 / 20
+- Largest component preserves positive slope/improves R2: True / False
+- Target raw q70: slope 0.144 px2/sample, R2 0.424, centroid path 18.749 px, area median 2.350e+03
+- Target largest-component q70: slope 2.582 px2/sample, R2 0.127, centroid path 222.070 px, area median 989.500
+- Target central/top3 q70 R2: 0.067 / 0.071; front flags remain fragmented_q70_mask;no_dominant_component
+- Guardrail: Automatic connected-component front retracking only; does not validate the front or create calibrated diffusion coefficients.
+
 ## Cross-Modal Degradation Consensus
 
 - Cycles scored/with votes: 89 / 53

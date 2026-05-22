@@ -4607,3 +4607,27 @@ Results:
 Interpretation: the q70 positive-CI blocker is numerically cleared for the target, but the front-identity review packet shows why calibrated diffusion is still blocked. The apparent expansion is object-specific and worth manual review, yet the q70 mask is fragmented enough that a human needs to decide whether the front is physically interpretable or just a thresholded texture artifact.
 
 Guardrail: this packet assigns no manual labels. It renders review panels and automatic front-identity metrics only; particle identity, front coherence, artifact risk, diffusion interpretability, and final accept/reject decisions remain blank.
+
+## 2026-05-22 Cycle 78 Component Front Retracking Audit
+
+Added `scripts/tier4_cycle78_component_front_retracking_audit.py` and ran it on Isambard to test whether connected-component front repair can resolve the fragmented q70 mask blocker for `cycle78_rank22_obj2`. The audit compares raw q70 masks, largest-component masks, central-component masks, and top-3-component masks for the target plus four same-source context ROIs.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_component_front_retracking_audit`
+- `derived_local/cycle78_component_front_retracking_audit`
+- `cycle78_component_front_retracking_per_strategy.csv`
+- `cycle78_component_front_retracking_summary.json`
+- `plots/*_component_retracking.png`
+
+Results:
+
+- The audit covers 5 context ROIs and 20 component-strategy rows.
+- For the target, the raw q70 mask has radius2 slope 0.144 px2/sample, R2 0.424, centroid path 18.75 px, and median area 2349.5 px.
+- The largest-component repair preserves a positive slope but does not improve fit quality: slope rises to 2.582 px2/sample, but R2 drops to 0.127 and centroid path jumps to 222.07 px.
+- The central-component and top-3-component repairs also preserve positive slope but have weak fit quality: R2 0.067 and 0.071.
+- Context rows show the same pattern: component choices often create large centroid paths and low-R2 slopes, so connected-component repair is not a reliable automatic replacement for manual front tracing.
+
+Interpretation: automatic component repair does not solve the front-identity blocker. The raw fragmented mask remains the most linearly coherent q70 radius2 readout, while component-only masks behave like unstable component switching. This strengthens the conclusion that `cycle78_rank22_obj2` needs manual front tracing/acceptance before diffusion wording, rather than another automatic mask-cleaning shortcut.
+
+Guardrail: this is an automatic connected-component retracking diagnostic. It does not validate front identity, accept manual labels, or create calibrated diffusion coefficients.
