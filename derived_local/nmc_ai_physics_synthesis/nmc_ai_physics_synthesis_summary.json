@@ -3923,6 +3923,404 @@
     ]
   },
   "all_qc_rf_mean_roc_auc": 0.796875,
+  "balanced_future_roi_physics_audit": {
+    "cycle_group_oof_metrics": [
+      {
+        "group_col": "cycleNo",
+        "model": "logistic_l2",
+        "n_negative_scored": 36,
+        "n_positive_scored": 36,
+        "n_scored": 72,
+        "pooled_oof_average_precision": 0.7610287875969075,
+        "pooled_oof_roc_auc": 0.7160493827160493
+      },
+      {
+        "group_col": "cycleNo",
+        "model": "random_forest",
+        "n_negative_scored": 36,
+        "n_positive_scored": 36,
+        "n_scored": 72,
+        "pooled_oof_average_precision": 0.7362062605386254,
+        "pooled_oof_roc_auc": 0.6728395061728395
+      }
+    ],
+    "front_diffusion_guardrail": "Diffusion values are apparent optical-front proxies computed as slope(radius^2) * pixel_size_um^2 / 4. They are not validated Li diffusion coefficients and require manual front QC.",
+    "guardrail": "Balanced direct-video ROI audit uses weak cycle-level future8 labels projected to automatic particle-region candidates. Cycle-group splits and cycle-collapsed tests reduce leakage, but this is still review-prioritization evidence, not manual QC or deployable detection.",
+    "label_counts": [
+      {
+        "cohort_role": "future8_negative",
+        "future_any_drop_within_8cycles": 0,
+        "n": 36
+      },
+      {
+        "cohort_role": "future8_positive",
+        "future_any_drop_within_8cycles": 1,
+        "n": 36
+      }
+    ],
+    "masked_rollout_best_method_counts_inside_particle": {
+      "persistence": 72
+    },
+    "n_cycles": 24,
+    "n_cycles_sampled": 24,
+    "n_features": 26,
+    "n_reconstructed_candidates": 1920,
+    "n_roi": 72,
+    "n_roi_rows": 72,
+    "n_roi_sequences": 72,
+    "permutation_null": {
+      "empirical_p_ge_observed": 0.04878048780487805,
+      "group_col": "cycleNo",
+      "model": "logistic_l2",
+      "n_permutation": 40,
+      "n_valid_permutation": 40,
+      "null_auc_mean": 0.48892746913580243,
+      "null_auc_p95": 0.701195987654321,
+      "observed_auc": 0.7160493827160493
+    },
+    "top_correlations": [
+      {
+        "abs_rho": 0.45443149294464524,
+        "n": 72,
+        "p_value": 6.076000583490448e-05,
+        "spearman_rho": 0.45443149294464524,
+        "x": "transferred_masked_residual_signature",
+        "y": "diffusion_proxy_abs_median_um2_per_s"
+      },
+      {
+        "abs_rho": 0.4480596045795833,
+        "n": 72,
+        "p_value": 7.922061269279558e-05,
+        "spearman_rho": 0.4480596045795833,
+        "x": "transferred_masked_residual_signature",
+        "y": "phase_slope_median_per_s"
+      },
+      {
+        "abs_rho": 0.4448736603970523,
+        "n": 72,
+        "p_value": 9.028156659213729e-05,
+        "spearman_rho": 0.4448736603970523,
+        "x": "transferred_masked_residual_signature",
+        "y": "q70_phase_slope_bootstrap_p50"
+      },
+      {
+        "abs_rho": 0.44125700879593177,
+        "n": 72,
+        "p_value": 0.00010455787205640964,
+        "spearman_rho": -0.44125700879593177,
+        "x": "stage_drift_xy_sampled",
+        "y": "persistence_particle_to_nonparticle_mse_ratio_mean"
+      },
+      {
+        "abs_rho": 0.43425603772549815,
+        "n": 72,
+        "p_value": 0.00013828042562464082,
+        "spearman_rho": -0.43425603772549815,
+        "x": "stage_drift_xy_sampled",
+        "y": "velocity_particle_mse_fraction_of_full_mean"
+      },
+      {
+        "abs_rho": 0.4311716938273351,
+        "n": 72,
+        "p_value": 0.00015610425201240553,
+        "spearman_rho": -0.4311716938273351,
+        "x": "stage_drift_xy_sampled",
+        "y": "velocity_particle_to_nonparticle_mse_ratio_mean"
+      },
+      {
+        "abs_rho": 0.42798943424986524,
+        "n": 72,
+        "p_value": 0.000176690959863939,
+        "spearman_rho": -0.42798943424986524,
+        "x": "stage_drift_xy_sampled",
+        "y": "persistence_particle_mse_fraction_of_full_mean"
+      },
+      {
+        "abs_rho": 0.3970970374285812,
+        "n": 72,
+        "p_value": 0.000552992579628975,
+        "spearman_rho": -0.3970970374285812,
+        "x": "stage_drift_xy_sampled",
+        "y": "persistence_particle_mse_mean"
+      },
+      {
+        "abs_rho": 0.39322936809596404,
+        "n": 72,
+        "p_value": 0.0006330831510285132,
+        "spearman_rho": -0.39322936809596404,
+        "x": "stage_drift_xy_sampled",
+        "y": "velocity_particle_mse_mean"
+      },
+      {
+        "abs_rho": 0.3716389608088226,
+        "n": 72,
+        "p_value": 0.001307964263126577,
+        "spearman_rho": 0.3716389608088226,
+        "x": "stage_drift_xy_sampled",
+        "y": "object_mean_abs_z"
+      },
+      {
+        "abs_rho": 0.31504369816951305,
+        "n": 72,
+        "p_value": 0.007029162803645027,
+        "spearman_rho": -0.31504369816951305,
+        "x": "stage_drift_xy_sampled",
+        "y": "roi_mean_delta_last_minus_first"
+      },
+      {
+        "abs_rho": 0.30549691943710355,
+        "n": 72,
+        "p_value": 0.009065720212088811,
+        "spearman_rho": -0.30549691943710355,
+        "x": "stage_drift_xy_sampled",
+        "y": "roi_norm_mean_delta_last_minus_first"
+      }
+    ],
+    "top_cycle_feature_tests": [
+      {
+        "feature": "persistence_particle_mse_fraction_of_full_mean",
+        "mannwhitney_p": 0.06060196971200612,
+        "median_positive_minus_negative": 0.24558674806427505,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.7291666666666666,
+        "permutation_p_abs_median_diff": 0.04878048780487805,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "radius2_slope_median_px2_per_s",
+        "mannwhitney_p": 0.06896433333905405,
+        "median_positive_minus_negative": 0.0008206388342029,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.7222222222222222,
+        "permutation_p_abs_median_diff": 0.04878048780487805,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "persistence_particle_to_nonparticle_mse_ratio_mean",
+        "mannwhitney_p": 0.11235119769046394,
+        "median_positive_minus_negative": 0.5200406196953897,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.6944444444444444,
+        "permutation_p_abs_median_diff": 0.07317073170731707,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+        "mannwhitney_p": 0.06060196971200612,
+        "median_positive_minus_negative": 0.0008302949449491,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.7291666666666666,
+        "permutation_p_abs_median_diff": 0.0975609756097561,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "velocity_particle_mse_fraction_of_full_mean",
+        "mannwhitney_p": 0.07825222852623706,
+        "median_positive_minus_negative": 0.2781817137884093,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.7152777777777778,
+        "permutation_p_abs_median_diff": 0.12195121951219512,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "transferred_masked_residual_signature",
+        "mannwhitney_p": 0.14095521914437145,
+        "median_positive_minus_negative": 0.41625476395278393,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.6805555555555556,
+        "permutation_p_abs_median_diff": 0.12195121951219512,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "diffusion_proxy_median_um2_per_s",
+        "mannwhitney_p": 0.06896433333905405,
+        "median_positive_minus_negative": 1.8907518740036629e-06,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.7222222222222222,
+        "permutation_p_abs_median_diff": 0.17073170731707318,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "low_rank_dmd_particle_mse_fraction_of_full_mean",
+        "mannwhitney_p": 0.21449380778351745,
+        "median_positive_minus_negative": 0.2572515141592113,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.6527777777777778,
+        "permutation_p_abs_median_diff": 0.17073170731707318,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "object_mean_residual",
+        "mannwhitney_p": 0.07825222852623706,
+        "median_positive_minus_negative": -1730.856201171875,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.7152777777777778,
+        "permutation_p_abs_median_diff": 0.21951219512195122,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "radius2_slope_positive_fraction",
+        "mannwhitney_p": 0.14187669061735844,
+        "median_positive_minus_negative": 0.642857142857143,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.673611111111111,
+        "permutation_p_abs_median_diff": 0.21951219512195122,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+        "mannwhitney_p": 0.1572127533400038,
+        "median_positive_minus_negative": 0.5517537596878614,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.6736111111111112,
+        "permutation_p_abs_median_diff": 0.2926829268292683,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "q70_phase_slope_bootstrap_p50",
+        "mannwhitney_p": 0.40250382378200356,
+        "median_positive_minus_negative": 5.080875886400899e-07,
+        "n_negative": 12,
+        "n_positive": 12,
+        "oriented_auc": 0.6041666666666666,
+        "permutation_p_abs_median_diff": 0.4634146341463415,
+        "target": "future_any_drop_within_8cycles"
+      }
+    ],
+    "top_roi_feature_tests": [
+      {
+        "feature": "radius2_slope_median_px2_per_s",
+        "mannwhitney_p": 0.0015827225129835217,
+        "median_positive_minus_negative": 0.00113804551863365,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.716820987654321,
+        "permutation_p_abs_median_diff": 0.024390243902439025,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "diffusion_proxy_median_um2_per_s",
+        "mannwhitney_p": 0.0015827225129835217,
+        "median_positive_minus_negative": 2.6220568749321207e-06,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.716820987654321,
+        "permutation_p_abs_median_diff": 0.024390243902439025,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+        "mannwhitney_p": 0.002230340861992037,
+        "median_positive_minus_negative": 0.0011098700448934,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.7098765432098766,
+        "permutation_p_abs_median_diff": 0.024390243902439025,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "persistence_particle_mse_fraction_of_full_mean",
+        "mannwhitney_p": 0.0023156149087556026,
+        "median_positive_minus_negative": 0.28182609869009045,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.7091049382716049,
+        "permutation_p_abs_median_diff": 0.024390243902439025,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "velocity_particle_mse_fraction_of_full_mean",
+        "mannwhitney_p": 0.0028930819945484913,
+        "median_positive_minus_negative": 0.3449054354193408,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.7044753086419753,
+        "permutation_p_abs_median_diff": 0.024390243902439025,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+        "mannwhitney_p": 0.012215416774845311,
+        "median_positive_minus_negative": 0.494759319569799,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.6720679012345679,
+        "permutation_p_abs_median_diff": 0.024390243902439025,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "persistence_particle_to_nonparticle_mse_ratio_mean",
+        "mannwhitney_p": 0.011831794108362837,
+        "median_positive_minus_negative": 0.44699604184386255,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.6728395061728395,
+        "permutation_p_abs_median_diff": 0.04878048780487805,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "transferred_masked_residual_signature",
+        "mannwhitney_p": 0.008493971974730287,
+        "median_positive_minus_negative": 0.41625476395278393,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.6805555555555556,
+        "permutation_p_abs_median_diff": 0.07317073170731707,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "persistence_particle_mse_mean",
+        "mannwhitney_p": 0.02689489396333899,
+        "median_positive_minus_negative": 7.636579749713133e-05,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.6520061728395061,
+        "permutation_p_abs_median_diff": 0.07317073170731707,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "velocity_particle_mse_mean",
+        "mannwhitney_p": 0.03771926712567991,
+        "median_positive_minus_negative": 0.00021951854228065,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.6427469135802469,
+        "permutation_p_abs_median_diff": 0.12195121951219512,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "radius2_slope_positive_fraction",
+        "mannwhitney_p": 0.013893760759106949,
+        "median_positive_minus_negative": 0.5714285714285715,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.6624228395061729,
+        "permutation_p_abs_median_diff": 0.14634146341463414,
+        "target": "future_any_drop_within_8cycles"
+      },
+      {
+        "feature": "phase_slope_positive_fraction",
+        "mannwhitney_p": 0.03331018544564888,
+        "median_positive_minus_negative": 0.0714285714285714,
+        "n_negative": 36,
+        "n_positive": 36,
+        "oriented_auc": 0.6304012345679013,
+        "permutation_p_abs_median_diff": 0.17073170731707318,
+        "target": "future_any_drop_within_8cycles"
+      }
+    ]
+  },
   "calibration_claim_risk_register": {
     "calibration_evidence": {
       "h5_files_scanned": 33,

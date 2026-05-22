@@ -1,0 +1,9 @@
+group,group_value,feature,event_mean,control_mean,event_minus_control,n_event,n_control,mannwhitney_u,p_value
+all,,phase_slope_median_per_s,,2.712056460574319e-07,,0,72,,
+all,,phase_slope_abs_median_per_s,,2.1601380198774057e-06,,0,72,,
+all,,phase_slope_positive_fraction,,0.6924603174603176,,0,72,,
+all,,radius2_slope_median_px2_per_s,,0.0004103038615679969,,0,72,,
+all,,diffusion_proxy_median_um2_per_s,,9.453400970526649e-07,,0,72,,
+all,,diffusion_proxy_abs_median_um2_per_s,,3.946182002643803e-06,,0,72,,
+all,,threshold_robust_phase_score,,0.5069444444444444,,0,72,,
+all,,threshold_robust_diffusion_score,,0.5069444444444444,,0,72,,

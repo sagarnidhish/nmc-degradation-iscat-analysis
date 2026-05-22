@@ -1,0 +1,12 @@
+n_event,n_control,median_event,median_control,median_diff_event_minus_control,p_value,feature,contrast
+0,0,,,,,fallback_frame_fraction,event_minus_control
+0,0,,,,,low_area_fraction,event_minus_control
+0,0,,,,,high_area_fraction,event_minus_control
+0,0,,,,,fragmented_fraction,event_minus_control
+0,0,,,,,centroid_jump_fraction,event_minus_control
+0,0,,,,,candidate_area_cv,event_minus_control
+0,0,,,,,accepted_area_cv,event_minus_control
+0,0,,,,,accepted_area_fraction_iqr,event_minus_control
+0,0,,,,,accepted_centroid_path_px,event_minus_control
+0,0,,,,,accepted_centroid_max_step_px,event_minus_control
+0,0,,,,,mask_instability_score,event_minus_control

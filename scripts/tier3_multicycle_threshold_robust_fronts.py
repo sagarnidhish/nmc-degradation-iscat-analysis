@@ -345,6 +345,10 @@ def main() -> None:
         - robust_df["diffusion_proxy_iqr_um2_per_s"].rank(pct=True)
         + np.maximum(robust_df["radius2_slope_positive_fraction"], robust_df["radius2_slope_negative_fraction"]).rank(pct=True)
     )
+    if "event_reference_cycle" not in robust_df.columns:
+        robust_df["event_reference_cycle"] = robust_df.get("cycleNo", np.nan)
+    else:
+        robust_df["event_reference_cycle"] = pd.to_numeric(robust_df["event_reference_cycle"], errors="coerce").fillna(pd.to_numeric(robust_df.get("cycleNo"), errors="coerce"))
     robust_df = robust_df.sort_values(["threshold_robust_phase_score", "threshold_robust_diffusion_score"], ascending=False)
 
     test_features = [

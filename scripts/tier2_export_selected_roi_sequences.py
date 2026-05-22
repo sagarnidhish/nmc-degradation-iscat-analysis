@@ -165,6 +165,13 @@ def export_one_roi(
         "roi_norm_mean_last": float(roi_norm_mean[-1]),
         "roi_norm_mean_delta_last_minus_first": float(roi_norm_mean[-1] - roi_norm_mean[0]),
         "stage_drift_xy_sampled": float(np.sqrt((np.nanmax(stage[0]) - np.nanmin(stage[0])) ** 2 + (np.nanmax(stage[1]) - np.nanmin(stage[1])) ** 2)) if np.isfinite(stage).any() else np.nan,
+        "cohort_role": row.get("cohort_role", ""),
+        "selection_subrole": row.get("selection_subrole", ""),
+        "event_reference_cycle": finite_float(row.get("event_reference_cycle", np.nan)),
+        "future_any_drop_within_8cycles": finite_float(row.get("future_any_drop_within_8cycles", np.nan)),
+        "future_any_drop_within_16cycles": finite_float(row.get("future_any_drop_within_16cycles", np.nan)),
+        "any_abrupt_drop": finite_float(row.get("any_abrupt_drop", np.nan)),
+        "transferred_masked_residual_signature": finite_float(row.get("transferred_masked_residual_signature", np.nan)),
         "npz_path": npz_path,
         "preview_png": preview_path,
     }

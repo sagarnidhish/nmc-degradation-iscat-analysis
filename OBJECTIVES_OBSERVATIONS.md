@@ -2189,3 +2189,39 @@ Key result:
 - The most common review tags are control-balance review, visual asset available, high future-drop probability, model boundary case, and front/diffusion guardrail review.
 
 Interpretation: this closes the loop from AI/physics discovery into a concrete human-review worklist. It does not assign manual labels or validate diffusion/degradation claims; it prioritizes where manual particle identity, front-mask quality, and diffusion-interpretability checks should be spent next.
+
+## 2026-05-22 Balanced Future-Drop Direct-Video ROI Audit
+
+Added and ran a separate class-balanced direct-video ROI workflow on Isambard:
+
+`python scripts/tier4_balanced_future_roi_reconstruction.py --root /scratch/u6hp/nsagar.u6hp/Alek_Jiho --ranked-cycles /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_ranked_cycles.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_reconstruction --positive-cycles 12 --negative-cycles 12 --top-candidates-per-cycle 3 --samples-per-segment 16`
+
+`python scripts/tier2_export_selected_roi_sequences.py --root /scratch/u6hp/nsagar.u6hp/Alek_Jiho --roi-table /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_reconstruction/balanced_future_roi_table.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences --crop-size-full 192 --output-size 96 --samples-per-roi 96`
+
+`python scripts/tier3_multicycle_threshold_robust_fronts.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts`
+
+`python scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --mask-stability /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_particle_mask_stability/particle_mask_stability_roi_summary.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_masked_roi_rollout_audit`
+
+`python scripts/tier4_balanced_future_roi_physics_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_physics_audit --n-permutation 20`
+
+Remote output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_reconstruction`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_particle_mask_stability`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_masked_roi_rollout_audit`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_physics_audit`
+
+Local compact copies exclude heavy NPZ/previews/overlays where applicable.
+
+Key result:
+
+- Reconstructed 24 direct-video cycles, 1,920 automatic particle-like components, and 72 ROI rows from a deliberately balanced weak future8 design: 36 positive ROI rows and 36 negative ROI rows across 12 positive and 12 negative cycles.
+- Exported 72 fixed 96-frame particle-region crop tensors for front/rollout analyses.
+- Masked rollout again picks persistence as best inside particle masks for all 72 ROIs; low-rank DMD remains a useful residual descriptor rather than a better pixel forecaster.
+- The balanced future8 physics audit uses 26 direct-video features and leave-cycle-out scoring. Logistic L2 reaches AUC=0.716 and AP=0.761; the 20-permutation cycle-label sanity null gives null mean AUC=0.481, p95=0.630, empirical p=0.0476.
+- The strongest ROI-level weak future8 features are radius2/front-motion proxies and masked rollout residual fractions: radius2 slope median and apparent diffusion-proxy median both have oriented AUC=0.717 and permutation p=0.0476; persistence and velocity particle-MSE fractions are also positive-associated.
+- The reused threshold-front script's event/control summary is not meaningful for this cohort because labels are `future8_positive` / `future8_negative`, not `event` / `control`; the final balanced audit uses the explicit `future_any_drop_within_8cycles` label.
+
+Interpretation: this addresses the main class-balance weakness of the transfer-ranked video audit. Future-drop signal persists in a more balanced direct-video cohort, but the top features still include apparent optical-front proxies and automatic particle-mask residuals, so this remains weak-label physics-prioritization evidence pending manual QC and calibrated diffusion validation.

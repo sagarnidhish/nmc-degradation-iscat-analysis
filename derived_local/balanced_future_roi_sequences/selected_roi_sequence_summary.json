@@ -1,0 +1,154 @@
+{
+  "crop_size_full": 192,
+  "cycle_summary": {
+    "104.0": {
+      "mean_norm_roi_delta": -0.0004962931076685587,
+      "mean_roi_delta": -9.85595703125,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 3
+    },
+    "108.0": {
+      "mean_norm_roi_delta": -4.378209511439005e-05,
+      "mean_roi_delta": -0.4576822916666667,
+      "mean_stage_drift_xy_sampled": 0.22360679774987732,
+      "n_roi_sequences": 3
+    },
+    "110.0": {
+      "mean_norm_roi_delta": -0.0006509448091189066,
+      "mean_roi_delta": -10.195963541666666,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 3
+    },
+    "129.0": {
+      "mean_norm_roi_delta": 0.0005608002344767252,
+      "mean_roi_delta": 9.642252604166666,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 3
+    },
+    "131.0": {
+      "mean_norm_roi_delta": 0.0018337865670522053,
+      "mean_roi_delta": 39.260416666666664,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 3
+    },
+    "139.0": {
+      "mean_norm_roi_delta": -0.00028876463572184247,
+      "mean_roi_delta": 1.66650390625,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 3
+    },
+    "140.0": {
+      "mean_norm_roi_delta": -0.0007554367184638977,
+      "mean_roi_delta": -1.9130859375,
+      "mean_stage_drift_xy_sampled": 0.24999999999993175,
+      "n_roi_sequences": 3
+    },
+    "143.0": {
+      "mean_norm_roi_delta": -0.0011186152696609497,
+      "mean_roi_delta": -25.822265625,
+      "mean_stage_drift_xy_sampled": 0.24999999999993175,
+      "n_roi_sequences": 3
+    },
+    "146.0": {
+      "mean_norm_roi_delta": -0.0007005631923675537,
+      "mean_roi_delta": -12.630208333333334,
+      "mean_stage_drift_xy_sampled": 0.25,
+      "n_roi_sequences": 3
+    },
+    "147.0": {
+      "mean_norm_roi_delta": 0.0010851646463076274,
+      "mean_roi_delta": 6.526041666666667,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 3
+    },
+    "148.0": {
+      "mean_norm_roi_delta": 0.00024364888668060303,
+      "mean_roi_delta": -3.8681640625,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 3
+    },
+    "149.0": {
+      "mean_norm_roi_delta": 0.0004468796153863271,
+      "mean_roi_delta": 3.4881184895833335,
+      "mean_stage_drift_xy_sampled": 0.24999999999993175,
+      "n_roi_sequences": 3
+    },
+    "150.0": {
+      "mean_norm_roi_delta": -0.0003842500348885854,
+      "mean_roi_delta": -9.02294921875,
+      "mean_stage_drift_xy_sampled": 0.2236067977500298,
+      "n_roi_sequences": 3
+    },
+    "151.0": {
+      "mean_norm_roi_delta": 3.254413604736328e-05,
+      "mean_roi_delta": 2.6129557291666665,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 3
+    },
+    "152.0": {
+      "mean_norm_roi_delta": -0.00030023356278737384,
+      "mean_roi_delta": -3.9874674479166665,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 3
+    },
+    "153.0": {
+      "mean_norm_roi_delta": -0.0006258239348729452,
+      "mean_roi_delta": -10.3896484375,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 3
+    },
+    "154.0": {
+      "mean_norm_roi_delta": -0.00048678119977315265,
+      "mean_roi_delta": -9.026041666666666,
+      "mean_stage_drift_xy_sampled": 0.28284271247460296,
+      "n_roi_sequences": 3
+    },
+    "155.0": {
+      "mean_norm_roi_delta": 0.001783000926176707,
+      "mean_roi_delta": 34.164713541666664,
+      "mean_stage_drift_xy_sampled": 0.1802775637731301,
+      "n_roi_sequences": 3
+    },
+    "158.0": {
+      "mean_norm_roi_delta": 0.007361891369024913,
+      "mean_roi_delta": 179.74934895833334,
+      "mean_stage_drift_xy_sampled": 0.18027756377319315,
+      "n_roi_sequences": 3
+    },
+    "40.0": {
+      "mean_norm_roi_delta": 8.881588776906331e-05,
+      "mean_roi_delta": 4.17626953125,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 3
+    },
+    "44.0": {
+      "mean_norm_roi_delta": -0.0003147671620051066,
+      "mean_roi_delta": -5.101236979166667,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 3
+    },
+    "76.0": {
+      "mean_norm_roi_delta": 2.979735533396403e-05,
+      "mean_roi_delta": 0.4794921875,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 3
+    },
+    "78.0": {
+      "mean_norm_roi_delta": 0.0005175098776817322,
+      "mean_roi_delta": 8.9755859375,
+      "mean_stage_drift_xy_sampled": 0.25,
+      "n_roi_sequences": 3
+    },
+    "84.0": {
+      "mean_norm_roi_delta": -0.0002748817205429077,
+      "mean_roi_delta": -4.919596354166667,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 3
+    }
+  },
+  "guardrail": "Sequences are fixed padded crops around automatically selected ROIs; they are particle-region model inputs, not manual annotations.",
+  "n_roi_sequences": 72,
+  "output_size": 96,
+  "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_reconstruction/balanced_future_roi_table.csv",
+  "samples_per_roi": 96
+}

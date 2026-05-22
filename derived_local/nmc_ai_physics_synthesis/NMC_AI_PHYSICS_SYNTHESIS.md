@@ -44,6 +44,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Transfer-ranked residual transition timing ROI/method rows: 48 / 144
 - Multi-cohort future-drop model rows/features: 59 / 44
 - Active-learning QC candidates/visual/immediate: 97 / 47 / 4
+- Balanced future-drop ROI rows/cycles/features: 72 / 24 / 26
 - Cross-cohort rollout transfer selected/transfer ROIs: 11 / 48
 - Diffusion sanity selected-front/publication candidates: 12 / 0
 - Control-balanced high-res front tracking/sanity candidates: 40 / 0
@@ -95,6 +96,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cross-cohort rollout transfer audit shows the late transfer-ranked crops are a distinct video-dynamics domain: selected-cohort DMD evaluated on transfer-ranked ROIs has median particle MSE 0.020, 3.494x the transfer-internal DMD baseline (p=3.277e-09), while pooled training is close to transfer-internal (1.061x).
 - Multi-cohort future-drop model combines selected and transfer-ranked ROI physics features across 59 rows / 44 features; leave-cycle random forest reaches AUC 0.886/AP 0.914 with 40-permutation p=0.024, but leave-cohort transfer is not evaluable because the selected cohort has no positive future8 labels.
 - Active-learning QC prioritization merges manual-QC, precursor, weak-model, front, and timing evidence into 97 review candidates; 47 have visual assets and 4 are immediate manual-QC picks, led by cycle116_rank7_obj37. No manual labels are assigned.
+- Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
@@ -749,6 +751,33 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Active-QC reason front_diffusion_guardrail_review: n=4
 - Active-QC reason transition_timing_residual_review: n=3
 - Guardrail: Active-learning QC ranks pending ROI review candidates from automatic and weak-label evidence only; manual labels, diffusion claims, and deployment decisions remain withheld until human QC.
+
+## Balanced Future-Drop Direct-Video ROI Audit
+
+- Reconstructed cycles/candidates/ROI rows: 24 / 1920 / 72
+- Exported ROI sequences: 72
+- Physics ROI/cycles/features: 72 / 24 / 26
+- Label counts: [{'cohort_role': 'future8_negative', 'future_any_drop_within_8cycles': 0, 'n': 36}, {'cohort_role': 'future8_positive', 'future_any_drop_within_8cycles': 1, 'n': 36}]
+- Masked rollout best-method counts: {'persistence': 72}
+- Balanced future OOF logistic_l2: AUC 0.716, AP 0.761, scored 72 rows (36/36 pos/neg)
+- Balanced future OOF random_forest: AUC 0.673, AP 0.736, scored 72 rows (36/36 pos/neg)
+- Balanced future permutation null logistic_l2: observed AUC 0.716, null mean 0.489, p95 0.701, empirical p=0.049
+- Balanced future ROI feature radius2_slope_median_px2_per_s: median positive-negative 0.001, oriented AUC 0.717, permutation p=0.024, n=36/36
+- Balanced future ROI feature diffusion_proxy_median_um2_per_s: median positive-negative 2.622e-06, oriented AUC 0.717, permutation p=0.024, n=36/36
+- Balanced future ROI feature q70_radius2_slope_bootstrap_p50_px2_per_s: median positive-negative 0.001, oriented AUC 0.710, permutation p=0.024, n=36/36
+- Balanced future ROI feature persistence_particle_mse_fraction_of_full_mean: median positive-negative 0.282, oriented AUC 0.709, permutation p=0.024, n=36/36
+- Balanced future ROI feature velocity_particle_mse_fraction_of_full_mean: median positive-negative 0.345, oriented AUC 0.704, permutation p=0.024, n=36/36
+- Balanced future ROI feature velocity_particle_to_nonparticle_mse_ratio_mean: median positive-negative 0.495, oriented AUC 0.672, permutation p=0.024, n=36/36
+- Balanced future ROI feature persistence_particle_to_nonparticle_mse_ratio_mean: median positive-negative 0.447, oriented AUC 0.673, permutation p=0.049, n=36/36
+- Balanced future ROI feature transferred_masked_residual_signature: median positive-negative 0.416, oriented AUC 0.681, permutation p=0.073, n=36/36
+- Balanced future cycle feature persistence_particle_mse_fraction_of_full_mean: median positive-negative 0.246, oriented AUC 0.729, permutation p=0.049, n=12/12
+- Balanced future cycle feature radius2_slope_median_px2_per_s: median positive-negative 8.206e-04, oriented AUC 0.722, permutation p=0.049, n=12/12
+- Balanced future cycle feature persistence_particle_to_nonparticle_mse_ratio_mean: median positive-negative 0.520, oriented AUC 0.694, permutation p=0.073, n=12/12
+- Balanced future cycle feature q70_radius2_slope_bootstrap_p50_px2_per_s: median positive-negative 8.303e-04, oriented AUC 0.729, permutation p=0.098, n=12/12
+- Balanced future cycle feature velocity_particle_mse_fraction_of_full_mean: median positive-negative 0.278, oriented AUC 0.715, permutation p=0.122, n=12/12
+- Balanced future cycle feature transferred_masked_residual_signature: median positive-negative 0.416, oriented AUC 0.681, permutation p=0.122, n=12/12
+- Front-script guardrail: Diffusion values are apparent optical-front proxies computed as slope(radius^2) * pixel_size_um^2 / 4. They are not validated Li diffusion coefficients and require manual front QC.
+- Audit guardrail: Balanced direct-video ROI audit uses weak cycle-level future8 labels projected to automatic particle-region candidates. Cycle-group splits and cycle-collapsed tests reduce leakage, but this is still review-prioritization evidence, not manual QC or deployable detection.
 
 ## Cross-Cohort Rollout Transfer
 
