@@ -3846,30 +3846,6 @@ Interpretation: this is a conservative review-prioritization guardrail. The auto
 
 ## 2026-05-22 Source-Balanced Pre-Event Phase Kinetics Audit
 
-Added `scripts/tier4_source_balanced_pre_event_phase_kinetics_audit.py` and ran it on Isambard. This audit moves beyond front-trace acceptance by extracting particle-region-only optical kinetics from all source-balanced pre-event ROI tensors. It builds a stable particle mask from early frames, falls back to that prior mask when per-frame masks are unstable, and computes masked contrast slopes, phase-fraction deltas/slopes/rates, logistic timing, and Avrami-style descriptive exponents.
-
-Outputs:
-
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_phase_kinetics_audit`
-- `derived_local/source_balanced_pre_event_phase_kinetics_audit`
-
-Cohort/result snapshot:
-
-- Loaded all 128 source-balanced pre-event ROI tensors across 14 source movies.
-- Event-bin counts are 32 near-pre, 22 mid-pre, 22 far-pre, 40 post-event, and 12 no-near-event controls.
-- Tested 56 stable kinetic features after excluding near-zero-denominator variation-to-net ratios.
-- Strongest raw event-bin row is `near_vs_any_non_near` `masked_minus_bg_slope`: AUC 0.816, median near-pre minus non-near difference 0.00376, p = 8.99e-08, but source eta2 remains high at 0.504.
-- Raw `masked_minus_bg_slope` also separates near-pre from mid-pre with AUC 0.849, median difference 0.00419, p = 1.55e-05, and near-pre from far-pre with AUC 0.825, median difference 0.00325, p = 5.76e-05.
-- The best source-residual rows are weaker but still present, for example near-vs-mid-pre `q55_phase_fraction_delta` AUC 0.739, median difference 0.0138, p = 0.00319.
-- Global echem/context near-vs-far matching preserves positive near-pre kinetic shifts: `masked_minus_bg_slope` n=32 pairs, median near-far difference 0.00747, positive fraction 0.781, sign-flip p = 0.00050; `q55_phase_fraction_delta` median difference 0.0215, positive fraction 0.875, p = 0.00050.
-- Kinetic variation/rate features correlate with electrochemical shape descriptors, especially q55 phase-fraction total variation versus mean voltage, rho = 0.523, p = 6.52e-10.
-
-Interpretation:
-
-This adds a useful particle-mask kinetic readout: near-pre candidates show stronger masked optical contrast growth and phase-fraction change even when front-trace visual acceptance is conservative. The strongest rows are still source-structured and far-control matching is cross-source, so this is not a calibrated phase-boundary, Avrami, diffusion, or causal degradation claim. It does, however, identify masked optical kinetics as a higher-yield manual-QC target than automatically accepting radial front traces.
-
-## 2026-05-22 Source-Balanced Pre-Event Phase Kinetics Audit
-
 Added `scripts/tier4_source_balanced_pre_event_phase_kinetics_audit.py` and ran it on Isambard. This audit measures particle-region-only optical kinetics on the 128 source-balanced pre-event ROI tensors: stable particle masks with per-frame fallback, masked-minus-background intensity trajectories, q55/q65/q75 phase-fraction slopes, logistic timing summaries, Avrami-style descriptive exponents, matched controls, echem correlations, and source summaries.
 
 Outputs:
@@ -3884,11 +3860,12 @@ Outputs:
 
 Results:
 
-- Loaded all 128 ROI tensors across 14 sources and tested 56 kinetic features.
+- Loaded all 128 ROI tensors across 14 sources and tested 56 stable kinetic features after excluding near-zero-denominator variation-to-net ratios.
 - Event-bin counts are 32 near-pre, 22 mid-pre, 22 far-pre, 40 post-event, and 12 no-near-event control rows.
 - Best event-bin row is near-vs-any-non-near raw `masked_minus_bg_slope`: AUC 0.816, AP 0.634, near-minus-control median difference 0.00376, Mann-Whitney p = 8.99e-08, but source eta2 remains high at 0.504.
 - The same masked-minus-background slope is consistent across near-vs-post-control (AUC 0.799, p = 4.80e-06), near-vs-mid-pre (AUC 0.849, p = 1.55e-05), and near-vs-far-pre (AUC 0.825, p = 5.76e-05).
-- Top matched-control rows are global echem-context near-vs-far comparisons: `masked_mean_total_variation` median near-control difference 0.00843, p = 0.000500, and `masked_minus_bg_slope` median difference 0.00747, p = 0.000500.
+- The best source-residual rows are weaker but still present, for example near-vs-mid-pre `q55_phase_fraction_delta` AUC 0.739, median difference 0.0138, p = 0.00319.
+- Top matched-control rows are global echem-context near-vs-far comparisons: `masked_mean_total_variation` median near-control difference 0.00843, p = 0.000500, and `masked_minus_bg_slope` median difference 0.00747, positive fraction 0.781, p = 0.000500.
 - Strongest echem correlation is `q55_phase_fraction_total_variation` versus `shape_V_mean`, rho 0.523, p = 6.52e-10.
 
-Interpretation: this is a useful optical phase-kinetics signal that connects particle-region intensity dynamics, event proximity, and echem context. It strengthens the case for masked optical kinetics as a pre-event review feature, but source structure is still substantial and the logistic/Avrami values are descriptive summaries only. It does not provide manual phase labels, validated particle identity, calibrated reaction constants, diffusion coefficients, phase-boundary proof, or causal degradation evidence.
+Interpretation: this is a useful optical phase-kinetics signal that connects particle-region intensity dynamics, event proximity, and echem context. It strengthens the case for masked optical kinetics as a pre-event review feature and a higher-yield manual-QC target than automatic radial front acceptance, but source structure is still substantial and the logistic/Avrami values are descriptive summaries only. It does not provide manual phase labels, validated particle identity, calibrated reaction constants, diffusion coefficients, phase-boundary proof, or causal degradation evidence.
