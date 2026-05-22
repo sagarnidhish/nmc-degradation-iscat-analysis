@@ -151,6 +151,7 @@ def main() -> None:
     source_balanced_resdict_normalized_readout = read_json(derived / "source_balanced_residual_dictionary_normalized_readout" / "source_balanced_residual_dictionary_normalized_readout_summary.json")
     source_balanced_residual_temporal_specificity = read_json(derived / "source_balanced_residual_temporal_specificity_audit" / "source_balanced_residual_temporal_specificity_summary.json")
     source_balanced_future_specific_residual = read_json(derived / "source_balanced_future_specific_residual_audit" / "source_balanced_future_specific_residual_summary.json")
+    source_balanced_degradation_modes = read_json(derived / "source_balanced_degradation_mode_audit" / "source_balanced_degradation_mode_summary.json")
     source_balanced_residual_physics_coupling = read_json(derived / "source_balanced_residual_physics_coupling_audit" / "source_balanced_residual_physics_coupling_summary.json")
     source_balanced_residual_candidate_review = read_json(derived / "source_balanced_residual_candidate_review_packet" / "source_balanced_residual_candidate_review_summary.json")
     balanced_future_sequences = read_json(derived / "balanced_future_roi_sequences" / "selected_roi_sequence_summary.json")
@@ -442,6 +443,10 @@ def main() -> None:
     source_balanced_future_specific_model_deltas = top_items(first_summary(source_balanced_future_specific_residual, "top_model_deltas_vs_past_context", []), 16)
     source_balanced_future_specific_top_delta = source_balanced_future_specific_model_deltas[0] if source_balanced_future_specific_model_deltas else {}
     source_balanced_future_specific_top_clean = source_balanced_future_specific_best_clean[0] if source_balanced_future_specific_best_clean else {}
+    source_balanced_degmode_clusters = top_items(first_summary(source_balanced_degradation_modes, "cluster_summary", []), 12)
+    source_balanced_degmode_enrichment = top_items(first_summary(source_balanced_degradation_modes, "top_enrichment", []), 24)
+    source_balanced_degmode_representatives = top_items(first_summary(source_balanced_degradation_modes, "representatives", []), 12)
+    source_balanced_degmode_top = source_balanced_degmode_enrichment[0] if source_balanced_degmode_enrichment else {}
     source_balanced_resphys_by_transform = top_items(first_summary(source_balanced_residual_physics_coupling, "best_by_transform", []), 8)
     source_balanced_resphys_primary = top_items(first_summary(source_balanced_residual_physics_coupling, "best_source_residual_primary_candidate_correlations", []), 12)
     source_balanced_resphys_aligned = top_items(first_summary(source_balanced_residual_physics_coupling, "best_source_residual_target_aligned_pairs", []), 12)
@@ -877,6 +882,7 @@ def main() -> None:
         f"- The grouped normalized residual-dictionary readout partially rescues held-out-source future16 transfer: raw residual dictionary AUC {fmt(source_balanced_resdict_norm_raw_source16.get('roc_auc'))} improves to {fmt(source_balanced_resdict_norm_sr_source16.get('roc_auc'))} after source residualization, while the single {source_balanced_resdict_norm_best.get('feature_set', 'NA')} readout reaches AUC {fmt(source_balanced_resdict_norm_best.get('roc_auc'))}/AP {fmt(source_balanced_resdict_norm_best.get('average_precision'))}; permutation p={fmt(source_balanced_resdict_norm_perm.get('empirical_p_roc_auc'))} keeps it provisional.",
         f"- Temporal-specificity controls show the same source-residual reconstruction-error drift is temporally ordered but not cleanly precursor-specific: future16 AUC {fmt(source_balanced_temporal_primary16.get('future_auc'))} beats a within-source shift null (p={fmt(source_balanced_temporal_shift16.get('empirical_p_roc_auc'))}) but barely exceeds past16 AUC {fmt(source_balanced_temporal_primary16.get('past_auc_fixed_direction'))}; raw masked-minus-background slope is more future8-specific but source structured.",
         f"- Future-specific residual controls sharpen that guardrail: after excluding past16 rows, the primary source-residual reconstruction-error feature drops to AUC {fmt(source_balanced_future_specific_primary16_clean.get('oriented_auc'))}, while grouped future16 prediction gains only modestly over past-event context (best delta AUC {fmt(source_balanced_future_specific_top_delta.get('delta_roc_auc'))} from {source_balanced_future_specific_top_delta.get('feature_set', 'NA')}).",
+        f"- Source-balanced degradation-mode audit clusters source-residual residual/front/contrast features into k={fmt(first_summary(source_balanced_degradation_modes, 'chosen_k'), 0)} modes; the strongest enrichment is mode {source_balanced_degmode_top.get('mode', 'NA')} for {source_balanced_degmode_top.get('label', 'NA')} (fraction {fmt(source_balanced_degmode_top.get('mode_fraction'))}, p={fmt(source_balanced_degmode_top.get('fisher_p'))}), but tiny outlier modes keep this as review triage rather than a stable taxonomy.",
         f"- Source-balanced residual-physics coupling links the best source-residual dictionary candidate to crop-local physics proxies: top target-aligned pair is {source_balanced_resphys_top_aligned.get('residual_feature', 'NA')} vs {source_balanced_resphys_top_aligned.get('physics_feature', 'NA')} with rho {fmt(source_balanced_resphys_top_aligned.get('spearman_rho'))}, residual AUC {fmt(source_balanced_resphys_top_aligned.get('residual_future16_auc'))}, and physics AUC {fmt(source_balanced_resphys_top_aligned.get('physics_future16_auc'))}; apparent diffusion coupling remains weak.",
         f"- Source-balanced residual candidate review packet converts the residual/readout/coupling evidence into {first_summary(source_balanced_residual_candidate_review, 'n_candidates', 0)} pending manual-QC candidates; {source_balanced_review_tiers.get('immediate_manual_qc', 0)} are immediate-review, led by {source_balanced_review_top1.get('roi_id', 'NA')} with score {fmt(source_balanced_review_top1.get('review_priority_score'))}.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
@@ -1897,6 +1903,28 @@ def main() -> None:
         f"- Best grouped residual delta over past-event context: {source_balanced_future_specific_top_delta.get('group_col', 'NA')} {source_balanced_future_specific_top_delta.get('target', 'NA')} {source_balanced_future_specific_top_delta.get('feature_set', 'NA')} delta AUC {fmt(source_balanced_future_specific_top_delta.get('delta_roc_auc'))}, model AUC {fmt(source_balanced_future_specific_top_delta.get('roc_auc'))}, base AUC {fmt(source_balanced_future_specific_top_delta.get('base_roc_auc'))}",
         f"- Guardrail: {first_summary(source_balanced_future_specific_residual, 'guardrail', 'Source-balanced future-specific residual audit unavailable.')}",
     ]
+
+    report_lines += [
+        "",
+        "## Source-Balanced Degradation Mode Audit",
+        "",
+        f"- Rows/cycles/sources/features: {first_summary(source_balanced_degradation_modes, 'n_rows', 0)} / {first_summary(source_balanced_degradation_modes, 'n_cycles', 0)} / {first_summary(source_balanced_degradation_modes, 'n_sources', 0)} / {first_summary(source_balanced_degradation_modes, 'n_features_used', 0)}",
+        f"- Chosen k and source-mode transitions: k={fmt(first_summary(source_balanced_degradation_modes, 'chosen_k'), 0)}, transition count {fmt(first_summary(source_balanced_degradation_modes, 'source_mode_transition_count'), 0)}, change fraction {fmt(first_summary(source_balanced_degradation_modes, 'source_mode_change_fraction'))}",
+        f"- Strongest event-neighborhood enrichment: mode {source_balanced_degmode_top.get('mode', 'NA')} {source_balanced_degmode_top.get('label', 'NA')} fraction {fmt(source_balanced_degmode_top.get('mode_fraction'))} vs outside {fmt(source_balanced_degmode_top.get('outside_fraction'))}, p={fmt(source_balanced_degmode_top.get('fisher_p'))}",
+    ]
+    for row in source_balanced_degmode_clusters[:6]:
+        report_lines.append(
+            f"- Degradation mode {row.get('mode', 'NA')} {row.get('mode_label', 'NA')}: n={fmt(row.get('n_roi'), 0)}, cycles={fmt(row.get('n_cycles'), 0)}, sources={fmt(row.get('n_sources'), 0)}, future16 fraction {fmt(row.get('future16_fraction'))}, past16 fraction {fmt(row.get('past16_fraction'))}, phases {row.get('phase_counts', {})}"
+        )
+    for row in source_balanced_degmode_enrichment[:8]:
+        report_lines.append(
+            f"- Mode enrichment {row.get('mode', 'NA')} {row.get('label', 'NA')} ({row.get('enrichment_type', 'NA')}): fraction {fmt(row.get('mode_fraction'))} vs outside {fmt(row.get('outside_fraction'))}, p={fmt(row.get('fisher_p'))}, n={fmt(row.get('mode_total'), 0)}"
+        )
+    for row in source_balanced_degmode_representatives[:6]:
+        report_lines.append(
+            f"- Mode representative {row.get('mode', 'NA')}: {row.get('roi_id', 'NA')} cycle {fmt(row.get('cycleNo'), 0)}, phase {row.get('event_neighborhood_phase', 'NA')}, distance {fmt(row.get('mode_distance'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_degradation_modes, 'guardrail', 'Source-balanced degradation mode audit unavailable.')}")
 
     report_lines += [
         "",
@@ -3018,6 +3046,20 @@ def main() -> None:
             "best_clean_future_subset_rows": source_balanced_future_specific_best_clean,
             "top_model_deltas_vs_past_context": source_balanced_future_specific_model_deltas,
             "guardrail": first_summary(source_balanced_future_specific_residual, "guardrail"),
+        },
+        "source_balanced_degradation_mode_audit": {
+            "n_rows": first_summary(source_balanced_degradation_modes, "n_rows"),
+            "n_cycles": first_summary(source_balanced_degradation_modes, "n_cycles"),
+            "n_sources": first_summary(source_balanced_degradation_modes, "n_sources"),
+            "n_features_used": first_summary(source_balanced_degradation_modes, "n_features_used"),
+            "chosen_k": first_summary(source_balanced_degradation_modes, "chosen_k"),
+            "k_scores": first_summary(source_balanced_degradation_modes, "k_scores", []),
+            "cluster_summary": source_balanced_degmode_clusters,
+            "top_enrichment": source_balanced_degmode_enrichment,
+            "representatives": source_balanced_degmode_representatives,
+            "source_mode_transition_count": first_summary(source_balanced_degradation_modes, "source_mode_transition_count"),
+            "source_mode_change_fraction": first_summary(source_balanced_degradation_modes, "source_mode_change_fraction"),
+            "guardrail": first_summary(source_balanced_degradation_modes, "guardrail"),
         },
         "source_balanced_residual_physics_coupling_audit": {
             "n_rows": first_summary(source_balanced_residual_physics_coupling, "n_rows"),

@@ -38572,6 +38572,732 @@
       }
     ]
   },
+  "source_balanced_degradation_mode_audit": {
+    "chosen_k": 4,
+    "cluster_summary": [
+      {
+        "future16_fraction": 0.5428571428571428,
+        "future8_fraction": 0.2857142857142857,
+        "median_cycles_since_prev_event": 14.0,
+        "median_cycles_to_next_event": 16.0,
+        "mode": 0,
+        "mode_label": "source_residual_front_geometry_state",
+        "n_cycles": 39,
+        "n_roi": 70,
+        "n_sources": 13,
+        "past16_fraction": 0.32857142857142857,
+        "phase_counts": {
+          "far_from_event": 19,
+          "post_event_16": 5,
+          "post_event_8": 8,
+          "pre_event_16": 18,
+          "pre_event_8": 20
+        },
+        "top_features": [
+          {
+            "feature": "front_radius_q60_slope_px_per_norm_time__source_residual",
+            "mode_vs_global_z": -0.39006825279676555
+          },
+          {
+            "feature": "dictionary_recon_error_last_minus_first__source_residual",
+            "mode_vs_global_z": 0.33018522895863295
+          },
+          {
+            "feature": "dictionary_recon_error_mse_slope__source_residual",
+            "mode_vs_global_z": 0.29025917750295427
+          },
+          {
+            "feature": "front_radius_q70_slope_px_per_norm_time__source_residual",
+            "mode_vs_global_z": -0.20774958328487514
+          },
+          {
+            "feature": "mask_centroid_drift_px__source_residual",
+            "mode_vs_global_z": -0.20712555147669734
+          }
+        ]
+      },
+      {
+        "future16_fraction": 1.0,
+        "future8_fraction": 0.0,
+        "median_cycles_since_prev_event": 26.0,
+        "median_cycles_to_next_event": 14.0,
+        "mode": 1,
+        "mode_label": "source_residual_temporal_dictionary_state",
+        "n_cycles": 1,
+        "n_roi": 1,
+        "n_sources": 1,
+        "past16_fraction": 0.0,
+        "phase_counts": {
+          "pre_event_16": 1
+        },
+        "top_features": [
+          {
+            "feature": "resdict_pc09_slope__source_residual",
+            "mode_vs_global_z": -7.2080873165751145
+          },
+          {
+            "feature": "resdict_pc01_mean__source_residual",
+            "mode_vs_global_z": 6.387193600389078
+          },
+          {
+            "feature": "residual_energy_slope__source_residual",
+            "mode_vs_global_z": -3.1857957753975232
+          },
+          {
+            "feature": "residual_energy_last_minus_first__source_residual",
+            "mode_vs_global_z": -3.140920633873408
+          },
+          {
+            "feature": "roi_norm_mean_delta_last_minus_first__source_residual",
+            "mode_vs_global_z": 2.2934549042893293
+          }
+        ]
+      },
+      {
+        "future16_fraction": 0.0,
+        "future8_fraction": 0.0,
+        "median_cycles_since_prev_event": 16.0,
+        "median_cycles_to_next_event": 24.0,
+        "mode": 2,
+        "mode_label": "source_residual_temporal_dictionary_state",
+        "n_cycles": 1,
+        "n_roi": 2,
+        "n_sources": 1,
+        "past16_fraction": 1.0,
+        "phase_counts": {
+          "post_event_16": 2
+        },
+        "top_features": [
+          {
+            "feature": "residual_energy_last_minus_first__source_residual",
+            "mode_vs_global_z": 4.758904232883384
+          },
+          {
+            "feature": "residual_energy_slope__source_residual",
+            "mode_vs_global_z": 4.217482845848987
+          },
+          {
+            "feature": "dictionary_recon_error_mse_slope__source_residual",
+            "mode_vs_global_z": 3.265059155865466
+          },
+          {
+            "feature": "dictionary_recon_error_last_minus_first__source_residual",
+            "mode_vs_global_z": 2.7138153986584626
+          },
+          {
+            "feature": "mask_area_fraction_slope__source_residual",
+            "mode_vs_global_z": -1.7525979142819543
+          }
+        ]
+      },
+      {
+        "future16_fraction": 0.391304347826087,
+        "future8_fraction": 0.34782608695652173,
+        "median_cycles_since_prev_event": 20.0,
+        "median_cycles_to_next_event": 18.0,
+        "mode": 3,
+        "mode_label": "source_residual_temporal_dictionary_state",
+        "n_cycles": 16,
+        "n_roi": 23,
+        "n_sources": 10,
+        "past16_fraction": 0.21739130434782608,
+        "phase_counts": {
+          "far_from_event": 9,
+          "post_event_16": 3,
+          "post_event_8": 2,
+          "pre_event_16": 1,
+          "pre_event_8": 8
+        },
+        "top_features": [
+          {
+            "feature": "dictionary_recon_error_last_minus_first__source_residual",
+            "mode_vs_global_z": -1.20564639130575
+          },
+          {
+            "feature": "dictionary_recon_error_mse_slope__source_residual",
+            "mode_vs_global_z": -1.1039469224566252
+          },
+          {
+            "feature": "resdict_pc10_mean__source_residual",
+            "mode_vs_global_z": 0.6953259786136352
+          },
+          {
+            "feature": "front_radius_q60_slope_px_per_norm_time__source_residual",
+            "mode_vs_global_z": 0.6646516655757922
+          },
+          {
+            "feature": "mask_area_fraction_slope__source_residual",
+            "mode_vs_global_z": 0.6483014321296491
+          }
+        ]
+      }
+    ],
+    "guardrail": "Modes are unsupervised source-residual clusters of automatic particle-region optical/residual proxies. They organize degradation-state hypotheses and review candidates, but they do not prove calibrated phase boundaries, diffusion coefficients, or causal event mechanisms.",
+    "k_scores": [
+      {
+        "k": 2,
+        "silhouette": 0.18155468914547926
+      },
+      {
+        "k": 3,
+        "silhouette": 0.19622166376422268
+      },
+      {
+        "k": 4,
+        "silhouette": 0.21458091487544476
+      },
+      {
+        "k": 5,
+        "silhouette": 0.09685472318286777
+      },
+      {
+        "k": 6,
+        "silhouette": 0.20372302577557103
+      }
+    ],
+    "n_cycles": 48,
+    "n_features_used": 18,
+    "n_rows": 96,
+    "n_sources": 14,
+    "representatives": [
+      {
+        "cycleNo": 142.0,
+        "cycles_since_prev_event": 26.0,
+        "cycles_to_next_event": 14.0,
+        "event_neighborhood_phase": "pre_event_16",
+        "future16": 1,
+        "future8": 0,
+        "mode": 1,
+        "mode_distance": 0.0,
+        "mode_label": "source_residual_temporal_dictionary_state",
+        "mode_pc1": -5.417979378702272,
+        "mode_pc2": -3.848191968036575,
+        "mode_pc3": 7.996314404901963,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle142_rank18_obj1_16_c2_x10_HighHighCOV_130723.npz",
+        "past16": 0,
+        "past8": 0,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle142_rank18_obj1_16_c2_x10_HighHighCOV_130723",
+        "source_stem": "16_c2_x10_HighHighCOV_130723"
+      },
+      {
+        "cycleNo": 92.0,
+        "cycles_since_prev_event": 6.0,
+        "cycles_to_next_event": 24.0,
+        "event_neighborhood_phase": "post_event_8",
+        "future16": 0,
+        "future8": 0,
+        "mode": 0,
+        "mode_distance": 1.0324305704211432,
+        "mode_label": "source_residual_front_geometry_state",
+        "mode_pc1": 0.010655805592986772,
+        "mode_pc2": 0.006377076942094008,
+        "mode_pc3": 0.1830784137323127,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle92_rank1_obj1_10_c2_x10_030723.npz",
+        "past16": 1,
+        "past8": 1,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle92_rank1_obj1_10_c2_x10_030723",
+        "source_stem": "10_c2_x10_030723"
+      },
+      {
+        "cycleNo": 92.0,
+        "cycles_since_prev_event": 6.0,
+        "cycles_to_next_event": 24.0,
+        "event_neighborhood_phase": "post_event_8",
+        "future16": 0,
+        "future8": 0,
+        "mode": 0,
+        "mode_distance": 1.0698678870634257,
+        "mode_label": "source_residual_front_geometry_state",
+        "mode_pc1": 0.12581771909961215,
+        "mode_pc2": 0.16092903445253445,
+        "mode_pc3": 0.3304416916624379,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle92_rank1_obj2_10_c2_x10_030723.npz",
+        "past16": 1,
+        "past8": 1,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle92_rank1_obj2_10_c2_x10_030723",
+        "source_stem": "10_c2_x10_030723"
+      },
+      {
+        "cycleNo": 102.0,
+        "cycles_since_prev_event": 16.0,
+        "cycles_to_next_event": 14.0,
+        "event_neighborhood_phase": "pre_event_16",
+        "future16": 1,
+        "future8": 0,
+        "mode": 0,
+        "mode_distance": 1.3028392174638566,
+        "mode_label": "source_residual_front_geometry_state",
+        "mode_pc1": 0.41832304190342484,
+        "mode_pc2": -0.18710426621939838,
+        "mode_pc3": -0.11803810300845607,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle102_rank5_obj1_11_c2_x10_050723.npz",
+        "past16": 1,
+        "past8": 0,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle102_rank5_obj1_11_c2_x10_050723",
+        "source_stem": "11_c2_x10_050723"
+      },
+      {
+        "cycleNo": 64.0,
+        "cycles_since_prev_event": 4.0,
+        "cycles_to_next_event": 22.0,
+        "event_neighborhood_phase": "post_event_8",
+        "future16": 0,
+        "future8": 0,
+        "mode": 0,
+        "mode_distance": 1.3756616327581013,
+        "mode_label": "source_residual_front_geometry_state",
+        "mode_pc1": 0.0977705757715615,
+        "mode_pc2": -0.08633948557139863,
+        "mode_pc3": -0.2840206084579668,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle64_rank40_obj1_7_c2_x10_290623.npz",
+        "past16": 1,
+        "past8": 1,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle64_rank40_obj1_7_c2_x10_290623",
+        "source_stem": "7_c2_x10_290623"
+      },
+      {
+        "cycleNo": 98.0,
+        "cycles_since_prev_event": 12.0,
+        "cycles_to_next_event": 18.0,
+        "event_neighborhood_phase": "post_event_16",
+        "future16": 0,
+        "future8": 0,
+        "mode": 3,
+        "mode_distance": 1.5812894587716873,
+        "mode_label": "source_residual_temporal_dictionary_state",
+        "mode_pc1": -1.689884234904632,
+        "mode_pc2": -0.33926584490082035,
+        "mode_pc3": -0.4788143883192487,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle98_rank3_obj2_11_c2_x10_050723.npz",
+        "past16": 1,
+        "past8": 0,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle98_rank3_obj2_11_c2_x10_050723",
+        "source_stem": "11_c2_x10_050723"
+      },
+      {
+        "cycleNo": 42.0,
+        "cycles_since_prev_event": null,
+        "cycles_to_next_event": 18.0,
+        "event_neighborhood_phase": "far_from_event",
+        "future16": 0,
+        "future8": 0,
+        "mode": 3,
+        "mode_distance": 1.9477102963878454,
+        "mode_label": "source_residual_temporal_dictionary_state",
+        "mode_pc1": -0.8232953985515409,
+        "mode_pc2": 0.6955220940652973,
+        "mode_pc3": -0.5670059894894879,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle42_rank34_obj2_5_c2_x10_260623.npz",
+        "past16": 0,
+        "past8": 0,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle42_rank34_obj2_5_c2_x10_260623",
+        "source_stem": "5_c2_x10_260623"
+      },
+      {
+        "cycleNo": 26.0,
+        "cycles_since_prev_event": null,
+        "cycles_to_next_event": 34.0,
+        "event_neighborhood_phase": "far_from_event",
+        "future16": 0,
+        "future8": 0,
+        "mode": 3,
+        "mode_distance": 2.5909713131590375,
+        "mode_label": "source_residual_temporal_dictionary_state",
+        "mode_pc1": -1.5159924448062152,
+        "mode_pc2": -0.6277976256303499,
+        "mode_pc3": -0.866207528214549,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle26_rank28_obj1_4_c2_x10_240623.npz",
+        "past16": 0,
+        "past8": 0,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle26_rank28_obj1_4_c2_x10_240623",
+        "source_stem": "4_c2_x10_240623"
+      },
+      {
+        "cycleNo": 126.0,
+        "cycles_since_prev_event": 10.0,
+        "cycles_to_next_event": 30.0,
+        "event_neighborhood_phase": "post_event_16",
+        "future16": 0,
+        "future8": 0,
+        "mode": 3,
+        "mode_distance": 2.93810615784788,
+        "mode_label": "source_residual_temporal_dictionary_state",
+        "mode_pc1": -0.887976054206124,
+        "mode_pc2": 0.18672574543886214,
+        "mode_pc3": -0.4996415968719688,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle126_rank12_obj1_14_c2_x10_HighCOV_110723.npz",
+        "past16": 1,
+        "past8": 0,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle126_rank12_obj1_14_c2_x10_HighCOV_110723",
+        "source_stem": "14_c2_x10_HighCOV_110723"
+      },
+      {
+        "cycleNo": 132.0,
+        "cycles_since_prev_event": 16.0,
+        "cycles_to_next_event": 24.0,
+        "event_neighborhood_phase": "post_event_16",
+        "future16": 0,
+        "future8": 0,
+        "mode": 2,
+        "mode_distance": 3.461095079779907,
+        "mode_label": "source_residual_temporal_dictionary_state",
+        "mode_pc1": 9.645790931020285,
+        "mode_pc2": -0.1800556049554196,
+        "mode_pc3": -1.0102133403643148,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle132_rank14_obj2_15_c2_x5_HighCOV_120723.npz",
+        "past16": 1,
+        "past8": 0,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle132_rank14_obj2_15_c2_x5_HighCOV_120723",
+        "source_stem": "15_c2_x5_HighCOV_120723"
+      },
+      {
+        "cycleNo": 132.0,
+        "cycles_since_prev_event": 16.0,
+        "cycles_to_next_event": 24.0,
+        "event_neighborhood_phase": "post_event_16",
+        "future16": 0,
+        "future8": 0,
+        "mode": 2,
+        "mode_distance": 3.461095079779908,
+        "mode_label": "source_residual_temporal_dictionary_state",
+        "mode_pc1": 5.10136818851001,
+        "mode_pc2": 1.2687590381990006,
+        "mode_pc3": 1.6377264673213232,
+        "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle132_rank14_obj1_15_c2_x5_HighCOV_120723.npz",
+        "past16": 1,
+        "past8": 0,
+        "preview_png": null,
+        "roi_id": "source_balanced_cycle132_rank14_obj1_15_c2_x5_HighCOV_120723",
+        "source_stem": "15_c2_x5_HighCOV_120723"
+      }
+    ],
+    "source_mode_change_fraction": 0.24390243902439024,
+    "source_mode_transition_count": 82,
+    "top_enrichment": [
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.00986842105263158,
+        "label": "post_event_16",
+        "mode": 2,
+        "mode_fraction": 1.0,
+        "mode_positive": 2,
+        "mode_total": 2,
+        "odds_ratio": null,
+        "outside_fraction": 0.0851063829787234,
+        "outside_positive": 8,
+        "outside_total": 94
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.03636437626843511,
+        "label": "pre_event_16",
+        "mode": 3,
+        "mode_fraction": 0.043478260869565216,
+        "mode_positive": 1,
+        "mode_total": 23,
+        "odds_ratio": 0.1291866028708134,
+        "outside_fraction": 0.2602739726027397,
+        "outside_positive": 19,
+        "outside_total": 73
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.08708798108383832,
+        "label": "pre_event_16",
+        "mode": 0,
+        "mode_fraction": 0.2571428571428571,
+        "mode_positive": 18,
+        "mode_total": 70,
+        "odds_ratio": 4.153846153846154,
+        "outside_fraction": 0.07692307692307693,
+        "outside_positive": 2,
+        "outside_total": 26
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 0.09539473684210525,
+        "label": "past16",
+        "mode": 2,
+        "mode_fraction": 1.0,
+        "mode_positive": 2,
+        "mode_total": 2,
+        "odds_ratio": null,
+        "outside_fraction": 0.2978723404255319,
+        "outside_positive": 28,
+        "outside_total": 94
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.12800991415098867,
+        "label": "post_event_16",
+        "mode": 0,
+        "mode_fraction": 0.07142857142857142,
+        "mode_positive": 5,
+        "mode_total": 70,
+        "odds_ratio": 0.3230769230769231,
+        "outside_fraction": 0.19230769230769232,
+        "outside_positive": 5,
+        "outside_total": 26
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.20833333333333331,
+        "label": "pre_event_16",
+        "mode": 1,
+        "mode_fraction": 1.0,
+        "mode_positive": 1,
+        "mode_total": 1,
+        "odds_ratio": null,
+        "outside_fraction": 0.2,
+        "outside_positive": 19,
+        "outside_total": 95
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 0.25062679953468014,
+        "label": "future16",
+        "mode": 0,
+        "mode_fraction": 0.5428571428571428,
+        "mode_positive": 38,
+        "mode_total": 70,
+        "odds_ratio": 1.9,
+        "outside_fraction": 0.38461538461538464,
+        "outside_positive": 10,
+        "outside_total": 26
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.29333778610365424,
+        "label": "far_from_event",
+        "mode": 3,
+        "mode_fraction": 0.391304347826087,
+        "mode_positive": 9,
+        "mode_total": 23,
+        "odds_ratio": 1.8270676691729324,
+        "outside_fraction": 0.2602739726027397,
+        "outside_positive": 19,
+        "outside_total": 73
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 0.3108723098084785,
+        "label": "past16",
+        "mode": 3,
+        "mode_fraction": 0.21739130434782608,
+        "mode_positive": 5,
+        "mode_total": 23,
+        "odds_ratio": 0.5333333333333333,
+        "outside_fraction": 0.3424657534246575,
+        "outside_positive": 25,
+        "outside_total": 73
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 0.3390198087422038,
+        "label": "future16",
+        "mode": 3,
+        "mode_fraction": 0.391304347826087,
+        "mode_positive": 9,
+        "mode_total": 23,
+        "odds_ratio": 0.5604395604395604,
+        "outside_fraction": 0.5342465753424658,
+        "outside_positive": 39,
+        "outside_total": 73
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 0.49473684210526314,
+        "label": "future16",
+        "mode": 2,
+        "mode_fraction": 0.0,
+        "mode_positive": 0,
+        "mode_total": 2,
+        "odds_ratio": 0.0,
+        "outside_fraction": 0.5106382978723404,
+        "outside_positive": 48,
+        "outside_total": 94
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 0.5998861617439702,
+        "label": "future8",
+        "mode": 3,
+        "mode_fraction": 0.34782608695652173,
+        "mode_positive": 8,
+        "mode_total": 23,
+        "odds_ratio": 1.4133333333333333,
+        "outside_fraction": 0.273972602739726,
+        "outside_positive": 20,
+        "outside_total": 73
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.5998861617439702,
+        "label": "pre_event_8",
+        "mode": 3,
+        "mode_fraction": 0.34782608695652173,
+        "mode_positive": 8,
+        "mode_total": 23,
+        "odds_ratio": 1.4133333333333333,
+        "outside_fraction": 0.273972602739726,
+        "outside_positive": 20,
+        "outside_total": 73
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.613842041226534,
+        "label": "far_from_event",
+        "mode": 0,
+        "mode_fraction": 0.2714285714285714,
+        "mode_positive": 19,
+        "mode_total": 70,
+        "odds_ratio": 0.7037037037037037,
+        "outside_fraction": 0.34615384615384615,
+        "outside_positive": 9,
+        "outside_total": 26
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 0.6293725163110558,
+        "label": "past16",
+        "mode": 0,
+        "mode_fraction": 0.32857142857142857,
+        "mode_positive": 23,
+        "mode_total": 70,
+        "odds_ratio": 1.3282674772036474,
+        "outside_fraction": 0.2692307692307692,
+        "outside_positive": 7,
+        "outside_total": 26
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.698503540473862,
+        "label": "post_event_16",
+        "mode": 3,
+        "mode_fraction": 0.13043478260869565,
+        "mode_positive": 3,
+        "mode_total": 23,
+        "odds_ratio": 1.4142857142857144,
+        "outside_fraction": 0.0958904109589041,
+        "outside_positive": 7,
+        "outside_total": 73
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 0.7236848764948425,
+        "label": "past8",
+        "mode": 0,
+        "mode_fraction": 0.11428571428571428,
+        "mode_positive": 8,
+        "mode_total": 70,
+        "odds_ratio": 1.5483870967741935,
+        "outside_fraction": 0.07692307692307693,
+        "outside_positive": 2,
+        "outside_total": 26
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.7236848764948425,
+        "label": "post_event_8",
+        "mode": 0,
+        "mode_fraction": 0.11428571428571428,
+        "mode_positive": 8,
+        "mode_total": 70,
+        "odds_ratio": 1.5483870967741935,
+        "outside_fraction": 0.07692307692307693,
+        "outside_positive": 2,
+        "outside_total": 26
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 0.8066793698255489,
+        "label": "future8",
+        "mode": 0,
+        "mode_fraction": 0.2857142857142857,
+        "mode_positive": 20,
+        "mode_total": 70,
+        "odds_ratio": 0.9,
+        "outside_fraction": 0.3076923076923077,
+        "outside_positive": 8,
+        "outside_total": 26
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 0.8066793698255489,
+        "label": "pre_event_8",
+        "mode": 0,
+        "mode_fraction": 0.2857142857142857,
+        "mode_positive": 20,
+        "mode_total": 70,
+        "odds_ratio": 0.9,
+        "outside_fraction": 0.3076923076923077,
+        "outside_positive": 8,
+        "outside_total": 26
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 1.0,
+        "label": "future16",
+        "mode": 1,
+        "mode_fraction": 1.0,
+        "mode_positive": 1,
+        "mode_total": 1,
+        "odds_ratio": null,
+        "outside_fraction": 0.49473684210526314,
+        "outside_positive": 47,
+        "outside_total": 95
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 1.0,
+        "label": "past8",
+        "mode": 3,
+        "mode_fraction": 0.08695652173913043,
+        "mode_positive": 2,
+        "mode_total": 23,
+        "odds_ratio": 0.7738095238095238,
+        "outside_fraction": 0.1095890410958904,
+        "outside_positive": 8,
+        "outside_total": 73
+      },
+      {
+        "enrichment_type": "event_phase",
+        "fisher_p": 1.0,
+        "label": "post_event_8",
+        "mode": 3,
+        "mode_fraction": 0.08695652173913043,
+        "mode_positive": 2,
+        "mode_total": 23,
+        "odds_ratio": 0.7738095238095238,
+        "outside_fraction": 0.1095890410958904,
+        "outside_positive": 8,
+        "outside_total": 73
+      },
+      {
+        "enrichment_type": "binary_label",
+        "fisher_p": 1.0,
+        "label": "future8",
+        "mode": 1,
+        "mode_fraction": 0.0,
+        "mode_positive": 0,
+        "mode_total": 1,
+        "odds_ratio": 0.0,
+        "outside_fraction": 0.29473684210526313,
+        "outside_positive": 28,
+        "outside_total": 95
+      }
+    ]
+  },
   "source_balanced_future_specific_residual_audit": {
     "best_clean_future_subset_rows": [
       {

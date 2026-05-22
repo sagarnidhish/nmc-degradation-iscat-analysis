@@ -3298,3 +3298,26 @@ Cohort/result snapshot:
 Interpretation:
 
 Past-event proximity explains much of the apparent future-warning structure in this source-balanced cohort. Some future16 optical/residual signal remains after removing past16 rows or modeling past-event context, but the deployable precursor claim is still weak: the strongest increments are modest, source-transfer increments are small, and the clean scalar winners are raw/source-structured optical contrast and residual PC features rather than the source-residual reconstruction-error candidate. The useful next direction is to treat these as event-neighborhood degradation state features and expand source-balanced pre-event sampling before claiming forecasting.
+
+## 2026-05-22 Source-Balanced Degradation Mode Audit
+
+Added `scripts/tier4_source_balanced_degradation_mode_audit.py` and ran it on Isambard. The audit clusters source-residualized residual/front/contrast features from the 96 source-balanced particle-region crops, then tests how the resulting unsupervised modes map onto pre-event, post-event, and far-from-event cycle neighborhoods.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_degradation_mode_audit`
+- `derived_local/source_balanced_degradation_mode_audit`
+
+Cohort/result snapshot:
+
+- 96 ROI rows, 48 cycles, 14 source movies, and 18 source-residual residual/front/contrast features.
+- KMeans selected k=4 by silhouette, but the partition is imbalanced: mode 0 has 70 ROI rows, mode 3 has 23, and modes 1/2 are tiny outlier states with 1 and 2 rows.
+- Mode 0 is a broad source-residual front-geometry state with future16 fraction 0.543 and past16 fraction 0.329.
+- Mode 3 is a residual-dictionary state with lower future16 fraction 0.391 and more far-from-event/pre-event-8 mixture.
+- The strongest enrichment is tiny mode 2 for post_event_16: 2/2 rows versus 8/94 outside, Fisher p=0.010. This should be treated as an outlier review cue, not a stable class.
+- Source-local mode transitions are common enough to be useful for review triage: 82 adjacent source/cycle transitions, change fraction 0.244.
+- Representative rows include the mode-2 pair at cycle 132 from `15_c2_x5_HighCOV_120723`, plus mode-1 pre-event-16 outlier `source_balanced_cycle142_rank18_obj1_16_c2_x10_HighHighCOV_130723`.
+
+Interpretation:
+
+The source-balanced residual/front feature space organizes degradation-neighborhood states, but it does not yet support a validated degradation-mode taxonomy. The main practical value is manual-QC triage: the broad mode captures common front/dictionary residual state, while tiny temporal-dictionary outlier modes identify specific post-event or pre-event examples worth checking. This reinforces the current synthesis guardrail: use these modes as hypotheses and review candidates only, not calibrated phase boundaries, diffusion coefficients, causal mechanisms, or deployable warning classes.

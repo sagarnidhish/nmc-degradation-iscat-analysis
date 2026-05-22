@@ -120,6 +120,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - The grouped normalized residual-dictionary readout partially rescues held-out-source future16 transfer: raw residual dictionary AUC 0.375 improves to 0.550 after source residualization, while the single dictionary_recon_error_last_minus_first_source_residual readout reaches AUC 0.612/AP 0.613; permutation p=0.100 keeps it provisional.
 - Temporal-specificity controls show the same source-residual reconstruction-error drift is temporally ordered but not cleanly precursor-specific: future16 AUC 0.637 beats a within-source shift null (p=0.002) but barely exceeds past16 AUC 0.625; raw masked-minus-background slope is more future8-specific but source structured.
 - Future-specific residual controls sharpen that guardrail: after excluding past16 rows, the primary source-residual reconstruction-error feature drops to AUC 0.589, while grouped future16 prediction gains only modestly over past-event context (best delta AUC 0.065 from mask_contrast_source_residual_plus_context).
+- Source-balanced degradation-mode audit clusters source-residual residual/front/contrast features into k=4 modes; the strongest enrichment is mode 2 for post_event_16 (fraction 1.000, p=0.010), but tiny outlier modes keep this as review triage rather than a stable taxonomy.
 - Source-balanced residual-physics coupling links the best source-residual dictionary candidate to crop-local physics proxies: top target-aligned pair is dictionary_recon_error_last_minus_first vs masked_minus_background_mean_slope with rho 0.373, residual AUC 0.637, and physics AUC 0.628; apparent diffusion coupling remains weak.
 - Source-balanced residual candidate review packet converts the residual/readout/coupling evidence into 96 pending manual-QC candidates; 8 are immediate-review, led by source_balanced_cycle108_rank6_obj2_12_c2_x10_070723 with score 0.917.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
@@ -1263,6 +1264,31 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Top clean scalar row: masked_minus_background_mean_slope / raw / window 8 / exclude_past8 AUC 0.812, AP 0.713
 - Best grouped residual delta over past-event context: cycleNo full_future_any_event_within_16cycles mask_contrast_source_residual_plus_context delta AUC 0.065, model AUC 0.820, base AUC 0.755
 - Guardrail: Past-event context uses event-cycle labels derived from full particle abrupt-drop cycles. Excluding or modeling past windows tests future specificity on the source-balanced ROI table; it does not prove causality, source transfer, or calibrated phase/diffusion physics.
+
+## Source-Balanced Degradation Mode Audit
+
+- Rows/cycles/sources/features: 96 / 48 / 14 / 18
+- Chosen k and source-mode transitions: k=4, transition count 82, change fraction 0.244
+- Strongest event-neighborhood enrichment: mode 2 post_event_16 fraction 1.000 vs outside 0.085, p=0.010
+- Degradation mode 0 source_residual_front_geometry_state: n=70, cycles=39, sources=13, future16 fraction 0.543, past16 fraction 0.329, phases {'pre_event_8': 20, 'far_from_event': 19, 'pre_event_16': 18, 'post_event_8': 8, 'post_event_16': 5}
+- Degradation mode 1 source_residual_temporal_dictionary_state: n=1, cycles=1, sources=1, future16 fraction 1.000, past16 fraction 0.000, phases {'pre_event_16': 1}
+- Degradation mode 2 source_residual_temporal_dictionary_state: n=2, cycles=1, sources=1, future16 fraction 0.000, past16 fraction 1.000, phases {'post_event_16': 2}
+- Degradation mode 3 source_residual_temporal_dictionary_state: n=23, cycles=16, sources=10, future16 fraction 0.391, past16 fraction 0.217, phases {'far_from_event': 9, 'pre_event_8': 8, 'post_event_16': 3, 'post_event_8': 2, 'pre_event_16': 1}
+- Mode enrichment 2 post_event_16 (event_phase): fraction 1.000 vs outside 0.085, p=0.010, n=2
+- Mode enrichment 3 pre_event_16 (event_phase): fraction 0.043 vs outside 0.260, p=0.036, n=23
+- Mode enrichment 0 pre_event_16 (event_phase): fraction 0.257 vs outside 0.077, p=0.087, n=70
+- Mode enrichment 2 past16 (binary_label): fraction 1.000 vs outside 0.298, p=0.095, n=2
+- Mode enrichment 0 post_event_16 (event_phase): fraction 0.071 vs outside 0.192, p=0.128, n=70
+- Mode enrichment 1 pre_event_16 (event_phase): fraction 1.000 vs outside 0.200, p=0.208, n=1
+- Mode enrichment 0 future16 (binary_label): fraction 0.543 vs outside 0.385, p=0.251, n=70
+- Mode enrichment 3 far_from_event (event_phase): fraction 0.391 vs outside 0.260, p=0.293, n=23
+- Mode representative 1: source_balanced_cycle142_rank18_obj1_16_c2_x10_HighHighCOV_130723 cycle 142, phase pre_event_16, distance 0.000
+- Mode representative 0: source_balanced_cycle92_rank1_obj1_10_c2_x10_030723 cycle 92, phase post_event_8, distance 1.032
+- Mode representative 0: source_balanced_cycle92_rank1_obj2_10_c2_x10_030723 cycle 92, phase post_event_8, distance 1.070
+- Mode representative 0: source_balanced_cycle102_rank5_obj1_11_c2_x10_050723 cycle 102, phase pre_event_16, distance 1.303
+- Mode representative 0: source_balanced_cycle64_rank40_obj1_7_c2_x10_290623 cycle 64, phase post_event_8, distance 1.376
+- Mode representative 3: source_balanced_cycle98_rank3_obj2_11_c2_x10_050723 cycle 98, phase post_event_16, distance 1.581
+- Guardrail: Modes are unsupervised source-residual clusters of automatic particle-region optical/residual proxies. They organize degradation-state hypotheses and review candidates, but they do not prove calibrated phase boundaries, diffusion coefficients, or causal event mechanisms.
 
 ## Source-Balanced Residual-Physics Coupling Audit
 
