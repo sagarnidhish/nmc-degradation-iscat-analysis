@@ -3965,3 +3965,24 @@ Results:
 - No row passes the automatic diffusion-claim gate; all diffusion interpretation remains blocked pending manual front validation and calibration.
 
 Interpretation: this converts the scattered review artifacts into a compact decision ledger. It is the right next manual-QC handoff: inspect the strict-front candidate first, then the near-pre front/kinetic-first rows, then kinetic-only and front-only guardrails as failure-mode controls. The packet prioritizes review only; it does not create manual labels, validate fronts, calibrate diffusion, or establish source-invariant causal physics.
+
+## 2026-05-22 Source-Balanced Pre-Event Manual-QC Visual Packet
+
+Added `scripts/tier4_source_balanced_pre_event_manual_qc_visual_packet.py` as the reproducible renderer for the manual-QC decision queue and indexed the output in the project synthesis. The script renders direct particle-crop visual evidence for every action tier, rather than only the earlier consensus top candidates.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_visual_packet`
+- `derived_local/source_balanced_pre_event_manual_qc_visual_packet`
+- `source_balanced_pre_event_manual_qc_visual_assets.csv`
+- `manual_qc_visual_contact_sheet.png`
+- `source_balanced_pre_event_manual_qc_visual_summary.json`
+
+Results:
+
+- Rendered 40 of 40 requested queue rows from the 128-row manual-QC decision queue.
+- The rendered set spans 12 sources and all review tiers: 1 `review_strict_front_gate`, 5 `review_front_and_kinetics_first`, 11 `review_front_only_guardrail`, 8 `review_kinetic_only_guardrail`, 4 `context_control_concordant`, and 11 `routine_or_low_concordance`.
+- Event-bin coverage includes 23 near-pre-event rows, 4 mid-pre-event rows, 4 far-pre-event rows, 6 post-event rows, and 3 no-near-event controls.
+- Each rendered row has a frame strip, mask overlay, radial kymograph, and contact-sheet entry. The top visual row is still `source_balanced_cycle80_rank62_obj2_9_c2_x10_010723`, the strict-front-gate candidate.
+
+Interpretation: this closes the biggest practical handoff gap for manual QC. The reviewer can now inspect one contact sheet plus per-ROI strip/overlay/kymograph assets for the exact decision queue that controls whether front, phase-boundary, and diffusion-proxy evidence should be trusted. The packet still assigns no labels and does not validate particle identity, front masks, calibrated diffusion, or causality.
