@@ -66,6 +66,25 @@ def scalar(v: Any) -> Any:
     return v
 
 
+def clean_json(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {str(k): clean_json(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [clean_json(v) for v in value]
+    if isinstance(value, tuple):
+        return [clean_json(v) for v in value]
+    if isinstance(value, (np.integer,)):
+        return int(value)
+    if isinstance(value, (np.floating, float)):
+        return float(value) if np.isfinite(value) else None
+    try:
+        if pd.isna(value):
+            return None
+    except TypeError:
+        pass
+    return value
+
+
 def read_csv(path: Path) -> pd.DataFrame:
     if not path.exists():
         return pd.DataFrame()
@@ -317,7 +336,7 @@ def main() -> None:
         "guardrail": "This atlas audits dataset and ROI-analysis coverage only. It does not extract new ROIs, validate particle identity, train deployment models, or make calibrated diffusion/phase-boundary claims.",
     }
     with (out / "all_cycle_dataset_coverage_summary.json").open("w") as f:
-        json.dump(summary, f, indent=2, default=scalar)
+        json.dump(clean_json(summary), f, indent=2, sort_keys=True)
 
     readme = [
         "# All-Cycle Dataset Coverage Atlas",
