@@ -40,6 +40,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Masked residual state-transfer anchor/full cycles: 11 / 89
 - Transfer-ranked reconstructed cycles/ROI rows: 12 / 48
 - Transfer-ranked masked rollout ROI/frame rows: 48 / 4608
+- Cross-cohort rollout transfer selected/transfer ROIs: 11 / 48
 - Diffusion sanity selected-front/publication candidates: 12 / 0
 - Control-balanced high-res front tracking/sanity candidates: 40 / 0
 - Weak-label benchmark trainable positives/negatives: 3 / 4
@@ -85,6 +86,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle-collapsed masked-rollout warning audit covers 11 observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p=0.014), while future-drop evaluation is underpowered with only 1 positive 8-cycle warning case.
 - Masked residual state-transfer warning expands the masked-residual signature from 11 video-backed cycles to 89 cycle-state rows; the transferred score separates future 8-cycle drops (AUC 0.708, permutation p=0.004), but anchor leave-one-cycle transfer is weak (rho=-0.155, p=0.650) and cycle-state PC2 remains the stronger direct future8 baseline (AUC 0.772).
 - Transfer-ranked ROI reconstruction converts that state-transfer hypothesis list back into direct video crops: 12 cycles yielded 960 reconstructed components and 48 ROI rows; masked rollout on the exported crops again picks persistence as best for 48 of 48 ROIs, while low-rank DMD particle residuals remain much larger than nonparticle context.
+- Cross-cohort rollout transfer audit shows the late transfer-ranked crops are a distinct video-dynamics domain: selected-cohort DMD evaluated on transfer-ranked ROIs has median particle MSE 0.020, 3.494x the transfer-internal DMD baseline (p=3.277e-09), while pooled training is close to transfer-internal (1.061x).
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
@@ -609,6 +611,30 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Transfer-ranked ROI candidate cycle 146 obj 4: validation score 25.085, mean abs z 13.691, future8=0
 - Transfer-ranked ROI candidate cycle 146 obj 3: validation score 24.258, mean abs z 20.728, future8=0
 - Guardrail: Automatic transfer-ranked ROI candidates reconstructed from sampled HDF5 cycle segments; compatible with particle-region sequence export, but not manual annotations or validated fronts. Held-out rollout errors are scored inside automatic history-aware particle masks; this is not manual segmentation or a new learned video model.
+
+## Cross-Cohort Rollout Transfer
+
+- ROI cohorts selected/transfer-ranked: 11 / 48
+- Low-rank rank/train fraction: 16 / 0.670
+- Transfer model selected_internal on selected: median particle MSE 0.002, DMD/persistence 22.808, particle/nonparticle ratio 5.416, internal ratio NA, p=NA
+- Transfer model pooled on selected: median particle MSE 0.006, DMD/persistence 40.246, particle/nonparticle ratio 4.473, internal ratio 3.521, p=0.115
+- Transfer model transfer_ranked_internal on selected: median particle MSE 0.016, DMD/persistence 102.029, particle/nonparticle ratio 5.186, internal ratio 10.285, p=8.113e-04
+- Transfer model transfer_ranked_internal on transfer_ranked: median particle MSE 0.006, DMD/persistence 20.622, particle/nonparticle ratio 8.308, internal ratio NA, p=NA
+- Transfer model pooled on transfer_ranked: median particle MSE 0.006, DMD/persistence 21.376, particle/nonparticle ratio 8.449, internal ratio 1.061, p=0.674
+- Transfer model selected_internal on transfer_ranked: median particle MSE 0.020, DMD/persistence 65.440, particle/nonparticle ratio 7.493, internal ratio 3.494, p=3.277e-09
+- Transfer/error link transfer_ranked_internal on transfer_ranked cycleNo vs particle_mse_mean: rho=0.569, p=2.493e-05, n=48
+- Transfer/error link pooled on transfer_ranked cycleNo vs particle_mse_mean: rho=0.511, p=2.092e-04, n=48
+- Transfer/error link selected_internal on selected cycleNo vs particle_mse_mean: rho=-0.866, p=5.670e-04, n=11
+- Transfer/error link selected_internal on transfer_ranked validation_score_first vs dmd_particle_mse_ratio_vs_persistence: rho=0.408, p=0.004, n=48
+- Transfer/error link transfer_ranked_internal on selected validation_score_first vs particle_mse_mean: rho=-0.782, p=0.004, n=11
+- Transfer/error link selected_internal on transfer_ranked validation_score_first vs particle_mse_mean: rho=0.381, p=0.008, n=48
+- Transfer-ranked hard ROI cycle116_rank12_obj2 via selected_internal: particle MSE 0.054, DMD/persistence 844.134, cycle 116
+- Transfer-ranked hard ROI cycle152_rank5_obj3 via selected_internal: particle MSE 0.045, DMD/persistence 84.097, cycle 152
+- Transfer-ranked hard ROI cycle40_rank8_obj3 via selected_internal: particle MSE 0.043, DMD/persistence 443.572, cycle 40
+- Transfer-ranked hard ROI cycle152_rank5_obj1 via selected_internal: particle MSE 0.040, DMD/persistence 46.942, cycle 152
+- Transfer-ranked hard ROI cycle150_rank1_obj4 via selected_internal: particle MSE 0.040, DMD/persistence 325.487, cycle 150
+- Transfer-ranked hard ROI cycle154_rank6_obj3 via selected_internal: particle MSE 0.039, DMD/persistence 104.473, cycle 154
+- Guardrail: Cross-cohort low-rank rollout transfer compares interpretable linear dynamics across automatic ROI cohorts. It is evidence about video-domain generalization and difficult particle-local dynamics, not manual QC, calibrated diffusion, or a deployable learned video predictor.
 
 ## Masked Residual Transition Timing
 

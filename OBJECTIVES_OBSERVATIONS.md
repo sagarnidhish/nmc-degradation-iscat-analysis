@@ -2062,3 +2062,27 @@ Key result:
 
 Interpretation: this closes the loop from cycle-level warning to direct video data. It does not validate the transfer-ranked crops as manual particle annotations or fronts, but it gives a concrete new ROI cohort for next-frame prediction, masked rollout, and eventual manual QC in cycles that the warning models said were worth inspecting.
 
+## 2026-05-22 Cross-Cohort Rollout Transfer Audit
+
+Added and ran:
+
+`python scripts/tier4_cross_cohort_rollout_transfer_audit.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cross_cohort_rollout_transfer_audit --rank 16 --train-fraction 0.67`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cross_cohort_rollout_transfer_audit`
+
+Local compact copy:
+
+`derived_local/cross_cohort_rollout_transfer_audit`
+
+Key result:
+
+- Trained the same interpretable low-rank DMD rollout model separately on the original selected ROI cohort, on the transfer-ranked warning ROI cohort, and on the pooled cohort, then evaluated each model on both cohorts with particle-mask scoring.
+- The audit covers 11 selected ROI sequences and 48 transfer-ranked ROI sequences. Each model is evaluated against persistence, velocity, and low-rank DMD rollouts on held-out frame tails.
+- Transfer-ranked ROIs are a distinct video-dynamics domain: selected-cohort DMD evaluated on transfer-ranked crops has median particle MSE 0.0204, which is 3.49x the transfer-ranked internal DMD baseline, with Mann-Whitney p=3.28e-9.
+- Pooled training transfers much better to transfer-ranked ROIs: median particle MSE 0.00620, only 1.06x the transfer-ranked internal baseline, p=0.674.
+- The reverse transfer is also poor: transfer-ranked DMD evaluated on selected ROIs is 10.28x the selected internal baseline, p=8.11e-4.
+- Even internal DMD remains worse than persistence in both cohorts, so the result should guide cohort-aware residual modeling and domain adaptation rather than support a deployable low-rank video predictor.
+
+Interpretation: this adds a stricter model-generalization test around next-frame/rollout work. The late warning-window crops are not just more of the same selected event/control videos; they require either cohort-aware training, pooled training, or stronger learned dynamics before rollout errors can be interpreted as robust degradation physics.
