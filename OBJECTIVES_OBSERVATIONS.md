@@ -3939,3 +3939,28 @@ Results:
 - The top event-proximity row is within-source-rank `strict_qc_priority_score`, rho = -0.450, source-stratified permutation p = 0.0196; the sign indicates this strict front-QC score is not a simple closer-to-event clock.
 
 Interpretation: masked optical kinetics are the most robust part of the current front/kinetic evidence under source-aware nulls. The composite concordance score is useful for review prioritization, but the weakened source-residual/rank rows and small mixed-label source counts mean it should not be treated as source-invariant physics, manual front validation, causal degradation proof, or calibrated diffusion evidence.
+
+## 2026-05-22 Source-Balanced Pre-Event Manual-QC Decision Packet
+
+Added `scripts/tier4_source_balanced_pre_event_manual_qc_decision_packet.py` and ran it on Isambard. This packet consolidates front/kinetic concordance, source-stratified null evidence, strict front gates, and rendered visual-asset paths into an operational manual-QC queue with explicit action tiers and review questions.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_decision_packet`
+- `derived_local/source_balanced_pre_event_manual_qc_decision_packet`
+- `source_balanced_pre_event_manual_qc_decision_queue.csv`
+- `source_balanced_pre_event_manual_qc_top40.csv`
+- `source_balanced_pre_event_manual_qc_visual_asset_manifest.csv`
+- `source_balanced_pre_event_manual_qc_action_summary.csv`
+- `source_balanced_pre_event_manual_qc_decision_summary.json`
+
+Results:
+
+- Ranked 128 ROI rows across 14 sources and correctly identified 24 rows with rendered visual assets from the consensus visual packet.
+- Action counts are 96 `routine_or_low_concordance`, 13 `review_front_only_guardrail`, 9 `review_kinetic_only_guardrail`, 5 `review_front_and_kinetics_first`, 4 `context_control_concordant`, and 1 `review_strict_front_gate`.
+- The top-40 review packet contains all 5 front/kinetic-first rows, the 1 strict-front-gate row, 8 of 9 kinetic-only guardrails, 11 of 13 front-only guardrails, 4 non-near concordant controls, and 11 routine comparators.
+- Top decision candidate is `source_balanced_cycle80_rank62_obj2_9_c2_x10_010723`, action `review_strict_front_gate`, decision score 1.181. Its manual question is whether a human can confirm a coherent outward/front-like trace in the strip, overlay, and radial kymograph.
+- Next front/kinetic-first candidates include `source_balanced_cycle151_rank28_obj1_17_c2_x10_HighHighCOV_150723`, `source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723`, `source_balanced_cycle78_rank61_obj2_9_c2_x10_010723`, and `source_balanced_cycle154_rank30_obj2_17_c2_x10_HighHighCOV_150723`.
+- No row passes the automatic diffusion-claim gate; all diffusion interpretation remains blocked pending manual front validation and calibration.
+
+Interpretation: this converts the scattered review artifacts into a compact decision ledger. It is the right next manual-QC handoff: inspect the strict-front candidate first, then the near-pre front/kinetic-first rows, then kinetic-only and front-only guardrails as failure-mode controls. The packet prioritizes review only; it does not create manual labels, validate fronts, calibrate diffusion, or establish source-invariant causal physics.

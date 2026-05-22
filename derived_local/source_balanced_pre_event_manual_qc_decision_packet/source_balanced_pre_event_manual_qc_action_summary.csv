@@ -1,0 +1,7 @@
+manual_qc_action_tier,n_rows,n_top40,median_score,n_visual_assets,n_manual_front_gate,n_diffusion_gate
+review_front_only_guardrail,13,11,0.4836781093950536,5,0,0
+routine_or_low_concordance,96,11,0.24218191754387716,8,0,0
+review_kinetic_only_guardrail,9,8,0.7466092102900065,5,0,0
+review_front_and_kinetics_first,5,5,1.0614486870946767,5,0,0
+context_control_concordant,4,4,0.5241899185439494,0,0,0
+review_strict_front_gate,1,1,1.1810114699883396,1,1,0

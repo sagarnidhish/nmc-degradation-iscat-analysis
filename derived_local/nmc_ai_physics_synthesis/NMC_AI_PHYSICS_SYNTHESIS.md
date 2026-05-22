@@ -133,6 +133,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Pre-event phase-kinetics audit loads 128 particle-region ROI tensors and tests 56 masked optical kinetic features; best event-bin row is near_vs_any_non_near masked_minus_bg_slope AUC 0.816, p=8.993e-08.
 - Pre-event front/kinetic concordance audit ranks 128 ROI rows by agreement between masked kinetics, front proxies, visual QC, and strict gates; 4 are near-pre front/kinetic review candidates, led by source_balanced_cycle154_rank30_obj2_17_c2_x10_HighHighCOV_150723 at score 1.669.
 - Pre-event front/kinetic source-null audit stress-tests 9 concordance/kinetic/front features with 50 source-stratified permutations; best row is near_vs_mid_pre kinetic_evidence_score AUC 0.820, coarse perm p=0.020.
+- Pre-event manual-QC decision packet consolidates 128 ROI rows, 24 rendered visual-asset rows, and source-null evidence into action tiers; top action is review_strict_front_gate for source_balanced_cycle80_rank62_obj2_9_c2_x10_010723 at decision score 1.181.
 - Pre-event multimodal leave-source predictor compares echem/front/QC/phase-kinetic families; best row is clean_pre16_vs_post_control consensus_visual_qc source_confound_filter_0.25 AUC 0.826/AP 0.879, while the best kinetics-vs-front delta is dAUC 0.131.
 - Pre-event strict QC-gated front audit reduces 24 rendered candidates to 1 automatic manual-front-review candidate and 0 automatic diffusion-claim candidates; the surviving review candidate is source_balanced_cycle80_rank62_obj2_9_c2_x10_010723 with strict QC score 0.600.
 - Pre-event physics-mode taxonomy clusters source-residual front/diffusion/heterogeneity features into k=2 broad states but finds no strong near-pre enrichment (best Fisher p=0.689), so continuous front/diffusion clocks remain more informative than coarse modes for this cohort.
@@ -155,7 +156,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Echem-conditioned residual-dictionary audit converts post-hoc fusion into a split-specific residual objective: conditioned residual dictionary future16 reaches leave-source AUC 0.785 versus raw residual dictionary 0.058 (delta 0.726), while leave-cycle conditioned residual+echem reaches AUC 0.834; future8 remains context dominated.
 - Conditioned residual physics atlas makes that objective interpretable: top source-centered physics alignment is leave_source resdict_pc04_mean to temporal_diffusion_proxy_median_um2_per_s (front_phase_diffusion) with rho 0.815; top single residual future16 mode is resdict_pc08_slope at AUC 0.821/AP 0.956.
 - Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC 1.000, raw all-video reaches 0.756, and context-residualized all-video alone reaches 0.319; future16 raw handcrafted reaches AUC 0.796 but residualized all-video alone is 0.620.
-- Acquisition-residualized video/echem warning audit executes the top tournament experiment: leave-cycle future16 residualized video_plus_echem reaches AUC 0.697 versus acquisition-only 0.727, but leave-source residualized AUC falls to 0.512 versus acquisition-only 0.697.
+- Acquisition-residualized video/echem warning audit executes the top tournament experiment: leave-cycle future16 residualized video_plus_echem reaches AUC 0.788 versus acquisition-only 0.727, but leave-source residualized AUC falls to 0.527 versus acquisition-only 0.697.
 - Source-domain video/echem adaptation partially rescues leave-source future16 transfer: source-centered video_plus_echem reaches AUC 0.737 versus acquisition-only 0.697, while CORAL reaches only 0.420.
 - Source-balanced transfer audit shows source-rank/weighting only modestly lifts video+echem future16 AUC to 0.614 versus raw video+echem 0.594, below acquisition context 0.704 and echem source-rank 0.642; source label composition remains the dominant guardrail.
 - Source-invariant projection is more promising but still guarded: best video_plus_echem future16 is source_mean_resid_4 at AUC 0.729 versus raw 0.612 and acquisition context 0.745; video-only source-confound filtering reaches AUC 0.770.
@@ -1418,6 +1419,9 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Top front/kinetic null row: near_vs_mid_pre raw kinetic_evidence_score AUC 0.820, null median/p95 0.694/0.775, coarse perm p=0.020, eligible sources 3
 - Top front/kinetic proximity row: within_source_rank strict_qc_priority_score rho -0.450, coarse perm p=0.020
 - Front/kinetic null guardrail: Source-aware null tests audit whether front/kinetic concordance survives source-stratified label shuffles and source-balanced resampling. Passing rows remain automatic review-prioritization evidence, not manual labels, causal mechanisms, deployable warnings, or calibrated diffusion coefficients.
+- Manual-QC decision packet rows/sources/visual-assets: 128 / 14 / 24; action counts {'context_control_concordant': 4, 'review_front_and_kinetics_first': 5, 'review_front_only_guardrail': 13, 'review_kinetic_only_guardrail': 9, 'review_strict_front_gate': 1, 'routine_or_low_concordance': 96}; top40 {'context_control_concordant': 4, 'review_front_and_kinetics_first': 5, 'review_front_only_guardrail': 11, 'review_kinetic_only_guardrail': 8, 'review_strict_front_gate': 1, 'routine_or_low_concordance': 11}
+- Top manual-QC decision candidate: rank 1 source_balanced_cycle80_rank62_obj2_9_c2_x10_010723 near_pre_event_1_8 action review_strict_front_gate score 1.181; question: Can a human confirm a coherent outward/front-like trace in the strip, overlay, and radial kymograph?
+- Manual-QC decision guardrail: Manual-QC decision packet only prioritizes review. It carries source-null and visual-QC evidence forward, but it does not create manual labels, validate fronts, calibrate diffusion, or make source-invariant causal claims.
 - Multimodal predictor rows/cycles/sources: 128 / 64 / 14; feature family sizes {'all_signal': 93, 'consensus_visual_qc': 5, 'echem_context': 7, 'front_echem_residual': 19, 'kinetics_plus_front_echem': 88, 'no_kinetics_signal': 31, 'object_context_guardrail': 6, 'phase_kinetics': 64}
 - Top multimodal leave-source row: clean_pre16_vs_post_control consensus_visual_qc source_confound_filter_0.25 n=106, AUC 0.826, AP 0.879, source eta2 mean/max 0.549/0.818
 - Best kinetics-family delta: near_vs_far_pre raw_standard phase_kinetics vs front_echem_residual dAUC 0.131, dAP 0.149
@@ -1751,16 +1755,16 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 - Rows/cycles/sources: 172 / 34 / 12
 - Feature set sizes: {'acquisition_context': 40, 'echem_regime': 57, 'video_all': 64, 'video_embedding': 16, 'video_plus_echem': 121, 'video_scalar': 48}
-- Leave-cycle future16 residualized video+echem: AUC 0.697, AP 0.903, p=0.016; acquisition-only AUC 0.727
-- Leave-source future16 residualized video+echem: AUC 0.512, AP 0.860, p=0.433; acquisition-only AUC 0.697
+- Leave-cycle future16 residualized video+echem: AUC 0.788, AP 0.932, p=0.002; acquisition-only AUC 0.727
+- Leave-source future16 residualized video+echem: AUC 0.527, AP 0.848, p=0.371; acquisition-only AUC 0.697
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_minus_echem_regime_raw: delta AUC 0.136, delta rho 0.191
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_cycle_balanced_minus_echem_regime_raw: delta AUC 0.136, delta rho 0.191
 - Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_raw_minus_echem_regime_raw: delta AUC 0.099, delta rho 0.140
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_minus_video_all_raw: delta AUC 0.091, delta rho 0.128
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_cycle_balanced_minus_video_all_raw: delta AUC 0.091, delta rho 0.128
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_minus_acquisition_context_raw: delta AUC 0.061, delta rho 0.086
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_cycle_balanced_minus_acquisition_context_raw: delta AUC 0.061, delta rho 0.086
 - Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_raw_minus_video_all_raw: delta AUC 0.055, delta rho 0.077
-- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_minus_echem_regime_raw: delta AUC 0.044, delta rho 0.062
-- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_raw_minus_acquisition_context_raw: delta AUC 0.025, delta rho 0.035
-- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_minus_video_all_raw: delta AUC 1.110e-16, delta rho 8.917e-06
-- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_minus_acquisition_context_raw: delta AUC -0.030, delta rho -0.043
-- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo echem_regime_acquisition_residualized_minus_acquisition_context_raw: delta AUC -0.041, delta rho -0.058
-- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_all_acquisition_residualized_minus_acquisition_context_raw: delta AUC -0.258, delta rho -0.364
 - Guardrail: This audit residualizes candidate video/echem features against acquisition/context inside each held-out fold. It tests context-resistant weak-label signal for prioritizing next analyses, not deployable warning, causal mechanism, manual QC labels, or calibrated diffusion.
 
 ## Source-Domain Video/Echem Adaptation Audit
