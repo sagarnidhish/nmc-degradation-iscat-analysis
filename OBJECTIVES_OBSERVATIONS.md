@@ -3655,6 +3655,33 @@ Interpretation:
 
 This extends the echem/front guardrail into explicit matched residual testing. It supports a review-worthy residual front/apparent-diffusion-like signal in same-source near-vs-mid and near-vs-any controls, while the near-vs-far result still depends on cross-source matching because the raw source lattice lacks same-source far controls. The guarded conclusion is narrower than the raw readouts: source/echem-conditioned front-radius and apparent-diffusion proxies remain promising manual-QC targets, but they are still automatic optical residuals, not calibrated diffusion coefficients, validated phase boundaries, or causal warning models.
 
+
+## 2026-05-22 Source-Balanced Pre-Event Front-Consensus Audit
+
+Added `scripts/tier4_source_balanced_pre_event_front_consensus_audit.py` and ran it on Isambard. This audit combines the echem/front joined table with the echem-matched residual pairs to test whether the automatic front-motion evidence is internally coherent across q60/q70/q80 slopes, radius/radius-squared fits, monotonicity, gradient coherence, and source+echem residual outward-front proxies.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit`
+- `derived_local/source_balanced_pre_event_front_consensus_audit`
+
+Cohort/result snapshot:
+
+- Input table: 128 ROI rows, 64 cycles, 14 source movies.
+- The audit used 320 matched pairs from the source/echem-matched residual audit.
+- Consensus features include `front_consensus_score`, residual/raw outward-front z-means, q-slope sign fraction, q-slope mean, q-slope coefficient of variation, and a front-quality score.
+- Unpaired event-bin consensus remains weak: best near-vs-any-non-near row is `front_quantile_positive_fraction`, median difference 0.333, AUC 0.599, p=0.0716.
+- Matched-pair consensus is much stronger. Same-source near-vs-mid `front_consensus_score` has n=20 pairs, median near-minus-control difference 4.946, positive fraction 0.650, sign-flip p=0.0010.
+- Same-source near-vs-mid `front_raw_outward_z_mean` has median difference 2.473, positive fraction 0.750, p=0.0010.
+- Source-penalized echem/context near-vs-mid `front_consensus_score` has n=32 pairs, median difference 2.428, positive fraction 0.719, p=0.0010.
+- Source-penalized echem/context near-vs-mid `front_residual_outward_z_mean` has n=28 pairs, median difference 0.817, p=0.0010.
+- Continuous pre-event clock tests remain weak: `front_consensus_score` versus event proximity has rho approximately -0.005, p=0.965, so this is not yet a smooth monotone precursor clock.
+- The top consensus-ranked ROI is `source_balanced_cycle38_rank42_obj2_5_c2_x10_260623`, but it is far-pre; the top near-pre examples include cycles 154, 151, and 80. This reinforces that consensus ranking is a manual-QC queue, not an event label.
+
+Interpretation:
+
+The consensus audit sharpens the current physics picture. A broad unpaired classifier does not cleanly separate near-pre rows, and continuous global clocks are weak. However, once matched by source/echem/acquisition context, near-pre rows show stronger coherent outward-front motion relative to mid-pre and non-near controls. The defensible claim is therefore paired, conditional, and review-oriented: source/echem-conditioned front propagation remains a promising automatic proxy for manual phase-front QC, but it is still not calibrated diffusion, validated phase-boundary motion, particle-identity proof, or a causal warning model.
+
 ## 2026-05-22 Source-Balanced Pre-Event Echem-Matched Far-Control Audit
 
 Added `scripts/tier4_source_balanced_pre_event_echem_matched_far_control_audit.py` and ran it on Isambard. This audit targets the raw source-lattice gap that no source contains both near-pre and far-pre rows. It uses the next-best control design: nearest far-pre controls matched by source class plus crop/acquisition context, with an echem-augmented variant using cycle-level regime descriptors.
@@ -3678,3 +3705,49 @@ Cohort/result snapshot:
 Interpretation:
 
 This strengthens the radial-kymograph near-pre front-motion result against a more specific cross-source far-control design, including echem/context matching. It still does not solve the missing same-source near-vs-far problem: controls are cross-source, only 3-4 far-control sources are used, and controls can be reused. The defensible conclusion is that near-pre front-radius and radius-squared movement remains review-worthy after source-class/echem/context matching, not that calibrated diffusion, particle identity, phase-boundary tracking, or causal precursor forecasting has been proven.
+
+## 2026-05-22 Source-Balanced Pre-Event Consensus Review Queue
+
+Added `scripts/tier4_source_balanced_pre_event_consensus_review_queue.py` and ran it on Isambard. This audit does not create a new physical claim; it consolidates the scattered pre-event evidence into one manual-QC work queue by combining source-invariant review scores, radial-kymograph front motion, source/echem residual front proxies, and matched-control support from the residual and far-control audits.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_consensus_review_queue`
+- `derived_local/source_balanced_pre_event_consensus_review_queue`
+
+Cohort/result snapshot:
+
+- Ranked 128 source-balanced pre-event candidates across 64 cycles and 14 source movies.
+- Priority tiers: 21 `matched_support_front_qc` rows and 107 routine-review rows.
+- The top candidate is `source_balanced_cycle151_rank28_obj1_17_c2_x10_HighHighCOV_150723`: near-pre, consensus score 0.932, matched-positive support count 56, cycle 151, 5 cycles to the next event.
+- The previous top review-packet candidate `source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723` remains near the top: rank 2, score 0.906, matched-positive support count 55.
+- The top 10 candidates are all near-pre rows and concentrate in the HighHighCOV source `17_c2_x10_HighHighCOV_150723` plus supporting near-pre candidates from `9_c2_x10_010723`, which is useful for manual QC but also highlights residual source/local-condition concentration.
+- The queue writes a full ranked CSV and a top-40 CSV with ROI IDs, source/cycle/bin metadata, consensus score, prior review score, key front/echem-residual proxies, matched-support counts, support details, and the source ROI tensor path.
+
+Interpretation:
+
+This is an operational bridge from automatic analysis to manual review. It makes the next human-QC step concrete: review the consensus top rows first, especially ranks 1-7 from the near-pre HighHighCOV sequence, while keeping matched-control and source/echem guardrails visible. The queue assigns no accept/reject labels and does not validate particle identity, front masks, calibrated diffusion, phase-boundary tracking, degradation causality, or deployable warnings.
+
+## 2026-05-22 Source-Balanced Pre-Event Front Consensus Audit
+
+Added `scripts/tier4_source_balanced_pre_event_front_consensus_audit.py` and ran it on Isambard. This audit asks whether the pre-event front signal is internally coherent across multiple automatic front proxies rather than depending on a single radius or apparent-diffusion descriptor. It combines raw outward-front slopes, source+echem residual outward-front slopes, radius-quantile sign agreement, monotonicity/gradient quality, and matched-control evidence.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit`
+- `derived_local/source_balanced_pre_event_front_consensus_audit`
+
+Cohort/result snapshot:
+
+- Input table: 128 ROI rows, 64 cycles, 14 source movies.
+- Consensus features tested include `front_consensus_score`, residual/raw outward-front z means, quantile-positive fraction, q-slope mean, q-slope CV, and front-quality score.
+- Unpaired event-bin separation is weak: best row is near-vs-any-non-near `front_quantile_positive_fraction`, n=32 versus 96, median difference 0.333, AUC 0.599, p=0.0717.
+- Matched consensus evidence is stronger: same-source near-vs-mid `front_consensus_score` has n=20, median near-control difference 4.946, sign-flip p=0.0010.
+- Same-source near-vs-mid `front_raw_outward_z_mean` also has median difference 2.473, p=0.0010.
+- Source-penalized echem/context near-vs-mid `front_consensus_score` has n=32, median difference 2.428, p=0.0010.
+- Same-source near-vs-any-non-near `front_raw_outward_z_mean` remains positive: n=27, median difference 1.074, p=0.0010.
+- The top consensus-ranked candidates feed into the consensus review queue rather than creating labels.
+
+Interpretation:
+
+This is a coherence stress test for the front-motion hypothesis. It shows that unpaired event-bin front consensus is not strong enough on its own, while matched same-source near-vs-mid and source/echem-matched comparisons preserve a coherent outward-front signal. The result supports prioritizing front-consensus candidates for manual QC, but it remains automatic optical evidence rather than calibrated diffusion, validated phase-boundary tracking, particle identity, or causal degradation proof.
