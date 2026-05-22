@@ -115,6 +115,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Source-balanced ROI sequence export converts that manifest into 96 particle-region crop tensors across 48 cycles and 14 sources with 0 export failures; the fast rollout audit finds strongest future16 ROI signal in roi_norm_mean_delta_last_minus_first at AUC 0.626, while prediction-error features are highly source-structured.
 - A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across 96 ROI tensors; top future16 mask/front proxy is masked_minus_background_mean_slope at AUC 0.690/AP 0.696, but source eta2 is 0.634.
 - A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.631/AP 0.634, and best within-source-rank proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.656/AP 0.677.
+- A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC 0.602/AP 0.581, but leave-source future16 drops to AUC 0.375, marking source transfer as the main failure mode.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC 0.849 versus PCA-video 0.569 and handcrafted scalar 0.828; future16 learned_all remains weak at AUC 0.538 versus handcrafted 0.680.
@@ -1181,6 +1182,39 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Best source-residual future16 feature: front_radius_q80_slope_px_per_norm_time AUC 0.631, AP 0.634, p=0.122
 - Best within-source-rank future16 feature: front_radius_q80_slope_px_per_norm_time AUC 0.656, AP 0.677, p=0.062
 - Guardrail: Source residualization tests whether automatic mask/front proxies survive source structure. Passing this audit would still be weak-label, automatic-mask evidence; failing it means the feature is useful mainly for QC/source triage.
+
+## Source-Balanced Residual Dictionary Audit
+
+- ROI sequences/cycles/sources: 96 / 48 / 14
+- PCA components/downsample/variance explained: 16 / 2 / 0.522
+- Feature set sizes: {'residual_dictionary': 72, 'mask_front_scalar': 27, 'residual_dictionary_plus_mask_front': 99}
+- Residual dictionary leave-cycle future16: AUC 0.602, AP 0.581; leave-source future16: AUC 0.375, AP 0.448
+- Top residual ROI/cycle future16 scalar: resdict_pc01_mean AUC 0.668, eta2 0.187 / resdict_pc01_mean AUC 0.769, eta2 0.421
+- Source-balanced residual dictionary metric cycleNo future_any_drop_within_16cycles residual_dictionary: AUC 0.602, AP 0.581, n=96
+- Source-balanced residual dictionary metric cycleNo future_any_drop_within_16cycles mask_front_scalar: AUC 0.593, AP 0.578, n=96
+- Source-balanced residual dictionary metric cycleNo future_any_drop_within_16cycles residual_dictionary_plus_mask_front: AUC 0.573, AP 0.555, n=96
+- Source-balanced residual dictionary metric source_stem future_any_drop_within_16cycles mask_front_scalar: AUC 0.456, AP 0.466, n=96
+- Source-balanced residual dictionary metric source_stem future_any_drop_within_16cycles residual_dictionary: AUC 0.375, AP 0.448, n=96
+- Source-balanced residual dictionary metric source_stem future_any_drop_within_16cycles residual_dictionary_plus_mask_front: AUC 0.322, AP 0.396, n=96
+- Source-balanced residual dictionary metric cycleNo future_any_drop_within_8cycles mask_front_scalar: AUC 0.641, AP 0.508, n=96
+- Source-balanced residual dictionary metric cycleNo future_any_drop_within_8cycles residual_dictionary_plus_mask_front: AUC 0.614, AP 0.437, n=96
+- Source-balanced residual dictionary metric cycleNo future_any_drop_within_8cycles residual_dictionary: AUC 0.600, AP 0.438, n=96
+- Source-balanced residual dictionary metric source_stem future_any_drop_within_8cycles mask_front_scalar: AUC 0.418, AP 0.255, n=96
+- Source-balanced residual dictionary ROI feature future_any_drop_within_16cycles masked_minus_background_mean_slope: AUC 0.690, AP 0.696, source eta2 0.634
+- Source-balanced residual dictionary ROI feature future_any_drop_within_16cycles resdict_pc01_mean: AUC 0.668, AP 0.670, source eta2 0.187
+- Source-balanced residual dictionary ROI feature future_any_drop_within_16cycles resdict_pc02_slope: AUC 0.668, AP 0.719, source eta2 0.199
+- Source-balanced residual dictionary ROI feature future_any_drop_within_16cycles resdict_pc09_slope: AUC 0.653, AP 0.674, source eta2 0.150
+- Source-balanced residual dictionary ROI feature future_any_drop_within_16cycles resdict_pc03_mean: AUC 0.641, AP 0.666, source eta2 0.329
+- Source-balanced residual dictionary ROI feature future_any_drop_within_16cycles resdict_pc02_last_minus_first: AUC 0.637, AP 0.617, source eta2 0.112
+- Source-balanced residual dictionary ROI feature future_any_drop_within_16cycles resdict_pc09_last_minus_first: AUC 0.629, AP 0.640, source eta2 0.114
+- Source-balanced residual dictionary ROI feature future_any_drop_within_16cycles roi_norm_mean_delta_last_minus_first: AUC 0.626, AP 0.589, source eta2 0.365
+- Source-balanced residual dictionary cycle feature future_any_drop_within_16cycles resdict_pc01_mean: AUC 0.769, AP 0.753, source eta2 0.421
+- Source-balanced residual dictionary cycle feature future_any_drop_within_16cycles resdict_pc09_slope: AUC 0.724, AP 0.755, source eta2 0.422
+- Source-balanced residual dictionary cycle feature future_any_drop_within_16cycles resdict_pc09_last_minus_first: AUC 0.698, AP 0.698, source eta2 0.316
+- Source-balanced residual dictionary cycle feature future_any_drop_within_16cycles resdict_pc07_last_minus_first: AUC 0.689, AP 0.728, source eta2 0.461
+- Source-balanced residual dictionary cycle feature future_any_drop_within_16cycles masked_minus_background_mean_slope: AUC 0.688, AP 0.703, source eta2 0.649
+- Source-balanced residual dictionary cycle feature future_any_drop_within_16cycles resdict_pc07_slope: AUC 0.682, AP 0.725, source eta2 0.536
+- Guardrail: Residual dictionary bases are label-free PCA summaries of automatic source-balanced ROI crops. They are useful for ranking dynamics hypotheses, not a trained deployable predictor or calibrated physics model.
 
 ## Balanced Future-Drop Direct-Video ROI Audit
 

@@ -3137,3 +3137,25 @@ Key result:
 - Within-source rank gives the same q80 front-slope feature AUC 0.656/AP 0.677, source eta2 0.078, p=0.062.
 
 Interpretation: source residualization demotes the strongest raw optical-contrast signal and leaves only modest front-radius slope evidence. That is still useful: it identifies `front_radius_q80_slope_px_per_norm_time` as a source-robust front/morphology hypothesis for QC and future modeling. It does not validate calibrated phase-boundary motion or diffusion because labels are weak, fronts are automatic, and significance is borderline.
+
+## 2026-05-22 Source-Balanced Residual Dictionary Audit
+
+Added `scripts/tier4_source_balanced_residual_dictionary_audit.py` and ran it on Isambard against the 96 source-balanced particle-region crop tensors. The audit learns label-free PCA bases on next-frame residual fields, summarizes each ROI by residual-dictionary coefficient trajectories, and compares residual descriptors with the automatic mask/front scalar proxies.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit`
+- `derived_local/source_balanced_residual_dictionary_audit`
+
+Cohort/result snapshot:
+
+- 96 ROI sequences across 48 cycles and 14 source movies.
+- PCA used 16 components on 48x48 downsampled residuals and explained 0.522 of sampled residual variance.
+- Leave-cycle future16 readout: residual dictionary AUC 0.602/AP 0.581, mask/front scalar AUC 0.593/AP 0.578, combined residual+mask/front AUC 0.573/AP 0.555.
+- Leave-source future16 readout failed/inverted: residual dictionary AUC 0.375/AP 0.448; combined residual+mask/front AUC 0.322/AP 0.396. Source transfer remains the dominant guardrail.
+- Strongest ROI-level residual dictionary future16 scalar was `resdict_pc01_mean`, AUC 0.668/AP 0.670/source eta2 0.187, close to `resdict_pc02_slope` AUC 0.668/AP 0.719/source eta2 0.199. These residual PCs are less source-structured than the mask/front contrast slope (`masked_minus_background_mean_slope`, AUC 0.690/source eta2 0.634).
+- Cycle-collapsed residual dictionary features were stronger: `resdict_pc01_mean` future16 AUC 0.769/AP 0.753/source eta2 0.421 and `resdict_pc09_slope` AUC 0.724/AP 0.755/source eta2 0.422.
+
+Interpretation:
+
+Label-free residual bases capture temporal-dynamics modes that are complementary to crop-local mask/front intensity contrast and less source dominated at the ROI scalar level. However, grouped predictive readouts do not yet transfer across held-out source movies, so the next modeling step should either residualize/domain-adapt these residual coefficients by source or explicitly train source-invariant residual dynamics objectives before making any degradation warning claim.

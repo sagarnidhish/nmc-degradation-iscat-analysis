@@ -146,6 +146,7 @@ def main() -> None:
     source_balanced_sequence_rollout = read_json(derived / "source_balanced_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
     source_balanced_mask_front = read_json(derived / "source_balanced_mask_front_sanity_audit" / "source_balanced_mask_front_summary.json")
     source_balanced_mask_front_source_residual = read_json(derived / "source_balanced_mask_front_source_residual_audit" / "source_balanced_mask_front_source_residual_summary.json")
+    source_balanced_residual_dictionary = read_json(derived / "source_balanced_residual_dictionary_audit" / "source_balanced_residual_dictionary_summary.json")
     balanced_future_sequences = read_json(derived / "balanced_future_roi_sequences" / "selected_roi_sequence_summary.json")
     balanced_future_fronts = read_json(derived / "balanced_future_threshold_robust_fronts" / "threshold_robust_front_summary.json")
     balanced_future_rollout = read_json(derived / "balanced_future_masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
@@ -404,6 +405,13 @@ def main() -> None:
     source_balanced_mask_front_top16 = next((r for r in source_balanced_mask_front_roi_tests if r.get("target") == "future_any_drop_within_16cycles"), {})
     source_balanced_mask_front_resid_best = first_summary(source_balanced_mask_front_source_residual, "future16_source_residual_best", {}) or {}
     source_balanced_mask_front_rank_best = first_summary(source_balanced_mask_front_source_residual, "future16_within_source_rank_best", {}) or {}
+    source_balanced_resdict_metrics = top_items(first_summary(source_balanced_residual_dictionary, "top_metrics", []), 24)
+    source_balanced_resdict_roi_tests = top_items(first_summary(source_balanced_residual_dictionary, "top_roi_feature_tests", []), 30)
+    source_balanced_resdict_cycle_tests = top_items(first_summary(source_balanced_residual_dictionary, "top_cycle_feature_tests", []), 20)
+    source_balanced_resdict_cycle16 = next((r for r in source_balanced_resdict_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "residual_dictionary"), {})
+    source_balanced_resdict_source16 = next((r for r in source_balanced_resdict_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "source_stem" and r.get("feature_set") == "residual_dictionary"), {})
+    source_balanced_resdict_top_roi16 = next((r for r in source_balanced_resdict_roi_tests if r.get("target") == "future_any_drop_within_16cycles" and str(r.get("feature", "")).startswith("resdict_")), {})
+    source_balanced_resdict_top_cycle16 = next((r for r in source_balanced_resdict_cycle_tests if r.get("target") == "future_any_drop_within_16cycles" and str(r.get("feature", "")).startswith("resdict_")), {})
     balanced_future_oof = top_items(first_summary(balanced_future_physics, "cycle_group_oof_metrics", []), 6)
     balanced_future_null = first_summary(balanced_future_physics, "permutation_null", {}) or {}
     balanced_future_roi_tests = top_items(first_summary(balanced_future_physics, "top_roi_feature_tests", []), 12)
@@ -823,6 +831,7 @@ def main() -> None:
         f"- Source-balanced ROI sequence export converts that manifest into {first_summary(source_balanced_sequences, 'n_roi_sequences', 0)} particle-region crop tensors across {first_summary(source_balanced_sequences, 'n_cycles', 0)} cycles and {first_summary(source_balanced_sequences, 'n_sources', 0)} sources with {first_summary(source_balanced_sequences, 'n_failed', 0)} export failures; the fast rollout audit finds strongest future16 ROI signal in {source_balanced_rollout_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_rollout_top16.get('oriented_auc'))}, while prediction-error features are highly source-structured.",
         f"- A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across {first_summary(source_balanced_mask_front, 'n_roi_sequences', 0)} ROI tensors; top future16 mask/front proxy is {source_balanced_mask_front_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_top16.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_top16.get('average_precision'))}, but source eta2 is {fmt(source_balanced_mask_front_top16.get('source_eta2'))}.",
         f"- A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is {source_balanced_mask_front_resid_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_resid_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_resid_best.get('average_precision'))}, and best within-source-rank proxy is {source_balanced_mask_front_rank_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_rank_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_rank_best.get('average_precision'))}.",
+        f"- A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC {fmt(source_balanced_resdict_cycle16.get('roc_auc'))}/AP {fmt(source_balanced_resdict_cycle16.get('average_precision'))}, but leave-source future16 drops to AUC {fmt(source_balanced_resdict_source16.get('roc_auc'))}, marking source transfer as the main failure mode.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
         f"- Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC {fmt(learned_residual_future8.get('roc_auc'))} versus PCA-video {fmt(learned_residual_pca_future8.get('roc_auc'))} and handcrafted scalar {fmt(learned_residual_hand_future8.get('roc_auc'))}; future16 learned_all remains weak at AUC {fmt(learned_residual_future16.get('roc_auc'))} versus handcrafted {fmt(learned_residual_hand_future16.get('roc_auc'))}.",
@@ -1763,6 +1772,30 @@ def main() -> None:
         f"- Best within-source-rank future16 feature: {source_balanced_mask_front_rank_best.get('feature', 'NA')} AUC {fmt(source_balanced_mask_front_rank_best.get('oriented_auc'))}, AP {fmt(source_balanced_mask_front_rank_best.get('average_precision'))}, p={fmt(source_balanced_mask_front_rank_best.get('mwu_p'))}",
         f"- Guardrail: {first_summary(source_balanced_mask_front_source_residual, 'guardrail', 'Source-balanced mask/front source-residual audit unavailable.')}",
     ]
+
+    report_lines += [
+        "",
+        "## Source-Balanced Residual Dictionary Audit",
+        "",
+        f"- ROI sequences/cycles/sources: {first_summary(source_balanced_residual_dictionary, 'n_roi_sequences', 0)} / {first_summary(source_balanced_residual_dictionary, 'n_cycles', 0)} / {first_summary(source_balanced_residual_dictionary, 'n_sources', 0)}",
+        f"- PCA components/downsample/variance explained: {first_summary(source_balanced_residual_dictionary, 'n_components', 0)} / {first_summary(source_balanced_residual_dictionary, 'downsample', 0)} / {fmt(first_summary(source_balanced_residual_dictionary, 'pca_explained_variance_ratio_sum'))}",
+        f"- Feature set sizes: {first_summary(source_balanced_residual_dictionary, 'feature_set_sizes', {})}",
+        f"- Residual dictionary leave-cycle future16: AUC {fmt(source_balanced_resdict_cycle16.get('roc_auc'))}, AP {fmt(source_balanced_resdict_cycle16.get('average_precision'))}; leave-source future16: AUC {fmt(source_balanced_resdict_source16.get('roc_auc'))}, AP {fmt(source_balanced_resdict_source16.get('average_precision'))}",
+        f"- Top residual ROI/cycle future16 scalar: {source_balanced_resdict_top_roi16.get('feature', 'NA')} AUC {fmt(source_balanced_resdict_top_roi16.get('oriented_auc'))}, eta2 {fmt(source_balanced_resdict_top_roi16.get('source_eta2'))} / {source_balanced_resdict_top_cycle16.get('feature', 'NA')} AUC {fmt(source_balanced_resdict_top_cycle16.get('oriented_auc'))}, eta2 {fmt(source_balanced_resdict_top_cycle16.get('source_eta2'))}",
+    ]
+    for row in source_balanced_resdict_metrics[:10]:
+        report_lines.append(
+            f"- Source-balanced residual dictionary metric {row.get('group_col')} {row.get('target')} {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, n={fmt(row.get('n_eval'), 0)}"
+        )
+    for row in source_balanced_resdict_roi_tests[:8]:
+        report_lines.append(
+            f"- Source-balanced residual dictionary ROI feature {row.get('target')} {row.get('feature')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, source eta2 {fmt(row.get('source_eta2'))}"
+        )
+    for row in source_balanced_resdict_cycle_tests[:6]:
+        report_lines.append(
+            f"- Source-balanced residual dictionary cycle feature {row.get('target')} {row.get('feature')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, source eta2 {fmt(row.get('source_eta2'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_residual_dictionary, 'guardrail', 'Source-balanced residual dictionary audit unavailable.')}")
 
     report_lines += [
         "",
@@ -2787,6 +2820,20 @@ def main() -> None:
             "top_cycle_feature_tests": source_balanced_mask_front_cycle_tests,
             "source_summary": source_balanced_mask_front_sources,
             "guardrail": first_summary(source_balanced_mask_front, "guardrail"),
+        },
+        "source_balanced_residual_dictionary_audit": {
+            "n_roi_sequences": first_summary(source_balanced_residual_dictionary, "n_roi_sequences"),
+            "n_cycles": first_summary(source_balanced_residual_dictionary, "n_cycles"),
+            "n_sources": first_summary(source_balanced_residual_dictionary, "n_sources"),
+            "future8_positive_sequences": first_summary(source_balanced_residual_dictionary, "future8_positive_sequences"),
+            "future16_positive_sequences": first_summary(source_balanced_residual_dictionary, "future16_positive_sequences"),
+            "n_components": first_summary(source_balanced_residual_dictionary, "n_components"),
+            "pca_explained_variance_ratio_sum": first_summary(source_balanced_residual_dictionary, "pca_explained_variance_ratio_sum"),
+            "feature_set_sizes": first_summary(source_balanced_residual_dictionary, "feature_set_sizes", {}),
+            "top_metrics": source_balanced_resdict_metrics,
+            "top_roi_feature_tests": source_balanced_resdict_roi_tests,
+            "top_cycle_feature_tests": source_balanced_resdict_cycle_tests,
+            "guardrail": first_summary(source_balanced_residual_dictionary, "guardrail"),
         },
         "balanced_future_roi_physics_audit": {
             "n_cycles_sampled": first_summary(balanced_future_reconstruction, "n_cycles_sampled"),
