@@ -124,7 +124,6 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Exact-feature mechanism consistency audit is a useful falsification check: exact_optical_loss_score predicts future16 with AUC 0.853 but has source eta2 0.513; the primary particle-vs-context descriptor has weak radius-slope linkage after source residualization (rho -0.047).
 - Signed optical-loss mechanism audit converts the pattern into interpretable axes: combined_loss_mechanism_axis future16 AUC is 0.989 but source eta2 is 0.556; leave-source all-axis AUC is 0.927, while optical-only AUC is 0.732.
 - Invariant sparse rule discovery finds review-prioritization rules rather than a standalone predictor: best leave-source rule low(particle_std_diff_positive_fraction) covers 27/72 rows with precision 0.889, lift 1.123, and source-positive hits in 6 sources.
-- Signed optical-loss mechanism audit makes the contraction hypothesis explicit: combined loss axis future16 AUC 0.989, signed optical-loss axis AUC 0.815, and best leave-source axis model all_loss_mechanism_axes reaches AUC 0.927.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
@@ -1411,26 +1410,24 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 ## Signed Optical-Loss Mechanism Audit
 
 - Rows/eval rows/cycles/sources: 172 / 72 / 24 / 9
-- Strongest future16 axis: combined_loss_mechanism_axis AUC 0.989, AP 0.997, p=6.795e-09, source eta2 0.556
-- Signed optical-loss axis alone: AUC 0.815, AP 0.940, source eta2 0.684
-- Best leave-source future16 axis model: all_loss_mechanism_axes AUC 0.927, AP 0.984
-- Best leave-source future8 axis model: optical_plus_front AUC 0.797, AP 0.694
-- Signed axis combined_loss_mechanism_axis: future16 AUC 0.989, AP 0.997, median pos-neg 0.575, eta2 0.556
-- Signed axis echem_degraded_state_axis: future16 AUC 0.821, AP 0.939, median pos-neg 0.849, eta2 0.055
-- Signed axis signed_optical_loss_axis: future16 AUC 0.815, AP 0.940, median pos-neg 0.809, eta2 0.684
-- Signed axis rollout_difficulty_axis: future16 AUC 0.632, AP 0.904, median pos-neg 0.204, eta2 0.147
-- Signed axis front_contraction_axis: future16 AUC 0.558, AP 0.862, median pos-neg 0.039, eta2 0.292
-- Axis model future_any_drop_within_16cycles all_loss_mechanism_axes: AUC 0.927, AP 0.984, rho 0.601
-- Axis model future_any_drop_within_16cycles echem_degraded_only: AUC 0.789, AP 0.937, rho 0.408
-- Axis model future_any_drop_within_16cycles optical_loss_only: AUC 0.732, AP 0.895, rho 0.327
-- Axis model future_any_drop_within_16cycles optical_plus_front: AUC 0.706, AP 0.905, rho 0.290
-- Axis model future_any_drop_within_16cycles optical_plus_rollout: AUC 0.568, AP 0.833, rho 0.096
-- Axis model future_any_drop_within_16cycles front_contraction_only: AUC 0.389, AP 0.802, rho -0.156
-- Axis model future_any_drop_within_16cycles rollout_difficulty_only: AUC 0.137, AP 0.686, rho -0.511
-- Axis model future_any_drop_within_8cycles optical_plus_front: AUC 0.797, AP 0.694, rho 0.515
-- Mechanism mode rollout_difficulty_dominant: rows 3, future16 rate 1.000, future8 rate 1.000, median residual signature 40.972
-- Mechanism mode echem_degraded_state_dominant: rows 39, future16 rate 0.795, future8 rate 0.718, median residual signature 0.558
-- Mechanism mode front_contraction_dominant: rows 30, future16 rate 0.767, future8 rate 0.167, median residual signature 0.487
+- Axis inputs: {'echem_degraded_state_axis': ['capacity_fraction_of_first', 'shape_charge_mAh_neg_abs', 'shape_V_q10', 'shape_V_q05', 'neg_dq_abs_lowV_frac', 'dqdv_integral_asymmetry', 'cycle_state_pc3', 'cycle_state_pc4'], 'front_contraction_axis': ['radius2_slope_median_px2_per_s', 'radius2_slope_positive_fraction', 'diffusion_proxy_median_um2_per_s', 'phase_slope_positive_fraction', 'threshold_robust_diffusion_score'], 'rollout_difficulty_axis': ['transferred_masked_residual_signature', 'persistence_particle_mse_fraction_of_full_mean', 'low_rank_dmd_particle_mse_fraction_of_full_mean', 'velocity_particle_mse_fraction_of_full_mean', 'object_mean_abs_z'], 'signed_optical_loss_axis': ['particle_vs_context_mean_diff_positive_fraction', 'particle_std_diff_positive_fraction', 'particle_mean_diff_positive_fraction', 'particle_gradient_diff_positive_fraction', 'roi_norm_mean_delta_last_minus_first', 'particle_prior_area_fraction']}
+- Future16 combined/optical/echem axis AUCs: 0.989 / 0.815 / 0.821; source eta2 combined/optical 0.556 / 0.684
+- Best future16 leave-source axis model: all_loss_mechanism_axes AUC 0.927, AP 0.984, rho 0.601
+- Best future8 leave-source axis model: optical_plus_front AUC 0.797, AP 0.694, rho 0.515
+- Signed-loss axis future_any_drop_within_16cycles combined_loss_mechanism_axis: AUC 0.989, median positive-negative 0.575, p=6.795e-09, eta2 0.556
+- Signed-loss axis future_any_drop_within_16cycles echem_degraded_state_axis: AUC 0.821, median positive-negative 0.849, p=1.434e-04, eta2 0.055
+- Signed-loss axis future_any_drop_within_16cycles signed_optical_loss_axis: AUC 0.815, median positive-negative 0.809, p=1.915e-04, eta2 0.684
+- Signed-loss axis future_any_drop_within_16cycles rollout_difficulty_axis: AUC 0.632, median positive-negative 0.204, p=0.120, eta2 0.147
+- Signed-loss axis future_any_drop_within_16cycles front_contraction_axis: AUC 0.558, median positive-negative 0.039, p=0.497, eta2 0.292
+- Mechanism mode rollout_difficulty_dominant: n=3, cycles=1, sources=1, future8/future16 1.000/1.000, median residual 40.972
+- Mechanism mode echem_degraded_state_dominant: n=39, cycles=14, sources=6, future8/future16 0.718/0.795, median residual 0.558
+- Mechanism mode front_contraction_dominant: n=30, cycles=11, sources=7, future8/future16 0.167/0.767, median residual 0.487
+- Top signed-loss candidate cycle150_rank13_obj3: cycle 150, source 17_c2_x10_HighHighCOV_150723, combined axis 1.174, future8/future16 1/1
+- Top signed-loss candidate cycle150_rank13_obj2: cycle 150, source 17_c2_x10_HighHighCOV_150723, combined axis 1.136, future8/future16 1/1
+- Top signed-loss candidate cycle150_rank13_obj1: cycle 150, source 17_c2_x10_HighHighCOV_150723, combined axis 1.102, future8/future16 1/1
+- Top signed-loss candidate cycle154_rank16_obj2: cycle 154, source 17_c2_x10_HighHighCOV_150723, combined axis 0.527, future8/future16 1/1
+- Top signed-loss candidate cycle104_rank6_obj2: cycle 104, source 11_c2_x10_050723, combined axis 0.462, future8/future16 0/1
+- Top signed-loss candidate cycle146_rank1_obj3: cycle 146, source 17_c2_x10_HighHighCOV_150723, combined axis 0.457, future8/future16 0/1
 - Guardrail: Signed optical-loss axes are computed from automatic ROI/video/echem descriptors and weak future labels. They support mechanism triage for optical loss/contraction versus front expansion, but they do not validate manual particle identity, front masks, calibrated diffusion, or deployable warnings.
 
 ## Invariant Physics Rule Discovery
@@ -1456,29 +1453,6 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Oriented feature low(pos_dq_abs_total_mAh): AUC 0.857, AP 0.963, p=1.841e-04, source eta2 0.858
 - Oriented feature low(shape_V_q10): AUC 0.839, AP 0.961, p=3.818e-04, source eta2 0.196
 - Guardrail: Rules use automatic ROI masks, weak future labels, and data-derived thresholds under leave-source evaluation. They are sparse review-prioritization hypotheses only; source/outcome imbalance, acquisition coupling, missing manual QC, and uncalibrated diffusion/front proxies remain hard claim limits.
-
-## Signed Optical-Loss Mechanism Audit
-
-- Rows/eval rows/cycles/sources: 172 / 72 / 24 / 9
-- Axis inputs: {'echem_degraded_state_axis': ['capacity_fraction_of_first', 'shape_charge_mAh_neg_abs', 'shape_V_q10', 'shape_V_q05', 'neg_dq_abs_lowV_frac', 'dqdv_integral_asymmetry', 'cycle_state_pc3', 'cycle_state_pc4'], 'front_contraction_axis': ['radius2_slope_median_px2_per_s', 'radius2_slope_positive_fraction', 'diffusion_proxy_median_um2_per_s', 'phase_slope_positive_fraction', 'threshold_robust_diffusion_score'], 'rollout_difficulty_axis': ['transferred_masked_residual_signature', 'persistence_particle_mse_fraction_of_full_mean', 'low_rank_dmd_particle_mse_fraction_of_full_mean', 'velocity_particle_mse_fraction_of_full_mean', 'object_mean_abs_z'], 'signed_optical_loss_axis': ['particle_vs_context_mean_diff_positive_fraction', 'particle_std_diff_positive_fraction', 'particle_mean_diff_positive_fraction', 'particle_gradient_diff_positive_fraction', 'roi_norm_mean_delta_last_minus_first', 'particle_prior_area_fraction']}
-- Future16 combined/optical/echem axis AUCs: 0.989 / 0.815 / 0.821
-- Best future16 leave-source axis model: all_loss_mechanism_axes AUC 0.927, AP 0.984, rho 0.601
-- Best future8 leave-source axis model: optical_plus_front AUC 0.797, AP 0.694, rho 0.515
-- Signed-loss axis future_any_drop_within_16cycles combined_loss_mechanism_axis: AUC 0.989, median positive-negative 0.575, p=6.795e-09, eta2 0.556
-- Signed-loss axis future_any_drop_within_16cycles echem_degraded_state_axis: AUC 0.821, median positive-negative 0.849, p=1.434e-04, eta2 0.055
-- Signed-loss axis future_any_drop_within_16cycles signed_optical_loss_axis: AUC 0.815, median positive-negative 0.809, p=1.915e-04, eta2 0.684
-- Signed-loss axis future_any_drop_within_16cycles rollout_difficulty_axis: AUC 0.632, median positive-negative 0.204, p=0.120, eta2 0.147
-- Signed-loss axis future_any_drop_within_16cycles front_contraction_axis: AUC 0.558, median positive-negative 0.039, p=0.497, eta2 0.292
-- Mechanism mode rollout_difficulty_dominant: n=3, cycles=1, sources=1, future8/future16 1.000/1.000, median residual 40.972
-- Mechanism mode echem_degraded_state_dominant: n=39, cycles=14, sources=6, future8/future16 0.718/0.795, median residual 0.558
-- Mechanism mode front_contraction_dominant: n=30, cycles=11, sources=7, future8/future16 0.167/0.767, median residual 0.487
-- Top signed-loss candidate cycle150_rank13_obj3: cycle 150, source 17_c2_x10_HighHighCOV_150723, combined axis 1.174, future8/future16 1/1
-- Top signed-loss candidate cycle150_rank13_obj2: cycle 150, source 17_c2_x10_HighHighCOV_150723, combined axis 1.136, future8/future16 1/1
-- Top signed-loss candidate cycle150_rank13_obj1: cycle 150, source 17_c2_x10_HighHighCOV_150723, combined axis 1.102, future8/future16 1/1
-- Top signed-loss candidate cycle154_rank16_obj2: cycle 154, source 17_c2_x10_HighHighCOV_150723, combined axis 0.527, future8/future16 1/1
-- Top signed-loss candidate cycle104_rank6_obj2: cycle 104, source 11_c2_x10_050723, combined axis 0.462, future8/future16 0/1
-- Top signed-loss candidate cycle146_rank1_obj3: cycle 146, source 17_c2_x10_HighHighCOV_150723, combined axis 0.457, future8/future16 0/1
-- Guardrail: Signed optical-loss axes are computed from automatic ROI/video/echem descriptors and weak future labels. They support mechanism triage for optical loss/contraction versus front expansion, but they do not validate manual particle identity, front masks, calibrated diffusion, or deployable warnings.
 
 ## Agentic Current Hypothesis Tournament
 
