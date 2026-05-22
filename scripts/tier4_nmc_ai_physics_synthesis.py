@@ -105,6 +105,7 @@ def main() -> None:
     calibration_provenance = read_json(derived / "calibration_provenance_evidence_audit" / "calibration_provenance_summary.json")
     calibration_claim_risk = read_json(derived / "calibration_claim_risk_register" / "calibration_claim_risk_summary.json")
     apparent_diffusion_calibration = read_json(derived / "apparent_diffusion_calibration_bounds" / "apparent_diffusion_calibration_bounds_summary.json")
+    hdf5_timebase = read_json(derived / "hdf5_timebase_provenance_audit" / "hdf5_timebase_provenance_summary.json")
     diffusion_physics_consistency = read_json(derived / "diffusion_physics_consistency_audit" / "diffusion_physics_consistency_summary.json")
     diffusion_claim_readiness = read_json(derived / "diffusion_claim_readiness_audit" / "diffusion_claim_readiness_summary.json")
     all_cycle_coverage = read_json(derived / "all_cycle_dataset_coverage_atlas" / "all_cycle_dataset_coverage_summary.json")
@@ -935,6 +936,10 @@ def main() -> None:
     apparent_diffusion_q70_tests = top_items(first_summary(apparent_diffusion_calibration, "future8_feature_tests_q70", []), 10)
     apparent_diffusion_corr = top_items(first_summary(apparent_diffusion_calibration, "calibration_correlations", []), 8)
     apparent_diffusion_q70_test = apparent_diffusion_q70_tests[0] if apparent_diffusion_q70_tests else {}
+    hdf5_timebase_scenarios = top_items(first_summary(hdf5_timebase, "scenario_summary", []), 8)
+    hdf5_timebase_correlations = top_items(first_summary(hdf5_timebase, "top_timebase_correlations", []), 8)
+    hdf5_timebase_pause_sources = top_items(first_summary(hdf5_timebase, "top_pause_heavy_sources", []), 8)
+    hdf5_timebase_strict_scenario = next((r for r in hdf5_timebase_scenarios if r.get("scenario") == "strict_source_and_roi_aligned"), {})
     diffusion_physics_gates = top_items(first_summary(diffusion_physics_consistency, "gate_counts", []), 12)
     diffusion_physics_tests = top_items(first_summary(diffusion_physics_consistency, "top_feature_tests", []), 12)
     diffusion_physics_corr = top_items(first_summary(diffusion_physics_consistency, "top_correlations", []), 10)
@@ -1091,6 +1096,7 @@ def main() -> None:
         f"- Calibration metadata HDF5/camera-timing files: {first_summary(calibration_metadata, 'n_h5_files', 0)} / {first_summary(calibration_metadata, 'n_h5_with_camera_timing', 0)}",
         f"- Calibration provenance status: {first_summary(calibration_provenance, 'provenance_status', 'missing')} with {first_summary(calibration_provenance, 'n_near_96nm_px_statements', 0)} near-96 nm/px statements",
         f"- Calibration claim-risk families/source tables: {first_summary(calibration_claim_risk, 'n_claim_families', 0)} / {first_summary(calibration_claim_risk, 'n_source_tables_present', 0)}",
+        f"- HDF5 timebase q70 rows strict/pause-heavy sources: {first_summary(hdf5_timebase, 'n_q70_roi_rows', 0)} rows, {first_summary(hdf5_timebase, 'n_strict_timebase_sources', 0)} strict sources, {first_summary(hdf5_timebase, 'n_pause_heavy_sources', 0)} pause-heavy sources",
         f"- Particle trace cycle rows/drop cycles: {first_summary(particle_trace, 'n_cycle_rows', 0)} / {first_summary(particle_trace, 'n_any_drop_cycles', 0)}",
         f"- Particle precursor event/control anchors: {first_summary(particle_precursor, 'n_event_anchors', 0)} / {first_summary(particle_precursor, 'n_matched_control_anchors', 0)}",
         f"- ROI trace-fusion rows/predictors: {first_summary(roi_trace_fusion, 'n_roi_rows', 0)} / {first_summary(roi_trace_fusion, 'n_predictors', 0)}",
@@ -1141,6 +1147,7 @@ def main() -> None:
         f"- Calibration provenance evidence audit scans {first_summary(calibration_provenance, 'n_h5_files_scanned', 0)} raw HDF5 files and {first_summary(calibration_provenance, 'n_files_inventoried', 0)} total provenance files; status is `{first_summary(calibration_provenance, 'provenance_status', 'missing')}` with highest near-scale evidence `{first_summary(calibration_provenance, 'highest_scale_evidence_strength', 'none')}`, so 96 nm/px remains supported by slides/project text rather than primary raw microscope metadata.",
         f"- Calibration claim-risk register audits {first_summary(calibration_claim_risk, 'n_claim_families', 0)} front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.",
         f"- Apparent diffusion calibration-bounds audit maps all {first_summary(apparent_diffusion_calibration, 'n_roi_with_h5_timing', 0)} balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is {fmt(first_summary(apparent_diffusion_calibration, 'median_roi_elapsed_to_h5_median_ratio'))}, q70 median apparent D at 96 nm/px is {fmt(first_summary(apparent_diffusion_calibration, 'median_q70_apparent_D_h5median_um2_per_s'))} um2/s, and q70 future8 separation is non-significant (top p={fmt(apparent_diffusion_q70_test.get('mannwhitney_p'))}).",
+        f"- HDF5 timebase provenance audit shows all q70 ROI spans align to median HDF5 timing ({first_summary(hdf5_timebase, 'n_roi_elapsed_h5_aligned', 0)}/{first_summary(hdf5_timebase, 'n_q70_roi_rows', 0)}), but {first_summary(hdf5_timebase, 'n_pause_heavy_sources', 0)} of {first_summary(hdf5_timebase, 'n_sources', 0)} sources have pause-heavy camera timing; in the strict source+ROI subset, q70 future8 apparent-D contrast has p={fmt(hdf5_timebase_strict_scenario.get('future8_mannwhitney_p'))} and median positive-negative {fmt(hdf5_timebase_strict_scenario.get('future8_median_positive_minus_negative'))}.",
         f"- Diffusion physics-consistency audit collapses {first_summary(diffusion_physics_consistency, 'n_threshold_rows', 0)} threshold rows to {first_summary(diffusion_physics_consistency, 'n_roi', 0)} ROI gates: {first_summary(diffusion_physics_consistency, 'n_automatic_diffusion_physics_consistent', 0)} automatic ROI passes the internal physics gate and {first_summary(diffusion_physics_consistency, 'n_publication_ready_diffusion_candidates', 0)} pass publication-ready diffusion gates; median radius2 fit R2 is only {fmt(first_summary(diffusion_physics_consistency, 'median_radius2_fit_r2'))}.",
         f"- Cross-modal consensus ranks cycles {cross_modal_sync_cycle_labels} as synchronized multimodal degradation candidates; the top cycle has {fmt(cross_modal_top_cycle.get('n_modal_votes'), 0)} modal votes and consensus score {fmt(cross_modal_top_cycle.get('cross_modal_consensus_score'))}, while the score remains an audit statistic rather than a calibrated probability.",
         f"- Echem/optical breakpoint audit tests {first_summary(echem_optical_breakpoint, 'n_features_tested', 0)} cycle-level echem/trace features around synchronized cycles {first_summary(echem_optical_breakpoint, 'event_cycles', [])}; strongest event-centered shift is {echem_breakpoint_top.get('feature', 'NA')} over +/-{fmt(echem_breakpoint_top.get('window_cycles'), 0)} cycles (scaled shift {fmt(echem_breakpoint_top.get('event_median_scaled_shift'))}, bootstrap p={fmt(echem_breakpoint_top.get('bootstrap_p_abs_vs_control_centers'))}).",
@@ -1507,6 +1514,27 @@ def main() -> None:
             f"- Calibration-bound link {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(apparent_diffusion_calibration, 'guardrail', 'Apparent diffusion calibration-bounds audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## HDF5 Timebase Provenance Audit",
+        "",
+        f"- Timebase status: {first_summary(hdf5_timebase, 'timebase_status', 'missing')}",
+        f"- q70 ROI rows / sources: {first_summary(hdf5_timebase, 'n_q70_roi_rows', 0)} / {first_summary(hdf5_timebase, 'n_sources', 0)}",
+        f"- Strict / pause-heavy sources: {first_summary(hdf5_timebase, 'n_strict_timebase_sources', 0)} / {first_summary(hdf5_timebase, 'n_pause_heavy_sources', 0)}",
+        f"- ROI-HDF5 elapsed-aligned rows: {first_summary(hdf5_timebase, 'n_roi_elapsed_h5_aligned', 0)} / {first_summary(hdf5_timebase, 'n_q70_roi_rows', 0)}",
+        f"- Median dt / ROI-HDF5 elapsed ratio / max source dt max-median ratio: {fmt(first_summary(hdf5_timebase, 'median_dt_median_s'))}s / {fmt(first_summary(hdf5_timebase, 'median_roi_elapsed_to_h5_ratio'))} / {fmt(first_summary(hdf5_timebase, 'max_source_dt_max_to_median_ratio'))}",
+        f"- Pause-heavy sources: {', '.join(first_summary(hdf5_timebase, 'pause_heavy_sources', []) or []) or 'none'}",
+    ]
+    for row in hdf5_timebase_scenarios:
+        report_lines.append(
+            f"- Timebase scenario {row.get('scenario')}: n={fmt(row.get('n_roi'), 0)}, sources={fmt(row.get('n_sources'), 0)}, median D {fmt(row.get('median_D_um2_per_s'))}, future8 median positive-negative {fmt(row.get('future8_median_positive_minus_negative'))}, p={fmt(row.get('future8_mannwhitney_p'))}"
+        )
+    for row in hdf5_timebase_correlations[:4]:
+        report_lines.append(
+            f"- Timebase correlation {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(hdf5_timebase, 'guardrail', 'HDF5 timebase provenance audit unavailable.')}")
 
     report_lines += [
         "",
@@ -5170,6 +5198,24 @@ def main() -> None:
             "future8_feature_tests_q70": apparent_diffusion_q70_tests,
             "calibration_correlations": apparent_diffusion_corr,
             "guardrail": first_summary(apparent_diffusion_calibration, "guardrail"),
+        },
+        "hdf5_timebase_provenance_audit": {
+            "timebase_status": first_summary(hdf5_timebase, "timebase_status"),
+            "n_h5_files": first_summary(hdf5_timebase, "n_h5_files"),
+            "n_q70_roi_rows": first_summary(hdf5_timebase, "n_q70_roi_rows"),
+            "n_sources": first_summary(hdf5_timebase, "n_sources"),
+            "n_strict_timebase_sources": first_summary(hdf5_timebase, "n_strict_timebase_sources"),
+            "n_pause_heavy_sources": first_summary(hdf5_timebase, "n_pause_heavy_sources"),
+            "n_roi_elapsed_h5_aligned": first_summary(hdf5_timebase, "n_roi_elapsed_h5_aligned"),
+            "n_q70_rows_passing_full_timebase_gate": first_summary(hdf5_timebase, "n_q70_rows_passing_full_timebase_gate"),
+            "median_dt_median_s": first_summary(hdf5_timebase, "median_dt_median_s"),
+            "median_roi_elapsed_to_h5_ratio": first_summary(hdf5_timebase, "median_roi_elapsed_to_h5_ratio"),
+            "max_source_dt_max_to_median_ratio": first_summary(hdf5_timebase, "max_source_dt_max_to_median_ratio"),
+            "pause_heavy_sources": first_summary(hdf5_timebase, "pause_heavy_sources", []),
+            "scenario_summary": hdf5_timebase_scenarios,
+            "top_timebase_correlations": hdf5_timebase_correlations,
+            "top_pause_heavy_sources": hdf5_timebase_pause_sources,
+            "guardrail": first_summary(hdf5_timebase, "guardrail"),
         },
         "diffusion_physics_consistency_audit": {
             "n_roi": first_summary(diffusion_physics_consistency, "n_roi"),

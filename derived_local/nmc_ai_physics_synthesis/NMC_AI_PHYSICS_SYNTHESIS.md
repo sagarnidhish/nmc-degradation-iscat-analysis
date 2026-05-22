@@ -22,6 +22,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Calibration metadata HDF5/camera-timing files: 33 / 32
 - Calibration provenance status: slide_or_project_text_supported_but_raw_metadata_blocked with 21 near-96 nm/px statements
 - Calibration claim-risk families/source tables: 11 / 11
+- HDF5 timebase q70 rows strict/pause-heavy sources: 72 rows, 5 strict sources, 4 pause-heavy sources
 - Particle trace cycle rows/drop cycles: 89 / 4
 - Particle precursor event/control anchors: 4 / 24
 - ROI trace-fusion rows/predictors: 52 / 100
@@ -72,6 +73,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Calibration provenance evidence audit scans 33 raw HDF5 files and 61 total provenance files; status is `slide_or_project_text_supported_but_raw_metadata_blocked` with highest near-scale evidence `slide_text`, so 96 nm/px remains supported by slides/project text rather than primary raw microscope metadata.
 - Calibration claim-risk register audits 11 front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.
 - Apparent diffusion calibration-bounds audit maps all 72 balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is 1.002, q70 median apparent D at 96 nm/px is 4.322e-08 um2/s, and q70 future8 separation is non-significant (top p=0.175).
+- HDF5 timebase provenance audit shows all q70 ROI spans align to median HDF5 timing (72/72), but 4 of 9 sources have pause-heavy camera timing; in the strict source+ROI subset, q70 future8 apparent-D contrast has p=0.840 and median positive-negative 1.159e-07.
 - Diffusion physics-consistency audit collapses 504 threshold rows to 72 ROI gates: 1 automatic ROI passes the internal physics gate and 0 pass publication-ready diffusion gates; median radius2 fit R2 is only 0.055.
 - Cross-modal consensus ranks cycles 86, 116 as synchronized multimodal degradation candidates; the top cycle has 4 modal votes and consensus score 0.813, while the score remains an audit statistic rather than a calibrated probability.
 - Echem/optical breakpoint audit tests 84 cycle-level echem/trace features around synchronized cycles [86.0, 116.0]; strongest event-centered shift is state_step_norm_delta_prev over +/-4 cycles (scaled shift -2.263, bootstrap p=0.002).
@@ -435,6 +437,25 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Calibration-bound link roi_elapsed_to_h5_median_ratio vs validation_score_recon: rho=0.222, p=5.050e-07
 - Calibration-bound link apparent_D_h5median_abs_um2_per_s vs transferred_masked_residual_signature: rho=-0.153, p=5.768e-04
 - Guardrail: Apparent diffusion values are recalibrated from HDF5 camera timing and slide-derived pixel-size assumptions. No HDF5 pixel-size attribute was found, and the values remain optical-front proxies, not validated material diffusion coefficients.
+
+## HDF5 Timebase Provenance Audit
+
+- Timebase status: mixed_timebase_pause_heavy_sources_present
+- q70 ROI rows / sources: 72 / 9
+- Strict / pause-heavy sources: 5 / 4
+- ROI-HDF5 elapsed-aligned rows: 72 / 72
+- Median dt / ROI-HDF5 elapsed ratio / max source dt max-median ratio: 10.039s / 1.002 / 13.783
+- Pause-heavy sources: 5_c2_x10_260623, 17_c2_x10_HighHighCOV_150723, 15_c2_x5_HighCOV_120723, 16_c2_x10_HighHighCOV_130723
+- Timebase scenario all_q70_rows: n=72, sources=9, median D 4.320e-08, future8 median positive-negative -6.334e-07, p=0.175
+- Timebase scenario strict_h5_timebase_sources: n=24, sources=5, median D 9.620e-08, future8 median positive-negative 1.159e-07, p=0.840
+- Timebase scenario pause_heavy_sources: n=48, sources=4, median D 4.320e-08, future8 median positive-negative -1.714e-06, p=0.078
+- Timebase scenario roi_elapsed_h5_aligned: n=72, sources=9, median D 4.320e-08, future8 median positive-negative -6.334e-07, p=0.175
+- Timebase scenario strict_source_and_roi_aligned: n=24, sources=5, median D 9.620e-08, future8 median positive-negative 1.159e-07, p=0.840
+- Timebase correlation h5_dt_max_to_median_ratio vs transferred_masked_residual_signature: rho=0.728, p=0.000, n=72
+- Timebase correlation h5_dt_max_to_median_ratio vs cycleNo: rho=0.364, p=0.002, n=72
+- Timebase correlation roi_elapsed_to_h5_median_ratio vs validation_score_recon: rho=0.222, p=0.061, n=72
+- Timebase correlation roi_elapsed_to_h5_median_ratio vs transferred_masked_residual_signature: rho=0.141, p=0.238, n=72
+- Guardrail: This audit validates timing provenance only. It does not validate spatial calibration, manual front identity, q70 confidence intervals, or material diffusion coefficients.
 
 ## Diffusion Physics Consistency Audit
 

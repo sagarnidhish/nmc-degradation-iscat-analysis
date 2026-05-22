@@ -4656,3 +4656,35 @@ Results:
 Interpretation: the 96 nm/px scale is plausible and internally compatible with the slide FoV and raw movie dimensions, but it is not yet proven from raw microscope metadata. Calibrated diffusion constants remain blocked by spatial provenance, manual front identity/QC, timing stability, and control-balanced diffusion sanity. Current diffusion-like outputs should continue to be described as apparent optical-front proxies.
 
 Guardrail: this audit strengthens the documentation of the calibration blocker; it does not clear the blocker or create publication-ready diffusion coefficients.
+
+## 2026-05-22 HDF5 Timebase Provenance Audit
+
+Added `scripts/tier4_hdf5_timebase_provenance_audit.py` and ran it on Isambard to separate HDF5 timing provenance from the spatial-calibration and manual-front-QC blockers. The audit uses the apparent-diffusion calibration table, HDF5 metadata audit, and diffusion physics-consistency scores to check whether q70 ROI frame spans align with source HDF5 camera timing, and whether diffusion-like future8 contrasts survive after excluding pause-heavy source files.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/hdf5_timebase_provenance_audit`
+- `derived_local/hdf5_timebase_provenance_audit`
+- `hdf5_timebase_source_summary.csv`
+- `hdf5_timebase_roi_q70_table.csv`
+- `hdf5_timebase_h5_file_table.csv`
+- `hdf5_timebase_scenario_table.csv`
+- `hdf5_timebase_correlations.csv`
+- `hdf5_timebase_provenance_summary.json`
+- `README.md`
+
+Results:
+
+- The q70 audit covers 72 ROI rows across 9 sources and 33 HDF5 files.
+- All 72 q70 ROI rows align with HDF5 median frame timing within the 2% ROI/HDF5 elapsed-ratio tolerance; median ROI/HDF5 elapsed ratio is 1.0016.
+- Median frame spacing is approximately 10.04 s.
+- Only 5/9 sources pass the strict source timebase gate (`dt_max / dt_median <= 1.25`).
+- Four sources are pause-heavy, with maximum frame gaps roughly 13.7x the median frame interval: `5_c2_x10_260623`, `17_c2_x10_HighHighCOV_150723`, `15_c2_x5_HighCOV_120723`, and `16_c2_x10_HighHighCOV_130723`.
+- The all-q70 future8 apparent-D contrast remains non-significant: median positive-minus-negative -6.33e-07 um2/s, p=0.175.
+- In the strict source-and-ROI-aligned subset, the future8 q70 apparent-D contrast disappears: median positive-minus-negative 1.16e-07 um2/s, p=0.840.
+- Pause-heavy source membership is strongly correlated with the transferred masked residual signature (`h5_dt_max_to_median_ratio` vs residual signature rho 0.728), so timing/acquisition structure is itself a modeling covariate and guardrail.
+- The synthesis report now includes a dedicated HDF5 timebase provenance section and carries the timing status into the machine-readable summary.
+
+Interpretation: ROI elapsed windows are internally aligned to HDF5 median frame timing, so per-second apparent optical-front proxies can be computed as median-timebase summaries. However, pause-heavy source files create a real timebase guardrail, and the strict-timebase subset does not preserve q70 apparent-D future8 separation. Calibrated diffusion wording remains blocked; source timing pauses should be excluded, modeled, or explicitly sensitivity-tested before any per-second diffusion-like result is promoted.
+
+Guardrail: this audit validates timing provenance only. It does not validate spatial calibration, manual front identity, q70 confidence intervals, or material diffusion coefficients.
