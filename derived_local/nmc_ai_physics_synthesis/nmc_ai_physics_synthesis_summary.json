@@ -34198,6 +34198,89 @@
       }
     ]
   },
+  "post_remeasurement_diffusion_gate_audit": {
+    "candidate_q70_blocker_removed": true,
+    "claim_readiness_overall_status": "not_ready_for_calibrated_diffusion_claim",
+    "claim_readiness_publication_ready_candidates": 0,
+    "guardrail": "This audit propagates a target-specific automatic q70 CI update through existing readiness gates. It does not rerun global diffusion readiness, accept manual labels, verify raw calibration metadata, or create publication-ready diffusion coefficients.",
+    "outputs": {
+      "candidate_update": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_candidate_update.csv",
+      "gate_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_gate_table.csv",
+      "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/README.md",
+      "scenario_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_scenario_table.csv",
+      "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_gate_summary.json"
+    },
+    "overall_status": "diffusion_claim_still_blocked_after_target_q70_update",
+    "post_candidate_blockers": [
+      "publication-ready gate"
+    ],
+    "pre_candidate_blockers": [
+      "q70 positive CI",
+      "publication-ready gate"
+    ],
+    "publication_ready_after_remeasurement": false,
+    "remaining_publication_blockers": [
+      "manual front/QC labels not accepted",
+      "raw spatial calibration metadata still not located in HDF5/microscope metadata",
+      "control-balanced diffusion sanity remains negative",
+      "event/control diffusion separability remains weak",
+      "publication-ready diffusion gate has not been rerun with accepted labels",
+      "global per-ROI timing-stability gate remains failed"
+    ],
+    "scenario_table": [
+      {
+        "candidate_q70_status": "blocked",
+        "publication_ready": false,
+        "remaining_candidate_blockers": "q70 positive CI; publication-ready gate",
+        "remaining_global_blockers": "HDF5 spatial calibration metadata present; Per-ROI HDF5 timing stability; Radius2 linear-fit quality; q70 positive confidence interval; Automatic/publication diffusion candidates; Manual QC accepted labels; Control-balanced diffusion sanity candidates; Event/control diffusion separability",
+        "scenario": "pre_remeasurement_readiness"
+      },
+      {
+        "candidate_q70_status": "passed_for_target_packet",
+        "publication_ready": false,
+        "remaining_candidate_blockers": "publication-ready gate",
+        "remaining_global_blockers": "HDF5 spatial calibration metadata present; Per-ROI HDF5 timing stability; Radius2 linear-fit quality; q70 positive confidence interval (globally still fail; target-specific packet now passes); Automatic/publication diffusion candidates; Manual QC accepted labels; Control-balanced diffusion sanity candidates; Event/control diffusion separability",
+        "scenario": "post_cycle78_q70_remeasurement"
+      },
+      {
+        "candidate_q70_status": "passed_for_target_packet",
+        "publication_ready": false,
+        "remaining_candidate_blockers": "publication-ready gate",
+        "remaining_global_blockers": "manual front/QC labels not accepted; raw spatial calibration metadata still not located in HDF5/microscope metadata; control-balanced diffusion sanity remains negative; event/control diffusion separability remains weak; publication-ready diffusion gate has not been rerun with accepted labels; global per-ROI timing-stability gate remains failed",
+        "scenario": "next_manual_qc_and_metadata_handoff"
+      }
+    ],
+    "target_q70_status": "passed_for_target_packet",
+    "target_remeasurement_evidence": {
+      "cohort_role": "future8_positive",
+      "context_role": "target_nearest_diffusion_candidate",
+      "cycleNo": 78.0,
+      "default_q70_D_p05_um2_per_s": 1.9531822660687e-06,
+      "default_q70_D_p95_um2_per_s": 5.379870113798701e-06,
+      "default_q70_D_um2_per_s": 3.456512133062921e-06,
+      "default_q70_D_um2_per_s_context_percentile": 0.9,
+      "default_q70_positive_ci": true,
+      "default_q70_radius2_r2": 0.42366463856220815,
+      "default_q70_radius2_r2_context_percentile": 0.9,
+      "full_window_positive_ci_fraction": 0.3333333333333333,
+      "max_radius2_r2": 0.8494148487940061,
+      "median_D_um2_per_s": 3.2878762231388737e-06,
+      "median_D_um2_per_s_context_percentile": 0.9,
+      "median_radius2_r2": 0.28808877496197155,
+      "n_full_window_variants": 63,
+      "n_variants": 252,
+      "positive_D_fraction": 0.7380952380952381,
+      "positive_ci_fraction": 0.3968253968253968,
+      "positive_ci_fraction_context_percentile": 0.9,
+      "q10_D_um2_per_s": -4.431050127114061e-06,
+      "q90_D_um2_per_s": 1.3845464421702908e-05,
+      "roi_id": "cycle78_rank22_obj2",
+      "roi_norm_mean_delta_last_minus_first": 0.0011900439858436,
+      "source_stem": "9_c2_x10_010723",
+      "validation_score": 24.49773808606248
+    },
+    "target_roi_id": "cycle78_rank22_obj2"
+  },
   "pre_event_temporal_dose_response_audit": {
     "distance_bin_counts": {
       "pre_17_32": 22,

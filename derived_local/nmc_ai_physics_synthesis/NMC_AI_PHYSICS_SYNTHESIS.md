@@ -593,6 +593,22 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Cycle78 context cycle84_rank23_obj2 (same_source_later_cycle_same_object_rank): q70 D -2.448e-07, q70 positive CI False, pos-CI fraction 0.155, max R2 0.687
 - Guardrail: Automatic threshold/mask/window remeasurement only; does not accept manual labels, validate front identity, or create calibrated diffusion coefficients.
 
+## Post-Remeasurement Diffusion Gate Audit
+
+- Status/target/q70/publication-ready: diffusion_claim_still_blocked_after_target_q70_update / cycle78_rank22_obj2 / passed_for_target_packet / False
+- Candidate q70 blocker removed: True; claim readiness status remains not_ready_for_calibrated_diffusion_claim; publication-ready candidates 0
+- Remeasured target evidence: q70 D 3.457e-06 um2/s, p05/p95 1.953e-06/5.380e-06, positive-CI fraction 0.397
+- Diffusion post-remeasurement scenario pre_remeasurement_readiness: q70 blocked, publication_ready=False, candidate blockers q70 positive CI; publication-ready gate
+- Diffusion post-remeasurement scenario post_cycle78_q70_remeasurement: q70 passed_for_target_packet, publication_ready=False, candidate blockers publication-ready gate
+- Diffusion post-remeasurement scenario next_manual_qc_and_metadata_handoff: q70 passed_for_target_packet, publication_ready=False, candidate blockers publication-ready gate
+- Remaining publication blocker: manual front/QC labels not accepted
+- Remaining publication blocker: raw spatial calibration metadata still not located in HDF5/microscope metadata
+- Remaining publication blocker: control-balanced diffusion sanity remains negative
+- Remaining publication blocker: event/control diffusion separability remains weak
+- Remaining publication blocker: publication-ready diffusion gate has not been rerun with accepted labels
+- Remaining publication blocker: global per-ROI timing-stability gate remains failed
+- Guardrail: This audit propagates a target-specific automatic q70 CI update through existing readiness gates. It does not rerun global diffusion readiness, accept manual labels, verify raw calibration metadata, or create publication-ready diffusion coefficients.
+
 ## Cross-Modal Degradation Consensus
 
 - Cycles scored/with votes: 89 / 53

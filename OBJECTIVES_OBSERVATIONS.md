@@ -4557,3 +4557,28 @@ Interpretation: this is the first targeted automatic remeasurement that clears t
 
 Guardrail: automatic threshold/mask/window remeasurement only; does not accept manual labels, validate front identity, or create calibrated diffusion coefficients.
 
+## 2026-05-22 Post-Remeasurement Diffusion Gate Audit
+
+Added `scripts/tier4_post_remeasurement_diffusion_gate_audit.py` and ran it on Isambard to propagate the new cycle-78 q70 positive-CI result through the existing diffusion-readiness ledgers. This audit separates a target-specific automatic gate update from a global calibrated-diffusion claim.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit`
+- `derived_local/post_remeasurement_diffusion_gate_audit`
+- `post_remeasurement_diffusion_candidate_update.csv`
+- `post_remeasurement_diffusion_gate_table.csv`
+- `post_remeasurement_diffusion_scenario_table.csv`
+- `post_remeasurement_diffusion_gate_summary.json`
+
+Results:
+
+- The candidate-specific q70 blocker for `cycle78_rank22_obj2` is removed after the remeasurement packet: pre-blockers were `q70 positive CI; publication-ready gate`, and post-candidate blockers are now only `publication-ready gate`.
+- The overall diffusion claim status remains `not_ready_for_calibrated_diffusion_claim`, with 0 publication-ready candidates.
+- The q70 global gate is not marked globally passed; it is recorded as `target_specific_pass_global_not_rerun` because only the leading candidate was remeasured, not the full 72-ROI diffusion-readiness cohort.
+- Remaining publication blockers are explicit: manual front/QC labels are not accepted, raw spatial calibration metadata is still not located in HDF5/microscope metadata, control-balanced diffusion sanity remains negative, event/control diffusion separability remains weak, the publication-ready gate has not been rerun with accepted labels, and the global per-ROI timing-stability gate remains failed.
+- The next handoff is now narrower: use `cycle78_rank22_obj2` as a manual front/QC and calibration-provenance target, not as a broad automatic diffusion claim.
+
+Interpretation: the project now has a concrete target-specific diffusion follow-up success: the q70 positive-CI blocker cleared for `cycle78_rank22_obj2`. The result upgrades the candidate from “blocked by q70 CI” to “publication-gate/manual-QC/calibration blocked,” which is meaningful progress but still below a calibrated material diffusion coefficient claim.
+
+Guardrail: this audit propagates a target-specific automatic q70 CI update through existing readiness gates. It does not rerun global diffusion readiness, accept manual labels, verify raw calibration metadata, or create publication-ready diffusion coefficients.
+

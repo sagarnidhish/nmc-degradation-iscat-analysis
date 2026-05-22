@@ -111,6 +111,7 @@ def main() -> None:
     diffusion_unblock_sensitivity = read_json(derived / "diffusion_unblock_sensitivity_audit" / "diffusion_unblock_sensitivity_summary.json")
     targeted_diffusion_blocker = read_json(derived / "targeted_diffusion_blocker_diagnostic" / "targeted_diffusion_blocker_diagnostic_summary.json")
     cycle78_diffusion_remeasurement = read_json(derived / "cycle78_diffusion_remeasurement_audit" / "cycle78_diffusion_remeasurement_summary.json")
+    post_remeasurement_diffusion_gate = read_json(derived / "post_remeasurement_diffusion_gate_audit" / "post_remeasurement_diffusion_gate_summary.json")
     cross_modal_consensus = read_json(derived / "cross_modal_degradation_consensus" / "cross_modal_degradation_consensus_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
@@ -954,6 +955,9 @@ def main() -> None:
     targeted_diffusion_nearest = first_summary(targeted_diffusion_blocker, "nearest_diffusion_candidate", {}) or {}
     cycle78_diffusion_target = first_summary(cycle78_diffusion_remeasurement, "target_summary", {}) or {}
     cycle78_diffusion_context = top_items(first_summary(cycle78_diffusion_remeasurement, "context_summary", []), 8)
+    post_remeasurement_scenarios = top_items(first_summary(post_remeasurement_diffusion_gate, "scenario_table", []), 8)
+    post_remeasurement_target = first_summary(post_remeasurement_diffusion_gate, "target_remeasurement_evidence", {}) or {}
+    post_remeasurement_publication_blockers = first_summary(post_remeasurement_diffusion_gate, "remaining_publication_blockers", []) or []
     cross_modal_top = top_items(first_summary(cross_modal_consensus, "top_cycles", []), 12)
     cross_modal_classes = top_items(first_summary(cross_modal_consensus, "class_summary", []), 8)
     cross_modal_contrasts = top_items(first_summary(cross_modal_consensus, "target_contrasts", []), 12)
@@ -1634,6 +1638,22 @@ def main() -> None:
             f"- Cycle78 context {row.get('roi_id', 'NA')} ({row.get('context_role', 'NA')}): q70 D {fmt(row.get('default_q70_D_um2_per_s'))}, q70 positive CI {row.get('default_q70_positive_ci', 'NA')}, pos-CI fraction {fmt(row.get('positive_ci_fraction'))}, max R2 {fmt(row.get('max_radius2_r2'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(cycle78_diffusion_remeasurement, 'guardrail', 'Cycle 78 diffusion remeasurement audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Post-Remeasurement Diffusion Gate Audit",
+        "",
+        f"- Status/target/q70/publication-ready: {first_summary(post_remeasurement_diffusion_gate, 'overall_status', 'unavailable')} / {first_summary(post_remeasurement_diffusion_gate, 'target_roi_id', 'NA')} / {first_summary(post_remeasurement_diffusion_gate, 'target_q70_status', 'NA')} / {first_summary(post_remeasurement_diffusion_gate, 'publication_ready_after_remeasurement', 'NA')}",
+        f"- Candidate q70 blocker removed: {first_summary(post_remeasurement_diffusion_gate, 'candidate_q70_blocker_removed', 'NA')}; claim readiness status remains {first_summary(post_remeasurement_diffusion_gate, 'claim_readiness_overall_status', 'NA')}; publication-ready candidates {fmt(first_summary(post_remeasurement_diffusion_gate, 'claim_readiness_publication_ready_candidates'), 0)}",
+        f"- Remeasured target evidence: q70 D {fmt(post_remeasurement_target.get('default_q70_D_um2_per_s'))} um2/s, p05/p95 {fmt(post_remeasurement_target.get('default_q70_D_p05_um2_per_s'))}/{fmt(post_remeasurement_target.get('default_q70_D_p95_um2_per_s'))}, positive-CI fraction {fmt(post_remeasurement_target.get('positive_ci_fraction'))}",
+    ]
+    for row in post_remeasurement_scenarios:
+        report_lines.append(
+            f"- Diffusion post-remeasurement scenario {row.get('scenario', 'NA')}: q70 {row.get('candidate_q70_status', 'NA')}, publication_ready={row.get('publication_ready', 'NA')}, candidate blockers {row.get('remaining_candidate_blockers', 'NA')}"
+        )
+    for blocker in post_remeasurement_publication_blockers[:8]:
+        report_lines.append(f"- Remaining publication blocker: {blocker}")
+    report_lines.append(f"- Guardrail: {first_summary(post_remeasurement_diffusion_gate, 'guardrail', 'Post-remeasurement diffusion gate audit unavailable.')}")
 
     report_lines += [
         "",
@@ -5195,6 +5215,22 @@ def main() -> None:
             "context_summary": cycle78_diffusion_context,
             "outputs": first_summary(cycle78_diffusion_remeasurement, "outputs", {}),
             "guardrail": first_summary(cycle78_diffusion_remeasurement, "guardrail"),
+        },
+        "post_remeasurement_diffusion_gate_audit": {
+            "overall_status": first_summary(post_remeasurement_diffusion_gate, "overall_status"),
+            "target_roi_id": first_summary(post_remeasurement_diffusion_gate, "target_roi_id"),
+            "target_q70_status": first_summary(post_remeasurement_diffusion_gate, "target_q70_status"),
+            "candidate_q70_blocker_removed": first_summary(post_remeasurement_diffusion_gate, "candidate_q70_blocker_removed"),
+            "publication_ready_after_remeasurement": first_summary(post_remeasurement_diffusion_gate, "publication_ready_after_remeasurement"),
+            "claim_readiness_overall_status": first_summary(post_remeasurement_diffusion_gate, "claim_readiness_overall_status"),
+            "claim_readiness_publication_ready_candidates": first_summary(post_remeasurement_diffusion_gate, "claim_readiness_publication_ready_candidates"),
+            "pre_candidate_blockers": first_summary(post_remeasurement_diffusion_gate, "pre_candidate_blockers", []),
+            "post_candidate_blockers": first_summary(post_remeasurement_diffusion_gate, "post_candidate_blockers", []),
+            "remaining_publication_blockers": post_remeasurement_publication_blockers,
+            "target_remeasurement_evidence": post_remeasurement_target,
+            "scenario_table": post_remeasurement_scenarios,
+            "outputs": first_summary(post_remeasurement_diffusion_gate, "outputs", {}),
+            "guardrail": first_summary(post_remeasurement_diffusion_gate, "guardrail"),
         },
         "cross_modal_degradation_consensus": {
             "n_cycles": first_summary(cross_modal_consensus, "n_cycles"),
