@@ -71,8 +71,9 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cross-modal consensus ranks cycles 86, 116 as synchronized multimodal degradation candidates; the top cycle has 4 modal votes and consensus score 0.813, while the score remains an audit statistic rather than a calibrated probability.
 - Echem/optical breakpoint audit tests 84 cycle-level echem/trace features around synchronized cycles [86.0, 116.0]; strongest event-centered shift is state_step_norm_delta_prev over +/-4 cycles (scaled shift -2.263, bootstrap p=0.002).
 - Echem-optical regime atlas organizes 89 cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is pos_dq_abs_peak_voltage vs multimodal_outlier_without_trace_drop (median shift 0.050, p=1.453e-04), and top continuous link is shape_dVdt_abs_p95 vs cross_modal_consensus_score (rho=0.617).
-- Echem-conditioned optical predictor shows the clearest echem gain for high_cross_modal_consensus_q75 under leave_one_cycle: echem_regime_minus_acquisition changes AUC by 0.113; same-cycle synchronized candidates remain acquisition/context dominated and underpowered.
+- Echem-conditioned optical predictor shows the clearest echem gain for high_particle_norm_cv_q75 under cycle_block_cv: echem_regime_minus_acquisition changes AUC by 0.152; same-cycle synchronized candidates remain acquisition/context dominated and underpowered.
 - Echem-conditioned ROI rollout/front audit joins 72 ROI rows across 24 cycles; strongest leave-cycle echem gain is transferred_masked_residual_signature echem_regime_minus_acquisition with delta Spearman 0.450 and delta R2 0.626.
+- Echem-video embedding fusion tests 172 masked-video rows across 34 cycles; top fusion delta is future_any_drop_within_8cycles video_plus_echem_acquisition_minus_echem_regime with delta AUC 0.284 and delta Spearman 0.492.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
@@ -448,29 +449,29 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 
 ## Echem-Conditioned Optical Predictor
 
-- Cycles/targets: 89 / 7
+- Cycles/targets: 89 / 5
 - Feature set sizes: {'acquisition_context': 7, 'cycle_state_upper_bound': 14, 'echem_plus_acquisition': 56, 'echem_regime': 49}
-- Echem feature-set delta leave_one_cycle high_cross_modal_consensus_q75 echem_regime_minus_acquisition: delta AUC 0.113, base 0.686, comparison 0.799
-- Echem feature-set delta leave_one_cycle high_particle_norm_cv_q75 echem_regime_minus_acquisition: delta AUC 0.113, base 0.527, comparison 0.640
-- Echem feature-set delta leave_one_cycle high_cross_modal_consensus_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.111, base 0.686, comparison 0.797
-- Echem feature-set delta leave_one_cycle high_particle_norm_cv_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.103, base 0.527, comparison 0.630
-- Echem feature-set delta rolling_origin high_particle_norm_cv_q75 echem_regime_minus_acquisition: delta AUC 0.084, base 0.525, comparison 0.609
-- Echem feature-set delta rolling_origin high_cross_modal_consensus_q75 echem_regime_minus_acquisition: delta AUC 0.067, base 0.625, comparison 0.692
-- Echem feature-set delta rolling_origin high_particle_norm_cv_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.052, base 0.525, comparison 0.577
-- Echem feature-set delta leave_one_cycle high_roi_phase_slope_abs_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.046, base 0.944, comparison 0.991
-- Echem feature-set delta leave_one_cycle high_roi_phase_slope_abs_q75 echem_regime_minus_acquisition: delta AUC 0.037, base 0.944, comparison 0.981
-- Echem feature-set delta rolling_origin high_cross_modal_consensus_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.014, base 0.625, comparison 0.639
-- Echem-conditioned metric leave_one_cycle synchronized_multimodal_candidate cycle_state_upper_bound: AUC 0.994, AP 0.833, n=89, positives=2
-- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 echem_plus_acquisition: AUC 0.991, AP 0.976, n=24, positives=6
-- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 echem_regime: AUC 0.981, AP 0.958, n=24, positives=6
-- Echem-conditioned metric leave_one_cycle synchronized_multimodal_candidate acquisition_context: AUC 0.966, AP 0.325, n=89, positives=2
-- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 acquisition_context: AUC 0.944, AP 0.735, n=24, positives=6
-- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 cycle_state_upper_bound: AUC 0.944, AP 0.735, n=24, positives=6
-- Echem-conditioned metric leave_one_cycle high_state_step_norm_q75 cycle_state_upper_bound: AUC 0.899, AP 0.835, n=88, positives=22
-- Echem-conditioned metric leave_one_cycle high_cross_modal_consensus_q75 cycle_state_upper_bound: AUC 0.829, AP 0.684, n=89, positives=23
-- Echem-conditioned metric leave_one_cycle future_any_drop_within_8cycles cycle_state_upper_bound: AUC 0.808, AP 0.530, n=89, positives=20
-- Echem-conditioned metric leave_one_cycle high_cross_modal_consensus_q75 echem_regime: AUC 0.799, AP 0.522, n=89, positives=23
-- Guardrail: This is a cycle-level weak-label model comparison. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics.
+- Echem feature-set delta cycle_block_cv high_particle_norm_cv_q75 echem_regime_minus_acquisition: delta AUC 0.152, base 0.482, comparison 0.634
+- Echem feature-set delta cycle_block_cv high_particle_norm_cv_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.127, base 0.482, comparison 0.609
+- Echem feature-set delta cycle_block_cv future_any_drop_within_8cycles echem_regime_minus_acquisition: delta AUC 0.124, base 0.316, comparison 0.440
+- Echem feature-set delta rolling_origin_block future_any_drop_within_8cycles echem_regime_minus_acquisition: delta AUC 0.112, base 0.463, comparison 0.574
+- Echem feature-set delta rolling_origin_block future_any_drop_within_8cycles echem_plus_acquisition_minus_acquisition: delta AUC 0.076, base 0.463, comparison 0.539
+- Echem feature-set delta cycle_block_cv high_cross_modal_consensus_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.074, base 0.730, comparison 0.804
+- Echem feature-set delta cycle_block_cv high_roi_phase_slope_abs_q75 echem_regime_minus_acquisition: delta AUC 0.056, base 0.944, comparison 1.000
+- Echem feature-set delta cycle_block_cv high_roi_phase_slope_abs_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.046, base 0.944, comparison 0.991
+- Echem feature-set delta rolling_origin_block high_particle_norm_cv_q75 echem_regime_minus_acquisition: delta AUC 0.036, base 0.371, comparison 0.407
+- Echem feature-set delta cycle_block_cv high_cross_modal_consensus_q75 echem_regime_minus_acquisition: delta AUC 0.030, base 0.730, comparison 0.760
+- Echem-conditioned metric cycle_block_cv high_roi_phase_slope_abs_q75 echem_regime: AUC 1.000, AP 1.000, n=24, positives=6
+- Echem-conditioned metric cycle_block_cv high_roi_phase_slope_abs_q75 echem_plus_acquisition: AUC 0.991, AP 0.976, n=24, positives=6
+- Echem-conditioned metric cycle_block_cv high_roi_phase_slope_abs_q75 acquisition_context: AUC 0.944, AP 0.735, n=24, positives=6
+- Echem-conditioned metric cycle_block_cv high_roi_phase_slope_abs_q75 cycle_state_upper_bound: AUC 0.926, AP 0.766, n=24, positives=6
+- Echem-conditioned metric cycle_block_cv high_state_step_norm_q75 cycle_state_upper_bound: AUC 0.857, AP 0.745, n=88, positives=22
+- Echem-conditioned metric cycle_block_cv high_cross_modal_consensus_q75 cycle_state_upper_bound: AUC 0.846, AP 0.716, n=89, positives=23
+- Echem-conditioned metric cycle_block_cv high_cross_modal_consensus_q75 echem_plus_acquisition: AUC 0.804, AP 0.632, n=89, positives=23
+- Echem-conditioned metric cycle_block_cv high_cross_modal_consensus_q75 echem_regime: AUC 0.760, AP 0.424, n=89, positives=23
+- Echem-conditioned metric cycle_block_cv high_cross_modal_consensus_q75 acquisition_context: AUC 0.730, AP 0.620, n=89, positives=23
+- Echem-conditioned metric cycle_block_cv high_particle_norm_cv_q75 cycle_state_upper_bound: AUC 0.659, AP 0.434, n=89, positives=23
+- Guardrail: This is a cycle-level weak-label model comparison with blocked cycle-CV and rolling-origin block splits. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics. Rare 2-4 positive targets are excluded from the model-comparison table, and the permutation null shuffles labels against held-out prediction scores rather than retraining every permutation.
 
 ## Echem-Conditioned ROI Rollout/Front Audit
 
@@ -505,6 +506,39 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - ROI acquisition-residual echem link capacity_fade_from_first_mAh vs residual transferred_masked_residual_signature: rho=0.558, p=1.176e-05, n=54
 - ROI acquisition-residual echem link capacity_fraction_of_first vs residual transferred_masked_residual_signature: rho=-0.558, p=1.176e-05, n=54
 - Guardrail: ROI rows are automatic, clustered by cycle, and front/diffusion variables are proxy measurements; use this as a weak-label explanatory audit, not calibrated electrochemical mechanism proof.
+
+## Echem Video Embedding Fusion Audit
+
+- Embedding rows/cycles: 172 / 34
+- Cohort counts: {'balanced_future': 72, 'selected_event_control': 52, 'transfer_ranked': 48}
+- Feature set sizes: {'acquisition_context': 24, 'echem_regime': 51, 'video_all': 64, 'video_embedding': 16, 'video_plus_echem': 115, 'video_plus_echem_acquisition': 138, 'video_scalar': 48}
+- Echem-video fusion delta classification future_any_drop_within_8cycles video_plus_echem_acquisition_minus_echem_regime: delta AUC 0.284, delta R2 NA, delta rho 0.492
+- Echem-video fusion delta classification future_any_drop_within_16cycles video_plus_echem_minus_echem_regime: delta AUC 0.249, delta R2 NA, delta rho 0.351
+- Echem-video fusion delta classification future_any_drop_within_16cycles video_plus_echem_acquisition_minus_echem_regime: delta AUC 0.236, delta R2 NA, delta rho 0.332
+- Echem-video fusion delta classification future_any_drop_within_16cycles video_all_minus_echem_regime: delta AUC 0.192, delta R2 NA, delta rho 0.270
+- Echem-video fusion delta classification future_any_drop_within_8cycles video_all_minus_echem_regime: delta AUC 0.191, delta R2 NA, delta rho 0.331
+- Echem-video fusion delta classification future_any_drop_within_8cycles video_plus_echem_minus_echem_regime: delta AUC 0.174, delta R2 NA, delta rho 0.301
+- Echem-video fusion delta classification future_any_drop_within_8cycles video_plus_echem_acquisition_minus_video_all: delta AUC 0.093, delta R2 NA, delta rho 0.160
+- Echem-video fusion delta classification future_any_drop_within_16cycles video_plus_echem_minus_video_all: delta AUC 0.057, delta R2 NA, delta rho 0.081
+- Echem-video fusion delta classification future_any_drop_within_16cycles video_plus_echem_acquisition_minus_video_all: delta AUC 0.044, delta R2 NA, delta rho 0.063
+- Echem-video fusion delta classification future_any_drop_within_16cycles video_plus_echem_minus_acquisition_context: delta AUC 0.026, delta R2 NA, delta rho 0.036
+- Echem-video classification future_any_drop_within_8cycles acquisition_context: AUC 1.000, AP 1.000, rho 0.866, null p=9.990e-04, n=72
+- Echem-video classification future_any_drop_within_8cycles video_plus_echem_acquisition: AUC 0.916, AP 0.957, rho 0.720, null p=9.990e-04, n=72
+- Echem-video classification future_any_drop_within_8cycles video_all: AUC 0.823, AP 0.874, rho 0.560, null p=9.990e-04, n=72
+- Echem-video classification future_any_drop_within_8cycles video_scalar: AUC 0.816, AP 0.866, rho 0.547, null p=NA, n=72
+- Echem-video classification future_any_drop_within_8cycles video_plus_echem: AUC 0.806, AP 0.851, rho 0.529, null p=9.990e-04, n=72
+- Echem-video classification future_any_drop_within_16cycles video_plus_echem: AUC 0.754, AP 0.926, rho 0.358, null p=0.002, n=72
+- Echem-video classification future_any_drop_within_16cycles video_plus_echem_acquisition: AUC 0.742, AP 0.927, rho 0.340, null p=0.002, n=72
+- Echem-video classification future_any_drop_within_16cycles acquisition_context: AUC 0.729, AP 0.934, rho 0.322, null p=0.003, n=72
+- Echem-video regression particle_norm_cv video_scalar: rho 0.988, R2 0.979, MAE 0.003, n=172
+- Echem-video regression particle_norm_cv video_all: rho 0.979, R2 0.955, MAE 0.004, n=172
+- Echem-video regression particle_norm_cv video_plus_echem_acquisition: rho 0.941, R2 0.886, MAE 0.006, n=172
+- Echem-video regression particle_norm_cv video_plus_echem: rho 0.932, R2 -0.116, MAE 0.010, n=172
+- Echem-video regression persistence_particle_mse_fraction_of_full_mean video_scalar: rho 0.817, R2 0.679, MAE 0.177, n=116
+- Echem-video regression persistence_particle_mse_fraction_of_full_mean video_plus_echem: rho 0.765, R2 -15.763, MAE 0.603, n=116
+- Echem-video regression velocity_particle_mse_fraction_of_full_mean video_scalar: rho 0.758, R2 0.616, MAE 0.199, n=116
+- Echem-video regression cross_modal_consensus_score video_plus_echem_acquisition: rho 0.748, R2 0.150, MAE 0.084, n=172
+- Guardrail: This is a grouped weak-label fusion audit over automatic masked-video embeddings, echem descriptors, and automatic ROI physics. It supports representation design and review prioritization, not deployable warning, manual particle/front labels, or calibrated diffusion claims.
 
 ## Diffusion Proxy Sanity Audit
 

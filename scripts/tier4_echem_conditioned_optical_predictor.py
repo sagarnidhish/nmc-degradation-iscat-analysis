@@ -161,7 +161,7 @@ def model(seed: int) -> Any:
     return make_pipeline(
         SimpleImputer(strategy="median"),
         StandardScaler(),
-        LogisticRegression(max_iter=5000, class_weight="balanced", C=0.25, random_state=seed),
+        LogisticRegression(max_iter=1000, class_weight="balanced", C=0.25, random_state=seed, solver="liblinear"),
     )
 
 
@@ -242,34 +242,24 @@ def rolling_origin_predictions(df: pd.DataFrame, features: List[str], target: st
         rows.append(row)
     return pd.DataFrame(rows)
 
-
-def permutation_null(
-    df: pd.DataFrame,
-    features: List[str],
-    target: str,
-    split: str,
-    observed_auc: float,
-    seed: int,
-    n_perm: int,
-) -> Dict[str, Any]:
+def score_permutation_null(pred: pd.DataFrame, observed_auc: float, seed: int, n_perm: int) -> Dict[str, Any]:
     if not np.isfinite(observed_auc):
         return {"empirical_p_ge_observed": np.nan, "n_permutation": int(n_perm)}
     rng = np.random.default_rng(seed)
-    y = pd.to_numeric(df[target], errors="coerce")
-    valid_values = y[y.isin([0, 1])].to_numpy(dtype=int)
+    tmp = pred.dropna(subset=["observed", "predicted_probability"]).copy()
+    y = pd.to_numeric(tmp["observed"], errors="coerce")
+    p = pd.to_numeric(tmp["predicted_probability"], errors="coerce")
+    valid = y.isin([0, 1]) & p.notna()
+    y = y[valid].to_numpy(dtype=int)
+    p = p[valid].to_numpy(dtype=float)
+    if len(y) < 6 or len(np.unique(y)) < 2:
+        return {"empirical_p_ge_observed": np.nan, "n_permutation": int(n_perm)}
     aucs = []
     for _ in range(n_perm):
-        shuffled = valid_values.copy()
+        shuffled = y.copy()
         rng.shuffle(shuffled)
-        tmp = df.copy()
-        tmp.loc[y.isin([0, 1]), target] = shuffled
-        if split == "leave_one_cycle":
-            pred = leave_one_predictions(tmp, features, target, seed)
-        else:
-            pred = rolling_origin_predictions(tmp, features, target, seed, purge_cycles=2, min_train=16)
-        auc = metric_row(pred, split, "perm", target).get("roc_auc")
-        if np.isfinite(auc):
-            aucs.append(float(auc))
+        if len(np.unique(shuffled)) == 2:
+            aucs.append(float(roc_auc_score(shuffled, p)))
     if not aucs:
         return {"empirical_p_ge_observed": np.nan, "n_permutation": int(n_perm)}
     auc_arr = np.asarray(aucs)
@@ -318,8 +308,6 @@ def main() -> None:
     feature_sets = build_feature_sets(table)
     targets = [
         "future_any_drop_within_8cycles",
-        "synchronized_multimodal_candidate",
-        "multimodal_outlier_without_trace_drop",
         "high_cross_modal_consensus_q75",
         "high_particle_norm_cv_q75",
         "high_roi_phase_slope_abs_q75",
@@ -327,6 +315,7 @@ def main() -> None:
     ]
     targets = [t for t in targets if t in table.columns and pd.to_numeric(table[t], errors="coerce").isin([0, 1]).sum() >= 10]
 
+    rolling_targets = {"future_any_drop_within_8cycles", "high_cross_modal_consensus_q75", "high_particle_norm_cv_q75"}
     predictions = []
     metrics = []
     nulls = []
@@ -337,6 +326,8 @@ def main() -> None:
             continue
         for feature_set, features in feature_sets.items():
             for split in ["leave_one_cycle", "rolling_origin"]:
+                if split == "rolling_origin" and (target not in rolling_targets or feature_set == "cycle_state_upper_bound"):
+                    continue
                 if split == "leave_one_cycle":
                     pred = leave_one_predictions(table, features, target, args.seed)
                 else:
@@ -348,8 +339,8 @@ def main() -> None:
                 met = metric_row(pred, split, feature_set, target)
                 metrics.append(met)
                 if split == "leave_one_cycle" and feature_set in {"acquisition_context", "echem_regime", "echem_plus_acquisition"}:
-                    null = permutation_null(table, features, target, split, met.get("roc_auc", np.nan), args.seed, args.n_permutation)
-                    null.update({"split": split, "feature_set": feature_set, "target": target, "observed_roc_auc": met.get("roc_auc", np.nan)})
+                    null = score_permutation_null(pred, met.get("roc_auc", np.nan), args.seed, args.n_permutation)
+                    null.update({"split": split, "feature_set": feature_set, "target": target, "observed_roc_auc": met.get("roc_auc", np.nan), "null_mode": "heldout_score_label_shuffle"})
                     nulls.append(null)
             coef = coefficient_table(table, features, target, feature_set, args.seed)
             if not coef.empty:
@@ -422,7 +413,7 @@ def main() -> None:
         "top_metrics": best.to_dict("records"),
         "top_feature_set_deltas": best_deltas.to_dict("records") if not best_deltas.empty else [],
         "top_coefficients": coeff_df.head(50).to_dict("records") if not coeff_df.empty else [],
-        "guardrail": "This is a cycle-level weak-label model comparison. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics.",
+        "guardrail": "This is a cycle-level weak-label model comparison with leave-one-cycle and rolling-origin splits. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics. Rare 2-4 positive targets are excluded from the model-comparison table, and the permutation null shuffles labels against held-out prediction scores rather than retraining every permutation.",
         "outputs": {k: str(v) for k, v in paths.items()},
     }
     with paths["summary"].open("w") as f:

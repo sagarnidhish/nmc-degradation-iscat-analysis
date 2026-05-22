@@ -2458,7 +2458,7 @@ Key result:
 Interpretation: this closes the immediate review-prioritization gap without pretending to replace manual QC. The output identifies high-yield visual-review candidates and explicit artifact/diffusion guardrails, but it must not be used as particle identity, front-mask acceptance, diffusion interpretability, or degradation-mode validation.
 ## 2026-05-22 Echem-Conditioned Optical Predictor
 
-Added `scripts/tier4_echem_conditioned_optical_predictor.py` and ran it on Isambard to test whether electrochemical regime descriptors add predictive signal for weak optical degradation targets beyond acquisition/frame-count context. The audit uses the `echem_optical_regime_atlas` cycle table and compares `acquisition_context`, `echem_regime`, `echem_plus_acquisition`, and a `cycle_state_upper_bound` feature set under leave-one-cycle and rolling-origin splits.
+Added `scripts/tier4_echem_conditioned_optical_predictor.py` and ran it on Isambard to test whether electrochemical regime descriptors add predictive signal for weak optical degradation targets beyond acquisition/frame-count context. The audit uses the `echem_optical_regime_atlas` cycle table and compares `acquisition_context`, `echem_regime`, `echem_plus_acquisition`, and a `cycle_state_upper_bound` feature set under leave-one-cycle and rolling-origin splits. Rare 2-4 positive labels are excluded from this model-comparison table and remain descriptive atlas/consensus targets.
 
 Remote output:
 
@@ -2470,16 +2470,15 @@ Local compact copy:
 
 Key result:
 
-- The audit covers 89 cycles, 7 weak optical targets, and feature sets of size 7 (`acquisition_context`), 49 (`echem_regime`), 56 (`echem_plus_acquisition`), and 14 (`cycle_state_upper_bound`).
-- Leave-one-cycle high cross-modal consensus prediction improves from acquisition-only AUC 0.686 to echem-regime AUC 0.799 (delta +0.113) and echem+acquisition AUC 0.797 (delta +0.111). Average precision only improves for echem+acquisition, so this is useful but not a final model.
-- Leave-one-cycle high particle heterogeneity improves from acquisition-only AUC 0.527 to echem-regime AUC 0.640 (delta +0.113) and echem+acquisition AUC 0.630 (delta +0.103).
-- Rolling-origin checks retain smaller positive echem gains: high particle heterogeneity AUC improves +0.084 for echem-regime over acquisition, and high cross-modal consensus improves +0.067.
-- High ROI phase-slope targets are highly separable, but only 24 cycles have the target available; echem+acquisition AUC is 0.991 versus acquisition-only 0.944.
-- Same-cycle synchronized multimodal candidates are not an echem-regime prediction success: acquisition-only AUC is 0.966 for the two positives, while echem-regime alone performs poorly. This reinforces the acquisition/frame-count confounder around cycles 86/116.
-- Future8 prediction does not improve with echem regime in leave-one-cycle mode: acquisition-only AUC 0.674 versus echem+acquisition 0.648 and echem-regime 0.620.
-- The fast run used zero permutation resamples after a 100-permutation run was too slow; the audit is therefore a controlled model-comparison screen, not a final significance test.
+- The refreshed audit covers 89 cycles, 5 weak optical targets, and feature sets of size 7 (`acquisition_context`), 49 (`echem_regime`), 56 (`echem_plus_acquisition`), and 14 (`cycle_state_upper_bound`).
+- Leave-one-cycle high cross-modal consensus prediction improves from acquisition-only AUC 0.688 to echem-regime AUC 0.785 (delta +0.0968) and echem+acquisition AUC 0.789 (delta +0.1008). Both echem feature sets beat the held-out score-label shuffle null with empirical p=0.00020 over 5,000 shuffles.
+- Leave-one-cycle high particle heterogeneity improves from acquisition-only AUC 0.527 to echem-regime AUC 0.643 (delta +0.116, empirical p=0.0210) and echem+acquisition AUC 0.642 (delta +0.115, empirical p=0.0226).
+- Rolling-origin checks retain smaller positive echem gains: high particle heterogeneity AUC improves +0.101 for echem-regime over acquisition, and high cross-modal consensus improves +0.0595.
+- High ROI phase-slope targets are highly separable but under-covered: only 24 cycles have the target, with acquisition-only AUC 0.944, echem-regime AUC 0.944, and echem+acquisition AUC 0.981.
+- Future8 prediction does not improve with echem regime: leave-one acquisition-only AUC 0.676 versus echem+acquisition 0.650 and echem-regime 0.621; rolling-origin echem-regime is also worse than acquisition-only.
+- The `cycle_state_upper_bound` remains strongest for future8 (leave-one AUC 0.812), confirming that direct cycle-state/trace axes are better early-warning features than echem-regime descriptors alone.
 
-Interpretation: electrochemical regime descriptors add conditional signal for broad cross-modal optical degradation state and particle heterogeneity, especially under leave-one-cycle evaluation and modestly under rolling-origin evaluation. They do not rescue future8 prediction or explain the two synchronized multimodal candidates without acquisition context. Use this as evidence that echem regime should condition optical AI models, not as deployable warning performance or causal proof.
+Interpretation: electrochemical regime descriptors add conditional signal for broad cross-modal optical degradation state and particle heterogeneity, especially under leave-one-cycle evaluation and modestly under rolling-origin evaluation. They do not rescue future8 prediction; echem regime is a conditioning/context axis for optical AI models rather than a standalone warning model or causal mechanism proof.
 
 ## 2026-05-22 Echem-Conditioned ROI Rollout/Front Audit
 
@@ -2503,3 +2502,25 @@ Key result:
 - After residualizing acquisition/context, the transferred masked-residual signature is strongly linked to echem proxy shape terms: `pos_dq_abs_entropy` rho=-0.745, `all_dq_abs_peak_frac` rho=0.727, `all_dq_abs_entropy` rho=-0.649, and `neg_dq_abs_peak_voltage` rho=0.592, all with n=54.
 
 Interpretation: the paper-inspired electrochemical-regime conditioning is most actionable for the masked residual signature, which is our strongest bridge between AI video reconstruction difficulty and battery state. Front-motion and diffusion-proxy descriptors remain useful screening variables, but the ROI-level evidence does not justify calibrated transport or phase-front claims without manual QC and stronger physical calibration.
+
+## 2026-05-22 Echem Video Embedding Fusion Audit
+
+Added `scripts/tier4_echem_video_embedding_fusion_audit.py` and ran it on Isambard to test whether label-free masked-video embeddings add degradation signal beyond electrochemical regime and acquisition/context variables. The audit fuses `masked_video_embedding_audit`, `echem_optical_regime_atlas`, and balanced ROI physics rows, then compares acquisition, echem, video-scalar, video-embedding, video-all, video+echem, and video+echem+acquisition feature sets under leave-one-cycle-out models.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_video_embedding_fusion_audit`
+
+Local compact copy:
+
+`derived_local/echem_video_embedding_fusion_audit`
+
+Key result:
+
+- The audit covers 172 masked-video rows across 34 cycles: 72 balanced-future, 52 selected event/control, and 48 transfer-ranked rows. Future-drop labels are available for 72 balanced rows across 24 cycles.
+- For future8 classification, acquisition/context alone reaches AUC 1.000, confirming a strong cohort-design/frame/context confounder. Video-all features still carry signal beyond echem alone: AUC 0.823 versus echem AUC 0.632, delta +0.191; video+echem+acquisition reaches AUC 0.916 but does not beat acquisition-only.
+- For future16 classification, video+echem is the best tested set: AUC 0.754 versus acquisition AUC 0.729, video-all AUC 0.697, and echem AUC 0.505. The video+echem gain over video-only is +0.057 AUC and +0.081 Spearman rho, with permutation p=0.002 for the fused model.
+- For the transferred masked-residual signature, video+echem strongly improves over video-only in regression: R2 0.711 versus -1.832 and Spearman 0.583 versus 0.040. This independently supports echem conditioning for AI residual-difficulty interpretation.
+- Scalar video descriptors outperform raw video PCA components for future labels in this small table: future8 video-scalar AUC 0.816 versus video-embedding-only AUC 0.569. The current PCA embedding is useful but not yet a sufficient learned video representation.
+
+Interpretation: masked-video representations add meaningful weak-label degradation signal over echem alone, and echem helps video descriptors for longer-horizon future16 and masked-residual-signature modeling. However, acquisition/context can dominate future8 labels, so the result should guide representation design, balanced sampling, and review prioritization rather than deployment or causal mechanism claims.

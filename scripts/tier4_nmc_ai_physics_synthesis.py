@@ -117,6 +117,7 @@ def main() -> None:
     echem_optical_regime = read_json(derived / "echem_optical_regime_atlas" / "echem_optical_regime_atlas_summary.json")
     echem_conditioned_predictor = read_json(derived / "echem_conditioned_optical_predictor" / "echem_conditioned_optical_predictor_summary.json")
     echem_roi_rollout_front = read_json(derived / "echem_conditioned_roi_rollout_front_audit" / "echem_conditioned_roi_rollout_front_summary.json")
+    echem_video_fusion = read_json(derived / "echem_video_embedding_fusion_audit" / "echem_video_embedding_fusion_summary.json")
     physics_consistency = read_json(derived / "physics_consistency_claim_matrix" / "physics_consistency_claim_matrix_summary.json")
     rollout_calibration = read_json(derived / "probabilistic_rollout_calibration" / "probabilistic_rollout_calibration_summary.json")
     cycle_state_space = read_json(derived / "cycle_state_space_transition_audit" / "cycle_state_space_transition_audit_summary.json")
@@ -269,6 +270,10 @@ def main() -> None:
     echem_roi_deltas = top_items(first_summary(echem_roi_rollout_front, "top_feature_set_deltas", []), 16)
     echem_roi_residual = top_items(first_summary(echem_roi_rollout_front, "top_residual_correlations", []), 12)
     echem_roi_top_delta = echem_roi_deltas[0] if echem_roi_deltas else {}
+    echem_video_class = top_items(first_summary(echem_video_fusion, "top_classification_metrics", []), 16)
+    echem_video_reg = top_items(first_summary(echem_video_fusion, "top_regression_metrics", []), 16)
+    echem_video_deltas = top_items(first_summary(echem_video_fusion, "top_feature_set_deltas", []), 16)
+    echem_video_top_delta = echem_video_deltas[0] if echem_video_deltas else {}
     physics_consistency_top = top_items(first_summary(physics_consistency, "top_consistency_rows", []), 12)
     physics_consistency_tests = top_items(first_summary(physics_consistency, "top_event_tests", []), 12)
     rollout_calibration_coverage = top_items(first_summary(rollout_calibration, "coverage_summary", []), 30)
@@ -577,6 +582,7 @@ def main() -> None:
         f"- Echem-optical regime atlas organizes {first_summary(echem_optical_regime, 'n_cycles', 0)} cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is {echem_regime_top_binary.get('feature', 'NA')} vs {echem_regime_top_binary.get('target', 'NA')} (median shift {fmt(echem_regime_top_binary.get('median_positive_minus_negative'))}, p={fmt(echem_regime_top_binary.get('mannwhitney_p'))}), and top continuous link is {echem_regime_top_corr.get('feature', 'NA')} vs {echem_regime_top_corr.get('target', 'NA')} (rho={fmt(echem_regime_top_corr.get('spearman_rho'))}).",
         f"- Echem-conditioned optical predictor shows the clearest echem gain for {echem_predictor_top_delta.get('target', 'NA')} under {echem_predictor_top_delta.get('split', 'NA')}: {echem_predictor_top_delta.get('comparison', 'NA')} changes AUC by {fmt(echem_predictor_top_delta.get('delta_roc_auc'))}; same-cycle synchronized candidates remain acquisition/context dominated and underpowered.",
         f"- Echem-conditioned ROI rollout/front audit joins {first_summary(echem_roi_rollout_front, 'n_roi_rows', 0)} ROI rows across {first_summary(echem_roi_rollout_front, 'n_cycles', 0)} cycles; strongest leave-cycle echem gain is {echem_roi_top_delta.get('target', 'NA')} {echem_roi_top_delta.get('comparison', 'NA')} with delta Spearman {fmt(echem_roi_top_delta.get('delta_spearman_rho'))} and delta R2 {fmt(echem_roi_top_delta.get('delta_r2'))}.",
+        f"- Echem-video embedding fusion tests {first_summary(echem_video_fusion, 'n_embedding_rows', 0)} masked-video rows across {first_summary(echem_video_fusion, 'n_cycles', 0)} cycles; top fusion delta is {echem_video_top_delta.get('target', 'NA')} {echem_video_top_delta.get('comparison', 'NA')} with delta AUC {fmt(echem_video_top_delta.get('delta_roc_auc'))} and delta Spearman {fmt(echem_video_top_delta.get('delta_spearman_rho'))}.",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
         f"- Automatic front-QC sensitivity keeps the positive phase-front residual in {len(robust_phase_strata)} strata: {', '.join(robust_phase_strata) if robust_phase_strata else 'none'}; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.",
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
@@ -969,6 +975,28 @@ def main() -> None:
             f"- ROI acquisition-residual echem link {row.get('echem_feature')} vs residual {row.get('target')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
         )
     report_lines.append(f"- Guardrail: {first_summary(echem_roi_rollout_front, 'guardrail', 'Echem-conditioned ROI rollout/front audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Echem Video Embedding Fusion Audit",
+        "",
+        f"- Embedding rows/cycles: {first_summary(echem_video_fusion, 'n_embedding_rows', 0)} / {first_summary(echem_video_fusion, 'n_cycles', 0)}",
+        f"- Cohort counts: {first_summary(echem_video_fusion, 'embedding_cohort_counts', {})}",
+        f"- Feature set sizes: {first_summary(echem_video_fusion, 'feature_set_sizes', {})}",
+    ]
+    for row in echem_video_deltas[:10]:
+        report_lines.append(
+            f"- Echem-video fusion delta {row.get('task')} {row.get('target')} {row.get('comparison')}: delta AUC {fmt(row.get('delta_roc_auc'))}, delta R2 {fmt(row.get('delta_r2'))}, delta rho {fmt(row.get('delta_spearman_rho'))}"
+        )
+    for row in echem_video_class[:8]:
+        report_lines.append(
+            f"- Echem-video classification {row.get('target')} {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, rho {fmt(row.get('spearman_rho'))}, null p={fmt(row.get('empirical_p_ge_observed'))}, n={fmt(row.get('n_eval'), 0)}"
+        )
+    for row in echem_video_reg[:8]:
+        report_lines.append(
+            f"- Echem-video regression {row.get('target')} {row.get('feature_set')}: rho {fmt(row.get('spearman_rho'))}, R2 {fmt(row.get('r2'))}, MAE {fmt(row.get('mae'))}, n={fmt(row.get('n_eval'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(echem_video_fusion, 'guardrail', 'Echem video embedding fusion audit unavailable.')}")
 
     report_lines += [
         "",
@@ -2269,6 +2297,18 @@ def main() -> None:
             "top_feature_set_deltas": echem_roi_deltas,
             "top_residual_correlations": echem_roi_residual,
             "guardrail": first_summary(echem_roi_rollout_front, "guardrail"),
+        },
+        "echem_video_embedding_fusion_audit": {
+            "n_embedding_rows": first_summary(echem_video_fusion, "n_embedding_rows"),
+            "n_cycles": first_summary(echem_video_fusion, "n_cycles"),
+            "embedding_cohort_counts": first_summary(echem_video_fusion, "embedding_cohort_counts", {}),
+            "classification_targets": first_summary(echem_video_fusion, "classification_targets", []),
+            "regression_targets": first_summary(echem_video_fusion, "regression_targets", []),
+            "feature_set_sizes": first_summary(echem_video_fusion, "feature_set_sizes", {}),
+            "top_classification_metrics": echem_video_class,
+            "top_regression_metrics": echem_video_reg,
+            "top_feature_set_deltas": echem_video_deltas,
+            "guardrail": first_summary(echem_video_fusion, "guardrail"),
         },
         "calibration_claim_risk_register": {
             "n_claim_families": first_summary(calibration_claim_risk, "n_claim_families"),
