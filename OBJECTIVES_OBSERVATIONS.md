@@ -2939,3 +2939,47 @@ Key result:
 - Source influence is not dominated by one single source: dropping `17_c2_x10_HighHighCOV_150723` changes the combined-axis AUC by only -0.012, while signed optical-loss is most reduced by dropping `15_c2_x5_HighCOV_120723` or `18_c2_xN_HighHighCOV_170723` (delta -0.046 each).
 
 Interpretation: the signed-loss mechanism result is useful, but this audit moves the claim boundary from “source-transferable warning axis” to “source/context-sensitive degradation-state triage axis.” The echem degraded-state axis is the most robust residual signal, while the optical-loss and combined axes need balanced sources, manual QC, and source-aware calibration before any source-independent warning or mechanism claim.
+
+## 2026-05-22 Echem/Optical Source-Residual Audit
+
+Added and ran:
+
+`scripts/tier4_echem_optical_source_residual_audit.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_source_residual_audit`
+
+Local compact copy:
+
+`derived_local/echem_optical_source_residual_audit`
+
+Key result:
+
+- The audit combines source-normalized echem-degraded, signed optical-loss, and front-contraction axes from the signed-loss source robustness table.
+- Direct source-residual scores recover low-source-eta future16 evidence: echem+optical+front residual AUC 0.809/AP 0.951/source eta2 0.006; echem+optical residual AUC 0.774/AP 0.943/source eta2 0.002.
+- Individual source-residual axes are weaker: echem residual AUC 0.716/AP 0.915 and optical residual AUC 0.656/AP 0.899.
+- Leave-source logistic evaluation is more conservative: echem+optical source-residual model reaches AUC 0.708/AP 0.922, while echem-only is 0.558 and optical-only is 0.611.
+- The raw/source-mean guardrail remains much stronger than source-normalized evidence, so source-normalized echem+optical features should be treated as review evidence rather than a deployable warning model.
+
+Interpretation: after removing much of the source composition signal, echem-degraded state and optical-loss residuals do add complementary weak-label information. This is the most defensible current source-normalized warning signature, but it still relies on weak labels, unlabeled source normalization, and automatic ROI/front descriptors.
+## 2026-05-22 Echem-Conditioned Residual Dictionary Audit
+
+Added and ran:
+
+`scripts/tier4_echem_conditioned_residual_dictionary.py`
+
+Output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_residual_dictionary`
+- `derived_local/echem_conditioned_residual_dictionary`
+
+Key result:
+
+- The audit uses 172 ROI rows across 34 cycles and 12 sources, with 39 residual-dictionary features and 119 echem/acquisition/context conditioning features.
+- Echem/context prediction explains a substantial part of some residual bases, especially leave-cycle `resdict_pc03_std` (R2 0.614, rho 0.783) and `resdict_pc04_std` (R2 0.102, rho 0.788).
+- For future16, split-specific conditioning rescues residual-dictionary transfer. Leave-source conditioned residual dictionary reaches AUC 0.785 versus raw residual dictionary AUC 0.058, a +0.726 AUC delta; leave-cycle conditioned residual dictionary reaches AUC 0.695 versus raw 0.481.
+- Adding echem/context to conditioned residuals gives leave-cycle future16 AUC 0.834 and leave-source AUC 0.651. The strongest leave-cycle future16 set is conditioned residual plus handcrafted plus echem/context at AUC 0.848.
+- Future8 remains context dominated: echem/context and context-augmented feature sets are near AUC 0.917 under leave-cycle, while conditioned residual dictionary alone is weak for future8.
+
+Interpretation: the useful representation is not raw learned video residuals alone. Residual dictionary modes become more informative after subtracting echem/acquisition-predictable structure, especially for longer-horizon future16 and leave-source transfer. This supports a context-conditioned residual objective for future AI models, but it remains a weak-label, automatic-mask, non-calibrated audit rather than a deployable warning or causal degradation mechanism.

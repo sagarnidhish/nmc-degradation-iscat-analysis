@@ -116,6 +116,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC 0.849 versus PCA-video 0.569 and handcrafted scalar 0.828; future16 learned_all remains weak at AUC 0.538 versus handcrafted 0.680.
 - Residual dictionary embedding learns label-free next-frame residual bases over 172 ROI videos; residual-dictionary future8 AUC is 0.663 with p=0.005, and residual_dictionary_plus_handcrafted reaches AUC 0.771.
 - Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to 0.917, while acquisition/context alone reaches 1.000; treat this as context-sensitive representation evidence rather than deployable warning.
+- Echem-conditioned residual-dictionary audit converts post-hoc fusion into a split-specific residual objective: conditioned residual dictionary future16 reaches leave-source AUC 0.785 versus raw residual dictionary 0.058 (delta 0.726), while leave-cycle conditioned residual+echem reaches AUC 0.834; future8 remains context dominated.
 - Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC 1.000, raw all-video reaches 0.756, and context-residualized all-video alone reaches 0.319; future16 raw handcrafted reaches AUC 0.796 but residualized all-video alone is 0.620.
 - Acquisition-residualized video/echem warning audit executes the top tournament experiment: leave-cycle future16 residualized video_plus_echem reaches AUC 0.697 versus acquisition-only 0.727, but leave-source residualized AUC falls to 0.512 versus acquisition-only 0.697.
 - Source-domain video/echem adaptation partially rescues leave-source future16 transfer: source-centered video_plus_echem reaches AUC 0.737 versus acquisition-only 0.697, while CORAL reaches only 0.420.
@@ -126,6 +127,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Exact-feature mechanism consistency audit is a useful falsification check: exact_optical_loss_score predicts future16 with AUC 0.853 but has source eta2 0.513; the primary particle-vs-context descriptor has weak radius-slope linkage after source residualization (rho -0.047).
 - Signed optical-loss mechanism audit converts the pattern into interpretable axes: combined_loss_mechanism_axis future16 AUC is 0.989 but source eta2 is 0.556; leave-source all-axis AUC is 0.927, while optical-only AUC is 0.732.
 - Signed-loss source robustness audit shows why this remains guarded: combined-axis raw/source-mean/within-source-rank AUCs are 0.989/0.942/0.551; optical-axis raw/source-mean/within-source-rank AUCs are 0.815/0.774/0.514.
+- Source-residual echem/optical audit finds low-source-eta residual evidence: echem+optical+front direct AUC 0.809, echem+optical direct AUC 0.774, and leave-source echem+optical residual AUC 0.708.
 - Invariant sparse rule discovery finds review-prioritization rules rather than a standalone predictor: best leave-source rule low(particle_std_diff_positive_fraction) covers 27/72 rows with precision 0.889, lift 1.123, and source-positive hits in 6 sources.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
@@ -1220,6 +1222,39 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Echem-resdict regression residual_energy_mean residual_dictionary_plus_handcrafted: R2 0.979, rho 0.973, n=172
 - Guardrail: Fusion uses weak cycle labels, automatic ROI crops, and echem/acquisition covariates. It tests representation conditioning and review prioritization, not deployable warning, manual particle/front labels, causal echem mechanism, or calibrated diffusion.
 
+## Echem-Conditioned Residual Dictionary
+
+- Rows/cycles/sources: 172 / 34 / 12
+- Residual/context features: 39 / 119
+- Feature set sizes: {'leave_cycle': {'conditioned_residual_dictionary': 39, 'conditioned_residual_plus_echem_context': 158, 'conditioned_residual_plus_handcrafted_echem': 216, 'echem_context': 119, 'handcrafted_plus_echem_context': 177, 'raw_residual_plus_echem_context': 158, 'residual_dictionary_raw': 39}, 'leave_source': {'conditioned_residual_dictionary': 39, 'conditioned_residual_plus_echem_context': 158, 'conditioned_residual_plus_handcrafted_echem': 216, 'echem_context': 119, 'handcrafted_plus_echem_context': 177, 'raw_residual_plus_echem_context': 158, 'residual_dictionary_raw': 39}}
+- Future16 conditioned residual dictionary leave-cycle/leave-source AUC: 0.695 / 0.785
+- Future16 conditioned residual+echem leave-cycle/leave-source AUC: 0.834 / 0.651
+- Echem-conditioned resdict leave_cycle future_any_drop_within_16cycles conditioned_residual_plus_handcrafted_echem: AUC 0.848, AP 0.961, p=0.003, n=72
+- Echem-conditioned resdict leave_cycle future_any_drop_within_16cycles conditioned_residual_plus_echem_context: AUC 0.834, AP 0.955, p=0.003, n=72
+- Echem-conditioned resdict leave_cycle future_any_drop_within_16cycles handcrafted_plus_echem_context: AUC 0.821, AP 0.956, p=NA, n=72
+- Echem-conditioned resdict leave_cycle future_any_drop_within_16cycles echem_context: AUC 0.806, AP 0.951, p=0.003, n=72
+- Echem-conditioned resdict leave_cycle future_any_drop_within_16cycles raw_residual_plus_echem_context: AUC 0.746, AP 0.935, p=NA, n=72
+- Echem-conditioned resdict leave_cycle future_any_drop_within_16cycles conditioned_residual_dictionary: AUC 0.695, AP 0.902, p=0.020, n=72
+- Echem-conditioned resdict leave_cycle future_any_drop_within_16cycles residual_dictionary_raw: AUC 0.481, AP 0.855, p=0.561, n=72
+- Echem-conditioned resdict leave_source future_any_drop_within_16cycles conditioned_residual_dictionary: AUC 0.785, AP 0.943, p=0.003, n=72
+- Echem-conditioned resdict leave_source future_any_drop_within_16cycles conditioned_residual_plus_handcrafted_echem: AUC 0.701, AP 0.913, p=0.010, n=72
+- Echem-conditioned resdict leave_source future_any_drop_within_16cycles conditioned_residual_plus_echem_context: AUC 0.651, AP 0.891, p=0.056, n=72
+- Echem-conditioned resdict delta leave_source future_any_drop_within_16cycles conditioned_residual_dictionary_minus_residual_dictionary_raw: delta AUC 0.726, delta AP 0.312, delta rho 1.022
+- Echem-conditioned resdict delta leave_cycle future_any_drop_within_16cycles conditioned_residual_dictionary_minus_residual_dictionary_raw: delta AUC 0.214, delta AP 0.047, delta rho 0.301
+- Echem-conditioned resdict delta leave_source future_any_drop_within_16cycles conditioned_residual_plus_echem_context_minus_raw_residual_plus_echem_context: delta AUC 0.157, delta AP 0.074, delta rho 0.221
+- Echem-conditioned resdict delta leave_source future_any_drop_within_8cycles conditioned_residual_dictionary_minus_residual_dictionary_raw: delta AUC 0.145, delta AP 0.069, delta rho 0.251
+- Echem-conditioned resdict delta leave_cycle future_any_drop_within_16cycles conditioned_residual_plus_echem_context_minus_raw_residual_plus_echem_context: delta AUC 0.088, delta AP 0.020, delta rho 0.123
+- Echem-conditioned resdict delta leave_source future_any_drop_within_16cycles conditioned_residual_plus_handcrafted_echem_minus_handcrafted_plus_echem_context: delta AUC 0.081, delta AP 0.036, delta rho 0.114
+- Echem-conditioned resdict delta leave_source future_any_drop_within_16cycles conditioned_residual_plus_handcrafted_echem_minus_conditioned_residual_plus_echem_context: delta AUC 0.049, delta AP 0.022, delta rho 0.069
+- Echem-conditioned resdict delta leave_cycle future_any_drop_within_16cycles conditioned_residual_plus_echem_context_minus_echem_context: delta AUC 0.028, delta AP 0.004, delta rho 0.039
+- Context fit leave_cycle resdict_pc03_std: R2 0.614, rho 0.783, residual std 0.054
+- Context fit leave_cycle resdict_pc04_std: R2 0.102, rho 0.788, residual std 0.078
+- Context fit leave_cycle resdict_pc01_std: R2 -0.029, rho 0.647, residual std 0.159
+- Context fit leave_cycle resdict_pc03_mean: R2 -0.232, rho 0.111, residual std 0.001
+- Context fit leave_cycle dictionary_recon_energy_mean: R2 -0.357, rho 0.546, residual std 2.972e-04
+- Context fit leave_cycle resdict_pc05_last_minus_first: R2 -0.542, rho 0.135, residual std 0.008
+- Guardrail: Echem-conditioned residual dictionary features are split-specific residuals from echem/acquisition predictions of label-free residual bases. They test whether video residual modes add signal beyond measured context, not deployable warning, manual QC, causal mechanism, or calibrated diffusion.
+
 ## Acquisition-Residualized Video Physics Benchmark
 
 - Rows/cycles: 172 / 34
@@ -1459,6 +1494,36 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source influence signed_optical_loss_axis drop 16_c2_x10_HighHighCOV_130723: full AUC 0.815, drop-source AUC 0.775, delta -0.041
 - Source influence echem_degraded_state_axis drop 15_c2_x5_HighCOV_120723: full AUC 0.821, drop-source AUC 0.789, delta -0.032
 - Guardrail: Source robustness transforms distinguish within-source signal from source-level composition. High raw AUC with high source-mean-only AUC or weak within-source permutation evidence should be treated as source/context-sensitive review evidence, not a source-independent detector.
+
+## Echem/Optical Source-Residual Audit
+
+- Rows/future16 labeled/cycles/sources: 172 / 72 / 34 / 12
+- Direct future16 echem / optical / echem+optical residual AUCs: 0.716 / 0.656 / 0.774
+- Direct echem+optical+front residual AUC/AP/source eta2: 0.809 / 0.951 / 0.006
+- Leave-source echem+optical residual model AUC/AP: 0.708 / 0.922
+- Direct source-residual set raw_axes_guardrail: AUC 0.989, AP 0.997, source eta2 0.556, p=2.291e-11
+- Direct source-residual set source_mean_only_guardrail: AUC 0.942, AP 0.980, source eta2 1.000, p=7.825e-10
+- Direct source-residual set echem_optical_front_residual: AUC 0.809, AP 0.951, source eta2 0.006, p=1.329e-04
+- Direct source-residual set echem_plus_optical_source_residual: AUC 0.774, AP 0.943, source eta2 0.002, p=8.148e-04
+- Direct source-residual set echem_source_residual: AUC 0.716, AP 0.915, source eta2 0.007, p=0.009
+- Direct source-residual set optical_source_residual: AUC 0.656, AP 0.899, source eta2 0.050, p=0.064
+- Direct source-residual set echem_plus_optical_centered_z: AUC 0.628, AP 0.863, source eta2 0.021, p=0.130
+- Direct source-residual set all_source_residual_axes: AUC 0.604, AP 0.878, source eta2 0.030, p=0.222
+- Leave-source residual model raw_axes_guardrail: AUC 0.926, AP 0.983, rho 0.600
+- Leave-source residual model echem_plus_optical_source_residual: AUC 0.708, AP 0.922, rho 0.292
+- Leave-source residual model optical_source_residual: AUC 0.611, AP 0.882, rho 0.156
+- Leave-source residual model source_mean_only_guardrail: AUC 0.584, AP 0.863, rho 0.123
+- Leave-source residual model echem_source_residual: AUC 0.558, AP 0.880, rho 0.082
+- Leave-source residual model echem_optical_front_residual: AUC 0.538, AP 0.868, rho 0.053
+- Leave-source residual model front_source_residual: AUC 0.505, AP 0.864, rho 0.007
+- Leave-source residual model echem_plus_optical_centered_z: AUC 0.473, AP 0.774, rho -0.039
+- Residual rule future_any_drop_within_8cycles echem_ge_q50: precision 0.750, recall 0.750, lift 1.500, source-positive hits 3
+- Residual rule future_any_drop_within_8cycles echem_ge_q50: precision 0.750, recall 0.750, lift 1.500, source-positive hits 3
+- Residual rule future_any_drop_within_8cycles echem_ge_q50: precision 0.750, recall 0.750, lift 1.500, source-positive hits 3
+- Residual rule future_any_drop_within_8cycles echem_ge_q50: precision 0.750, recall 0.750, lift 1.500, source-positive hits 3
+- Residual rule future_any_drop_within_8cycles echem_ge_q50_OR_optical_ge_q75: precision 0.667, recall 0.833, lift 1.333, source-positive hits 3
+- Residual rule future_any_drop_within_8cycles echem_ge_q50_OR_optical_ge_q70: precision 0.646, recall 0.861, lift 1.292, source-positive hits 3
+- Guardrail: Source-residual and within-source-rank transforms use unlabeled source distribution information and weak future labels. They test whether echem state contextualizes optical loss after source normalization; they are not deployable warning models or causal mechanism proof.
 
 ## Invariant Physics Rule Discovery
 

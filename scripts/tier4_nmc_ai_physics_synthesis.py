@@ -152,6 +152,7 @@ def main() -> None:
     learned_video_residual_embedding = read_json(derived / "learned_video_residual_embedding_audit" / "learned_video_residual_embedding_summary.json")
     residual_dictionary_embedding = read_json(derived / "residual_dictionary_embedding_audit" / "residual_dictionary_embedding_summary.json")
     echem_residual_dictionary_fusion = read_json(derived / "echem_residual_dictionary_fusion_audit" / "echem_residual_dictionary_summary.json")
+    echem_conditioned_residual_dictionary = read_json(derived / "echem_conditioned_residual_dictionary" / "echem_conditioned_residual_dictionary_summary.json")
     acquisition_residualized_video = read_json(derived / "acquisition_residualized_video_physics_benchmark" / "acquisition_residualized_summary.json")
     acquisition_residualized_video_echem = read_json(derived / "acquisition_residualized_video_echem_warning" / "acquisition_residualized_video_echem_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
@@ -162,6 +163,7 @@ def main() -> None:
     exact_feature_mechanism = read_json(derived / "exact_feature_mechanism_consistency_audit" / "exact_feature_mechanism_summary.json")
     signed_optical_loss = read_json(derived / "signed_optical_loss_mechanism_audit" / "signed_optical_loss_mechanism_summary.json")
     signed_loss_source_robustness = read_json(derived / "signed_loss_source_robustness_audit" / "signed_loss_source_robustness_summary.json")
+    echem_optical_source_residual = read_json(derived / "echem_optical_source_residual_audit" / "echem_optical_source_residual_summary.json")
     invariant_physics_rules = read_json(derived / "invariant_physics_rule_discovery" / "invariant_physics_rule_summary.json")
     agentic_current = read_json(derived / "agentic_current_hypothesis_tournament" / "agentic_current_hypothesis_tournament_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
@@ -426,6 +428,15 @@ def main() -> None:
     echem_resdict_deltas = top_items(first_summary(echem_residual_dictionary_fusion, "top_feature_set_deltas", []), 10)
     echem_resdict_acq_future8 = next((r for r in echem_resdict_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "acquisition_context"), {})
     echem_resdict_res_future8 = next((r for r in echem_resdict_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "residual_dictionary_plus_echem"), {})
+    echem_cond_resdict_metrics = top_items(first_summary(echem_conditioned_residual_dictionary, "top_metrics", []), 40)
+    echem_cond_resdict_deltas = top_items(first_summary(echem_conditioned_residual_dictionary, "top_deltas", []), 30)
+    echem_cond_resdict_context = top_items(first_summary(echem_conditioned_residual_dictionary, "top_context_fit_metrics", []), 20)
+    echem_cond_resdict_lc16 = next((r for r in echem_cond_resdict_metrics if r.get("split") == "leave_cycle" and r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "conditioned_residual_dictionary"), {})
+    echem_cond_resdict_ls16 = next((r for r in echem_cond_resdict_metrics if r.get("split") == "leave_source" and r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "conditioned_residual_dictionary"), {})
+    echem_cond_resdict_lc16_plus = next((r for r in echem_cond_resdict_metrics if r.get("split") == "leave_cycle" and r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "conditioned_residual_plus_echem_context"), {})
+    echem_cond_resdict_ls16_plus = next((r for r in echem_cond_resdict_metrics if r.get("split") == "leave_source" and r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "conditioned_residual_plus_echem_context"), {})
+    echem_cond_resdict_raw_ls16 = next((r for r in echem_cond_resdict_metrics if r.get("split") == "leave_source" and r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "residual_dictionary_raw"), {})
+    echem_cond_resdict_delta_ls16 = next((r for r in echem_cond_resdict_deltas if r.get("split") == "leave_source" and r.get("target") == "future_any_drop_within_16cycles" and r.get("comparison") == "conditioned_residual_dictionary_minus_residual_dictionary_raw"), {})
     acq_resid_metrics = top_items(first_summary(acquisition_residualized_video, "top_metrics", []), 40)
     acq_resid_deltas = top_items(first_summary(acquisition_residualized_video, "top_feature_set_deltas", []), 14)
     acq_resid_tests = top_items(first_summary(acquisition_residualized_video, "top_context_residual_feature_tests", []), 12)
@@ -526,6 +537,15 @@ def main() -> None:
     signed_robust_optical_source_mean = signed_robust("signed_optical_loss_axis", "source_mean_only")
     signed_robust_optical_rank = signed_robust("signed_optical_loss_axis", "within_source_rank")
     signed_robust_echem_resid = signed_robust("echem_degraded_state_axis", "source_residual")
+    echem_optical_direct = top_items(first_summary(echem_optical_source_residual, "top_future16_direct_metrics", []), 20)
+    echem_optical_models = top_items(first_summary(echem_optical_source_residual, "top_future16_model_metrics", []), 20)
+    echem_optical_rules = top_items(first_summary(echem_optical_source_residual, "top_rules", []), 20)
+    echem_optical_candidates = top_items(first_summary(echem_optical_source_residual, "top_candidates", []), 12)
+    echem_optical_resid_direct = next((r for r in echem_optical_direct if r.get("feature_set") == "echem_plus_optical_source_residual"), {})
+    echem_optical_front_direct = next((r for r in echem_optical_direct if r.get("feature_set") == "echem_optical_front_residual"), {})
+    echem_optical_resid_model = next((r for r in echem_optical_models if r.get("feature_set") == "echem_plus_optical_source_residual"), {})
+    echem_resid_direct = next((r for r in echem_optical_direct if r.get("feature_set") == "echem_source_residual"), {})
+    optical_resid_direct = next((r for r in echem_optical_direct if r.get("feature_set") == "optical_source_residual"), {})
     balanced_future_top_acq_resid = balanced_future_acq_resid[0] if balanced_future_acq_resid else {}
     temporal_future8 = (first_summary(temporal_directionality, "best_future8_model", []) or [{}])[0]
     temporal_past8 = (first_summary(temporal_directionality, "best_past8_model", []) or [{}])[0]
@@ -779,6 +799,7 @@ def main() -> None:
         f"- Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC {fmt(learned_residual_future8.get('roc_auc'))} versus PCA-video {fmt(learned_residual_pca_future8.get('roc_auc'))} and handcrafted scalar {fmt(learned_residual_hand_future8.get('roc_auc'))}; future16 learned_all remains weak at AUC {fmt(learned_residual_future16.get('roc_auc'))} versus handcrafted {fmt(learned_residual_hand_future16.get('roc_auc'))}.",
         f"- Residual dictionary embedding learns label-free next-frame residual bases over {first_summary(residual_dictionary_embedding, 'n_embedding_rows', 0)} ROI videos; residual-dictionary future8 AUC is {fmt(residual_dict_future8.get('roc_auc'))} with p={fmt(residual_dict_future8.get('empirical_p_ge_observed'))}, and residual_dictionary_plus_handcrafted reaches AUC {fmt(residual_dict_plus_future8.get('roc_auc'))}.",
         f"- Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to {fmt(echem_resdict_res_future8.get('roc_auc'))}, while acquisition/context alone reaches {fmt(echem_resdict_acq_future8.get('roc_auc'))}; treat this as context-sensitive representation evidence rather than deployable warning.",
+        f"- Echem-conditioned residual-dictionary audit converts post-hoc fusion into a split-specific residual objective: conditioned residual dictionary future16 reaches leave-source AUC {fmt(echem_cond_resdict_ls16.get('roc_auc'))} versus raw residual dictionary {fmt(echem_cond_resdict_raw_ls16.get('roc_auc'))} (delta {fmt(echem_cond_resdict_delta_ls16.get('delta_roc_auc'))}), while leave-cycle conditioned residual+echem reaches AUC {fmt(echem_cond_resdict_lc16_plus.get('roc_auc'))}; future8 remains context dominated.",
         f"- Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC {fmt(acq_resid_context8.get('roc_auc'))}, raw all-video reaches {fmt(acq_resid_raw_video8.get('roc_auc'))}, and context-residualized all-video alone reaches {fmt(acq_resid_video_only8.get('roc_auc'))}; future16 raw handcrafted reaches AUC {fmt(acq_resid_raw_hand16.get('roc_auc'))} but residualized all-video alone is {fmt(acq_resid_video_only16.get('roc_auc'))}.",
         f"- Acquisition-residualized video/echem warning audit executes the top tournament experiment: leave-cycle future16 residualized video_plus_echem reaches AUC {fmt(acq_echem_cycle_future16.get('roc_auc'))} versus acquisition-only {fmt(acq_echem_cycle_acq_future16.get('roc_auc'))}, but leave-source residualized AUC falls to {fmt(acq_echem_source_future16.get('roc_auc'))} versus acquisition-only {fmt(acq_echem_source_acq_future16.get('roc_auc'))}.",
         f"- Source-domain video/echem adaptation partially rescues leave-source future16 transfer: source-centered video_plus_echem reaches AUC {fmt(source_domain_centered.get('roc_auc'))} versus acquisition-only {fmt(source_domain_acq.get('roc_auc'))}, while CORAL reaches only {fmt(source_domain_coral.get('roc_auc'))}.",
@@ -789,6 +810,7 @@ def main() -> None:
         f"- Exact-feature mechanism consistency audit is a useful falsification check: exact_optical_loss_score predicts future16 with AUC {fmt(exact_mech_loss_metric.get('oriented_auc'))} but has source eta2 {fmt(exact_mech_loss_metric.get('source_eta2'))}; the primary particle-vs-context descriptor has weak radius-slope linkage after source residualization (rho {fmt(exact_mech_primary_radius_corr.get('source_residual_spearman_rho'))}).",
         f"- Signed optical-loss mechanism audit converts the pattern into interpretable axes: combined_loss_mechanism_axis future16 AUC is {fmt(signed_loss_top_axis.get('oriented_auc'))} but source eta2 is {fmt(signed_loss_top_axis.get('source_eta2'))}; leave-source all-axis AUC is {fmt(signed_loss_best_model16.get('roc_auc'))}, while optical-only AUC is {fmt((next((r for r in signed_loss_models if r.get('target') == 'future_any_drop_within_16cycles' and r.get('feature_set') == 'optical_loss_only'), {}) or {}).get('roc_auc'))}.",
         f"- Signed-loss source robustness audit shows why this remains guarded: combined-axis raw/source-mean/within-source-rank AUCs are {fmt(signed_robust_combined_raw.get('oriented_auc'))}/{fmt(signed_robust_combined_source_mean.get('oriented_auc'))}/{fmt(signed_robust_combined_rank.get('oriented_auc'))}; optical-axis raw/source-mean/within-source-rank AUCs are {fmt(signed_robust_optical_raw.get('oriented_auc'))}/{fmt(signed_robust_optical_source_mean.get('oriented_auc'))}/{fmt(signed_robust_optical_rank.get('oriented_auc'))}.",
+        f"- Source-residual echem/optical audit finds low-source-eta residual evidence: echem+optical+front direct AUC {fmt(echem_optical_front_direct.get('oriented_auc'))}, echem+optical direct AUC {fmt(echem_optical_resid_direct.get('oriented_auc'))}, and leave-source echem+optical residual AUC {fmt(echem_optical_resid_model.get('roc_auc'))}.",
         f"- Invariant sparse rule discovery finds review-prioritization rules rather than a standalone predictor: best leave-source rule {invariant_rule_best.get('terms', 'NA')} covers {fmt(invariant_rule_best.get('n_covered'), 0)}/{fmt(invariant_rule_best.get('n_eval'), 0)} rows with precision {fmt(invariant_rule_best.get('precision'))}, lift {fmt(invariant_rule_best.get('lift'))}, and source-positive hits in {fmt(invariant_rule_best.get('n_sources_with_positive_hits'), 0)} sources.",
         f"- Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as {first_summary(agentic_current, 'top_hypothesis', {}).get('title', 'NA')} with score {fmt(first_summary(agentic_current, 'top_hypothesis', {}).get('tournament_score'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
@@ -1757,6 +1779,30 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Echem-Conditioned Residual Dictionary",
+        "",
+        f"- Rows/cycles/sources: {first_summary(echem_conditioned_residual_dictionary, 'n_rows', 0)} / {first_summary(echem_conditioned_residual_dictionary, 'n_cycles', 0)} / {first_summary(echem_conditioned_residual_dictionary, 'n_sources', 0)}",
+        f"- Residual/context features: {first_summary(echem_conditioned_residual_dictionary, 'n_residual_features', 0)} / {first_summary(echem_conditioned_residual_dictionary, 'n_conditioning_features', 0)}",
+        f"- Feature set sizes: {first_summary(echem_conditioned_residual_dictionary, 'feature_set_sizes', {})}",
+        f"- Future16 conditioned residual dictionary leave-cycle/leave-source AUC: {fmt(echem_cond_resdict_lc16.get('roc_auc'))} / {fmt(echem_cond_resdict_ls16.get('roc_auc'))}",
+        f"- Future16 conditioned residual+echem leave-cycle/leave-source AUC: {fmt(echem_cond_resdict_lc16_plus.get('roc_auc'))} / {fmt(echem_cond_resdict_ls16_plus.get('roc_auc'))}",
+    ]
+    for row in echem_cond_resdict_metrics[:10]:
+        report_lines.append(
+            f"- Echem-conditioned resdict {row.get('split')} {row.get('target')} {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, p={fmt(row.get('empirical_p_ge_observed'))}, n={fmt(row.get('n_eval'), 0)}"
+        )
+    for row in echem_cond_resdict_deltas[:8]:
+        report_lines.append(
+            f"- Echem-conditioned resdict delta {row.get('split')} {row.get('target')} {row.get('comparison')}: delta AUC {fmt(row.get('delta_roc_auc'))}, delta AP {fmt(row.get('delta_average_precision'))}, delta rho {fmt(row.get('delta_spearman_rho'))}"
+        )
+    for row in echem_cond_resdict_context[:6]:
+        report_lines.append(
+            f"- Context fit {row.get('split')} {row.get('feature')}: R2 {fmt(row.get('r2'))}, rho {fmt(row.get('spearman_rho'))}, residual std {fmt(row.get('residual_std'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(echem_conditioned_residual_dictionary, 'guardrail', 'Echem-conditioned residual dictionary unavailable.')}")
+
+    report_lines += [
+        "",
         "## Acquisition-Residualized Video Physics Benchmark",
         "",
         f"- Rows/cycles: {first_summary(acquisition_residualized_video, 'n_rows', 0)} / {first_summary(acquisition_residualized_video, 'n_cycles', 0)}",
@@ -1958,6 +2004,29 @@ def main() -> None:
             f"- Source influence {row.get('axis')} drop {row.get('dropped_source')}: full AUC {fmt(row.get('full_oriented_auc'))}, drop-source AUC {fmt(row.get('drop_source_oriented_auc'))}, delta {fmt(row.get('delta_auc_minus_full'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(signed_loss_source_robustness, 'guardrail', 'Signed-loss source robustness audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Echem/Optical Source-Residual Audit",
+        "",
+        f"- Rows/future16 labeled/cycles/sources: {first_summary(echem_optical_source_residual, 'n_rows', 0)} / {first_summary(echem_optical_source_residual, 'n_labeled_future16', 0)} / {first_summary(echem_optical_source_residual, 'n_cycles', 0)} / {first_summary(echem_optical_source_residual, 'n_sources', 0)}",
+        f"- Direct future16 echem / optical / echem+optical residual AUCs: {fmt(echem_resid_direct.get('oriented_auc'))} / {fmt(optical_resid_direct.get('oriented_auc'))} / {fmt(echem_optical_resid_direct.get('oriented_auc'))}",
+        f"- Direct echem+optical+front residual AUC/AP/source eta2: {fmt(echem_optical_front_direct.get('oriented_auc'))} / {fmt(echem_optical_front_direct.get('average_precision'))} / {fmt(echem_optical_front_direct.get('source_eta2'))}",
+        f"- Leave-source echem+optical residual model AUC/AP: {fmt(echem_optical_resid_model.get('roc_auc'))} / {fmt(echem_optical_resid_model.get('average_precision'))}",
+    ]
+    for row in echem_optical_direct[:8]:
+        report_lines.append(
+            f"- Direct source-residual set {row.get('feature_set')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, source eta2 {fmt(row.get('source_eta2'))}, p={fmt(row.get('spearman_p'))}"
+        )
+    for row in echem_optical_models[:8]:
+        report_lines.append(
+            f"- Leave-source residual model {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, rho {fmt(row.get('spearman_rho'))}"
+        )
+    for row in echem_optical_rules[:6]:
+        report_lines.append(
+            f"- Residual rule {row.get('target')} {row.get('rule')}: precision {fmt(row.get('precision'))}, recall {fmt(row.get('recall'))}, lift {fmt(row.get('lift'))}, source-positive hits {fmt(row.get('n_sources_with_positive_hits'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(echem_optical_source_residual, 'guardrail', 'Echem/optical source-residual audit unavailable.')}")
 
     report_lines += [
         "",
@@ -2644,6 +2713,18 @@ def main() -> None:
             "top_feature_set_deltas": echem_resdict_deltas,
             "guardrail": first_summary(echem_residual_dictionary_fusion, "guardrail"),
         },
+        "echem_conditioned_residual_dictionary": {
+            "n_rows": first_summary(echem_conditioned_residual_dictionary, "n_rows"),
+            "n_cycles": first_summary(echem_conditioned_residual_dictionary, "n_cycles"),
+            "n_sources": first_summary(echem_conditioned_residual_dictionary, "n_sources"),
+            "n_residual_features": first_summary(echem_conditioned_residual_dictionary, "n_residual_features"),
+            "n_conditioning_features": first_summary(echem_conditioned_residual_dictionary, "n_conditioning_features"),
+            "feature_set_sizes": first_summary(echem_conditioned_residual_dictionary, "feature_set_sizes", {}),
+            "top_metrics": echem_cond_resdict_metrics,
+            "top_deltas": echem_cond_resdict_deltas,
+            "top_context_fit_metrics": echem_cond_resdict_context,
+            "guardrail": first_summary(echem_conditioned_residual_dictionary, "guardrail"),
+        },
         "acquisition_residualized_video_physics_benchmark": {
             "n_rows": first_summary(acquisition_residualized_video, "n_rows"),
             "n_cycles": first_summary(acquisition_residualized_video, "n_cycles"),
@@ -2769,6 +2850,17 @@ def main() -> None:
             "largest_negative_source_influence": signed_source_influence,
             "source_summary": signed_source_summary,
             "guardrail": first_summary(signed_loss_source_robustness, "guardrail"),
+        },
+        "echem_optical_source_residual_audit": {
+            "n_rows": first_summary(echem_optical_source_residual, "n_rows"),
+            "n_labeled_future16": first_summary(echem_optical_source_residual, "n_labeled_future16"),
+            "n_cycles": first_summary(echem_optical_source_residual, "n_cycles"),
+            "n_sources": first_summary(echem_optical_source_residual, "n_sources"),
+            "top_future16_direct_metrics": echem_optical_direct,
+            "top_future16_model_metrics": echem_optical_models,
+            "top_rules": echem_optical_rules,
+            "top_candidates": echem_optical_candidates,
+            "guardrail": first_summary(echem_optical_source_residual, "guardrail"),
         },
         "agentic_current_hypothesis_tournament": {
             "n_hypotheses": first_summary(agentic_current, "n_hypotheses"),
