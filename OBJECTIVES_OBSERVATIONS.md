@@ -4631,3 +4631,28 @@ Results:
 Interpretation: automatic component repair does not solve the front-identity blocker. The raw fragmented mask remains the most linearly coherent q70 radius2 readout, while component-only masks behave like unstable component switching. This strengthens the conclusion that `cycle78_rank22_obj2` needs manual front tracing/acceptance before diffusion wording, rather than another automatic mask-cleaning shortcut.
 
 Guardrail: this is an automatic connected-component retracking diagnostic. It does not validate front identity, accept manual labels, or create calibrated diffusion coefficients.
+
+## 2026-05-22 Calibration Provenance Evidence Audit
+
+Added `scripts/tier4_calibration_provenance_evidence_audit.py` and ran it on Isambard to make the spatial-calibration blocker explicit across raw HDF5 metadata, project PPTX/XLSX/CSV/text files, and raw movie dimensions. This is a provenance audit only; it does not change any front-tracking values.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit`
+- `derived_local/calibration_provenance_evidence_audit`
+- `calibration_provenance_file_inventory.csv`
+- `calibration_provenance_evidence_statements.csv`
+- `calibration_provenance_summary.json`
+
+Results:
+
+- The audit inventoried 61 files: 33 raw HDF5 files, 3 presentations, 2 spreadsheets, 12 CSV files, 2 project observation notes, and 9 other text notes.
+- All raw movies share spatial dimensions 1200 x 1920 px.
+- No raw HDF5 explicit spatial-scale statement was found: 0 raw HDF5 spatial-scale statements and 0 raw near-96 nm/px statements.
+- No contradictory spatial-scale statement was found.
+- Independent slide evidence supports the provisional scale: `Degradation Paper Outline.pptx` slide 3 states 96 nm pixel size and 180 x 120 um FoV, while FoV divided by the raw movie dimensions gives 93.75 nm/px horizontally and 100 nm/px vertically.
+- The highest independent evidence class remains `slide_text`, not raw microscope metadata. The provenance status is `slide_or_project_text_supported_but_raw_metadata_blocked`.
+
+Interpretation: the 96 nm/px scale is plausible and internally compatible with the slide FoV and raw movie dimensions, but it is not yet proven from raw microscope metadata. Calibrated diffusion constants remain blocked by spatial provenance, manual front identity/QC, timing stability, and control-balanced diffusion sanity. Current diffusion-like outputs should continue to be described as apparent optical-front proxies.
+
+Guardrail: this audit strengthens the documentation of the calibration blocker; it does not clear the blocker or create publication-ready diffusion coefficients.

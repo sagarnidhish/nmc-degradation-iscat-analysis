@@ -1,0 +1,115 @@
+{
+  "contradictory_examples": [],
+  "file_source_class_counts": {
+    "csv": 4,
+    "electrochemistry_csv": 8,
+    "presentation": 3,
+    "project_observation_note": 2,
+    "raw_hdf5": 33,
+    "spreadsheet": 2,
+    "text_note": 9
+  },
+  "highest_scale_evidence_strength": "slide_text",
+  "interpretation": "The 96 nm/px assumption is supported only by slide/project-text evidence and by FoV divided by raw movie dimensions being approximately compatible with that scale. No raw HDF5 attribute or microscope metadata statement was found, so calibrated diffusion constants remain blocked; use apparent optical-front units.",
+  "n_contradictory_scale_statements": 0,
+  "n_evidence_statements": 38,
+  "n_files_inventoried": 61,
+  "n_h5_files_scanned": 33,
+  "n_near_96nm_px_statements": 21,
+  "n_raw_h5_calibration_like_statements": 0,
+  "n_raw_h5_spatial_scale_statements": 0,
+  "near_96nm_px_examples": [
+    {
+      "channel": "slide_xml",
+      "evidence_strength": "slide_text",
+      "inferred_nm_per_px": 93.75,
+      "location": "ppt/slides/slide2.xml",
+      "px_dimension": 1920.0,
+      "relative_path": "alek_jiho_nmc_deg/Battery_Degradation_Project/Charge Photometry Meeting 1902.pptx",
+      "scale_status": "near_96nm_px",
+      "snippet": "Motivation Methods: Wide field-of-view (180x120um) optical microscope Optical coin cell (under long cycling especially) Automated statistical analysis of electrode scale (de)lithiation behaviour Material and E",
+      "source_class": "presentation",
+      "statement_type": "fov_width_div_movie_width",
+      "unit": "um / px",
+      "value": 180.0
+    },
+    {
+      "channel": "slide_xml",
+      "evidence_strength": "slide_text",
+      "inferred_nm_per_px": 100.0,
+      "location": "ppt/slides/slide2.xml",
+      "px_dimension": 1200.0,
+      "relative_path": "alek_jiho_nmc_deg/Battery_Degradation_Project/Charge Photometry Meeting 1902.pptx",
+      "scale_status": "near_96nm_px",
+      "snippet": "Motivation Methods: Wide field-of-view (180x120um) optical microscope Optical coin cell (under long cycling especially) Automated statistical analysis of electrode scale (de)lithiation behaviour Material and E",
+      "source_class": "presentation",
+      "statement_type": "fov_height_div_movie_height",
+      "unit": "um / px",
+      "value": 120.0
+    },
+    {
+      "channel": "slide_xml",
+      "evidence_strength": "slide_text",
+      "inferred_nm_per_px": 96.0,
+      "location": "ppt/slides/slide3.xml",
+      "px_dimension": null,
+      "relative_path": "alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
+      "scale_status": "near_96nm_px",
+      "snippet": "ctrode (Li-metal here). MiniSCAT set-up diagram. We present an improved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active material mass loading acquired using the new m",
+      "source_class": "presentation",
+      "statement_type": "explicit_nm_per_pixel",
+      "unit": "nm/px",
+      "value": 96.0
+    },
+    {
+      "channel": "slide_xml",
+      "evidence_strength": "slide_text",
+      "inferred_nm_per_px": 93.75,
+      "location": "ppt/slides/slide3.xml",
+      "px_dimension": 1920.0,
+      "relative_path": "alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
+      "scale_status": "near_96nm_px",
+      "snippet": "e). MiniSCAT set-up diagram. We present an improved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active material mass loading acquired using the new microscope (b). Two",
+      "source_class": "presentation",
+      "statement_type": "fov_width_div_movie_width",
+      "unit": "um / px",
+      "value": 180.0
+    },
+    {
+      "channel": "slide_xml",
+      "evidence_strength": "slide_text",
+      "inferred_nm_per_px": 100.0,
+      "location": "ppt/slides/slide3.xml",
+      "px_dimension": 1200.0,
+      "relative_path": "alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
+      "scale_status": "near_96nm_px",
+      "snippet": "e). MiniSCAT set-up diagram. We present an improved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active material mass loading acquired using the new microscope (b). Two",
+      "source_class": "presentation",
+      "statement_type": "fov_height_div_movie_height",
+      "unit": "um / px",
+      "value": 120.0
+    }
+  ],
+  "near_fraction_tolerance": 0.1,
+  "outputs": {
+    "evidence_statements": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit/calibration_provenance_evidence_statements.csv",
+    "file_inventory": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit/calibration_provenance_file_inventory.csv",
+    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit/README.md",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit/calibration_provenance_summary.json"
+  },
+  "provenance_status": "slide_or_project_text_supported_but_raw_metadata_blocked",
+  "statement_type_counts": {
+    "explicit_nm_per_pixel": 9,
+    "fov_height_div_movie_height": 6,
+    "fov_pair": 6,
+    "fov_width_div_movie_width": 6,
+    "time_or_exposure_statement": 11
+  },
+  "target_nm_per_px": 96.0,
+  "unique_movie_spatial_shapes": [
+    [
+      1200,
+      1920
+    ]
+  ]
+}
