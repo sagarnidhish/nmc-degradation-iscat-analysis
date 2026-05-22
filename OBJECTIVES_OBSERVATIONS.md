@@ -4180,3 +4180,30 @@ Results:
 Interpretation: adding optical-flow transport and masked-rollout difficulty to existing phase/front/kinetic evidence improves the near-pre-event ranking signal under source-stratified permutation. The strongest defensible output is now a prioritized manual-review/fusion ledger, not a standalone automatic degradation detector. The source-balanced fusion result supports the idea that near-event particle regions show coupled apparent transport, prediction difficulty, and phase/front evidence before degradation events.
 
 Guardrail: fusion scores join automatic descriptors from history-derived particle ROI crops. They are ranking and hypothesis-generation tools only; they are not manual QC labels, calibrated phase-boundary velocities, material fluxes, diffusion coefficients, or causal degradation proof.
+
+## 2026-05-22 Source-Balanced Transport Mechanism Dossier
+
+Added `scripts/tier4_source_balanced_transport_mechanism_dossier.py` and ran it on Isambard to join the source-balanced optical-flow transport audit, manual-QC decision packet, observable-forecast descriptors, and front/kinetic concordance audit into one candidate-level mechanism review dossier.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_dossier`
+- `derived_local/source_balanced_transport_mechanism_dossier`
+- `source_balanced_transport_mechanism_dossier.csv`
+- `source_balanced_transport_mechanism_top40.csv`
+- `source_balanced_transport_mechanism_immediate_review.csv`
+- `source_balanced_transport_mechanism_source_summary.csv`
+- `source_balanced_transport_mechanism_tier_summary.csv`
+- `source_balanced_transport_mechanism_summary.json`
+
+Results:
+
+- Ranked 128 ROI rows across 64 cycles and 14 sources; 6 rows land in the immediate-review queue and 0 rows pass the automatic diffusion-claim gate.
+- Review tiers are 103 routine/context-control rows, 19 guarded transport-hypothesis rows, 5 priority transport-mechanism rows, and 1 priority manual transport/front row.
+- The top mechanism candidate is `source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723`, a near-pre-event row at cycle 152 with `transport_mechanism_score=0.892`, future8/future16 positives, visual assets present, and diffusion claims blocked.
+- Top-40 event bins are enriched for near-pre-event rows: 22 near-pre, 7 post-event, 6 far-pre, 3 no-near-event controls, and 2 mid-pre.
+- Source `17_c2_x10_HighHighCOV_150723` has the strongest concentration of priority rows: max mechanism score 0.892, 8 near-pre rows, and 4 priority rows. Source `9_c2_x10_010723` contributes two additional priority near-pre rows.
+
+Interpretation: the dossier converts several separate AI/physics proxies into a practical manual-review ledger. The strongest candidates show coupled apparent transport, source-residual transport, front/kinetic concordance, future-observable tail signal, and QC evidence before abrupt optical drops, but the output is still a ranking/hypothesis tool rather than a mechanistic claim.
+
+Guardrail: automatic optical flow, front proxies, and fusion scores are not calibrated phase-boundary velocities, material fluxes, diffusion coefficients, or causal degradation proof. Diffusion and transport-mechanism claims remain blocked until strict gates and manual validation pass.

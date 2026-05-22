@@ -207,6 +207,7 @@ def main() -> None:
     source_balanced_pre_event_observable_forecast = read_json(derived / "source_balanced_pre_event_observable_forecast" / "source_balanced_pre_event_observable_forecast_summary.json")
     source_balanced_pre_event_optical_flow_transport = read_json(derived / "source_balanced_pre_event_optical_flow_transport_audit" / "source_balanced_pre_event_optical_flow_transport_summary.json")
     source_balanced_pre_event_transport_kinetic_fusion = read_json(derived / "source_balanced_pre_event_transport_kinetic_fusion_audit" / "source_balanced_pre_event_transport_kinetic_fusion_summary.json")
+    source_balanced_transport_mechanism = read_json(derived / "source_balanced_transport_mechanism_dossier" / "source_balanced_transport_mechanism_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
@@ -754,6 +755,9 @@ def main() -> None:
     transport_fusion_near_post = next((r for r in transport_fusion_best_by_target if r.get("target") == "near_vs_post_control"), {})
     transport_fusion_top_model = transport_fusion_models[0] if transport_fusion_models else {}
     transport_fusion_top_candidate = transport_fusion_candidates[0] if transport_fusion_candidates else {}
+    transport_mechanism_top = first_summary(source_balanced_transport_mechanism, "top_candidate", {}) or {}
+    transport_mechanism_tiers = top_items(first_summary(source_balanced_transport_mechanism, "tier_counts", []), 12)
+    transport_mechanism_sources = top_items(first_summary(source_balanced_transport_mechanism, "source_summary_top", []), 12)
     acq_echem_cycle_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized"), {})
     acq_echem_cycle_bal_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized_cycle_balanced"), {})
     acq_echem_cycle_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
@@ -2405,6 +2409,26 @@ def main() -> None:
             f"- Fusion candidate {row.get('roi_id', 'NA')} {row.get('event_relative_bin', 'NA')}: priority {fmt(row.get('fusion_review_priority_score'))}, source-guarded {fmt(row.get('source_guarded_transport_kinetic_front_score'))}, action {row.get('manual_qc_action_tier', 'NA')}"
         )
     report_lines.append(f"- Guardrail: {first_summary(source_balanced_pre_event_transport_kinetic_fusion, 'guardrail', 'Source-balanced pre-event transport/kinetic fusion audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Source-Balanced Transport Mechanism Dossier",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_balanced_transport_mechanism, 'n_rows', 0)} / {first_summary(source_balanced_transport_mechanism, 'n_cycles', 0)} / {first_summary(source_balanced_transport_mechanism, 'n_sources', 0)}",
+        f"- Immediate-review rows / automatic diffusion-claim candidates: {fmt(first_summary(source_balanced_transport_mechanism, 'n_immediate_review'), 0)} / {fmt(first_summary(source_balanced_transport_mechanism, 'n_diffusion_claim_candidates'), 0)}",
+        f"- Top40 event-bin counts: {first_summary(source_balanced_transport_mechanism, 'top40_event_bin_counts', {})}",
+        f"- Top mechanism candidate: {transport_mechanism_top.get('roi_id', 'NA')} {transport_mechanism_top.get('event_relative_bin', 'NA')} score {fmt(transport_mechanism_top.get('transport_mechanism_score'))}, tier {transport_mechanism_top.get('transport_review_tier', 'NA')}, source {transport_mechanism_top.get('source_stem', 'NA')}, cycle {fmt(transport_mechanism_top.get('cycleNo'), 0)}",
+        f"- Top candidate future labels and guardrail: future8={fmt(transport_mechanism_top.get('future_any_drop_within_8cycles'), 0)}, future16={fmt(transport_mechanism_top.get('future_any_drop_within_16cycles'), 0)}, diffusion blocked={transport_mechanism_top.get('diffusion_claim_blocked', 'NA')}, visual assets={transport_mechanism_top.get('has_visual_assets', 'NA')}",
+    ]
+    for row in transport_mechanism_tiers:
+        report_lines.append(
+            f"- Mechanism review tier {row.get('transport_review_tier', 'NA')}: n={fmt(row.get('n'), 0)}"
+        )
+    for row in transport_mechanism_sources[:6]:
+        report_lines.append(
+            f"- Mechanism source {row.get('source_stem', 'NA')}: max score {fmt(row.get('max_transport_mechanism_score'))}, near-pre rows {fmt(row.get('n_near_pre'), 0)}, priority rows {fmt(row.get('n_priority'), 0)}, median source-residual transport {fmt(row.get('median_transport_source_residual_score'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_transport_mechanism, 'guardrail', 'Source-balanced transport mechanism dossier unavailable.')}")
 
     report_lines += [
         "",
@@ -4194,6 +4218,19 @@ def main() -> None:
             "top_source_residual_event_tests": optical_flow_source_resid_tests,
             "best_source_residual_test": optical_flow_source_resid_best,
             "guardrail": first_summary(source_balanced_pre_event_optical_flow_transport, "guardrail"),
+        },
+        "source_balanced_transport_mechanism_dossier": {
+            "n_rows": first_summary(source_balanced_transport_mechanism, "n_rows"),
+            "n_cycles": first_summary(source_balanced_transport_mechanism, "n_cycles"),
+            "n_sources": first_summary(source_balanced_transport_mechanism, "n_sources"),
+            "n_immediate_review": first_summary(source_balanced_transport_mechanism, "n_immediate_review"),
+            "n_diffusion_claim_candidates": first_summary(source_balanced_transport_mechanism, "n_diffusion_claim_candidates"),
+            "tier_counts": transport_mechanism_tiers,
+            "top40_event_bin_counts": first_summary(source_balanced_transport_mechanism, "top40_event_bin_counts", {}),
+            "top_candidate": transport_mechanism_top,
+            "source_summary_top": transport_mechanism_sources,
+            "outputs": first_summary(source_balanced_transport_mechanism, "outputs", {}),
+            "guardrail": first_summary(source_balanced_transport_mechanism, "guardrail"),
         },
         "source_domain_video_echem_adaptation_audit": {
             "n_rows": first_summary(source_domain_video_echem, "n_rows"),

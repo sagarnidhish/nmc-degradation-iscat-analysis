@@ -1554,6 +1554,25 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Fusion candidate source_balanced_cycle141_rank22_obj1_16_c2_x10_HighHighCOV_130723 mid_pre_event_9_16: priority 2.712, source-guarded 2.076, action routine_or_low_concordance
 - Guardrail: Fusion scores join automatic transport, rollout, front, and kinetic descriptors from history-derived particle ROI crops. They are ranking and source-aware hypothesis-generation tools, not manual QC labels, calibrated phase-boundary velocities, diffusion coefficients, or causal degradation proof.
 
+## Source-Balanced Transport Mechanism Dossier
+
+- Rows/cycles/sources: 128 / 64 / 14
+- Immediate-review rows / automatic diffusion-claim candidates: 6 / 0
+- Top40 event-bin counts: {'far_pre_event_17_32': 6, 'mid_pre_event_9_16': 2, 'near_pre_event_1_8': 22, 'no_near_event_control': 3, 'post_event_1_16': 7}
+- Top mechanism candidate: source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723 near_pre_event_1_8 score 0.892, tier priority_transport_mechanism_review, source 17_c2_x10_HighHighCOV_150723, cycle 152
+- Top candidate future labels and guardrail: future8=1, future16=1, diffusion blocked=True, visual assets=True
+- Mechanism review tier routine_or_context_control: n=103
+- Mechanism review tier guarded_transport_hypothesis_review: n=19
+- Mechanism review tier priority_transport_mechanism_review: n=5
+- Mechanism review tier priority_manual_transport_front_review: n=1
+- Mechanism source 17_c2_x10_HighHighCOV_150723: max score 0.892, near-pre rows 8, priority rows 4, median source-residual transport 0.511
+- Mechanism source 5_c2_x10_260623: max score 0.807, near-pre rows 0, priority rows 0, median source-residual transport 0.487
+- Mechanism source 9_c2_x10_010723: max score 0.800, near-pre rows 8, priority rows 2, median source-residual transport 0.654
+- Mechanism source 14_c2_x10_HighCOV_110723: max score 0.748, near-pre rows 0, priority rows 0, median source-residual transport 0.463
+- Mechanism source 7_c2_x10_290623: max score 0.743, near-pre rows 4, priority rows 0, median source-residual transport 0.352
+- Mechanism source 12_c2_x10_070723: max score 0.714, near-pre rows 8, priority rows 0, median source-residual transport 0.347
+- Guardrail: This dossier ranks apparent transport/front/kinetic candidates for manual review. Automatic optical flow and front proxies are not calibrated phase-boundary velocities, material fluxes, or diffusion coefficients; diffusion claims remain blocked unless strict gates and manual validation pass.
+
 ## Source-Balanced Degradation Mode Audit
 
 - Rows/cycles/sources/features: 96 / 48 / 14 / 18
