@@ -2275,3 +2275,30 @@ Key result:
 - Spatial bin label enrichment is not significant: x-bin p=1.0, y-bin p=0.846, xy-region p=0.982.
 
 Interpretation: the balanced future-drop physics signal is useful for review prioritization, but it is not yet a context-independent detector. More balanced acquisition design and manual ROI/front QC are needed before claiming direct video physics as a deployable degradation predictor.
+
+## 2026-05-22 Particle-Masked Video Embedding Audit
+
+Added and ran a self-supervised masked video embedding audit over the existing ROI tensor cohorts on Isambard:
+
+`python scripts/tier4_masked_video_embedding_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_video_embedding_audit --n-permutation 80`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_video_embedding_audit`
+
+Local compact copy:
+
+`derived_local/masked_video_embedding_audit`
+
+Key result:
+
+- Extracted particle-prior masked temporal and spatial-temporal descriptors for 172 ROI tensors: 72 balanced future-drop ROIs, 52 selected event/control ROIs, and 48 transfer-ranked ROIs.
+- The embedding uses the same history-derived particle-support prior and mask-stability logic as the ROI-only guardrail, then builds PCA components from prior-masked video bins plus trace/mask descriptors. Heavy NPZ tensors stay remote.
+- On the balanced future cohort, leave-cycle grouped logistic scoring over masked video embedding/trace features reaches AUC=0.816 and AP=0.865 across 72 rows (36/36 weak future8 positives/negatives).
+- The 80-permutation cycle-label null gives null mean AUC=0.469, p95=0.641, empirical p=0.0123.
+- The older selected event/control split is much weaker under the same embedding readout: AUC=0.588 and AP=0.530 across 52 rows (24 event / 28 control), which is a useful guardrail against overgeneralizing the balanced future result.
+- The strongest univariate masked-video features for weak future8 are increasing particle-region intensity heterogeneity and edge/gradient energy: `particle_std_last_minus_first` has oriented AUC=0.891 and Mann-Whitney p=1.17e-8; `particle_std_slope` has oriented AUC=0.884 and p=2.11e-8; `particle_gradient_slope` has oriented AUC=0.813 and p=4.95e-6.
+- Unsupervised clusters show coherent review groups: cluster 6 is entirely weak future8-positive among labeled balanced rows (future8 positive fraction 1.0, prototype `transfer_ranked::cycle152_rank5_obj2`), while cluster 2 is future8-negative among labeled balanced rows (fraction 0.0, prototype `selected_event_control::cycle156_rank8_obj10`).
+
+Interpretation: this is the strongest particle-masked video-embedding evidence so far for weak future-drop triage, and it is closer to the requested AI-video objective than hand-picked scalar front proxies alone. It remains a weak-label and context-sensitive result: the synthesis context audit shows acquisition/spatial metadata can also predict the balanced future labels strongly, so these embeddings should drive review prioritization and model-design hypotheses rather than deployment or calibrated diffusion claims.
+

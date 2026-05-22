@@ -1,0 +1,3 @@
+target,group_col,feature_set,n_features,n_scored,n_positive_scored,n_negative_scored,pooled_oof_roc_auc,pooled_oof_average_precision
+future_any_drop_within_8cycles,cycleNo,masked_video_embedding_trace,72,72,36,36,0.816358024691358,0.8653451736313662
+event_vs_control,cycleNo,masked_video_embedding_trace,72,52,24,28,0.5877976190476191,0.5302119313174137

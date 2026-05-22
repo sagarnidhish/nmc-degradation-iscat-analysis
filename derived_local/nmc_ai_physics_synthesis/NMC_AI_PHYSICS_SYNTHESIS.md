@@ -98,6 +98,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Active-learning QC prioritization merges manual-QC, precursor, weak-model, front, and timing evidence into 97 review candidates; 47 have visual assets and 4 are immediate manual-QC picks, led by cycle116_rank7_obj37. No manual labels are assigned.
 - Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
+- Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
@@ -798,6 +799,20 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Balanced future context OOF physics_plus_acquisition_context random_forest: AUC 0.786, AP 0.841
 - Balanced future context OOF physics_plus_design_context logistic_l2: AUC 1.000, AP 1.000
 - Balanced future context OOF physics_plus_design_context random_forest: AUC 1.000, AP 1.000
+- Masked video embedding OOF future_any_drop_within_8cycles: AUC 0.816, AP 0.865, scored 72 rows (36/36 pos/neg)
+- Masked video embedding OOF event_vs_control: AUC 0.588, AP 0.530, scored 52 rows (24/28 pos/neg)
+- Masked video embedding future8 permutation null: observed AUC 0.816, null mean 0.469, p95 0.641, empirical p=0.012
+- Masked video embedding feature particle_std_last_minus_first: median positive-negative 0.007, oriented AUC 0.891, MW p=1.168e-08
+- Masked video embedding feature particle_std_slope: median positive-negative 0.009, oriented AUC 0.884, MW p=2.107e-08
+- Masked video embedding feature particle_gradient_slope: median positive-negative 0.002, oriented AUC 0.813, MW p=4.951e-06
+- Masked video embedding feature particle_gradient_last_minus_first: median positive-negative 0.001, oriented AUC 0.792, MW p=2.123e-05
+- Masked video embedding feature particle_std_diff_q10: median positive-negative -0.001, oriented AUC 0.775, MW p=5.944e-05
+- Masked video embedding feature particle_vs_context_mean_last_minus_first: median positive-negative 0.002, oriented AUC 0.773, MW p=6.856e-05
+- Masked video embedding cluster 0: n=33, future8 positive fraction 0.235, prototype transfer_ranked::cycle147_rank11_obj4
+- Masked video embedding cluster 1: n=46, future8 positive fraction 0.364, prototype selected_event_control::cycle60_rank1_obj1
+- Masked video embedding cluster 2: n=11, future8 positive fraction 0.000, prototype selected_event_control::cycle156_rank8_obj10
+- Masked video embedding cluster 3: n=15, future8 positive fraction 0.857, prototype transfer_ranked::cycle151_rank4_obj1
+- Masked video embedding cluster 4: n=32, future8 positive fraction 0.429, prototype transfer_ranked::cycle40_rank8_obj4
 - Acquisition-context residual feature radius2_slope_median_px2_per_s: median positive-negative 9.596e-05, AUC 0.552, MW p=0.447
 - Acquisition-context residual feature diffusion_proxy_median_um2_per_s: median positive-negative 2.211e-07, AUC 0.552, MW p=0.447
 - Acquisition-context residual feature q70_radius2_slope_bootstrap_p50_px2_per_s: median positive-negative -4.025e-05, AUC 0.552, MW p=0.454

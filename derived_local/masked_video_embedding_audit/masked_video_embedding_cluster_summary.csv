@@ -1,0 +1,9 @@
+video_embedding_cluster,n_roi,cohort_counts,future8_positive_fraction,median_cycleNo,prototype_roi
+0,33,"{'balanced_future': 17, 'transfer_ranked': 11, 'selected_event_control': 5}",0.23529411764705882,147.0,transfer_ranked::cycle147_rank11_obj4
+1,46,"{'balanced_future': 22, 'selected_event_control': 18, 'transfer_ranked': 6}",0.36363636363636365,97.0,selected_event_control::cycle60_rank1_obj1
+2,11,"{'selected_event_control': 6, 'transfer_ranked': 4, 'balanced_future': 1}",0.0,156.0,selected_event_control::cycle156_rank8_obj10
+3,15,"{'transfer_ranked': 8, 'balanced_future': 7}",0.8571428571428571,150.0,transfer_ranked::cycle151_rank4_obj1
+4,32,"{'selected_event_control': 23, 'balanced_future': 7, 'transfer_ranked': 2}",0.42857142857142855,81.0,transfer_ranked::cycle40_rank8_obj4
+5,1,{'balanced_future': 1},0.0,104.0,balanced_future::cycle104_rank6_obj2
+6,18,"{'transfer_ranked': 9, 'balanced_future': 9}",1.0,152.0,transfer_ranked::cycle152_rank5_obj2
+7,16,"{'transfer_ranked': 8, 'balanced_future': 8}",0.75,154.0,transfer_ranked::cycle154_rank6_obj1

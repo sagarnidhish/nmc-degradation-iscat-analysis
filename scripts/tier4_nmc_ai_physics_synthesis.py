@@ -135,6 +135,7 @@ def main() -> None:
     balanced_future_rollout = read_json(derived / "balanced_future_masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
     balanced_future_mask = read_json(derived / "balanced_future_particle_mask_stability" / "particle_mask_stability_audit_summary.json")
     balanced_future_context = read_json(derived / "balanced_future_context_region_audit" / "balanced_future_context_region_summary.json")
+    masked_video_embedding = read_json(derived / "masked_video_embedding_audit" / "masked_video_embedding_audit_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
     diffusion_sanity = read_json(derived / "diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
@@ -334,6 +335,12 @@ def main() -> None:
     balanced_future_best_context_physics = first_summary(balanced_future_context, "best_physics_plus_acquisition_context", {}) or {}
     balanced_future_acq_resid = top_items(first_summary(balanced_future_context, "top_acquisition_context_residual_feature_tests", []), 10)
     balanced_future_spatial_tests = top_items(first_summary(balanced_future_context, "spatial_region_tests", []), 8)
+    masked_video_metrics = top_items(first_summary(masked_video_embedding, "target_metrics", []), 8)
+    masked_video_future_metric = next((r for r in masked_video_metrics if r.get("target") == "future_any_drop_within_8cycles"), {})
+    masked_video_event_metric = next((r for r in masked_video_metrics if r.get("target") == "event_vs_control"), {})
+    masked_video_null = first_summary(masked_video_embedding, "balanced_future_label_permutation_null", {}) or {}
+    masked_video_feature_tests = top_items(first_summary(masked_video_embedding, "top_feature_tests", []), 12)
+    masked_video_clusters = top_items(first_summary(masked_video_embedding, "cluster_summary", []), 8)
     balanced_future_top_acq_resid = balanced_future_acq_resid[0] if balanced_future_acq_resid else {}
     multicohort_best_oof = max(multicohort_oof, key=lambda r: (float(r.get("pooled_oof_roc_auc") or float("nan")) if r.get("pooled_oof_roc_auc") is not None else float("nan"))) if multicohort_oof else {}
     cross_cohort_shift = top_items(first_summary(cross_cohort_rollout, "domain_shift", []), 12)
@@ -533,6 +540,7 @@ def main() -> None:
         f"- Active-learning QC prioritization merges manual-QC, precursor, weak-model, front, and timing evidence into {first_summary(active_learning_qc, 'n_candidate_rows', 0)} review candidates; {first_summary(active_learning_qc, 'n_rows_with_visual_asset', 0)} have visual assets and {active_qc_tiers.get('immediate_manual_qc', 0)} are immediate manual-QC picks, led by {(active_qc_top[0] if active_qc_top else {}).get('roi_id', 'NA')}. No manual labels are assigned.",
         f"- Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling {first_summary(balanced_future_reconstruction, 'n_cycles_sampled', 0)} cycles and {first_summary(balanced_future_physics, 'n_roi', 0)} ROI rows with equal weak future8 positives/negatives; leave-cycle {balanced_future_best_oof.get('model', 'NA')} reaches AUC {fmt(balanced_future_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(balanced_future_best_oof.get('pooled_oof_average_precision'))}, permutation p={fmt(balanced_future_null.get('empirical_p_ge_observed'))}. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
+        f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
         f"- Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p={fmt((masked_residual_timing_align[0] if masked_residual_timing_align else {}).get('empirical_p_distance_le_observed'))}), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.",
         f"- Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: {first_summary(weak_label_benchmark, 'n_trainable_weak_label_rows', 0)} trainable weak rows ({first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} positive / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)} negative), and only {weak_label_leakage.get('n_usable_binary_folds', 0)} leave-reference fold is class-balanced enough for binary evaluation.",
@@ -1175,6 +1183,21 @@ def main() -> None:
         report_lines.append(
             f"- Balanced future context OOF {row.get('feature_set')} {row.get('model')}: AUC {fmt(row.get('pooled_oof_roc_auc'))}, AP {fmt(row.get('pooled_oof_average_precision'))}"
         )
+    for row in masked_video_metrics:
+        report_lines.append(
+            f"- Masked video embedding OOF {row.get('target')}: AUC {fmt(row.get('pooled_oof_roc_auc'))}, AP {fmt(row.get('pooled_oof_average_precision'))}, scored {fmt(row.get('n_scored'), 0)} rows ({fmt(row.get('n_positive_scored'), 0)}/{fmt(row.get('n_negative_scored'), 0)} pos/neg)"
+        )
+    report_lines.append(
+        f"- Masked video embedding future8 permutation null: observed AUC {fmt(masked_video_null.get('observed_auc'))}, null mean {fmt(masked_video_null.get('null_auc_mean'))}, p95 {fmt(masked_video_null.get('null_auc_p95'))}, empirical p={fmt(masked_video_null.get('empirical_p_ge_observed'))}"
+    )
+    for row in masked_video_feature_tests[:6]:
+        report_lines.append(
+            f"- Masked video embedding feature {row.get('feature')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, oriented AUC {fmt(row.get('oriented_auc'))}, MW p={fmt(row.get('mannwhitney_p'))}"
+        )
+    for row in masked_video_clusters[:5]:
+        report_lines.append(
+            f"- Masked video embedding cluster {fmt(row.get('video_embedding_cluster'), 0)}: n={fmt(row.get('n_roi'), 0)}, future8 positive fraction {fmt(row.get('future8_positive_fraction'))}, prototype {row.get('prototype_roi', 'NA')}"
+        )
     for row in balanced_future_acq_resid[:6]:
         report_lines.append(
             f"- Acquisition-context residual feature {row.get('feature')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, AUC {fmt(row.get('oriented_auc'))}, MW p={fmt(row.get('mannwhitney_p'))}"
@@ -1687,6 +1710,18 @@ def main() -> None:
             },
             "front_diffusion_guardrail": first_summary(balanced_future_fronts, "diffusion_guardrail"),
             "guardrail": first_summary(balanced_future_physics, "guardrail"),
+        },
+        "masked_video_embedding_audit": {
+            "n_manifest_rows": first_summary(masked_video_embedding, "n_manifest_rows"),
+            "n_embedding_rows": first_summary(masked_video_embedding, "n_embedding_rows"),
+            "cohort_counts": first_summary(masked_video_embedding, "cohort_counts", {}),
+            "particle_region_method": first_summary(masked_video_embedding, "particle_region_method"),
+            "pca_summary": first_summary(masked_video_embedding, "pca_summary", {}),
+            "target_metrics": masked_video_metrics,
+            "balanced_future_label_permutation_null": masked_video_null,
+            "top_feature_tests": masked_video_feature_tests,
+            "cluster_summary": masked_video_clusters,
+            "guardrail": first_summary(masked_video_embedding, "guardrail"),
         },
         "active_learning_qc_prioritization": {
             "n_candidate_rows": first_summary(active_learning_qc, "n_candidate_rows"),
