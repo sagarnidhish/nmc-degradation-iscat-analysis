@@ -2703,3 +2703,26 @@ Key result:
 - Video-only future16 remains weak under source holdout at AUC 0.454/AP 0.794.
 
 Interpretation: source-rank normalization and source/class weighting are useful stress tests but do not solve the source-transfer problem. The stronger source-centered adaptation result suggests source offsets matter, while this audit shows simple balancing does not yield a deployable source-transferable warning model. Treat video+echem as a review-prioritization and representation-design signal until we have better balanced sources and manual QC labels.
+
+## 2026-05-22 Learned Video Residual Embedding Audit
+
+Added `scripts/tier4_learned_video_residual_embedding_audit.py` and ran it on Isambard as a label-free next-frame residual representation experiment. The model trains a small residual CNN to predict frame-to-frame residuals from current ROI frames, then summarizes latent channels and residual errors per ROI before evaluating weak labels with leave-cycle splits.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/learned_video_residual_embedding_audit`
+
+Local compact copy:
+
+`derived_local/learned_video_residual_embedding_audit`
+
+Key result:
+
+- The audit covers 172 ROI rows across 34 cycles: 52 selected event/control rows, 48 transfer-ranked rows, and 72 balanced-future rows.
+- Training used 7000 frame pairs at downsample 2 with stride 2, 12 channels, and 14 epochs; best validation residual MSE was 4.37e-4.
+- Future8 leave-cycle weak-label classification is strong for learned residual-CNN features: `learned_all` AUC 0.849/AP 0.872 with permutation p=0.001, versus PCA-video AUC 0.569/AP 0.622 and handcrafted scalar AUC 0.828/AP 0.867.
+- Learned latent features alone reach future8 AUC 0.829/AP 0.850, so the encoder carries useful short-horizon degradation information beyond simple PCA video bins.
+- Future16 remains weak for the learned residual representation: `learned_all` AUC 0.538/AP 0.842, while handcrafted scalar features remain stronger at AUC 0.680/AP 0.910.
+- The learned features predict their own residual-energy/error targets under leave-cycle regression, confirming the feature extraction path, but that is an internal reconstruction-consistency result rather than external degradation physics.
+
+Interpretation: a small self-supervised residual CNN is now a useful AI representation for short-horizon weak degradation ranking and clearly beats the earlier PCA-video embedding on future8. It does not solve longer-horizon future16/source-transfer behavior, and it does not validate manual particle/front labels or calibrated diffusion. The next modeling use should be source-aware/echem-conditioned residual-CNN features or using these embeddings to prioritize manually QC-reviewed ROI/front candidates.

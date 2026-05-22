@@ -110,6 +110,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
+- Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC 0.849 versus PCA-video 0.569 and handcrafted scalar 0.828; future16 learned_all remains weak at AUC 0.538 versus handcrafted 0.680.
 - Residual dictionary embedding learns label-free next-frame residual bases over 172 ROI videos; residual-dictionary future8 AUC is 0.663 with p=0.005, and residual_dictionary_plus_handcrafted reaches AUC 0.771.
 - Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to 0.917, while acquisition/context alone reaches 1.000; treat this as context-sensitive representation evidence rather than deployable warning.
 - Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC 1.000, raw all-video reaches 0.756, and context-residualized all-video alone reaches 0.319; future16 raw handcrafted reaches AUC 0.796 but residualized all-video alone is 0.620.
@@ -1101,6 +1102,36 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Masked video embedding cluster 2: n=11, future8 positive fraction 0.000, prototype selected_event_control::cycle156_rank8_obj10
 - Masked video embedding cluster 3: n=15, future8 positive fraction 0.857, prototype transfer_ranked::cycle151_rank4_obj1
 - Masked video embedding cluster 4: n=32, future8 positive fraction 0.429, prototype transfer_ranked::cycle40_rank8_obj4
+
+## Learned Video Residual Embedding Audit
+
+- Rows/cycles: 172 / 34
+- Cohorts: {'balanced_future': 72, 'selected_event_control': 52, 'transfer_ranked': 48}
+- Training: {'best_val_loss': 0.0004373242554720491, 'channels': 12, 'downsample': 2, 'final_train_loss': 0.0003976869063100163, 'n_epochs_run': 14, 'n_pairs_used': 7000, 'pair_stride': 2}
+- Feature set sizes: {'handcrafted_scalar': 55, 'learned_all': 105, 'learned_latent': 96, 'learned_plus_handcrafted': 160, 'learned_residual': 9, 'pca_video': 16}
+- Future8 learned_all / PCA-video / handcrafted AUC: 0.849 / 0.569 / 0.828
+- Future16 learned_all / handcrafted AUC: 0.538 / 0.680
+- Learned-residual classification future_any_drop_within_8cycles learned_all: AUC 0.849, AP 0.872, p=9.990e-04, n=72
+- Learned-residual classification future_any_drop_within_8cycles learned_plus_handcrafted: AUC 0.843, AP 0.871, p=9.990e-04, n=72
+- Learned-residual classification future_any_drop_within_8cycles learned_latent: AUC 0.829, AP 0.850, p=9.990e-04, n=72
+- Learned-residual classification future_any_drop_within_8cycles handcrafted_scalar: AUC 0.828, AP 0.867, p=9.990e-04, n=72
+- Learned-residual classification future_any_drop_within_8cycles learned_residual: AUC 0.690, AP 0.790, p=NA, n=72
+- Learned-residual classification future_any_drop_within_16cycles handcrafted_scalar: AUC 0.680, AP 0.910, p=0.019, n=72
+- Learned-residual classification future_any_drop_within_16cycles learned_plus_handcrafted: AUC 0.601, AP 0.864, p=0.124, n=72
+- Learned-residual classification future_any_drop_within_16cycles learned_latent: AUC 0.593, AP 0.865, p=0.144, n=72
+- Learned-residual delta future_any_drop_within_8cycles learned_all_minus_pca_video: delta AUC 0.279, delta rho 0.484, delta R2 NA
+- Learned-residual delta future_any_drop_within_8cycles learned_plus_handcrafted_minus_pca_video: delta AUC 0.273, delta rho 0.473, delta R2 NA
+- Learned-residual delta future_any_drop_within_8cycles learned_latent_minus_pca_video: delta AUC 0.259, delta rho 0.449, delta R2 NA
+- Learned-residual delta future_any_drop_within_16cycles learned_plus_handcrafted_minus_pca_video: delta AUC 0.089, delta rho 0.125, delta R2 NA
+- Learned-residual delta future_any_drop_within_16cycles learned_latent_minus_pca_video: delta AUC 0.081, delta rho 0.114, delta R2 NA
+- Learned-residual delta future_any_drop_within_16cycles learned_all_minus_pca_video: delta AUC 0.026, delta rho 0.036, delta R2 NA
+- Learned-residual delta future_any_drop_within_8cycles learned_all_minus_handcrafted_scalar: delta AUC 0.021, delta rho 0.036, delta R2 NA
+- Learned-residual delta future_any_drop_within_8cycles learned_plus_handcrafted_minus_handcrafted_scalar: delta AUC 0.015, delta rho 0.025, delta R2 NA
+- Learned-residual regression true_residual_energy_mean learned_residual: R2 0.999, rho 0.999, n=172
+- Learned-residual regression learned_residual_mse_mean learned_residual: R2 0.999, rho 0.999, n=172
+- Learned-residual regression true_residual_energy_mean learned_all: R2 0.996, rho 0.990, n=172
+- Learned-residual regression learned_residual_mse_mean learned_all: R2 0.996, rho 0.990, n=172
+- Guardrail: The residual CNN is trained label-free on automatic ROI crops and evaluated only through weak cycle labels. Learned embeddings support representation design and review prioritization, not deployable prediction, manual particle/front labels, or calibrated diffusion.
 
 ## Residual Dictionary Embedding Audit
 

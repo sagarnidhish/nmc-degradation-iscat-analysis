@@ -147,6 +147,7 @@ def main() -> None:
     temporal_directionality = read_json(derived / "temporal_directionality_physics_audit" / "temporal_directionality_physics_audit_summary.json")
     balanced_spatial_propagation = read_json(derived / "balanced_spatial_front_propagation_audit" / "balanced_spatial_front_propagation_summary.json")
     masked_video_embedding = read_json(derived / "masked_video_embedding_audit" / "masked_video_embedding_audit_summary.json")
+    learned_video_residual_embedding = read_json(derived / "learned_video_residual_embedding_audit" / "learned_video_residual_embedding_summary.json")
     residual_dictionary_embedding = read_json(derived / "residual_dictionary_embedding_audit" / "residual_dictionary_embedding_summary.json")
     echem_residual_dictionary_fusion = read_json(derived / "echem_residual_dictionary_fusion_audit" / "echem_residual_dictionary_summary.json")
     acquisition_residualized_video = read_json(derived / "acquisition_residualized_video_physics_benchmark" / "acquisition_residualized_summary.json")
@@ -391,6 +392,14 @@ def main() -> None:
     masked_video_null = first_summary(masked_video_embedding, "balanced_future_label_permutation_null", {}) or {}
     masked_video_feature_tests = top_items(first_summary(masked_video_embedding, "top_feature_tests", []), 12)
     masked_video_clusters = top_items(first_summary(masked_video_embedding, "cluster_summary", []), 8)
+    learned_residual_class = top_items(first_summary(learned_video_residual_embedding, "top_classification_metrics", []), 12)
+    learned_residual_reg = top_items(first_summary(learned_video_residual_embedding, "top_regression_metrics", []), 8)
+    learned_residual_deltas = top_items(first_summary(learned_video_residual_embedding, "top_feature_set_deltas", []), 12)
+    learned_residual_future8 = next((r for r in learned_residual_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "learned_all"), {})
+    learned_residual_hand_future8 = next((r for r in learned_residual_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "handcrafted_scalar"), {})
+    learned_residual_pca_future8 = next((r for r in learned_residual_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "pca_video"), {})
+    learned_residual_future16 = next((r for r in learned_residual_class if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "learned_all"), {})
+    learned_residual_hand_future16 = next((r for r in learned_residual_class if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "handcrafted_scalar"), {})
     residual_dict_class = top_items(first_summary(residual_dictionary_embedding, "top_classification_metrics", []), 8)
     residual_dict_reg = top_items(first_summary(residual_dictionary_embedding, "top_regression_metrics", []), 8)
     residual_dict_deltas = top_items(first_summary(residual_dictionary_embedding, "top_feature_set_deltas", []), 8)
@@ -675,6 +684,7 @@ def main() -> None:
         f"- Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling {first_summary(balanced_future_reconstruction, 'n_cycles_sampled', 0)} cycles and {first_summary(balanced_future_physics, 'n_roi', 0)} ROI rows with equal weak future8 positives/negatives; leave-cycle {balanced_future_best_oof.get('model', 'NA')} reaches AUC {fmt(balanced_future_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(balanced_future_best_oof.get('pooled_oof_average_precision'))}, permutation p={fmt(balanced_future_null.get('empirical_p_ge_observed'))}. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
+        f"- Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC {fmt(learned_residual_future8.get('roc_auc'))} versus PCA-video {fmt(learned_residual_pca_future8.get('roc_auc'))} and handcrafted scalar {fmt(learned_residual_hand_future8.get('roc_auc'))}; future16 learned_all remains weak at AUC {fmt(learned_residual_future16.get('roc_auc'))} versus handcrafted {fmt(learned_residual_hand_future16.get('roc_auc'))}.",
         f"- Residual dictionary embedding learns label-free next-frame residual bases over {first_summary(residual_dictionary_embedding, 'n_embedding_rows', 0)} ROI videos; residual-dictionary future8 AUC is {fmt(residual_dict_future8.get('roc_auc'))} with p={fmt(residual_dict_future8.get('empirical_p_ge_observed'))}, and residual_dictionary_plus_handcrafted reaches AUC {fmt(residual_dict_plus_future8.get('roc_auc'))}.",
         f"- Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to {fmt(echem_resdict_res_future8.get('roc_auc'))}, while acquisition/context alone reaches {fmt(echem_resdict_acq_future8.get('roc_auc'))}; treat this as context-sensitive representation evidence rather than deployable warning.",
         f"- Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC {fmt(acq_resid_context8.get('roc_auc'))}, raw all-video reaches {fmt(acq_resid_raw_video8.get('roc_auc'))}, and context-residualized all-video alone reaches {fmt(acq_resid_video_only8.get('roc_auc'))}; future16 raw handcrafted reaches AUC {fmt(acq_resid_raw_hand16.get('roc_auc'))} but residualized all-video alone is {fmt(acq_resid_video_only16.get('roc_auc'))}.",
@@ -1553,6 +1563,31 @@ def main() -> None:
         )
     report_lines += [
         "",
+        "## Learned Video Residual Embedding Audit",
+        "",
+        f"- Rows/cycles: {first_summary(learned_video_residual_embedding, 'n_embedding_rows', 0)} / {first_summary(learned_video_residual_embedding, 'n_cycles', 0)}",
+        f"- Cohorts: {first_summary(learned_video_residual_embedding, 'embedding_cohort_counts', {})}",
+        f"- Training: {first_summary(learned_video_residual_embedding, 'training', {})}",
+        f"- Feature set sizes: {first_summary(learned_video_residual_embedding, 'feature_set_sizes', {})}",
+        f"- Future8 learned_all / PCA-video / handcrafted AUC: {fmt(learned_residual_future8.get('roc_auc'))} / {fmt(learned_residual_pca_future8.get('roc_auc'))} / {fmt(learned_residual_hand_future8.get('roc_auc'))}",
+        f"- Future16 learned_all / handcrafted AUC: {fmt(learned_residual_future16.get('roc_auc'))} / {fmt(learned_residual_hand_future16.get('roc_auc'))}",
+    ]
+    for row in learned_residual_class[:8]:
+        report_lines.append(
+            f"- Learned-residual classification {row.get('target')} {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, p={fmt(row.get('empirical_p_ge_observed'))}, n={fmt(row.get('n_eval'), 0)}"
+        )
+    for row in learned_residual_deltas[:8]:
+        report_lines.append(
+            f"- Learned-residual delta {row.get('target')} {row.get('comparison')}: delta AUC {fmt(row.get('delta_roc_auc'))}, delta rho {fmt(row.get('delta_spearman_rho'))}, delta R2 {fmt(row.get('delta_r2'))}"
+        )
+    for row in learned_residual_reg[:4]:
+        report_lines.append(
+            f"- Learned-residual regression {row.get('target')} {row.get('feature_set')}: R2 {fmt(row.get('r2'))}, rho {fmt(row.get('spearman_rho'))}, n={fmt(row.get('n_eval'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(learned_video_residual_embedding, 'guardrail', 'Learned video residual embedding unavailable.')}")
+
+    report_lines += [
+        "",
         "## Residual Dictionary Embedding Audit",
         "",
         f"- Rows/cycles: {first_summary(residual_dictionary_embedding, 'n_embedding_rows', 0)} / {first_summary(residual_dictionary_embedding, 'n_cycles', 0)}",
@@ -2283,6 +2318,17 @@ def main() -> None:
             "top_feature_tests": masked_video_feature_tests,
             "cluster_summary": masked_video_clusters,
             "guardrail": first_summary(masked_video_embedding, "guardrail"),
+        },
+        "learned_video_residual_embedding_audit": {
+            "n_embedding_rows": first_summary(learned_video_residual_embedding, "n_embedding_rows"),
+            "n_cycles": first_summary(learned_video_residual_embedding, "n_cycles"),
+            "embedding_cohort_counts": first_summary(learned_video_residual_embedding, "embedding_cohort_counts", {}),
+            "training": first_summary(learned_video_residual_embedding, "training", {}),
+            "feature_set_sizes": first_summary(learned_video_residual_embedding, "feature_set_sizes", {}),
+            "top_classification_metrics": learned_residual_class,
+            "top_regression_metrics": learned_residual_reg,
+            "top_feature_set_deltas": learned_residual_deltas,
+            "guardrail": first_summary(learned_video_residual_embedding, "guardrail"),
         },
         "residual_dictionary_embedding_audit": {
             "n_embedding_rows": first_summary(residual_dictionary_embedding, "n_embedding_rows"),
