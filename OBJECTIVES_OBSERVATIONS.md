@@ -2726,3 +2726,26 @@ Key result:
 - The learned features predict their own residual-energy/error targets under leave-cycle regression, confirming the feature extraction path, but that is an internal reconstruction-consistency result rather than external degradation physics.
 
 Interpretation: a small self-supervised residual CNN is now a useful AI representation for short-horizon weak degradation ranking and clearly beats the earlier PCA-video embedding on future8. It does not solve longer-horizon future16/source-transfer behavior, and it does not validate manual particle/front labels or calibrated diffusion. The next modeling use should be source-aware/echem-conditioned residual-CNN features or using these embeddings to prioritize manually QC-reviewed ROI/front candidates.
+
+## 2026-05-22 Source-Invariant Video/Echem Transfer Audit
+
+Added `scripts/tier4_source_invariant_video_echem_transfer_audit.py` and ran it on Isambard to test a stronger source-transfer remedy than weighting or within-source rank normalization. The audit removes training-source mean directions (`source_mean_resid_k`) and filters source-confounded features by train-source eta-squared before leave-source prediction, without using held-out source labels.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit`
+
+Local compact copy:
+
+`derived_local/source_invariant_video_echem_transfer_audit`
+
+Key result:
+
+- The audit covers 172 ROI rows, 34 cycles, and 12 source movies, using the same 72 labeled leave-source evaluation rows over 24 cycles and 9 sources for the weak-label tests.
+- For future16, raw video+echem reaches AUC 0.612/AP 0.858/p=0.088, still below acquisition context raw AUC 0.745/AP 0.937/p=0.002.
+- Removing the top four training-source mean directions improves video+echem future16 to AUC 0.729/AP 0.927/p=0.004, a +0.117 AUC gain over raw video+echem but still just below acquisition context.
+- Video-only features respond strongly: source-confound filtering of the top 50% source-predictive video features reaches future16 AUC 0.770/AP 0.919/p=0.004, a +0.281 AUC gain over raw video-only.
+- Future8 remains acquisition/context dominated: acquisition context is AUC 1.000, while best video+echem source-invariant future8 is AUC 0.784 and source-mean removal can also destroy the signal when too many components are removed.
+
+Interpretation: source-invariant projection is the best source-transfer rescue so far for particle-region video/echem features, especially for future16 and video-only descriptors. It still does not clear the warning-model guardrail because acquisition context remains competitive and source/outcome composition is severely entangled. The result supports pursuing explicit domain-invariant video representations and manual-QC-gated targets, not deployable weak-label source transfer.
+

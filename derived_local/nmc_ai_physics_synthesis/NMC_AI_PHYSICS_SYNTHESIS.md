@@ -117,6 +117,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Acquisition-residualized video/echem warning audit executes the top tournament experiment: leave-cycle future16 residualized video_plus_echem reaches AUC 0.697 versus acquisition-only 0.727, but leave-source residualized AUC falls to 0.512 versus acquisition-only 0.697.
 - Source-domain video/echem adaptation partially rescues leave-source future16 transfer: source-centered video_plus_echem reaches AUC 0.737 versus acquisition-only 0.697, while CORAL reaches only 0.420.
 - Source-balanced transfer audit shows source-rank/weighting only modestly lifts video+echem future16 AUC to 0.614 versus raw video+echem 0.594, below acquisition context 0.704 and echem source-rank 0.642; source label composition remains the dominant guardrail.
+- Source-invariant projection is more promising but still guarded: best video_plus_echem future16 is source_mean_resid_4 at AUC 0.729 versus raw 0.612 and acquisition context 0.745; video-only source-confound filtering reaches AUC 0.770.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
@@ -1272,6 +1273,30 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source 7_c2_x10_290623: rows/cycles 14/3, future16 labeled/positive/negative 0/0/0, future16 fraction NA
 - Source 5_c2_x10_260623: rows/cycles 10/2, future16 labeled/positive/negative 6/3/3, future16 fraction 0.500
 - Guardrail: Leave-source labels are highly source-composition imbalanced. Source weighting and within-source rank normalization test domain robustness and review-prioritization only; they do not validate source-transferable warning, causal degradation mechanisms, manual QC labels, or calibrated diffusion.
+
+## Source-Invariant Video/Echem Transfer Audit
+
+- Rows/cycles/sources: 172 / 34 / 12
+- Methods: ['raw', 'source_mean_resid_1', 'source_mean_resid_2', 'source_mean_resid_4', 'source_mean_resid_8', 'source_confound_filter_0.10', 'source_confound_filter_0.25', 'source_confound_filter_0.50']
+- Future16 acquisition raw / video+echem raw / best video+echem invariant AUC: 0.745 / 0.612 / 0.729
+- Best video+echem method: source_mean_resid_4 AP 0.927, p=0.004
+- Best video-only future16 method: source_confound_filter_0.50 AUC 0.770, AP 0.919, p=0.004
+- Best video+echem future8 invariant method: source_mean_resid_1 AUC 0.784, AP 0.832
+- Source-invariant delta future_any_drop_within_16cycles video_all_source_confound_filter_0.50_minus_same_raw: delta AUC 0.281, delta AP 0.104, delta rho 0.395
+- Source-invariant delta future_any_drop_within_16cycles video_all_source_mean_resid_2_minus_same_raw: delta AUC 0.240, delta AP 0.107, delta rho 0.337
+- Source-invariant delta future_any_drop_within_16cycles video_all_source_mean_resid_8_minus_same_raw: delta AUC 0.129, delta AP 0.032, delta rho 0.181
+- Source-invariant delta future_any_drop_within_16cycles video_plus_echem_source_mean_resid_4_minus_same_raw: delta AUC 0.117, delta AP 0.069, delta rho 0.165
+- Source-invariant delta future_any_drop_within_16cycles video_plus_echem_source_mean_resid_8_minus_same_raw: delta AUC 0.106, delta AP 0.060, delta rho 0.150
+- Source-invariant delta future_any_drop_within_16cycles video_all_source_mean_resid_1_minus_same_raw: delta AUC 0.095, delta AP 0.040, delta rho 0.133
+- Source-invariant delta future_any_drop_within_16cycles video_plus_echem_source_confound_filter_0.50_minus_same_raw: delta AUC 0.091, delta AP 0.041, delta rho 0.128
+- Source-invariant delta future_any_drop_within_16cycles video_all_source_mean_resid_4_minus_same_raw: delta AUC 0.090, delta AP 0.035, delta rho 0.127
+- Source 17_c2_x10_HighHighCOV_150723: rows/cycles 66/10, future16 fraction 1.000, mean video/echem z-shift 0.589
+- Source 16_c2_x10_HighHighCOV_130723: rows/cycles 9/3, future16 fraction 0.667, mean video/echem z-shift 0.598
+- Source 9_c2_x10_010723: rows/cycles 9/3, future16 fraction 1.000, mean video/echem z-shift 0.376
+- Source 5_c2_x10_260623: rows/cycles 10/2, future16 fraction 0.500, mean video/echem z-shift 0.509
+- Source 12_c2_x10_070723: rows/cycles 6/2, future16 fraction 1.000, mean video/echem z-shift 0.344
+- Source 18_c2_xN_HighHighCOV_170723: rows/cycles 21/3, future16 fraction 0.000, mean video/echem z-shift 0.449
+- Guardrail: Source-invariant projections and source-confound filters are trained without held-out source labels, but labels remain source-composition imbalanced. These results test robustness for review prioritization only; they do not validate source-transferable warning, causal degradation mechanisms, manual QC labels, or calibrated diffusion.
 
 ## Agentic Current Hypothesis Tournament
 
