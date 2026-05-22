@@ -113,6 +113,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
 - Source-balanced ROI expansion attacks the remaining cohort-breadth bottleneck: it samples 48 cycles across 14 source movies, including 41 cycle/source pairs not already in video cohorts, and proposes 96 automatic ROI rows for follow-up sequence export/QC.
 - Source-balanced ROI sequence export converts that manifest into 96 particle-region crop tensors across 48 cycles and 14 sources with 0 export failures; the fast rollout audit finds strongest future16 ROI signal in roi_norm_mean_delta_last_minus_first at AUC 0.626, while prediction-error features are highly source-structured.
+- Source-balanced mask/front sanity audit finds the strongest future16 crop-local proxy in masked_minus_background_mean_slope at ROI AUC 0.690 and AP 0.696; high source eta2 0.634 keeps it as a sanity/QC signal rather than a calibrated morphology claim.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC 0.849 versus PCA-video 0.569 and handcrafted scalar 0.828; future16 learned_all remains weak at AUC 0.538 versus handcrafted 0.680.
@@ -1142,6 +1143,35 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source-balanced rollout source 16_c2_x10_HighHighCOV_130723: ROI 8, cycles 4, persistence MSE 2.279e-04, future16 seq 6
 - Sequence guardrail: Source-balanced sequences are fixed padded particle-region crops around automatic reconstructed candidates. They broaden source coverage for model/physics tests, but are not manual particle annotations or validated front labels.
 - Rollout guardrail: Source-balanced rollout features are computed from automatic particle-centered crops and weak future labels. They quantify ROI-only temporal prediction difficulty and optical drift/intensity dynamics, not manual QC, causal degradation, or calibrated diffusion.
+
+## Source-Balanced Mask/Front Sanity Audit
+
+- Mask/front ROI sequences/cycles/sources: 96 / 48 / 14
+- Future8/future16 positive sequences: 28 / 48
+- Assumed output-pixel scale: 0.192 um
+- Source-balanced mask/front ROI feature future_any_drop_within_16cycles masked_minus_background_mean_slope: AUC 0.690, AP 0.696, source eta2 0.634, median pos-neg 0.004
+- Source-balanced mask/front ROI feature future_any_drop_within_16cycles roi_norm_mean_delta_last_minus_first: AUC 0.626, AP 0.589, source eta2 0.365, median pos-neg -2.135e-04
+- Source-balanced mask/front ROI feature future_any_drop_within_16cycles front_radius_q80_slope_px_per_norm_time: AUC 0.612, AP 0.616, source eta2 0.104, median pos-neg -0.246
+- Source-balanced mask/front ROI feature future_any_drop_within_16cycles front_radius_q60_slope_px_per_norm_time: AUC 0.611, AP 0.649, source eta2 0.370, median pos-neg 0.094
+- Source-balanced mask/front ROI feature future_any_drop_within_16cycles mask_area_fraction_median: AUC 0.607, AP 0.606, source eta2 0.317, median pos-neg 0.007
+- Source-balanced mask/front ROI feature future_any_drop_within_16cycles mask_base_area_fraction: AUC 0.595, AP 0.610, source eta2 0.243, median pos-neg 0.005
+- Source-balanced mask/front ROI feature future_any_drop_within_16cycles front_radius_q60_median_px: AUC 0.578, AP 0.535, source eta2 0.156, median pos-neg -1.500
+- Source-balanced mask/front ROI feature future_any_drop_within_16cycles front_radius_q80_median_px: AUC 0.576, AP 0.538, source eta2 0.153, median pos-neg -0.500
+- Source-balanced mask/front ROI feature future_any_drop_within_16cycles front_gradient_peak_radius_median_px: AUC 0.564, AP 0.550, source eta2 0.215, median pos-neg 0.500
+- Source-balanced mask/front ROI feature future_any_drop_within_16cycles mask_centroid_max_step_px: AUC 0.560, AP 0.618, source eta2 0.695, median pos-neg 0.012
+- Source-balanced mask/front cycle feature future_any_drop_within_16cycles masked_minus_background_mean_slope: AUC 0.688, AP 0.703, median pos-neg 0.003
+- Source-balanced mask/front cycle feature future_any_drop_within_16cycles mask_base_area_fraction: AUC 0.666, AP 0.652, median pos-neg 0.009
+- Source-balanced mask/front cycle feature future_any_drop_within_16cycles front_radius_q80_median_px: AUC 0.661, AP 0.602, median pos-neg -2.000
+- Source-balanced mask/front cycle feature future_any_drop_within_16cycles roi_norm_mean_delta_last_minus_first: AUC 0.648, AP 0.594, median pos-neg -2.333e-04
+- Source-balanced mask/front cycle feature future_any_drop_within_16cycles mask_area_fraction_median: AUC 0.632, AP 0.651, median pos-neg 0.010
+- Source-balanced mask/front cycle feature future_any_drop_within_16cycles front_radius_q70_median_px: AUC 0.625, AP 0.573, median pos-neg -1.000
+- Source-balanced mask/front source 10_c2_x10_030723: ROI 4, cycles 2, q70 radius slope -1.332, future16 seq 0
+- Source-balanced mask/front source 11_c2_x10_050723: ROI 6, cycles 3, q70 radius slope 0.389, future16 seq 4
+- Source-balanced mask/front source 12_c2_x10_070723: ROI 8, cycles 4, q70 radius slope -0.425, future16 seq 8
+- Source-balanced mask/front source 14_c2_x10_HighCOV_110723: ROI 8, cycles 4, q70 radius slope -0.183, future16 seq 0
+- Source-balanced mask/front source 15_c2_x5_HighCOV_120723: ROI 6, cycles 3, q70 radius slope 0.186, future16 seq 0
+- Source-balanced mask/front source 16_c2_x10_HighHighCOV_130723: ROI 8, cycles 4, q70 radius slope 0.032, future16 seq 6
+- Guardrail: Automatic crop-local masks/front radii are source-balanced sanity proxies from resized ROI tensors; they are not manual particle masks, not calibrated fronts, and apparent diffusion uses an approximate 0.192 um/output-pixel scale.
 
 ## Balanced Future-Drop Direct-Video ROI Audit
 

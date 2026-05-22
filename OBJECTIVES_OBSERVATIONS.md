@@ -3094,3 +3094,25 @@ Key result:
 - The code acceptance gate scanned 3 generated experiment stubs. All compile, but all remain `needs_revision` because they are placeholders without real split/null/schema logic. This is the correct guardrail outcome.
 
 Interpretation: the three Nature agentic-AI ideas are now implemented as auditable project infrastructure over real Alek/Jiho derived evidence, not as an unrestricted LLM report. The immediate computational value is benchmark-driven prioritization and claim tracking. The scientific bottleneck is still manual ROI/front QC plus source-balanced validation before mechanism-level claims.
+
+## 2026-05-22 Source-Balanced Mask/Front Sanity Audit
+
+Added `scripts/tier4_source_balanced_mask_front_sanity_audit.py` and ran it on Isambard against the source-balanced particle-region crop tensors.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit`
+- `derived_local/source_balanced_mask_front_sanity_audit`
+
+Cohort/result snapshot:
+
+- 96 ROI sequences across 48 cycles and 14 source movies.
+- Future8/future16 positive ROI sequences: 28 / 48.
+- Strongest future16 ROI proxy: `masked_minus_background_mean_slope`, AUC 0.690, AP 0.696, median positive-negative 0.00372, source eta2 0.634.
+- Strongest future16 cycle-collapsed proxy was the same feature, AUC 0.688, AP 0.703, median positive-negative 0.00253, source eta2 0.649.
+- The prior rollout/intensity drift signal remains visible: `roi_norm_mean_delta_last_minus_first` future16 ROI AUC 0.626 and cycle AUC 0.648, lower in positives.
+- Simple front-radius and apparent diffusion proxies were weaker: q70 radius-squared apparent diffusion future16 ROI AUC 0.558 and cycle AUC 0.569, with substantial source structure.
+
+Interpretation:
+
+The source-balanced crop cohort contains a reproducible automatic mask/intensity contrast slope associated with future16 drops, stronger than the raw ROI mean drift in this audit. However, the strongest mask/front proxy is still source-structured, and the masks/front radii are crop-local automatic sanity proxies from resized tensors, not manual particle masks or calibrated diffusion measurements. Treat this as a useful QC/mechanism triage feature, not a standalone morphology claim.
