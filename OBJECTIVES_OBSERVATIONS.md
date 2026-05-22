@@ -4069,3 +4069,31 @@ Results:
 Interpretation: the held-out-tail experiment strengthens the earlier modeling conclusion. For these slowly varying particle crops, persistence is a hard baseline and simple trend models are not credible simulators. The useful physics-facing signal is the localized prediction difficulty: near-pre-event particles are harder to persist inside a history-derived particle mask, especially versus post/control rows. This supports using masked rollout residual energy as an instability/readiness descriptor, not as a calibrated phase-boundary tracker or diffusion estimator.
 
 Guardrail: this benchmark uses history-derived automatic particle masks and held-out future frames within ROI crops. It does not provide manual segmentation, calibrated phase-boundary motion, material diffusion coefficients, or causal event evidence.
+
+
+## 2026-05-22 Residualized Future8 Video-Physics Benchmark
+
+Added `scripts/tier4_residualized_future8_video_physics_benchmark.py` and ran it on Isambard to test whether the short-horizon `future_any_drop_within_8cycles` weak label still contains source-robust optical/video physics after acquisition residualization, cycle balancing, source/source-cohort holdouts, source-stratified permutation, and comparison against echem context.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residualized_future8_video_physics_benchmark`
+- `derived_local/residualized_future8_video_physics_benchmark`
+- `residualized_future8_video_physics_metrics.csv`
+- `residualized_future8_video_physics_predictions.csv`
+- `residualized_future8_video_physics_deltas.csv`
+- `residualized_future8_video_physics_summary.json`
+
+Results:
+
+- Evaluated 172 rows across 34 cycles and 12 sources.
+- Decision status is `future8_video_physics_status = not_supported_after_controls`.
+- Fused video+echem status is `future8_fused_video_echem_incremental_status = not_incremental_over_echem_context`.
+- Acquisition context alone remains perfect in the source-cohort split: AUC/AP 1.000/1.000, source-stratified p=0.001996.
+- Residualized echem context is moderate but not source-stratified significant: AUC/AP 0.688/0.762, source-stratified p=0.228.
+- Strict residualized optical physics fails the source-cohort test: ROC-AUC/AP 0.0046/0.314, source-stratified p=1.000, rho=-0.858. Leave-source residualized optical physics is also weak: ROC-AUC/AP 0.090/0.329.
+- Residualized fused video+echem is worse than residualized echem alone in the source-cohort split: AUC/AP 0.590/0.713, source-stratified p=0.896, delta AUC versus echem -0.099.
+
+Interpretation: the current future8 warning label is dominated by acquisition/context and echem structure, not by an independent source-robust optical physics mechanism. Future8 should remain a guardrail/context label, while physics claims should focus on longer-horizon future16, pre-event, manual-QC, and source-invariant tracks.
+
+Guardrail: this benchmark is a falsification/control test. It blocks using future8 video/optical metrics as standalone degradation physics evidence unless future runs pass source/source-cohort holdout, acquisition residualization, cycle balancing, source-stratified permutation, and incremental echem comparisons.

@@ -202,6 +202,7 @@ def main() -> None:
     conditioned_residual_physics_atlas = read_json(derived / "conditioned_residual_physics_atlas" / "conditioned_residual_physics_atlas_summary.json")
     acquisition_residualized_video = read_json(derived / "acquisition_residualized_video_physics_benchmark" / "acquisition_residualized_summary.json")
     acquisition_residualized_video_echem = read_json(derived / "acquisition_residualized_video_echem_warning" / "acquisition_residualized_video_echem_summary.json")
+    residualized_future8_video_physics = read_json(derived / "residualized_future8_video_physics_benchmark" / "residualized_future8_video_physics_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
@@ -718,6 +719,14 @@ def main() -> None:
     acq_resid_video_only16 = next((r for r in acq_resid_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "residualized_all_video"), {})
     acq_echem_metrics = top_items(first_summary(acquisition_residualized_video_echem, "top_metrics", []), 48)
     acq_echem_deltas = top_items(first_summary(acquisition_residualized_video_echem, "top_deltas", []), 40)
+    future8_decision = first_summary(residualized_future8_video_physics, "decision", {}) or {}
+    future8_top_metrics = top_items(first_summary(residualized_future8_video_physics, "top_metrics", []), 24)
+    future8_key_deltas = top_items(first_summary(residualized_future8_video_physics, "key_deltas", []), 24)
+    future8_strict_optical_source = future8_decision.get("strict_optical_source_stem_metric", {}) or {}
+    future8_strict_optical_cohort = future8_decision.get("strict_optical_source_cohort_metric", {}) or {}
+    future8_fused_cohort = future8_decision.get("fused_source_cohort_metric", {}) or {}
+    future8_echem_cohort = future8_decision.get("echem_source_cohort_metric", {}) or {}
+    future8_acq_cohort = future8_decision.get("acquisition_source_cohort_metric", {}) or {}
     acq_echem_cycle_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized"), {})
     acq_echem_cycle_bal_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized_cycle_balanced"), {})
     acq_echem_cycle_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
@@ -2570,6 +2579,24 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Residualized Future8 Video-Physics Benchmark",
+        "",
+        f"- Rows/cycles/sources: {first_summary(residualized_future8_video_physics, 'n_rows', 0)} / {first_summary(residualized_future8_video_physics, 'n_cycles', 0)} / {first_summary(residualized_future8_video_physics, 'n_sources', 0)}",
+        f"- Feature set sizes: {first_summary(residualized_future8_video_physics, 'feature_set_sizes', {})}",
+        f"- Decision: optical physics {future8_decision.get('future8_video_physics_status', 'unavailable')}; fused video+echem incremental {future8_decision.get('future8_fused_video_echem_incremental_status', 'unavailable')}",
+        f"- Strict source-cohort residualized optical physics: AUC {fmt(future8_strict_optical_cohort.get('roc_auc'))}, AP {fmt(future8_strict_optical_cohort.get('average_precision'))}, source-stratified p={fmt(future8_strict_optical_cohort.get('empirical_p_ge_observed_source_stratified'))}",
+        f"- Strict leave-source residualized optical physics: AUC {fmt(future8_strict_optical_source.get('roc_auc'))}, AP {fmt(future8_strict_optical_source.get('average_precision'))}, source-stratified p={fmt(future8_strict_optical_source.get('empirical_p_ge_observed_source_stratified'))}",
+        f"- Source-cohort residualized fused video+echem / echem-only / acquisition-only AUC: {fmt(future8_fused_cohort.get('roc_auc'))} / {fmt(future8_echem_cohort.get('roc_auc'))} / {fmt(future8_acq_cohort.get('roc_auc'))}",
+        f"- Fused minus residualized echem source-cohort delta AUC: {fmt(future8_decision.get('fused_minus_echem_residualized_source_cohort_delta_auc'))}",
+    ]
+    for row in future8_key_deltas[:8]:
+        report_lines.append(
+            f"- Future8 delta {row.get('group_col')} {row.get('feature_set')} {row.get('mode')} vs {row.get('baseline')}: delta AUC {fmt(row.get('delta_roc_auc'))}, delta AP {fmt(row.get('delta_average_precision'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(residualized_future8_video_physics, 'guardrail', 'Residualized future8 video-physics benchmark unavailable.')}")
+
+    report_lines += [
+        "",
         "## Source-Domain Video/Echem Adaptation Audit",
         "",
         f"- Rows/cycles/sources: {first_summary(source_domain_video_echem, 'n_rows', 0)} / {first_summary(source_domain_video_echem, 'n_cycles', 0)} / {first_summary(source_domain_video_echem, 'n_sources', 0)}",
@@ -4007,6 +4034,17 @@ def main() -> None:
             "strict_cycle_balanced_source_cohort_metrics": first_summary(acquisition_residualized_video_echem, "strict_cycle_balanced_source_cohort_metrics", []),
             "strict_cycle_balanced_source_cohort_deltas": first_summary(acquisition_residualized_video_echem, "strict_cycle_balanced_source_cohort_deltas", []),
             "guardrail": first_summary(acquisition_residualized_video_echem, "guardrail"),
+        },
+        "residualized_future8_video_physics_benchmark": {
+            "n_rows": first_summary(residualized_future8_video_physics, "n_rows"),
+            "n_cycles": first_summary(residualized_future8_video_physics, "n_cycles"),
+            "n_sources": first_summary(residualized_future8_video_physics, "n_sources"),
+            "target": first_summary(residualized_future8_video_physics, "target"),
+            "feature_set_sizes": first_summary(residualized_future8_video_physics, "feature_set_sizes", {}),
+            "decision": future8_decision,
+            "top_metrics": future8_top_metrics,
+            "key_deltas": future8_key_deltas,
+            "guardrail": first_summary(residualized_future8_video_physics, "guardrail"),
         },
         "source_domain_video_echem_adaptation_audit": {
             "n_rows": first_summary(source_domain_video_echem, "n_rows"),

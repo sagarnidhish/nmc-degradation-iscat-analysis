@@ -1797,6 +1797,25 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_raw_minus_video_all_raw: delta AUC 0.055, delta rho 0.077
 - Guardrail: This audit residualizes candidate video/echem features against acquisition/context inside each held-out fold. It tests context-resistant weak-label signal for prioritizing next analyses, not deployable warning, causal mechanism, manual QC labels, or calibrated diffusion.
 
+## Residualized Future8 Video-Physics Benchmark
+
+- Rows/cycles/sources: 172 / 34 / 12
+- Feature set sizes: {'acquisition_context': 40, 'echem_context': 42, 'front_transport_proxy': 30, 'optical_physics_all': 110, 'optical_physics_plus_echem': 152, 'optical_trace_video': 66, 'rollout_difficulty': 16}
+- Decision: optical physics not_supported_after_controls; fused video+echem incremental not_incremental_over_echem_context
+- Strict source-cohort residualized optical physics: AUC 0.005, AP 0.314, source-stratified p=1.000
+- Strict leave-source residualized optical physics: AUC 0.090, AP 0.329, source-stratified p=1.000
+- Source-cohort residualized fused video+echem / echem-only / acquisition-only AUC: 0.590 / 0.688 / 1.000
+- Fused minus residualized echem source-cohort delta AUC: -0.099
+- Future8 delta source_cohort_key optical_physics_all acquisition_residualized_cycle_balanced vs acquisition_raw: delta AUC -0.995, delta AP -0.686
+- Future8 delta source_cohort_key optical_physics_all acquisition_residualized_cycle_balanced vs echem_raw: delta AUC -0.509, delta AP -0.257
+- Future8 delta source_cohort_key optical_physics_all acquisition_residualized_cycle_balanced vs echem_residualized_cycle_balanced: delta AUC -0.684, delta AP -0.448
+- Future8 delta source_cohort_key optical_physics_all acquisition_residualized_cycle_balanced vs optical_raw: delta AUC -0.217, delta AP -0.045
+- Future8 delta source_cohort_key optical_physics_plus_echem acquisition_residualized_cycle_balanced vs acquisition_raw: delta AUC -0.410, delta AP -0.287
+- Future8 delta source_cohort_key optical_physics_plus_echem acquisition_residualized_cycle_balanced vs echem_raw: delta AUC 0.076, delta AP 0.142
+- Future8 delta source_cohort_key optical_physics_plus_echem acquisition_residualized_cycle_balanced vs echem_residualized_cycle_balanced: delta AUC -0.099, delta AP -0.049
+- Future8 delta source_cohort_key optical_physics_plus_echem acquisition_residualized_cycle_balanced vs optical_raw: delta AUC 0.368, delta AP 0.353
+- Guardrail: Future8 labels are treated as weak warning labels. This benchmark supports a video-physics claim only if optical features survive source/source-cohort holdout, acquisition residualization, cycle balancing, source-stratified permutation, and echem-context comparison.
+
 ## Source-Domain Video/Echem Adaptation Audit
 
 - Rows/cycles/sources: 172 / 34 / 12
