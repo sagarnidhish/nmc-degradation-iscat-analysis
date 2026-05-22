@@ -116,6 +116,7 @@ def main() -> None:
     echem_optical_breakpoint = read_json(derived / "echem_optical_breakpoint_audit" / "echem_optical_breakpoint_audit_summary.json")
     echem_optical_regime = read_json(derived / "echem_optical_regime_atlas" / "echem_optical_regime_atlas_summary.json")
     echem_conditioned_predictor = read_json(derived / "echem_conditioned_optical_predictor" / "echem_conditioned_optical_predictor_summary.json")
+    echem_roi_rollout_front = read_json(derived / "echem_conditioned_roi_rollout_front_audit" / "echem_conditioned_roi_rollout_front_summary.json")
     physics_consistency = read_json(derived / "physics_consistency_claim_matrix" / "physics_consistency_claim_matrix_summary.json")
     rollout_calibration = read_json(derived / "probabilistic_rollout_calibration" / "probabilistic_rollout_calibration_summary.json")
     cycle_state_space = read_json(derived / "cycle_state_space_transition_audit" / "cycle_state_space_transition_audit_summary.json")
@@ -264,6 +265,10 @@ def main() -> None:
     echem_predictor_metrics = top_items(first_summary(echem_conditioned_predictor, "top_metrics", []), 16)
     echem_predictor_deltas = top_items(first_summary(echem_conditioned_predictor, "top_feature_set_deltas", []), 16)
     echem_predictor_top_delta = echem_predictor_deltas[0] if echem_predictor_deltas else {}
+    echem_roi_metrics = top_items(first_summary(echem_roi_rollout_front, "top_model_metrics", []), 16)
+    echem_roi_deltas = top_items(first_summary(echem_roi_rollout_front, "top_feature_set_deltas", []), 16)
+    echem_roi_residual = top_items(first_summary(echem_roi_rollout_front, "top_residual_correlations", []), 12)
+    echem_roi_top_delta = echem_roi_deltas[0] if echem_roi_deltas else {}
     physics_consistency_top = top_items(first_summary(physics_consistency, "top_consistency_rows", []), 12)
     physics_consistency_tests = top_items(first_summary(physics_consistency, "top_event_tests", []), 12)
     rollout_calibration_coverage = top_items(first_summary(rollout_calibration, "coverage_summary", []), 30)
@@ -571,6 +576,7 @@ def main() -> None:
         f"- Echem/optical breakpoint audit tests {first_summary(echem_optical_breakpoint, 'n_features_tested', 0)} cycle-level echem/trace features around synchronized cycles {first_summary(echem_optical_breakpoint, 'event_cycles', [])}; strongest event-centered shift is {echem_breakpoint_top.get('feature', 'NA')} over +/-{fmt(echem_breakpoint_top.get('window_cycles'), 0)} cycles (scaled shift {fmt(echem_breakpoint_top.get('event_median_scaled_shift'))}, bootstrap p={fmt(echem_breakpoint_top.get('bootstrap_p_abs_vs_control_centers'))}).",
         f"- Echem-optical regime atlas organizes {first_summary(echem_optical_regime, 'n_cycles', 0)} cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is {echem_regime_top_binary.get('feature', 'NA')} vs {echem_regime_top_binary.get('target', 'NA')} (median shift {fmt(echem_regime_top_binary.get('median_positive_minus_negative'))}, p={fmt(echem_regime_top_binary.get('mannwhitney_p'))}), and top continuous link is {echem_regime_top_corr.get('feature', 'NA')} vs {echem_regime_top_corr.get('target', 'NA')} (rho={fmt(echem_regime_top_corr.get('spearman_rho'))}).",
         f"- Echem-conditioned optical predictor shows the clearest echem gain for {echem_predictor_top_delta.get('target', 'NA')} under {echem_predictor_top_delta.get('split', 'NA')}: {echem_predictor_top_delta.get('comparison', 'NA')} changes AUC by {fmt(echem_predictor_top_delta.get('delta_roc_auc'))}; same-cycle synchronized candidates remain acquisition/context dominated and underpowered.",
+        f"- Echem-conditioned ROI rollout/front audit joins {first_summary(echem_roi_rollout_front, 'n_roi_rows', 0)} ROI rows across {first_summary(echem_roi_rollout_front, 'n_cycles', 0)} cycles; strongest leave-cycle echem gain is {echem_roi_top_delta.get('target', 'NA')} {echem_roi_top_delta.get('comparison', 'NA')} with delta Spearman {fmt(echem_roi_top_delta.get('delta_spearman_rho'))} and delta R2 {fmt(echem_roi_top_delta.get('delta_r2'))}.",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
         f"- Automatic front-QC sensitivity keeps the positive phase-front residual in {len(robust_phase_strata)} strata: {', '.join(robust_phase_strata) if robust_phase_strata else 'none'}; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.",
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
@@ -942,6 +948,27 @@ def main() -> None:
             f"- Echem-conditioned metric {row.get('split')} {row.get('target')} {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, n={fmt(row.get('n_eval'), 0)}, positives={fmt(row.get('n_positive'), 0)}"
         )
     report_lines.append(f"- Guardrail: {first_summary(echem_conditioned_predictor, 'guardrail', 'Echem-conditioned optical predictor unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Echem-Conditioned ROI Rollout/Front Audit",
+        "",
+        f"- ROI rows/cycles/targets: {first_summary(echem_roi_rollout_front, 'n_roi_rows', 0)} / {first_summary(echem_roi_rollout_front, 'n_cycles', 0)} / {len(first_summary(echem_roi_rollout_front, 'targets', []))}",
+        f"- Feature set sizes: {first_summary(echem_roi_rollout_front, 'feature_set_sizes', {})}",
+    ]
+    for row in echem_roi_deltas[:10]:
+        report_lines.append(
+            f"- ROI echem feature-set delta {row.get('target')} {row.get('comparison')}: delta Spearman {fmt(row.get('delta_spearman_rho'))}, delta R2 {fmt(row.get('delta_r2'))}, base rho {fmt(row.get('base_spearman_rho'))}, comparison rho {fmt(row.get('comparison_spearman_rho'))}"
+        )
+    for row in echem_roi_metrics[:10]:
+        report_lines.append(
+            f"- ROI leave-cycle metric {row.get('target')} {row.get('feature_set')}: rho {fmt(row.get('spearman_rho'))}, R2 {fmt(row.get('r2'))}, MAE {fmt(row.get('mae'))}, n={fmt(row.get('n_eval'), 0)}, cycles={fmt(row.get('n_cycles'), 0)}"
+        )
+    for row in echem_roi_residual[:8]:
+        report_lines.append(
+            f"- ROI acquisition-residual echem link {row.get('echem_feature')} vs residual {row.get('target')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(echem_roi_rollout_front, 'guardrail', 'Echem-conditioned ROI rollout/front audit unavailable.')}")
 
     report_lines += [
         "",
@@ -2232,6 +2259,16 @@ def main() -> None:
             "top_metrics": echem_predictor_metrics,
             "top_feature_set_deltas": echem_predictor_deltas,
             "guardrail": first_summary(echem_conditioned_predictor, "guardrail"),
+        },
+        "echem_conditioned_roi_rollout_front_audit": {
+            "n_roi_rows": first_summary(echem_roi_rollout_front, "n_roi_rows"),
+            "n_cycles": first_summary(echem_roi_rollout_front, "n_cycles"),
+            "targets": first_summary(echem_roi_rollout_front, "targets", []),
+            "feature_set_sizes": first_summary(echem_roi_rollout_front, "feature_set_sizes", {}),
+            "top_model_metrics": echem_roi_metrics,
+            "top_feature_set_deltas": echem_roi_deltas,
+            "top_residual_correlations": echem_roi_residual,
+            "guardrail": first_summary(echem_roi_rollout_front, "guardrail"),
         },
         "calibration_claim_risk_register": {
             "n_claim_families": first_summary(calibration_claim_risk, "n_claim_families"),

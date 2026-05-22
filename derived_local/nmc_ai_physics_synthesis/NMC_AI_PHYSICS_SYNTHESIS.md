@@ -72,6 +72,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Echem/optical breakpoint audit tests 84 cycle-level echem/trace features around synchronized cycles [86.0, 116.0]; strongest event-centered shift is state_step_norm_delta_prev over +/-4 cycles (scaled shift -2.263, bootstrap p=0.002).
 - Echem-optical regime atlas organizes 89 cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is pos_dq_abs_peak_voltage vs multimodal_outlier_without_trace_drop (median shift 0.050, p=1.453e-04), and top continuous link is shape_dVdt_abs_p95 vs cross_modal_consensus_score (rho=0.617).
 - Echem-conditioned optical predictor shows the clearest echem gain for high_cross_modal_consensus_q75 under leave_one_cycle: echem_regime_minus_acquisition changes AUC by 0.113; same-cycle synchronized candidates remain acquisition/context dominated and underpowered.
+- Echem-conditioned ROI rollout/front audit joins 72 ROI rows across 24 cycles; strongest leave-cycle echem gain is transferred_masked_residual_signature echem_regime_minus_acquisition with delta Spearman 0.450 and delta R2 0.626.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
@@ -470,6 +471,40 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Echem-conditioned metric leave_one_cycle future_any_drop_within_8cycles cycle_state_upper_bound: AUC 0.808, AP 0.530, n=89, positives=20
 - Echem-conditioned metric leave_one_cycle high_cross_modal_consensus_q75 echem_regime: AUC 0.799, AP 0.522, n=89, positives=23
 - Guardrail: This is a cycle-level weak-label model comparison. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics.
+
+## Echem-Conditioned ROI Rollout/Front Audit
+
+- ROI rows/cycles/targets: 72 / 24 / 12
+- Feature set sizes: {'acquisition_context': 10, 'echem_plus_acquisition': 59, 'echem_regime': 49}
+- ROI echem feature-set delta transferred_masked_residual_signature echem_regime_minus_acquisition: delta Spearman 0.450, delta R2 0.626, base rho -0.086, comparison rho 0.364
+- ROI echem feature-set delta phase_slope_positive_fraction echem_plus_acquisition_minus_acquisition: delta Spearman 0.327, delta R2 -18.120, base rho 0.010, comparison rho 0.337
+- ROI echem feature-set delta transferred_masked_residual_signature echem_plus_acquisition_minus_acquisition: delta Spearman 0.272, delta R2 1.042, base rho -0.086, comparison rho 0.186
+- ROI echem feature-set delta phase_slope_positive_fraction echem_regime_minus_acquisition: delta Spearman 0.223, delta R2 -9.254, base rho 0.010, comparison rho 0.234
+- ROI echem feature-set delta threshold_robust_phase_score echem_regime_minus_acquisition: delta Spearman 0.159, delta R2 -3.963, base rho 0.119, comparison rho 0.278
+- ROI echem feature-set delta persistence_particle_mse_fraction_of_full_mean echem_plus_acquisition_minus_acquisition: delta Spearman 0.044, delta R2 -0.668, base rho 0.685, comparison rho 0.729
+- ROI echem feature-set delta roi_norm_mean_delta_last_minus_first echem_regime_minus_acquisition: delta Spearman 0.038, delta R2 -11.834, base rho 0.018, comparison rho 0.057
+- ROI echem feature-set delta low_rank_dmd_particle_to_nonparticle_mse_ratio_mean echem_regime_minus_acquisition: delta Spearman 0.027, delta R2 -6.778, base rho 0.031, comparison rho 0.058
+- ROI echem feature-set delta radius2_slope_median_px2_per_s echem_plus_acquisition_minus_acquisition: delta Spearman 0.001, delta R2 -0.338, base rho 0.520, comparison rho 0.522
+- ROI echem feature-set delta velocity_particle_mse_fraction_of_full_mean echem_plus_acquisition_minus_acquisition: delta Spearman -0.024, delta R2 -18.776, base rho 0.667, comparison rho 0.643
+- ROI leave-cycle metric persistence_particle_mse_fraction_of_full_mean echem_plus_acquisition: rho 0.729, R2 -0.199, MAE 0.292, n=72, cycles=24
+- ROI leave-cycle metric persistence_particle_mse_fraction_of_full_mean acquisition_context: rho 0.685, R2 0.469, MAE 0.247, n=72, cycles=24
+- ROI leave-cycle metric velocity_particle_mse_fraction_of_full_mean acquisition_context: rho 0.667, R2 0.323, MAE 0.255, n=72, cycles=24
+- ROI leave-cycle metric phase_slope_abs_median_per_s acquisition_context: rho 0.655, R2 0.267, MAE 1.243e-06, n=72, cycles=24
+- ROI leave-cycle metric velocity_particle_mse_fraction_of_full_mean echem_plus_acquisition: rho 0.643, R2 -18.452, MAE 0.668, n=72, cycles=24
+- ROI leave-cycle metric persistence_particle_mse_fraction_of_full_mean echem_regime: rho 0.587, R2 -48.210, MAE 0.971, n=72, cycles=24
+- ROI leave-cycle metric velocity_particle_mse_fraction_of_full_mean echem_regime: rho 0.530, R2 -73.147, MAE 1.093, n=72, cycles=24
+- ROI leave-cycle metric radius2_slope_median_px2_per_s echem_plus_acquisition: rho 0.522, R2 -0.058, MAE 0.002, n=72, cycles=24
+- ROI leave-cycle metric radius2_slope_median_px2_per_s acquisition_context: rho 0.520, R2 0.280, MAE 0.002, n=72, cycles=24
+- ROI leave-cycle metric phase_slope_abs_median_per_s echem_regime: rho 0.463, R2 -6.996, MAE 2.134e-06, n=72, cycles=24
+- ROI acquisition-residual echem link pos_dq_abs_entropy vs residual transferred_masked_residual_signature: rho=-0.745, p=1.006e-10, n=54
+- ROI acquisition-residual echem link all_dq_abs_peak_frac vs residual transferred_masked_residual_signature: rho=0.727, p=4.861e-10, n=54
+- ROI acquisition-residual echem link all_dq_abs_entropy vs residual transferred_masked_residual_signature: rho=-0.649, p=1.140e-07, n=54
+- ROI acquisition-residual echem link neg_dq_abs_peak_voltage vs residual transferred_masked_residual_signature: rho=0.592, p=2.439e-06, n=54
+- ROI acquisition-residual echem link shape_V_range vs residual transferred_masked_residual_signature: rho=-0.574, p=5.604e-06, n=54
+- ROI acquisition-residual echem link capacity_mAh vs residual transferred_masked_residual_signature: rho=-0.558, p=1.176e-05, n=54
+- ROI acquisition-residual echem link capacity_fade_from_first_mAh vs residual transferred_masked_residual_signature: rho=0.558, p=1.176e-05, n=54
+- ROI acquisition-residual echem link capacity_fraction_of_first vs residual transferred_masked_residual_signature: rho=-0.558, p=1.176e-05, n=54
+- Guardrail: ROI rows are automatic, clustered by cycle, and front/diffusion variables are proxy measurements; use this as a weak-label explanatory audit, not calibrated electrochemical mechanism proof.
 
 ## Diffusion Proxy Sanity Audit
 

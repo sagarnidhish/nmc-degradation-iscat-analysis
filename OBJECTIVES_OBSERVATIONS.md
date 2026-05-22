@@ -2480,3 +2480,26 @@ Key result:
 - The fast run used zero permutation resamples after a 100-permutation run was too slow; the audit is therefore a controlled model-comparison screen, not a final significance test.
 
 Interpretation: electrochemical regime descriptors add conditional signal for broad cross-modal optical degradation state and particle heterogeneity, especially under leave-one-cycle evaluation and modestly under rolling-origin evaluation. They do not rescue future8 prediction or explain the two synchronized multimodal candidates without acquisition context. Use this as evidence that echem regime should condition optical AI models, not as deployable warning performance or causal proof.
+
+## 2026-05-22 Echem-Conditioned ROI Rollout/Front Audit
+
+Added `scripts/tier4_echem_conditioned_roi_rollout_front_audit.py` and ran it on Isambard to test whether electrochemical regime descriptors explain ROI-level video-model difficulty and front-motion descriptors beyond acquisition/context variables. The audit joins the `echem_optical_regime_atlas` cycle table to `balanced_future_roi_physics_audit/balanced_future_roi_physics_joined.csv`, then compares `acquisition_context`, `echem_regime`, and `echem_plus_acquisition` feature sets under leave-one-cycle-out ridge regression.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_roi_rollout_front_audit`
+
+Local compact copy:
+
+`derived_local/echem_conditioned_roi_rollout_front_audit`
+
+Key result:
+
+- The audit covers 72 ROI rows from 24 cycles, 12 continuous ROI targets, 10 acquisition/context features, and 49 echem-regime features.
+- The clearest echem-conditioned win is the transferred masked-residual signature: acquisition-only leave-cycle performance is R2 -0.079 and Spearman -0.086, while echem-regime features reach R2 0.546 and Spearman 0.364 (delta R2 +0.626, delta Spearman +0.450).
+- Adding echem to acquisition improves R2 further for the transferred masked-residual signature (R2 0.963, delta R2 +1.042), but the rank correlation is weaker than echem alone (Spearman 0.186), so this looks like a useful explanatory axis rather than a robust deployable predictor.
+- Echem features add rank signal for phase-front positive fraction (delta Spearman +0.223 to +0.327), but R2 remains strongly negative. Treat those front-fraction effects as exploratory and sensitive to small-sample/high-dimensional regression.
+- Particle rollout fractions are mostly better explained by acquisition/context: persistence particle MSE fraction has acquisition-only Spearman 0.685 and echem+acquisition Spearman 0.729, while echem alone has very poor R2.
+- After residualizing acquisition/context, the transferred masked-residual signature is strongly linked to echem proxy shape terms: `pos_dq_abs_entropy` rho=-0.745, `all_dq_abs_peak_frac` rho=0.727, `all_dq_abs_entropy` rho=-0.649, and `neg_dq_abs_peak_voltage` rho=0.592, all with n=54.
+
+Interpretation: the paper-inspired electrochemical-regime conditioning is most actionable for the masked residual signature, which is our strongest bridge between AI video reconstruction difficulty and battery state. Front-motion and diffusion-proxy descriptors remain useful screening variables, but the ROI-level evidence does not justify calibrated transport or phase-front claims without manual QC and stronger physical calibration.
