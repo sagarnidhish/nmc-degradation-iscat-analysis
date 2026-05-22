@@ -158,6 +158,7 @@ def main() -> None:
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
     source_invariant_family = read_json(derived / "source_invariant_physical_family_audit" / "source_invariant_family_summary.json")
     source_invariant_interpretable = read_json(derived / "source_invariant_interpretable_feature_audit" / "source_invariant_interpretable_summary.json")
+    exact_feature_mechanism = read_json(derived / "exact_feature_mechanism_consistency_audit" / "exact_feature_mechanism_summary.json")
     invariant_physics_rules = read_json(derived / "invariant_physics_rule_discovery" / "invariant_physics_rule_summary.json")
     agentic_current = read_json(derived / "agentic_current_hypothesis_tournament" / "agentic_current_hypothesis_tournament_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
@@ -471,6 +472,15 @@ def main() -> None:
     source_interpretable_top_uni = source_interpretable_univariate[0] if source_interpretable_univariate else {}
     source_interpretable_top_single = source_interpretable_single[0] if source_interpretable_single else {}
     source_interpretable_top_combo = source_interpretable_combo[0] if source_interpretable_combo else {}
+    exact_mech_target_metrics = top_items(first_summary(exact_feature_mechanism, "top_target_metrics", []), 20)
+    exact_mech_correlations = top_items(first_summary(exact_feature_mechanism, "top_mechanism_correlations", []), 30)
+    exact_mech_contraction = top_items(first_summary(exact_feature_mechanism, "contraction_related_correlations", []), 20)
+    exact_mech_strata = top_items(first_summary(exact_feature_mechanism, "top_stratum_tests", []), 20)
+    exact_mech_loss_metric = next((r for r in exact_mech_target_metrics if r.get("score") == "exact_optical_loss_score"), {})
+    exact_mech_context_metric = next((r for r in exact_mech_target_metrics if r.get("score") == "exact_low_context_change_score"), {})
+    exact_mech_contraction_metric = next((r for r in exact_mech_target_metrics if r.get("score") == "front_contraction_score"), {})
+    exact_mech_radius_corr = next((r for r in exact_mech_contraction if r.get("anchor_feature") == "exact_optical_loss_score" and r.get("mechanism_feature") == "radius2_slope_median_px2_per_s"), {})
+    exact_mech_primary_radius_corr = next((r for r in exact_mech_contraction if r.get("anchor_feature") == "particle_vs_context_mean_diff_positive_fraction" and r.get("mechanism_feature") == "radius2_slope_median_px2_per_s"), {})
     invariant_rule_best = first_summary(invariant_physics_rules, "best_rule", {}) or {}
     invariant_rule_top = top_items(first_summary(invariant_physics_rules, "top_rules", []), 16)
     invariant_rule_features = top_items(first_summary(invariant_physics_rules, "top_oriented_features", []), 16)
@@ -732,6 +742,7 @@ def main() -> None:
         f"- Source-invariant projection is more promising but still guarded: best video_plus_echem future16 is {source_invariant_best_vpe16.get('method', 'NA')} at AUC {fmt(source_invariant_best_vpe16.get('roc_auc'))} versus raw {fmt(source_invariant_raw16.get('roc_auc'))} and acquisition context {fmt(source_invariant_acq16.get('roc_auc'))}; video-only source-confound filtering reaches AUC {fmt(source_invariant_best_video16.get('roc_auc'))}.",
         f"- Source-invariant physical-family audit localizes the future16 rescue to normalized heterogeneity and particle-vs-context contrast: norm-heterogeneity source_mean_resid_4 reaches AUC {fmt(source_family_norm16.get('roc_auc'))}, contrast source_mean_resid_4 reaches {fmt(source_family_contrast16.get('roc_auc'))}, while raw embedding alone is {fmt(source_family_embed16.get('roc_auc'))}.",
         f"- Exact-feature source-invariant audit nominates {source_interpretable_top_uni.get('feature', 'NA')} as the strongest univariate future16 descriptor (oriented AUC {fmt(source_interpretable_top_uni.get('roc_auc_oriented'))}, source eta2 {fmt(source_interpretable_top_uni.get('source_eta2'))}); best small transfer set {source_interpretable_top_combo.get('feature_set', 'NA')} reaches leave-source AUC {fmt(source_interpretable_top_combo.get('roc_auc'))}.",
+        f"- Exact-feature mechanism consistency audit is a useful falsification check: exact_optical_loss_score predicts future16 with AUC {fmt(exact_mech_loss_metric.get('oriented_auc'))} but has source eta2 {fmt(exact_mech_loss_metric.get('source_eta2'))}; the primary particle-vs-context descriptor has weak radius-slope linkage after source residualization (rho {fmt(exact_mech_primary_radius_corr.get('source_residual_spearman_rho'))}).",
         f"- Invariant sparse rule discovery finds review-prioritization rules rather than a standalone predictor: best leave-source rule {invariant_rule_best.get('terms', 'NA')} covers {fmt(invariant_rule_best.get('n_covered'), 0)}/{fmt(invariant_rule_best.get('n_eval'), 0)} rows with precision {fmt(invariant_rule_best.get('precision'))}, lift {fmt(invariant_rule_best.get('lift'))}, and source-positive hits in {fmt(invariant_rule_best.get('n_sources_with_positive_hits'), 0)} sources.",
         f"- Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as {first_summary(agentic_current, 'top_hypothesis', {}).get('title', 'NA')} with score {fmt(first_summary(agentic_current, 'top_hypothesis', {}).get('tournament_score'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
@@ -1840,6 +1851,26 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Exact Feature Mechanism Consistency Audit",
+        "",
+        f"- Rows/cycles/sources: {first_summary(exact_feature_mechanism, 'n_rows', 0)} / {first_summary(exact_feature_mechanism, 'n_cycles', 0)} / {first_summary(exact_feature_mechanism, 'n_sources', 0)}",
+        f"- Exact optical-loss composite future16 metric: AUC {fmt(exact_mech_loss_metric.get('oriented_auc'))}, AP {fmt(exact_mech_loss_metric.get('average_precision'))}, median positive-negative {fmt(exact_mech_loss_metric.get('median_positive_minus_negative'))}, source eta2 {fmt(exact_mech_loss_metric.get('source_eta2'))}",
+        f"- Primary low context-change metric: AUC {fmt(exact_mech_context_metric.get('oriented_auc'))}, AP {fmt(exact_mech_context_metric.get('average_precision'))}, source eta2 {fmt(exact_mech_context_metric.get('source_eta2'))}",
+        f"- Front-contraction composite future16 metric: AUC {fmt(exact_mech_contraction_metric.get('oriented_auc'))}, AP {fmt(exact_mech_contraction_metric.get('average_precision'))}, p={fmt(exact_mech_contraction_metric.get('mannwhitney_p'))}",
+        f"- Composite exact-loss vs radius2 slope: raw rho {fmt(exact_mech_radius_corr.get('spearman_rho'))}, source-residual rho {fmt(exact_mech_radius_corr.get('source_residual_spearman_rho'))}; primary descriptor vs radius2 source-residual rho {fmt(exact_mech_primary_radius_corr.get('source_residual_spearman_rho'))}",
+    ]
+    for row in exact_mech_contraction[:8]:
+        report_lines.append(
+            f"- Mechanism correlation {row.get('anchor_feature')} vs {row.get('mechanism_feature')}: rho {fmt(row.get('spearman_rho'))}, p={fmt(row.get('spearman_p'))}, source-resid rho {fmt(row.get('source_residual_spearman_rho'))}, source-resid p={fmt(row.get('source_residual_spearman_p'))}"
+        )
+    for row in exact_mech_strata[:8]:
+        report_lines.append(
+            f"- High exact-loss stratum shift {row.get('feature')}: median high-low {fmt(row.get('median_high_minus_low'))}, p={fmt(row.get('mannwhitney_p'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(exact_feature_mechanism, 'guardrail', 'Exact feature mechanism consistency audit unavailable.')}")
+
+    report_lines += [
+        "",
         "## Invariant Physics Rule Discovery",
         "",
         f"- Rows/eval rows/cycles/sources: {first_summary(invariant_physics_rules, 'n_rows', 0)} / {first_summary(invariant_physics_rules, 'n_eval_rows', 0)} / {first_summary(invariant_physics_rules, 'n_cycles', 0)} / {first_summary(invariant_physics_rules, 'n_sources', 0)}",
@@ -2576,6 +2607,16 @@ def main() -> None:
             "top_combo_transfer": source_interpretable_combo,
             "top_set_metrics": source_interpretable_sets,
             "guardrail": first_summary(source_invariant_interpretable, "guardrail"),
+        },
+        "exact_feature_mechanism_consistency_audit": {
+            "n_rows": first_summary(exact_feature_mechanism, "n_rows"),
+            "n_cycles": first_summary(exact_feature_mechanism, "n_cycles"),
+            "n_sources": first_summary(exact_feature_mechanism, "n_sources"),
+            "target": first_summary(exact_feature_mechanism, "target"),
+            "top_target_metrics": exact_mech_target_metrics,
+            "contraction_related_correlations": exact_mech_contraction,
+            "top_stratum_tests": exact_mech_strata,
+            "guardrail": first_summary(exact_feature_mechanism, "guardrail"),
         },
         "invariant_physics_rule_discovery": {
             "n_rows": first_summary(invariant_physics_rules, "n_rows"),

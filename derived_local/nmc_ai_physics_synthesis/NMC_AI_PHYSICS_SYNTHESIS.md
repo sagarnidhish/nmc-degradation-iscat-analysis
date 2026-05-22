@@ -121,6 +121,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Source-invariant projection is more promising but still guarded: best video_plus_echem future16 is source_mean_resid_4 at AUC 0.729 versus raw 0.612 and acquisition context 0.745; video-only source-confound filtering reaches AUC 0.770.
 - Source-invariant physical-family audit localizes the future16 rescue to normalized heterogeneity and particle-vs-context contrast: norm-heterogeneity source_mean_resid_4 reaches AUC 0.738, contrast source_mean_resid_4 reaches 0.703, while raw embedding alone is 0.462.
 - Exact-feature source-invariant audit nominates particle_vs_context_mean_diff_positive_fraction as the strongest univariate future16 descriptor (oriented AUC 0.769, source eta2 0.390); best small transfer set trio::particle_vs_context_mean_diff_positive_fraction+particle_mean_last_minus_first+particle_gradient_diff_q90 reaches leave-source AUC 0.750.
+- Exact-feature mechanism consistency audit is a useful falsification check: exact_optical_loss_score predicts future16 with AUC 0.853 but has source eta2 0.513; the primary particle-vs-context descriptor has weak radius-slope linkage after source residualization (rho -0.047).
 - Invariant sparse rule discovery finds review-prioritization rules rather than a standalone predictor: best leave-source rule low(particle_std_diff_positive_fraction) covers 27/72 rows with precision 0.889, lift 1.123, and source-positive hits in 6 sources.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
@@ -1379,6 +1380,31 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Feature set pair::particle_vs_context_mean_diff_positive_fraction+particle_norm_max source_confound_filter_0.50: n_features 2, AUC 0.727, AP 0.880, p=0.008
 - Feature set pair::particle_vs_context_mean_diff_positive_fraction+particle_norm_min source_confound_filter_0.50: n_features 2, AUC 0.727, AP 0.880, p=0.008
 - Guardrail: Exact-feature readouts are automatic particle-region descriptors evaluated against weak future16 labels under leave-source splits. They are hypothesis-prioritization signals only; source imbalance, acquisition context, automatic masks, and absent manual QC still block mechanistic claims.
+
+## Exact Feature Mechanism Consistency Audit
+
+- Rows/cycles/sources: 172 / 34 / 12
+- Exact optical-loss composite future16 metric: AUC 0.853, AP 0.960, median positive-negative 0.730, source eta2 0.513
+- Primary low context-change metric: AUC 0.769, AP 0.904, source eta2 0.317
+- Front-contraction composite future16 metric: AUC 0.648, AP 0.888, p=0.081
+- Composite exact-loss vs radius2 slope: raw rho 0.355, source-residual rho 0.404; primary descriptor vs radius2 source-residual rho -0.047
+- Mechanism correlation exact_optical_loss_score vs radius2_slope_median_px2_per_s: rho 0.355, p=0.002, source-resid rho 0.404, source-resid p=4.309e-04
+- Mechanism correlation exact_optical_loss_score vs front_contraction_score: rho -0.136, p=0.254, source-resid rho -0.398, source-resid p=5.333e-04
+- Mechanism correlation exact_optical_loss_score vs positive_D_fraction: rho -0.126, p=0.291, source-resid rho 0.313, source-resid p=0.008
+- Mechanism correlation exact_low_context_change_score vs radius2_slope_median_px2_per_s: rho 0.121, p=0.311, source-resid rho 0.049, source-resid p=0.682
+- Mechanism correlation particle_vs_context_mean_diff_positive_fraction vs radius2_slope_median_px2_per_s: rho -0.121, p=0.311, source-resid rho -0.047, source-resid p=0.693
+- Mechanism correlation exact_low_context_change_score vs positive_D_fraction: rho -0.071, p=0.553, source-resid rho 0.109, source-resid p=0.364
+- Mechanism correlation particle_vs_context_mean_diff_positive_fraction vs positive_D_fraction: rho 0.071, p=0.553, source-resid rho -0.108, source-resid p=0.365
+- Mechanism correlation exact_low_context_change_score vs front_contraction_score: rho -0.049, p=0.681, source-resid rho -0.078, source-resid p=0.516
+- High exact-loss stratum shift exact_optical_loss_score: median high-low 1.322, p=1.449e-15
+- High exact-loss stratum shift particle_vs_context_mean_diff_positive_fraction: median high-low -0.074, p=1.147e-12
+- High exact-loss stratum shift exact_low_context_change_score: median high-low 1.498, p=1.147e-12
+- High exact-loss stratum shift particle_std_diff_positive_fraction: median high-low -0.084, p=1.676e-11
+- High exact-loss stratum shift particle_gradient_diff_q90: median high-low 0.001, p=8.784e-09
+- High exact-loss stratum shift transferred_masked_residual_signature: median high-low 0.614, p=5.290e-05
+- High exact-loss stratum shift radius2_slope_median_px2_per_s: median high-low 0.003, p=9.685e-04
+- High exact-loss stratum shift diffusion_proxy_median_um2_per_s: median high-low 5.932e-06, p=9.685e-04
+- Guardrail: Mechanism consistency joins automatic particle descriptors to automatic front, rollout, echem, and diffusion-proxy outputs. It tests whether the exact feature behaves like optical loss/contraction, but all front/diffusion quantities remain apparent proxies pending manual QC and calibration.
 
 ## Invariant Physics Rule Discovery
 

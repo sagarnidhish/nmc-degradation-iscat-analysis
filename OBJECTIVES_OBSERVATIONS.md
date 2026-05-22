@@ -2842,3 +2842,27 @@ Key result:
 - The strongest oriented single features include echem capacity/state descriptors as well as optical-difference descriptors; several echem features have higher AUC but also substantial source/context structure.
 
 Interpretation: sparse rules reinforce the exact-feature audit by flagging low positive optical-change fractions as a review-prioritization signature. They are not deployable warning rules: precision gains are modest over the high future16 base rate, source support is uneven, and manual QC/acquisition controls remain required.
+
+## 2026-05-22 Exact Feature Mechanism Consistency Audit
+
+Added and ran:
+
+`scripts/tier4_exact_feature_mechanism_consistency_audit.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit`
+
+Local compact copy:
+
+`derived_local/exact_feature_mechanism_consistency_audit`
+
+Key result:
+
+- The audit joined exact particle-region descriptors to temporal directionality, front/rollout, echem-conditioned, and diffusion-consistency tables. The overlap covers 172 rows, 34 cycles, and 12 sources, with 72 rows carrying the balanced front/diffusion mechanism fields.
+- The composite `exact_optical_loss_score` is a strong future16 weak-label separator: AUC 0.853, AP 0.960, median positive-minus-negative 0.730, p = 2.998e-05.
+- That composite is also source-structured: source eta2 is 0.513, so it is not a source-independent degradation detector.
+- The primary exact descriptor, `particle_vs_context_mean_diff_positive_fraction`, remains useful for future16 (oriented AUC 0.769), but its direct source-residualized link to radius-squared slope is weak (rho -0.047).
+- The composite score correlates with radius2 slope after source residualization (rho 0.404, p = 4.31e-04) and has high-stratum shifts in rollout residual and radius/diffusion-proxy features, but it does not validate a clean contraction mechanism: front-contraction composite linkage is negative after source residualization (rho -0.398), and diffusion proxy quantities remain apparent/guarded.
+
+Interpretation: this audit prevents overclaiming. Exact particle-region descriptors are useful warning/review features, but the mechanistic story is not simply clean optical-front contraction or calibrated diffusion. The next strongest interpretation is a source/context-sensitive optical-change mode with rollout-residual and radius-proxy associations that needs manual QC and calibration before physical mechanism claims.
