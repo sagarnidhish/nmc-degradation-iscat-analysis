@@ -152,6 +152,7 @@ def main() -> None:
     acquisition_residualized_video = read_json(derived / "acquisition_residualized_video_physics_benchmark" / "acquisition_residualized_summary.json")
     acquisition_residualized_video_echem = read_json(derived / "acquisition_residualized_video_echem_warning" / "acquisition_residualized_video_echem_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
+    source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     agentic_current = read_json(derived / "agentic_current_hypothesis_tournament" / "agentic_current_hypothesis_tournament_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
@@ -425,6 +426,14 @@ def main() -> None:
     source_domain_best = source_domain_metrics[0] if source_domain_metrics else {}
     source_domain_centered = next((r for r in source_domain_metrics if r.get("feature_set") == "video_plus_echem" and r.get("method") == "source_centered"), {})
     source_domain_coral = next((r for r in source_domain_metrics if r.get("feature_set") == "video_plus_echem" and r.get("method") == "coral"), {})
+    source_balanced_metrics = top_items(first_summary(source_balanced_video_echem, "top_metrics", []), 48)
+    source_balanced_deltas = top_items(first_summary(source_balanced_video_echem, "top_deltas", []), 24)
+    source_balanced_sources = top_items(first_summary(source_balanced_video_echem, "source_summary", []), 12)
+    source_balanced_acq16 = next((r for r in source_balanced_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw_unweighted"), {})
+    source_balanced_raw16 = next((r for r in source_balanced_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "raw_unweighted"), {})
+    source_balanced_vpe16 = next((r for r in source_balanced_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "source_rank_weighted"), {})
+    source_balanced_echem16 = next((r for r in source_balanced_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "echem_regime" and r.get("mode") == "source_rank_weighted"), {})
+    source_balanced_rank8 = next((r for r in source_balanced_metrics if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "source_rank_weighted"), {})
     balanced_future_top_acq_resid = balanced_future_acq_resid[0] if balanced_future_acq_resid else {}
     temporal_future8 = (first_summary(temporal_directionality, "best_future8_model", []) or [{}])[0]
     temporal_past8 = (first_summary(temporal_directionality, "best_past8_model", []) or [{}])[0]
@@ -671,6 +680,7 @@ def main() -> None:
         f"- Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC {fmt(acq_resid_context8.get('roc_auc'))}, raw all-video reaches {fmt(acq_resid_raw_video8.get('roc_auc'))}, and context-residualized all-video alone reaches {fmt(acq_resid_video_only8.get('roc_auc'))}; future16 raw handcrafted reaches AUC {fmt(acq_resid_raw_hand16.get('roc_auc'))} but residualized all-video alone is {fmt(acq_resid_video_only16.get('roc_auc'))}.",
         f"- Acquisition-residualized video/echem warning audit executes the top tournament experiment: leave-cycle future16 residualized video_plus_echem reaches AUC {fmt(acq_echem_cycle_future16.get('roc_auc'))} versus acquisition-only {fmt(acq_echem_cycle_acq_future16.get('roc_auc'))}, but leave-source residualized AUC falls to {fmt(acq_echem_source_future16.get('roc_auc'))} versus acquisition-only {fmt(acq_echem_source_acq_future16.get('roc_auc'))}.",
         f"- Source-domain video/echem adaptation partially rescues leave-source future16 transfer: source-centered video_plus_echem reaches AUC {fmt(source_domain_centered.get('roc_auc'))} versus acquisition-only {fmt(source_domain_acq.get('roc_auc'))}, while CORAL reaches only {fmt(source_domain_coral.get('roc_auc'))}.",
+        f"- Source-balanced transfer audit shows source-rank/weighting only modestly lifts video+echem future16 AUC to {fmt(source_balanced_vpe16.get('roc_auc'))} versus raw video+echem {fmt(source_balanced_raw16.get('roc_auc'))}, below acquisition context {fmt(source_balanced_acq16.get('roc_auc'))} and echem source-rank {fmt(source_balanced_echem16.get('roc_auc'))}; source label composition remains the dominant guardrail.",
         f"- Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as {first_summary(agentic_current, 'top_hypothesis', {}).get('title', 'NA')} with score {fmt(first_summary(agentic_current, 'top_hypothesis', {}).get('tournament_score'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
         f"- Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with {temporal_future8.get('model', 'NA')} AUC {fmt(temporal_future8.get('pooled_oof_roc_auc'))}/AP {fmt(temporal_future8.get('pooled_oof_average_precision'))}, beating circular time-shift labels at empirical p={fmt(temporal_shift_null.get('empirical_p_ge_observed'))}; reversed labels remain nontrivial (best AUC {fmt(temporal_reversed8.get('pooled_oof_roc_auc'))}) and past8 is underpowered with {temporal_past8_counts.get('1', 0)} positives.",
@@ -1644,6 +1654,25 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Source-Balanced Video/Echem Transfer Audit",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_balanced_video_echem, 'n_rows', 0)} / {first_summary(source_balanced_video_echem, 'n_cycles', 0)} / {first_summary(source_balanced_video_echem, 'n_sources', 0)}",
+        f"- Feature set sizes: {first_summary(source_balanced_video_echem, 'feature_set_sizes', {})}",
+        f"- Future16 source-rank weighted video+echem: AUC {fmt(source_balanced_vpe16.get('roc_auc'))}, AP {fmt(source_balanced_vpe16.get('average_precision'))}, p={fmt(source_balanced_vpe16.get('empirical_p_ge_observed'))}",
+        f"- Future16 acquisition raw / echem source-rank / video+echem source-rank AUC: {fmt(source_balanced_acq16.get('roc_auc'))} / {fmt(source_balanced_echem16.get('roc_auc'))} / {fmt(source_balanced_vpe16.get('roc_auc'))}",
+    ]
+    for row in source_balanced_deltas[:8]:
+        report_lines.append(
+            f"- Source-balanced delta {row.get('target')} {row.get('comparison')}: delta AUC {fmt(row.get('delta_roc_auc'))}, delta rho {fmt(row.get('delta_spearman_rho'))}"
+        )
+    for row in source_balanced_sources[:6]:
+        report_lines.append(
+            f"- Source {row.get('source_stem')}: rows/cycles {fmt(row.get('n_rows'), 0)}/{fmt(row.get('n_cycles'), 0)}, future16 labeled/positive/negative {fmt(row.get('future_any_drop_within_16cycles_labeled'), 0)}/{fmt(row.get('future_any_drop_within_16cycles_positive'), 0)}/{fmt(row.get('future_any_drop_within_16cycles_negative'), 0)}, future16 fraction {fmt(row.get('future_any_drop_within_16cycles_positive_fraction'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_video_echem, 'guardrail', 'Source-balanced video/echem transfer audit unavailable.')}")
+
+    report_lines += [
+        "",
         "## Agentic Current Hypothesis Tournament",
         "",
         f"- Hypotheses ranked: {first_summary(agentic_current, 'n_hypotheses', 0)}",
@@ -2304,6 +2333,17 @@ def main() -> None:
             "top_deltas": source_domain_deltas,
             "source_summary": source_domain_sources,
             "guardrail": first_summary(source_domain_video_echem, "guardrail"),
+        },
+        "source_balanced_video_echem_transfer_audit": {
+            "n_rows": first_summary(source_balanced_video_echem, "n_rows"),
+            "n_cycles": first_summary(source_balanced_video_echem, "n_cycles"),
+            "n_sources": first_summary(source_balanced_video_echem, "n_sources"),
+            "modes": first_summary(source_balanced_video_echem, "modes", []),
+            "feature_set_sizes": first_summary(source_balanced_video_echem, "feature_set_sizes", {}),
+            "top_metrics": source_balanced_metrics,
+            "top_deltas": source_balanced_deltas,
+            "source_summary": source_balanced_sources,
+            "guardrail": first_summary(source_balanced_video_echem, "guardrail"),
         },
         "agentic_current_hypothesis_tournament": {
             "n_hypotheses": first_summary(agentic_current, "n_hypotheses"),

@@ -2681,3 +2681,25 @@ Key result:
 
 Interpretation: unlabeled source-centering partially rescues future16 source transfer, so source-specific feature offsets/domain calibration matter. The result is still not a deployable warning model because source labels and outcomes remain severely entangled; the next defensible step is source-balanced sampling or explicit domain-invariant representation learning, ideally anchored by manual QC labels.
 
+## 2026-05-22 Source-Balanced Video/Echem Transfer Audit
+
+Added `scripts/tier4_source_balanced_video_echem_transfer_audit.py` and ran it on Isambard to test whether source/class weighting and within-source rank normalization make the video+echem future16 signal source-transferable after the source-domain adaptation result.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_video_echem_transfer_audit`
+
+Local compact copy:
+
+`derived_local/source_balanced_video_echem_transfer_audit`
+
+Key result:
+
+- The audit covers 172 ROI rows, 34 cycles, and 12 source movies, with four feature sets: acquisition context (28 features), echem regime (55), video-only (64), and video+echem (119).
+- Source composition is the dominant limitation: `17_c2_x10_HighHighCOV_150723` contributes 30 labeled future16 rows and all are positive, while several small sources are all positive, all negative, or unlabeled for future16.
+- Future16 acquisition-context raw leave-source remains strongest at AUC 0.704/AP 0.915 with empirical p=0.004.
+- Future16 echem source-rank reaches AUC 0.642/AP 0.898 with empirical p=0.032.
+- Future16 video+echem improves only modestly from raw AUC 0.594/AP 0.850 to source-rank weighted AUC 0.614/AP 0.868 with empirical p=0.068, still below acquisition context and echem source-rank.
+- Video-only future16 remains weak under source holdout at AUC 0.454/AP 0.794.
+
+Interpretation: source-rank normalization and source/class weighting are useful stress tests but do not solve the source-transfer problem. The stronger source-centered adaptation result suggests source offsets matter, while this audit shows simple balancing does not yield a deployable source-transferable warning model. Treat video+echem as a review-prioritization and representation-design signal until we have better balanced sources and manual QC labels.

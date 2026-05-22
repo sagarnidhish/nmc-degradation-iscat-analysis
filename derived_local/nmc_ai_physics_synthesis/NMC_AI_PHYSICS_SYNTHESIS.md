@@ -115,6 +115,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC 1.000, raw all-video reaches 0.756, and context-residualized all-video alone reaches 0.319; future16 raw handcrafted reaches AUC 0.796 but residualized all-video alone is 0.620.
 - Acquisition-residualized video/echem warning audit executes the top tournament experiment: leave-cycle future16 residualized video_plus_echem reaches AUC 0.697 versus acquisition-only 0.727, but leave-source residualized AUC falls to 0.512 versus acquisition-only 0.697.
 - Source-domain video/echem adaptation partially rescues leave-source future16 transfer: source-centered video_plus_echem reaches AUC 0.737 versus acquisition-only 0.697, while CORAL reaches only 0.420.
+- Source-balanced transfer audit shows source-rank/weighting only modestly lifts video+echem future16 AUC to 0.614 versus raw video+echem 0.594, below acquisition context 0.704 and echem source-rank 0.642; source label composition remains the dominant guardrail.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
@@ -1218,6 +1219,28 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source 16_c2_x10_HighHighCOV_130723: rows/cycles 9/3, future16 fraction 0.667, mean feature z-shift 0.533
 - Source 5_c2_x10_260623: rows/cycles 6/2, future16 fraction 0.500, mean feature z-shift 0.769
 - Guardrail: This is an unlabeled target-source adaptation audit over weak labels and automatic ROI descriptors. Source centering/CORAL use held-out source feature distributions but not held-out labels. Results diagnose domain shift; they are not deployable warnings or causal physics proof.
+
+## Source-Balanced Video/Echem Transfer Audit
+
+- Rows/cycles/sources: 172 / 34 / 12
+- Feature set sizes: {'acquisition_context': 28, 'echem_regime': 55, 'video_all': 64, 'video_plus_echem': 119}
+- Future16 source-rank weighted video+echem: AUC 0.614, AP 0.868, p=0.068
+- Future16 acquisition raw / echem source-rank / video+echem source-rank AUC: 0.704 / 0.642 / 0.614
+- Source-balanced delta future_any_drop_within_16cycles video_plus_echem_source_rank_weighted_minus_video_all_raw_unweighted: delta AUC 0.160, delta rho 0.225
+- Source-balanced delta future_any_drop_within_16cycles video_plus_echem_source_rank_weighted_minus_video_plus_echem_raw_unweighted: delta AUC 0.020, delta rho 0.028
+- Source-balanced delta future_any_drop_within_16cycles video_plus_echem_source_rank_unweighted_minus_video_plus_echem_raw_unweighted: delta AUC 0.020, delta rho 0.028
+- Source-balanced delta future_any_drop_within_16cycles video_plus_echem_raw_weighted_minus_video_plus_echem_raw_unweighted: delta AUC 0.000, delta rho 0.000
+- Source-balanced delta future_any_drop_within_16cycles video_plus_echem_source_rank_weighted_minus_echem_regime_raw_unweighted: delta AUC -0.018, delta rho -0.025
+- Source-balanced delta future_any_drop_within_16cycles video_plus_echem_source_rank_weighted_minus_acquisition_context_raw_unweighted: delta AUC -0.090, delta rho -0.127
+- Source-balanced delta future_any_drop_within_8cycles video_plus_echem_raw_weighted_minus_video_plus_echem_raw_unweighted: delta AUC 0.000, delta rho 0.000
+- Source-balanced delta future_any_drop_within_8cycles video_plus_echem_source_rank_weighted_minus_echem_regime_raw_unweighted: delta AUC -0.105, delta rho -0.182
+- Source 17_c2_x10_HighHighCOV_150723: rows/cycles 66/10, future16 labeled/positive/negative 30/30/0, future16 fraction 1.000
+- Source 18_c2_xN_HighHighCOV_170723: rows/cycles 21/3, future16 labeled/positive/negative 3/0/3, future16 fraction 0.000
+- Source 10_c2_x10_030723: rows/cycles 14/3, future16 labeled/positive/negative 0/0/0, future16 fraction NA
+- Source 13_c2_x6_100723: rows/cycles 14/2, future16 labeled/positive/negative 0/0/0, future16 fraction NA
+- Source 7_c2_x10_290623: rows/cycles 14/3, future16 labeled/positive/negative 0/0/0, future16 fraction NA
+- Source 5_c2_x10_260623: rows/cycles 10/2, future16 labeled/positive/negative 6/3/3, future16 fraction 0.500
+- Guardrail: Leave-source labels are highly source-composition imbalanced. Source weighting and within-source rank normalization test domain robustness and review-prioritization only; they do not validate source-transferable warning, causal degradation mechanisms, manual QC labels, or calibrated diffusion.
 
 ## Agentic Current Hypothesis Tournament
 
