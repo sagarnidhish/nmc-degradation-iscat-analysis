@@ -1,0 +1,13 @@
+target,model,group_col,n_rows,n_scored,n_positive_scored,n_negative_scored,pooled_oof_roc_auc,pooled_oof_average_precision
+future_any_drop_within_8cycles,logistic_l2,cycleNo,72,72,36,36,0.7986111111111112,0.7925229854126128
+future_any_drop_within_8cycles,random_forest,cycleNo,72,72,36,36,0.7145061728395061,0.7665801886867338
+future_any_drop_within_16cycles,logistic_l2,cycleNo,72,72,57,15,0.47953216374269003,0.7503581460393567
+future_any_drop_within_16cycles,random_forest,cycleNo,72,72,57,15,0.5251461988304094,0.8158568137139386
+past_any_drop_within_4cycles,logistic_l2,cycleNo,72,69,0,69,,
+past_any_drop_within_4cycles,random_forest,cycleNo,72,69,0,69,,
+past_any_drop_within_8cycles,logistic_l2,cycleNo,72,69,0,69,,
+past_any_drop_within_8cycles,random_forest,cycleNo,72,69,0,69,,
+past_any_drop_within_16cycles,logistic_l2,cycleNo,72,72,12,60,0.8166666666666667,0.5142773320274012
+past_any_drop_within_16cycles,random_forest,cycleNo,72,72,12,60,0.7333333333333333,0.34183909946425906
+reversed_future_any_drop_within_8cycles,logistic_l2,cycleNo,72,72,36,36,0.6381172839506174,0.5567611373440315
+reversed_future_any_drop_within_8cycles,random_forest,cycleNo,72,72,36,36,0.7500000000000001,0.8088337470670914

@@ -2302,3 +2302,29 @@ Key result:
 
 Interpretation: this is the strongest particle-masked video-embedding evidence so far for weak future-drop triage, and it is closer to the requested AI-video objective than hand-picked scalar front proxies alone. It remains a weak-label and context-sensitive result: the synthesis context audit shows acquisition/spatial metadata can also predict the balanced future labels strongly, so these embeddings should drive review prioritization and model-design hypotheses rather than deployment or calibrated diffusion claims.
 
+## 2026-05-22 Temporal Directionality Physics Audit
+
+Added and ran a temporal directionality guardrail for the balanced future-drop ROI physics descriptors:
+
+`python scripts/tier4_temporal_directionality_physics_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/temporal_directionality_physics_audit`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/temporal_directionality_physics_audit`
+
+Local compact copy:
+
+`derived_local/temporal_directionality_physics_audit`
+
+Key result:
+
+- Audited 72 balanced direct-video ROI rows across 24 cycles using 33 ROI physics/front/rollout descriptors.
+- Computed past-drop windows from the particle-trace cycle table and compared future8 labels against past, time-reversed, and circularly shifted labels.
+- Physics-only leave-cycle-out logistic regression predicts balanced future8 drops with AUC=0.799 and AP=0.793.
+- Circular time-shift null over 23 nonzero shifts has mean AUC=0.593, p95=0.775, and empirical p=0.0417 versus the observed future8 AUC.
+- Top future8 features remain front-motion/apparent-diffusion and particle-mask residual descriptors: q70 radius2 slope p95 AUC=0.731, apparent diffusion median AUC=0.717, radius2 slope median AUC=0.717, persistence particle-MSE fraction AUC=0.709.
+- Past8 labels are underpowered in this balanced cohort, with only 3 positive ROI rows and no evaluable leave-cycle-out positive predictions; past16 is evaluable but has a different class balance.
+- Time-reversed future8 labels remain nontrivial, especially with random forest AUC=0.750, so directionality is supportive rather than causal proof.
+
+Interpretation: this strengthens the precursor-style evidence because the observed future8 physics model beats circular time-shifted labels, but the nontrivial reversed-label and context-confound guardrails mean the result remains weak-label hypothesis-ranking evidence pending more balanced acquisition design and manual ROI/front QC.
+

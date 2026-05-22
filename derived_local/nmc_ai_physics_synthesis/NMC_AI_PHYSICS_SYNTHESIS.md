@@ -100,6 +100,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
+- Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
@@ -822,6 +823,20 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Spatial region test y_bin: chi2=0.333, p=0.846, regions=3
 - Spatial region test xy_region: chi2=1.511, p=0.982, regions=8
 - Spatial region test x_bin: chi2=0.000, p=1.000, regions=3
+- Temporal directionality future8 model: logistic_l2 AUC 0.799, AP 0.793; shift-null mean AUC 0.593, p95 0.775, empirical p=0.042
+- Temporal directionality reversed/past8 guardrails: reversed best AUC 0.750; past8 positives 3 and evaluable AUC NA
+- Temporal future8 feature q70_radius2_slope_bootstrap_p95_px2_per_s: AUC 0.731, median positive-negative 0.002, MW p=7.434e-04
+- Temporal future8 feature diffusion_proxy_median_um2_per_s: AUC 0.717, median positive-negative 2.622e-06, MW p=0.002
+- Temporal future8 feature radius2_slope_median_px2_per_s: AUC 0.717, median positive-negative 0.001, MW p=0.002
+- Temporal future8 feature default_q70_diffusion_proxy_um2_per_s: AUC 0.712, median positive-negative 2.430e-06, MW p=0.002
+- Temporal future8 feature q70_radius2_slope_bootstrap_p50_px2_per_s: AUC 0.710, median positive-negative 0.001, MW p=0.002
+- Temporal future8 feature persistence_particle_mse_fraction_of_full_mean: AUC 0.709, median positive-negative 0.282, MW p=0.002
+- Temporal timing correlation diffusion_proxy_iqr_um2_per_s vs cycles_since_previous_drop: rho=0.644, p=5.400e-09
+- Temporal timing correlation radius2_slope_iqr_px2_per_s vs cycles_since_previous_drop: rho=0.644, p=5.400e-09
+- Temporal timing correlation velocity_particle_mse_fraction_of_full_mean vs cycles_since_previous_drop: rho=0.518, p=8.539e-06
+- Temporal timing correlation persistence_particle_mse_fraction_of_full_mean vs cycles_to_next_drop: rho=-0.493, p=1.665e-05
+- Temporal timing correlation diffusion_proxy_abs_median_um2_per_s vs cycles_since_previous_drop: rho=0.492, p=2.671e-05
+- Temporal guardrail: Temporal directionality audit compares ROI physics against future, past, reversed, and circularly shifted weak degradation labels. It uses automatic ROI/front descriptors and weak cycle-level abrupt-drop labels.
 - Context guardrail: Context/region audit tests whether balanced future8 ROI signal is explainable by acquisition context or spatial position. It still uses weak cycle labels and automatic ROI candidates.
 - Front-script guardrail: Diffusion values are apparent optical-front proxies computed as slope(radius^2) * pixel_size_um^2 / 4. They are not validated Li diffusion coefficients and require manual front QC.
 - Audit guardrail: Balanced direct-video ROI audit uses weak cycle-level future8 labels projected to automatic particle-region candidates. Cycle-group splits and cycle-collapsed tests reduce leakage, but this is still review-prioritization evidence, not manual QC or deployable detection.

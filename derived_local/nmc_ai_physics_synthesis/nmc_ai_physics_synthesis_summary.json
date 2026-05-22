@@ -4383,6 +4383,282 @@
       "null_auc_p95": 0.701195987654321,
       "observed_auc": 0.7160493827160493
     },
+    "temporal_directionality_audit": {
+      "best_future8_model": {
+        "group_col": "cycleNo",
+        "model": "logistic_l2",
+        "n_negative_scored": 36,
+        "n_positive_scored": 36,
+        "n_rows": 72,
+        "n_scored": 72,
+        "pooled_oof_average_precision": 0.7925229854,
+        "pooled_oof_roc_auc": 0.7986111111,
+        "target": "future_any_drop_within_8cycles"
+      },
+      "best_past8_model": {
+        "group_col": "cycleNo",
+        "model": "logistic_l2",
+        "n_negative_scored": 69,
+        "n_positive_scored": 0,
+        "n_rows": 72,
+        "n_scored": 69,
+        "pooled_oof_average_precision": null,
+        "pooled_oof_roc_auc": null,
+        "target": "past_any_drop_within_8cycles"
+      },
+      "best_reversed_future8_model": {
+        "group_col": "cycleNo",
+        "model": "random_forest",
+        "n_negative_scored": 36,
+        "n_positive_scored": 36,
+        "n_rows": 72,
+        "n_scored": 72,
+        "pooled_oof_average_precision": 0.8088337471,
+        "pooled_oof_roc_auc": 0.75,
+        "target": "reversed_future_any_drop_within_8cycles"
+      },
+      "guardrail": "Temporal directionality audit compares ROI physics against future, past, reversed, and circularly shifted weak degradation labels. It uses automatic ROI/front descriptors and weak cycle-level abrupt-drop labels.",
+      "n_cycles": 24,
+      "n_physics_features": 33,
+      "n_roi": 72,
+      "shift_null_summary": {
+        "empirical_p_ge_observed": 0.041666666666666664,
+        "n_shift_nulls": 23,
+        "observed_future8_logistic_auc": 0.7986111111111112,
+        "shift_null_auc_mean": 0.5926932367149759,
+        "shift_null_auc_p95": 0.7753858024691358
+      },
+      "target_label_counts": {
+        "future_any_drop_within_16cycles": {
+          "0": 15,
+          "1": 57
+        },
+        "future_any_drop_within_8cycles": {
+          "0": 36,
+          "1": 36
+        },
+        "past_any_drop_within_16cycles": {
+          "0": 60,
+          "1": 12
+        },
+        "past_any_drop_within_4cycles": {
+          "0": 69,
+          "1": 3
+        },
+        "past_any_drop_within_8cycles": {
+          "0": 69,
+          "1": 3
+        },
+        "reversed_future_any_drop_within_8cycles": {
+          "0": 36,
+          "1": 36
+        }
+      },
+      "top_future8_feature_tests": [
+        {
+          "auc": 0.7314814815,
+          "feature": "q70_radius2_slope_bootstrap_p95_px2_per_s",
+          "mannwhitney_p": 0.000743389,
+          "median_negative": -0.0001021472,
+          "median_positive": 0.001724419,
+          "median_positive_minus_negative": 0.0018265662,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.7314814815,
+          "target": "future_any_drop_within_8cycles"
+        },
+        {
+          "auc": 0.7168209877,
+          "feature": "diffusion_proxy_median_um2_per_s",
+          "mannwhitney_p": 0.0015827225,
+          "median_negative": -1.1073e-06,
+          "median_positive": 1.5147e-06,
+          "median_positive_minus_negative": 2.6221e-06,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.7168209877,
+          "target": "future_any_drop_within_8cycles"
+        },
+        {
+          "auc": 0.7168209877,
+          "feature": "radius2_slope_median_px2_per_s",
+          "mannwhitney_p": 0.0015827225,
+          "median_negative": -0.0004806133,
+          "median_positive": 0.0006574323,
+          "median_positive_minus_negative": 0.0011380455,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.7168209877,
+          "target": "future_any_drop_within_8cycles"
+        },
+        {
+          "auc": 0.712191358,
+          "feature": "default_q70_diffusion_proxy_um2_per_s",
+          "mannwhitney_p": 0.0019914898,
+          "median_negative": -1.2705e-06,
+          "median_positive": 1.1593e-06,
+          "median_positive_minus_negative": 2.4298e-06,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.712191358,
+          "target": "future_any_drop_within_8cycles"
+        },
+        {
+          "auc": 0.7098765432,
+          "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+          "mannwhitney_p": 0.0022303409,
+          "median_negative": -0.0005301967,
+          "median_positive": 0.0005796734,
+          "median_positive_minus_negative": 0.00110987,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.7098765432,
+          "target": "future_any_drop_within_8cycles"
+        },
+        {
+          "auc": 0.7091049383,
+          "feature": "persistence_particle_mse_fraction_of_full_mean",
+          "mannwhitney_p": 0.0023156149,
+          "median_negative": 1.1932517673,
+          "median_positive": 1.475077866,
+          "median_positive_minus_negative": 0.2818260987,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.7091049383,
+          "target": "future_any_drop_within_8cycles"
+        },
+        {
+          "auc": 0.7044753086,
+          "feature": "velocity_particle_mse_fraction_of_full_mean",
+          "mannwhitney_p": 0.002893082,
+          "median_negative": 1.0667190948,
+          "median_positive": 1.4116245302,
+          "median_positive_minus_negative": 0.3449054354,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.7044753086,
+          "target": "future_any_drop_within_8cycles"
+        },
+        {
+          "auc": 0.6790123457,
+          "feature": "q70_radius2_slope_bootstrap_p05_px2_per_s",
+          "mannwhitney_p": 0.0091280678,
+          "median_negative": -0.0010609419,
+          "median_positive": -0.0004740402,
+          "median_positive_minus_negative": 0.0005869018,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.6790123457,
+          "target": "future_any_drop_within_8cycles"
+        },
+        {
+          "auc": 0.6728395062,
+          "feature": "persistence_particle_to_nonparticle_mse_ratio_mean",
+          "mannwhitney_p": 0.0118317941,
+          "median_negative": 1.535297587,
+          "median_positive": 1.9822936288,
+          "median_positive_minus_negative": 0.4469960418,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.6728395062,
+          "target": "future_any_drop_within_8cycles"
+        },
+        {
+          "auc": 0.6720679012,
+          "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+          "mannwhitney_p": 0.0122154168,
+          "median_negative": 1.3094475536,
+          "median_positive": 1.8042068732,
+          "median_positive_minus_negative": 0.4947593196,
+          "n_negative": 36,
+          "n_positive": 36,
+          "oriented_auc": 0.6720679012,
+          "target": "future_any_drop_within_8cycles"
+        }
+      ],
+      "top_timing_correlations": [
+        {
+          "abs_rho": 0.6440851532,
+          "feature": "diffusion_proxy_iqr_um2_per_s",
+          "n": 66,
+          "p_value": 5.4e-09,
+          "spearman_rho": 0.6440851532,
+          "timing_target": "cycles_since_previous_drop"
+        },
+        {
+          "abs_rho": 0.6440851532,
+          "feature": "radius2_slope_iqr_px2_per_s",
+          "n": 66,
+          "p_value": 5.4e-09,
+          "spearman_rho": 0.6440851532,
+          "timing_target": "cycles_since_previous_drop"
+        },
+        {
+          "abs_rho": 0.5176659447,
+          "feature": "velocity_particle_mse_fraction_of_full_mean",
+          "n": 66,
+          "p_value": 8.5393e-06,
+          "spearman_rho": 0.5176659447,
+          "timing_target": "cycles_since_previous_drop"
+        },
+        {
+          "abs_rho": 0.4932053483,
+          "feature": "persistence_particle_mse_fraction_of_full_mean",
+          "n": 69,
+          "p_value": 1.6647e-05,
+          "spearman_rho": -0.4932053483,
+          "timing_target": "cycles_to_next_drop"
+        },
+        {
+          "abs_rho": 0.4924323192,
+          "feature": "diffusion_proxy_abs_median_um2_per_s",
+          "n": 66,
+          "p_value": 2.67076e-05,
+          "spearman_rho": 0.4924323192,
+          "timing_target": "cycles_since_previous_drop"
+        },
+        {
+          "abs_rho": 0.4793133447,
+          "feature": "phase_slope_iqr_per_s",
+          "n": 66,
+          "p_value": 4.66728e-05,
+          "spearman_rho": 0.4793133447,
+          "timing_target": "cycles_since_previous_drop"
+        },
+        {
+          "abs_rho": 0.4587874851,
+          "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+          "n": 66,
+          "p_value": 0.0001069298,
+          "spearman_rho": 0.4587874851,
+          "timing_target": "cycles_since_previous_drop"
+        },
+        {
+          "abs_rho": 0.4515061405,
+          "feature": "velocity_particle_mse_mean",
+          "n": 66,
+          "p_value": 0.0001417172,
+          "spearman_rho": 0.4515061405,
+          "timing_target": "cycles_since_previous_drop"
+        },
+        {
+          "abs_rho": 0.4418733007,
+          "feature": "velocity_particle_mse_fraction_of_full_mean",
+          "n": 69,
+          "p_value": 0.0001440897,
+          "spearman_rho": -0.4418733007,
+          "timing_target": "cycles_to_next_drop"
+        },
+        {
+          "abs_rho": 0.4401447319,
+          "feature": "q70_radius2_slope_bootstrap_p95_px2_per_s",
+          "n": 66,
+          "p_value": 0.0002172101,
+          "spearman_rho": 0.4401447319,
+          "timing_target": "cycles_since_previous_drop"
+        }
+      ]
+    },
     "top_correlations": [
       {
         "abs_rho": 0.45443149294464524,
