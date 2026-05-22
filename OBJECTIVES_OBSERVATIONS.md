@@ -4339,3 +4339,32 @@ Interpretation: a simple held-out-source orientation/scaling procedure can prese
 
 Guardrail: this is an automatic particle-region ranking diagnostic. It adds no manual labels, calibrated velocities, diffusion coefficients, causal mechanism proof, or prospective deployment validation.
 
+## 2026-05-22 All-Cycle Dataset Coverage Atlas
+
+Added `scripts/tier4_all_cycle_dataset_coverage_atlas.py` and ran it on Isambard to map the complete cycle-level echem/optical ledger against the accumulated ROI/video-sequence cohorts. This directly addresses the project-level coverage question: how much of the Alek_Jiho NMC degradation dataset is represented by the current AI/physics analyses, and which source/cycle windows should be prioritized next.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/all_cycle_dataset_coverage_atlas`
+- `derived_local/all_cycle_dataset_coverage_atlas`
+- `all_cycle_coverage_table.csv`
+- `all_cycle_source_coverage_summary.csv`
+- `all_cycle_roi_cohort_coverage_summary.csv`
+- `all_cycle_output_coverage_summary.csv`
+- `all_cycle_coverage_gap_priority.csv`
+- `all_cycle_h5_inventory_enriched.csv`
+- `all_cycle_dataset_coverage_summary.json`
+
+Results:
+
+- The atlas covers 89 cycle-level rows across 16 sources and joins them to 33 HDF5 inventory rows.
+- It checks 17 ROI/video cohorts and 7 cycle-level outputs. Across the accumulated cohorts, 88/89 cycle rows have at least one tracked ROI/video sequence, and 88/89 have primary ROI-sequence coverage.
+- No future16-positive cycle is completely missing tracked ROI-sequence coverage.
+- Source `16_c2_x10_HighHighCOV_130723` is the main residual source-level gap: 9/10 cycles have ROI coverage and the uncovered cycle is cycle 137, which is not future8/future16 positive but is an echem/context outlier candidate.
+- The highest coverage-priority cycles are already represented but deserve denser/manual-QC review because they combine future-event labels, echem/hazard/context signals, and ROI coverage: cycle 150 from `17_c2_x10_HighHighCOV_150723`, cycle 110 from `12_c2_x10_070723`, and cycles 80/78/82 from `9_c2_x10_010723`.
+- Cohort coverage is now explicit: source-balanced pre-event ROI sequences cover 128 rows across 64 cycles and 14 sources; source-balanced expansion ROI sequences cover 96 rows across 48 cycles and 14 sources; balanced-future ROI sequences cover 72 rows across 24 cycles and 9 sources.
+
+Interpretation: the project has moved beyond a small event/reference-only core cohort. The accumulated source-balanced and expansion cohorts now cover nearly the full cycle-level ledger, so the next useful expansion is not blind all-cycle extraction; it is targeted densification/manual QC around high-priority cycles and the single uncovered source/cycle gap.
+
+Guardrail: this atlas audits dataset and ROI-analysis coverage only. It does not extract new ROIs, validate particle identity, train deployment models, or make calibrated diffusion/phase-boundary claims.
+

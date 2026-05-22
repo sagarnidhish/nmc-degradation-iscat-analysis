@@ -1,0 +1,8 @@
+output,path,status,n_rows,n_cycles
+event_echem_coupling,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv,ok,89,89
+echem_optical_regime_atlas,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_cycle_table.csv,ok,89,89
+cross_modal_degradation_consensus,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cross_modal_degradation_consensus/cross_modal_consensus_cycle_table.csv,ok,89,89
+cycle_state_space_transition_audit,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_space_table.csv,ok,89,89
+cycle_hazard_warning_audit,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_hazard_warning_audit/cycle_hazard_warning_predictions.csv,ok,445,89
+masked_rollout_cycle_warning,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_rollout_cycle_warning/masked_rollout_cycle_warning_ranked_cycles.csv,ok,11,11
+masked_residual_state_transfer_warning,/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_ranked_cycles.csv,ok,30,30
