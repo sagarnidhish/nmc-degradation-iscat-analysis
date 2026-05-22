@@ -3491,6 +3491,30 @@ Interpretation:
 
 This adds a stricter pre-event trajectory question on top of the bin-classification audits: are particle-crop front/diffusion proxies progressively organized as an abrupt event approaches? The answer is suggestive but still guarded. The apparent q70 radius-squared proxy and q70 front-slope proxy move in the expected direction after source residualization, but p-values are marginal and the event-distance design is sparse. These results are useful for prioritizing phase-front/diffusion follow-up experiments and manual QC, not for claiming calibrated phase-boundary motion, diffusion coefficients, particle identity, or causal forecasting.
 
+## 2026-05-22 Source-Balanced Pre-Event Matched Counterfactual Audit
+
+Added `scripts/tier4_source_balanced_pre_event_matched_counterfactual_audit.py` and ran it on Isambard. This audit builds baseline/context-nearest counterfactual pairs for near-pre-event ROI rows against far-pre and post/control rows, then tests paired differences in front, mask, apparent-diffusion, and video-dynamics descriptors with 1000 sign-flip permutations.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit`
+- `derived_local/source_balanced_pre_event_matched_counterfactual_audit`
+
+Cohort/result snapshot:
+
+- Input table: 128 ROI rows, 64 cycles, 14 source movies.
+- Matching context features: cycle/local-cycle indices, object location/area/z-score, crop location, first-frame ROI intensity, and baseline mask area.
+- Pair counts: 32 near-vs-far source-penalized global pairs, 32 near-vs-post/control source-penalized global pairs, and 12 same-source near-vs-post/control pairs. Same-source near-vs-far pairs are not available in this sparse event-relative design.
+- Strongest near-vs-far matched row is `masked_minus_background_mean_median`: median near-minus-far difference 0.0030, sign-flip p=0.0010.
+- Near-vs-far `masked_minus_background_mean_slope` also survives matching: median difference 0.0030, sign-flip p=0.0050.
+- Near-vs-far `mask_centroid_path_px` is larger in near-pre rows: median difference 0.658 px, sign-flip p=0.0080.
+- The q60 front-slope row is directionally positive but underpowered after matching: median difference 0.988 px/norm time, n=10, sign-flip p=0.124.
+- The apparent q70 diffusion proxy does not survive the matched counterfactual screen: median difference -0.204 um2/norm time, n=9, sign-flip p=0.395.
+
+Interpretation:
+
+This audit tightens the pre-event claim. Matched counterfactuals preserve a near-pre optical/mask-contrast signal, but they weaken the apparent-diffusion interpretation and leave front-slope evidence underpowered. The most defensible current statement is that source-balanced near-pre crops show review-worthy mask/contrast and some front-motion hints after observed-context matching; calibrated diffusion and phase-boundary claims still require manual QC and stronger matched same-source coverage.
+
 ## 2026-05-22 Source-Balanced Pre-Event Physics-Mode Taxonomy
 
 Added `scripts/tier4_source_balanced_pre_event_physics_mode_taxonomy.py` and ran it on Isambard using the source-balanced pre-event directionality feature table. This audit clusters source-residual front, mask, apparent-diffusion, and heterogeneity descriptors to test whether the pre-event signal forms repeatable discrete physics modes rather than only continuous event-distance/readout axes.
