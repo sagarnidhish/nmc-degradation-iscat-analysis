@@ -1,0 +1,379 @@
+{
+  "chosen_k": 2,
+  "clock_tests": [
+    {
+      "median_in_minus_out": 2.0,
+      "median_pre_clock_in_mode": -10.0,
+      "median_pre_clock_outside": -12.0,
+      "mode": 0,
+      "mwu_p": 0.8469801085411472,
+      "n_pre_rows": 36,
+      "within_mode_prebin_kruskal_p": 2.2590572376785415e-07
+    },
+    {
+      "median_in_minus_out": -2.0,
+      "median_pre_clock_in_mode": -12.0,
+      "median_pre_clock_outside": -10.0,
+      "mode": 1,
+      "mwu_p": 0.8469801085411472,
+      "n_pre_rows": 40,
+      "within_mode_prebin_kruskal_p": 3.153843666030785e-08
+    }
+  ],
+  "guardrail": "Pre-event physics modes are unsupervised clusters of automatic source-residual ROI features. Mode enrichment and event-clock tests nominate repeatable front/diffusion/heterogeneity states for review; they are not manual degradation labels, calibrated phase boundaries, diffusion coefficients, or causal forecasts.",
+  "input_features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_features.csv",
+  "k_scores": [
+    {
+      "inertia": 3684.322503125584,
+      "k": 2,
+      "max_cluster_size": 68,
+      "min_cluster_size": 60,
+      "silhouette": 0.11007885741509328
+    },
+    {
+      "inertia": 3392.535919552873,
+      "k": 3,
+      "max_cluster_size": 77,
+      "min_cluster_size": 1,
+      "silhouette": null
+    },
+    {
+      "inertia": 3121.0715481140905,
+      "k": 4,
+      "max_cluster_size": 65,
+      "min_cluster_size": 1,
+      "silhouette": null
+    },
+    {
+      "inertia": 2945.9856181607943,
+      "k": 5,
+      "max_cluster_size": 69,
+      "min_cluster_size": 1,
+      "silhouette": null
+    },
+    {
+      "inertia": 2770.232632920346,
+      "k": 6,
+      "max_cluster_size": 36,
+      "min_cluster_size": 1,
+      "silhouette": null
+    }
+  ],
+  "mode_summary": [
+    {
+      "control_fraction": 0.1,
+      "far_pre_fraction": 0.18333333333333332,
+      "median_cycles_to_next_event": 17.0,
+      "median_pre_event_clock_closer": -10.0,
+      "mid_pre_fraction": 0.15,
+      "mode": 0,
+      "mode_label": "front_geometry_mask_contrast_video_heterogeneity",
+      "n_cycles": 54,
+      "n_roi": 60,
+      "n_sources": 14,
+      "near_pre_fraction": 0.26666666666666666,
+      "post_event_fraction": 0.3,
+      "top_loading_features": "temporal_energy_mean;frame_diff_abs_mean;mask_base_area_fraction;front_radius_q60_median_px;mask_area_fraction_median;temporal_energy_p95",
+      "top_loading_z": "0.766;0.732;0.514;0.469;0.447;0.436"
+    },
+    {
+      "control_fraction": 0.08823529411764706,
+      "far_pre_fraction": 0.16176470588235295,
+      "median_cycles_to_next_event": 16.0,
+      "median_pre_event_clock_closer": -12.0,
+      "mid_pre_fraction": 0.19117647058823528,
+      "mode": 1,
+      "mode_label": "front_geometry_mask_contrast_video_heterogeneity",
+      "n_cycles": 58,
+      "n_roi": 68,
+      "n_sources": 14,
+      "near_pre_fraction": 0.23529411764705882,
+      "post_event_fraction": 0.3235294117647059,
+      "top_loading_features": "temporal_energy_mean;frame_diff_abs_mean;front_radius_q70_slope_px_per_norm_time;mask_base_area_fraction;front_radius_q60_median_px;mask_area_fraction_median",
+      "top_loading_z": "0.676;0.646;0.564;0.454;0.414;0.395"
+    }
+  ],
+  "n_cycles": 64,
+  "n_features_used": 32,
+  "n_rows": 128,
+  "n_sources": 14,
+  "outputs": {
+    "assignments": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_assignments.csv",
+    "clock_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_clock_tests.csv",
+    "enrichment": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_enrichment.csv",
+    "feature_source_eta": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_feature_source_eta.csv",
+    "k_scores": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_k_scores.csv",
+    "representatives": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_representatives.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_summary.csv"
+  },
+  "representatives": [
+    {
+      "cycleNo": 92.0,
+      "cycles_since_prev_event": 6.0,
+      "cycles_to_next_event": 24.0,
+      "distance_to_mode_center": 2.356255546188438,
+      "event_relative_bin": "post_event_1_16",
+      "mode": 0,
+      "mode_rank": 1,
+      "roi_id": "source_balanced_cycle92_rank3_obj1_10_c2_x10_030723",
+      "source_stem": "10_c2_x10_030723"
+    },
+    {
+      "cycleNo": 58.0,
+      "cycles_since_prev_event": null,
+      "cycles_to_next_event": 2.0,
+      "distance_to_mode_center": 2.87253683645136,
+      "event_relative_bin": "near_pre_event_1_8",
+      "mode": 0,
+      "mode_rank": 2,
+      "roi_id": "source_balanced_cycle58_rank52_obj2_7_c2_x10_290623",
+      "source_stem": "7_c2_x10_290623"
+    },
+    {
+      "cycleNo": 56.0,
+      "cycles_since_prev_event": null,
+      "cycles_to_next_event": 4.0,
+      "distance_to_mode_center": 2.8806999959146045,
+      "event_relative_bin": "near_pre_event_1_8",
+      "mode": 0,
+      "mode_rank": 3,
+      "roi_id": "source_balanced_cycle56_rank51_obj1_7_c2_x10_290623",
+      "source_stem": "7_c2_x10_290623"
+    },
+    {
+      "cycleNo": 88.0,
+      "cycles_since_prev_event": 2.0,
+      "cycles_to_next_event": 28.0,
+      "distance_to_mode_center": 2.966617590598913,
+      "event_relative_bin": "post_event_1_16",
+      "mode": 0,
+      "mode_rank": 4,
+      "roi_id": "source_balanced_cycle88_rank1_obj2_10_c2_x10_030723",
+      "source_stem": "10_c2_x10_030723"
+    },
+    {
+      "cycleNo": 48.0,
+      "cycles_since_prev_event": null,
+      "cycles_to_next_event": 12.0,
+      "distance_to_mode_center": 1.9540382812786259,
+      "event_relative_bin": "mid_pre_event_9_16",
+      "mode": 1,
+      "mode_rank": 1,
+      "roi_id": "source_balanced_cycle48_rank47_obj1_6_c2_x10_270623_2",
+      "source_stem": "6_c2_x10_270623_2"
+    },
+    {
+      "cycleNo": 50.0,
+      "cycles_since_prev_event": null,
+      "cycles_to_next_event": 10.0,
+      "distance_to_mode_center": 1.9819734102948716,
+      "event_relative_bin": "mid_pre_event_9_16",
+      "mode": 1,
+      "mode_rank": 2,
+      "roi_id": "source_balanced_cycle50_rank48_obj1_6_c2_x10_270623_2",
+      "source_stem": "6_c2_x10_270623_2"
+    },
+    {
+      "cycleNo": 94.0,
+      "cycles_since_prev_event": 8.0,
+      "cycles_to_next_event": 22.0,
+      "distance_to_mode_center": 2.0870845068937447,
+      "event_relative_bin": "post_event_1_16",
+      "mode": 1,
+      "mode_rank": 3,
+      "roi_id": "source_balanced_cycle94_rank4_obj1_10_c2_x10_030723",
+      "source_stem": "10_c2_x10_030723"
+    },
+    {
+      "cycleNo": 52.0,
+      "cycles_since_prev_event": null,
+      "cycles_to_next_event": 8.0,
+      "distance_to_mode_center": 2.137778969102701,
+      "event_relative_bin": "near_pre_event_1_8",
+      "mode": 1,
+      "mode_rank": 4,
+      "roi_id": "source_balanced_cycle52_rank49_obj1_6_c2_x10_270623_2",
+      "source_stem": "6_c2_x10_270623_2"
+    }
+  ],
+  "top_enrichment": [
+    {
+      "fisher_p": 0.6887026231823037,
+      "label": "near_pre",
+      "mode": 1,
+      "mode_fraction": 0.23529411764705882,
+      "mode_positive": 16,
+      "mode_total": 68,
+      "odds_ratio": 0.8461538461538461,
+      "outside_fraction": 0.26666666666666666,
+      "outside_positive": 16,
+      "outside_total": 60
+    },
+    {
+      "fisher_p": 0.6887026231823039,
+      "label": "near_pre",
+      "mode": 0,
+      "mode_fraction": 0.26666666666666666,
+      "mode_positive": 16,
+      "mode_total": 60,
+      "odds_ratio": 1.1818181818181819,
+      "outside_fraction": 0.23529411764705882,
+      "outside_positive": 16,
+      "outside_total": 68
+    },
+    {
+      "fisher_p": 0.8493788377614271,
+      "label": "post_event",
+      "mode": 0,
+      "mode_fraction": 0.3,
+      "mode_positive": 18,
+      "mode_total": 60,
+      "odds_ratio": 0.8961038961038961,
+      "outside_fraction": 0.3235294117647059,
+      "outside_positive": 22,
+      "outside_total": 68
+    },
+    {
+      "fisher_p": 0.8493788377614273,
+      "label": "post_event",
+      "mode": 1,
+      "mode_fraction": 0.3235294117647059,
+      "mode_positive": 22,
+      "mode_total": 68,
+      "odds_ratio": 1.1159420289855073,
+      "outside_fraction": 0.3,
+      "outside_positive": 18,
+      "outside_total": 60
+    },
+    {
+      "fisher_p": 1.0,
+      "label": "pre_event",
+      "mode": 0,
+      "mode_fraction": 0.6,
+      "mode_positive": 36,
+      "mode_total": 60,
+      "odds_ratio": 1.05,
+      "outside_fraction": 0.5882352941176471,
+      "outside_positive": 40,
+      "outside_total": 68
+    },
+    {
+      "fisher_p": 1.0,
+      "label": "pre_event",
+      "mode": 1,
+      "mode_fraction": 0.5882352941176471,
+      "mode_positive": 40,
+      "mode_total": 68,
+      "odds_ratio": 0.9523809523809523,
+      "outside_fraction": 0.6,
+      "outside_positive": 36,
+      "outside_total": 60
+    },
+    {
+      "fisher_p": 1.0,
+      "label": "control",
+      "mode": 0,
+      "mode_fraction": 0.1,
+      "mode_positive": 6,
+      "mode_total": 60,
+      "odds_ratio": 1.1481481481481481,
+      "outside_fraction": 0.08823529411764706,
+      "outside_positive": 6,
+      "outside_total": 68
+    },
+    {
+      "fisher_p": 1.0,
+      "label": "control",
+      "mode": 1,
+      "mode_fraction": 0.08823529411764706,
+      "mode_positive": 6,
+      "mode_total": 68,
+      "odds_ratio": 0.8709677419354839,
+      "outside_fraction": 0.1,
+      "outside_positive": 6,
+      "outside_total": 60
+    }
+  ],
+  "top_source_confounded_features": [
+    {
+      "feature": "temporal_energy_p95",
+      "raw_source_eta2": 0.8374275676480234,
+      "residual_source_eta2": 1.3883815376244911e-32
+    },
+    {
+      "feature": "mask_centroid_path_px",
+      "raw_source_eta2": 0.7648575103265738,
+      "residual_source_eta2": 5.166141469816707e-32
+    },
+    {
+      "feature": "mask_centroid_max_step_px",
+      "raw_source_eta2": 0.7553858029701687,
+      "residual_source_eta2": 3.5021997566846926e-32
+    },
+    {
+      "feature": "frame_diff_mse_mean",
+      "raw_source_eta2": 0.7541983734421749,
+      "residual_source_eta2": 3.288304896354527e-33
+    },
+    {
+      "feature": "temporal_energy_mean",
+      "raw_source_eta2": 0.7281690036904103,
+      "residual_source_eta2": 1.566178043106527e-31
+    },
+    {
+      "feature": "frame_diff_mse_p95",
+      "raw_source_eta2": 0.6648823276962966,
+      "residual_source_eta2": 1.1700609501302524e-32
+    },
+    {
+      "feature": "frame_diff_abs_mean",
+      "raw_source_eta2": 0.6168376064037338,
+      "residual_source_eta2": 1.4794432606440277e-31
+    },
+    {
+      "feature": "masked_minus_background_mean_slope",
+      "raw_source_eta2": 0.5781004525786195,
+      "residual_source_eta2": 4.984064462459731e-33
+    },
+    {
+      "feature": "spatial_std_slope",
+      "raw_source_eta2": 0.5721075421394747,
+      "residual_source_eta2": 1.3520889785073497e-32
+    },
+    {
+      "feature": "masked_minus_background_mean_median",
+      "raw_source_eta2": 0.43670484472087534,
+      "residual_source_eta2": 3.0822746380990503e-30
+    },
+    {
+      "feature": "frame_diff_mse_slope",
+      "raw_source_eta2": 0.40709605393744575,
+      "residual_source_eta2": 1.927854270040395e-33
+    },
+    {
+      "feature": "mask_area_fraction_iqr",
+      "raw_source_eta2": 0.3839107963796472,
+      "residual_source_eta2": 1.986386695296688e-32
+    },
+    {
+      "feature": "mask_area_fraction_slope",
+      "raw_source_eta2": 0.3709568317727134,
+      "residual_source_eta2": 1.544281629907837e-33
+    },
+    {
+      "feature": "front_radius_q70_positive_step_fraction",
+      "raw_source_eta2": 0.36398625429553283,
+      "residual_source_eta2": 9.9401611149228e-33
+    },
+    {
+      "feature": "front_radius_q70_slope_px_per_norm_time",
+      "raw_source_eta2": 0.3379626708409469,
+      "residual_source_eta2": 2.8872900991430222e-33
+    },
+    {
+      "feature": "mask_area_fraction_median",
+      "raw_source_eta2": 0.29077556614059247,
+      "residual_source_eta2": 4.675779742438587e-31
+    }
+  ]
+}

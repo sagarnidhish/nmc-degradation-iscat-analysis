@@ -3468,3 +3468,26 @@ Cohort/result snapshot:
 Interpretation:
 
 This adds a stricter pre-event trajectory question on top of the bin-classification audits: are particle-crop front/diffusion proxies progressively organized as an abrupt event approaches? The answer is suggestive but still guarded. The apparent q70 radius-squared proxy and q70 front-slope proxy move in the expected direction after source residualization, but p-values are marginal and the event-distance design is sparse. These results are useful for prioritizing phase-front/diffusion follow-up experiments and manual QC, not for claiming calibrated phase-boundary motion, diffusion coefficients, particle identity, or causal forecasting.
+
+## 2026-05-22 Source-Balanced Pre-Event Physics-Mode Taxonomy
+
+Added `scripts/tier4_source_balanced_pre_event_physics_mode_taxonomy.py` and ran it on Isambard using the source-balanced pre-event directionality feature table. This audit clusters source-residual front, mask, apparent-diffusion, and heterogeneity descriptors to test whether the pre-event signal forms repeatable discrete physics modes rather than only continuous event-distance/readout axes.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy`
+- `derived_local/source_balanced_pre_event_physics_mode_taxonomy`
+
+Cohort/result snapshot:
+
+- Input table: 128 ROI rows, 64 cycles, 14 source movies.
+- Features used: 32 source-residual front/mask/apparent-diffusion/heterogeneity descriptors.
+- K-means selection chooses k=2 as the only stable non-singleton clustering; silhouette is weak at 0.110.
+- The two modes are broad and balanced: mode 0 has 60 ROI rows, mode 1 has 68 ROI rows; both contain all 14 sources.
+- No strong event-neighborhood enrichment is detected. Best near-pre Fisher row is p=0.689, with near-pre fractions 0.267 versus 0.235 outside.
+- Both modes are mixed front/mask/video-heterogeneity states. Representative rows include near-pre, mid-pre, and post-event examples rather than a clean degradation-neighborhood class.
+- The most source-confounded raw features before residualization include `temporal_energy_p95`, `mask_centroid_path_px`, `frame_diff_mse_mean`, `masked_minus_background_mean_slope`, and `spatial_std_slope`; residualization drives their source eta2 approximately to zero.
+
+Interpretation:
+
+This is a useful negative result. In the source-balanced pre-event cohort, coarse unsupervised source-residual modes do not recover a repeatable near-pre-event degradation state. The more defensible signal remains continuous: front/diffusion-like clocks and source-invariant feature-family readouts. Mode labels from this audit should be used only as broad review strata, not as validated degradation modes, phase boundaries, diffusion coefficients, or causal warning classes.

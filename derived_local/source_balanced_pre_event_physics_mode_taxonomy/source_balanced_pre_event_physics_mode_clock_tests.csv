@@ -1,0 +1,3 @@
+mode,n_pre_rows,median_pre_clock_in_mode,median_pre_clock_outside,median_in_minus_out,mwu_p,within_mode_prebin_kruskal_p
+0,36,-10.0,-12.0,2.0,0.8469801085411472,2.2590572376785415e-07
+1,40,-12.0,-10.0,-2.0,0.8469801085411472,3.153843666030785e-08
