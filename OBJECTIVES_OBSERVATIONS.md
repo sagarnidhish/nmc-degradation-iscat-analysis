@@ -3869,3 +3869,27 @@ Results:
 - Strongest echem correlation is `q55_phase_fraction_total_variation` versus `shape_V_mean`, rho 0.523, p = 6.52e-10.
 
 Interpretation: this is a useful optical phase-kinetics signal that connects particle-region intensity dynamics, event proximity, and echem context. It strengthens the case for masked optical kinetics as a pre-event review feature and a higher-yield manual-QC target than automatic radial front acceptance, but source structure is still substantial and the logistic/Avrami values are descriptive summaries only. It does not provide manual phase labels, validated particle identity, calibrated reaction constants, diffusion coefficients, phase-boundary proof, or causal degradation evidence.
+
+## 2026-05-22 Source-Balanced Pre-Event Multimodal Predictor
+
+Added `scripts/tier4_source_balanced_pre_event_multimodal_predictor.py` and ran it on Isambard. This audit asks whether the new masked phase-kinetics features add source-heldout predictive value beyond existing echem, source/echem-residual front, consensus-review, and visual-QC features. It uses leave-source logistic models over weak event-relative labels and compares feature families rather than treating any model as deployable.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor`
+- `derived_local/source_balanced_pre_event_multimodal_predictor`
+
+Results:
+
+- Input table has 128 ROI rows, 64 cycles, and 14 sources.
+- Feature family sizes: 7 echem-context, 19 front/echem-residual, 5 consensus/visual-QC, 64 phase-kinetics, 31 no-kinetics signal, 93 all-signal, and 6 object-context guardrail features.
+- Best clean-pre16-vs-post/control leave-source row is `consensus_visual_qc` with source-confound filtering: n=106, 13 held-out sources, AUC 0.826, AP 0.879, mean/max raw source eta2 0.549/0.818.
+- The same target using no-kinetics signal features reaches AUC 0.735/AP 0.777 raw, while all-signal drops to AUC 0.647/AP 0.701, consistent with overfitting or source-structured feature mixing in this small cohort.
+- Near-vs-post/control is easiest for consensus/no-kinetics features: `consensus_visual_qc` raw AUC 0.999/AP 0.998 and no-kinetics raw AUC 0.963/AP 0.945, but these are review/consensus features and should not be interpreted as independent prospective warning performance.
+- Near-vs-far-pre is also dominated by consensus/echem context: `consensus_visual_qc` raw AUC 0.991/AP 0.994, echem-context source-mean-residual AUC 0.920/AP 0.937.
+- Phase kinetics alone are modest under leave-source modeling: clean-pre16-vs-post/control raw AUC 0.548/AP 0.620; near-vs-post/control source-mean-residual AUC 0.594/AP 0.512; near-vs-far-pre source-mean-residual AUC 0.491/AP 0.700.
+- However, phase kinetics improve over front/echem-residual features in family-delta checks, for example near-vs-post/control source-mean-residual phase kinetics versus front/echem residuals gives dAUC +0.127 and dAP +0.109; near-vs-far-pre raw gives dAUC +0.131 and dAP +0.149.
+
+Interpretation:
+
+This is a useful model-selection guardrail. Masked phase kinetics add signal relative to automatic front/echem-residual features, but they do not yet make a robust standalone leave-source predictor. The strongest source-heldout discrimination comes from consensus/visual-QC and echem-context features that are partly review-ranking or source/event-bin structured, so they should guide manual QC and experiment selection, not be reported as deployable precursor accuracy. The practical next target is a smaller, regularized manual-QC candidate set that combines consensus/QC ranking with masked kinetics rather than feeding every automatic feature into one model.
