@@ -120,6 +120,8 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Source-balanced transfer audit shows source-rank/weighting only modestly lifts video+echem future16 AUC to 0.614 versus raw video+echem 0.594, below acquisition context 0.704 and echem source-rank 0.642; source label composition remains the dominant guardrail.
 - Source-invariant projection is more promising but still guarded: best video_plus_echem future16 is source_mean_resid_4 at AUC 0.729 versus raw 0.612 and acquisition context 0.745; video-only source-confound filtering reaches AUC 0.770.
 - Source-invariant physical-family audit localizes the future16 rescue to normalized heterogeneity and particle-vs-context contrast: norm-heterogeneity source_mean_resid_4 reaches AUC 0.738, contrast source_mean_resid_4 reaches 0.703, while raw embedding alone is 0.462.
+- Exact-feature source-invariant audit nominates particle_vs_context_mean_diff_positive_fraction as the strongest univariate future16 descriptor (oriented AUC 0.769, source eta2 0.390); best small transfer set trio::particle_vs_context_mean_diff_positive_fraction+particle_mean_last_minus_first+particle_gradient_diff_q90 reaches leave-source AUC 0.750.
+- Invariant sparse rule discovery finds review-prioritization rules rather than a standalone predictor: best leave-source rule low(particle_std_diff_positive_fraction) covers 27/72 rows with precision 0.889, lift 1.123, and source-positive hits in 6 sources.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
@@ -1352,6 +1354,55 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source-confounded feature all_video particle_norm_min: eta2 0.840
 - Source-confounded feature handcrafted_particle particle_norm_min: eta2 0.840
 - Guardrail: Physical family readouts use automatic particle-region descriptors and weak future labels under leave-source splits. They identify candidate physics families for review prioritization only; source/outcome imbalance, automatic masks, missing manual QC, and uncalibrated optical-front diffusion remain guardrails.
+
+## Source-Invariant Interpretable Feature Audit
+
+- Rows/cycles/sources: 72 / 24 / 9
+- Feature family sizes: {'norm_heterogeneity': 8, 'particle_gradient': 10, 'particle_intensity': 20, 'particle_vs_context': 10}
+- Top univariate descriptor: particle_vs_context_mean_diff_positive_fraction (particle_vs_context), orientation lower_in_positive, AUC 0.769, AP 0.904, eta2 0.390
+- Top single-feature transfer set: single::particle_vs_context_mean_diff_positive_fraction raw AUC 0.727, AP 0.880, p=0.008
+- Top small-combo transfer set: trio::particle_vs_context_mean_diff_positive_fraction+particle_mean_last_minus_first+particle_gradient_diff_q90 raw AUC 0.750, AP 0.905, p=0.002
+- Exact feature particle_vs_context particle_vs_context_mean_diff_positive_fraction: oriented AUC 0.769, direction lower_in_positive, eta2 0.390, median pos-neg -0.053
+- Exact feature particle_intensity particle_std_diff_positive_fraction: oriented AUC 0.723, direction lower_in_positive, eta2 0.184, median pos-neg -0.011
+- Exact feature particle_vs_context particle_vs_context_mean_last_minus_first: oriented AUC 0.709, direction higher_in_positive, eta2 0.773, median pos-neg 0.001
+- Exact feature particle_intensity particle_mean_diff_positive_fraction: oriented AUC 0.707, direction lower_in_positive, eta2 0.306, median pos-neg -0.021
+- Exact feature particle_intensity particle_mean_last_minus_first: oriented AUC 0.683, direction higher_in_positive, eta2 0.710, median pos-neg 0.002
+- Exact feature particle_vs_context particle_vs_context_mean_slope: oriented AUC 0.683, direction higher_in_positive, eta2 0.800, median pos-neg 0.002
+- Exact feature norm_heterogeneity particle_norm_mean: oriented AUC 0.674, direction higher_in_positive, eta2 0.868, median pos-neg 0.010
+- Exact feature particle_intensity particle_mean_slope: oriented AUC 0.667, direction higher_in_positive, eta2 0.731, median pos-neg 0.002
+- Feature set trio::particle_vs_context_mean_diff_positive_fraction+particle_mean_last_minus_first+particle_gradient_diff_q90 raw: n_features 3, AUC 0.750, AP 0.905, p=0.002
+- Feature set trio::particle_vs_context_mean_diff_positive_fraction+particle_mean_last_minus_first+particle_gradient_diff_abs_mean raw: n_features 3, AUC 0.747, AP 0.905, p=0.002
+- Feature set pair::particle_vs_context_mean_diff_positive_fraction+particle_prior_area_fraction raw: n_features 2, AUC 0.746, AP 0.897, p=0.004
+- Feature set single::particle_vs_context_mean_diff_positive_fraction raw: n_features 1, AUC 0.727, AP 0.880, p=0.008
+- Feature set single::particle_vs_context_mean_diff_positive_fraction source_confound_filter_0.50: n_features 1, AUC 0.727, AP 0.880, p=0.008
+- Feature set pair::particle_vs_context_mean_diff_positive_fraction+particle_norm_mean source_confound_filter_0.50: n_features 2, AUC 0.727, AP 0.880, p=0.008
+- Feature set pair::particle_vs_context_mean_diff_positive_fraction+particle_norm_max source_confound_filter_0.50: n_features 2, AUC 0.727, AP 0.880, p=0.008
+- Feature set pair::particle_vs_context_mean_diff_positive_fraction+particle_norm_min source_confound_filter_0.50: n_features 2, AUC 0.727, AP 0.880, p=0.008
+- Guardrail: Exact-feature readouts are automatic particle-region descriptors evaluated against weak future16 labels under leave-source splits. They are hypothesis-prioritization signals only; source imbalance, acquisition context, automatic masks, and absent manual QC still block mechanistic claims.
+
+## Invariant Physics Rule Discovery
+
+- Rows/eval rows/cycles/sources: 172 / 72 / 24 / 9
+- Target/positive rate/candidate rules: future_any_drop_within_16cycles / 0.792 / 171
+- Best rule: low(particle_std_diff_positive_fraction) with precision 0.889, recall 0.421, lift 1.123, binary AUC 0.611, Fisher p=0.099
+- Best-rule source support: hits in 7 sources, positive hits in 6 sources, max feature source eta2 0.184
+- Rule low(particle_std_diff_positive_fraction): covered 27/72, precision 0.889, recall 0.421, lift 1.123, positive-source hits 6
+- Rule low(particle_vs_context_mean_diff_positive_fraction): covered 21/72, precision 0.905, recall 0.333, lift 1.143, positive-source hits 5
+- Rule low(shape_V_q10): covered 18/72, precision 1.000, recall 0.316, lift 1.263, positive-source hits 4
+- Rule low(shape_dVdt_slope): covered 18/72, precision 1.000, recall 0.316, lift 1.263, positive-source hits 4
+- Rule low(shape_V_q10) AND low(shape_dVdt_slope): covered 18/72, precision 1.000, recall 0.316, lift 1.263, positive-source hits 4
+- Rule low(particle_vs_context_mean_diff_positive_fraction) AND low(particle_std_diff_positive_fraction): covered 13/72, precision 0.923, recall 0.211, lift 1.166, positive-source hits 5
+- Rule low(shape_V_q05): covered 15/72, precision 1.000, recall 0.263, lift 1.263, positive-source hits 4
+- Rule low(neg_dq_abs_total_mAh): covered 15/72, precision 1.000, recall 0.263, lift 1.263, positive-source hits 4
+- Oriented feature low(capacity_fraction_of_first): AUC 0.893, AP 0.965, p=3.874e-05, source eta2 0.519
+- Oriented feature low(shape_charge_mAh_neg_abs): AUC 0.893, AP 0.965, p=3.874e-05, source eta2 0.519
+- Oriented feature high(neg_dq_abs_lowV_frac): AUC 0.875, AP 0.971, p=8.588e-05, source eta2 0.122
+- Oriented feature low(all_dq_abs_total_mAh): AUC 0.875, AP 0.961, p=8.588e-05, source eta2 0.547
+- Oriented feature low(neg_dq_abs_total_mAh): AUC 0.875, AP 0.961, p=8.588e-05, source eta2 0.507
+- Oriented feature low(shape_charge_mAh_abs): AUC 0.875, AP 0.961, p=8.588e-05, source eta2 0.825
+- Oriented feature low(pos_dq_abs_total_mAh): AUC 0.857, AP 0.963, p=1.841e-04, source eta2 0.858
+- Oriented feature low(shape_V_q10): AUC 0.839, AP 0.961, p=3.818e-04, source eta2 0.196
+- Guardrail: Rules use automatic ROI masks, weak future labels, and data-derived thresholds under leave-source evaluation. They are sparse review-prioritization hypotheses only; source/outcome imbalance, acquisition coupling, missing manual QC, and uncalibrated diffusion/front proxies remain hard claim limits.
 
 ## Agentic Current Hypothesis Tournament
 

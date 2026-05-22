@@ -157,6 +157,8 @@ def main() -> None:
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
     source_invariant_family = read_json(derived / "source_invariant_physical_family_audit" / "source_invariant_family_summary.json")
+    source_invariant_interpretable = read_json(derived / "source_invariant_interpretable_feature_audit" / "source_invariant_interpretable_summary.json")
+    invariant_physics_rules = read_json(derived / "invariant_physics_rule_discovery" / "invariant_physics_rule_summary.json")
     agentic_current = read_json(derived / "agentic_current_hypothesis_tournament" / "agentic_current_hypothesis_tournament_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
@@ -462,6 +464,16 @@ def main() -> None:
     source_family_contrast16 = next((r for r in source_family_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_family") == "particle_vs_context" and r.get("method") == "source_mean_resid_4"), {})
     source_family_embed16 = next((r for r in source_family_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_family") == "video_embedding" and r.get("method") == "raw"), {})
     source_family_best8 = max([r for r in source_family_metrics if r.get("target") == "future_any_drop_within_8cycles"], key=lambda r: (float(r.get("roc_auc") or float("nan")) if r.get("roc_auc") is not None else float("nan")), default={})
+    source_interpretable_univariate = top_items(first_summary(source_invariant_interpretable, "top_univariate_features", []), 30)
+    source_interpretable_single = top_items(first_summary(source_invariant_interpretable, "top_single_feature_transfer", []), 20)
+    source_interpretable_combo = top_items(first_summary(source_invariant_interpretable, "top_combo_transfer", []), 20)
+    source_interpretable_sets = top_items(first_summary(source_invariant_interpretable, "top_set_metrics", []), 40)
+    source_interpretable_top_uni = source_interpretable_univariate[0] if source_interpretable_univariate else {}
+    source_interpretable_top_single = source_interpretable_single[0] if source_interpretable_single else {}
+    source_interpretable_top_combo = source_interpretable_combo[0] if source_interpretable_combo else {}
+    invariant_rule_best = first_summary(invariant_physics_rules, "best_rule", {}) or {}
+    invariant_rule_top = top_items(first_summary(invariant_physics_rules, "top_rules", []), 16)
+    invariant_rule_features = top_items(first_summary(invariant_physics_rules, "top_oriented_features", []), 16)
     balanced_future_top_acq_resid = balanced_future_acq_resid[0] if balanced_future_acq_resid else {}
     temporal_future8 = (first_summary(temporal_directionality, "best_future8_model", []) or [{}])[0]
     temporal_past8 = (first_summary(temporal_directionality, "best_past8_model", []) or [{}])[0]
@@ -719,6 +731,8 @@ def main() -> None:
         f"- Source-balanced transfer audit shows source-rank/weighting only modestly lifts video+echem future16 AUC to {fmt(source_balanced_vpe16.get('roc_auc'))} versus raw video+echem {fmt(source_balanced_raw16.get('roc_auc'))}, below acquisition context {fmt(source_balanced_acq16.get('roc_auc'))} and echem source-rank {fmt(source_balanced_echem16.get('roc_auc'))}; source label composition remains the dominant guardrail.",
         f"- Source-invariant projection is more promising but still guarded: best video_plus_echem future16 is {source_invariant_best_vpe16.get('method', 'NA')} at AUC {fmt(source_invariant_best_vpe16.get('roc_auc'))} versus raw {fmt(source_invariant_raw16.get('roc_auc'))} and acquisition context {fmt(source_invariant_acq16.get('roc_auc'))}; video-only source-confound filtering reaches AUC {fmt(source_invariant_best_video16.get('roc_auc'))}.",
         f"- Source-invariant physical-family audit localizes the future16 rescue to normalized heterogeneity and particle-vs-context contrast: norm-heterogeneity source_mean_resid_4 reaches AUC {fmt(source_family_norm16.get('roc_auc'))}, contrast source_mean_resid_4 reaches {fmt(source_family_contrast16.get('roc_auc'))}, while raw embedding alone is {fmt(source_family_embed16.get('roc_auc'))}.",
+        f"- Exact-feature source-invariant audit nominates {source_interpretable_top_uni.get('feature', 'NA')} as the strongest univariate future16 descriptor (oriented AUC {fmt(source_interpretable_top_uni.get('roc_auc_oriented'))}, source eta2 {fmt(source_interpretable_top_uni.get('source_eta2'))}); best small transfer set {source_interpretable_top_combo.get('feature_set', 'NA')} reaches leave-source AUC {fmt(source_interpretable_top_combo.get('roc_auc'))}.",
+        f"- Invariant sparse rule discovery finds review-prioritization rules rather than a standalone predictor: best leave-source rule {invariant_rule_best.get('terms', 'NA')} covers {fmt(invariant_rule_best.get('n_covered'), 0)}/{fmt(invariant_rule_best.get('n_eval'), 0)} rows with precision {fmt(invariant_rule_best.get('precision'))}, lift {fmt(invariant_rule_best.get('lift'))}, and source-positive hits in {fmt(invariant_rule_best.get('n_sources_with_positive_hits'), 0)} sources.",
         f"- Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as {first_summary(agentic_current, 'top_hypothesis', {}).get('title', 'NA')} with score {fmt(first_summary(agentic_current, 'top_hypothesis', {}).get('tournament_score'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
         f"- Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with {temporal_future8.get('model', 'NA')} AUC {fmt(temporal_future8.get('pooled_oof_roc_auc'))}/AP {fmt(temporal_future8.get('pooled_oof_average_precision'))}, beating circular time-shift labels at empirical p={fmt(temporal_shift_null.get('empirical_p_ge_observed'))}; reversed labels remain nontrivial (best AUC {fmt(temporal_reversed8.get('pooled_oof_roc_auc'))}) and past8 is underpowered with {temporal_past8_counts.get('1', 0)} positives.",
@@ -1806,6 +1820,45 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Source-Invariant Interpretable Feature Audit",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_invariant_interpretable, 'n_rows', 0)} / {first_summary(source_invariant_interpretable, 'n_cycles', 0)} / {first_summary(source_invariant_interpretable, 'n_sources', 0)}",
+        f"- Feature family sizes: {first_summary(source_invariant_interpretable, 'feature_family_sizes', {})}",
+        f"- Top univariate descriptor: {source_interpretable_top_uni.get('feature', 'NA')} ({source_interpretable_top_uni.get('feature_family', 'NA')}), orientation {source_interpretable_top_uni.get('orientation', 'NA')}, AUC {fmt(source_interpretable_top_uni.get('roc_auc_oriented'))}, AP {fmt(source_interpretable_top_uni.get('average_precision_oriented'))}, eta2 {fmt(source_interpretable_top_uni.get('source_eta2'))}",
+        f"- Top single-feature transfer set: {source_interpretable_top_single.get('feature_set', 'NA')} {source_interpretable_top_single.get('method', 'NA')} AUC {fmt(source_interpretable_top_single.get('roc_auc'))}, AP {fmt(source_interpretable_top_single.get('average_precision'))}, p={fmt(source_interpretable_top_single.get('empirical_p_ge_observed'))}",
+        f"- Top small-combo transfer set: {source_interpretable_top_combo.get('feature_set', 'NA')} {source_interpretable_top_combo.get('method', 'NA')} AUC {fmt(source_interpretable_top_combo.get('roc_auc'))}, AP {fmt(source_interpretable_top_combo.get('average_precision'))}, p={fmt(source_interpretable_top_combo.get('empirical_p_ge_observed'))}",
+    ]
+    for row in source_interpretable_univariate[:8]:
+        report_lines.append(
+            f"- Exact feature {row.get('feature_family')} {row.get('feature')}: oriented AUC {fmt(row.get('roc_auc_oriented'))}, direction {row.get('orientation')}, eta2 {fmt(row.get('source_eta2'))}, median pos-neg {fmt(row.get('median_positive_minus_negative'))}"
+        )
+    for row in source_interpretable_sets[:8]:
+        report_lines.append(
+            f"- Feature set {row.get('feature_set')} {row.get('method')}: n_features {fmt(row.get('n_features'), 0)}, AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, p={fmt(row.get('empirical_p_ge_observed'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_invariant_interpretable, 'guardrail', 'Source-invariant interpretable feature audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Invariant Physics Rule Discovery",
+        "",
+        f"- Rows/eval rows/cycles/sources: {first_summary(invariant_physics_rules, 'n_rows', 0)} / {first_summary(invariant_physics_rules, 'n_eval_rows', 0)} / {first_summary(invariant_physics_rules, 'n_cycles', 0)} / {first_summary(invariant_physics_rules, 'n_sources', 0)}",
+        f"- Target/positive rate/candidate rules: {first_summary(invariant_physics_rules, 'target', 'NA')} / {fmt(first_summary(invariant_physics_rules, 'positive_rate'))} / {first_summary(invariant_physics_rules, 'n_candidate_rules', 0)}",
+        f"- Best rule: {invariant_rule_best.get('terms', 'NA')} with precision {fmt(invariant_rule_best.get('precision'))}, recall {fmt(invariant_rule_best.get('recall'))}, lift {fmt(invariant_rule_best.get('lift'))}, binary AUC {fmt(invariant_rule_best.get('binary_auc'))}, Fisher p={fmt(invariant_rule_best.get('fisher_p_greater'))}",
+        f"- Best-rule source support: hits in {fmt(invariant_rule_best.get('n_sources_with_hits'), 0)} sources, positive hits in {fmt(invariant_rule_best.get('n_sources_with_positive_hits'), 0)} sources, max feature source eta2 {fmt(invariant_rule_best.get('max_feature_source_eta2'))}",
+    ]
+    for row in invariant_rule_top[:8]:
+        report_lines.append(
+            f"- Rule {row.get('terms')}: covered {fmt(row.get('n_covered'), 0)}/{fmt(row.get('n_eval'), 0)}, precision {fmt(row.get('precision'))}, recall {fmt(row.get('recall'))}, lift {fmt(row.get('lift'))}, positive-source hits {fmt(row.get('n_sources_with_positive_hits'), 0)}"
+        )
+    for row in invariant_rule_features[:8]:
+        report_lines.append(
+            f"- Oriented feature {row.get('direction')}({row.get('feature')}): AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, p={fmt(row.get('mannwhitney_p'))}, source eta2 {fmt(row.get('source_eta2'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(invariant_physics_rules, 'guardrail', 'Invariant physics rule discovery unavailable.')}")
+
+    report_lines += [
+        "",
         "## Agentic Current Hypothesis Tournament",
         "",
         f"- Hypotheses ranked: {first_summary(agentic_current, 'n_hypotheses', 0)}",
@@ -2510,6 +2563,33 @@ def main() -> None:
             "top_deltas": source_family_deltas,
             "top_source_confounded_features": source_family_confounds,
             "guardrail": first_summary(source_invariant_family, "guardrail"),
+        },
+        "source_invariant_interpretable_feature_audit": {
+            "n_rows": first_summary(source_invariant_interpretable, "n_rows"),
+            "n_cycles": first_summary(source_invariant_interpretable, "n_cycles"),
+            "n_sources": first_summary(source_invariant_interpretable, "n_sources"),
+            "target": first_summary(source_invariant_interpretable, "target"),
+            "methods": first_summary(source_invariant_interpretable, "methods", []),
+            "feature_family_sizes": first_summary(source_invariant_interpretable, "feature_family_sizes", {}),
+            "top_univariate_features": source_interpretable_univariate,
+            "top_single_feature_transfer": source_interpretable_single,
+            "top_combo_transfer": source_interpretable_combo,
+            "top_set_metrics": source_interpretable_sets,
+            "guardrail": first_summary(source_invariant_interpretable, "guardrail"),
+        },
+        "invariant_physics_rule_discovery": {
+            "n_rows": first_summary(invariant_physics_rules, "n_rows"),
+            "n_eval_rows": first_summary(invariant_physics_rules, "n_eval_rows"),
+            "n_cycles": first_summary(invariant_physics_rules, "n_cycles"),
+            "n_sources": first_summary(invariant_physics_rules, "n_sources"),
+            "target": first_summary(invariant_physics_rules, "target"),
+            "positive_rate": first_summary(invariant_physics_rules, "positive_rate"),
+            "feature_family_sizes": first_summary(invariant_physics_rules, "feature_family_sizes", {}),
+            "n_candidate_rules": first_summary(invariant_physics_rules, "n_candidate_rules"),
+            "best_rule": invariant_rule_best,
+            "top_rules": invariant_rule_top,
+            "top_oriented_features": invariant_rule_features,
+            "guardrail": first_summary(invariant_physics_rules, "guardrail"),
         },
         "agentic_current_hypothesis_tournament": {
             "n_hypotheses": first_summary(agentic_current, "n_hypotheses"),

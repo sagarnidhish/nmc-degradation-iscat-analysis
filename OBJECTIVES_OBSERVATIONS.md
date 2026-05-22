@@ -1,6 +1,6 @@
 # Objectives And Observations
 
-Last updated: 2026-05-21
+Last updated: 2026-05-22
 
 ## Working Objective
 
@@ -2795,3 +2795,50 @@ Key result:
 
 Interpretation: calibrated diffusion remains blocked. The apparent-D quantities are useful as optical-front consistency and guardrail features, but they do not satisfy internal physics gates for material diffusion coefficients. This strengthens the project rule that diffusion claims need manual QC, better front masks, stable timing, and positive estimator agreement before promotion.
 
+## 2026-05-22 Source-Invariant Exact Feature Audit
+
+Added and ran:
+
+`scripts/tier4_source_invariant_interpretable_feature_audit.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_interpretable_feature_audit`
+
+Local compact copy:
+
+`derived_local/source_invariant_interpretable_feature_audit`
+
+Key result:
+
+- The audit evaluated 72 ROI rows across 24 cycles and 9 sources using weak future16 labels under leave-source splits.
+- The strongest univariate descriptor is `particle_vs_context_mean_diff_positive_fraction`: lower values are associated with future16 positives, oriented AUC 0.769, AP 0.904, source eta2 0.390, and median positive-minus-negative -0.0526.
+- The best single-feature leave-source transfer model is the same descriptor with AUC 0.727, AP 0.880, empirical permutation p = 0.00798.
+- The best small feature set is `particle_vs_context_mean_diff_positive_fraction + particle_mean_last_minus_first + particle_gradient_diff_q90`, with leave-source AUC 0.750, AP 0.905, empirical permutation p = 0.001996.
+- Other high-ranking exact descriptors include lower `particle_std_diff_positive_fraction`, higher particle-vs-context/particle-mean last-minus-first trends, and normalized intensity features, but several trend/intensity features remain strongly source-confounded.
+
+Interpretation: the source-invariant family signal now has an exact descriptor hypothesis: future16 positives tend to show fewer positive particle-vs-context frame-to-frame changes, consistent with optical-loss/contraction-like behavior rather than clean expanding fronts. This remains a hypothesis-prioritization result only because labels are weak, acquisition/source imbalance persists, masks are automatic, and manual QC is still absent.
+
+## 2026-05-22 Invariant Physics Rule Discovery
+
+Added and ran:
+
+`scripts/tier4_invariant_physics_rule_discovery.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/invariant_physics_rule_discovery`
+
+Local compact copy:
+
+`derived_local/invariant_physics_rule_discovery`
+
+Key result:
+
+- The rule audit screened 172 joined rows and evaluated 72 future16-labeled rows across 24 cycles and 9 sources.
+- It generated 171 sparse candidate rules from particle optical, front/rollout, echem-state, and acquisition-context descriptors.
+- The highest-priority sparse rule is `low(particle_std_diff_positive_fraction)`: it covers 27/72 rows, precision 0.889 against a 0.792 base positive rate, recall 0.421, binary AUC 0.611, Fisher greater-tail p = 0.099, and positive hits in 6 sources.
+- A related rule, `low(particle_vs_context_mean_diff_positive_fraction)`, covers 21/72 rows with precision 0.905, recall 0.333, lift 1.143, and positive hits in 5 sources.
+- The strongest oriented single features include echem capacity/state descriptors as well as optical-difference descriptors; several echem features have higher AUC but also substantial source/context structure.
+
+Interpretation: sparse rules reinforce the exact-feature audit by flagging low positive optical-change fractions as a review-prioritization signature. They are not deployable warning rules: precision gains are modest over the high future16 base rate, source support is uneven, and manual QC/acquisition controls remain required.
