@@ -2637,3 +2637,24 @@ Key result:
 
 Interpretation: this is an important negative/guardrail result. Future8 should not be treated as a context-independent video-physics degradation detector in the current weak-label design. Future16 remains the more plausible target for echem-conditioned video modeling, but the evidence should be framed as review-prioritization and hypothesis generation until source/cohort holdouts and manual-QC labels support it.
 
+## 2026-05-22 Acquisition-Residualized Video/Echem Warning Audit
+
+Added `scripts/tier4_acquisition_residualized_video_echem_warning.py` and ran it on Isambard to execute the top current-evidence tournament recommendation: test whether the video+echem future16 signal survives explicit acquisition/context residualization and stricter source holdouts. Candidate echem/video features are residualized against acquisition/context inside each held-out fold before classification.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_echem_warning`
+
+Local compact copy:
+
+`derived_local/acquisition_residualized_video_echem_warning`
+
+Key result:
+
+- The audit covers 172 ROI rows, 34 cycles, and 12 source movies, with both leave-cycle and leave-source splits.
+- Under leave-cycle future16 evaluation, acquisition-residualized video+echem reaches AUC 0.788, AP 0.932, empirical p=0.002, versus acquisition/context-only AUC 0.727. This is a context-resistant gain over the cycle-holdout baseline.
+- In the same leave-cycle setting, residualized video+echem beats raw echem-only by +0.136 AUC and raw video-only by +0.091 AUC, supporting the paper-inspired multimodal conditioning hypothesis.
+- Under leave-source future16 evaluation, the signal does not transfer: acquisition-residualized video+echem falls to AUC 0.527, while acquisition/context-only is AUC 0.697. This makes source/movie domain shift a major guardrail.
+- Residualized video-only collapses under leave-cycle future16 (AUC 0.469), so the useful residualized signal is mainly electrochemically conditioned, not generic optical video structure alone.
+
+Interpretation: the top tournament experiment is now executed. Echem+video carries future16 weak-label signal beyond linear acquisition context when held out by cycle, but it is not yet source-transferable. The next defensible modeling step is source-domain adaptation or source-balanced sampling before any warning-model claim; the current result should guide representation design and review prioritization only.

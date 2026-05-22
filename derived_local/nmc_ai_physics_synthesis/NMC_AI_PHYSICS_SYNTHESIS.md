@@ -113,6 +113,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Residual dictionary embedding learns label-free next-frame residual bases over 172 ROI videos; residual-dictionary future8 AUC is 0.663 with p=0.005, and residual_dictionary_plus_handcrafted reaches AUC 0.771.
 - Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to 0.917, while acquisition/context alone reaches 1.000; treat this as context-sensitive representation evidence rather than deployable warning.
 - Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC 1.000, raw all-video reaches 0.756, and context-residualized all-video alone reaches 0.319; future16 raw handcrafted reaches AUC 0.796 but residualized all-video alone is 0.620.
+- Acquisition-residualized video/echem warning audit executes the top tournament experiment: leave-cycle future16 residualized video_plus_echem reaches AUC 0.788 versus acquisition-only 0.727, but leave-source residualized AUC falls to 0.527 versus acquisition-only 0.697.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
@@ -1178,6 +1179,22 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Context-residual feature handcrafted_particle mask_low_area_fraction vs future_any_drop_within_8cycles: |rho|=0.477, direction-free AUC 0.596
 - Context-residual feature all_video mask_low_area_fraction vs future_any_drop_within_8cycles: |rho|=0.477, direction-free AUC 0.596
 - Guardrail: This is a weak-label, leave-one-cycle benchmark over automatically selected ROI embeddings. A strong acquisition-context score is treated as design/context structure, not a deployable warning model. Residualized video scores test whether particle-region video descriptors add signal after context conditioning.
+
+## Acquisition-Residualized Video/Echem Warning Audit
+
+- Rows/cycles/sources: 172 / 34 / 12
+- Feature set sizes: {'acquisition_context': 40, 'echem_regime': 57, 'video_all': 64, 'video_embedding': 16, 'video_plus_echem': 121, 'video_scalar': 48}
+- Leave-cycle future16 residualized video+echem: AUC 0.788, AP 0.932, p=0.002; acquisition-only AUC 0.727
+- Leave-source future16 residualized video+echem: AUC 0.527, AP 0.848, p=0.371; acquisition-only AUC 0.697
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_minus_echem_regime_raw: delta AUC 0.136, delta rho 0.191
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_raw_minus_echem_regime_raw: delta AUC 0.099, delta rho 0.140
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_minus_video_all_raw: delta AUC 0.091, delta rho 0.128
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_acquisition_residualized_minus_acquisition_context_raw: delta AUC 0.061, delta rho 0.086
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_raw_minus_video_all_raw: delta AUC 0.055, delta rho 0.077
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo echem_regime_acquisition_residualized_minus_acquisition_context_raw: delta AUC 0.044, delta rho 0.063
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_plus_echem_raw_minus_acquisition_context_raw: delta AUC 0.025, delta rho 0.035
+- Acquisition-residualized video/echem delta future_any_drop_within_16cycles cycleNo video_all_acquisition_residualized_minus_acquisition_context_raw: delta AUC -0.258, delta rho -0.364
+- Guardrail: This audit residualizes candidate video/echem features against acquisition/context inside each held-out fold. It tests context-resistant weak-label signal for prioritizing next analyses, not deployable warning, causal mechanism, manual QC labels, or calibrated diffusion.
 
 ## Agentic Current Hypothesis Tournament
 
