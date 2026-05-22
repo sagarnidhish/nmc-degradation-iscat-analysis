@@ -9743,6 +9743,7 @@
       "observed_auc": 0.8857142857142857,
       "status": "ok"
     },
+    "rf_trees": 80,
     "top_feature_importance": [
       {
         "feature": "velocity_particle_mse_fraction_of_full_mean",
@@ -9803,26 +9804,6 @@
         "feature": "phase_slope_positive_fraction",
         "importance": 0.31074185210754895,
         "model": "logistic_l2"
-      },
-      {
-        "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
-        "importance": 0.15141572991265945,
-        "model": "random_forest"
-      },
-      {
-        "feature": "velocity_particle_mse_fraction_of_full_mean",
-        "importance": 0.13697154164228126,
-        "model": "random_forest"
-      },
-      {
-        "feature": "velocity_particle_mse_mean",
-        "importance": 0.13369657081926117,
-        "model": "random_forest"
-      },
-      {
-        "feature": "persistence_particle_mse_fraction_of_full_mean",
-        "importance": 0.09412684172844063,
-        "model": "random_forest"
       }
     ],
     "top_feature_tests": [
