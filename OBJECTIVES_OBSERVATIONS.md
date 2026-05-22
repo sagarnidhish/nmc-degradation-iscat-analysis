@@ -3515,6 +3515,28 @@ Interpretation:
 
 This audit tightens the pre-event claim. Matched counterfactuals preserve a near-pre optical/mask-contrast signal, but they weaken the apparent-diffusion interpretation and leave front-slope evidence underpowered. The most defensible current statement is that source-balanced near-pre crops show review-worthy mask/contrast and some front-motion hints after observed-context matching; calibrated diffusion and phase-boundary claims still require manual QC and stronger matched same-source coverage.
 
+## 2026-05-22 Source-Balanced Pre-Event Radial Kymograph Audit
+
+Added `scripts/tier4_source_balanced_pre_event_radial_kymograph_audit.py` and ran it on Isambard. This audit extracts radial intensity kymographs from the source-balanced pre-event ROI tensors, tracks an automatic radial gradient-front over normalized time, and renders review kymograph PNGs for the top-ranked candidates.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit`
+- `derived_local/source_balanced_pre_event_radial_kymograph_audit`
+
+Cohort/result snapshot:
+
+- Processed 128 ROI crops across 64 cycles and 14 source movies.
+- Rendered 32 radial-kymograph PNGs for top review candidates.
+- Near-pre versus far-pre is led by `front_radius2_slope_px2_per_norm_time`: AUC 0.705/AP 0.754, median near-minus-far difference 3.455 px^2 per normalized time, p=0.040.
+- The paired front-radius slope is similar but weaker: `front_radius_slope_px_per_norm_time` AUC 0.686/AP 0.726, median difference 0.298 px/norm time, p=0.062.
+- Clean pre-event versus post/control is led by `kymograph_temporal_energy`: AUC 0.664/AP 0.771, median difference 2.86e-06, p=0.00168, suggesting broader radial profile activity rather than a clean single-front effect.
+- The top review candidate `source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723` has radial-kymograph front radius2 slope 12.90 px^2/norm time, front radius slope 0.910 px/norm time, but modest front-track R2 0.076.
+
+Interpretation:
+
+This gives the pre-event cohort a more explicit phase-front-style representation than the scalar mask/front summaries. It strengthens the near-pre versus far-pre front-motion hypothesis, especially for radius-squared slope, while also showing why diffusion language remains guarded: front-track fit quality is often modest, clean-pre separation is dominated by temporal kymograph energy, and all tracks are automatic fixed-crop optical proxies. The outputs are best used for manual front QC and candidate selection, not calibrated diffusion or validated phase-boundary claims.
+
 ## 2026-05-22 Source-Balanced Pre-Event Physics-Mode Taxonomy
 
 Added `scripts/tier4_source_balanced_pre_event_physics_mode_taxonomy.py` and ran it on Isambard using the source-balanced pre-event directionality feature table. This audit clusters source-residual front, mask, apparent-diffusion, and heterogeneity descriptors to test whether the pre-event signal forms repeatable discrete physics modes rather than only continuous event-distance/readout axes.
