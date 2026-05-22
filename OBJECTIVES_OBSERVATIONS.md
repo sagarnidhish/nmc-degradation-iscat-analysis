@@ -3182,3 +3182,26 @@ Cohort/result snapshot:
 Interpretation:
 
 This audit separates three effects: source-level structure is very predictive, raw crop-local mask/front contrast is strong but source structured, and source-residual residual-dictionary reconstruction-error drift retains a moderate future16 association without source variance. The source-residual residual feature is the best current candidate for a source-robust temporal-dynamics physics proxy, but it remains an in-cohort weak-label scalar audit and needs held-out-source/domain-adapted modeling before any warning claim.
+
+## 2026-05-22 Source-Balanced Residual-Physics Coupling Audit
+
+Added `scripts/tier4_source_balanced_residual_physics_coupling_audit.py` and ran it on Isambard against the source-balanced residual dictionary feature table. The audit asks whether source-normalized residual-dictionary dynamics align with crop-local mask/front/apparent-diffusion proxies, rather than only predicting weak future-drop labels.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit`
+- `derived_local/source_balanced_residual_physics_coupling_audit`
+
+Cohort/result snapshot:
+
+- 96 ROI sequences, 48 cycles, 14 source movies.
+- Tested 72 residual-dictionary descriptors against 25 crop-local physics proxies under raw, source-residual, within-source-rank, and within-source-z transforms.
+- Strong raw and source-residual correlations often involve mask centroid/area summaries, but many of those are not useful future16 targets after source removal.
+- For the source-residual primary candidates, the largest coupling is `resdict_pc02_slope` versus `mask_area_fraction_median` (rho 0.521), but the target directions are not aligned.
+- The strongest source-residual target-aligned pair is `dictionary_recon_error_last_minus_first` versus `masked_minus_background_mean_slope`: rho 0.373, residual future16 AUC 0.637, physics-proxy future16 AUC 0.628, with both source eta2 values effectively zero after residualization.
+- The same residual candidate couples to front-radius slope proxies in magnitude (`front_radius_q60_slope_px_per_norm_time` rho -0.380, `front_radius_q80_slope_px_per_norm_time` rho -0.305), but those are not target-direction aligned in this audit.
+- Apparent q70 diffusion proxy coupling is weak (`dictionary_recon_error_last_minus_first` versus apparent q70 diffusion rho -0.184, p=0.183) and should not be interpreted as calibrated diffusion evidence.
+
+Interpretation:
+
+The current source-robust residual-dynamics candidate is most consistent with an optical contrast/reconstruction-error change rather than a clean diffusion-front measurement. It is still useful for triage because the signal survives source residualization and aligns with a crop-local contrast proxy, but the front/diffusion interpretation remains guarded until manual QC and calibrated phase-boundary tracking are available.
