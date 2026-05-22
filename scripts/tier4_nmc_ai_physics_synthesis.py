@@ -142,6 +142,8 @@ def main() -> None:
     qc_decision_ledger = read_json(derived / "qc_decision_evidence_ledger" / "qc_decision_evidence_ledger_summary.json")
     balanced_future_reconstruction = read_json(derived / "balanced_future_roi_reconstruction" / "balanced_future_roi_reconstruction_summary.json")
     source_balanced_expansion = read_json(derived / "source_balanced_roi_expansion_manifest" / "source_balanced_roi_expansion_summary.json")
+    source_balanced_sequences = read_json(derived / "source_balanced_roi_sequences" / "selected_roi_sequence_summary.json")
+    source_balanced_sequence_rollout = read_json(derived / "source_balanced_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
     balanced_future_sequences = read_json(derived / "balanced_future_roi_sequences" / "selected_roi_sequence_summary.json")
     balanced_future_fronts = read_json(derived / "balanced_future_threshold_robust_fronts" / "threshold_robust_front_summary.json")
     balanced_future_rollout = read_json(derived / "balanced_future_masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
@@ -389,6 +391,11 @@ def main() -> None:
     qc_decision_actions = first_summary(qc_decision_ledger, "decision_action_counts", {}) or {}
     source_balanced_expansion_sources = top_items(first_summary(source_balanced_expansion, "source_coverage", []), 20)
     source_balanced_expansion_top = top_items(first_summary(source_balanced_expansion, "top_roi_rows", []), 12)
+    source_balanced_rollout_roi_tests = top_items(first_summary(source_balanced_sequence_rollout, "top_roi_feature_tests", []), 30)
+    source_balanced_rollout_cycle_tests = top_items(first_summary(source_balanced_sequence_rollout, "top_cycle_feature_tests", []), 20)
+    source_balanced_rollout_sources = top_items(first_summary(source_balanced_sequence_rollout, "source_summary", []), 20)
+    source_balanced_rollout_top16 = next((r for r in source_balanced_rollout_roi_tests if r.get("target") == "future_any_drop_within_16cycles"), {})
+    source_balanced_rollout_top8 = next((r for r in source_balanced_rollout_roi_tests if r.get("target") == "future_any_drop_within_8cycles"), {})
     balanced_future_oof = top_items(first_summary(balanced_future_physics, "cycle_group_oof_metrics", []), 6)
     balanced_future_null = first_summary(balanced_future_physics, "permutation_null", {}) or {}
     balanced_future_roi_tests = top_items(first_summary(balanced_future_physics, "top_roi_feature_tests", []), 12)
@@ -805,6 +812,7 @@ def main() -> None:
         f"- QC decision evidence ledger converts the 47 pending labels into explicit reviewer actions without assigning labels: {qc_decision_actions}; top possible-accept ROI is {(qc_decision_accept[0] if qc_decision_accept else {}).get('roi_id', 'NA')}, while top artifact/reject-first ROI is {(qc_decision_artifact[0] if qc_decision_artifact else {}).get('roi_id', 'NA')}.",
         f"- Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling {first_summary(balanced_future_reconstruction, 'n_cycles_sampled', 0)} cycles and {first_summary(balanced_future_physics, 'n_roi', 0)} ROI rows with equal weak future8 positives/negatives; leave-cycle {balanced_future_best_oof.get('model', 'NA')} reaches AUC {fmt(balanced_future_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(balanced_future_best_oof.get('pooled_oof_average_precision'))}, permutation p={fmt(balanced_future_null.get('empirical_p_ge_observed'))}. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.",
         f"- Source-balanced ROI expansion attacks the remaining cohort-breadth bottleneck: it samples {first_summary(source_balanced_expansion, 'n_sampled_cycles', 0)} cycles across {first_summary(source_balanced_expansion, 'n_sources_selected', 0)} source movies, including {first_summary(source_balanced_expansion, 'n_new_selected_cycles', 0)} cycle/source pairs not already in video cohorts, and proposes {first_summary(source_balanced_expansion, 'n_roi_rows', 0)} automatic ROI rows for follow-up sequence export/QC.",
+        f"- Source-balanced ROI sequence export converts that manifest into {first_summary(source_balanced_sequences, 'n_roi_sequences', 0)} particle-region crop tensors across {first_summary(source_balanced_sequences, 'n_cycles', 0)} cycles and {first_summary(source_balanced_sequences, 'n_sources', 0)} sources with {first_summary(source_balanced_sequences, 'n_failed', 0)} export failures; the fast rollout audit finds strongest future16 ROI signal in {source_balanced_rollout_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_rollout_top16.get('oriented_auc'))}, while prediction-error features are highly source-structured.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
         f"- Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC {fmt(learned_residual_future8.get('roc_auc'))} versus PCA-video {fmt(learned_residual_pca_future8.get('roc_auc'))} and handcrafted scalar {fmt(learned_residual_hand_future8.get('roc_auc'))}; future16 learned_all remains weak at AUC {fmt(learned_residual_future16.get('roc_auc'))} versus handcrafted {fmt(learned_residual_hand_future16.get('roc_auc'))}.",
@@ -1688,6 +1696,30 @@ def main() -> None:
             f"- Expansion ROI candidate cycle {fmt(row.get('cycleNo'), 0)} {row.get('source_stem')} rank {fmt(row.get('object_candidate_rank'), 0)}: score {fmt(row.get('validation_score'))}, future16 {fmt(row.get('future_any_drop_within_16cycles'), 0)}, existing cohort {row.get('already_in_existing_video_cohort')}"
         )
     report_lines.append(f"- Guardrail: {first_summary(source_balanced_expansion, 'guardrail', 'Source-balanced expansion manifest unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Source-Balanced ROI Sequence Export and Rollout Audit",
+        "",
+        f"- Exported ROI sequences/cycles/sources/failures: {first_summary(source_balanced_sequences, 'n_roi_sequences', 0)} / {first_summary(source_balanced_sequences, 'n_cycles', 0)} / {first_summary(source_balanced_sequences, 'n_sources', 0)} / {first_summary(source_balanced_sequences, 'n_failed', 0)}",
+        f"- Crop/output size/samples per ROI: {first_summary(source_balanced_sequences, 'crop_size_full', 0)} / {first_summary(source_balanced_sequences, 'output_size', 0)} / {first_summary(source_balanced_sequences, 'samples_per_roi', 0)}",
+        f"- Rollout audit ROI sequences/cycles/sources: {first_summary(source_balanced_sequence_rollout, 'n_roi_sequences', 0)} / {first_summary(source_balanced_sequence_rollout, 'n_cycles', 0)} / {first_summary(source_balanced_sequence_rollout, 'n_sources', 0)}",
+        f"- Future8/future16 positive sequences: {first_summary(source_balanced_sequence_rollout, 'future8_positive_sequences', 0)} / {first_summary(source_balanced_sequence_rollout, 'future16_positive_sequences', 0)}",
+    ]
+    for row in source_balanced_rollout_roi_tests[:10]:
+        report_lines.append(
+            f"- Source-balanced ROI feature {row.get('target')} {row.get('feature')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, source eta2 {fmt(row.get('source_eta2'))}, median pos-neg {fmt(row.get('median_positive_minus_negative'))}"
+        )
+    for row in source_balanced_rollout_cycle_tests[:6]:
+        report_lines.append(
+            f"- Source-balanced cycle feature {row.get('target')} {row.get('feature')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, median pos-neg {fmt(row.get('median_positive_minus_negative'))}"
+        )
+    for row in source_balanced_rollout_sources[:6]:
+        report_lines.append(
+            f"- Source-balanced rollout source {row.get('source_stem')}: ROI {fmt(row.get('n_roi'), 0)}, cycles {fmt(row.get('n_cycles'), 0)}, persistence MSE {fmt(row.get('persistence_mse_mean'))}, future16 seq {fmt(row.get('future_any_drop_within_16cycles'), 0)}"
+        )
+    report_lines.append(f"- Sequence guardrail: {first_summary(source_balanced_sequences, 'guardrail', 'Source-balanced sequence export unavailable.')}")
+    report_lines.append(f"- Rollout guardrail: {first_summary(source_balanced_sequence_rollout, 'guardrail', 'Source-balanced rollout audit unavailable.')}")
 
     report_lines += [
         "",
@@ -2676,6 +2708,30 @@ def main() -> None:
             "source_coverage": source_balanced_expansion_sources,
             "top_roi_rows": source_balanced_expansion_top,
             "guardrail": first_summary(source_balanced_expansion, "guardrail"),
+        },
+        "source_balanced_roi_sequences": {
+            "n_input_roi_rows": first_summary(source_balanced_sequences, "n_input_roi_rows"),
+            "n_roi_sequences": first_summary(source_balanced_sequences, "n_roi_sequences"),
+            "n_cycles": first_summary(source_balanced_sequences, "n_cycles"),
+            "n_sources": first_summary(source_balanced_sequences, "n_sources"),
+            "n_failed": first_summary(source_balanced_sequences, "n_failed"),
+            "crop_size_full": first_summary(source_balanced_sequences, "crop_size_full"),
+            "output_size": first_summary(source_balanced_sequences, "output_size"),
+            "samples_per_roi": first_summary(source_balanced_sequences, "samples_per_roi"),
+            "future8_positive_sequences": first_summary(source_balanced_sequences, "future8_positive_sequences"),
+            "future16_positive_sequences": first_summary(source_balanced_sequences, "future16_positive_sequences"),
+            "guardrail": first_summary(source_balanced_sequences, "guardrail"),
+        },
+        "source_balanced_sequence_rollout_audit": {
+            "n_roi_sequences": first_summary(source_balanced_sequence_rollout, "n_roi_sequences"),
+            "n_cycles": first_summary(source_balanced_sequence_rollout, "n_cycles"),
+            "n_sources": first_summary(source_balanced_sequence_rollout, "n_sources"),
+            "future8_positive_sequences": first_summary(source_balanced_sequence_rollout, "future8_positive_sequences"),
+            "future16_positive_sequences": first_summary(source_balanced_sequence_rollout, "future16_positive_sequences"),
+            "top_roi_feature_tests": source_balanced_rollout_roi_tests,
+            "top_cycle_feature_tests": source_balanced_rollout_cycle_tests,
+            "source_summary": source_balanced_rollout_sources,
+            "guardrail": first_summary(source_balanced_sequence_rollout, "guardrail"),
         },
         "balanced_future_roi_physics_audit": {
             "n_cycles_sampled": first_summary(balanced_future_reconstruction, "n_cycles_sampled"),

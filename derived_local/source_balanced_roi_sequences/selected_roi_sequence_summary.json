@@ -1,0 +1,405 @@
+{
+  "crop_size_full": 192,
+  "cycle_summary": {
+    "10.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.001097027212381363,
+      "mean_roi_delta": 26.406005859375,
+      "mean_stage_drift_xy_sampled": 0.18027756377319315,
+      "n_roi_sequences": 2
+    },
+    "100.0": {
+      "future16_positive": 1,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.00020621716976165771,
+      "mean_roi_delta": 5.2548828125,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 2
+    },
+    "102.0": {
+      "future16_positive": 1,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.00012518838047981262,
+      "mean_roi_delta": -3.91748046875,
+      "mean_stage_drift_xy_sampled": 0.22360679774997896,
+      "n_roi_sequences": 2
+    },
+    "108.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -6.332993507385254e-05,
+      "mean_roi_delta": -0.6396484375,
+      "mean_stage_drift_xy_sampled": 0.2236067977498773,
+      "n_roi_sequences": 2
+    },
+    "110.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -0.00011946633458137512,
+      "mean_roi_delta": 0.033203125,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 2
+    },
+    "112.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -0.0003781430423259735,
+      "mean_roi_delta": -5.0478515625,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 2
+    },
+    "114.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -0.0003071501851081848,
+      "mean_roi_delta": -6.60791015625,
+      "mean_stage_drift_xy_sampled": 0.2121320343560125,
+      "n_roi_sequences": 2
+    },
+    "12.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.001055993139743805,
+      "mean_roi_delta": 26.772216796875,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 2
+    },
+    "123.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.0005991198122501373,
+      "mean_roi_delta": -10.15625,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 2
+    },
+    "125.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.0001666136085987091,
+      "mean_roi_delta": 3.0498046875,
+      "mean_stage_drift_xy_sampled": 0.2692582403567336,
+      "n_roi_sequences": 2
+    },
+    "126.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.0008775480091571808,
+      "mean_roi_delta": 12.70947265625,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 2
+    },
+    "127.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.00010841712355613708,
+      "mean_roi_delta": -8.56396484375,
+      "mean_stage_drift_xy_sampled": 0.2236067977500298,
+      "n_roi_sequences": 2
+    },
+    "132.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.0006448253989219666,
+      "mean_roi_delta": 26.564453125,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 2
+    },
+    "133.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.0027193352580070496,
+      "mean_roi_delta": 61.91943359375,
+      "mean_stage_drift_xy_sampled": 0.2692582403567336,
+      "n_roi_sequences": 2
+    },
+    "134.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.0009673982858657837,
+      "mean_roi_delta": 28.779296875,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 2
+    },
+    "136.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.0003905370831489563,
+      "mean_roi_delta": -50.05859375,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 2
+    },
+    "142.0": {
+      "future16_positive": 1,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.00039024651050567627,
+      "mean_roi_delta": -8.62255859375,
+      "mean_stage_drift_xy_sampled": 0.24999999999993178,
+      "n_roi_sequences": 2
+    },
+    "144.0": {
+      "future16_positive": 1,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.000715550035238266,
+      "mean_roi_delta": -13.5673828125,
+      "mean_stage_drift_xy_sampled": 0.22360679774992814,
+      "n_roi_sequences": 2
+    },
+    "145.0": {
+      "future16_positive": 1,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.003082539886236191,
+      "mean_roi_delta": -56.0517578125,
+      "mean_stage_drift_xy_sampled": 0.2236067977500298,
+      "n_roi_sequences": 2
+    },
+    "150.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -0.0002702362835407257,
+      "mean_roi_delta": -7.869140625,
+      "mean_stage_drift_xy_sampled": 0.2236067977500298,
+      "n_roi_sequences": 2
+    },
+    "151.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -7.933005690574646e-05,
+      "mean_roi_delta": 0.69091796875,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 2
+    },
+    "152.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -0.0002059154212474823,
+      "mean_roi_delta": -1.30810546875,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 2
+    },
+    "2.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.0016346275806427002,
+      "mean_roi_delta": -31.59130859375,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 2
+    },
+    "26.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.00010419636964797974,
+      "mean_roi_delta": -3.2568359375,
+      "mean_stage_drift_xy_sampled": 0.2500000000000909,
+      "n_roi_sequences": 2
+    },
+    "28.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 9.024515748023987e-05,
+      "mean_roi_delta": 0.39306640625,
+      "mean_stage_drift_xy_sampled": 0.2500000000000909,
+      "n_roi_sequences": 2
+    },
+    "30.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.0006928630173206329,
+      "mean_roi_delta": -13.37451171875,
+      "mean_stage_drift_xy_sampled": 0.2236067977500298,
+      "n_roi_sequences": 2
+    },
+    "34.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -8.799508213996887e-05,
+      "mean_roi_delta": -2.74755859375,
+      "mean_stage_drift_xy_sampled": 0.28284271247460296,
+      "n_roi_sequences": 2
+    },
+    "36.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.0005397722125053406,
+      "mean_roi_delta": 9.22216796875,
+      "mean_stage_drift_xy_sampled": 0.2692582403567336,
+      "n_roi_sequences": 2
+    },
+    "38.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.000837080180644989,
+      "mean_roi_delta": 14.03369140625,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 2
+    },
+    "42.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 9.677931666374207e-05,
+      "mean_roi_delta": 3.20751953125,
+      "mean_stage_drift_xy_sampled": 0.24999999999993178,
+      "n_roi_sequences": 2
+    },
+    "46.0": {
+      "future16_positive": 1,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.00010906904935836792,
+      "mean_roi_delta": -1.78662109375,
+      "mean_stage_drift_xy_sampled": 0.2236067977498773,
+      "n_roi_sequences": 2
+    },
+    "48.0": {
+      "future16_positive": 1,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.00043431296944618225,
+      "mean_roi_delta": -6.22900390625,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 2
+    },
+    "52.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -2.2899359464645386e-05,
+      "mean_roi_delta": -1.46044921875,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 2
+    },
+    "54.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -4.7691166400909424e-05,
+      "mean_roi_delta": -0.896484375,
+      "mean_stage_drift_xy_sampled": 0.22360679774992814,
+      "n_roi_sequences": 2
+    },
+    "56.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -0.0002098381519317627,
+      "mean_roi_delta": -3.2080078125,
+      "mean_stage_drift_xy_sampled": 0.18027756377319315,
+      "n_roi_sequences": 2
+    },
+    "6.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.0009562484920024872,
+      "mean_roi_delta": 31.33740234375,
+      "mean_stage_drift_xy_sampled": 0.2236067977498773,
+      "n_roi_sequences": 2
+    },
+    "64.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.00011911243200302124,
+      "mean_roi_delta": 1.16357421875,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 2
+    },
+    "68.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.0004079751670360565,
+      "mean_roi_delta": -5.14111328125,
+      "mean_stage_drift_xy_sampled": 0.25,
+      "n_roi_sequences": 2
+    },
+    "70.0": {
+      "future16_positive": 1,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.00012560561299324036,
+      "mean_roi_delta": -2.160888671875,
+      "mean_stage_drift_xy_sampled": 0.18027756377319315,
+      "n_roi_sequences": 2
+    },
+    "72.0": {
+      "future16_positive": 1,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.0004064403474330902,
+      "mean_roi_delta": 7.1923828125,
+      "mean_stage_drift_xy_sampled": 0.2121320343560125,
+      "n_roi_sequences": 2
+    },
+    "74.0": {
+      "future16_positive": 1,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.0002445019781589508,
+      "mean_roi_delta": -3.36767578125,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 2
+    },
+    "78.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": 0.0006552785634994507,
+      "mean_roi_delta": 10.90234375,
+      "mean_stage_drift_xy_sampled": 0.25,
+      "n_roi_sequences": 2
+    },
+    "80.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": 0.000519830733537674,
+      "mean_roi_delta": 7.470703125,
+      "mean_stage_drift_xy_sampled": 0.2692582403567336,
+      "n_roi_sequences": 2
+    },
+    "82.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": 0.0005519576370716095,
+      "mean_roi_delta": 9.3037109375,
+      "mean_stage_drift_xy_sampled": 0.2692582403567336,
+      "n_roi_sequences": 2
+    },
+    "84.0": {
+      "future16_positive": 1,
+      "future8_positive": 1,
+      "mean_norm_roi_delta": -0.00012809038162231445,
+      "mean_roi_delta": -3.00927734375,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 2
+    },
+    "92.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.0004872642457485199,
+      "mean_roi_delta": -7.36474609375,
+      "mean_stage_drift_xy_sampled": 0.18027756377328777,
+      "n_roi_sequences": 2
+    },
+    "94.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": -0.0005793608725070953,
+      "mean_roi_delta": -8.74462890625,
+      "mean_stage_drift_xy_sampled": 0.24999999999993178,
+      "n_roi_sequences": 2
+    },
+    "98.0": {
+      "future16_positive": 0,
+      "future8_positive": 0,
+      "mean_norm_roi_delta": 0.0007366351783275604,
+      "mean_roi_delta": 8.25341796875,
+      "mean_stage_drift_xy_sampled": 0.22360679774992814,
+      "n_roi_sequences": 2
+    }
+  },
+  "future16_positive_sequences": 48,
+  "future8_positive_sequences": 28,
+  "guardrail": "Source-balanced sequences are fixed padded particle-region crops around automatic reconstructed candidates. They broaden source coverage for model/physics tests, but are not manual particle annotations or validated front labels.",
+  "n_cycles": 48,
+  "n_failed": 0,
+  "n_input_roi_rows": 96,
+  "n_roi_sequences": 96,
+  "n_sources": 14,
+  "output_size": 96,
+  "outputs": {
+    "failures": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_sequence_failures.csv",
+    "manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/selected_roi_sequence_manifest.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/selected_roi_sequence_summary.json"
+  },
+  "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_roi_table.csv",
+  "samples_per_roi": 96
+}

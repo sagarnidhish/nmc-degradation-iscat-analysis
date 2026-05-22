@@ -158,6 +158,24 @@ Smoke outputs are written on Isambard under:
 
 Current ERA ranking prioritizes: frame-count/protocol matched controls, protocol-local echem window scans, ROI event visual QC, hazard calibration, and degradation-mode clustering.
 
+## 2026-05-22 Agentic AI Paper Implementation Review
+
+Reviewed the three May 2026 Nature agentic-AI papers linked by the user:
+
+- Ghareeb et al., "A multi-agent system for automating scientific discovery", DOI `10.1038/s41586-026-10652-y`.
+- Gottweis et al., "Accelerating scientific discovery with Co-Scientist", DOI `10.1038/s41586-026-10644-y`.
+- Aygun et al., "An AI system to help scientists write expert-level empirical software", DOI `10.1038/s41586-026-10658-6`.
+
+Added a project-specific implementation plan under:
+
+`derived_local/literature_agentic_ai_implementation_plan`
+
+Key conclusion:
+
+- The directly useful techniques are a closed-loop hypothesis ledger, Co-Scientist-style skeptical hypothesis tournament, Robin-style lab-in-the-loop feedback, and ERA-style metric search over analysis code/feature variants.
+- The highest-priority implementable module is `tier4_agentic_metric_search.py`, which should search over feature families, source/cycle splits, residualization controls, and weak-label targets using a predeclared scientific score.
+- The key guardrail is unchanged: agentic systems may rank and test hypotheses, but should not emit validated battery mechanism claims without source-balanced controls, manual ROI/front QC, and electrochemical consistency checks.
+
 ## 2026-05-21 Frame-Count Matched Control Result
 
 Added and ran:
@@ -3024,3 +3042,26 @@ Key result:
 - Top mode summaries connect target-predictive residuals to interpretable families: leave-source `residual_energy_mean` aligns with low-rank-DMD particle reconstruction error (centered rho 0.659), and leave-source `resdict_pc04_mean` aligns with apparent diffusion/front-radius motion (centered rho 0.815).
 
 Interpretation: the conditioned residual objective is not just a black-box weak-label predictor. Several residual bases line up, after source centering, with apparent phase/front/diffusion motion, rollout reconstruction difficulty, and echem-regime structure. These are still optical proxies and split-specific residual features, so they support physics triage and model-objective design rather than calibrated diffusion coefficients or causal mechanism claims.
+## 2026-05-22 Source-Balanced ROI Sequences and Rollout Audit
+
+Added and ran:
+
+- `scripts/tier4_export_source_balanced_roi_sequences.py`
+- `scripts/tier4_source_balanced_sequence_rollout_audit.py`
+
+Output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit`
+- `derived_local/source_balanced_roi_sequences` (manifest/summary only; NPZ tensors stay remote)
+- `derived_local/source_balanced_sequence_rollout_audit`
+
+Key result:
+
+- Exported all 96 source-balanced ROI rows into particle-region crop tensors across 48 cycles and 14 sources, with 96 sampled frames per ROI, 192 px full-frame crops resized to 96x96, and zero export failures. This directly converts the source-balanced manifest into model-ready particle-only inputs without copying the NPZ tensors locally.
+- The fast rollout/temporal audit computes ROI-only persistence/velocity prediction error, temporal activity, and intensity-drift features over the exported crops. It avoids the expensive full global-DMD run that was too slow for this larger cohort.
+- Future16 weak-label signal in this broader cohort is modest and mostly intensity-drift based: ROI normalized mean last-minus-first has AUC 0.626/AP 0.589/source eta2 0.365, with future16 positives showing a more negative normalized intensity drift. Raw ROI mean drift has AUC 0.606/AP 0.549/source eta2 0.534.
+- One-step prediction-error features are not robust future16 signals here and remain strongly source structured: persistence late MSE AUC 0.556/source eta2 0.787; velocity MSE mean AUC 0.540/source eta2 0.824.
+- At the cycle-collapsed level, normalized ROI intensity drift is again the top future16 feature (AUC 0.648/AP 0.594), while future8 is weak and led by object contrast/late temporal energy around AUC 0.63/0.63.
+
+Interpretation: this is the first broad source-balanced direct-video cohort with particle-only tensors. It supports source-breadth and model-readiness more than strong warning performance: future labels are weak, automatic ROIs are not manually validated, and rollout-error features are heavily source dependent. The useful next step is to combine this cohort with mask/front QC and source-normalized modeling rather than claiming calibrated degradation physics from these automatic crops alone.

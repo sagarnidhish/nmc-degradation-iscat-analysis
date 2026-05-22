@@ -112,6 +112,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - QC decision evidence ledger converts the 47 pending labels into explicit reviewer actions without assigning labels: {'high_priority_review': 5, 'review_artifact_or_reject_first': 4, 'review_but_diffusion_guarded': 16, 'review_for_possible_accept_first': 3, 'routine_pending_review': 19}; top possible-accept ROI is cycle156_rank7_obj27, while top artifact/reject-first ROI is cycle156_rank5_obj4.
 - Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
 - Source-balanced ROI expansion attacks the remaining cohort-breadth bottleneck: it samples 48 cycles across 14 source movies, including 41 cycle/source pairs not already in video cohorts, and proposes 96 automatic ROI rows for follow-up sequence export/QC.
+- Source-balanced ROI sequence export converts that manifest into 96 particle-region crop tensors across 48 cycles and 14 sources with 0 export failures; the fast rollout audit finds strongest future16 ROI signal in roi_norm_mean_delta_last_minus_first at AUC 0.626, while prediction-error features are highly source-structured.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC 0.849 versus PCA-video 0.569 and handcrafted scalar 0.828; future16 learned_all remains weak at AUC 0.538 versus handcrafted 0.680.
@@ -1110,6 +1111,37 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Expansion ROI candidate cycle 98 11_c2_x10_050723 rank 2: score 25.035, future16 0, existing cohort False
 - Expansion ROI candidate cycle 98 11_c2_x10_050723 rank 1: score 23.986, future16 0, existing cohort False
 - Guardrail: Source-balanced expansion candidates are automatic proposals from sampled HDF5 frames. They reduce source/cycle selection bias for follow-up ROI export and manual QC, but do not validate particle identity, fronts, diffusion, or degradation mechanisms.
+
+## Source-Balanced ROI Sequence Export and Rollout Audit
+
+- Exported ROI sequences/cycles/sources/failures: 96 / 48 / 14 / 0
+- Crop/output size/samples per ROI: 192 / 96 / 96
+- Rollout audit ROI sequences/cycles/sources: 96 / 48 / 14
+- Future8/future16 positive sequences: 28 / 48
+- Source-balanced ROI feature future_any_drop_within_16cycles roi_norm_mean_delta_last_minus_first: AUC 0.626, AP 0.589, source eta2 0.365, median pos-neg -2.135e-04
+- Source-balanced ROI feature future_any_drop_within_16cycles raw_roi_mean_delta_last_minus_first: AUC 0.606, AP 0.549, source eta2 0.534, median pos-neg -2.669
+- Source-balanced ROI feature future_any_drop_within_16cycles roi_norm_mean_positive_step_fraction: AUC 0.602, AP 0.603, source eta2 0.233, median pos-neg 0.005
+- Source-balanced ROI feature future_any_drop_within_16cycles stage_drift_xy_recomputed: AUC 0.563, AP 0.590, source eta2 0.335, median pos-neg -0.026
+- Source-balanced ROI feature future_any_drop_within_16cycles temporal_energy_late_minus_early: AUC 0.561, AP 0.548, source eta2 0.294, median pos-neg 2.230e-05
+- Source-balanced ROI feature future_any_drop_within_16cycles persistence_mse_late_mean: AUC 0.556, AP 0.619, source eta2 0.787, median pos-neg 4.682e-06
+- Source-balanced ROI feature future_any_drop_within_16cycles velocity_mse_p95: AUC 0.556, AP 0.616, source eta2 0.717, median pos-neg 7.237e-05
+- Source-balanced ROI feature future_any_drop_within_16cycles velocity_minus_persistence_mse: AUC 0.550, AP 0.609, source eta2 0.825, median pos-neg 7.504e-06
+- Source-balanced ROI feature future_any_drop_within_16cycles persistence_mse_p95: AUC 0.548, AP 0.614, source eta2 0.727, median pos-neg 1.061e-05
+- Source-balanced ROI feature future_any_drop_within_16cycles velocity_mse_mean: AUC 0.540, AP 0.605, source eta2 0.824, median pos-neg 8.163e-06
+- Source-balanced cycle feature future_any_drop_within_16cycles roi_norm_mean_delta_last_minus_first: AUC 0.648, AP 0.594, median pos-neg -2.333e-04
+- Source-balanced cycle feature future_any_drop_within_16cycles stage_drift_xy_recomputed: AUC 0.563, AP 0.590, median pos-neg -0.026
+- Source-balanced cycle feature future_any_drop_within_16cycles object_mean_abs_z: AUC 0.562, AP 0.559, median pos-neg -0.867
+- Source-balanced cycle feature future_any_drop_within_16cycles temporal_energy_late_minus_early: AUC 0.554, AP 0.556, median pos-neg 2.904e-05
+- Source-balanced cycle feature future_any_drop_within_16cycles velocity_mse_mean: AUC 0.519, AP 0.604, median pos-neg 5.961e-07
+- Source-balanced cycle feature future_any_drop_within_16cycles persistence_mse_mean: AUC 0.502, AP 0.598, median pos-neg 4.526e-07
+- Source-balanced rollout source 10_c2_x10_030723: ROI 4, cycles 2, persistence MSE 1.133e-04, future16 seq 0
+- Source-balanced rollout source 11_c2_x10_050723: ROI 6, cycles 3, persistence MSE 5.424e-05, future16 seq 4
+- Source-balanced rollout source 12_c2_x10_070723: ROI 8, cycles 4, persistence MSE 8.179e-05, future16 seq 8
+- Source-balanced rollout source 14_c2_x10_HighCOV_110723: ROI 8, cycles 4, persistence MSE 9.804e-05, future16 seq 0
+- Source-balanced rollout source 15_c2_x5_HighCOV_120723: ROI 6, cycles 3, persistence MSE 1.923e-04, future16 seq 0
+- Source-balanced rollout source 16_c2_x10_HighHighCOV_130723: ROI 8, cycles 4, persistence MSE 2.279e-04, future16 seq 6
+- Sequence guardrail: Source-balanced sequences are fixed padded particle-region crops around automatic reconstructed candidates. They broaden source coverage for model/physics tests, but are not manual particle annotations or validated front labels.
+- Rollout guardrail: Source-balanced rollout features are computed from automatic particle-centered crops and weak future labels. They quantify ROI-only temporal prediction difficulty and optical drift/intensity dynamics, not manual QC, causal degradation, or calibrated diffusion.
 
 ## Balanced Future-Drop Direct-Video ROI Audit
 
