@@ -4262,3 +4262,52 @@ Results:
 Interpretation: apparent transport/front descriptors partially generalize to the broader source-balanced expansion cohort, especially for future8 raw radial-flow features, but the evidence is weaker and more source-sensitive than in the pre-event review dossier. This is useful as a falsification/generalization check: the transport signal is not simply universal across all expanded crops, and high-score future-negative controls should be used during manual QC and model refinement.
 
 Guardrail: expanded-cohort optical flow and front-radius descriptors are automatic fixed-crop image-motion proxies. They are not manual particle labels, calibrated transport velocities, phase-boundary velocities, diffusion coefficients, or causal degradation proof.
+
+## 2026-05-22 Diffusion Unblock Sensitivity Audit
+
+Added `scripts/tier4_diffusion_unblock_sensitivity_audit.py` and ran it on Isambard to quantify which strict-readiness blockers dominate the current apparent-diffusion candidate ledger. This is a what-if sensitivity audit over existing blocker labels; it does not relax production gates or create new diffusion claims.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit`
+- `derived_local/diffusion_unblock_sensitivity_audit`
+- `diffusion_unblock_blocker_table.csv`
+- `diffusion_unblock_review_queue.csv`
+- `diffusion_unblock_scenario_table.csv`
+- `diffusion_unblock_sensitivity_summary.json`
+
+Results:
+
+- The audit covers 60 diffusion-candidate rows and applies three global hard blockers to every row: HDF5 spatial calibration metadata present, control-balanced diffusion sanity candidates, and event/control diffusion separability.
+- The dominant blockers are automatic/publication diffusion candidates, control-balanced diffusion sanity candidates, event/control diffusion separability, and HDF5 spatial calibration metadata present at 60/60 candidate rows each; radius2 linear-fit quality blocks 53 rows and q70 positive confidence interval blocks 51 rows.
+- Manual QC accepted labels blocks 30 rows, so manual labeling and spatial calibration alone are not sufficient to unblock calibrated diffusion claims.
+- Scenario analysis gives 0 eligible candidates under the current guardrails, 0 after only confirming spatial calibration plus accepting manual QC, 0 after also rechecking the publication gate, and 0 eligible with 4 one-blocker-away rows after clearing the external/global blockers.
+- Eligibility appears only when external/global blockers plus timing and q70 confidence gates are relaxed: 5 eligible and 17 one-blocker-away rows. The all-blockers-removed sanity upper bound is 46 eligible rows, which is not an allowed claim path.
+- The nearest current row is `cycle78_rank22_obj2` from source `9_c2_x10_010723`, with five blockers remaining: automatic/publication diffusion candidates, control-balanced diffusion sanity candidates, event/control diffusion separability, HDF5 spatial calibration metadata present, and q70 positive confidence interval.
+
+Interpretation: calibrated diffusion remains blocked for multiple independent reasons, not just missing manual QC or spatial calibration. The actionable path is to validate raw spatial/timing calibration, perform manual front/QC labeling, and then rerun the q70/radius2/control-balanced gates before making any physical diffusion statement.
+
+Guardrail: this sensitivity audit removes blockers only in explicit what-if scenarios. It does not change the diffusion readiness status, accept manual labels, relax gates in production, or create calibrated diffusion coefficients.
+
+## 2026-05-22 Current Claim Readiness Matrix
+
+Added `scripts/tier4_current_claim_readiness_matrix.py` and ran it on Isambard to consolidate the current source-balanced transport/fusion, mechanism-dossier, falsification, expanded-cohort, rollout, residualized-warning, manual-QC, and diffusion-readiness audits into explicit claim-level wording decisions.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/current_claim_readiness_matrix`
+- `derived_local/current_claim_readiness_matrix`
+- `current_claim_readiness_matrix.csv`
+- `current_claim_readiness_status_counts.csv`
+- `current_claim_readiness_summary.json`
+
+Results:
+
+- The matrix audits 7 current claims. Three are supported or operational as guarded internal tools: event-local particle-readiness ranking, transport-mechanism candidate dossier handoff, and next-frame rollout physics descriptors.
+- Three claims are blocked or not supported: broad future-drop generalization, calibrated diffusion coefficients, and deployable future warning detection. Phase-boundary/front tracking remains a partial optical proxy only.
+- Positive evidence is concentrated in source-aware event-local review ranking: fusion near-vs-any AUC 0.785 with source-stratified p=0.00399; falsification near-vs-any AUC 0.783 with source-stratified p=0.00050; same-source matched-pair median score delta 0.208 with sign-flip p=0.00050.
+- Negative evidence remains decisive for stronger claims: diffusion status is `not_ready_for_calibrated_diffusion_claim` with 0 publication-ready candidates; future8 video physics is `not_supported_after_controls`; fused video/echem is `not_incremental_over_echem_context`; expanded future8 transport/front source-stratified p=0.078.
+
+Interpretation: the project currently supports source-aware particle-region manual-review ranking and optical-proxy hypothesis generation. It does not yet support calibrated diffusion, causal mechanism, broad source-robust forecasting, or deployable warning claims.
+
+Guardrail: the matrix is a wording/readiness ledger over existing automatic audits. It adds no manual labels, calibrated spatial metadata, causal validation, or prospective deployment validation.

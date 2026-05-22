@@ -1,0 +1,106 @@
+{
+  "blocked_or_not_supported_claim_ids": [
+    "C03_broad_future_drop_generalization",
+    "C05_calibrated_diffusion_coefficients",
+    "C07_deployable_future_warning_detector"
+  ],
+  "evidence_strength_counts": [
+    {
+      "evidence_strength": "strong_internal_source_aware",
+      "n": 1
+    },
+    {
+      "evidence_strength": "operationally_strong",
+      "n": 1
+    },
+    {
+      "evidence_strength": "mixed_weak_generalization",
+      "n": 1
+    },
+    {
+      "evidence_strength": "moderate_descriptor_signal",
+      "n": 1
+    },
+    {
+      "evidence_strength": "strong_negative_gate_evidence",
+      "n": 1
+    },
+    {
+      "evidence_strength": "moderate_but_qc_limited",
+      "n": 1
+    },
+    {
+      "evidence_strength": "negative_after_context_controls",
+      "n": 1
+    }
+  ],
+  "guardrail": "Claim readiness is wording guidance over existing automatic audits. It does not add manual labels, calibrated spatial metadata, causal tests, or deployable validation.",
+  "n_claims": 7,
+  "outputs": {
+    "matrix_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/current_claim_readiness_matrix/current_claim_readiness_matrix.csv",
+    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/current_claim_readiness_matrix/README.md",
+    "status_counts_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/current_claim_readiness_matrix/current_claim_readiness_status_counts.csv",
+    "summary_json": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/current_claim_readiness_matrix/current_claim_readiness_summary.json"
+  },
+  "overall_position": "The project supports source-aware particle-region review ranking and optical-proxy hypothesis generation, while calibrated diffusion, causal mechanism, and deployable warning claims remain blocked.",
+  "status_counts": [
+    {
+      "n": 1,
+      "readiness": "supported_for_review_ranking"
+    },
+    {
+      "n": 1,
+      "readiness": "ready_for_manual_qc_handoff"
+    },
+    {
+      "n": 1,
+      "readiness": "not_supported_as_broad_predictor"
+    },
+    {
+      "n": 1,
+      "readiness": "supported_as_descriptor_not_superior_predictor"
+    },
+    {
+      "n": 1,
+      "readiness": "blocked"
+    },
+    {
+      "n": 1,
+      "readiness": "partial_proxy_only"
+    },
+    {
+      "n": 1,
+      "readiness": "blocked_for_deployment"
+    }
+  ],
+  "supported_or_operational_claim_ids": [
+    "C01_event_local_particle_readiness_ranker",
+    "C02_transport_mechanism_candidate_dossier",
+    "C04_next_frame_rollout_physics_descriptor"
+  ],
+  "top_negative_evidence": {
+    "diffusion_hard_blockers": [
+      "HDF5 spatial calibration metadata present",
+      "Per-ROI HDF5 timing stability",
+      "Radius2 linear-fit quality",
+      "q70 positive confidence interval",
+      "Automatic/publication diffusion candidates",
+      "Manual QC accepted labels",
+      "Control-balanced diffusion sanity candidates",
+      "Event/control diffusion separability"
+    ],
+    "diffusion_publication_ready_candidates": 0,
+    "diffusion_status": "not_ready_for_calibrated_diffusion_claim",
+    "expansion_future8_source_stratified_p": 0.078,
+    "future8_fused_video_echem_incremental_status": "not_incremental_over_echem_context",
+    "future8_video_physics_status": "not_supported_after_controls"
+  },
+  "top_positive_evidence": {
+    "falsification_near_any_auc": 0.783203125,
+    "falsification_source_stratified_p": 0.0004997501249375312,
+    "fusion_near_any_auc": 0.7848307291666667,
+    "fusion_near_any_source_stratified_p": 0.003992015968063872,
+    "same_source_pair_median_delta": 0.20795149423543685,
+    "same_source_pair_sign_flip_p": 0.0004997501249375312
+  }
+}

@@ -106,6 +106,8 @@ def main() -> None:
     apparent_diffusion_calibration = read_json(derived / "apparent_diffusion_calibration_bounds" / "apparent_diffusion_calibration_bounds_summary.json")
     diffusion_physics_consistency = read_json(derived / "diffusion_physics_consistency_audit" / "diffusion_physics_consistency_summary.json")
     diffusion_claim_readiness = read_json(derived / "diffusion_claim_readiness_audit" / "diffusion_claim_readiness_summary.json")
+    current_claim_readiness = read_json(derived / "current_claim_readiness_matrix" / "current_claim_readiness_summary.json")
+    diffusion_unblock_sensitivity = read_json(derived / "diffusion_unblock_sensitivity_audit" / "diffusion_unblock_sensitivity_summary.json")
     cross_modal_consensus = read_json(derived / "cross_modal_degradation_consensus" / "cross_modal_degradation_consensus_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
@@ -906,6 +908,12 @@ def main() -> None:
     diffusion_physics_source_summary = top_items(first_summary(diffusion_physics_consistency, "source_summary", []), 12)
     diffusion_claim_top_candidates = top_items(first_summary(diffusion_claim_readiness, "top_candidates", []), 8)
     diffusion_claim_hard_blockers = top_items(first_summary(diffusion_claim_readiness, "hard_blockers", []), 12)
+    current_claim_status_counts = top_items(first_summary(current_claim_readiness, "status_counts", []), 12)
+    current_claim_positive = first_summary(current_claim_readiness, "top_positive_evidence", {}) or {}
+    current_claim_negative = first_summary(current_claim_readiness, "top_negative_evidence", {}) or {}
+    diffusion_unblock_blockers = top_items(first_summary(diffusion_unblock_sensitivity, "top_blockers", []), 12)
+    diffusion_unblock_scenarios = top_items(first_summary(diffusion_unblock_sensitivity, "scenario_summary", []), 8)
+    diffusion_unblock_candidates = top_items(first_summary(diffusion_unblock_sensitivity, "top_nearest_unblock_candidates", []), 8)
     cross_modal_top = top_items(first_summary(cross_modal_consensus, "top_cycles", []), 12)
     cross_modal_classes = top_items(first_summary(cross_modal_consensus, "class_summary", []), 8)
     cross_modal_contrasts = top_items(first_summary(cross_modal_consensus, "target_contrasts", []), 12)
@@ -1470,6 +1478,42 @@ def main() -> None:
             f"- Readiness candidate {row.get('roi_id')}: source {row.get('candidate_source')}, cycle {fmt(row.get('cycleNo'), 0)}, publication_ready={row.get('publication_ready')}, blockers={row.get('blockers')}"
         )
     report_lines.append(f"- Guardrail: {first_summary(diffusion_claim_readiness, 'guardrail', 'Diffusion claim readiness audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Current Claim Readiness Matrix",
+        "",
+        f"- Claims audited: {fmt(first_summary(current_claim_readiness, 'n_claims'), 0)}",
+        f"- Overall position: {first_summary(current_claim_readiness, 'overall_position', 'NA')}",
+        f"- Supported/operational claim IDs: {first_summary(current_claim_readiness, 'supported_or_operational_claim_ids', [])}",
+        f"- Blocked/not-supported claim IDs: {first_summary(current_claim_readiness, 'blocked_or_not_supported_claim_ids', [])}",
+        f"- Positive evidence: fusion near-any AUC {fmt(current_claim_positive.get('fusion_near_any_auc'))}, fusion source-stratified p {fmt(current_claim_positive.get('fusion_near_any_source_stratified_p'))}, falsification AUC {fmt(current_claim_positive.get('falsification_near_any_auc'))}, same-source median delta {fmt(current_claim_positive.get('same_source_pair_median_delta'))}.",
+        f"- Negative evidence: diffusion status {current_claim_negative.get('diffusion_status', 'NA')} with {fmt(current_claim_negative.get('diffusion_publication_ready_candidates'), 0)} publication-ready candidates; future8 video status {current_claim_negative.get('future8_video_physics_status', 'NA')}; expansion future8 source-stratified p {fmt(current_claim_negative.get('expansion_future8_source_stratified_p'))}.",
+    ]
+    for row in current_claim_status_counts:
+        report_lines.append(f"- Claim readiness {row.get('readiness', 'NA')}: n={fmt(row.get('n'), 0)}")
+    report_lines.append(f"- Guardrail: {first_summary(current_claim_readiness, 'guardrail', 'Current claim readiness matrix unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Diffusion Unblock Sensitivity Audit",
+        "",
+        f"- Status/candidates/global hard blockers applied: {first_summary(diffusion_unblock_sensitivity, 'overall_status', 'unavailable')} / {first_summary(diffusion_unblock_sensitivity, 'n_candidate_rows', 0)} / {first_summary(diffusion_unblock_sensitivity, 'n_global_hard_blockers_applied', 0)}",
+        f"- Global hard blockers applied to every candidate: {first_summary(diffusion_unblock_sensitivity, 'global_hard_blockers_applied', [])}",
+    ]
+    for row in diffusion_unblock_scenarios[:6]:
+        report_lines.append(
+            f"- Diffusion unblock scenario {row.get('scenario')}: eligible {fmt(row.get('n_eligible'), 0)}, one-blocker remaining {fmt(row.get('n_one_blocker_remaining'), 0)}"
+        )
+    for row in diffusion_unblock_blockers[:8]:
+        report_lines.append(
+            f"- Diffusion blocker sensitivity {row.get('blocker')}: {fmt(row.get('n_candidate_rows'), 0)} candidate rows, criterion status {row.get('criterion_status', 'NA')}"
+        )
+    for row in diffusion_unblock_candidates[:4]:
+        report_lines.append(
+            f"- Nearest diffusion-unblock candidate {row.get('roi_id')}: blockers {fmt(row.get('n_all_blockers'), 0)}, priority {fmt(row.get('review_priority'))}, blocker summary {row.get('blocker_summary', 'NA')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(diffusion_unblock_sensitivity, 'guardrail', 'Diffusion unblock sensitivity audit unavailable.')}")
 
     report_lines += [
         "",
@@ -4770,6 +4814,28 @@ def main() -> None:
             "n_publication_ready_candidates": first_summary(diffusion_claim_readiness, "n_publication_ready_candidates"),
             "top_candidates": diffusion_claim_top_candidates,
             "guardrail": first_summary(diffusion_claim_readiness, "guardrail"),
+        },
+        "current_claim_readiness_matrix": {
+            "n_claims": first_summary(current_claim_readiness, "n_claims"),
+            "status_counts": current_claim_status_counts,
+            "supported_or_operational_claim_ids": first_summary(current_claim_readiness, "supported_or_operational_claim_ids", []),
+            "blocked_or_not_supported_claim_ids": first_summary(current_claim_readiness, "blocked_or_not_supported_claim_ids", []),
+            "overall_position": first_summary(current_claim_readiness, "overall_position"),
+            "top_positive_evidence": current_claim_positive,
+            "top_negative_evidence": current_claim_negative,
+            "guardrail": first_summary(current_claim_readiness, "guardrail"),
+        },
+        "diffusion_unblock_sensitivity_audit": {
+            "overall_status": first_summary(diffusion_unblock_sensitivity, "overall_status"),
+            "n_candidate_rows": first_summary(diffusion_unblock_sensitivity, "n_candidate_rows"),
+            "n_criteria": first_summary(diffusion_unblock_sensitivity, "n_criteria"),
+            "n_global_hard_blockers_applied": first_summary(diffusion_unblock_sensitivity, "n_global_hard_blockers_applied"),
+            "global_hard_blockers_applied": first_summary(diffusion_unblock_sensitivity, "global_hard_blockers_applied", []),
+            "top_blockers": diffusion_unblock_blockers,
+            "scenario_summary": diffusion_unblock_scenarios,
+            "top_nearest_unblock_candidates": diffusion_unblock_candidates,
+            "outputs": first_summary(diffusion_unblock_sensitivity, "outputs", {}),
+            "guardrail": first_summary(diffusion_unblock_sensitivity, "guardrail"),
         },
         "cross_modal_degradation_consensus": {
             "n_cycles": first_summary(cross_modal_consensus, "n_cycles"),

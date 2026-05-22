@@ -13716,6 +13716,76 @@
       }
     ]
   },
+  "current_claim_readiness_matrix": {
+    "blocked_or_not_supported_claim_ids": [
+      "C03_broad_future_drop_generalization",
+      "C05_calibrated_diffusion_coefficients",
+      "C07_deployable_future_warning_detector"
+    ],
+    "guardrail": "Claim readiness is wording guidance over existing automatic audits. It does not add manual labels, calibrated spatial metadata, causal tests, or deployable validation.",
+    "n_claims": 7,
+    "overall_position": "The project supports source-aware particle-region review ranking and optical-proxy hypothesis generation, while calibrated diffusion, causal mechanism, and deployable warning claims remain blocked.",
+    "status_counts": [
+      {
+        "n": 1,
+        "readiness": "supported_for_review_ranking"
+      },
+      {
+        "n": 1,
+        "readiness": "ready_for_manual_qc_handoff"
+      },
+      {
+        "n": 1,
+        "readiness": "not_supported_as_broad_predictor"
+      },
+      {
+        "n": 1,
+        "readiness": "supported_as_descriptor_not_superior_predictor"
+      },
+      {
+        "n": 1,
+        "readiness": "blocked"
+      },
+      {
+        "n": 1,
+        "readiness": "partial_proxy_only"
+      },
+      {
+        "n": 1,
+        "readiness": "blocked_for_deployment"
+      }
+    ],
+    "supported_or_operational_claim_ids": [
+      "C01_event_local_particle_readiness_ranker",
+      "C02_transport_mechanism_candidate_dossier",
+      "C04_next_frame_rollout_physics_descriptor"
+    ],
+    "top_negative_evidence": {
+      "diffusion_hard_blockers": [
+        "HDF5 spatial calibration metadata present",
+        "Per-ROI HDF5 timing stability",
+        "Radius2 linear-fit quality",
+        "q70 positive confidence interval",
+        "Automatic/publication diffusion candidates",
+        "Manual QC accepted labels",
+        "Control-balanced diffusion sanity candidates",
+        "Event/control diffusion separability"
+      ],
+      "diffusion_publication_ready_candidates": 0,
+      "diffusion_status": "not_ready_for_calibrated_diffusion_claim",
+      "expansion_future8_source_stratified_p": 0.078,
+      "future8_fused_video_echem_incremental_status": "not_incremental_over_echem_context",
+      "future8_video_physics_status": "not_supported_after_controls"
+    },
+    "top_positive_evidence": {
+      "falsification_near_any_auc": 0.783203125,
+      "falsification_source_stratified_p": 0.0004997501249375312,
+      "fusion_near_any_auc": 0.7848307291666667,
+      "fusion_near_any_source_stratified_p": 0.003992015968063872,
+      "same_source_pair_median_delta": 0.20795149423543685,
+      "same_source_pair_sign_flip_p": 0.0004997501249375312
+    }
+  },
   "cycle_hazard_warning_audit": {
     "best_feature_set": "particle_trace_echem_with_acquisition",
     "event_cycles": [
@@ -16713,6 +16783,306 @@
         "spearman_rho": -0.10000000000000002,
         "x": "selected_diffusion_um2_per_s",
         "y": "mask_instability_score"
+      }
+    ]
+  },
+  "diffusion_unblock_sensitivity_audit": {
+    "global_hard_blockers_applied": [
+      "Control-balanced diffusion sanity candidates",
+      "Event/control diffusion separability",
+      "HDF5 spatial calibration metadata present"
+    ],
+    "guardrail": "This sensitivity audit removes blockers only in explicit what-if scenarios. It does not change the diffusion readiness status, accept manual labels, relax gates in production, or create calibrated diffusion coefficients.",
+    "n_candidate_rows": 60,
+    "n_criteria": 14,
+    "n_global_hard_blockers_applied": 3,
+    "outputs": {
+      "blocker_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_blocker_table.csv",
+      "review_queue": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_review_queue.csv",
+      "scenario_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_scenario_table.csv",
+      "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_sensitivity_summary.json"
+    },
+    "overall_status": "diffusion_claim_still_blocked",
+    "scenario_summary": [
+      {
+        "n_eligible": 0,
+        "n_one_blocker_remaining": 0,
+        "removed_blockers": "",
+        "scenario": "current_all_guardrails"
+      },
+      {
+        "n_eligible": 0,
+        "n_one_blocker_remaining": 0,
+        "removed_blockers": "HDF5 spatial calibration metadata present; Manual QC accepted labels",
+        "scenario": "confirm_spatial_calibration_plus_accept_manual_qc_only"
+      },
+      {
+        "n_eligible": 0,
+        "n_one_blocker_remaining": 0,
+        "removed_blockers": "Automatic/publication diffusion candidates; HDF5 spatial calibration metadata present; Manual QC accepted labels",
+        "scenario": "metadata_manual_qc_and_publication_gate_rechecked"
+      },
+      {
+        "n_eligible": 0,
+        "n_one_blocker_remaining": 4,
+        "removed_blockers": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels",
+        "scenario": "external_blockers_cleared_internal_gates_unchanged"
+      },
+      {
+        "n_eligible": 5,
+        "n_one_blocker_remaining": 17,
+        "removed_blockers": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Per-ROI HDF5 timing stability; q70 positive confidence interval",
+        "scenario": "external_blockers_cleared_plus_timing_and_q70_relaxed"
+      },
+      {
+        "n_eligible": 46,
+        "n_one_blocker_remaining": 14,
+        "removed_blockers": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Per-ROI HDF5 timing stability; Positive front expansion; Radius2 linear-fit quality; q70 positive confidence interval",
+        "scenario": "all_current_blockers_removed_sanity_upper_bound"
+      }
+    ],
+    "top_blockers": [
+      {
+        "blocker": "Automatic/publication diffusion candidates",
+        "criterion_severity": "hard_blocker",
+        "criterion_status": "fail",
+        "evidence": "1 automatic physics-consistent ROI and 0 publication-ready diffusion candidates.",
+        "n_candidate_rows": 60,
+        "next_action": "Do not state calibrated material diffusion coefficients until manual labels and gate pass criteria are satisfied."
+      },
+      {
+        "blocker": "Control-balanced diffusion sanity candidates",
+        "criterion_severity": "hard_blocker",
+        "criterion_status": "fail",
+        "evidence": "0 automatic positive proxy candidates and 0 publication diffusion candidates in the control-balanced sanity audit.",
+        "n_candidate_rows": 60,
+        "next_action": "Keep diffusion wording as optical-front proxy unless this independent sanity audit produces accepted candidates."
+      },
+      {
+        "blocker": "Event/control diffusion separability",
+        "criterion_severity": "hard_blocker",
+        "criterion_status": "fail",
+        "evidence": "Best control-balanced diffusion-proxy event/control p-value is 0.3136.",
+        "n_candidate_rows": 60,
+        "next_action": "Use source/event-balanced tests for prioritization only, not physical diffusion inference."
+      },
+      {
+        "blocker": "HDF5 spatial calibration metadata present",
+        "criterion_severity": "hard_blocker",
+        "criterion_status": "fail",
+        "evidence": "0/33 scanned HDF5 files have spatial-calibration-like attribute hits; slide evidence gives 96 nm/px.",
+        "n_candidate_rows": 60,
+        "next_action": "Locate raw microscope calibration metadata or independently verify the 96 nm/px scale."
+      },
+      {
+        "blocker": "Radius2 linear-fit quality",
+        "criterion_severity": "hard_blocker",
+        "criterion_status": "fail",
+        "evidence": "7/72 ROI pass.",
+        "n_candidate_rows": 53,
+        "next_action": "Use this gate to restrict manual review and avoid reporting failed candidates as diffusion coefficients."
+      },
+      {
+        "blocker": "q70 positive confidence interval",
+        "criterion_severity": "hard_blocker",
+        "criterion_status": "fail",
+        "evidence": "0/72 ROI pass.",
+        "n_candidate_rows": 51,
+        "next_action": "Use this gate to restrict manual review and avoid reporting failed candidates as diffusion coefficients."
+      },
+      {
+        "blocker": "Positive front expansion",
+        "criterion_severity": "candidate_specific",
+        "criterion_status": "",
+        "evidence": "",
+        "n_candidate_rows": 35,
+        "next_action": ""
+      },
+      {
+        "blocker": "Manual QC accepted labels",
+        "criterion_severity": "hard_blocker",
+        "criterion_status": "blocked_pending_manual_qc",
+        "evidence": "0 manual front-effect labels and 0 manual diffusion-interpretable labels accepted; 52 pending/not accepted.",
+        "n_candidate_rows": 30,
+        "next_action": "Review and label the manual-QC packet before treating front motion as physical diffusion."
+      },
+      {
+        "blocker": "threshold nonnegative",
+        "criterion_severity": "candidate_specific",
+        "criterion_status": "",
+        "evidence": "",
+        "n_candidate_rows": 14,
+        "next_action": ""
+      },
+      {
+        "blocker": "Per-ROI HDF5 timing stability",
+        "criterion_severity": "hard_blocker",
+        "criterion_status": "fail",
+        "evidence": "24/72 ROI pass the HDF5 timing-stability gate; max source dt max/median ratio is 13.78.",
+        "n_candidate_rows": 11,
+        "next_action": "Prioritize source-level timestamp validation before physical units are used in claims."
+      }
+    ],
+    "top_nearest_unblock_candidates": [
+      {
+        "automatic_physics_consistent": true,
+        "blocker_summary": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; q70 positive confidence interval",
+        "candidate_source": "diffusion_physics_consistency",
+        "cohort_role": "future8_positive",
+        "cycleNo": 78.0,
+        "gate_count": 6.0,
+        "h5_dt_max_to_median_ratio": 1.1361501308587034,
+        "manual_qc_status": null,
+        "median_apparent_D_um2_per_s": 4.092918932175444e-06,
+        "median_radius2_fit_r2": 0.4148131409143081,
+        "n_all_blockers": 5,
+        "publication_ready": false,
+        "review_priority": 56.47261063486813,
+        "roi_id": "cycle78_rank22_obj2",
+        "selected_diffusion_um2_per_s": null,
+        "selected_r2": null,
+        "selected_roi_id": "cycle78_rank22_obj2",
+        "source_stem": "9_c2_x10_010723"
+      },
+      {
+        "automatic_physics_consistent": false,
+        "blocker_summary": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Radius2 linear-fit quality",
+        "candidate_source": "control_balanced_selected_front",
+        "cohort_role": "control",
+        "cycleNo": 62.0,
+        "gate_count": null,
+        "h5_dt_max_to_median_ratio": null,
+        "manual_qc_status": "pending",
+        "median_apparent_D_um2_per_s": 2.18166299218825e-06,
+        "median_radius2_fit_r2": null,
+        "n_all_blockers": 6,
+        "publication_ready": false,
+        "review_priority": 15.002721388804652,
+        "roi_id": "cycle62_rank1_obj4",
+        "selected_diffusion_um2_per_s": 3.191429289804595e-05,
+        "selected_r2": 0.0027213888046516,
+        "selected_roi_id": "cycle62_front1_obj4",
+        "source_stem": "7_c2_x10_290623"
+      },
+      {
+        "automatic_physics_consistent": false,
+        "blocker_summary": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Radius2 linear-fit quality",
+        "candidate_source": "control_balanced_selected_front",
+        "cohort_role": "event",
+        "cycleNo": 60.0,
+        "gate_count": null,
+        "h5_dt_max_to_median_ratio": null,
+        "manual_qc_status": "pending",
+        "median_apparent_D_um2_per_s": 4.057906823151882e-06,
+        "median_radius2_fit_r2": null,
+        "n_all_blockers": 6,
+        "publication_ready": false,
+        "review_priority": 15.00025187983658,
+        "roi_id": "cycle60_rank2_obj2",
+        "selected_diffusion_um2_per_s": 8.099162231826124e-06,
+        "selected_r2": 0.00025187983658,
+        "selected_roi_id": "cycle60_front2_obj2",
+        "source_stem": "7_c2_x10_290623"
+      },
+      {
+        "automatic_physics_consistent": false,
+        "blocker_summary": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Positive front expansion",
+        "candidate_source": "control_balanced_selected_front",
+        "cohort_role": "event",
+        "cycleNo": 116.0,
+        "gate_count": null,
+        "h5_dt_max_to_median_ratio": null,
+        "manual_qc_status": "pending",
+        "median_apparent_D_um2_per_s": 4.588812077925554e-06,
+        "median_radius2_fit_r2": null,
+        "n_all_blockers": 6,
+        "publication_ready": false,
+        "review_priority": 10.612143252222973,
+        "roi_id": "cycle116_rank7_obj37",
+        "selected_diffusion_um2_per_s": -0.000500037360841,
+        "selected_r2": 0.612143252222972,
+        "selected_roi_id": "cycle116_front7_obj37",
+        "source_stem": "13_c2_x6_100723"
+      },
+      {
+        "automatic_physics_consistent": false,
+        "blocker_summary": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Per-ROI HDF5 timing stability; q70 positive confidence interval",
+        "candidate_source": "diffusion_physics_consistency",
+        "cohort_role": "future8_negative",
+        "cycleNo": 140.0,
+        "gate_count": 5.0,
+        "h5_dt_max_to_median_ratio": 13.736323266163534,
+        "manual_qc_status": null,
+        "median_apparent_D_um2_per_s": 1.3110342736740732e-05,
+        "median_radius2_fit_r2": 0.3677270105627852,
+        "n_all_blockers": 6,
+        "publication_ready": false,
+        "review_priority": 5.4142068261501,
+        "roi_id": "cycle140_rank9_obj2",
+        "selected_diffusion_um2_per_s": null,
+        "selected_r2": null,
+        "selected_roi_id": "cycle140_rank9_obj2",
+        "source_stem": "16_c2_x10_HighHighCOV_130723"
+      },
+      {
+        "automatic_physics_consistent": false,
+        "blocker_summary": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Per-ROI HDF5 timing stability; q70 positive confidence interval",
+        "candidate_source": "diffusion_physics_consistency",
+        "cohort_role": "future8_positive",
+        "cycleNo": 153.0,
+        "gate_count": 5.0,
+        "h5_dt_max_to_median_ratio": 13.75745087739935,
+        "manual_qc_status": null,
+        "median_apparent_D_um2_per_s": 3.764771487988926e-06,
+        "median_radius2_fit_r2": 0.2813449927826972,
+        "n_all_blockers": 6,
+        "publication_ready": false,
+        "review_priority": 5.410387396133704,
+        "roi_id": "cycle153_rank17_obj2",
+        "selected_diffusion_um2_per_s": null,
+        "selected_r2": null,
+        "selected_roi_id": "cycle153_rank17_obj2",
+        "source_stem": "17_c2_x10_HighHighCOV_150723"
+      },
+      {
+        "automatic_physics_consistent": false,
+        "blocker_summary": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Per-ROI HDF5 timing stability; q70 positive confidence interval",
+        "candidate_source": "diffusion_physics_consistency",
+        "cohort_role": "future8_negative",
+        "cycleNo": 139.0,
+        "gate_count": 5.0,
+        "h5_dt_max_to_median_ratio": 13.736323266163534,
+        "manual_qc_status": null,
+        "median_apparent_D_um2_per_s": 8.240779874352087e-06,
+        "median_radius2_fit_r2": 0.5329850337014117,
+        "n_all_blockers": 6,
+        "publication_ready": false,
+        "review_priority": 5.407738910757132,
+        "roi_id": "cycle139_rank11_obj3",
+        "selected_diffusion_um2_per_s": null,
+        "selected_r2": null,
+        "selected_roi_id": "cycle139_rank11_obj3",
+        "source_stem": "16_c2_x10_HighHighCOV_130723"
+      },
+      {
+        "automatic_physics_consistent": false,
+        "blocker_summary": "Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Positive front expansion; q70 positive confidence interval",
+        "candidate_source": "diffusion_physics_consistency",
+        "cohort_role": "future8_positive",
+        "cycleNo": 108.0,
+        "gate_count": 5.0,
+        "h5_dt_max_to_median_ratio": 1.1428571332843969,
+        "manual_qc_status": null,
+        "median_apparent_D_um2_per_s": 1.1657481136501925e-06,
+        "median_radius2_fit_r2": 0.2012151084775747,
+        "n_all_blockers": 6,
+        "publication_ready": false,
+        "review_priority": 5.407650608408734,
+        "roi_id": "cycle108_rank21_obj3",
+        "selected_diffusion_um2_per_s": null,
+        "selected_r2": null,
+        "selected_roi_id": "cycle108_rank21_obj3",
+        "source_stem": "12_c2_x10_070723"
       }
     ]
   },

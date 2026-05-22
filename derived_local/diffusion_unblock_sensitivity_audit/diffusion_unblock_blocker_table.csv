@@ -1,0 +1,11 @@
+blocker,n_candidate_rows,criterion_status,criterion_severity,evidence,next_action
+Automatic/publication diffusion candidates,60,fail,hard_blocker,1 automatic physics-consistent ROI and 0 publication-ready diffusion candidates.,Do not state calibrated material diffusion coefficients until manual labels and gate pass criteria are satisfied.
+Control-balanced diffusion sanity candidates,60,fail,hard_blocker,0 automatic positive proxy candidates and 0 publication diffusion candidates in the control-balanced sanity audit.,Keep diffusion wording as optical-front proxy unless this independent sanity audit produces accepted candidates.
+Event/control diffusion separability,60,fail,hard_blocker,Best control-balanced diffusion-proxy event/control p-value is 0.3136.,"Use source/event-balanced tests for prioritization only, not physical diffusion inference."
+HDF5 spatial calibration metadata present,60,fail,hard_blocker,0/33 scanned HDF5 files have spatial-calibration-like attribute hits; slide evidence gives 96 nm/px.,Locate raw microscope calibration metadata or independently verify the 96 nm/px scale.
+Radius2 linear-fit quality,53,fail,hard_blocker,7/72 ROI pass.,Use this gate to restrict manual review and avoid reporting failed candidates as diffusion coefficients.
+q70 positive confidence interval,51,fail,hard_blocker,0/72 ROI pass.,Use this gate to restrict manual review and avoid reporting failed candidates as diffusion coefficients.
+Positive front expansion,35,,candidate_specific,,
+Manual QC accepted labels,30,blocked_pending_manual_qc,hard_blocker,0 manual front-effect labels and 0 manual diffusion-interpretable labels accepted; 52 pending/not accepted.,Review and label the manual-QC packet before treating front motion as physical diffusion.
+threshold nonnegative,14,,candidate_specific,,
+Per-ROI HDF5 timing stability,11,fail,hard_blocker,24/72 ROI pass the HDF5 timing-stability gate; max source dt max/median ratio is 13.78.,Prioritize source-level timestamp validation before physical units are used in claims.

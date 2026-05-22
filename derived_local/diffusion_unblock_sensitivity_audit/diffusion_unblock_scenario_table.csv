@@ -1,0 +1,7 @@
+scenario,removed_blockers,n_eligible,n_one_blocker_remaining
+current_all_guardrails,,0,0
+confirm_spatial_calibration_plus_accept_manual_qc_only,HDF5 spatial calibration metadata present; Manual QC accepted labels,0,0
+metadata_manual_qc_and_publication_gate_rechecked,Automatic/publication diffusion candidates; HDF5 spatial calibration metadata present; Manual QC accepted labels,0,0
+external_blockers_cleared_internal_gates_unchanged,Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels,0,4
+external_blockers_cleared_plus_timing_and_q70_relaxed,Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Per-ROI HDF5 timing stability; q70 positive confidence interval,5,17
+all_current_blockers_removed_sanity_upper_bound,Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Per-ROI HDF5 timing stability; Positive front expansion; Radius2 linear-fit quality; q70 positive confidence interval,46,14

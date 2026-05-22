@@ -467,6 +467,47 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Readiness candidate cycle116_rank7_obj37: source control_balanced_selected_front, cycle 116, publication_ready=False, blockers=selected nonnegative; manual QC accepted; publication-ready gate
 - Guardrail: Calibrated diffusion remains blocked unless raw spatial calibration, timestamp semantics, internal front-motion gates, control-balanced sanity checks, and manual QC labels all pass. Current outputs support optical-front proxy review only.
 
+## Current Claim Readiness Matrix
+
+- Claims audited: 7
+- Overall position: The project supports source-aware particle-region review ranking and optical-proxy hypothesis generation, while calibrated diffusion, causal mechanism, and deployable warning claims remain blocked.
+- Supported/operational claim IDs: ['C01_event_local_particle_readiness_ranker', 'C02_transport_mechanism_candidate_dossier', 'C04_next_frame_rollout_physics_descriptor']
+- Blocked/not-supported claim IDs: ['C03_broad_future_drop_generalization', 'C05_calibrated_diffusion_coefficients', 'C07_deployable_future_warning_detector']
+- Positive evidence: fusion near-any AUC 0.785, fusion source-stratified p 0.004, falsification AUC 0.783, same-source median delta 0.208.
+- Negative evidence: diffusion status not_ready_for_calibrated_diffusion_claim with 0 publication-ready candidates; future8 video status not_supported_after_controls; expansion future8 source-stratified p 0.078.
+- Claim readiness supported_for_review_ranking: n=1
+- Claim readiness ready_for_manual_qc_handoff: n=1
+- Claim readiness not_supported_as_broad_predictor: n=1
+- Claim readiness supported_as_descriptor_not_superior_predictor: n=1
+- Claim readiness blocked: n=1
+- Claim readiness partial_proxy_only: n=1
+- Claim readiness blocked_for_deployment: n=1
+- Guardrail: Claim readiness is wording guidance over existing automatic audits. It does not add manual labels, calibrated spatial metadata, causal tests, or deployable validation.
+
+## Diffusion Unblock Sensitivity Audit
+
+- Status/candidates/global hard blockers applied: diffusion_claim_still_blocked / 60 / 3
+- Global hard blockers applied to every candidate: ['Control-balanced diffusion sanity candidates', 'Event/control diffusion separability', 'HDF5 spatial calibration metadata present']
+- Diffusion unblock scenario current_all_guardrails: eligible 0, one-blocker remaining 0
+- Diffusion unblock scenario confirm_spatial_calibration_plus_accept_manual_qc_only: eligible 0, one-blocker remaining 0
+- Diffusion unblock scenario metadata_manual_qc_and_publication_gate_rechecked: eligible 0, one-blocker remaining 0
+- Diffusion unblock scenario external_blockers_cleared_internal_gates_unchanged: eligible 0, one-blocker remaining 4
+- Diffusion unblock scenario external_blockers_cleared_plus_timing_and_q70_relaxed: eligible 5, one-blocker remaining 17
+- Diffusion unblock scenario all_current_blockers_removed_sanity_upper_bound: eligible 46, one-blocker remaining 14
+- Diffusion blocker sensitivity Automatic/publication diffusion candidates: 60 candidate rows, criterion status fail
+- Diffusion blocker sensitivity Control-balanced diffusion sanity candidates: 60 candidate rows, criterion status fail
+- Diffusion blocker sensitivity Event/control diffusion separability: 60 candidate rows, criterion status fail
+- Diffusion blocker sensitivity HDF5 spatial calibration metadata present: 60 candidate rows, criterion status fail
+- Diffusion blocker sensitivity Radius2 linear-fit quality: 53 candidate rows, criterion status fail
+- Diffusion blocker sensitivity q70 positive confidence interval: 51 candidate rows, criterion status fail
+- Diffusion blocker sensitivity Positive front expansion: 35 candidate rows, criterion status
+- Diffusion blocker sensitivity Manual QC accepted labels: 30 candidate rows, criterion status blocked_pending_manual_qc
+- Nearest diffusion-unblock candidate cycle78_rank22_obj2: blockers 5, priority 56.473, blocker summary Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; q70 positive confidence interval
+- Nearest diffusion-unblock candidate cycle62_rank1_obj4: blockers 6, priority 15.003, blocker summary Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Radius2 linear-fit quality
+- Nearest diffusion-unblock candidate cycle60_rank2_obj2: blockers 6, priority 15.000, blocker summary Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Radius2 linear-fit quality
+- Nearest diffusion-unblock candidate cycle116_rank7_obj37: blockers 6, priority 10.612, blocker summary Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Positive front expansion
+- Guardrail: This sensitivity audit removes blockers only in explicit what-if scenarios. It does not change the diffusion readiness status, accept manual labels, relax gates in production, or create calibrated diffusion coefficients.
+
 ## Cross-Modal Degradation Consensus
 
 - Cycles scored/with votes: 89 / 53
