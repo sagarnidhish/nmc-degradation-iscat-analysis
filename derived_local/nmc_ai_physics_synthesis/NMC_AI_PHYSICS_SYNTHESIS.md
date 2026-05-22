@@ -1727,6 +1727,20 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Heldout top-40 fixed_transport_mechanism_score: near-pre fraction 0.700, sources 5, dominant source 9_c2_x10_010723 fraction 0.250
 - Guardrail: Held-out-source transfer scores are automatic particle-region ranking diagnostics. They do not add manual labels, calibrated velocities, diffusion coefficients, or deployment validation.
 
+## Pre-Event Temporal Dose-Response Audit
+
+- Status/input/pre-event rows/cycles/sources: pre_event_temporal_dose_response_ready / 128 / 76 / 38 / 10
+- Distance bin counts: {'pre_17_32': 22, 'pre_1_2': 8, 'pre_3_4': 8, 'pre_5_8': 16, 'pre_9_16': 22}
+- Temporal key qc_review_score: raw rho 0.417 (p 4.998e-04), source-centered rho 0.110 (p 0.345), positive source-slope fraction 0.556, sign-flip p 0.695
+- Temporal key transport_mechanism_score: raw rho 0.404 (p 4.998e-04), source-centered rho 0.011 (p 0.924), positive source-slope fraction 0.556, sign-flip p 0.922
+- Temporal key front_kinetic_score: raw rho 0.354 (p 0.004), source-centered rho -0.007 (p 0.948), positive source-slope fraction 0.444, sign-flip p 0.586
+- Directional source-slope candidate kinetic_evidence_score: median slope 0.075, positive source-slope fraction 0.778, source sign-flip p 0.062, source-centered rho 0.028
+- Directional source-slope candidate transport_source_residual_score: median slope 0.028, positive source-slope fraction 0.556, source sign-flip p 0.629, source-centered rho 0.050
+- Directional source-slope candidate transport_raw_score: median slope 0.027, positive source-slope fraction 0.556, source sign-flip p 0.723, source-centered rho -0.012
+- Directional source-slope candidate transport_mechanism_score: median slope 0.013, positive source-slope fraction 0.556, source sign-flip p 0.922, source-centered rho 0.011
+- Directional source-slope candidate qc_review_score: median slope 6.185e-05, positive source-slope fraction 0.556, source sign-flip p 0.695, source-centered rho 0.110
+- Guardrail: Temporal dose-response tests use automatic particle-region optical/front descriptors and event-relative labels. They support precursor-ranking hypotheses only, not causal mechanisms, calibrated phase-boundary velocities, or diffusion coefficients.
+
 ## Source-Balanced Degradation Mode Audit
 
 - Rows/cycles/sources/features: 96 / 48 / 14 / 18

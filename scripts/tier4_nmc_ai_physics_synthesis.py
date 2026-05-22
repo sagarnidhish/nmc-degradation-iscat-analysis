@@ -214,6 +214,7 @@ def main() -> None:
     source_balanced_transport_mechanism = read_json(derived / "source_balanced_transport_mechanism_dossier" / "source_balanced_transport_mechanism_summary.json")
     source_balanced_transport_mechanism_falsification = read_json(derived / "source_balanced_transport_mechanism_falsification_audit" / "source_balanced_transport_mechanism_falsification_summary.json")
     source_heldout_event_rank_transfer = read_json(derived / "source_heldout_event_rank_transfer_audit" / "source_heldout_event_rank_transfer_summary.json")
+    pre_event_temporal_dose_response = read_json(derived / "pre_event_temporal_dose_response_audit" / "pre_event_temporal_dose_response_summary.json")
     targeted_densification_qc = read_json(derived / "targeted_densification_qc_plan" / "targeted_densification_qc_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
@@ -778,6 +779,9 @@ def main() -> None:
     heldout_rank_transfer_tests = top_items(first_summary(source_heldout_event_rank_transfer, "best_score_tests_by_target", []), 8)
     heldout_rank_transfer_transfer_tests = top_items(first_summary(source_heldout_event_rank_transfer, "transfer_score_tests", []), 4)
     heldout_rank_transfer_topk = top_items(first_summary(source_heldout_event_rank_transfer, "topk_summary", []), 12)
+    temporal_dose_key_tests = top_items(first_summary(pre_event_temporal_dose_response, "key_feature_tests", []), 8)
+    temporal_dose_centered = top_items(first_summary(pre_event_temporal_dose_response, "top_source_centered_tests", []), 8)
+    temporal_dose_slopes = top_items(first_summary(pre_event_temporal_dose_response, "top_source_slope_tests", []), 8)
     targeted_densification_cycle_actions = top_items(first_summary(targeted_densification_qc, "top_cycle_actions", []), 12)
     targeted_densification_roi_actions = top_items(first_summary(targeted_densification_qc, "top_roi_actions", []), 12)
     targeted_densification_source_plan = top_items(first_summary(targeted_densification_qc, "source_plan_top", []), 10)
@@ -4470,6 +4474,19 @@ def main() -> None:
             "topk_summary": heldout_rank_transfer_topk,
             "outputs": first_summary(source_heldout_event_rank_transfer, "outputs", {}),
             "guardrail": first_summary(source_heldout_event_rank_transfer, "guardrail"),
+        },
+        "pre_event_temporal_dose_response_audit": {
+            "overall_status": first_summary(pre_event_temporal_dose_response, "overall_status"),
+            "n_input_rows": first_summary(pre_event_temporal_dose_response, "n_input_rows"),
+            "n_pre_event_rows": first_summary(pre_event_temporal_dose_response, "n_pre_event_rows"),
+            "n_pre_event_cycles": first_summary(pre_event_temporal_dose_response, "n_pre_event_cycles"),
+            "n_pre_event_sources": first_summary(pre_event_temporal_dose_response, "n_pre_event_sources"),
+            "distance_bin_counts": first_summary(pre_event_temporal_dose_response, "distance_bin_counts", {}),
+            "key_feature_tests": temporal_dose_key_tests,
+            "top_source_centered_tests": temporal_dose_centered,
+            "top_source_slope_tests": temporal_dose_slopes,
+            "outputs": first_summary(pre_event_temporal_dose_response, "outputs", {}),
+            "guardrail": first_summary(pre_event_temporal_dose_response, "guardrail"),
         },
         "targeted_densification_qc_plan": {
             "overall_status": first_summary(targeted_densification_qc, "overall_status"),

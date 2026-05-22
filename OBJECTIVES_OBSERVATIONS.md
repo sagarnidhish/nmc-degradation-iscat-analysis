@@ -4396,3 +4396,28 @@ Interpretation: the next useful work is no longer blind all-cycle extraction. Th
 
 Guardrail: this plan prioritizes ROI densification and manual-QC review using existing automatic ledgers. It does not extract new ROIs, accept labels, relax gates, or create calibrated diffusion/phase-boundary claims.
 
+## 2026-05-22 Pre-Event Temporal Dose-Response Audit
+
+Added `scripts/tier4_pre_event_temporal_dose_response_audit.py` and ran it on Isambard to test whether automatic particle-region transport/front/kinetic descriptors intensify monotonically as the next degradation event approaches. This is a stricter temporal physics check than near-pre versus control ranking because it asks whether descriptor magnitude follows event proximity across near, mid, and far pre-event windows.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_temporal_dose_response_audit`
+- `derived_local/pre_event_temporal_dose_response_audit`
+- `pre_event_temporal_dose_response_feature_tests.csv`
+- `pre_event_temporal_dose_response_bin_summary.csv`
+- `pre_event_temporal_dose_response_source_summary.csv`
+- `pre_event_temporal_dose_response_summary.json`
+
+Results:
+
+- The audit uses 76 pre-event particle ROI rows from 38 cycles and 10 sources, split into distance bins: 1-2 cycles (8 rows), 3-4 cycles (8), 5-8 cycles (16), 9-16 cycles (22), and 17-32 cycles (22).
+- Raw pooled correlations with event proximity are positive for review/ranking scores: `qc_review_score` rho 0.417, `transport_mechanism_score` rho 0.404, and `front_kinetic_score` rho 0.354, all with permutation p <= 0.0045.
+- After source-centering, the temporal dose-response mostly collapses: `qc_review_score` source-centered rho 0.110 (p=0.345), `transport_mechanism_score` rho 0.011 (p=0.924), and `front_kinetic_score` rho -0.007 (p=0.948).
+- Source-level slopes are also weak for the main ranking scores: positive source-slope fraction is 5/9 for `transport_mechanism_score` and `qc_review_score`, and 4/9 for `front_kinetic_score`.
+- The most directional source-slope feature is `kinetic_evidence_score`, with positive slopes in 7/9 eligible sources and sign-flip p=0.0625, but its source-centered rank correlation remains weak.
+
+Interpretation: apparent temporal countdown structure exists in pooled pre-event descriptors, but much of it is source/acquisition structured rather than a robust within-source monotonic ramp. The result supports using these descriptors for event-local ranking and review prioritization, but it argues against claiming a calibrated or generally monotonic phase-boundary/diffusion precursor trajectory from the automatic scores alone.
+
+Guardrail: temporal dose-response tests use automatic particle-region optical/front descriptors and event-relative labels. They support precursor-ranking hypotheses only, not causal mechanisms, calibrated phase-boundary velocities, or diffusion coefficients.
+
