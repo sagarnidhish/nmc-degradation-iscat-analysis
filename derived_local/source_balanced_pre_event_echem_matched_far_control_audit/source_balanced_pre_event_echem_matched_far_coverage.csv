@@ -1,0 +1,15 @@
+source_class,source_stem,near_rows,far_rows,mid_rows,post_control_rows
+HighCOV,15_c2_x5_HighCOV_120723,0,4,0,0
+HighCOV,14_c2_x10_HighCOV_110723,0,0,0,8
+HighHighCOV,17_c2_x10_HighHighCOV_150723,8,0,2,0
+HighHighCOV,16_c2_x10_HighHighCOV_130723,0,2,8,0
+nominal,12_c2_x10_070723,8,0,2,0
+nominal,9_c2_x10_010723,8,0,0,2
+nominal,6_c2_x10_270623_2,4,0,6,0
+nominal,7_c2_x10_290623,4,0,0,4
+nominal,4_c2_x10_240623,0,8,0,2
+nominal,5_c2_x10_260623,0,8,2,0
+nominal,10_c2_x10_030723,0,0,0,8
+nominal,11_c2_x10_050723,0,0,2,8
+nominal,2_c2_x14_200623,0,0,0,10
+nominal,8_c2_x10_300623,0,0,0,10

@@ -3628,3 +3628,27 @@ Cohort/result snapshot:
 Interpretation:
 
 This audit is an important guardrail. Cycle-level echem descriptors explain substantial structure in kymograph energy and mask/front proxies, and source+echem residualization removes most of the strongest raw clean-pre contrast/mask signal. The remaining residual evidence is a modest front-radius/front-radius-squared slope hint rather than a calibrated diffusion or phase-boundary result. These outputs support manual front QC and better source/echem matched sampling; they argue against presenting the current automatic optical signals as standalone causal precursors or deployable warnings.
+
+## 2026-05-22 Source-Balanced Pre-Event Echem-Matched Far-Control Audit
+
+Added `scripts/tier4_source_balanced_pre_event_echem_matched_far_control_audit.py` and ran it on Isambard. This audit targets the raw source-lattice gap that no source contains both near-pre and far-pre rows. It uses the next-best control design: nearest far-pre controls matched by source class plus crop/acquisition context, with an echem-augmented variant using cycle-level regime descriptors.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_far_control_audit`
+- `derived_local/source_balanced_pre_event_echem_matched_far_control_audit`
+
+Cohort/result snapshot:
+
+- Input table: 128 ROI rows, 64 cycles, 14 source movies; event bins include 32 near-pre rows and 22 far-pre rows.
+- Each matching scheme forms 32 near-vs-far pairs: global echem/context, same-source-class context-only, and same-source-class echem/context.
+- Source-class+echem/context matching uses 3 far-control sources; global echem/context uses 4 far-control sources.
+- The top paired row overall is same-source-class context-only `front_radius2_slope_px2_per_norm_time`: n=19 valid pairs, median near-far difference 15.95 px^2/norm time, positive fraction 0.842, sign-flip p=0.0010.
+- The echem-augmented source-class version keeps the same front-radius-squared direction: n=20 valid pairs, median difference 8.79 px^2/norm time, positive fraction 0.750, p=0.0010.
+- The matched front-radius slope also remains positive under source-class+echem/context matching: n=20, median difference 0.675 px/norm time, positive fraction 0.750, p=0.0040.
+- Matched kymograph temporal energy remains directionally higher in near-pre rows under source-class+echem/context matching: median difference 2.53e-06, positive fraction 0.625, p=0.0020.
+- Mask/contrast signals also persist in some schemes, including global echem/context `masked_minus_background_mean_slope` median difference 0.00264, p=0.0040.
+
+Interpretation:
+
+This strengthens the radial-kymograph near-pre front-motion result against a more specific cross-source far-control design, including echem/context matching. It still does not solve the missing same-source near-vs-far problem: controls are cross-source, only 3-4 far-control sources are used, and controls can be reused. The defensible conclusion is that near-pre front-radius and radius-squared movement remains review-worthy after source-class/echem/context matching, not that calibrated diffusion, particle identity, phase-boundary tracking, or causal precursor forecasting has been proven.
