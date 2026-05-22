@@ -1,0 +1,17 @@
+source_stem,source_class,h5_available,n_cycles,cycle_min,cycle_max,near_pre_rows,mid_pre_rows,far_pre_rows,post_event_rows,no_near_event_control_rows,current_event_rows,has_near,has_near_mid,has_near_far,has_near_post_or_control,recommended_within_source_comparison
+12_c2_x10_070723,nominal,True,5,106,114,4,1,0,0,0,0,True,True,False,False,near_vs_mid_pre
+17_c2_x10_HighHighCOV_150723,HighHighCOV,True,10,146,155,8,2,0,0,0,0,True,True,False,False,near_vs_mid_pre
+6_c2_x10_270623_2,nominal,True,5,46,54,2,3,0,0,0,0,True,True,False,False,near_vs_mid_pre
+7_c2_x10_290623,nominal,True,5,56,64,2,0,0,2,0,1,True,False,False,True,near_vs_post_control
+9_c2_x10_010723,nominal,True,5,76,84,4,0,0,1,0,0,True,False,False,True,near_vs_post_control
+10_c2_x10_030723,nominal,True,5,86,94,0,0,0,4,0,1,False,False,False,False,control_only
+11_c2_x10_050723,nominal,True,5,96,104,0,1,0,4,0,0,False,False,False,False,control_only
+13_c2_x6_100723,nominal,True,2,116,118,0,0,0,1,0,1,False,False,False,False,control_only
+14_c2_x10_HighCOV_110723,HighCOV,True,8,123,130,0,0,0,8,0,0,False,False,False,False,control_only
+15_c2_x5_HighCOV_120723,HighCOV,True,4,131,134,0,0,2,2,0,0,False,False,False,False,control_only
+16_c2_x10_HighHighCOV_130723,HighHighCOV,True,10,136,145,0,6,4,0,0,0,False,False,False,False,control_only
+18_c2_xN_HighHighCOV_170723,HighHighCOV,True,3,156,158,0,0,0,2,0,1,False,False,False,False,control_only
+2_c2_x14_200623,nominal,True,7,2,14,0,0,0,0,7,0,False,False,False,False,control_only
+4_c2_x10_240623,nominal,True,5,26,34,0,0,4,0,1,0,False,False,False,False,control_only
+5_c2_x10_260623,nominal,True,5,36,44,0,1,4,0,0,0,False,False,False,False,control_only
+8_c2_x10_300623,nominal,True,5,66,74,0,0,0,5,0,0,False,False,False,False,control_only

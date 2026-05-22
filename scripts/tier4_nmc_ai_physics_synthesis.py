@@ -154,6 +154,7 @@ def main() -> None:
     source_balanced_pre_event_review_packet = read_json(derived / "source_balanced_pre_event_review_packet" / "source_balanced_pre_event_review_packet_summary.json")
     source_balanced_pre_event_matched_counterfactual = read_json(derived / "source_balanced_pre_event_matched_counterfactual_audit" / "source_balanced_pre_event_matched_counterfactual_summary.json")
     source_balanced_pre_event_same_source_ladder = read_json(derived / "source_balanced_pre_event_same_source_ladder_audit" / "source_balanced_pre_event_same_source_ladder_summary.json")
+    pre_event_source_lattice = read_json(derived / "pre_event_source_lattice_coverage_audit" / "pre_event_source_lattice_coverage_summary.json")
     source_balanced_pre_event_radial_kymograph = read_json(derived / "source_balanced_pre_event_radial_kymograph_audit" / "source_balanced_pre_event_radial_kymograph_summary.json")
     source_balanced_pre_event_physics_modes = read_json(derived / "source_balanced_pre_event_physics_mode_taxonomy" / "source_balanced_pre_event_physics_mode_summary.json")
     source_balanced_sequences = read_json(derived / "source_balanced_roi_sequences" / "selected_roi_sequence_summary.json")
@@ -519,6 +520,10 @@ def main() -> None:
     source_balanced_pre_event_ladder_front = next((r for r in source_balanced_pre_event_ladder_top if r.get("feature") == "front_radius_q60_slope_px_per_norm_time"), {})
     source_balanced_pre_event_ladder_diffusion = next((r for r in source_balanced_pre_event_ladder_top if r.get("feature") == "apparent_diffusion_q70_um2_per_norm_time"), {})
     source_balanced_pre_event_ladder_clock_top = source_balanced_pre_event_ladder_clock[0] if source_balanced_pre_event_ladder_clock else {}
+    pre_event_lattice_near_counts = first_summary(pre_event_source_lattice, "near_source_counts", {}) or {}
+    pre_event_lattice_near_sources = top_items(first_summary(pre_event_source_lattice, "near_source_rows", []), 8)
+    pre_event_lattice_far_controls = top_items(first_summary(pre_event_source_lattice, "candidate_far_control_sources", []), 8)
+    pre_event_lattice_design = first_summary(pre_event_source_lattice, "recommended_design", []) or []
     source_balanced_pre_event_kymo_near_far = top_items(first_summary(source_balanced_pre_event_radial_kymograph, "top_near_vs_far_tests", []), 8)
     source_balanced_pre_event_kymo_clean = top_items(first_summary(source_balanced_pre_event_radial_kymograph, "top_clean_pre_vs_post_control_tests", []), 8)
     source_balanced_pre_event_kymo_review = top_items(first_summary(source_balanced_pre_event_radial_kymograph, "top_review_candidate_kymograph_features", []), 12)
@@ -971,6 +976,7 @@ def main() -> None:
         f"- Pre-event review packet ranks {first_summary(source_balanced_pre_event_review_packet, 'n_candidates', 0)} automatic ROI crops and renders {first_summary(source_balanced_pre_event_review_packet, 'n_rendered_frame_strips', 0)} frame strips plus a contact sheet; top candidate is {source_balanced_pre_event_review_top1.get('roi_id', 'NA')} from {source_balanced_pre_event_review_top1.get('event_relative_bin', 'NA')} with review reason {source_balanced_pre_event_review_top1.get('review_reason', 'NA')}.",
         f"- Pre-event matched-counterfactual audit pairs near-pre ROIs against baseline/context-nearest controls; the strongest matched physics row is {source_balanced_pre_event_matched_best.get('comparison', 'NA')} {source_balanced_pre_event_matched_best.get('match_scheme', 'NA')} {source_balanced_pre_event_matched_best.get('feature', 'NA')} with median near-minus-control {fmt(source_balanced_pre_event_matched_best.get('median_treated_minus_control'))} and sign-flip p={fmt(source_balanced_pre_event_matched_best.get('signflip_mean_abs_p'))}, while q70 apparent diffusion remains weak at p={fmt(source_balanced_pre_event_matched_diffusion.get('signflip_mean_abs_p'))}.",
         f"- Same-source pre-event ladder audit shows the sampling gap explicitly: {source_balanced_pre_event_ladder_counts.get('sources_with_near_rows', 0)} sources have near-pre rows, {source_balanced_pre_event_ladder_counts.get('sources_with_near_mid_ladder', 0)} have near+mid ladders, and {source_balanced_pre_event_ladder_counts.get('sources_with_near_far_ladder', 0)} have near+far ladders; the strongest same-source paired row is {source_balanced_pre_event_ladder_best.get('comparison', 'NA')} {source_balanced_pre_event_ladder_best.get('feature', 'NA')} with p={fmt(source_balanced_pre_event_ladder_best.get('signflip_mean_abs_p'))}, while the global within-source clock remains weak (top rho {fmt(source_balanced_pre_event_ladder_clock_top.get('within_source_residual_spearman_rho_vs_event_proximity'))}).",
+        f"- Raw pre-event source-lattice coverage confirms this is a real data-design gap, not a sampler artifact: {pre_event_lattice_near_counts.get('sources_with_near', 0)} raw sources have near-pre rows, {pre_event_lattice_near_counts.get('sources_with_near_far', 0)} have near+far rows, and {len(pre_event_lattice_far_controls)} separate sources can serve only as cross-source far-pre controls under source/acquisition matching.",
         f"- Pre-event radial-kymograph audit renders explicit front tracks for {first_summary(source_balanced_pre_event_radial_kymograph, 'n_roi', 0)} ROI crops; near-vs-far is led by {source_balanced_pre_event_kymo_near_far_top.get('feature', 'NA')} at AUC {fmt(source_balanced_pre_event_kymo_near_far_top.get('oriented_auc'))}, median diff {fmt(source_balanced_pre_event_kymo_near_far_top.get('median_positive_minus_negative'))}, p={fmt(source_balanced_pre_event_kymo_near_far_top.get('mwu_p'))}.",
         f"- Pre-event physics-mode taxonomy clusters source-residual front/diffusion/heterogeneity features into k={fmt(first_summary(source_balanced_pre_event_physics_modes, 'chosen_k'), 0)} broad states but finds no strong near-pre enrichment (best Fisher p={fmt(source_balanced_pre_event_mode_enrich_best.get('fisher_p'))}), so continuous front/diffusion clocks remain more informative than coarse modes for this cohort.",
         f"- Source-balanced ROI sequence export converts that manifest into {first_summary(source_balanced_sequences, 'n_roi_sequences', 0)} particle-region crop tensors across {first_summary(source_balanced_sequences, 'n_cycles', 0)} cycles and {first_summary(source_balanced_sequences, 'n_sources', 0)} sources with {first_summary(source_balanced_sequences, 'n_failed', 0)} export failures; the fast rollout audit finds strongest future16 ROI signal in {source_balanced_rollout_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_rollout_top16.get('oriented_auc'))}, while prediction-error features are highly source-structured.",
@@ -2082,6 +2088,10 @@ def main() -> None:
         f"- Top same-source paired row: {source_balanced_pre_event_ladder_best.get('comparison', 'NA')} {source_balanced_pre_event_ladder_best.get('feature', 'NA')} n={fmt(source_balanced_pre_event_ladder_best.get('n_pairs'), 0)}, median near-control diff {fmt(source_balanced_pre_event_ladder_best.get('median_treated_minus_control'))}, sign-flip p={fmt(source_balanced_pre_event_ladder_best.get('signflip_mean_abs_p'))}",
         f"- Same-source front/diffusion guardrails: q60 front-slope median diff {fmt(source_balanced_pre_event_ladder_front.get('median_treated_minus_control'))}, p={fmt(source_balanced_pre_event_ladder_front.get('signflip_mean_abs_p'))}; q70 apparent diffusion median diff {fmt(source_balanced_pre_event_ladder_diffusion.get('median_treated_minus_control'))}, p={fmt(source_balanced_pre_event_ladder_diffusion.get('signflip_mean_abs_p'))}; top continuous clock {source_balanced_pre_event_ladder_clock_top.get('feature', 'NA')} rho {fmt(source_balanced_pre_event_ladder_clock_top.get('within_source_residual_spearman_rho_vs_event_proximity'))}, p={fmt(source_balanced_pre_event_ladder_clock_top.get('spearman_p'))}",
         f"- Same-source ladder guardrail: {first_summary(source_balanced_pre_event_same_source_ladder, 'guardrail', 'Source-balanced pre-event same-source ladder audit unavailable.')}",
+        f"- Source-lattice raw cycles/sources/HDF5 sources: {first_summary(pre_event_source_lattice, 'n_cycle_rows', 0)} / {first_summary(pre_event_source_lattice, 'n_sources', 0)} / {first_summary(pre_event_source_lattice, 'n_sources_with_h5', 0)}",
+        f"- Source-lattice near-source counts: {pre_event_lattice_near_counts}; candidate far-control sources: {pre_event_lattice_far_controls}",
+        f"- Source-lattice design recommendation: {'; '.join(pre_event_lattice_design[:3]) if pre_event_lattice_design else 'unavailable'}",
+        f"- Source-lattice guardrail: {first_summary(pre_event_source_lattice, 'guardrail', 'Pre-event source-lattice coverage audit unavailable.')}",
         f"- Radial-kymograph ROI/cycles/sources/rendered: {first_summary(source_balanced_pre_event_radial_kymograph, 'n_roi', 0)} / {first_summary(source_balanced_pre_event_radial_kymograph, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_radial_kymograph, 'n_sources', 0)} / {first_summary(source_balanced_pre_event_radial_kymograph, 'n_rendered_kymographs', 0)}",
         f"- Top radial-kymograph near-vs-far row: {source_balanced_pre_event_kymo_near_far_top.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_kymo_near_far_top.get('oriented_auc'))}, median diff {fmt(source_balanced_pre_event_kymo_near_far_top.get('median_positive_minus_negative'))}, p={fmt(source_balanced_pre_event_kymo_near_far_top.get('mwu_p'))}",
         f"- Top radial-kymograph clean-pre row: {source_balanced_pre_event_kymo_clean_top.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_kymo_clean_top.get('oriented_auc'))}, median diff {fmt(source_balanced_pre_event_kymo_clean_top.get('median_positive_minus_negative'))}, p={fmt(source_balanced_pre_event_kymo_clean_top.get('mwu_p'))}",
@@ -3363,6 +3373,17 @@ def main() -> None:
                 "top_same_source_paired_tests": source_balanced_pre_event_ladder_top,
                 "top_within_source_clock_tests": source_balanced_pre_event_ladder_clock,
                 "guardrail": first_summary(source_balanced_pre_event_same_source_ladder, "guardrail"),
+            },
+            "source_lattice_coverage_audit": {
+                "n_cycle_rows": first_summary(pre_event_source_lattice, "n_cycle_rows"),
+                "n_sources": first_summary(pre_event_source_lattice, "n_sources"),
+                "n_sources_with_h5": first_summary(pre_event_source_lattice, "n_sources_with_h5"),
+                "event_relative_bin_counts": first_summary(pre_event_source_lattice, "event_relative_bin_counts", {}),
+                "near_source_counts": pre_event_lattice_near_counts,
+                "near_source_rows": pre_event_lattice_near_sources,
+                "candidate_far_control_sources": pre_event_lattice_far_controls,
+                "recommended_design": pre_event_lattice_design,
+                "guardrail": first_summary(pre_event_source_lattice, "guardrail"),
             },
             "radial_kymograph_audit": {
                 "n_roi": first_summary(source_balanced_pre_event_radial_kymograph, "n_roi"),

@@ -1,0 +1,181 @@
+{
+  "candidate_far_control_sources": [
+    {
+      "cycle_max": 134,
+      "cycle_min": 131,
+      "far_pre_rows": 2,
+      "h5_available": true,
+      "source_class": "HighCOV",
+      "source_stem": "15_c2_x5_HighCOV_120723"
+    },
+    {
+      "cycle_max": 145,
+      "cycle_min": 136,
+      "far_pre_rows": 4,
+      "h5_available": true,
+      "source_class": "HighHighCOV",
+      "source_stem": "16_c2_x10_HighHighCOV_130723"
+    },
+    {
+      "cycle_max": 34,
+      "cycle_min": 26,
+      "far_pre_rows": 4,
+      "h5_available": true,
+      "source_class": "nominal",
+      "source_stem": "4_c2_x10_240623"
+    },
+    {
+      "cycle_max": 44,
+      "cycle_min": 36,
+      "far_pre_rows": 4,
+      "h5_available": true,
+      "source_class": "nominal",
+      "source_stem": "5_c2_x10_260623"
+    }
+  ],
+  "event_cycles": [
+    60.0,
+    86.0,
+    116.0,
+    156.0
+  ],
+  "event_relative_bin_counts": {
+    "current_event": 4,
+    "far_pre_event_17_32": 14,
+    "mid_pre_event_9_16": 14,
+    "near_pre_event_1_8": 20,
+    "no_near_event_control": 8,
+    "post_event_1_16": 29
+  },
+  "guardrail": "This is a coverage/design audit over the raw particle cycle/source index. It identifies feasible controls and missing same-source ladders; it does not add manual labels, validate particles/fronts, calibrate diffusion, or establish precursor causality.",
+  "n_cycle_rows": 89,
+  "n_sources": 16,
+  "n_sources_with_h5": 16,
+  "near_source_counts": {
+    "near_sources_no_within_source_control": 0,
+    "sources_with_near": 5,
+    "sources_with_near_far": 0,
+    "sources_with_near_mid": 3,
+    "sources_with_near_post_or_control": 2
+  },
+  "near_source_rows": [
+    {
+      "current_event_rows": 0,
+      "cycle_max": 114,
+      "cycle_min": 106,
+      "far_pre_rows": 0,
+      "h5_available": true,
+      "has_near": true,
+      "has_near_far": false,
+      "has_near_mid": true,
+      "has_near_post_or_control": false,
+      "mid_pre_rows": 1,
+      "n_cycles": 5,
+      "near_pre_rows": 4,
+      "no_near_event_control_rows": 0,
+      "post_event_rows": 0,
+      "recommended_within_source_comparison": "near_vs_mid_pre",
+      "source_class": "nominal",
+      "source_stem": "12_c2_x10_070723"
+    },
+    {
+      "current_event_rows": 0,
+      "cycle_max": 155,
+      "cycle_min": 146,
+      "far_pre_rows": 0,
+      "h5_available": true,
+      "has_near": true,
+      "has_near_far": false,
+      "has_near_mid": true,
+      "has_near_post_or_control": false,
+      "mid_pre_rows": 2,
+      "n_cycles": 10,
+      "near_pre_rows": 8,
+      "no_near_event_control_rows": 0,
+      "post_event_rows": 0,
+      "recommended_within_source_comparison": "near_vs_mid_pre",
+      "source_class": "HighHighCOV",
+      "source_stem": "17_c2_x10_HighHighCOV_150723"
+    },
+    {
+      "current_event_rows": 0,
+      "cycle_max": 54,
+      "cycle_min": 46,
+      "far_pre_rows": 0,
+      "h5_available": true,
+      "has_near": true,
+      "has_near_far": false,
+      "has_near_mid": true,
+      "has_near_post_or_control": false,
+      "mid_pre_rows": 3,
+      "n_cycles": 5,
+      "near_pre_rows": 2,
+      "no_near_event_control_rows": 0,
+      "post_event_rows": 0,
+      "recommended_within_source_comparison": "near_vs_mid_pre",
+      "source_class": "nominal",
+      "source_stem": "6_c2_x10_270623_2"
+    },
+    {
+      "current_event_rows": 1,
+      "cycle_max": 64,
+      "cycle_min": 56,
+      "far_pre_rows": 0,
+      "h5_available": true,
+      "has_near": true,
+      "has_near_far": false,
+      "has_near_mid": false,
+      "has_near_post_or_control": true,
+      "mid_pre_rows": 0,
+      "n_cycles": 5,
+      "near_pre_rows": 2,
+      "no_near_event_control_rows": 0,
+      "post_event_rows": 2,
+      "recommended_within_source_comparison": "near_vs_post_control",
+      "source_class": "nominal",
+      "source_stem": "7_c2_x10_290623"
+    },
+    {
+      "current_event_rows": 0,
+      "cycle_max": 84,
+      "cycle_min": 76,
+      "far_pre_rows": 0,
+      "h5_available": true,
+      "has_near": true,
+      "has_near_far": false,
+      "has_near_mid": false,
+      "has_near_post_or_control": true,
+      "mid_pre_rows": 0,
+      "n_cycles": 5,
+      "near_pre_rows": 4,
+      "no_near_event_control_rows": 0,
+      "post_event_rows": 1,
+      "recommended_within_source_comparison": "near_vs_post_control",
+      "source_class": "nominal",
+      "source_stem": "9_c2_x10_010723"
+    }
+  ],
+  "outputs": {
+    "candidate_controls": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_candidate_controls.csv",
+    "cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_cycle_table.csv",
+    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_source_summary.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_coverage_summary.json"
+  },
+  "recommended_design": [
+    "Do not claim same-source near-vs-far evidence from current raw coverage: no source with near-pre rows also has far-pre rows.",
+    "Use same-source near-vs-mid and near-vs-post/control as local opportunistic checks where available.",
+    "Use cross-source far-pre controls only with explicit source/acquisition-class matching or source-residualization.",
+    "Acquire or export additional far-pre cycles only if new raw source/movie coverage exists; it is not latent in exampleParticles for current near-pre sources."
+  ],
+  "sampled_same_source_ladder_counts": {
+    "sources_with_near_far_ladder": 0,
+    "sources_with_near_mid_ladder": 3,
+    "sources_with_near_post_ladder": 2,
+    "sources_with_near_rows": 5
+  },
+  "source_class_counts": {
+    "HighCOV": 2,
+    "HighHighCOV": 3,
+    "nominal": 11
+  }
+}

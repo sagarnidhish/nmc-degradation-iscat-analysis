@@ -3515,6 +3515,27 @@ Interpretation:
 
 This audit tightens the pre-event claim. Matched counterfactuals preserve a near-pre optical/mask-contrast signal, but they weaken the apparent-diffusion interpretation and leave front-slope evidence underpowered. The most defensible current statement is that source-balanced near-pre crops show review-worthy mask/contrast and some front-motion hints after observed-context matching; calibrated diffusion and phase-boundary claims still require manual QC and stronger matched same-source coverage.
 
+## 2026-05-22 Pre-Event Source Lattice Coverage Audit
+
+Added `scripts/tier4_pre_event_source_lattice_coverage_audit.py` and ran it on Isambard. This audit checks the raw `exampleParticles` cycle/source lattice, not just the sampled ROI table, to determine whether missing same-source far-pre controls are a sampler artifact or a real data-design limitation.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit`
+- `derived_local/pre_event_source_lattice_coverage_audit`
+
+Cohort/result snapshot:
+
+- Raw cycle/source lattice: 89 cycle rows across 16 HDF5-backed source movies.
+- Event-relative bins: 20 near-pre rows, 14 mid-pre, 14 far-pre, 29 post-event, 8 no-near-event controls, and 4 current-event rows.
+- Five raw sources have near-pre rows: `12_c2_x10_070723`, `17_c2_x10_HighHighCOV_150723`, `6_c2_x10_270623_2`, `7_c2_x10_290623`, and `9_c2_x10_010723`.
+- Among those near-pre sources, 3 have near+mid-pre coverage, 2 have near+post/control coverage, and 0 have near+far-pre coverage.
+- Four separate sources provide far-pre rows: `15_c2_x5_HighCOV_120723`, `16_c2_x10_HighHighCOV_130723`, `4_c2_x10_240623`, and `5_c2_x10_260623`.
+
+Interpretation:
+
+This closes an important design question from the matched and same-source ladder audits. The missing same-source near-vs-far-pre comparison is not latent in the current raw particle cycle index; it is absent from the available source/event lattice. Therefore the defensible designs are same-source near-vs-mid or near-vs-post/control checks where available, and cross-source far-pre controls only with explicit source/acquisition-class matching or source residualization. This prevents overclaiming source-independent pre-event diffusion or phase-boundary behavior from an unavailable same-source far-pre control.
+
 ## 2026-05-22 Source-Balanced Pre-Event Same-Source Ladder Audit
 
 Added `scripts/tier4_source_balanced_pre_event_same_source_ladder_audit.py` and ran it on Isambard. This audit addresses the matched-counterfactual limitation that near-pre versus far-pre had no same-source pairs by asking a narrower within-source question: where a source contains near-pre rows plus mid-pre, post-event, or no-near-event controls, do automatic physics descriptors move consistently along that local event-relative ladder?
