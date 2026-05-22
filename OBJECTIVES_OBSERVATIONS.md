@@ -2658,3 +2658,26 @@ Key result:
 - Residualized video-only collapses under leave-cycle future16 (AUC 0.469), so the useful residualized signal is mainly electrochemically conditioned, not generic optical video structure alone.
 
 Interpretation: the top tournament experiment is now executed. Echem+video carries future16 weak-label signal beyond linear acquisition context when held out by cycle, but it is not yet source-transferable. The next defensible modeling step is source-domain adaptation or source-balanced sampling before any warning-model claim; the current result should guide representation design and review prioritization only.
+
+## 2026-05-22 Source-Domain Video/Echem Adaptation Audit
+
+Added `scripts/tier4_source_domain_video_echem_adaptation_audit.py` and ran it on Isambard to test whether simple source-domain adaptation can rescue the failed leave-source future16 transfer from the acquisition-residualized warning audit. The audit compares raw, source-centered, CORAL-aligned, acquisition-residualized, and combined variants across acquisition context, video-only, echem-only, and video+echem feature sets.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_domain_video_echem_adaptation_audit`
+
+Local compact copy:
+
+`derived_local/source_domain_video_echem_adaptation_audit`
+
+Key result:
+
+- The audit covers 172 ROI rows, 34 cycles, and 12 source movies; the future16 labels are highly source concentrated, with `17_c2_x10_HighHighCOV_150723` at 30/30 positives and several 3-row sources all negative.
+- Acquisition-only leave-source reaches AUC 0.697/AP 0.922 with empirical p=0.012, confirming that source/context structure remains predictive.
+- Raw video+echem leave-source is weak at AUC 0.595/AP 0.868, matching the earlier source-transfer warning.
+- Source-centered video+echem reaches AUC 0.737/AP 0.931 with empirical p=0.006, improving over acquisition-only by +0.040 AUC and +0.009 AP.
+- CORAL alignment fails for this small, imbalanced source layout: video+echem CORAL reaches only AUC 0.420, and acquisition-residualized CORAL/source-centering variants do not help.
+
+Interpretation: unlabeled source-centering partially rescues future16 source transfer, so source-specific feature offsets/domain calibration matter. The result is still not a deployable warning model because source labels and outcomes remain severely entangled; the next defensible step is source-balanced sampling or explicit domain-invariant representation learning, ideally anchored by manual QC labels.
+
