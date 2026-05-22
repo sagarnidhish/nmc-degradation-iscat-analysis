@@ -4688,3 +4688,31 @@ Results:
 Interpretation: ROI elapsed windows are internally aligned to HDF5 median frame timing, so per-second apparent optical-front proxies can be computed as median-timebase summaries. However, pause-heavy source files create a real timebase guardrail, and the strict-timebase subset does not preserve q70 apparent-D future8 separation. Calibrated diffusion wording remains blocked; source timing pauses should be excluded, modeled, or explicitly sensitivity-tested before any per-second diffusion-like result is promoted.
 
 Guardrail: this audit validates timing provenance only. It does not validate spatial calibration, manual front identity, q70 confidence intervals, or material diffusion coefficients.
+
+## 2026-05-22 Source-Balanced Sequence Source-Control Audit
+
+Added `scripts/tier4_source_balanced_sequence_source_control_audit.py` and ran it on Isambard to stress-test whether the 96-row source-balanced ROI rollout cohort supports future-drop prediction after source/cycle controls. This audit uses the existing particle-region-only rollout feature table, so it does not reread large NPZ tensors.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_source_control_audit`
+- `derived_local/source_balanced_sequence_source_control_audit`
+- `source_balanced_sequence_source_control_scalar_tests.csv`
+- `source_balanced_sequence_source_control_model_metrics.csv`
+- `source_balanced_sequence_source_control_model_deltas.csv`
+- `source_balanced_sequence_source_control_predictions.csv`
+- `source_balanced_sequence_source_control_summary.json`
+
+Results:
+
+- The audit covers 96 ROI rows, 48 cycles, and 14 source movies from the source-balanced expansion cohort.
+- It tests 20 rollout/intensity/context features across raw, source-residual, within-source-rank, and within-source-z transforms with 500 source/cycle-stratified label permutations.
+- No scalar feature passes the strict source-controlled signal gate: 0 rows simultaneously have source-controlled transform, AUC >= 0.65, and source-stratified p <= 0.05.
+- No source-heldout model reaches AUC >= 0.65. The best source-heldout model is `rollout_raw` for future16 with AUC 0.639 and AP 0.656, below the candidate threshold.
+- The best source-stratified scalar is `temporal_energy_late_minus_early` source-residual for future16: AUC 0.615, AP 0.606, source-stratified p 0.00399. This is statistically source-stratified but too small in effect size to count as predictive.
+- Leave-cycle models can look stronger, e.g. `rollout_raw` future16 AUC 0.690 and delta AUC +0.170 versus context, but that is weaker evidence than source-heldout transfer because cycle labels are nested inside source/acquisition regimes.
+- Final verdict: `not_source_controlled_predictive;use_for_review_negative_controls`.
+
+Interpretation: expanding source-balanced particle crops was useful because it revealed a boundary. ROI-only rollout/intensity features contain weak temporal structure and useful negative controls, but the current source-balanced cohort does not justify a source-transferable future-drop detector. These features should feed review prioritization, source-aware mechanism dossiers, and cohort-design diagnostics rather than deployment claims.
+
+Guardrail: within-source transforms are review tools, not prospective source-transfer models. This audit does not assign manual QC labels, validate degradation mechanisms, or calibrate diffusion.
