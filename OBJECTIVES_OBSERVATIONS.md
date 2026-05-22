@@ -2914,3 +2914,28 @@ Key result:
 - Cycle-state cluster 1 carries most sampled ROI rows (42/52) and has higher mixed mode fractions, while cluster 0 is smaller and mostly near-baseline/context-like.
 
 Interpretation: cycle-state coordinates appear useful for organizing automatic ROI degradation-mode composition beyond simple context, but the evidence is exploratory rather than confirmatory. The model improves over context-only on macro MAE, yet the permutation null and tiny 11-cycle cohort prevent a strong claim. This should guide which cycles/modes to expand and manually QC next, not be treated as a causal degradation-mode predictor.
+
+## 2026-05-22 Signed Loss Source Robustness Audit
+
+Added and completed:
+
+`scripts/tier4_signed_loss_source_robustness_audit.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_loss_source_robustness_audit`
+
+Local compact copy:
+
+`derived_local/signed_loss_source_robustness_audit`
+
+Key result:
+
+- The audit covers 172 rows, 34 cycles, and 12 sources; 72 rows have future16 weak labels across 9 labeled sources.
+- The combined loss-mechanism axis is extremely strong raw (future16 AUC 0.989, balanced source bootstrap mean AUC 0.989), but the source-mean-only transform also reaches AUC 0.942, proving that source composition is a major part of the raw separation.
+- After source residualization, the combined axis drops to AUC 0.558 and within-source rank drops to AUC 0.551, so the combined raw axis should not be interpreted as a source-independent detector.
+- The signed optical-loss axis raw AUC is 0.815 with high source eta2 0.684. Source-mean-only is still AUC 0.774, source-residual AUC is 0.656, within-source centered-z AUC is 0.607, and within-source rank AUC is 0.514.
+- The echem degraded-state axis is less source-structured in raw form (eta2 0.055) and remains the strongest source-residualized future16 axis among the signed axes tested: raw AUC 0.821 and source-residual AUC 0.716.
+- Source influence is not dominated by one single source: dropping `17_c2_x10_HighHighCOV_150723` changes the combined-axis AUC by only -0.012, while signed optical-loss is most reduced by dropping `15_c2_x5_HighCOV_120723` or `18_c2_xN_HighHighCOV_170723` (delta -0.046 each).
+
+Interpretation: the signed-loss mechanism result is useful, but this audit moves the claim boundary from “source-transferable warning axis” to “source/context-sensitive degradation-state triage axis.” The echem degraded-state axis is the most robust residual signal, while the optical-loss and combined axes need balanced sources, manual QC, and source-aware calibration before any source-independent warning or mechanism claim.

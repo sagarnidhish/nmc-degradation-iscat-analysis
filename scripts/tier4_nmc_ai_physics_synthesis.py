@@ -161,6 +161,7 @@ def main() -> None:
     source_invariant_interpretable = read_json(derived / "source_invariant_interpretable_feature_audit" / "source_invariant_interpretable_summary.json")
     exact_feature_mechanism = read_json(derived / "exact_feature_mechanism_consistency_audit" / "exact_feature_mechanism_summary.json")
     signed_optical_loss = read_json(derived / "signed_optical_loss_mechanism_audit" / "signed_optical_loss_mechanism_summary.json")
+    signed_loss_source_robustness = read_json(derived / "signed_loss_source_robustness_audit" / "signed_loss_source_robustness_summary.json")
     invariant_physics_rules = read_json(derived / "invariant_physics_rule_discovery" / "invariant_physics_rule_summary.json")
     agentic_current = read_json(derived / "agentic_current_hypothesis_tournament" / "agentic_current_hypothesis_tournament_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
@@ -496,6 +497,17 @@ def main() -> None:
     signed_loss_modes = top_items(first_summary(signed_optical_loss, "mechanism_mode_summary", []), 8)
     signed_loss_sources = top_items(first_summary(signed_optical_loss, "source_summary", []), 12)
     signed_loss_candidates = top_items(first_summary(signed_optical_loss, "top_candidates", []), 12)
+    signed_source_key_metrics = top_items(first_summary(signed_loss_source_robustness, "key_future16_metrics", []), 30)
+    signed_source_top_metrics = top_items(first_summary(signed_loss_source_robustness, "top_future16_metrics", []), 30)
+    signed_source_influence = top_items(first_summary(signed_loss_source_robustness, "largest_negative_source_influence", []), 12)
+    signed_source_summary = top_items(first_summary(signed_loss_source_robustness, "source_summary", []), 12)
+    signed_source_raw_optical = next((r for r in signed_source_key_metrics if r.get("axis") == "signed_optical_loss_axis" and r.get("transform") == "raw"), {})
+    signed_source_resid_optical = next((r for r in signed_source_key_metrics if r.get("axis") == "signed_optical_loss_axis" and r.get("transform") == "source_residual"), {})
+    signed_source_rank_optical = next((r for r in signed_source_key_metrics if r.get("axis") == "signed_optical_loss_axis" and r.get("transform") == "within_source_rank"), {})
+    signed_source_raw_combined = next((r for r in signed_source_key_metrics if r.get("axis") == "combined_loss_mechanism_axis" and r.get("transform") == "raw"), {})
+    signed_source_resid_combined = next((r for r in signed_source_key_metrics if r.get("axis") == "combined_loss_mechanism_axis" and r.get("transform") == "source_residual"), {})
+    signed_source_raw_echem = next((r for r in signed_source_key_metrics if r.get("axis") == "echem_degraded_state_axis" and r.get("transform") == "raw"), {})
+    signed_source_resid_echem = next((r for r in signed_source_key_metrics if r.get("axis") == "echem_degraded_state_axis" and r.get("transform") == "source_residual"), {})
     signed_loss_combined16 = next((r for r in signed_loss_tests if r.get("target") == "future_any_drop_within_16cycles" and r.get("axis") == "combined_loss_mechanism_axis"), {})
     signed_loss_optical16 = next((r for r in signed_loss_tests if r.get("target") == "future_any_drop_within_16cycles" and r.get("axis") == "signed_optical_loss_axis"), {})
     signed_loss_echem16 = next((r for r in signed_loss_tests if r.get("target") == "future_any_drop_within_16cycles" and r.get("axis") == "echem_degraded_state_axis"), {})
@@ -503,6 +515,17 @@ def main() -> None:
     signed_loss_best_model8 = max([r for r in signed_loss_models if r.get("target") == "future_any_drop_within_8cycles"], key=lambda r: (float(r.get("roc_auc") or float("nan")) if r.get("roc_auc") is not None else float("nan")), default={})
     signed_loss_top_axis = signed_loss_combined16 or (signed_loss_tests[0] if signed_loss_tests else {})
     signed_loss_optical_axis = signed_loss_optical16
+    signed_robust_key = top_items(first_summary(signed_loss_source_robustness, "key_future16_metrics", []), 40)
+    signed_robust_influence = top_items(first_summary(signed_loss_source_robustness, "largest_negative_source_influence", []), 20)
+    def signed_robust(axis: str, transform: str) -> Dict[str, Any]:
+        return next((r for r in signed_robust_key if r.get("axis") == axis and r.get("transform") == transform), {})
+    signed_robust_combined_raw = signed_robust("combined_loss_mechanism_axis", "raw")
+    signed_robust_combined_source_mean = signed_robust("combined_loss_mechanism_axis", "source_mean_only")
+    signed_robust_combined_rank = signed_robust("combined_loss_mechanism_axis", "within_source_rank")
+    signed_robust_optical_raw = signed_robust("signed_optical_loss_axis", "raw")
+    signed_robust_optical_source_mean = signed_robust("signed_optical_loss_axis", "source_mean_only")
+    signed_robust_optical_rank = signed_robust("signed_optical_loss_axis", "within_source_rank")
+    signed_robust_echem_resid = signed_robust("echem_degraded_state_axis", "source_residual")
     balanced_future_top_acq_resid = balanced_future_acq_resid[0] if balanced_future_acq_resid else {}
     temporal_future8 = (first_summary(temporal_directionality, "best_future8_model", []) or [{}])[0]
     temporal_past8 = (first_summary(temporal_directionality, "best_past8_model", []) or [{}])[0]
@@ -765,6 +788,7 @@ def main() -> None:
         f"- Exact-feature source-invariant audit nominates {source_interpretable_top_uni.get('feature', 'NA')} as the strongest univariate future16 descriptor (oriented AUC {fmt(source_interpretable_top_uni.get('roc_auc_oriented'))}, source eta2 {fmt(source_interpretable_top_uni.get('source_eta2'))}); best small transfer set {source_interpretable_top_combo.get('feature_set', 'NA')} reaches leave-source AUC {fmt(source_interpretable_top_combo.get('roc_auc'))}.",
         f"- Exact-feature mechanism consistency audit is a useful falsification check: exact_optical_loss_score predicts future16 with AUC {fmt(exact_mech_loss_metric.get('oriented_auc'))} but has source eta2 {fmt(exact_mech_loss_metric.get('source_eta2'))}; the primary particle-vs-context descriptor has weak radius-slope linkage after source residualization (rho {fmt(exact_mech_primary_radius_corr.get('source_residual_spearman_rho'))}).",
         f"- Signed optical-loss mechanism audit converts the pattern into interpretable axes: combined_loss_mechanism_axis future16 AUC is {fmt(signed_loss_top_axis.get('oriented_auc'))} but source eta2 is {fmt(signed_loss_top_axis.get('source_eta2'))}; leave-source all-axis AUC is {fmt(signed_loss_best_model16.get('roc_auc'))}, while optical-only AUC is {fmt((next((r for r in signed_loss_models if r.get('target') == 'future_any_drop_within_16cycles' and r.get('feature_set') == 'optical_loss_only'), {}) or {}).get('roc_auc'))}.",
+        f"- Signed-loss source robustness audit shows why this remains guarded: combined-axis raw/source-mean/within-source-rank AUCs are {fmt(signed_robust_combined_raw.get('oriented_auc'))}/{fmt(signed_robust_combined_source_mean.get('oriented_auc'))}/{fmt(signed_robust_combined_rank.get('oriented_auc'))}; optical-axis raw/source-mean/within-source-rank AUCs are {fmt(signed_robust_optical_raw.get('oriented_auc'))}/{fmt(signed_robust_optical_source_mean.get('oriented_auc'))}/{fmt(signed_robust_optical_rank.get('oriented_auc'))}.",
         f"- Invariant sparse rule discovery finds review-prioritization rules rather than a standalone predictor: best leave-source rule {invariant_rule_best.get('terms', 'NA')} covers {fmt(invariant_rule_best.get('n_covered'), 0)}/{fmt(invariant_rule_best.get('n_eval'), 0)} rows with precision {fmt(invariant_rule_best.get('precision'))}, lift {fmt(invariant_rule_best.get('lift'))}, and source-positive hits in {fmt(invariant_rule_best.get('n_sources_with_positive_hits'), 0)} sources.",
         f"- Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as {first_summary(agentic_current, 'top_hypothesis', {}).get('title', 'NA')} with score {fmt(first_summary(agentic_current, 'top_hypothesis', {}).get('tournament_score'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
@@ -1917,6 +1941,26 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Signed-Loss Source Robustness Audit",
+        "",
+        f"- Rows/future16 labeled/cycles/sources: {first_summary(signed_loss_source_robustness, 'n_rows', 0)} / {first_summary(signed_loss_source_robustness, 'n_labeled_future16', 0)} / {first_summary(signed_loss_source_robustness, 'n_cycles', 0)} / {first_summary(signed_loss_source_robustness, 'n_sources', 0)}",
+        f"- Combined axis raw/source-mean/within-source-rank AUC: {fmt(signed_robust_combined_raw.get('oriented_auc'))} / {fmt(signed_robust_combined_source_mean.get('oriented_auc'))} / {fmt(signed_robust_combined_rank.get('oriented_auc'))}",
+        f"- Optical axis raw/source-mean/within-source-rank AUC: {fmt(signed_robust_optical_raw.get('oriented_auc'))} / {fmt(signed_robust_optical_source_mean.get('oriented_auc'))} / {fmt(signed_robust_optical_rank.get('oriented_auc'))}",
+        f"- Echem degraded source-residual AUC/AP: {fmt(signed_robust_echem_resid.get('oriented_auc'))} / {fmt(signed_robust_echem_resid.get('average_precision'))}",
+        f"- Optical within-source rank global/within-source permutation p: {fmt(signed_robust_optical_rank.get('global_label_shuffle'))} / {fmt(signed_robust_optical_rank.get('within_source_label_shuffle'))}",
+    ]
+    for row in signed_robust_key[:12]:
+        report_lines.append(
+            f"- Robustness {row.get('axis')} {row.get('transform')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, source eta2 {fmt(row.get('source_eta2'))}, balanced AUC mean {fmt(row.get('balanced_auc_mean'))}, within-source p {fmt(row.get('within_source_label_shuffle'))}"
+        )
+    for row in signed_robust_influence[:6]:
+        report_lines.append(
+            f"- Source influence {row.get('axis')} drop {row.get('dropped_source')}: full AUC {fmt(row.get('full_oriented_auc'))}, drop-source AUC {fmt(row.get('drop_source_oriented_auc'))}, delta {fmt(row.get('delta_auc_minus_full'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(signed_loss_source_robustness, 'guardrail', 'Signed-loss source robustness audit unavailable.')}")
+
+    report_lines += [
+        "",
         "## Invariant Physics Rule Discovery",
         "",
         f"- Rows/eval rows/cycles/sources: {first_summary(invariant_physics_rules, 'n_rows', 0)} / {first_summary(invariant_physics_rules, 'n_eval_rows', 0)} / {first_summary(invariant_physics_rules, 'n_cycles', 0)} / {first_summary(invariant_physics_rules, 'n_sources', 0)}",
@@ -2712,6 +2756,19 @@ def main() -> None:
             "source_summary": signed_loss_sources,
             "top_candidates": signed_loss_candidates,
             "guardrail": first_summary(signed_optical_loss, "guardrail"),
+        },
+        "signed_loss_source_robustness_audit": {
+            "n_rows": first_summary(signed_loss_source_robustness, "n_rows"),
+            "n_labeled_future16": first_summary(signed_loss_source_robustness, "n_labeled_future16"),
+            "n_cycles": first_summary(signed_loss_source_robustness, "n_cycles"),
+            "n_sources": first_summary(signed_loss_source_robustness, "n_sources"),
+            "axes": first_summary(signed_loss_source_robustness, "axes", []),
+            "transforms": first_summary(signed_loss_source_robustness, "transforms", []),
+            "key_future16_metrics": signed_source_key_metrics,
+            "top_future16_metrics": signed_source_top_metrics,
+            "largest_negative_source_influence": signed_source_influence,
+            "source_summary": signed_source_summary,
+            "guardrail": first_summary(signed_loss_source_robustness, "guardrail"),
         },
         "agentic_current_hypothesis_tournament": {
             "n_hypotheses": first_summary(agentic_current, "n_hypotheses"),

@@ -125,6 +125,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Exact-feature source-invariant audit nominates particle_vs_context_mean_diff_positive_fraction as the strongest univariate future16 descriptor (oriented AUC 0.769, source eta2 0.390); best small transfer set trio::particle_vs_context_mean_diff_positive_fraction+particle_mean_last_minus_first+particle_gradient_diff_q90 reaches leave-source AUC 0.750.
 - Exact-feature mechanism consistency audit is a useful falsification check: exact_optical_loss_score predicts future16 with AUC 0.853 but has source eta2 0.513; the primary particle-vs-context descriptor has weak radius-slope linkage after source residualization (rho -0.047).
 - Signed optical-loss mechanism audit converts the pattern into interpretable axes: combined_loss_mechanism_axis future16 AUC is 0.989 but source eta2 is 0.556; leave-source all-axis AUC is 0.927, while optical-only AUC is 0.732.
+- Signed-loss source robustness audit shows why this remains guarded: combined-axis raw/source-mean/within-source-rank AUCs are 0.989/0.942/0.551; optical-axis raw/source-mean/within-source-rank AUCs are 0.815/0.774/0.514.
 - Invariant sparse rule discovery finds review-prioritization rules rather than a standalone predictor: best leave-source rule low(particle_std_diff_positive_fraction) covers 27/72 rows with precision 0.889, lift 1.123, and source-positive hits in 6 sources.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
@@ -1431,6 +1432,33 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Top signed-loss candidate cycle104_rank6_obj2: cycle 104, source 11_c2_x10_050723, combined axis 0.462, future8/future16 0/1
 - Top signed-loss candidate cycle146_rank1_obj3: cycle 146, source 17_c2_x10_HighHighCOV_150723, combined axis 0.457, future8/future16 0/1
 - Guardrail: Signed optical-loss axes are computed from automatic ROI/video/echem descriptors and weak future labels. They support mechanism triage for optical loss/contraction versus front expansion, but they do not validate manual particle identity, front masks, calibrated diffusion, or deployable warnings.
+
+## Signed-Loss Source Robustness Audit
+
+- Rows/future16 labeled/cycles/sources: 172 / 72 / 34 / 12
+- Combined axis raw/source-mean/within-source-rank AUC: 0.989 / 0.942 / 0.551
+- Optical axis raw/source-mean/within-source-rank AUC: 0.815 / 0.774 / 0.514
+- Echem degraded source-residual AUC/AP: 0.716 / 0.915
+- Optical within-source rank global/within-source permutation p: 0.448 / 0.036
+- Robustness combined_loss_mechanism_axis raw: AUC 0.989, AP 0.997, source eta2 0.556, balanced AUC mean 0.989, within-source p 0.003
+- Robustness combined_loss_mechanism_axis source_mean_only: AUC 0.942, AP 0.980, source eta2 1.000, balanced AUC mean 0.967, within-source p 1.000
+- Robustness combined_loss_mechanism_axis within_source_centered_z: AUC 0.632, AP 0.866, source eta2 0.019, balanced AUC mean 0.603, within-source p 0.003
+- Robustness combined_loss_mechanism_axis source_residual: AUC 0.558, AP 0.832, source eta2 0.104, balanced AUC mean 0.515, within-source p 0.003
+- Robustness combined_loss_mechanism_axis within_source_rank: AUC 0.551, AP 0.813, source eta2 0.053, balanced AUC mean 0.552, within-source p 0.003
+- Robustness echem_degraded_state_axis raw: AUC 0.821, AP 0.939, source eta2 0.055, balanced AUC mean 0.793, within-source p 0.003
+- Robustness echem_degraded_state_axis source_residual: AUC 0.716, AP 0.915, source eta2 0.007, balanced AUC mean 0.553, within-source p 0.003
+- Robustness echem_degraded_state_axis within_source_centered_z: AUC 0.674, AP 0.882, source eta2 0.059, balanced AUC mean 0.557, within-source p 0.003
+- Robustness echem_degraded_state_axis within_source_rank: AUC 0.489, AP 0.818, source eta2 0.102, balanced AUC mean 0.511, within-source p 1.000
+- Robustness echem_degraded_state_axis source_mean_only: AUC 0.384, AP 0.807, source eta2 1.000, balanced AUC mean 0.178, within-source p 1.000
+- Robustness signed_optical_loss_axis raw: AUC 0.815, AP 0.940, source eta2 0.684, balanced AUC mean 0.866, within-source p 0.008
+- Robustness signed_optical_loss_axis source_mean_only: AUC 0.774, AP 0.923, source eta2 1.000, balanced AUC mean 0.838, within-source p 1.000
+- Source influence front_contraction_axis drop 18_c2_xN_HighHighCOV_170723: full AUC 0.558, drop-source AUC 0.461, delta -0.097
+- Source influence signed_optical_loss_axis drop 15_c2_x5_HighCOV_120723: full AUC 0.815, drop-source AUC 0.769, delta -0.046
+- Source influence signed_optical_loss_axis drop 18_c2_xN_HighHighCOV_170723: full AUC 0.815, drop-source AUC 0.769, delta -0.046
+- Source influence echem_degraded_state_axis drop 5_c2_x10_260623: full AUC 0.821, drop-source AUC 0.778, delta -0.043
+- Source influence signed_optical_loss_axis drop 16_c2_x10_HighHighCOV_130723: full AUC 0.815, drop-source AUC 0.775, delta -0.041
+- Source influence echem_degraded_state_axis drop 15_c2_x5_HighCOV_120723: full AUC 0.821, drop-source AUC 0.789, delta -0.032
+- Guardrail: Source robustness transforms distinguish within-source signal from source-level composition. High raw AUC with high source-mean-only AUC or weak within-source permutation evidence should be treated as source/context-sensitive review evidence, not a source-independent detector.
 
 ## Invariant Physics Rule Discovery
 
