@@ -73,6 +73,19 @@ def source_residual(df: pd.DataFrame, col: str) -> pd.Series:
     return x - x.groupby(df["source_stem"].astype(str)).transform("mean")
 
 
+def truthy_gate(value: Any) -> bool:
+    if value is None:
+        return False
+    try:
+        if pd.isna(value):
+            return False
+    except TypeError:
+        pass
+    if isinstance(value, str):
+        return value.strip().lower() in {"1", "true", "yes", "y"}
+    return bool(value)
+
+
 def add_prefixed(base: pd.DataFrame, other: pd.DataFrame, cols: Iterable[str], prefix: str) -> pd.DataFrame:
     keep = ["roi_id"] + [c for c in cols if c in other.columns]
     tmp = other[keep].copy()
@@ -81,9 +94,9 @@ def add_prefixed(base: pd.DataFrame, other: pd.DataFrame, cols: Iterable[str], p
 
 
 def tier_row(row: pd.Series) -> str:
-    if bool(row.get("automatic_diffusion_claim_gate", False)):
+    if truthy_gate(row.get("automatic_diffusion_claim_gate", False)):
         return "unexpected_diffusion_gate_pass_recheck"
-    if bool(row.get("manual_front_review_gate", False)) and row.get("event_relative_bin") == "near_pre_event_1_8":
+    if truthy_gate(row.get("manual_front_review_gate", False)) and row.get("event_relative_bin") == "near_pre_event_1_8":
         return "priority_manual_transport_front_review"
     if row.get("transport_mechanism_score", 0) >= 0.80 and row.get("event_relative_bin") == "near_pre_event_1_8":
         return "priority_transport_mechanism_review"
