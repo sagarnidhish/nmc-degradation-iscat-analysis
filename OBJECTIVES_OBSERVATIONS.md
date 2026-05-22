@@ -4582,3 +4582,28 @@ Interpretation: the project now has a concrete target-specific diffusion follow-
 
 Guardrail: this audit propagates a target-specific automatic q70 CI update through existing readiness gates. It does not rerun global diffusion readiness, accept manual labels, verify raw calibration metadata, or create publication-ready diffusion coefficients.
 
+## 2026-05-22 Cycle 78 Front Identity Review Packet
+
+Added `scripts/tier4_cycle78_front_identity_review_packet.py` and ran it on Isambard as the next handoff after the cycle-78 q70 positive-CI remeasurement. The packet renders the target `cycle78_rank22_obj2` plus same-source/same-cycle context ROIs using the same q70 front definition, and writes a pending manual-review manifest with blank particle/front/diffusion decision fields.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_front_identity_review_packet`
+- `derived_local/cycle78_front_identity_review_packet`
+- `cycle78_front_identity_review_manifest.csv`
+- `cycle78_front_identity_review.html`
+- `cycle78_front_identity_review_summary.json`
+- `panels/*_front_identity_panel.png`
+
+Results:
+
+- The packet contains 5 review rows: the target, two same-cycle neighboring objects, one previous same-source/same-object-rank context row, and one later same-source/same-object-rank context row.
+- Only 1/5 rows has a default q70 positive-CI apparent diffusion remeasurement, and that row is the target `cycle78_rank22_obj2`.
+- No row is free of automatic front-identity flags.
+- The target retains positive q70 diffusion context: q70 D 3.457e-06 um2/s, positive CI true, q70 R2 0.424, and positive-CI fraction 0.397.
+- The target also fails automatic front-identity cleanliness: flags are `fragmented_q70_mask;no_dominant_component`, median q70 components is 53, largest-component fraction is 0.420, median q70 area fraction is 0.352, area CV is 0.095, centroid path is 18.75 px, and net centroid displacement is only 0.513 px.
+- Edge contact is 0, so the main automatic concern is not crop-boundary leakage; it is fragmented threshold-front support and lack of a dominant coherent front component.
+
+Interpretation: the q70 positive-CI blocker is numerically cleared for the target, but the front-identity review packet shows why calibrated diffusion is still blocked. The apparent expansion is object-specific and worth manual review, yet the q70 mask is fragmented enough that a human needs to decide whether the front is physically interpretable or just a thresholded texture artifact.
+
+Guardrail: this packet assigns no manual labels. It renders review panels and automatic front-identity metrics only; particle identity, front coherence, artifact risk, diffusion interpretability, and final accept/reject decisions remain blank.

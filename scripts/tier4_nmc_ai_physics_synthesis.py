@@ -112,6 +112,7 @@ def main() -> None:
     targeted_diffusion_blocker = read_json(derived / "targeted_diffusion_blocker_diagnostic" / "targeted_diffusion_blocker_diagnostic_summary.json")
     cycle78_diffusion_remeasurement = read_json(derived / "cycle78_diffusion_remeasurement_audit" / "cycle78_diffusion_remeasurement_summary.json")
     post_remeasurement_diffusion_gate = read_json(derived / "post_remeasurement_diffusion_gate_audit" / "post_remeasurement_diffusion_gate_summary.json")
+    cycle78_front_identity_review = read_json(derived / "cycle78_front_identity_review_packet" / "cycle78_front_identity_review_summary.json")
     cross_modal_consensus = read_json(derived / "cross_modal_degradation_consensus" / "cross_modal_degradation_consensus_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
@@ -958,6 +959,7 @@ def main() -> None:
     post_remeasurement_scenarios = top_items(first_summary(post_remeasurement_diffusion_gate, "scenario_table", []), 8)
     post_remeasurement_target = first_summary(post_remeasurement_diffusion_gate, "target_remeasurement_evidence", {}) or {}
     post_remeasurement_publication_blockers = first_summary(post_remeasurement_diffusion_gate, "remaining_publication_blockers", []) or []
+    cycle78_front_identity_target = first_summary(cycle78_front_identity_review, "target_summary", {}) or {}
     cross_modal_top = top_items(first_summary(cross_modal_consensus, "top_cycles", []), 12)
     cross_modal_classes = top_items(first_summary(cross_modal_consensus, "class_summary", []), 8)
     cross_modal_contrasts = top_items(first_summary(cross_modal_consensus, "target_contrasts", []), 12)
@@ -1654,6 +1656,18 @@ def main() -> None:
     for blocker in post_remeasurement_publication_blockers[:8]:
         report_lines.append(f"- Remaining publication blocker: {blocker}")
     report_lines.append(f"- Guardrail: {first_summary(post_remeasurement_diffusion_gate, 'guardrail', 'Post-remeasurement diffusion gate audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Cycle 78 Front Identity Review Packet",
+        "",
+        f"- Status/target/review rows/default-q70-CI rows/no-flag rows: {first_summary(cycle78_front_identity_review, 'overall_status', 'unavailable')} / {first_summary(cycle78_front_identity_review, 'target_roi_id', 'NA')} / {first_summary(cycle78_front_identity_review, 'n_review_rows', 0)} / {first_summary(cycle78_front_identity_review, 'n_rows_default_q70_positive_ci', 0)} / {first_summary(cycle78_front_identity_review, 'n_rows_no_automatic_flags', 0)}",
+        f"- Target front-identity flags: {cycle78_front_identity_target.get('automatic_front_identity_flags', 'NA')}; score {fmt(cycle78_front_identity_target.get('automatic_front_identity_score'))}; q70 components median {fmt(cycle78_front_identity_target.get('q70_components_median'))}; largest-component fraction {fmt(cycle78_front_identity_target.get('q70_largest_component_fraction_median'))}",
+        f"- Target mask stability: q70 area median/CV {fmt(cycle78_front_identity_target.get('q70_area_fraction_median'))}/{fmt(cycle78_front_identity_target.get('q70_area_fraction_cv'))}, centroid path/net {fmt(cycle78_front_identity_target.get('q70_centroid_path_px'))}/{fmt(cycle78_front_identity_target.get('q70_centroid_net_px'))} px, edge contact {fmt(cycle78_front_identity_target.get('q70_edge_contact_fraction_median'))}",
+        f"- Target q70 diffusion context remains positive but manual fields are pending: D {fmt(cycle78_front_identity_target.get('default_q70_D_um2_per_s'))} um2/s, positive CI {cycle78_front_identity_target.get('default_q70_positive_ci', 'NA')}, manual particle/front/diffusion decisions are blank.",
+        f"- Outputs: manifest {first_summary(cycle78_front_identity_review, 'outputs', {}).get('manifest', 'NA')}; HTML {first_summary(cycle78_front_identity_review, 'outputs', {}).get('html', 'NA')}",
+    ]
+    report_lines.append(f"- Guardrail: {first_summary(cycle78_front_identity_review, 'guardrail', 'Cycle 78 front identity review packet unavailable.')}")
 
     report_lines += [
         "",
@@ -5231,6 +5245,16 @@ def main() -> None:
             "scenario_table": post_remeasurement_scenarios,
             "outputs": first_summary(post_remeasurement_diffusion_gate, "outputs", {}),
             "guardrail": first_summary(post_remeasurement_diffusion_gate, "guardrail"),
+        },
+        "cycle78_front_identity_review_packet": {
+            "overall_status": first_summary(cycle78_front_identity_review, "overall_status"),
+            "target_roi_id": first_summary(cycle78_front_identity_review, "target_roi_id"),
+            "n_review_rows": first_summary(cycle78_front_identity_review, "n_review_rows"),
+            "n_rows_default_q70_positive_ci": first_summary(cycle78_front_identity_review, "n_rows_default_q70_positive_ci"),
+            "n_rows_no_automatic_flags": first_summary(cycle78_front_identity_review, "n_rows_no_automatic_flags"),
+            "target_summary": cycle78_front_identity_target,
+            "outputs": first_summary(cycle78_front_identity_review, "outputs", {}),
+            "guardrail": first_summary(cycle78_front_identity_review, "guardrail"),
         },
         "cross_modal_degradation_consensus": {
             "n_cycles": first_summary(cross_modal_consensus, "n_cycles"),

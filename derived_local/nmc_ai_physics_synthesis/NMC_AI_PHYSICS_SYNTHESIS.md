@@ -609,6 +609,15 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Remaining publication blocker: global per-ROI timing-stability gate remains failed
 - Guardrail: This audit propagates a target-specific automatic q70 CI update through existing readiness gates. It does not rerun global diffusion readiness, accept manual labels, verify raw calibration metadata, or create publication-ready diffusion coefficients.
 
+## Cycle 78 Front Identity Review Packet
+
+- Status/target/review rows/default-q70-CI rows/no-flag rows: cycle78_front_identity_review_packet_ready / cycle78_rank22_obj2 / 5 / 1 / 0
+- Target front-identity flags: fragmented_q70_mask;no_dominant_component; score 1.843; q70 components median 53.000; largest-component fraction 0.420
+- Target mask stability: q70 area median/CV 0.352/0.095, centroid path/net 18.749/0.513 px, edge contact 0.000
+- Target q70 diffusion context remains positive but manual fields are pending: D 3.457e-06 um2/s, positive CI True, manual particle/front/diffusion decisions are blank.
+- Outputs: manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_front_identity_review_packet/cycle78_front_identity_review_manifest.csv; HTML /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_front_identity_review_packet/cycle78_front_identity_review.html
+- Guardrail: Review packet and automatic front-identity metrics only; manual fields are blank and no diffusion/front labels are accepted.
+
 ## Cross-Modal Degradation Consensus
 
 - Cycles scored/with votes: 89 / 53
