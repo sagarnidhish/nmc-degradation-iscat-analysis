@@ -102,6 +102,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
+- Balanced spatial front-propagation audit builds 414 spatial kNN edges over 72 balanced ROI nodes; nearest next-cycle front descriptors autocorrelate strongly (radius2_slope_median_px2_per_s rho=0.594, p_perm=9.990e-04) and same future8-label homophily is high (0.867), but automatic ROI identity and cycle-level labels keep this as spatial hypothesis ranking.
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
@@ -882,6 +883,24 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Apparent diffusion calibration correlation apparent_D_h5median_abs_um2_per_s vs transferred_masked_residual_signature: rho=-0.153, p=5.768e-04, n=504
 - Apparent diffusion timing guardrail: ROI/HDF5 elapsed median ratio 1.002, max source dt max/median ratio 13.783, q70 positive-D fraction 0.514
 - Apparent diffusion guardrail: Apparent diffusion values are recalibrated from HDF5 camera timing and slide-derived pixel-size assumptions. No HDF5 pixel-size attribute was found, and the values remain optical-front proxies, not validated material diffusion coefficients.
+- Balanced spatial propagation graph: nodes 72, edges 414, edge counts {'next_observed_cycle_spatial_knn': 135, 'previous_observed_cycle_spatial_knn': 135, 'same_cycle_spatial_knn': 144}
+- Spatial propagation homophily next_observed_cycle_spatial_knn: same future8 0.867 vs null mean 0.548, p=9.990e-04
+- Spatial propagation homophily previous_observed_cycle_spatial_knn: same future8 0.867 vs null mean 0.549, p=9.990e-04
+- Spatial propagation homophily same_cycle_spatial_knn: same future8 1.000 vs null mean 0.501, p=9.990e-04
+- Spatial propagation autocorr next_observed_cycle_spatial_knn radius2_slope_median_px2_per_s: rho=0.594, p=9.990e-04
+- Spatial propagation autocorr next_observed_cycle_spatial_knn diffusion_proxy_median_um2_per_s: rho=0.594, p=9.990e-04
+- Spatial propagation autocorr next_observed_cycle_spatial_knn q70_radius2_slope_bootstrap_p50_px2_per_s: rho=0.599, p=9.990e-04
+- Spatial propagation autocorr next_observed_cycle_spatial_knn q70_radius2_slope_bootstrap_p95_px2_per_s: rho=0.581, p=9.990e-04
+- Spatial propagation autocorr next_observed_cycle_spatial_knn phase_slope_positive_fraction: rho=0.622, p=9.990e-04
+- Spatial propagation autocorr next_observed_cycle_spatial_knn threshold_robust_phase_score: rho=0.420, p=9.990e-04
+- Spatial lag feature-to-next-label phase_slope_positive_fraction: AUC 0.682, null p=9.990e-04
+- Spatial lag feature-to-next-label mask_instability_score: AUC 0.563, null p=0.279
+- Spatial lag feature-to-next-label radius2_slope_median_px2_per_s: AUC 0.558, null p=0.293
+- Spatial lag feature-to-next-label diffusion_proxy_median_um2_per_s: AUC 0.558, null p=0.327
+- Spatial distance gradient same_cycle_spatial_knn: both-positive minus other 9.863 um, p=0.339
+- Spatial distance gradient next_observed_cycle_spatial_knn: both-positive minus other -5.562 um, p=0.831
+- Spatial distance gradient previous_observed_cycle_spatial_knn: both-positive minus other -5.562 um, p=0.831
+- Spatial propagation guardrail: Balanced spatial front propagation audit uses automatic ROI coordinates and reconstructed candidates, not tracked particle identities. Edges test spatial/temporal coherence for hypothesis ranking, not causal propagation.
 - Temporal guardrail: Temporal directionality audit compares ROI physics against future, past, reversed, and circularly shifted weak degradation labels. It uses automatic ROI/front descriptors and weak cycle-level abrupt-drop labels.
 - Context guardrail: Context/region audit tests whether balanced future8 ROI signal is explainable by acquisition context or spatial position. It still uses weak cycle labels and automatic ROI candidates.
 - Front-script guardrail: Diffusion values are apparent optical-front proxies computed as slope(radius^2) * pixel_size_um^2 / 4. They are not validated Li diffusion coefficients and require manual front QC.

@@ -137,6 +137,7 @@ def main() -> None:
     balanced_future_mask = read_json(derived / "balanced_future_particle_mask_stability" / "particle_mask_stability_audit_summary.json")
     balanced_future_context = read_json(derived / "balanced_future_context_region_audit" / "balanced_future_context_region_summary.json")
     temporal_directionality = read_json(derived / "temporal_directionality_physics_audit" / "temporal_directionality_physics_audit_summary.json")
+    balanced_spatial_propagation = read_json(derived / "balanced_spatial_front_propagation_audit" / "balanced_spatial_front_propagation_summary.json")
     masked_video_embedding = read_json(derived / "masked_video_embedding_audit" / "masked_video_embedding_audit_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
@@ -353,6 +354,13 @@ def main() -> None:
     temporal_future_tests = top_items(first_summary(temporal_directionality, "top_future8_feature_tests", []), 10)
     temporal_past_tests = top_items(first_summary(temporal_directionality, "top_past8_feature_tests", []), 6)
     temporal_timing_corr = top_items(first_summary(temporal_directionality, "top_timing_correlations", []), 10)
+    spatial_prop_homophily = top_items(first_summary(balanced_spatial_propagation, "top_homophily_tests", []), 8)
+    spatial_prop_autocorr = top_items(first_summary(balanced_spatial_propagation, "top_feature_autocorrelation_tests", []), 12)
+    spatial_prop_lag = top_items(first_summary(balanced_spatial_propagation, "top_lag_feature_label_tests", []), 10)
+    spatial_prop_distance = top_items(first_summary(balanced_spatial_propagation, "distance_gradient_tests", []), 8)
+    spatial_prop_top_homophily = spatial_prop_homophily[0] if spatial_prop_homophily else {}
+    spatial_prop_top_autocorr = spatial_prop_autocorr[0] if spatial_prop_autocorr else {}
+    spatial_prop_top_lag = spatial_prop_lag[0] if spatial_prop_lag else {}
     multicohort_best_oof = max(multicohort_oof, key=lambda r: (float(r.get("pooled_oof_roc_auc") or float("nan")) if r.get("pooled_oof_roc_auc") is not None else float("nan"))) if multicohort_oof else {}
     cross_cohort_shift = top_items(first_summary(cross_cohort_rollout, "domain_shift", []), 12)
     cross_cohort_corr = top_items(first_summary(cross_cohort_rollout, "top_correlations", []), 12)
@@ -560,6 +568,7 @@ def main() -> None:
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
         f"- Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with {temporal_future8.get('model', 'NA')} AUC {fmt(temporal_future8.get('pooled_oof_roc_auc'))}/AP {fmt(temporal_future8.get('pooled_oof_average_precision'))}, beating circular time-shift labels at empirical p={fmt(temporal_shift_null.get('empirical_p_ge_observed'))}; reversed labels remain nontrivial (best AUC {fmt(temporal_reversed8.get('pooled_oof_roc_auc'))}) and past8 is underpowered with {temporal_past8_counts.get('1', 0)} positives.",
+        f"- Balanced spatial front-propagation audit builds {first_summary(balanced_spatial_propagation, 'n_edges', 0)} spatial kNN edges over {first_summary(balanced_spatial_propagation, 'n_nodes', 0)} balanced ROI nodes; nearest next-cycle front descriptors autocorrelate strongly ({spatial_prop_top_autocorr.get('feature', 'NA')} rho={fmt(spatial_prop_top_autocorr.get('spearman_src_dst'))}, p_perm={fmt(spatial_prop_top_autocorr.get('empirical_p_abs_ge_observed'))}) and same future8-label homophily is high ({fmt(spatial_prop_top_homophily.get('observed_same_future8_fraction'))}), but automatic ROI identity and cycle-level labels keep this as spatial hypothesis ranking.",
         f"- Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p={fmt((masked_residual_timing_align[0] if masked_residual_timing_align else {}).get('empirical_p_distance_le_observed'))}), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.",
         f"- Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: {first_summary(weak_label_benchmark, 'n_trainable_weak_label_rows', 0)} trainable weak rows ({first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} positive / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)} negative), and only {weak_label_leakage.get('n_usable_binary_folds', 0)} leave-reference fold is class-balanced enough for binary evaluation.",
         "",
@@ -1278,6 +1287,26 @@ def main() -> None:
         f"- Apparent diffusion timing guardrail: ROI/HDF5 elapsed median ratio {fmt(first_summary(apparent_diffusion_calibration, 'median_roi_elapsed_to_h5_median_ratio'))}, max source dt max/median ratio {fmt(first_summary(apparent_diffusion_calibration, 'max_source_h5_dt_max_to_median_ratio'))}, q70 positive-D fraction {fmt(first_summary(apparent_diffusion_calibration, 'q70_positive_D_fraction'))}"
     )
     report_lines.append(f"- Apparent diffusion guardrail: {first_summary(apparent_diffusion_calibration, 'guardrail', 'Apparent diffusion calibration audit unavailable.')}")
+    report_lines.append(
+        f"- Balanced spatial propagation graph: nodes {first_summary(balanced_spatial_propagation, 'n_nodes', 0)}, edges {first_summary(balanced_spatial_propagation, 'n_edges', 0)}, edge counts {first_summary(balanced_spatial_propagation, 'edge_counts', {})}"
+    )
+    for row in spatial_prop_homophily[:4]:
+        report_lines.append(
+            f"- Spatial propagation homophily {row.get('edge_type')}: same future8 {fmt(row.get('observed_same_future8_fraction'))} vs null mean {fmt(row.get('null_same_mean'))}, p={fmt(row.get('empirical_p_same_ge_observed'))}"
+        )
+    for row in spatial_prop_autocorr[:6]:
+        report_lines.append(
+            f"- Spatial propagation autocorr {row.get('edge_type')} {row.get('feature')}: rho={fmt(row.get('spearman_src_dst'))}, p={fmt(row.get('empirical_p_abs_ge_observed'))}"
+        )
+    for row in spatial_prop_lag[:4]:
+        report_lines.append(
+            f"- Spatial lag feature-to-next-label {row.get('feature')}: AUC {fmt(row.get('auc_src_feature_predicts_dst_future8'))}, null p={fmt(row.get('empirical_p_ge_observed'))}"
+        )
+    for row in spatial_prop_distance[:3]:
+        report_lines.append(
+            f"- Spatial distance gradient {row.get('edge_type')}: both-positive minus other {fmt(row.get('median_distance_both_positive_minus_other_um'))} um, p={fmt(row.get('mannwhitney_p'))}"
+        )
+    report_lines.append(f"- Spatial propagation guardrail: {first_summary(balanced_spatial_propagation, 'guardrail', 'Balanced spatial front propagation audit unavailable.')}")
     report_lines.append(f"- Temporal guardrail: {first_summary(temporal_directionality, 'guardrail', 'Temporal directionality audit unavailable.')}")
     report_lines.append(f"- Context guardrail: {first_summary(balanced_future_context, 'guardrail', 'Balanced future context/region audit unavailable.')}")
     report_lines.append(f"- Front-script guardrail: {first_summary(balanced_future_fronts, 'diffusion_guardrail', 'Balanced future fronts unavailable.')}")
@@ -1793,6 +1822,18 @@ def main() -> None:
                 "top_future8_feature_tests": temporal_future_tests,
                 "top_timing_correlations": temporal_timing_corr,
                 "guardrail": first_summary(temporal_directionality, "guardrail"),
+            },
+            "balanced_spatial_front_propagation_audit": {
+                "n_nodes": first_summary(balanced_spatial_propagation, "n_nodes"),
+                "n_edges": first_summary(balanced_spatial_propagation, "n_edges"),
+                "n_cycles": first_summary(balanced_spatial_propagation, "n_cycles"),
+                "n_source_stems": first_summary(balanced_spatial_propagation, "n_source_stems"),
+                "edge_counts": first_summary(balanced_spatial_propagation, "edge_counts", {}),
+                "top_homophily_tests": spatial_prop_homophily,
+                "top_feature_autocorrelation_tests": spatial_prop_autocorr,
+                "top_lag_feature_label_tests": spatial_prop_lag,
+                "distance_gradient_tests": spatial_prop_distance,
+                "guardrail": first_summary(balanced_spatial_propagation, "guardrail"),
             },
             "front_diffusion_guardrail": first_summary(balanced_future_fronts, "diffusion_guardrail"),
             "guardrail": first_summary(balanced_future_physics, "guardrail"),

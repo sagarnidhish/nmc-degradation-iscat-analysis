@@ -2354,3 +2354,27 @@ Key result:
 - The strongest calibration correlation is HDF5 dt max/median ratio versus transferred masked residual signature, rho=0.728, p=2.86e-84, showing source/timing context remains an important guardrail.
 
 Interpretation: the video timebase itself is well matched for ROI spans, but the apparent diffusion proxy is threshold/context sensitive and not a calibrated material diffusion coefficient. This supports retaining diffusion-like values as optical-front descriptors for QC and hypothesis ranking only.
+
+## 2026-05-22 Balanced Spatial Front Propagation Audit
+
+Added and ran a balanced-cohort spatial/temporal propagation audit over reconstructed ROI front/rollout physics:
+
+`python scripts/tier4_balanced_spatial_front_propagation_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_spatial_front_propagation_audit --k-neighbors 3 --n-permutation 1000`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_spatial_front_propagation_audit`
+
+Local compact copy:
+
+`derived_local/balanced_spatial_front_propagation_audit`
+
+Key result:
+
+- Built a spatial kNN graph over 72 balanced ROI nodes across 24 cycles and 9 source videos, yielding 414 edges: 144 same-cycle, 135 next-observed-cycle, and 135 previous-observed-cycle edges.
+- Future8 label homophily is high across adjacent observed cycles: next-cycle same-label fraction is 0.867 versus null mean 0.548, permutation p=0.001; same-cycle same-label fraction is 1.0 because labels are cycle-level.
+- Front-motion descriptors show strong nearest-neighbor temporal autocorrelation: next-cycle radius2 slope rho=0.594, apparent diffusion proxy rho=0.594, q70 radius2 p50 rho=0.599, phase-slope positive fraction rho=0.622; all permutation p=0.001.
+- The only strong source-feature to next-cycle future8 test is phase-slope positive fraction: next-neighbor AUC=0.682 versus null p95=0.593, permutation p=0.001.
+- Distance-gradient tests do not show a simple shorter-distance enrichment for future8-positive pairs; next-cycle both-positive median distance is not significantly different from other edges (p=0.831).
+
+Interpretation: nearby reconstructed ROI candidates preserve coherent front/rollout state across adjacent observed cycles, which is useful for spatial review prioritization and candidate propagation hypotheses. It is not particle tracking or causal propagation proof because ROI identities are automatic and future8 labels are cycle-level weak labels.

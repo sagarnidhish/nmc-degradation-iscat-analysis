@@ -1,0 +1,426 @@
+{
+  "distance_gradient_tests": [
+    {
+      "edge_type": "same_cycle_spatial_knn",
+      "mannwhitney_p": 0.338568228,
+      "median_distance_both_positive_minus_other_um": 9.8626209961,
+      "median_distance_both_positive_um": 84.8835735411,
+      "median_distance_other_um": 75.020952545,
+      "n_both_future8_positive_edges": 72,
+      "n_other_edges": 72
+    },
+    {
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "mannwhitney_p": 0.8310605891,
+      "median_distance_both_positive_minus_other_um": -5.5623456724,
+      "median_distance_both_positive_um": 66.9602387396,
+      "median_distance_other_um": 72.522584412,
+      "n_both_future8_positive_edges": 81,
+      "n_other_edges": 54
+    },
+    {
+      "edge_type": "previous_observed_cycle_spatial_knn",
+      "mannwhitney_p": 0.8310605891,
+      "median_distance_both_positive_minus_other_um": -5.5623456724,
+      "median_distance_both_positive_um": 66.9602387396,
+      "median_distance_other_um": 72.522584412,
+      "n_both_future8_positive_edges": 81,
+      "n_other_edges": 54
+    }
+  ],
+  "edge_counts": {
+    "next_observed_cycle_spatial_knn": 135,
+    "previous_observed_cycle_spatial_knn": 135,
+    "same_cycle_spatial_knn": 144
+  },
+  "guardrail": "Balanced spatial front propagation audit uses automatic ROI coordinates and reconstructed candidates, not tracked particle identities. Edges test spatial/temporal coherence for hypothesis ranking, not causal propagation.",
+  "k_neighbors": 3,
+  "n_cycles": 24,
+  "n_edges": 414,
+  "n_nodes": 72,
+  "n_permutation": 1000,
+  "n_source_stems": 9,
+  "node_future8_positive_fraction": 0.5,
+  "top_feature_autocorrelation_tests": [
+    {
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "radius2_slope_median_px2_per_s",
+      "n_edges": 135,
+      "null_mean": 0.0024771629,
+      "null_p05": -0.1385177866,
+      "null_p95": 0.1497826087,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5940711462
+    },
+    {
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "diffusion_proxy_median_um2_per_s",
+      "n_edges": 135,
+      "null_mean": -0.0027909091,
+      "null_p05": -0.1443478261,
+      "null_p95": 0.1453381643,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5940711462
+    },
+    {
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+      "n_edges": 135,
+      "null_mean": 0.003296267,
+      "null_p05": -0.1268599034,
+      "null_p95": 0.1438757137,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5985068072
+    },
+    {
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "q70_radius2_slope_bootstrap_p95_px2_per_s",
+      "n_edges": 135,
+      "null_mean": 0.0008440931,
+      "null_p05": -0.1358014932,
+      "null_p95": 0.1495674133,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5809837505
+    },
+    {
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "phase_slope_positive_fraction",
+      "n_edges": 135,
+      "null_mean": 0.0042354195,
+      "null_p05": -0.1365622681,
+      "null_p95": 0.1493411467,
+      "spearman_p": 7.919573586e-16,
+      "spearman_src_dst": 0.6222248615
+    },
+    {
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "threshold_robust_phase_score",
+      "n_edges": 135,
+      "null_mean": 0.0023614279,
+      "null_p05": -0.1394670063,
+      "null_p95": 0.1422649275,
+      "spearman_p": 3.841e-07,
+      "spearman_src_dst": 0.4204188403
+    },
+    {
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "persistence_particle_mse_fraction_of_full_mean",
+      "n_edges": 135,
+      "null_mean": 0.0026770751,
+      "null_p05": -0.1446332894,
+      "null_p95": 0.149332455,
+      "spearman_p": 1e-10,
+      "spearman_src_dst": 0.5171717172
+    },
+    {
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "velocity_particle_mse_fraction_of_full_mean",
+      "n_edges": 135,
+      "null_mean": -0.0017939394,
+      "null_p05": -0.1456236276,
+      "null_p95": 0.1390030742,
+      "spearman_p": 1e-09,
+      "spearman_src_dst": 0.4956960913
+    },
+    {
+      "edge_type": "previous_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "radius2_slope_median_px2_per_s",
+      "n_edges": 135,
+      "null_mean": 0.0029708388,
+      "null_p05": -0.1378216952,
+      "null_p95": 0.1439503733,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5940711462
+    },
+    {
+      "edge_type": "previous_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "diffusion_proxy_median_um2_per_s",
+      "n_edges": 135,
+      "null_mean": 0.0015879666,
+      "null_p05": -0.1422134387,
+      "null_p95": 0.1447979798,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5940711462
+    },
+    {
+      "edge_type": "previous_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+      "n_edges": 135,
+      "null_mean": 0.0001097497,
+      "null_p05": -0.1406280193,
+      "null_p95": 0.1394158981,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5985068072
+    },
+    {
+      "edge_type": "previous_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "q70_radius2_slope_bootstrap_p95_px2_per_s",
+      "n_edges": 135,
+      "null_mean": 0.0061318841,
+      "null_p05": -0.1307773386,
+      "null_p95": 0.1485682916,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5809837505
+    },
+    {
+      "edge_type": "previous_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "phase_slope_positive_fraction",
+      "n_edges": 135,
+      "null_mean": 0.0034839552,
+      "null_p05": -0.1384642271,
+      "null_p95": 0.1431055639,
+      "spearman_p": 7.919573586e-16,
+      "spearman_src_dst": 0.6222248615
+    },
+    {
+      "edge_type": "previous_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "threshold_robust_phase_score",
+      "n_edges": 135,
+      "null_mean": -0.0045206342,
+      "null_p05": -0.145319952,
+      "null_p95": 0.1285274804,
+      "spearman_p": 3.841e-07,
+      "spearman_src_dst": 0.4204188403
+    },
+    {
+      "edge_type": "previous_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "persistence_particle_mse_fraction_of_full_mean",
+      "n_edges": 135,
+      "null_mean": -0.0005428634,
+      "null_p05": -0.1457114625,
+      "null_p95": 0.1464975845,
+      "spearman_p": 1e-10,
+      "spearman_src_dst": 0.5171717172
+    },
+    {
+      "edge_type": "previous_observed_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "velocity_particle_mse_fraction_of_full_mean",
+      "n_edges": 135,
+      "null_mean": 0.0005819499,
+      "null_p05": -0.1385155907,
+      "null_p95": 0.1448858147,
+      "spearman_p": 1e-09,
+      "spearman_src_dst": 0.4956960913
+    },
+    {
+      "edge_type": "same_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "radius2_slope_median_px2_per_s",
+      "n_edges": 144,
+      "null_mean": 1.5628e-05,
+      "null_p05": -0.1375418033,
+      "null_p95": 0.1380305807,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5152099813
+    },
+    {
+      "edge_type": "same_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "diffusion_proxy_median_um2_per_s",
+      "n_edges": 144,
+      "null_mean": -0.0028930317,
+      "null_p05": -0.1393771304,
+      "null_p95": 0.1310831886,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5152099813
+    },
+    {
+      "edge_type": "same_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+      "n_edges": 144,
+      "null_mean": 0.0031643836,
+      "null_p05": -0.1327263811,
+      "null_p95": 0.1397035179,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5222843913
+    },
+    {
+      "edge_type": "same_cycle_spatial_knn",
+      "empirical_p_abs_ge_observed": 0.000999001,
+      "feature": "q70_radius2_slope_bootstrap_p95_px2_per_s",
+      "n_edges": 144,
+      "null_mean": 0.0021511994,
+      "null_p05": -0.1353969709,
+      "null_p95": 0.1499774905,
+      "spearman_p": 0.0,
+      "spearman_src_dst": 0.5430574313
+    }
+  ],
+  "top_homophily_tests": [
+    {
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_both_ge_observed": 0.000999001,
+      "empirical_p_same_ge_observed": 0.000999001,
+      "n_edges": 135,
+      "null_both_positive_mean": 0.4404888889,
+      "null_both_positive_p95": 0.4740740741,
+      "null_same_mean": 0.5476444444,
+      "null_same_p95": 0.6148148148,
+      "observed_both_future8_positive_fraction": 0.6,
+      "observed_same_future8_fraction": 0.8666666667
+    },
+    {
+      "edge_type": "previous_observed_cycle_spatial_knn",
+      "empirical_p_both_ge_observed": 0.000999001,
+      "empirical_p_same_ge_observed": 0.000999001,
+      "n_edges": 135,
+      "null_both_positive_mean": 0.4409703704,
+      "null_both_positive_p95": 0.4666666667,
+      "null_same_mean": 0.5486074074,
+      "null_same_p95": 0.6,
+      "observed_both_future8_positive_fraction": 0.6,
+      "observed_same_future8_fraction": 0.8666666667
+    },
+    {
+      "edge_type": "same_cycle_spatial_knn",
+      "empirical_p_both_ge_observed": 0.000999001,
+      "empirical_p_same_ge_observed": 0.000999001,
+      "n_edges": 144,
+      "null_both_positive_mean": 0.2503055556,
+      "null_both_positive_p95": 0.2847222222,
+      "null_same_mean": 0.5006111111,
+      "null_same_p95": 0.5694444444,
+      "observed_both_future8_positive_fraction": 0.5,
+      "observed_same_future8_fraction": 1.0
+    }
+  ],
+  "top_lag_feature_label_tests": [
+    {
+      "auc_src_feature_predicts_dst_future8": 0.6818181818,
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_ge_observed": 0.000999001,
+      "feature": "phase_slope_positive_fraction",
+      "n_dst_negative": 36,
+      "n_dst_positive": 99,
+      "n_edges": 135,
+      "null_oriented_auc_mean": 0.5373228114,
+      "null_oriented_auc_p95": 0.5930345118,
+      "oriented_auc": 0.6818181818
+    },
+    {
+      "auc_src_feature_predicts_dst_future8": 0.5631313131,
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_ge_observed": 0.2787212787,
+      "feature": "mask_instability_score",
+      "n_dst_negative": 36,
+      "n_dst_positive": 99,
+      "n_edges": 135,
+      "null_oriented_auc_mean": 0.5457558923,
+      "null_oriented_auc_p95": 0.6069444444,
+      "oriented_auc": 0.5631313131
+    },
+    {
+      "auc_src_feature_predicts_dst_future8": 0.5580808081,
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_ge_observed": 0.2927072927,
+      "feature": "radius2_slope_median_px2_per_s",
+      "n_dst_negative": 36,
+      "n_dst_positive": 99,
+      "n_edges": 135,
+      "null_oriented_auc_mean": 0.5433644781,
+      "null_oriented_auc_p95": 0.6078282828,
+      "oriented_auc": 0.5580808081
+    },
+    {
+      "auc_src_feature_predicts_dst_future8": 0.5580808081,
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_ge_observed": 0.3266733267,
+      "feature": "diffusion_proxy_median_um2_per_s",
+      "n_dst_negative": 36,
+      "n_dst_positive": 99,
+      "n_edges": 135,
+      "null_oriented_auc_mean": 0.5451835017,
+      "null_oriented_auc_p95": 0.606986532,
+      "oriented_auc": 0.5580808081
+    },
+    {
+      "auc_src_feature_predicts_dst_future8": 0.5555555556,
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_ge_observed": 0.3606393606,
+      "feature": "q70_radius2_slope_bootstrap_p95_px2_per_s",
+      "n_dst_negative": 36,
+      "n_dst_positive": 99,
+      "n_edges": 135,
+      "null_oriented_auc_mean": 0.5465883838,
+      "null_oriented_auc_p95": 0.6085858586,
+      "oriented_auc": 0.5555555556
+    },
+    {
+      "auc_src_feature_predicts_dst_future8": 0.5505050505,
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_ge_observed": 0.4105894106,
+      "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+      "n_dst_negative": 36,
+      "n_dst_positive": 99,
+      "n_edges": 135,
+      "null_oriented_auc_mean": 0.5473981481,
+      "null_oriented_auc_p95": 0.6102693603,
+      "oriented_auc": 0.5505050505
+    },
+    {
+      "auc_src_feature_predicts_dst_future8": 0.4810606061,
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_ge_observed": 0.7492507493,
+      "feature": "threshold_robust_diffusion_score",
+      "n_dst_negative": 36,
+      "n_dst_positive": 99,
+      "n_edges": 135,
+      "null_oriented_auc_mean": 0.5438775253,
+      "null_oriented_auc_p95": 0.6077861953,
+      "oriented_auc": 0.5189393939
+    },
+    {
+      "auc_src_feature_predicts_dst_future8": 0.5126262626,
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_ge_observed": 0.8181818182,
+      "feature": "velocity_particle_mse_fraction_of_full_mean",
+      "n_dst_negative": 36,
+      "n_dst_positive": 99,
+      "n_edges": 135,
+      "null_oriented_auc_mean": 0.5444006734,
+      "null_oriented_auc_p95": 0.6077861953,
+      "oriented_auc": 0.5126262626
+    },
+    {
+      "auc_src_feature_predicts_dst_future8": 0.5126262626,
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_ge_observed": 0.8201798202,
+      "feature": "persistence_particle_mse_fraction_of_full_mean",
+      "n_dst_negative": 36,
+      "n_dst_positive": 99,
+      "n_edges": 135,
+      "null_oriented_auc_mean": 0.5450909091,
+      "null_oriented_auc_p95": 0.6111531987,
+      "oriented_auc": 0.5126262626
+    },
+    {
+      "auc_src_feature_predicts_dst_future8": 0.5075757576,
+      "edge_type": "next_observed_cycle_spatial_knn",
+      "empirical_p_ge_observed": 0.9100899101,
+      "feature": "threshold_robust_phase_score",
+      "n_dst_negative": 36,
+      "n_dst_positive": 99,
+      "n_edges": 135,
+      "null_oriented_auc_mean": 0.5463316498,
+      "null_oriented_auc_p95": 0.6098905724,
+      "oriented_auc": 0.5075757576
+    }
+  ]
+}

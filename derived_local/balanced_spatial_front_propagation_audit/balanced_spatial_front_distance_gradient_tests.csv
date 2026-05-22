@@ -1,0 +1,4 @@
+edge_type,n_both_future8_positive_edges,n_other_edges,median_distance_both_positive_um,median_distance_other_um,median_distance_both_positive_minus_other_um,mannwhitney_p
+same_cycle_spatial_knn,72,72,84.88357354108713,75.02095254502554,9.862620996061594,0.33856822796614283
+next_observed_cycle_spatial_knn,81,54,66.96023873957208,72.52258441195912,-5.562345672387039,0.831060589059464
+previous_observed_cycle_spatial_knn,81,54,66.96023873957208,72.52258441195912,-5.562345672387039,0.831060589059464
