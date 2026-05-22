@@ -1,0 +1,4 @@
+auto_qc_tier,n_candidates,event_fraction,median_surrogate_score,median_artifact_risk,diffusion_guardrail_rate,visual_asset_rate
+auto_surrogate_likely_interpretable,6,0.8333333333333334,0.8360661424606846,0.0625,0.16666666666666666,1.0
+standard_review,31,0.41935483870967744,0.5551196808510639,0.375,0.3870967741935484,1.0
+auto_surrogate_artifact_risk,10,0.5,0.4633870837187789,0.5,0.7,1.0

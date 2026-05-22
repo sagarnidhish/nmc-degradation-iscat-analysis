@@ -2433,3 +2433,26 @@ Key result:
 
 Interpretation: the echem regime atlas supports a multi-stage degradation picture. Synchronized optical events at 86/116 sit in a broader echem/trace transition landscape, while late cycles 150/151 look like electrochemical-regime outliers with future-drop risk but no same-cycle trace drop. The atlas is useful for hypothesis ranking and model conditioning, not calibrated dQ/dV, mechanistic phase-diagram proof, or diffusion validation.
 
+
+## 2026-05-22 Automatic QC Triage Surrogate
+
+Added `scripts/tier4_automatic_qc_triage_surrogate.py` and ran it on Isambard to turn the pending manual-QC bottleneck into an auditable automatic triage queue. The script consolidates the manual-QC label template, active-learning priority table, control-balanced front-QC sensitivity diagnostics, front-tracking metrics, and physics-consistency matrix. It preserves all manual labels as pending and assigns only surrogate triage tiers.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/automatic_qc_triage_surrogate`
+
+Local compact copy:
+
+`derived_local/automatic_qc_triage_surrogate`
+
+Key result:
+
+- The surrogate scored all 47 pending manual-QC candidates; manual status remains `pending` for all rows.
+- Six candidates are `auto_surrogate_likely_interpretable`; five are event ROIs and all six have visual assets. The top likely-interpretable ROI is `cycle156_rank7_obj27` with score 0.919 and artifact risk 0.000.
+- Ten candidates are `auto_surrogate_artifact_risk`, led by `cycle156_rank5_obj4` with score 0.598, artifact risk 0.625, fragmentation and diffusion-CI flags.
+- Twenty candidates trigger the diffusion guardrail after incorporating suffixed control-balanced QC flags; artifact-risk rows have diffusion-guardrail rate 0.700 versus 0.167 in likely-interpretable rows.
+- The likely-interpretable tier has median surrogate score 0.836 and median artifact risk 0.0625. Standard-review rows have median score 0.555 and median risk 0.375. Artifact-risk rows have median score 0.463 and median risk 0.500.
+- Internal checks behave as expected: diffusion interpretability is strongly lower in diffusion-guardrail rows (median positive-negative -0.515, p=6.68e-9), front-mask score is higher in likely-interpretable rows (median shift 0.453, p=7.45e-7), and particle-identity score correlates with total surrogate score (rho=0.722, p=9.96e-9).
+
+Interpretation: this closes the immediate review-prioritization gap without pretending to replace manual QC. The output identifies high-yield visual-review candidates and explicit artifact/diffusion guardrails, but it must not be used as particle identity, front-mask acceptance, diffusion interpretability, or degradation-mode validation.

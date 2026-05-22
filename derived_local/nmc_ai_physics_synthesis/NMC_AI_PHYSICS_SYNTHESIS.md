@@ -44,6 +44,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Transfer-ranked residual transition timing ROI/method rows: 48 / 144
 - Multi-cohort future-drop model rows/features: 59 / 44
 - Active-learning QC candidates/visual/immediate: 97 / 47 / 4
+- Automatic QC triage surrogate candidates/likely/artifact/diffusion-guardrail: 47 / 6 / 10 / 20
 - Balanced future-drop ROI rows/cycles/features: 72 / 24 / 26
 - Cross-cohort rollout transfer selected/transfer ROIs: 11 / 48
 - Diffusion sanity selected-front/publication candidates: 12 / 0
@@ -100,6 +101,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cross-cohort rollout transfer audit shows the late transfer-ranked crops are a distinct video-dynamics domain: selected-cohort DMD evaluated on transfer-ranked ROIs has median particle MSE 0.020, 3.494x the transfer-internal DMD baseline (p=3.277e-09), while pooled training is close to transfer-internal (1.061x).
 - Multi-cohort future-drop model combines selected and transfer-ranked ROI physics features across 59 rows / 44 features; leave-cycle random forest reaches AUC 0.886/AP 0.914 with 40-permutation p=0.024, but leave-cohort transfer is not evaluable because the selected cohort has no positive future8 labels.
 - Active-learning QC prioritization merges manual-QC, precursor, weak-model, front, and timing evidence into 97 review candidates; 47 have visual assets and 4 are immediate manual-QC picks, led by cycle116_rank7_obj37. No manual labels are assigned.
+- Automatic QC triage surrogate ranks the same pending-review bottleneck without assigning labels: 6 likely interpretable candidates, 10 artifact-risk candidates, and 20 diffusion-guardrail rows; top likely ROI is cycle156_rank7_obj27 and top artifact-risk ROI is cycle156_rank5_obj4.
 - Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
@@ -882,6 +884,39 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Active-QC reason front_diffusion_guardrail_review: n=4
 - Active-QC reason transition_timing_residual_review: n=3
 - Guardrail: Active-learning QC ranks pending ROI review candidates from automatic and weak-label evidence only; manual labels, diffusion claims, and deployment decisions remain withheld until human QC.
+
+## Automatic QC Triage Surrogate
+
+- Candidate/manual-status rows: 47 / {'pending': 47}
+- Likely/artifact/diffusion-guardrail counts: 6 / 10 / 20
+- Auto-QC tier auto_surrogate_likely_interpretable: n=6, median score 0.836, median risk 0.062, diffusion guardrail rate 0.167
+- Auto-QC tier standard_review: n=31, median score 0.555, median risk 0.375, diffusion guardrail rate 0.387
+- Auto-QC tier auto_surrogate_artifact_risk: n=10, median score 0.463, median risk 0.500, diffusion guardrail rate 0.700
+- Auto-QC likely ROI cycle156_rank7_obj27: score 0.919, risk 0.000, cycle 156, role event, reason event_roi;primary_visual_panel;control_balanced_panel;no_auto_flags;high_residual_mode_priority;hard_rollout_mobility
+- Auto-QC likely ROI cycle156_rank8_obj10: score 0.843, risk 0.000, cycle 156, role event, reason event_roi;primary_visual_panel;control_balanced_panel;no_auto_flags;hard_rollout_mobility
+- Auto-QC likely ROI cycle156_rank2_obj2: score 0.840, risk 0.125, cycle 156, role event, reason event_roi;primary_visual_panel;control_balanced_panel;no_auto_flags;hard_rollout_mobility
+- Auto-QC likely ROI cycle156_rank1_obj1: score 0.832, risk 0.125, cycle 156, role event, reason event_roi;primary_visual_panel;control_balanced_panel;no_auto_flags
+- Auto-QC likely ROI cycle156_rank6_obj3: score 0.762, risk 0.250, cycle 156, role event, reason event_roi;primary_visual_panel;control_balanced_panel;diffusion_ci_check
+- Auto-QC likely ROI cycle157_rank1_obj1: score 0.703, risk 0.000, cycle 157, role control, reason control_roi;control_balanced_panel;no_auto_flags;large_conditioned_front_sign_residual
+- Auto-QC artifact-risk ROI cycle156_rank5_obj4: score 0.598, risk 0.625, diffusion guardrail 1, reason event_roi;primary_visual_panel;control_balanced_panel;fragmentation_check;diffusion_ci_check;hard_rollout_mobility
+- Auto-QC artifact-risk ROI cycle86_rank6_obj78: score 0.542, risk 0.500, diffusion guardrail 1, reason event_roi;control_balanced_panel;fragmentation_check;diffusion_ci_check
+- Auto-QC artifact-risk ROI cycle62_rank2_obj2: score 0.523, risk 0.500, diffusion guardrail 0, reason control_roi;control_balanced_panel;fragmentation_check;large_conditioned_front_sign_residual
+- Auto-QC artifact-risk ROI cycle157_rank2_obj2: score 0.486, risk 0.625, diffusion guardrail 1, reason control_roi;control_balanced_panel;fragmentation_check;diffusion_ci_check;high_residual_mode_priority;large_conditioned_front_sign_residual
+- Auto-QC artifact-risk ROI cycle86_rank4_obj9: score 0.464, risk 0.500, diffusion guardrail 1, reason event_roi;primary_visual_panel;fragmentation_check;diffusion_ci_check
+- Auto-QC artifact-risk ROI cycle158_rank2_obj1: score 0.463, risk 0.500, diffusion guardrail 1, reason control_roi;control_balanced_panel;fragmentation_check;diffusion_ci_check;large_conditioned_front_sign_residual
+- Auto-QC contrast surrogate_diffusion_interpretability_score vs auto_diffusion_guardrail: median positive-negative -0.515, p=6.682e-09, n=47
+- Auto-QC contrast automatic_artifact_risk_score vs is_artifact_risk: median positive-negative 0.125, p=5.722e-07, n=47
+- Auto-QC contrast surrogate_front_mask_score vs is_likely_interpretable: median positive-negative 0.453, p=7.450e-07, n=47
+- Auto-QC contrast diffusion_proxy_abs_median_um2_per_s vs auto_diffusion_guardrail: median positive-negative -2.211e-06, p=4.045e-05, n=46
+- Auto-QC contrast surrogate_particle_identity_score vs is_likely_interpretable: median positive-negative 0.173, p=4.815e-04, n=47
+- Auto-QC contrast automatic_artifact_risk_score vs is_likely_interpretable: median positive-negative -0.312, p=5.139e-04, n=47
+- Auto-QC correlation surrogate_particle_identity_score vs automatic_qc_surrogate_score: rho=0.722, p=9.959e-09, n=47
+- Auto-QC correlation surrogate_front_mask_score vs automatic_qc_surrogate_score: rho=0.616, p=3.982e-06, n=47
+- Auto-QC correlation automatic_artifact_risk_score vs automatic_qc_surrogate_score: rho=-0.575, p=2.407e-05, n=47
+- Auto-QC correlation surrogate_particle_identity_score vs automatic_artifact_risk_score: rho=-0.559, p=4.392e-05, n=47
+- Auto-QC correlation surrogate_front_mask_score vs automatic_artifact_risk_score: rho=-0.507, p=2.773e-04, n=47
+- Auto-QC correlation surrogate_diffusion_interpretability_score vs automatic_qc_surrogate_score: rho=0.483, p=5.824e-04, n=47
+- Guardrail: Automatic QC triage surrogate preserves manual_qc_status as pending. It ranks candidate review priority from existing automatic/visual QC diagnostics and must not be treated as manual particle identity, front-mask, or diffusion-interpretable labels.
 
 ## Balanced Future-Drop Direct-Video ROI Audit
 
