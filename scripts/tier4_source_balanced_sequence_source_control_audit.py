@@ -368,6 +368,7 @@ def write_readme(out: Path, summary: Dict[str, Any]) -> None:
         "Source/cycle-control stress test for source-balanced particle-region rollout features.",
         "",
         f"- ROI rows/cycles/sources: {summary['n_rows']} / {summary['n_cycles']} / {summary['n_sources']}",
+        f"- Source/cycle-stratified permutations per scalar test: {summary['n_permutation']}",
         f"- Verdict: {summary['verdict']}",
         f"- Strict scalar rows: {summary['n_strict_scalar_rows']}",
         f"- Source-heldout model rows with AUC >= 0.65: {summary['n_source_model_auc_ge_065']}",
@@ -393,7 +394,7 @@ def main() -> None:
     parser.add_argument("--rollout-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit")
     parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_source_control_audit")
     parser.add_argument("--seed", type=int, default=71)
-    parser.add_argument("--n-permutation", type=int, default=500)
+    parser.add_argument("--n-permutation", type=int, default=1000)
     args = parser.parse_args()
 
     rollout_dir = Path(args.rollout_dir)
@@ -450,6 +451,7 @@ def main() -> None:
         "targets": [t for t in TARGETS if t in df.columns],
         "features_tested": features,
         "n_scalar_rows": int(len(scalar)),
+        "n_permutation": int(args.n_permutation),
         "n_strict_scalar_rows": int(len(strict_scalar)),
         "n_source_model_auc_ge_065": int(len(source_models)),
         "verdict": cohort_verdict(scalar, model_metrics, model_deltas),

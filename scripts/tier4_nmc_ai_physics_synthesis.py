@@ -191,6 +191,7 @@ def main() -> None:
     source_balanced_pre_event_physics_modes = read_json(derived / "source_balanced_pre_event_physics_mode_taxonomy" / "source_balanced_pre_event_physics_mode_summary.json")
     source_balanced_sequences = read_json(derived / "source_balanced_roi_sequences" / "selected_roi_sequence_summary.json")
     source_balanced_sequence_rollout = read_json(derived / "source_balanced_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
+    source_balanced_sequence_source_control = read_json(derived / "source_balanced_sequence_source_control_audit" / "source_balanced_sequence_source_control_summary.json")
     source_balanced_expansion_transport_front = read_json(derived / "source_balanced_expansion_transport_front_audit" / "source_balanced_expansion_transport_front_summary.json")
     source_balanced_mask_front = read_json(derived / "source_balanced_mask_front_sanity_audit" / "source_balanced_mask_front_summary.json")
     source_balanced_mask_front_source_residual = read_json(derived / "source_balanced_mask_front_source_residual_audit" / "source_balanced_mask_front_source_residual_summary.json")
@@ -472,6 +473,11 @@ def main() -> None:
     source_balanced_rollout_roi_tests = top_items(first_summary(source_balanced_sequence_rollout, "top_roi_feature_tests", []), 30)
     source_balanced_rollout_cycle_tests = top_items(first_summary(source_balanced_sequence_rollout, "top_cycle_feature_tests", []), 20)
     source_balanced_rollout_sources = top_items(first_summary(source_balanced_sequence_rollout, "source_summary", []), 20)
+    source_balanced_source_control_scalars = top_items(first_summary(source_balanced_sequence_source_control, "top_source_stratified_scalars", []), 12)
+    source_balanced_source_control_models = top_items(first_summary(source_balanced_sequence_source_control, "top_source_heldout_models", []), 12)
+    source_balanced_source_control_deltas = top_items(first_summary(source_balanced_sequence_source_control, "top_model_deltas_vs_context", []), 12)
+    source_balanced_source_control_best_scalar = source_balanced_source_control_scalars[0] if source_balanced_source_control_scalars else {}
+    source_balanced_source_control_best_model = source_balanced_source_control_models[0] if source_balanced_source_control_models else {}
     source_balanced_rollout_top16 = next((r for r in source_balanced_rollout_roi_tests if r.get("target") == "future_any_drop_within_16cycles"), {})
     source_balanced_rollout_top8 = next((r for r in source_balanced_rollout_roi_tests if r.get("target") == "future_any_drop_within_8cycles"), {})
     source_balanced_expansion_transport_tests = top_items(first_summary(source_balanced_expansion_transport_front, "top_feature_tests", []), 120)
@@ -1218,6 +1224,7 @@ def main() -> None:
         f"- Pre-event strict QC-gated front audit reduces {first_summary(source_balanced_pre_event_strict_qc_gated_front, 'n_candidates', 0)} rendered candidates to {first_summary(source_balanced_pre_event_strict_qc_gated_front, 'n_manual_front_review_candidates', 0)} automatic manual-front-review candidate and {first_summary(source_balanced_pre_event_strict_qc_gated_front, 'n_automatic_diffusion_claim_candidates', 0)} automatic diffusion-claim candidates; the surviving review candidate is {source_balanced_pre_event_strict_qc_best.get('roi_id', 'NA')} with strict QC score {fmt(source_balanced_pre_event_strict_qc_best.get('strict_qc_priority_score'))}.",
         f"- Pre-event physics-mode taxonomy clusters source-residual front/diffusion/heterogeneity features into k={fmt(first_summary(source_balanced_pre_event_physics_modes, 'chosen_k'), 0)} broad states but finds no strong near-pre enrichment (best Fisher p={fmt(source_balanced_pre_event_mode_enrich_best.get('fisher_p'))}), so continuous front/diffusion clocks remain more informative than coarse modes for this cohort.",
         f"- Source-balanced ROI sequence export converts that manifest into {first_summary(source_balanced_sequences, 'n_roi_sequences', 0)} particle-region crop tensors across {first_summary(source_balanced_sequences, 'n_cycles', 0)} cycles and {first_summary(source_balanced_sequences, 'n_sources', 0)} sources with {first_summary(source_balanced_sequences, 'n_failed', 0)} export failures; the fast rollout audit finds strongest future16 ROI signal in {source_balanced_rollout_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_rollout_top16.get('oriented_auc'))}, while prediction-error features are highly source-structured.",
+        f"- Source-balanced sequence source-control audit stress-tests those rollout features across {first_summary(source_balanced_sequence_source_control, 'n_rows', 0)} rows and {first_summary(source_balanced_sequence_source_control, 'n_sources', 0)} sources; verdict `{first_summary(source_balanced_sequence_source_control, 'verdict', 'missing')}` with {first_summary(source_balanced_sequence_source_control, 'n_strict_scalar_rows', 0)} strict scalar rows and {first_summary(source_balanced_sequence_source_control, 'n_source_model_auc_ge_065', 0)} source-heldout model rows above AUC 0.65.",
         f"- A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across {first_summary(source_balanced_mask_front, 'n_roi_sequences', 0)} ROI tensors; top future16 mask/front proxy is {source_balanced_mask_front_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_top16.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_top16.get('average_precision'))}, but source eta2 is {fmt(source_balanced_mask_front_top16.get('source_eta2'))}.",
         f"- A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is {source_balanced_mask_front_resid_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_resid_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_resid_best.get('average_precision'))}, and best within-source-rank proxy is {source_balanced_mask_front_rank_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_rank_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_rank_best.get('average_precision'))}.",
         f"- A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC {fmt(source_balanced_resdict_cycle16.get('roc_auc'))}/AP {fmt(source_balanced_resdict_cycle16.get('average_precision'))}, but leave-source future16 drops to AUC {fmt(source_balanced_resdict_source16.get('roc_auc'))}, marking source transfer as the main failure mode.",
@@ -2345,6 +2352,27 @@ def main() -> None:
         )
     report_lines.append(f"- Sequence guardrail: {first_summary(source_balanced_sequences, 'guardrail', 'Source-balanced sequence export unavailable.')}")
     report_lines.append(f"- Rollout guardrail: {first_summary(source_balanced_sequence_rollout, 'guardrail', 'Source-balanced rollout audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Source-Balanced Sequence Source-Control Audit",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_balanced_sequence_source_control, 'n_rows', 0)} / {first_summary(source_balanced_sequence_source_control, 'n_cycles', 0)} / {first_summary(source_balanced_sequence_source_control, 'n_sources', 0)}",
+        f"- Features/scalar rows/permutations: {len(first_summary(source_balanced_sequence_source_control, 'features_tested', []))} / {first_summary(source_balanced_sequence_source_control, 'n_scalar_rows', 0)} / {first_summary(source_balanced_sequence_source_control, 'n_permutation', 0)}",
+        f"- Strict scalar rows / source-heldout model rows AUC>=0.65: {first_summary(source_balanced_sequence_source_control, 'n_strict_scalar_rows', 0)} / {first_summary(source_balanced_sequence_source_control, 'n_source_model_auc_ge_065', 0)}",
+        f"- Verdict: {first_summary(source_balanced_sequence_source_control, 'verdict', 'missing')}",
+        f"- Best source-stratified scalar: {source_balanced_source_control_best_scalar.get('target', 'NA')} {source_balanced_source_control_best_scalar.get('feature', 'NA')} {source_balanced_source_control_best_scalar.get('transform', 'NA')} AUC {fmt(source_balanced_source_control_best_scalar.get('oriented_auc'))}, source p {fmt(source_balanced_source_control_best_scalar.get('source_stratified_auc_p'))}, AP {fmt(source_balanced_source_control_best_scalar.get('average_precision'))}",
+        f"- Best source-heldout model: {source_balanced_source_control_best_model.get('target', 'NA')} {source_balanced_source_control_best_model.get('feature_set', 'NA')} AUC {fmt(source_balanced_source_control_best_model.get('roc_auc'))}, AP {fmt(source_balanced_source_control_best_model.get('average_precision'))}",
+    ]
+    for row in source_balanced_source_control_scalars[:6]:
+        report_lines.append(
+            f"- Source-control scalar {row.get('target')} {row.get('feature')} {row.get('transform')}: AUC {fmt(row.get('oriented_auc'))}, source p {fmt(row.get('source_stratified_auc_p'))}, cycle p {fmt(row.get('cycle_stratified_auc_p'))}, median pos-neg {fmt(row.get('median_positive_minus_negative'))}"
+        )
+    for row in source_balanced_source_control_deltas[:4]:
+        report_lines.append(
+            f"- Source-control model delta {row.get('target')} {row.get('group_col')} {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, delta vs context {fmt(row.get('delta_roc_auc_vs_context'))}, AP {fmt(row.get('average_precision'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_sequence_source_control, 'guardrail', 'Source-balanced sequence source-control audit unavailable.')}")
 
     report_lines += [
         "",
@@ -3943,6 +3971,20 @@ def main() -> None:
             "top_cycle_feature_tests": source_balanced_rollout_cycle_tests,
             "source_summary": source_balanced_rollout_sources,
             "guardrail": first_summary(source_balanced_sequence_rollout, "guardrail"),
+        },
+        "source_balanced_sequence_source_control_audit": {
+            "n_rows": first_summary(source_balanced_sequence_source_control, "n_rows"),
+            "n_cycles": first_summary(source_balanced_sequence_source_control, "n_cycles"),
+            "n_sources": first_summary(source_balanced_sequence_source_control, "n_sources"),
+            "n_permutation": first_summary(source_balanced_sequence_source_control, "n_permutation"),
+            "n_scalar_rows": first_summary(source_balanced_sequence_source_control, "n_scalar_rows"),
+            "n_strict_scalar_rows": first_summary(source_balanced_sequence_source_control, "n_strict_scalar_rows"),
+            "n_source_model_auc_ge_065": first_summary(source_balanced_sequence_source_control, "n_source_model_auc_ge_065"),
+            "verdict": first_summary(source_balanced_sequence_source_control, "verdict"),
+            "top_source_stratified_scalars": source_balanced_source_control_scalars,
+            "top_source_heldout_models": source_balanced_source_control_models,
+            "top_model_deltas_vs_context": source_balanced_source_control_deltas,
+            "guardrail": first_summary(source_balanced_sequence_source_control, "guardrail"),
         },
         "source_balanced_expansion_transport_front_audit": {
             "n_input_rows": first_summary(source_balanced_expansion_transport_front, "n_input_rows"),

@@ -4706,10 +4706,10 @@ Outputs:
 Results:
 
 - The audit covers 96 ROI rows, 48 cycles, and 14 source movies from the source-balanced expansion cohort.
-- It tests 20 rollout/intensity/context features across raw, source-residual, within-source-rank, and within-source-z transforms with 500 source/cycle-stratified label permutations.
+- It tests 20 rollout/intensity/context features across raw, source-residual, within-source-rank, and within-source-z transforms with 1000 source/cycle-stratified label permutations.
 - No scalar feature passes the strict source-controlled signal gate: 0 rows simultaneously have source-controlled transform, AUC >= 0.65, and source-stratified p <= 0.05.
 - No source-heldout model reaches AUC >= 0.65. The best source-heldout model is `rollout_raw` for future16 with AUC 0.639 and AP 0.656, below the candidate threshold.
-- The best source-stratified scalar is `temporal_energy_late_minus_early` source-residual for future16: AUC 0.615, AP 0.606, source-stratified p 0.00399. This is statistically source-stratified but too small in effect size to count as predictive.
+- The best source-stratified scalar family is `temporal_energy_late_minus_early` for future16; the largest effect-size version is source-residual with AUC 0.615 and AP 0.606, while the strongest source-stratified p-value after 1000 permutations is the raw transform (p=0.001998). These effects are statistically source-stratified but too small to count as predictive.
 - Leave-cycle models can look stronger, e.g. `rollout_raw` future16 AUC 0.690 and delta AUC +0.170 versus context, but that is weaker evidence than source-heldout transfer because cycle labels are nested inside source/acquisition regimes.
 - Final verdict: `not_source_controlled_predictive;use_for_review_negative_controls`.
 

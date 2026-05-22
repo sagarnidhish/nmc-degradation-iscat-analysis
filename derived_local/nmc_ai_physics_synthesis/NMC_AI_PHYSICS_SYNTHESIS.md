@@ -144,6 +144,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Pre-event strict QC-gated front audit reduces 24 rendered candidates to 1 automatic manual-front-review candidate and 0 automatic diffusion-claim candidates; the surviving review candidate is source_balanced_cycle80_rank62_obj2_9_c2_x10_010723 with strict QC score 0.600.
 - Pre-event physics-mode taxonomy clusters source-residual front/diffusion/heterogeneity features into k=2 broad states but finds no strong near-pre enrichment (best Fisher p=0.689), so continuous front/diffusion clocks remain more informative than coarse modes for this cohort.
 - Source-balanced ROI sequence export converts that manifest into 96 particle-region crop tensors across 48 cycles and 14 sources with 0 export failures; the fast rollout audit finds strongest future16 ROI signal in roi_norm_mean_delta_last_minus_first at AUC 0.626, while prediction-error features are highly source-structured.
+- Source-balanced sequence source-control audit stress-tests those rollout features across 96 rows and 14 sources; verdict `not_source_controlled_predictive;use_for_review_negative_controls` with 0 strict scalar rows and 0 source-heldout model rows above AUC 0.65.
 - A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across 96 ROI tensors; top future16 mask/front proxy is masked_minus_background_mean_slope at AUC 0.690/AP 0.696, but source eta2 is 0.634.
 - A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.631/AP 0.634, and best within-source-rank proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.656/AP 0.677.
 - A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC 0.602/AP 0.581, but leave-source future16 drops to AUC 0.375, marking source transfer as the main failure mode.
@@ -1394,6 +1395,26 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source-balanced rollout source 16_c2_x10_HighHighCOV_130723: ROI 8, cycles 4, persistence MSE 2.279e-04, future16 seq 6
 - Sequence guardrail: Source-balanced sequences are fixed padded particle-region crops around automatic reconstructed candidates. They broaden source coverage for model/physics tests, but are not manual particle annotations or validated front labels.
 - Rollout guardrail: Source-balanced rollout features are computed from automatic particle-centered crops and weak future labels. They quantify ROI-only temporal prediction difficulty and optical drift/intensity dynamics, not manual QC, causal degradation, or calibrated diffusion.
+
+## Source-Balanced Sequence Source-Control Audit
+
+- Rows/cycles/sources: 96 / 48 / 14
+- Features/scalar rows/permutations: 20 / 160 / 1000
+- Strict scalar rows / source-heldout model rows AUC>=0.65: 0 / 0
+- Verdict: not_source_controlled_predictive;use_for_review_negative_controls
+- Best source-stratified scalar: future_any_drop_within_16cycles temporal_energy_late_minus_early raw AUC 0.561, source p 0.002, AP 0.548
+- Best source-heldout model: future_any_drop_within_16cycles rollout_raw AUC 0.639, AP 0.656
+- Source-control scalar future_any_drop_within_16cycles temporal_energy_late_minus_early raw: AUC 0.561, source p 0.002, cycle p 1.000, median pos-neg 2.230e-05
+- Source-control scalar future_any_drop_within_16cycles temporal_energy_late_minus_early within_source_z: AUC 0.591, source p 0.003, cycle p 1.000, median pos-neg 0.762
+- Source-control scalar future_any_drop_within_16cycles temporal_energy_late_minus_early source_residual: AUC 0.615, source p 0.004, cycle p 1.000, median pos-neg 2.010e-04
+- Source-control scalar future_any_drop_within_16cycles temporal_energy_late_minus_early within_source_rank: AUC 0.573, source p 0.006, cycle p 1.000, median pos-neg 0.125
+- Source-control scalar future_any_drop_within_16cycles roi_norm_mean_positive_step_fraction raw: AUC 0.602, source p 0.013, cycle p 1.000, median pos-neg 0.005
+- Source-control scalar future_any_drop_within_8cycles stage_drift_xy_recomputed within_source_rank: AUC 0.543, source p 0.028, cycle p 1.000, median pos-neg -0.073
+- Source-control model delta future_any_drop_within_16cycles source_stem rollout_raw: AUC 0.639, delta vs context 0.207, AP 0.656
+- Source-control model delta future_any_drop_within_8cycles source_stem rollout_source_residual: AUC 0.489, delta vs context 0.195, AP 0.381
+- Source-control model delta future_any_drop_within_8cycles cycleNo rollout_raw: AUC 0.660, delta vs context 0.189, AP 0.507
+- Source-control model delta future_any_drop_within_16cycles source_stem rollout_raw_plus_context: AUC 0.604, delta vs context 0.171, AP 0.639
+- Guardrail: This audit stress-tests source-balanced rollout descriptors under source/cycle controls and weak future-drop labels. Within-source transforms are useful for review and negative-control design, but are not prospective source-transfer models. Results do not assign manual QC labels, validate degradation mechanisms, or calibrate diffusion.
 
 ## Source-Balanced Expansion Transport/Front Audit
 
