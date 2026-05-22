@@ -104,6 +104,7 @@ def main() -> None:
     calibration_metadata = read_json(derived / "calibration_metadata_audit" / "calibration_metadata_audit_summary.json")
     calibration_claim_risk = read_json(derived / "calibration_claim_risk_register" / "calibration_claim_risk_summary.json")
     apparent_diffusion_calibration = read_json(derived / "apparent_diffusion_calibration_bounds" / "apparent_diffusion_calibration_bounds_summary.json")
+    diffusion_physics_consistency = read_json(derived / "diffusion_physics_consistency_audit" / "diffusion_physics_consistency_summary.json")
     cross_modal_consensus = read_json(derived / "cross_modal_degradation_consensus" / "cross_modal_degradation_consensus_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
@@ -489,6 +490,12 @@ def main() -> None:
     apparent_diffusion_q70_tests = top_items(first_summary(apparent_diffusion_calibration, "future8_feature_tests_q70", []), 10)
     apparent_diffusion_corr = top_items(first_summary(apparent_diffusion_calibration, "calibration_correlations", []), 8)
     apparent_diffusion_q70_test = apparent_diffusion_q70_tests[0] if apparent_diffusion_q70_tests else {}
+    diffusion_physics_gates = top_items(first_summary(diffusion_physics_consistency, "gate_counts", []), 12)
+    diffusion_physics_tests = top_items(first_summary(diffusion_physics_consistency, "top_feature_tests", []), 12)
+    diffusion_physics_corr = top_items(first_summary(diffusion_physics_consistency, "top_correlations", []), 10)
+    diffusion_physics_candidates = top_items(first_summary(diffusion_physics_consistency, "top_consistent_candidates", []), 8)
+    diffusion_physics_top_scores = top_items(first_summary(diffusion_physics_consistency, "top_physics_scores", []), 8)
+    diffusion_physics_source_summary = top_items(first_summary(diffusion_physics_consistency, "source_summary", []), 12)
     cross_modal_top = top_items(first_summary(cross_modal_consensus, "top_cycles", []), 12)
     cross_modal_classes = top_items(first_summary(cross_modal_consensus, "class_summary", []), 8)
     cross_modal_contrasts = top_items(first_summary(cross_modal_consensus, "target_contrasts", []), 12)
@@ -661,6 +668,7 @@ def main() -> None:
         f"- Calibration metadata audit finds camera-timing datasets in {first_summary(calibration_metadata, 'n_h5_with_camera_timing', 0)} of {first_summary(calibration_metadata, 'n_h5_files', 0)} scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.",
         f"- Calibration claim-risk register audits {first_summary(calibration_claim_risk, 'n_claim_families', 0)} front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.",
         f"- Apparent diffusion calibration-bounds audit maps all {first_summary(apparent_diffusion_calibration, 'n_roi_with_h5_timing', 0)} balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is {fmt(first_summary(apparent_diffusion_calibration, 'median_roi_elapsed_to_h5_median_ratio'))}, q70 median apparent D at 96 nm/px is {fmt(first_summary(apparent_diffusion_calibration, 'median_q70_apparent_D_h5median_um2_per_s'))} um2/s, and q70 future8 separation is non-significant (top p={fmt(apparent_diffusion_q70_test.get('mannwhitney_p'))}).",
+        f"- Diffusion physics-consistency audit collapses {first_summary(diffusion_physics_consistency, 'n_threshold_rows', 0)} threshold rows to {first_summary(diffusion_physics_consistency, 'n_roi', 0)} ROI gates: {first_summary(diffusion_physics_consistency, 'n_automatic_diffusion_physics_consistent', 0)} automatic ROI passes the internal physics gate and {first_summary(diffusion_physics_consistency, 'n_publication_ready_diffusion_candidates', 0)} pass publication-ready diffusion gates; median radius2 fit R2 is only {fmt(first_summary(diffusion_physics_consistency, 'median_radius2_fit_r2'))}.",
         f"- Cross-modal consensus ranks cycles {cross_modal_sync_cycle_labels} as synchronized multimodal degradation candidates; the top cycle has {fmt(cross_modal_top_cycle.get('n_modal_votes'), 0)} modal votes and consensus score {fmt(cross_modal_top_cycle.get('cross_modal_consensus_score'))}, while the score remains an audit statistic rather than a calibrated probability.",
         f"- Echem/optical breakpoint audit tests {first_summary(echem_optical_breakpoint, 'n_features_tested', 0)} cycle-level echem/trace features around synchronized cycles {first_summary(echem_optical_breakpoint, 'event_cycles', [])}; strongest event-centered shift is {echem_breakpoint_top.get('feature', 'NA')} over +/-{fmt(echem_breakpoint_top.get('window_cycles'), 0)} cycles (scaled shift {fmt(echem_breakpoint_top.get('event_median_scaled_shift'))}, bootstrap p={fmt(echem_breakpoint_top.get('bootstrap_p_abs_vs_control_centers'))}).",
         f"- Echem-optical regime atlas organizes {first_summary(echem_optical_regime, 'n_cycles', 0)} cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is {echem_regime_top_binary.get('feature', 'NA')} vs {echem_regime_top_binary.get('target', 'NA')} (median shift {fmt(echem_regime_top_binary.get('median_positive_minus_negative'))}, p={fmt(echem_regime_top_binary.get('mannwhitney_p'))}), and top continuous link is {echem_regime_top_corr.get('feature', 'NA')} vs {echem_regime_top_corr.get('target', 'NA')} (rho={fmt(echem_regime_top_corr.get('spearman_rho'))}).",
@@ -961,6 +969,32 @@ def main() -> None:
             f"- Calibration-bound link {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(apparent_diffusion_calibration, 'guardrail', 'Apparent diffusion calibration-bounds audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Diffusion Physics Consistency Audit",
+        "",
+        f"- ROI/threshold rows/sources: {first_summary(diffusion_physics_consistency, 'n_roi', 0)} / {first_summary(diffusion_physics_consistency, 'n_threshold_rows', 0)} / {first_summary(diffusion_physics_consistency, 'n_sources', 0)}",
+        f"- Automatic physics-consistent / publication-ready diffusion candidates: {first_summary(diffusion_physics_consistency, 'n_automatic_diffusion_physics_consistent', 0)} / {first_summary(diffusion_physics_consistency, 'n_publication_ready_diffusion_candidates', 0)}",
+        f"- Median abs apparent D / positive-D fraction / radius2 fit R2 / threshold sensitivity: {fmt(first_summary(diffusion_physics_consistency, 'median_abs_apparent_D_um2_per_s'))} / {fmt(first_summary(diffusion_physics_consistency, 'median_positive_D_fraction'))} / {fmt(first_summary(diffusion_physics_consistency, 'median_radius2_fit_r2'))} / {fmt(first_summary(diffusion_physics_consistency, 'median_threshold_sensitivity_iqr_over_median_abs'))}",
+    ]
+    for row in diffusion_physics_gates:
+        report_lines.append(
+            f"- Diffusion physics gate {row.get('criterion')}: {fmt(row.get('n_pass'), 0)}/{fmt(row.get('n_total'), 0)} pass ({fmt(row.get('fraction_pass'))})"
+        )
+    for row in diffusion_physics_candidates[:4]:
+        report_lines.append(
+            f"- Physics-consistent candidate {row.get('roi_id')}: cycle {fmt(row.get('cycleNo'), 0)}, D {fmt(row.get('median_apparent_D_um2_per_s'))}, fit R2 {fmt(row.get('median_radius2_fit_r2'))}, future8={fmt(row.get('future_any_drop_within_8cycles'), 0)}, future16={fmt(row.get('future_any_drop_within_16cycles'), 0)}"
+        )
+    for row in diffusion_physics_tests[:6]:
+        report_lines.append(
+            f"- Diffusion consistency target {row.get('target')} {row.get('feature')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, AUC {fmt(row.get('abs_oriented_auc'))}, p={fmt(row.get('mannwhitney_p'))}"
+        )
+    for row in diffusion_physics_corr[:4]:
+        report_lines.append(
+            f"- Diffusion consistency correlation {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(diffusion_physics_consistency, 'guardrail', 'Diffusion physics consistency audit unavailable.')}")
 
     report_lines += [
         "",
@@ -2769,6 +2803,25 @@ def main() -> None:
             "future8_feature_tests_q70": apparent_diffusion_q70_tests,
             "calibration_correlations": apparent_diffusion_corr,
             "guardrail": first_summary(apparent_diffusion_calibration, "guardrail"),
+        },
+        "diffusion_physics_consistency_audit": {
+            "n_roi": first_summary(diffusion_physics_consistency, "n_roi"),
+            "n_cycles": first_summary(diffusion_physics_consistency, "n_cycles"),
+            "n_sources": first_summary(diffusion_physics_consistency, "n_sources"),
+            "n_threshold_rows": first_summary(diffusion_physics_consistency, "n_threshold_rows"),
+            "n_automatic_diffusion_physics_consistent": first_summary(diffusion_physics_consistency, "n_automatic_diffusion_physics_consistent"),
+            "n_publication_ready_diffusion_candidates": first_summary(diffusion_physics_consistency, "n_publication_ready_diffusion_candidates"),
+            "median_abs_apparent_D_um2_per_s": first_summary(diffusion_physics_consistency, "median_abs_apparent_D_um2_per_s"),
+            "median_positive_D_fraction": first_summary(diffusion_physics_consistency, "median_positive_D_fraction"),
+            "median_radius2_fit_r2": first_summary(diffusion_physics_consistency, "median_radius2_fit_r2"),
+            "median_threshold_sensitivity_iqr_over_median_abs": first_summary(diffusion_physics_consistency, "median_threshold_sensitivity_iqr_over_median_abs"),
+            "gate_counts": diffusion_physics_gates,
+            "top_consistent_candidates": diffusion_physics_candidates,
+            "top_physics_scores": diffusion_physics_top_scores,
+            "top_feature_tests": diffusion_physics_tests,
+            "top_correlations": diffusion_physics_corr,
+            "source_summary": diffusion_physics_source_summary,
+            "guardrail": first_summary(diffusion_physics_consistency, "guardrail"),
         },
         "cross_modal_degradation_consensus": {
             "n_cycles": first_summary(cross_modal_consensus, "n_cycles"),

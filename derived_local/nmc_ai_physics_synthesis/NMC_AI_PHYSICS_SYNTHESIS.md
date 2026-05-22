@@ -69,6 +69,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Calibration metadata audit finds camera-timing datasets in 32 of 33 scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.
 - Calibration claim-risk register audits 11 front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.
 - Apparent diffusion calibration-bounds audit maps all 72 balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is 1.002, q70 median apparent D at 96 nm/px is 4.322e-08 um2/s, and q70 future8 separation is non-significant (top p=0.175).
+- Diffusion physics-consistency audit collapses 504 threshold rows to 72 ROI gates: 1 automatic ROI passes the internal physics gate and 0 pass publication-ready diffusion gates; median radius2 fit R2 is only 0.055.
 - Cross-modal consensus ranks cycles 86, 116 as synchronized multimodal degradation candidates; the top cycle has 4 modal votes and consensus score 0.813, while the score remains an audit statistic rather than a calibrated probability.
 - Echem/optical breakpoint audit tests 84 cycle-level echem/trace features around synchronized cycles [86.0, 116.0]; strongest event-centered shift is state_step_norm_delta_prev over +/-4 cycles (scaled shift -2.263, bootstrap p=0.002).
 - Echem-optical regime atlas organizes 89 cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is pos_dq_abs_peak_voltage vs multimodal_outlier_without_trace_drop (median shift 0.050, p=1.453e-04), and top continuous link is shape_dVdt_abs_p95 vs cross_modal_consensus_score (rho=0.617).
@@ -370,6 +371,33 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Calibration-bound link roi_elapsed_to_h5_median_ratio vs validation_score_recon: rho=0.222, p=5.050e-07
 - Calibration-bound link apparent_D_h5median_abs_um2_per_s vs transferred_masked_residual_signature: rho=-0.153, p=5.768e-04
 - Guardrail: Apparent diffusion values are recalibrated from HDF5 camera timing and slide-derived pixel-size assumptions. No HDF5 pixel-size attribute was found, and the values remain optical-front proxies, not validated material diffusion coefficients.
+
+## Diffusion Physics Consistency Audit
+
+- ROI/threshold rows/sources: 72 / 504 / 9
+- Automatic physics-consistent / publication-ready diffusion candidates: 1 / 0
+- Median abs apparent D / positive-D fraction / radius2 fit R2 / threshold sensitivity: 2.229e-06 / 0.714 / 0.055 / 0.798
+- Diffusion physics gate gate_all_thresholds_present: 72/72 pass (1.000)
+- Diffusion physics gate gate_positive_expansion: 26/72 pass (0.361)
+- Diffusion physics gate gate_fit_quality: 7/72 pass (0.097)
+- Diffusion physics gate gate_threshold_stability: 63/72 pass (0.875)
+- Diffusion physics gate gate_h5_timing_stable: 24/72 pass (0.333)
+- Diffusion physics gate gate_low_drift: 72/72 pass (1.000)
+- Diffusion physics gate gate_q70_positive_ci: 0/72 pass (0.000)
+- Diffusion physics gate automatic_diffusion_physics_consistent: 1/72 pass (0.014)
+- Diffusion physics gate publication_ready_diffusion_candidate: 0/72 pass (0.000)
+- Physics-consistent candidate cycle78_rank22_obj2: cycle 78, D 4.093e-06, fit R2 0.415, future8=1, future16=1
+- Diffusion consistency target future_any_drop_within_16cycles positive_D_fraction: median positive-negative -0.714, AUC 0.705, p=0.013
+- Diffusion consistency target future_any_drop_within_16cycles median_apparent_D_um2_per_s: median positive-negative -2.569e-06, AUC 0.701, p=0.018
+- Diffusion consistency target future_any_drop_within_16cycles transferred_masked_residual_signature: median positive-negative 0.342, AUC 0.695, p=0.021
+- Diffusion consistency target future_any_drop_within_16cycles physics_consistency_score: median positive-negative -0.399, AUC 0.691, p=0.024
+- Diffusion consistency target future_any_drop_within_16cycles diffusion_physics_gate_count: median positive-negative 0.000, AUC 0.629, p=0.104
+- Diffusion consistency target future_any_drop_within_16cycles threshold_sensitivity_iqr_over_median_abs: median positive-negative 0.248, AUC 0.622, p=0.149
+- Diffusion consistency correlation h5_dt_max_to_median_ratio vs transferred_masked_residual_signature: rho=0.728, p=4.405e-13, n=72
+- Diffusion consistency correlation physics_consistency_score vs transferred_masked_residual_signature: rho=-0.529, p=1.746e-06, n=72
+- Diffusion consistency correlation diffusion_physics_gate_count vs transferred_masked_residual_signature: rho=-0.469, p=3.243e-05, n=72
+- Diffusion consistency correlation median_abs_apparent_D_um2_per_s vs validation_score_recon: rho=-0.409, p=3.547e-04, n=72
+- Guardrail: Automatic apparent-D candidates must pass positive expansion, radius^2 fit, threshold-stability, timing, drift, q70 CI, and manual-QC gates before any calibrated diffusion claim. This audit is a physics-consistency filter over optical front proxies, not a material diffusion measurement.
 
 ## Cross-Modal Degradation Consensus
 

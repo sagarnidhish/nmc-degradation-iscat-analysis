@@ -2772,3 +2772,26 @@ Key result:
 
 Interpretation: the source-transfer rescue now has a more physical handle. The future16 particle-region signal that survives source-mean removal is concentrated in normalized heterogeneity and particle-vs-context contrast, consistent with degradation-mode/phase-front texture changes rather than raw brightness drift alone. It remains a review-prioritization result under weak labels and automatic masks, not a calibrated mechanism or warning model.
 
+## 2026-05-22 Diffusion Physics Consistency Audit
+
+Added `scripts/tier4_diffusion_physics_consistency_audit.py` and reran it on Isambard to collapse the apparent-diffusion threshold sweep into ROI-level physics gates. The audit asks whether any automatic optical-front ROI satisfies the minimum internal conditions needed before interpreting radius-squared slopes as material-like diffusion: positive expansion across thresholds, adequate linear fit, low threshold sensitivity, stable HDF5 timing, low drift, positive q70 confidence interval, and manual-QC acceptance.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_physics_consistency_audit`
+
+Local compact copy:
+
+`derived_local/diffusion_physics_consistency_audit`
+
+Key result:
+
+- The audit covers 72 ROI rows, 24 cycles, 9 sources, and 504 threshold rows from the apparent-diffusion calibration table.
+- All 72 ROIs have the full threshold set and 63/72 pass threshold-stability, but only 26/72 pass positive expansion, 7/72 pass the radius-squared fit-quality gate, 24/72 pass stable HDF5 timing, and 0/72 pass the q70 positive-confidence-interval gate.
+- Only 1/72 ROIs is automatically physics-consistent (`cycle78_rank22_obj2`), and 0/72 are publication-ready diffusion candidates because q70 CI and manual-QC gates fail.
+- The median absolute apparent D is 2.23e-06 um2/s, median positive-D fraction is 0.714, and median radius-squared fit R2 is only 0.055.
+- Future16 positives have lower positive-D fraction and lower median signed apparent D than negatives (positive-D fraction oriented AUC 0.705, p=0.013; median apparent D oriented AUC 0.701, p=0.018), which is consistent with optical-front loss/contraction rather than clean expanding diffusion.
+- The transferred masked residual signature remains a stronger weak-label correlate than diffusion gates for future8/future16, while physics consistency scores are negatively correlated with that residual signature.
+
+Interpretation: calibrated diffusion remains blocked. The apparent-D quantities are useful as optical-front consistency and guardrail features, but they do not satisfy internal physics gates for material diffusion coefficients. This strengthens the project rule that diffusion claims need manual QC, better front masks, stable timing, and positive estimator agreement before promotion.
+
