@@ -117,6 +117,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.631/AP 0.634, and best within-source-rank proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.656/AP 0.677.
 - A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC 0.602/AP 0.581, but leave-source future16 drops to AUC 0.375, marking source transfer as the main failure mode.
 - Source-normalizing the source-balanced residual dictionary leaves a source-residual future16 residual-dynamics candidate, dictionary_recon_error_last_minus_first, at AUC 0.637/AP 0.637 with source eta2 1.484e-33; within-source-rank residual PCs are weaker at AUC 0.574.
+- The grouped normalized residual-dictionary readout partially rescues held-out-source future16 transfer: raw residual dictionary AUC 0.375 improves to 0.550 after source residualization, while the single dictionary_recon_error_last_minus_first_source_residual readout reaches AUC 0.612/AP 0.613; permutation p=0.100 keeps it provisional.
 - Source-balanced residual-physics coupling links the best source-residual dictionary candidate to crop-local physics proxies: top target-aligned pair is dictionary_recon_error_last_minus_first vs masked_minus_background_mean_slope with rho 0.373, residual AUC 0.637, and physics AUC 0.628; apparent diffusion coupling remains weak.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
@@ -1226,6 +1227,18 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Best future16 within-source-rank residual dictionary feature: dictionary_recon_error_mse_slope AUC 0.574, AP 0.551, eta2 0.004
 - Best future16 source-residual feature overall: dictionary_recon_error_last_minus_first (residual_dictionary) AUC 0.637, AP 0.637
 - Guardrail: Source-normalized residual dictionary tests are in-cohort weak-label audits. They can identify source-robust residual dynamics candidates for follow-up, but they do not prove source-transferable prediction or calibrated phase/diffusion physics.
+
+## Source-Balanced Residual Dictionary Normalized Readout
+
+- Rows/cycles/sources: 96 / 48 / 14
+- Feature set sizes: {'residual_dictionary_raw': 72, 'residual_dictionary_source_residual': 72, 'residual_dictionary_within_source_z': 72, 'residual_dictionary_within_source_rank': 72, 'mask_front_source_residual': 24, 'residual_dictionary_plus_mask_front_source_residual': 96, 'mask_front_within_source_rank': 24, 'residual_dictionary_plus_mask_front_within_source_rank': 96, 'dictionary_recon_error_last_minus_first_source_residual': 1}
+- Future16 leave-source raw residual dictionary: AUC 0.375, AP 0.448
+- Future16 leave-source source-residual residual dictionary: AUC 0.550, AP 0.583
+- Future16 leave-source within-source-rank residual dictionary: AUC 0.543, AP 0.506
+- Best future16 leave-source readout: dictionary_recon_error_last_minus_first_source_residual AUC 0.612, AP 0.613, n=96
+- Same single-feature leave-cycle future16 readout: AUC 0.627, AP 0.630
+- Permutation null: n=200, AUC p95=0.621, empirical p(AUC)=0.100, empirical p(AP)=0.070
+- Guardrail: Source transforms are unsupervised within-source normalizations computed from ROI feature distributions, including held-out source rows without labels. This tests source-normalized readout stability, not a deployable source-transfer warning model.
 
 ## Source-Balanced Residual-Physics Coupling Audit
 

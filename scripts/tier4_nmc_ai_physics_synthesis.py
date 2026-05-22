@@ -148,6 +148,7 @@ def main() -> None:
     source_balanced_mask_front_source_residual = read_json(derived / "source_balanced_mask_front_source_residual_audit" / "source_balanced_mask_front_source_residual_summary.json")
     source_balanced_residual_dictionary = read_json(derived / "source_balanced_residual_dictionary_audit" / "source_balanced_residual_dictionary_summary.json")
     source_balanced_resdict_source_residual = read_json(derived / "source_balanced_residual_dictionary_source_residual_audit" / "source_balanced_residual_dictionary_source_residual_summary.json")
+    source_balanced_resdict_normalized_readout = read_json(derived / "source_balanced_residual_dictionary_normalized_readout" / "source_balanced_residual_dictionary_normalized_readout_summary.json")
     source_balanced_residual_physics_coupling = read_json(derived / "source_balanced_residual_physics_coupling_audit" / "source_balanced_residual_physics_coupling_summary.json")
     balanced_future_sequences = read_json(derived / "balanced_future_roi_sequences" / "selected_roi_sequence_summary.json")
     balanced_future_fronts = read_json(derived / "balanced_future_threshold_robust_fronts" / "threshold_robust_front_summary.json")
@@ -417,6 +418,13 @@ def main() -> None:
     source_balanced_resdict_sr_best = first_summary(source_balanced_resdict_source_residual, "future16_source_residual_residual_dictionary_best", {}) or {}
     source_balanced_resdict_rank_best = first_summary(source_balanced_resdict_source_residual, "future16_within_source_rank_residual_dictionary_best", {}) or {}
     source_balanced_resdict_sr_transform_best = first_summary(source_balanced_resdict_source_residual, "future16_source_residual_best", {}) or {}
+    source_balanced_resdict_norm_metrics = top_items(first_summary(source_balanced_resdict_normalized_readout, "top_metrics", []), 32)
+    source_balanced_resdict_norm_best = first_summary(source_balanced_resdict_normalized_readout, "future16_leave_source_best", {}) or {}
+    source_balanced_resdict_norm_raw_source16 = first_summary(source_balanced_resdict_normalized_readout, "future16_leave_source_raw_residual_dictionary", {}) or {}
+    source_balanced_resdict_norm_sr_source16 = first_summary(source_balanced_resdict_normalized_readout, "future16_leave_source_source_residual_residual_dictionary", {}) or {}
+    source_balanced_resdict_norm_rank_source16 = first_summary(source_balanced_resdict_normalized_readout, "future16_leave_source_within_source_rank_residual_dictionary", {}) or {}
+    source_balanced_resdict_norm_cycle_single16 = next((r for r in source_balanced_resdict_norm_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "dictionary_recon_error_last_minus_first_source_residual"), {})
+    source_balanced_resdict_norm_perm = first_summary(source_balanced_resdict_normalized_readout, "permutation_summary", {}) or {}
     source_balanced_resphys_by_transform = top_items(first_summary(source_balanced_residual_physics_coupling, "best_by_transform", []), 8)
     source_balanced_resphys_primary = top_items(first_summary(source_balanced_residual_physics_coupling, "best_source_residual_primary_candidate_correlations", []), 12)
     source_balanced_resphys_aligned = top_items(first_summary(source_balanced_residual_physics_coupling, "best_source_residual_target_aligned_pairs", []), 12)
@@ -844,6 +852,7 @@ def main() -> None:
         f"- A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is {source_balanced_mask_front_resid_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_resid_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_resid_best.get('average_precision'))}, and best within-source-rank proxy is {source_balanced_mask_front_rank_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_rank_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_rank_best.get('average_precision'))}.",
         f"- A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC {fmt(source_balanced_resdict_cycle16.get('roc_auc'))}/AP {fmt(source_balanced_resdict_cycle16.get('average_precision'))}, but leave-source future16 drops to AUC {fmt(source_balanced_resdict_source16.get('roc_auc'))}, marking source transfer as the main failure mode.",
         f"- Source-normalizing the source-balanced residual dictionary leaves a source-residual future16 residual-dynamics candidate, {source_balanced_resdict_sr_best.get('feature', 'NA')}, at AUC {fmt(source_balanced_resdict_sr_best.get('oriented_auc'))}/AP {fmt(source_balanced_resdict_sr_best.get('average_precision'))} with source eta2 {fmt(source_balanced_resdict_sr_best.get('source_eta2_after_transform'))}; within-source-rank residual PCs are weaker at AUC {fmt(source_balanced_resdict_rank_best.get('oriented_auc'))}.",
+        f"- The grouped normalized residual-dictionary readout partially rescues held-out-source future16 transfer: raw residual dictionary AUC {fmt(source_balanced_resdict_norm_raw_source16.get('roc_auc'))} improves to {fmt(source_balanced_resdict_norm_sr_source16.get('roc_auc'))} after source residualization, while the single {source_balanced_resdict_norm_best.get('feature_set', 'NA')} readout reaches AUC {fmt(source_balanced_resdict_norm_best.get('roc_auc'))}/AP {fmt(source_balanced_resdict_norm_best.get('average_precision'))}; permutation p={fmt(source_balanced_resdict_norm_perm.get('empirical_p_roc_auc'))} keeps it provisional.",
         f"- Source-balanced residual-physics coupling links the best source-residual dictionary candidate to crop-local physics proxies: top target-aligned pair is {source_balanced_resphys_top_aligned.get('residual_feature', 'NA')} vs {source_balanced_resphys_top_aligned.get('physics_feature', 'NA')} with rho {fmt(source_balanced_resphys_top_aligned.get('spearman_rho'))}, residual AUC {fmt(source_balanced_resphys_top_aligned.get('residual_future16_auc'))}, and physics AUC {fmt(source_balanced_resphys_top_aligned.get('physics_future16_auc'))}; apparent diffusion coupling remains weak.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
@@ -1820,6 +1829,21 @@ def main() -> None:
         f"- Best future16 within-source-rank residual dictionary feature: {source_balanced_resdict_rank_best.get('feature', 'NA')} AUC {fmt(source_balanced_resdict_rank_best.get('oriented_auc'))}, AP {fmt(source_balanced_resdict_rank_best.get('average_precision'))}, eta2 {fmt(source_balanced_resdict_rank_best.get('source_eta2_after_transform'))}",
         f"- Best future16 source-residual feature overall: {source_balanced_resdict_sr_transform_best.get('feature', 'NA')} ({source_balanced_resdict_sr_transform_best.get('feature_family', 'NA')}) AUC {fmt(source_balanced_resdict_sr_transform_best.get('oriented_auc'))}, AP {fmt(source_balanced_resdict_sr_transform_best.get('average_precision'))}",
         f"- Guardrail: {first_summary(source_balanced_resdict_source_residual, 'guardrail', 'Source-balanced residual dictionary source-residual audit unavailable.')}",
+    ]
+
+    report_lines += [
+        "",
+        "## Source-Balanced Residual Dictionary Normalized Readout",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_balanced_resdict_normalized_readout, 'n_rows', 0)} / {first_summary(source_balanced_resdict_normalized_readout, 'n_cycles', 0)} / {first_summary(source_balanced_resdict_normalized_readout, 'n_sources', 0)}",
+        f"- Feature set sizes: {first_summary(source_balanced_resdict_normalized_readout, 'feature_set_sizes', {})}",
+        f"- Future16 leave-source raw residual dictionary: AUC {fmt(source_balanced_resdict_norm_raw_source16.get('roc_auc'))}, AP {fmt(source_balanced_resdict_norm_raw_source16.get('average_precision'))}",
+        f"- Future16 leave-source source-residual residual dictionary: AUC {fmt(source_balanced_resdict_norm_sr_source16.get('roc_auc'))}, AP {fmt(source_balanced_resdict_norm_sr_source16.get('average_precision'))}",
+        f"- Future16 leave-source within-source-rank residual dictionary: AUC {fmt(source_balanced_resdict_norm_rank_source16.get('roc_auc'))}, AP {fmt(source_balanced_resdict_norm_rank_source16.get('average_precision'))}",
+        f"- Best future16 leave-source readout: {source_balanced_resdict_norm_best.get('feature_set', 'NA')} AUC {fmt(source_balanced_resdict_norm_best.get('roc_auc'))}, AP {fmt(source_balanced_resdict_norm_best.get('average_precision'))}, n={fmt(source_balanced_resdict_norm_best.get('n_eval'), 0)}",
+        f"- Same single-feature leave-cycle future16 readout: AUC {fmt(source_balanced_resdict_norm_cycle_single16.get('roc_auc'))}, AP {fmt(source_balanced_resdict_norm_cycle_single16.get('average_precision'))}",
+        f"- Permutation null: n={fmt(source_balanced_resdict_norm_perm.get('n_permutations'), 0)}, AUC p95={fmt(source_balanced_resdict_norm_perm.get('null_roc_auc_p95'))}, empirical p(AUC)={fmt(source_balanced_resdict_norm_perm.get('empirical_p_roc_auc'))}, empirical p(AP)={fmt(source_balanced_resdict_norm_perm.get('empirical_p_average_precision'))}",
+        f"- Guardrail: {first_summary(source_balanced_resdict_normalized_readout, 'guardrail', 'Source-balanced normalized residual readout unavailable.')}",
     ]
 
     report_lines += [
@@ -2888,6 +2912,20 @@ def main() -> None:
             "future16_within_source_rank_residual_dictionary_best": source_balanced_resdict_rank_best,
             "future16_source_residual_best": source_balanced_resdict_sr_transform_best,
             "guardrail": first_summary(source_balanced_resdict_source_residual, "guardrail"),
+        },
+        "source_balanced_residual_dictionary_normalized_readout": {
+            "n_rows": first_summary(source_balanced_resdict_normalized_readout, "n_rows"),
+            "n_cycles": first_summary(source_balanced_resdict_normalized_readout, "n_cycles"),
+            "n_sources": first_summary(source_balanced_resdict_normalized_readout, "n_sources"),
+            "feature_set_sizes": first_summary(source_balanced_resdict_normalized_readout, "feature_set_sizes", {}),
+            "top_metrics": source_balanced_resdict_norm_metrics,
+            "future16_leave_source_best": source_balanced_resdict_norm_best,
+            "future16_leave_source_raw_residual_dictionary": source_balanced_resdict_norm_raw_source16,
+            "future16_leave_source_source_residual_residual_dictionary": source_balanced_resdict_norm_sr_source16,
+            "future16_leave_source_within_source_rank_residual_dictionary": source_balanced_resdict_norm_rank_source16,
+            "future16_leave_cycle_dictionary_recon_error_last_minus_first_source_residual": source_balanced_resdict_norm_cycle_single16,
+            "permutation_summary": source_balanced_resdict_norm_perm,
+            "guardrail": first_summary(source_balanced_resdict_normalized_readout, "guardrail"),
         },
         "source_balanced_residual_physics_coupling_audit": {
             "n_rows": first_summary(source_balanced_residual_physics_coupling, "n_rows"),

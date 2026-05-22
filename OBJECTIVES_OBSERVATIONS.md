@@ -3172,7 +3172,7 @@ Outputs:
 Cohort/result snapshot:
 
 - 96 ROI sequences, 48 cycles, 14 source movies.
-- Tested 119 numeric descriptors: 72 residual dictionary, 24 mask/front scalar, 6 object-reconstruction, and 17 other scalar controls.
+- Tested 102 physics/ROI descriptors: 72 residual dictionary, 24 mask/front scalar, and 6 object-reconstruction controls.
 - Raw future16 best overall remains `masked_minus_background_mean_slope`, AUC 0.690/AP 0.696/source eta2 0.634.
 - Raw future16 best residual-dictionary feature remains `resdict_pc01_mean`, AUC 0.668/AP 0.670/source eta2 0.187.
 - Source-residual future16 best overall and best residual-dictionary feature is `dictionary_recon_error_last_minus_first`, AUC 0.637/AP 0.637 with source eta2 effectively zero and median positive-negative 2.54e-6.
@@ -3205,3 +3205,25 @@ Cohort/result snapshot:
 Interpretation:
 
 The current source-robust residual-dynamics candidate is most consistent with an optical contrast/reconstruction-error change rather than a clean diffusion-front measurement. It is still useful for triage because the signal survives source residualization and aligns with a crop-local contrast proxy, but the front/diffusion interpretation remains guarded until manual QC and calibrated phase-boundary tracking are available.
+
+## 2026-05-22 Source-Balanced Residual Dictionary Normalized Readout
+
+Added `scripts/tier4_source_balanced_residual_dictionary_normalized_readout.py` and ran it on Isambard against the source-balanced residual dictionary feature table. The audit applies unsupervised within-source transforms and evaluates grouped logistic readouts under leave-cycle and leave-source splits.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout`
+- `derived_local/source_balanced_residual_dictionary_normalized_readout`
+
+Cohort/result snapshot:
+
+- 96 ROI sequences, 48 cycles, 14 source movies.
+- Feature sets include 72 raw/source-normalized residual-dictionary descriptors, 24 mask/front descriptors, combined residual+mask/front sets, and the single source-residual `dictionary_recon_error_last_minus_first` candidate.
+- Future16 leave-source raw residual dictionary remained inverted/failed: AUC 0.375/AP 0.448.
+- Future16 leave-source full residual dictionary improved after source residualization to AUC 0.550/AP 0.583 and within-source-rank reached AUC 0.543/AP 0.506.
+- The single source-residual `dictionary_recon_error_last_minus_first` readout was strongest: leave-source future16 AUC 0.612/AP 0.613 and leave-cycle future16 AUC 0.627/AP 0.630.
+- A 200-permutation null for the best leave-source future16 readout had null AUC p95 0.621, empirical p(AUC)=0.100 and p(AP)=0.070.
+
+Interpretation:
+
+Source normalization partially rescues the held-out-source failure mode, but the improvement concentrates in one reconstruction-error drift feature rather than the full residual dictionary. The permutation null is suggestive but not conventionally significant, so this is a provisional source-robust temporal-dynamics readout for follow-up, not a deployable degradation warning model.
