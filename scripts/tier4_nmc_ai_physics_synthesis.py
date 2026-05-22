@@ -149,7 +149,9 @@ def main() -> None:
     source_balanced_residual_dictionary = read_json(derived / "source_balanced_residual_dictionary_audit" / "source_balanced_residual_dictionary_summary.json")
     source_balanced_resdict_source_residual = read_json(derived / "source_balanced_residual_dictionary_source_residual_audit" / "source_balanced_residual_dictionary_source_residual_summary.json")
     source_balanced_resdict_normalized_readout = read_json(derived / "source_balanced_residual_dictionary_normalized_readout" / "source_balanced_residual_dictionary_normalized_readout_summary.json")
+    source_balanced_residual_temporal_specificity = read_json(derived / "source_balanced_residual_temporal_specificity_audit" / "source_balanced_residual_temporal_specificity_summary.json")
     source_balanced_residual_physics_coupling = read_json(derived / "source_balanced_residual_physics_coupling_audit" / "source_balanced_residual_physics_coupling_summary.json")
+    source_balanced_residual_candidate_review = read_json(derived / "source_balanced_residual_candidate_review_packet" / "source_balanced_residual_candidate_review_summary.json")
     balanced_future_sequences = read_json(derived / "balanced_future_roi_sequences" / "selected_roi_sequence_summary.json")
     balanced_future_fronts = read_json(derived / "balanced_future_threshold_robust_fronts" / "threshold_robust_front_summary.json")
     balanced_future_rollout = read_json(derived / "balanced_future_masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
@@ -425,12 +427,23 @@ def main() -> None:
     source_balanced_resdict_norm_rank_source16 = first_summary(source_balanced_resdict_normalized_readout, "future16_leave_source_within_source_rank_residual_dictionary", {}) or {}
     source_balanced_resdict_norm_cycle_single16 = next((r for r in source_balanced_resdict_norm_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "dictionary_recon_error_last_minus_first_source_residual"), {})
     source_balanced_resdict_norm_perm = first_summary(source_balanced_resdict_normalized_readout, "permutation_summary", {}) or {}
+    source_balanced_temporal_best = top_items(first_summary(source_balanced_residual_temporal_specificity, "best_future_specific", []), 16)
+    source_balanced_temporal_primary = first_summary(source_balanced_residual_temporal_specificity, "primary_source_residual_rows", []) or []
+    source_balanced_temporal_primary8 = next((r for r in source_balanced_temporal_primary if r.get("window_cycles") == 8), {})
+    source_balanced_temporal_primary16 = next((r for r in source_balanced_temporal_primary if r.get("window_cycles") == 16), {})
+    source_balanced_temporal_shift16 = first_summary(source_balanced_residual_temporal_specificity, "primary_future16_shift_null", {}) or {}
+    source_balanced_temporal_top = source_balanced_temporal_best[0] if source_balanced_temporal_best else {}
     source_balanced_resphys_by_transform = top_items(first_summary(source_balanced_residual_physics_coupling, "best_by_transform", []), 8)
     source_balanced_resphys_primary = top_items(first_summary(source_balanced_residual_physics_coupling, "best_source_residual_primary_candidate_correlations", []), 12)
     source_balanced_resphys_aligned = top_items(first_summary(source_balanced_residual_physics_coupling, "best_source_residual_target_aligned_pairs", []), 12)
     source_balanced_resphys_dict_recon = top_items(first_summary(source_balanced_residual_physics_coupling, "dictionary_recon_error_last_minus_first_source_residual_top_correlations", []), 12)
     source_balanced_resphys_top_aligned = source_balanced_resphys_aligned[0] if source_balanced_resphys_aligned else {}
     source_balanced_resphys_top_primary = source_balanced_resphys_primary[0] if source_balanced_resphys_primary else {}
+    source_balanced_review_top = top_items(first_summary(source_balanced_residual_candidate_review, "top_review_candidates", []), 16)
+    source_balanced_review_immediate = top_items(first_summary(source_balanced_residual_candidate_review, "immediate_manual_qc_candidates", []), 16)
+    source_balanced_review_sources = top_items(first_summary(source_balanced_residual_candidate_review, "source_summary", []), 16)
+    source_balanced_review_tiers = first_summary(source_balanced_residual_candidate_review, "review_tier_counts", {}) or {}
+    source_balanced_review_top1 = source_balanced_review_top[0] if source_balanced_review_top else {}
     balanced_future_oof = top_items(first_summary(balanced_future_physics, "cycle_group_oof_metrics", []), 6)
     balanced_future_null = first_summary(balanced_future_physics, "permutation_null", {}) or {}
     balanced_future_roi_tests = top_items(first_summary(balanced_future_physics, "top_roi_feature_tests", []), 12)
@@ -853,7 +866,9 @@ def main() -> None:
         f"- A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC {fmt(source_balanced_resdict_cycle16.get('roc_auc'))}/AP {fmt(source_balanced_resdict_cycle16.get('average_precision'))}, but leave-source future16 drops to AUC {fmt(source_balanced_resdict_source16.get('roc_auc'))}, marking source transfer as the main failure mode.",
         f"- Source-normalizing the source-balanced residual dictionary leaves a source-residual future16 residual-dynamics candidate, {source_balanced_resdict_sr_best.get('feature', 'NA')}, at AUC {fmt(source_balanced_resdict_sr_best.get('oriented_auc'))}/AP {fmt(source_balanced_resdict_sr_best.get('average_precision'))} with source eta2 {fmt(source_balanced_resdict_sr_best.get('source_eta2_after_transform'))}; within-source-rank residual PCs are weaker at AUC {fmt(source_balanced_resdict_rank_best.get('oriented_auc'))}.",
         f"- The grouped normalized residual-dictionary readout partially rescues held-out-source future16 transfer: raw residual dictionary AUC {fmt(source_balanced_resdict_norm_raw_source16.get('roc_auc'))} improves to {fmt(source_balanced_resdict_norm_sr_source16.get('roc_auc'))} after source residualization, while the single {source_balanced_resdict_norm_best.get('feature_set', 'NA')} readout reaches AUC {fmt(source_balanced_resdict_norm_best.get('roc_auc'))}/AP {fmt(source_balanced_resdict_norm_best.get('average_precision'))}; permutation p={fmt(source_balanced_resdict_norm_perm.get('empirical_p_roc_auc'))} keeps it provisional.",
+        f"- Temporal-specificity controls show the same source-residual reconstruction-error drift is temporally ordered but not cleanly precursor-specific: future16 AUC {fmt(source_balanced_temporal_primary16.get('future_auc'))} beats a within-source shift null (p={fmt(source_balanced_temporal_shift16.get('empirical_p_roc_auc'))}) but barely exceeds past16 AUC {fmt(source_balanced_temporal_primary16.get('past_auc_fixed_direction'))}; raw masked-minus-background slope is more future8-specific but source structured.",
         f"- Source-balanced residual-physics coupling links the best source-residual dictionary candidate to crop-local physics proxies: top target-aligned pair is {source_balanced_resphys_top_aligned.get('residual_feature', 'NA')} vs {source_balanced_resphys_top_aligned.get('physics_feature', 'NA')} with rho {fmt(source_balanced_resphys_top_aligned.get('spearman_rho'))}, residual AUC {fmt(source_balanced_resphys_top_aligned.get('residual_future16_auc'))}, and physics AUC {fmt(source_balanced_resphys_top_aligned.get('physics_future16_auc'))}; apparent diffusion coupling remains weak.",
+        f"- Source-balanced residual candidate review packet converts the residual/readout/coupling evidence into {first_summary(source_balanced_residual_candidate_review, 'n_candidates', 0)} pending manual-QC candidates; {source_balanced_review_tiers.get('immediate_manual_qc', 0)} are immediate-review, led by {source_balanced_review_top1.get('roi_id', 'NA')} with score {fmt(source_balanced_review_top1.get('review_priority_score'))}.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
         f"- Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC {fmt(learned_residual_future8.get('roc_auc'))} versus PCA-video {fmt(learned_residual_pca_future8.get('roc_auc'))} and handcrafted scalar {fmt(learned_residual_hand_future8.get('roc_auc'))}; future16 learned_all remains weak at AUC {fmt(learned_residual_future16.get('roc_auc'))} versus handcrafted {fmt(learned_residual_hand_future16.get('roc_auc'))}.",
@@ -1848,6 +1863,19 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Source-Balanced Residual Temporal Specificity Audit",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_balanced_residual_temporal_specificity, 'n_rows', 0)} / {first_summary(source_balanced_residual_temporal_specificity, 'n_cycles', 0)} / {first_summary(source_balanced_residual_temporal_specificity, 'n_sources', 0)}",
+        f"- Event cycles and label counts: {first_summary(source_balanced_residual_temporal_specificity, 'event_cycles', [])} / {first_summary(source_balanced_residual_temporal_specificity, 'label_counts', {})}",
+        f"- Primary source-residual reconstruction-error future8: AUC {fmt(source_balanced_temporal_primary8.get('future_auc'))}, past-control AUC {fmt(source_balanced_temporal_primary8.get('past_auc_fixed_direction'))}, future-minus-control {fmt(source_balanced_temporal_primary8.get('future_minus_max_control_auc'))}",
+        f"- Primary source-residual reconstruction-error future16: AUC {fmt(source_balanced_temporal_primary16.get('future_auc'))}, AP {fmt(source_balanced_temporal_primary16.get('future_ap'))}, past-control AUC {fmt(source_balanced_temporal_primary16.get('past_auc_fixed_direction'))}, future-minus-control {fmt(source_balanced_temporal_primary16.get('future_minus_max_control_auc'))}",
+        f"- Primary future16 within-source shift null: n={fmt(source_balanced_temporal_shift16.get('n_permutations'), 0)}, null AUC p95={fmt(source_balanced_temporal_shift16.get('null_roc_auc_p95'))}, empirical p(AUC)={fmt(source_balanced_temporal_shift16.get('empirical_p_roc_auc'))}",
+        f"- Most future-specific row overall: {source_balanced_temporal_top.get('feature', 'NA')} / {source_balanced_temporal_top.get('transform', 'NA')} / {fmt(source_balanced_temporal_top.get('window_cycles'), 0)} cycles, future AUC {fmt(source_balanced_temporal_top.get('future_auc'))}, past-control AUC {fmt(source_balanced_temporal_top.get('past_auc_fixed_direction'))}, delta {fmt(source_balanced_temporal_top.get('future_minus_max_control_auc'))}",
+        f"- Guardrail: {first_summary(source_balanced_residual_temporal_specificity, 'guardrail', 'Source-balanced residual temporal specificity audit unavailable.')}",
+    ]
+
+    report_lines += [
+        "",
         "## Source-Balanced Residual-Physics Coupling Audit",
         "",
         f"- Rows/residual features/physics proxies/sources: {first_summary(source_balanced_residual_physics_coupling, 'n_rows', 0)} / {first_summary(source_balanced_residual_physics_coupling, 'n_residual_features', 0)} / {first_summary(source_balanced_residual_physics_coupling, 'n_physics_features', 0)} / {first_summary(source_balanced_residual_physics_coupling, 'n_sources', 0)}",
@@ -1863,6 +1891,24 @@ def main() -> None:
             f"- Dictionary recon source-residual coupling to {row.get('physics_feature', 'NA')}: rho {fmt(row.get('spearman_rho'))}, p={fmt(row.get('spearman_p'))}, physics AUC {fmt(row.get('physics_future16_auc'))}, target aligned={row.get('target_aligned')}"
         )
     report_lines.append(f"- Guardrail: {first_summary(source_balanced_residual_physics_coupling, 'guardrail', 'Source-balanced residual-physics coupling audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Source-Balanced Residual Candidate Review Packet",
+        "",
+        f"- Candidates/sources/cycles: {first_summary(source_balanced_residual_candidate_review, 'n_candidates', 0)} / {first_summary(source_balanced_residual_candidate_review, 'n_sources', 0)} / {first_summary(source_balanced_residual_candidate_review, 'n_cycles', 0)}",
+        f"- Review tier counts: {source_balanced_review_tiers}",
+        f"- Top candidate: {source_balanced_review_top1.get('roi_id', 'NA')} score {fmt(source_balanced_review_top1.get('review_priority_score'))}, source {source_balanced_review_top1.get('source_stem', 'NA')}, cycle {fmt(source_balanced_review_top1.get('cycleNo'), 0)}, status {source_balanced_review_top1.get('manual_qc_status', 'NA')}",
+    ]
+    for row in source_balanced_review_top[:8]:
+        report_lines.append(
+            f"- Residual candidate review rank {row.get('review_rank')}: {row.get('roi_id', 'NA')} score {fmt(row.get('review_priority_score'))}, prob {fmt(row.get('source_heldout_future16_probability'))}, tier {row.get('review_tier', 'NA')}, status {row.get('manual_qc_status', 'NA')}"
+        )
+    for row in source_balanced_review_sources[:6]:
+        report_lines.append(
+            f"- Residual candidate source {row.get('source_stem', 'NA')}: n={fmt(row.get('n_candidates'), 0)}, max score {fmt(row.get('max_review_priority_score'))}, future16 rate {fmt(row.get('future16_positive_rate'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_residual_candidate_review, 'guardrail', 'Source-balanced residual candidate review packet unavailable.')}")
 
     report_lines += [
         "",
@@ -2927,6 +2973,17 @@ def main() -> None:
             "permutation_summary": source_balanced_resdict_norm_perm,
             "guardrail": first_summary(source_balanced_resdict_normalized_readout, "guardrail"),
         },
+        "source_balanced_residual_temporal_specificity_audit": {
+            "n_rows": first_summary(source_balanced_residual_temporal_specificity, "n_rows"),
+            "n_cycles": first_summary(source_balanced_residual_temporal_specificity, "n_cycles"),
+            "n_sources": first_summary(source_balanced_residual_temporal_specificity, "n_sources"),
+            "event_cycles": first_summary(source_balanced_residual_temporal_specificity, "event_cycles", []),
+            "label_counts": first_summary(source_balanced_residual_temporal_specificity, "label_counts", {}),
+            "best_future_specific": source_balanced_temporal_best,
+            "primary_source_residual_rows": source_balanced_temporal_primary,
+            "primary_future16_shift_null": source_balanced_temporal_shift16,
+            "guardrail": first_summary(source_balanced_residual_temporal_specificity, "guardrail"),
+        },
         "source_balanced_residual_physics_coupling_audit": {
             "n_rows": first_summary(source_balanced_residual_physics_coupling, "n_rows"),
             "n_cycles": first_summary(source_balanced_residual_physics_coupling, "n_cycles"),
@@ -2938,6 +2995,16 @@ def main() -> None:
             "best_source_residual_target_aligned_pairs": source_balanced_resphys_aligned,
             "dictionary_recon_error_last_minus_first_source_residual_top_correlations": source_balanced_resphys_dict_recon,
             "guardrail": first_summary(source_balanced_residual_physics_coupling, "guardrail"),
+        },
+        "source_balanced_residual_candidate_review_packet": {
+            "n_candidates": first_summary(source_balanced_residual_candidate_review, "n_candidates"),
+            "n_sources": first_summary(source_balanced_residual_candidate_review, "n_sources"),
+            "n_cycles": first_summary(source_balanced_residual_candidate_review, "n_cycles"),
+            "review_tier_counts": source_balanced_review_tiers,
+            "top_review_candidates": source_balanced_review_top,
+            "immediate_manual_qc_candidates": source_balanced_review_immediate,
+            "source_summary": source_balanced_review_sources,
+            "guardrail": first_summary(source_balanced_residual_candidate_review, "guardrail"),
         },
         "balanced_future_roi_physics_audit": {
             "n_cycles_sampled": first_summary(balanced_future_reconstruction, "n_cycles_sampled"),

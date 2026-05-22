@@ -118,7 +118,9 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC 0.602/AP 0.581, but leave-source future16 drops to AUC 0.375, marking source transfer as the main failure mode.
 - Source-normalizing the source-balanced residual dictionary leaves a source-residual future16 residual-dynamics candidate, dictionary_recon_error_last_minus_first, at AUC 0.637/AP 0.637 with source eta2 1.484e-33; within-source-rank residual PCs are weaker at AUC 0.574.
 - The grouped normalized residual-dictionary readout partially rescues held-out-source future16 transfer: raw residual dictionary AUC 0.375 improves to 0.550 after source residualization, while the single dictionary_recon_error_last_minus_first_source_residual readout reaches AUC 0.612/AP 0.613; permutation p=0.100 keeps it provisional.
+- Temporal-specificity controls show the same source-residual reconstruction-error drift is temporally ordered but not cleanly precursor-specific: future16 AUC 0.637 beats a within-source shift null (p=0.002) but barely exceeds past16 AUC 0.625; raw masked-minus-background slope is more future8-specific but source structured.
 - Source-balanced residual-physics coupling links the best source-residual dictionary candidate to crop-local physics proxies: top target-aligned pair is dictionary_recon_error_last_minus_first vs masked_minus_background_mean_slope with rho 0.373, residual AUC 0.637, and physics AUC 0.628; apparent diffusion coupling remains weak.
+- Source-balanced residual candidate review packet converts the residual/readout/coupling evidence into 96 pending manual-QC candidates; 8 are immediate-review, led by source_balanced_cycle108_rank6_obj2_12_c2_x10_070723 with score 0.917.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC 0.849 versus PCA-video 0.569 and handcrafted scalar 0.828; future16 learned_all remains weak at AUC 0.538 versus handcrafted 0.680.
@@ -1240,6 +1242,16 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Permutation null: n=200, AUC p95=0.621, empirical p(AUC)=0.100, empirical p(AP)=0.070
 - Guardrail: Source transforms are unsupervised within-source normalizations computed from ROI feature distributions, including held-out source rows without labels. This tests source-normalized readout stability, not a deployable source-transfer warning model.
 
+## Source-Balanced Residual Temporal Specificity Audit
+
+- Rows/cycles/sources: 96 / 48 / 14
+- Event cycles and label counts: [60.0, 86.0, 116.0, 156.0] / {'current_any_event': 0, 'future8': 28, 'future16': 48, 'past8': 10, 'past16': 30}
+- Primary source-residual reconstruction-error future8: AUC 0.539, past-control AUC 0.630, future-minus-control -0.091
+- Primary source-residual reconstruction-error future16: AUC 0.637, AP 0.637, past-control AUC 0.625, future-minus-control 0.012
+- Primary future16 within-source shift null: n=500, null AUC p95=0.521, empirical p(AUC)=0.002
+- Most future-specific row overall: masked_minus_background_mean_slope / raw / 8 cycles, future AUC 0.821, past-control AUC 0.377, delta 0.444
+- Guardrail: Temporal labels come from full particle abrupt-drop cycles but are evaluated on the 96 source-balanced ROI rows. Future-oriented scores use the future-label sign and apply the same sign to past/current controls. This tests temporal specificity, not causality or deployable warning.
+
 ## Source-Balanced Residual-Physics Coupling Audit
 
 - Rows/residual features/physics proxies/sources: 96 / 72 / 25 / 14
@@ -1256,6 +1268,27 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Dictionary recon source-residual coupling to front_radius_q70_slope_px_per_norm_time: rho -0.262, p=0.055, physics AUC 0.504, target aligned=False
 - Dictionary recon source-residual coupling to mask_centroid_drift_px: rho -0.231, p=0.024, physics AUC 0.580, target aligned=False
 - Guardrail: Residual-physics coupling is a source-normalized correlation audit over automatic crop-local optical proxies. It can prioritize follow-up mechanisms, but it does not calibrate diffusion coefficients or prove phase-boundary physics without manual/QC and physical scale validation.
+
+## Source-Balanced Residual Candidate Review Packet
+
+- Candidates/sources/cycles: 96 / 14 / 48
+- Review tier counts: {'routine': 58, 'standard_review': 19, 'high_priority': 11, 'immediate_manual_qc': 8}
+- Top candidate: source_balanced_cycle108_rank6_obj2_12_c2_x10_070723 score 0.917, source 12_c2_x10_070723, cycle 108, status pending
+- Residual candidate review rank 1: source_balanced_cycle108_rank6_obj2_12_c2_x10_070723 score 0.917, prob 0.781, tier immediate_manual_qc, status pending
+- Residual candidate review rank 2: source_balanced_cycle132_rank14_obj2_15_c2_x5_HighCOV_120723 score 0.904, prob 0.828, tier immediate_manual_qc, status pending
+- Residual candidate review rank 3: source_balanced_cycle145_rank20_obj2_16_c2_x10_HighHighCOV_130723 score 0.887, prob 0.585, tier immediate_manual_qc, status pending
+- Residual candidate review rank 4: source_balanced_cycle132_rank14_obj1_15_c2_x5_HighCOV_120723 score 0.878, prob 0.773, tier immediate_manual_qc, status pending
+- Residual candidate review rank 5: source_balanced_cycle108_rank6_obj1_12_c2_x10_070723 score 0.875, prob 0.747, tier immediate_manual_qc, status pending
+- Residual candidate review rank 6: source_balanced_cycle145_rank20_obj1_16_c2_x10_HighHighCOV_130723 score 0.853, prob 0.592, tier immediate_manual_qc, status pending
+- Residual candidate review rank 7: source_balanced_cycle144_rank19_obj2_16_c2_x10_HighHighCOV_130723 score 0.848, prob 0.584, tier immediate_manual_qc, status pending
+- Residual candidate review rank 8: source_balanced_cycle144_rank19_obj1_16_c2_x10_HighHighCOV_130723 score 0.840, prob 0.586, tier immediate_manual_qc, status pending
+- Residual candidate source 12_c2_x10_070723: n=8, max score 0.917, future16 rate 1.000
+- Residual candidate source 15_c2_x5_HighCOV_120723: n=6, max score 0.904, future16 rate 0.000
+- Residual candidate source 16_c2_x10_HighHighCOV_130723: n=8, max score 0.887, future16 rate 0.750
+- Residual candidate source 17_c2_x10_HighHighCOV_150723: n=6, max score 0.797, future16 rate 1.000
+- Residual candidate source 8_c2_x10_300623: n=8, max score 0.769, future16 rate 0.750
+- Residual candidate source 14_c2_x10_HighCOV_110723: n=8, max score 0.727, future16 rate 0.000
+- Guardrail: This packet ranks automatic source-balanced ROI crops for human review. It keeps manual_qc_status pending and does not assign particle identity, front validity, diffusion validity, or degradation labels.
 
 ## Balanced Future-Drop Direct-Video ROI Audit
 

@@ -3227,3 +3227,25 @@ Cohort/result snapshot:
 Interpretation:
 
 Source normalization partially rescues the held-out-source failure mode, but the improvement concentrates in one reconstruction-error drift feature rather than the full residual dictionary. The permutation null is suggestive but not conventionally significant, so this is a provisional source-robust temporal-dynamics readout for follow-up, not a deployable degradation warning model.
+
+## 2026-05-22 Source-Balanced Residual Candidate Review Packet
+
+Added `scripts/tier4_source_balanced_residual_candidate_review_packet.py` and ran it on Isambard. This converts the source-normalized residual readout and residual-physics coupling evidence into a concrete manual-QC queue for the source-balanced ROI crops without assigning labels.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet`
+- `derived_local/source_balanced_residual_candidate_review_packet`
+
+Cohort/result snapshot:
+
+- Ranked 96 ROI candidates across 48 cycles and 14 source movies.
+- Review tier counts: 8 immediate manual-QC, 11 high-priority, 19 standard-review, and 58 routine candidates.
+- Ranking combines source-heldout future16 probability from `dictionary_recon_error_last_minus_first_source_residual`, source-residual reconstruction-error drift, source-residual contrast slope, and front-motion magnitude.
+- The top immediate-review candidate is `source_balanced_cycle108_rank6_obj2_12_c2_x10_070723`, score 0.917, source-heldout future16 probability 0.781, future16 weak label 1, with positive source-residual reconstruction-error and contrast-slope evidence.
+- Other immediate-review candidates include cycle/source groups 132 (`15_c2_x5_HighCOV_120723`), 145/144 (`16_c2_x10_HighHighCOV_130723`), and 108 (`12_c2_x10_070723`), giving both weak-positive and weak-negative examples for artifact/front review.
+- Every row keeps `manual_qc_status=pending` and includes an instruction to review particle identity, stable mask, phase-front plausibility, and artifact risk before treating any automatic feature as physics evidence.
+
+Interpretation:
+
+This packet turns the current AI-derived residual dynamics signal into an actionable lab-in-the-loop queue. It does not improve the model by itself, but it reduces the next bottleneck: selecting which automatic crops should be manually checked before making stronger claims about phase-front movement, diffusion proxies, or degradation modes.
