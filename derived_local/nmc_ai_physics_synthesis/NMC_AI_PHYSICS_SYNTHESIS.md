@@ -67,6 +67,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Calibration metadata audit finds camera-timing datasets in 32 of 33 scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.
 - Calibration claim-risk register audits 11 front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.
 - Apparent diffusion calibration-bounds audit maps all 72 balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is 1.002, q70 median apparent D at 96 nm/px is 4.322e-08 um2/s, and q70 future8 separation is non-significant (top p=0.175).
+- Cross-modal consensus ranks cycles 86 and 116 as synchronized multimodal degradation candidates; the top cycle has 4 modal votes and consensus score 0.813, while the score remains an audit statistic rather than a calibrated probability.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
@@ -350,6 +351,30 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Calibration-bound link roi_elapsed_to_h5_median_ratio vs validation_score_recon: rho=0.222, p=5.050e-07
 - Calibration-bound link apparent_D_h5median_abs_um2_per_s vs transferred_masked_residual_signature: rho=-0.153, p=5.768e-04
 - Guardrail: Apparent diffusion values are recalibrated from HDF5 camera timing and slide-derived pixel-size assumptions. No HDF5 pixel-size attribute was found, and the values remain optical-front proxies, not validated material diffusion coefficients.
+
+## Cross-Modal Degradation Consensus
+
+- Cycles scored/with votes: 89 / 53
+- Median consensus score: 0.499; modal vote threshold 0.850
+- Consensus class synchronized_multimodal_degradation_candidate: n=2, median score 0.804, modal votes 4.000, event rate 1.000, future8 rate 0.000, median frame percentile 0.045
+- Consensus class multimodal_outlier_without_trace_drop: n=4, median score 0.623, modal votes 3.000, event rate 0.000, future8 rate 0.500, median frame percentile 0.770
+- Consensus class trace_event_low_modal_support: n=2, median score 0.618, modal votes 1.500, event rate 1.000, future8 rate 0.000, median frame percentile 0.640
+- Consensus class low_consensus: n=81, median score 0.485, modal votes 0.753, event rate 0.000, future8 rate 0.222, median frame percentile 0.500
+- Consensus cycle 86: synchronized_multimodal_degradation_candidate, score 0.813, votes 4, event=1, future8=0, frame percentile 0.079
+- Consensus cycle 116: synchronized_multimodal_degradation_candidate, score 0.795, votes 4, event=1, future8=0, frame percentile 0.011
+- Consensus cycle 150: multimodal_outlier_without_trace_drop, score 0.646, votes 3, event=0, future8=1, frame percentile 0.848
+- Consensus cycle 151: multimodal_outlier_without_trace_drop, score 0.625, votes 3, event=0, future8=1, frame percentile 0.831
+- Consensus cycle 104: multimodal_outlier_without_trace_drop, score 0.621, votes 3, event=0, future8=0, frame percentile 0.079
+- Consensus cycle 126: multimodal_outlier_without_trace_drop, score 0.565, votes 3, event=0, future8=0, frame percentile 0.708
+- Consensus cycle 76: low_consensus, score 0.710, votes 2, event=0, future8=0, frame percentile 0.202
+- Consensus cycle 125: low_consensus, score 0.709, votes 2, event=0, future8=0, frame percentile 0.742
+- Consensus contrast cross_modal_consensus_score vs any_abrupt_drop: median positive-negative 0.240, rho=0.298, n=89
+- Consensus contrast n_modal_votes vs any_abrupt_drop: median positive-negative 2.000, rho=0.277, n=89
+- Consensus contrast low_frame_rank vs any_abrupt_drop: median positive-negative 0.298, rho=0.122, n=89
+- Consensus contrast hazard_probability_max vs any_abrupt_drop: median positive-negative -0.024, rho=-0.116, n=62
+- Consensus contrast cross_modal_consensus_score vs future_any_drop_within_8cycles: median positive-negative 0.009, rho=0.062, n=89
+- Consensus contrast n_modal_votes vs future_any_drop_within_8cycles: median positive-negative 0.000, rho=0.068, n=89
+- Guardrail: Consensus score is an audit/ranking statistic across already-derived modalities; it is not a calibrated probability and keeps frame-count/acquisition as an explicit confounder.
 
 ## Diffusion Proxy Sanity Audit
 

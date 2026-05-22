@@ -1,0 +1,5 @@
+consensus_class,n_cycles,median_consensus_score,mean_modal_votes,event_rate,future8_rate,median_frames_percentile
+synchronized_multimodal_degradation_candidate,2,0.8039256823941291,4.0,1.0,0.0,0.04494382022471905
+multimodal_outlier_without_trace_drop,4,0.6233730879330129,3.0,0.0,0.5,0.7696629213483146
+trace_event_low_modal_support,2,0.6182167062618917,1.5,1.0,0.0,0.6404494382022472
+low_consensus,81,0.4849426161254119,0.7530864197530864,0.0,0.2222222222222222,0.5

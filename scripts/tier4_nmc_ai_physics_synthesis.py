@@ -104,6 +104,7 @@ def main() -> None:
     calibration_metadata = read_json(derived / "calibration_metadata_audit" / "calibration_metadata_audit_summary.json")
     calibration_claim_risk = read_json(derived / "calibration_claim_risk_register" / "calibration_claim_risk_summary.json")
     apparent_diffusion_calibration = read_json(derived / "apparent_diffusion_calibration_bounds" / "apparent_diffusion_calibration_bounds_summary.json")
+    cross_modal_consensus = read_json(derived / "cross_modal_degradation_consensus" / "cross_modal_degradation_consensus_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
     roi_trace_fusion = read_json(derived / "roi_trace_fusion_audit" / "roi_trace_fusion_audit_summary.json")
@@ -372,6 +373,15 @@ def main() -> None:
     apparent_diffusion_q70_tests = top_items(first_summary(apparent_diffusion_calibration, "future8_feature_tests_q70", []), 10)
     apparent_diffusion_corr = top_items(first_summary(apparent_diffusion_calibration, "calibration_correlations", []), 8)
     apparent_diffusion_q70_test = apparent_diffusion_q70_tests[0] if apparent_diffusion_q70_tests else {}
+    cross_modal_top = top_items(first_summary(cross_modal_consensus, "top_cycles", []), 12)
+    cross_modal_classes = top_items(first_summary(cross_modal_consensus, "class_summary", []), 8)
+    cross_modal_contrasts = top_items(first_summary(cross_modal_consensus, "target_contrasts", []), 12)
+    cross_modal_top_cycle = first_summary(cross_modal_consensus, "top_cycle", {}) or {}
+    cross_modal_sync_cycles = [
+        row for row in cross_modal_top
+        if row.get("consensus_class") == "synchronized_multimodal_degradation_candidate"
+    ]
+    cross_modal_sync_cycle_labels = ", ".join(fmt(row.get("cycleNo"), 0) for row in cross_modal_sync_cycles[:3]) or "NA"
     diffusion_sanity_gate = top_items(first_summary(diffusion_sanity, "gate_counts", []), 12)
     diffusion_sanity_candidates = top_items(first_summary(diffusion_sanity, "top_automatic_candidates", []), 12)
     diffusion_sanity_corr = top_items(first_summary(diffusion_sanity, "top_correlations", []), 8)
@@ -533,6 +543,7 @@ def main() -> None:
         f"- Calibration metadata audit finds camera-timing datasets in {first_summary(calibration_metadata, 'n_h5_with_camera_timing', 0)} of {first_summary(calibration_metadata, 'n_h5_files', 0)} scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.",
         f"- Calibration claim-risk register audits {first_summary(calibration_claim_risk, 'n_claim_families', 0)} front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.",
         f"- Apparent diffusion calibration-bounds audit maps all {first_summary(apparent_diffusion_calibration, 'n_roi_with_h5_timing', 0)} balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is {fmt(first_summary(apparent_diffusion_calibration, 'median_roi_elapsed_to_h5_median_ratio'))}, q70 median apparent D at 96 nm/px is {fmt(first_summary(apparent_diffusion_calibration, 'median_q70_apparent_D_h5median_um2_per_s'))} um2/s, and q70 future8 separation is non-significant (top p={fmt(apparent_diffusion_q70_test.get('mannwhitney_p'))}).",
+        f"- Cross-modal consensus ranks cycles {cross_modal_sync_cycle_labels} as synchronized multimodal degradation candidates; the top cycle has {fmt(cross_modal_top_cycle.get('n_modal_votes'), 0)} modal votes and consensus score {fmt(cross_modal_top_cycle.get('cross_modal_consensus_score'))}, while the score remains an audit statistic rather than a calibrated probability.",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
         f"- Automatic front-QC sensitivity keeps the positive phase-front residual in {len(robust_phase_strata)} strata: {', '.join(robust_phase_strata) if robust_phase_strata else 'none'}; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.",
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
@@ -815,6 +826,27 @@ def main() -> None:
             f"- Calibration-bound link {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(apparent_diffusion_calibration, 'guardrail', 'Apparent diffusion calibration-bounds audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Cross-Modal Degradation Consensus",
+        "",
+        f"- Cycles scored/with votes: {first_summary(cross_modal_consensus, 'n_cycles', 0)} / {first_summary(cross_modal_consensus, 'n_cycles_with_any_modal_vote', 0)}",
+        f"- Median consensus score: {fmt(first_summary(cross_modal_consensus, 'median_consensus_score'))}; modal vote threshold {fmt(first_summary(cross_modal_consensus, 'modal_vote_threshold'))}",
+    ]
+    for row in cross_modal_classes:
+        report_lines.append(
+            f"- Consensus class {row.get('consensus_class')}: n={fmt(row.get('n_cycles'), 0)}, median score {fmt(row.get('median_consensus_score'))}, modal votes {fmt(row.get('mean_modal_votes'))}, event rate {fmt(row.get('event_rate'))}, future8 rate {fmt(row.get('future8_rate'))}, median frame percentile {fmt(row.get('median_frames_percentile'))}"
+        )
+    for row in cross_modal_top[:8]:
+        report_lines.append(
+            f"- Consensus cycle {fmt(row.get('cycleNo'), 0)}: {row.get('consensus_class')}, score {fmt(row.get('cross_modal_consensus_score'))}, votes {fmt(row.get('n_modal_votes'), 0)}, event={fmt(row.get('any_abrupt_drop'), 0)}, future8={fmt(row.get('future_any_drop_within_8cycles'), 0)}, frame percentile {fmt(row.get('frames_percentile'))}"
+        )
+    for row in cross_modal_contrasts[:6]:
+        report_lines.append(
+            f"- Consensus contrast {row.get('feature')} vs {row.get('target')}: median positive-negative {fmt(row.get('median_difference'))}, rho={fmt(row.get('spearman_rho'))}, n={fmt(row.get('n'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(cross_modal_consensus, 'score_guardrail', 'Consensus audit unavailable.')}")
 
     report_lines += [
         "",
@@ -2058,6 +2090,17 @@ def main() -> None:
             "future8_feature_tests_q70": apparent_diffusion_q70_tests,
             "calibration_correlations": apparent_diffusion_corr,
             "guardrail": first_summary(apparent_diffusion_calibration, "guardrail"),
+        },
+        "cross_modal_degradation_consensus": {
+            "n_cycles": first_summary(cross_modal_consensus, "n_cycles"),
+            "n_cycles_with_any_modal_vote": first_summary(cross_modal_consensus, "n_cycles_with_any_modal_vote"),
+            "median_consensus_score": first_summary(cross_modal_consensus, "median_consensus_score"),
+            "modal_vote_threshold": first_summary(cross_modal_consensus, "modal_vote_threshold"),
+            "top_cycle": cross_modal_top_cycle,
+            "class_summary": cross_modal_classes,
+            "target_contrasts": cross_modal_contrasts,
+            "top_cycles": cross_modal_top,
+            "guardrail": first_summary(cross_modal_consensus, "score_guardrail"),
         },
         "calibration_metadata_audit": {
             "n_h5_discovered_before_cap": first_summary(calibration_metadata, "n_h5_discovered_before_cap"),

@@ -2378,3 +2378,20 @@ Key result:
 - Distance-gradient tests do not show a simple shorter-distance enrichment for future8-positive pairs; next-cycle both-positive median distance is not significantly different from other edges (p=0.831).
 
 Interpretation: nearby reconstructed ROI candidates preserve coherent front/rollout state across adjacent observed cycles, which is useful for spatial review prioritization and candidate propagation hypotheses. It is not particle tracking or causal propagation proof because ROI identities are automatic and future8 labels are cycle-level weak labels.
+
+## 2026-05-22 Cross-Modal Degradation Consensus
+
+Added `scripts/tier4_cross_modal_degradation_consensus.py` and ran it on Isambard to join cycle-level evidence from particle traces, integrated event evidence, hazard probabilities, balanced ROI-front physics, temporal directionality, electrochemical state-space transitions, and joint rollout/physics degradation summaries.
+
+Key result:
+
+- The audit scored 89 cycles; 53 cycles received at least one modal vote at the 0.85 rank threshold.
+- Cycles 86 and 116 are the only `synchronized_multimodal_degradation_candidate` cycles. Each has 4 modal votes, synchronized trace drops, low frame-count/acquisition votes, and echem-state votes.
+- Cycle 86 ranks first with consensus score 0.813, 4 modal votes, frame percentile 0.079, 3 dropping particles, max particle-trace delta 0.168, hazard probability 0.942, rollout residual energy 0.00171, and state-step norm 8.52.
+- Cycle 116 ranks second with consensus score 0.795, 4 modal votes, frame percentile 0.011, 3 dropping particles, max particle-trace delta 0.262, integrated evidence score 12.93, and state-step norm 13.56.
+- The synchronized candidate class has median consensus score 0.804, event rate 1.0, and median frame percentile 0.045; this reinforces the event hypothesis while keeping acquisition/frame-count as an explicit confounder.
+- Four cycles are `multimodal_outlier_without_trace_drop`; cycles 150 and 151 are notable because both are future8-positive and combine high hazard probability, ROI-front/masked-residual signals, and large echem-state transitions without a current trace drop.
+- Consensus score separates current abrupt-drop cycles from non-drop cycles (median 0.732 vs 0.492) but barely separates future8 labels by itself (median 0.508 vs 0.498). Hazard probability and masked residual signatures remain more relevant for future warning than the full consensus score.
+
+Interpretation: cross-modal agreement strengthens cycles 86/116 as coordinated degradation candidates, but the same result also confirms that the strongest synchronized events are acquisition-confounded low-frame-count regimes. Use the consensus table as a QC and hypothesis-ranking index, not as a calibrated probability model.
+
