@@ -4009,3 +4009,36 @@ Results:
 - Rubric fields explicitly ask for particle identity, front-like motion, front direction, phase-boundary interpretability, particle-local kinetic signal, artifact/drift risk, diffusion interpretation permission, and final manual decision.
 
 Interpretation: this is the missing bridge from automatic physics proxies to defensible manual validation. It prevents automatic ranking and event proximity from biasing the first scoring pass, while retaining a hidden key for post-label enrichment tests. It still assigns no labels and keeps diffusion claims blocked unless manual review supports particle identity, front mask quality, and front-motion interpretability.
+
+
+## 2026-05-22 Diffusion Claim Readiness Audit
+
+Added scripts/tier4_diffusion_claim_readiness_audit.py and ran it on Isambard to assemble a single go/no-go ledger for calibrated diffusion claims. The audit joins the calibration metadata, apparent-diffusion calibration bounds, diffusion physics consistency gates, control-balanced diffusion sanity checks, manual-QC gate state, and manual visual-review packet into separate criteria and candidate tables. It is deliberately a readiness/guardrail audit, not a new diffusion estimator.
+
+Remote output:
+
+/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_claim_readiness_audit
+
+Local compact mirror:
+
+derived_local/diffusion_claim_readiness_audit
+
+Key outputs:
+
+- diffusion_claim_readiness_criteria.csv
+- diffusion_claim_readiness_candidates.csv
+- diffusion_claim_readiness_summary.json
+- README.md
+
+Results:
+
+- Overall status remains not_ready_for_calibrated_diffusion_claim.
+- 14 criteria were evaluated: 1 pass, 5 partial, 7 fail, and 1 blocked pending manual QC.
+- 8 hard blockers remain: missing HDF5 spatial-calibration metadata, per-ROI HDF5 timing stability, radius2 fit quality, q70 positive confidence interval, no publication-ready diffusion candidates, no accepted manual-QC labels, no control-balanced publication candidates, and non-significant event/control diffusion separability.
+- Candidate ledger contains 60 rows. There is 1 automatic physics-consistent candidate and 0 publication-ready diffusion candidates.
+- Top candidate remains cycle78_rank22_obj2 from source 9_c2_x10_010723: it passes most automatic physics gates but remains blocked by q70 positive-CI failure and the publication-ready gate.
+
+Interpretation:
+
+- The current project can responsibly report optical-front/apparent-motion proxy analyses and use the ranked candidate ledger for manual review.
+- It should not report calibrated material diffusion coefficients until raw spatial calibration, timestamp semantics, manual particle/front labels, and the control-balanced sanity gates pass.

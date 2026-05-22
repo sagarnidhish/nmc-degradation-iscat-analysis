@@ -448,6 +448,25 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Diffusion consistency correlation median_abs_apparent_D_um2_per_s vs validation_score_recon: rho=-0.409, p=3.547e-04, n=72
 - Guardrail: Automatic apparent-D candidates must pass positive expansion, radius^2 fit, threshold-stability, timing, drift, q70 CI, and manual-QC gates before any calibrated diffusion claim. This audit is a physics-consistency filter over optical front proxies, not a material diffusion measurement.
 
+## Diffusion Claim Readiness Audit
+
+- Overall status: not_ready_for_calibrated_diffusion_claim
+- Criteria / hard blockers / publication-ready candidates: 14 / 8 / 0
+- Status counts: {'blocked_pending_manual_qc': 1, 'fail': 7, 'partial': 5, 'pass': 1}
+- Hard blocker: HDF5 spatial calibration metadata present
+- Hard blocker: Per-ROI HDF5 timing stability
+- Hard blocker: Radius2 linear-fit quality
+- Hard blocker: q70 positive confidence interval
+- Hard blocker: Automatic/publication diffusion candidates
+- Hard blocker: Manual QC accepted labels
+- Hard blocker: Control-balanced diffusion sanity candidates
+- Hard blocker: Event/control diffusion separability
+- Readiness candidate cycle78_rank22_obj2: source diffusion_physics_consistency, cycle 78, publication_ready=False, blockers=q70 positive CI; publication-ready gate
+- Readiness candidate cycle62_rank1_obj4: source control_balanced_selected_front, cycle 62, publication_ready=False, blockers=selected fit quality; manual QC accepted; publication-ready gate
+- Readiness candidate cycle60_rank2_obj2: source control_balanced_selected_front, cycle 60, publication_ready=False, blockers=selected fit quality; manual QC accepted; publication-ready gate
+- Readiness candidate cycle116_rank7_obj37: source control_balanced_selected_front, cycle 116, publication_ready=False, blockers=selected nonnegative; manual QC accepted; publication-ready gate
+- Guardrail: Calibrated diffusion remains blocked unless raw spatial calibration, timestamp semantics, internal front-motion gates, control-balanced sanity checks, and manual QC labels all pass. Current outputs support optical-front proxy review only.
+
 ## Cross-Modal Degradation Consensus
 
 - Cycles scored/with votes: 89 / 53
