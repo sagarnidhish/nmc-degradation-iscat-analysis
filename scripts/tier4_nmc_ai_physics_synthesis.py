@@ -148,6 +148,7 @@ def main() -> None:
     source_balanced_pre_event_rollout = read_json(derived / "source_balanced_pre_event_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
     source_balanced_pre_event_mask_front = read_json(derived / "source_balanced_pre_event_mask_front_audit" / "source_balanced_mask_front_summary.json")
     source_balanced_pre_event_readout = read_json(derived / "source_balanced_pre_event_readout_audit" / "source_balanced_pre_event_readout_summary.json")
+    source_balanced_pre_event_trajectory = read_json(derived / "source_balanced_pre_event_trajectory_audit" / "source_balanced_pre_event_trajectory_summary.json")
     source_balanced_sequences = read_json(derived / "source_balanced_roi_sequences" / "selected_roi_sequence_summary.json")
     source_balanced_sequence_rollout = read_json(derived / "source_balanced_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
     source_balanced_mask_front = read_json(derived / "source_balanced_mask_front_sanity_audit" / "source_balanced_mask_front_summary.json")
@@ -472,6 +473,9 @@ def main() -> None:
     ]
     source_balanced_pre_event_mask_best = source_balanced_pre_event_mask_physics[0] if source_balanced_pre_event_mask_physics else (source_balanced_pre_event_mask_top[0] if source_balanced_pre_event_mask_top else {})
     source_balanced_pre_event_clean_best = source_balanced_pre_event_readout_clean[0] if source_balanced_pre_event_readout_clean else {}
+    source_balanced_pre_event_traj_physics = top_items(first_summary(source_balanced_pre_event_trajectory, "top_physics_toward_event_tests", []), 12)
+    source_balanced_pre_event_traj_source = top_items(first_summary(source_balanced_pre_event_trajectory, "top_source_residual_event_distance_tests", []), 12)
+    source_balanced_pre_event_traj_best = source_balanced_pre_event_traj_physics[0] if source_balanced_pre_event_traj_physics else {}
     source_balanced_degmode_clusters = top_items(first_summary(source_balanced_degradation_modes, "cluster_summary", []), 12)
     source_balanced_degmode_enrichment = top_items(first_summary(source_balanced_degradation_modes, "top_enrichment", []), 24)
     source_balanced_degmode_representatives = top_items(first_summary(source_balanced_degradation_modes, "representatives", []), 12)
@@ -906,6 +910,7 @@ def main() -> None:
         f"- Source-balanced pre-event sampling addresses the future-specificity gap directly: it reconstructs {first_summary(source_balanced_pre_event_sampling, 'n_roi_rows', 0)} automatic ROI proposals from {first_summary(source_balanced_pre_event_sampling, 'n_sampled_cycles', 0)} event-relative cycles across {first_summary(source_balanced_pre_event_sampling, 'n_sources_selected', 0)} sources, with cycle bins {source_balanced_pre_event_bins} and {first_summary(source_balanced_pre_event_sampling, 'n_new_selected_cycles', 0)} new cycle/source pairs.",
         f"- Source-balanced pre-event sequence audit exports {first_summary(source_balanced_pre_event_sequences, 'n_roi_sequences', 0)} event-relative particle crops and finds near-pre-event spatial video structure under leave-source AUC {fmt(source_balanced_pre_event_near_source.get('roc_auc'))}/AP {fmt(source_balanced_pre_event_near_source.get('average_precision'))}, while broader any-pre transfer remains weak at AUC {fmt(source_balanced_pre_event_any_source.get('roc_auc'))}.",
         f"- Pre-event rollout/mask audits on those crops find top future16 ROI signals in {source_balanced_pre_event_rollout_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_rollout_best.get('oriented_auc'))} and {source_balanced_pre_event_mask_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_mask_best.get('oriented_auc'))}; event-relative clean-pre source-residual readout peaks at {source_balanced_pre_event_clean_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_clean_best.get('oriented_auc'))}.",
+        f"- Pre-event event-distance trajectory audit collapses duplicate ROI proposals to {first_summary(source_balanced_pre_event_trajectory, 'n_cycle_rows', 0)} cycle rows and tests monotonic approach-to-event physics proxies; the leading source-residual physics trend is {source_balanced_pre_event_traj_best.get('feature', 'NA')} with rho {fmt(source_balanced_pre_event_traj_best.get('spearman_rho_vs_event_proximity'))} and source-stratified permutation p={fmt(source_balanced_pre_event_traj_best.get('within_source_permutation_abs_rho_p'))}.",
         f"- Source-balanced ROI sequence export converts that manifest into {first_summary(source_balanced_sequences, 'n_roi_sequences', 0)} particle-region crop tensors across {first_summary(source_balanced_sequences, 'n_cycles', 0)} cycles and {first_summary(source_balanced_sequences, 'n_sources', 0)} sources with {first_summary(source_balanced_sequences, 'n_failed', 0)} export failures; the fast rollout audit finds strongest future16 ROI signal in {source_balanced_rollout_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_rollout_top16.get('oriented_auc'))}, while prediction-error features are highly source-structured.",
         f"- A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across {first_summary(source_balanced_mask_front, 'n_roi_sequences', 0)} ROI tensors; top future16 mask/front proxy is {source_balanced_mask_front_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_top16.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_top16.get('average_precision'))}, but source eta2 is {fmt(source_balanced_mask_front_top16.get('source_eta2'))}.",
         f"- A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is {source_balanced_mask_front_resid_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_resid_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_resid_best.get('average_precision'))}, and best within-source-rank proxy is {source_balanced_mask_front_rank_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_rank_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_rank_best.get('average_precision'))}.",
@@ -1986,11 +1991,18 @@ def main() -> None:
         f"- Top pre-event mask/front future-label row: {source_balanced_pre_event_mask_best.get('target', 'NA')} {source_balanced_pre_event_mask_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_mask_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_mask_best.get('average_precision'))}, source eta2 {fmt(source_balanced_pre_event_mask_best.get('source_eta2'))}",
         f"- Event-relative bins: {first_summary(source_balanced_pre_event_readout, 'event_relative_bin_counts', {})}",
         f"- Best source-residual clean-pre readout: {source_balanced_pre_event_clean_best.get('target', 'NA')} {source_balanced_pre_event_clean_best.get('feature', 'NA')} AUC {fmt(source_balanced_pre_event_clean_best.get('oriented_auc'))}, AP {fmt(source_balanced_pre_event_clean_best.get('average_precision'))}, p={fmt(source_balanced_pre_event_clean_best.get('mwu_p'))}",
+        f"- Event-distance trajectory rows/sources/events/features: {first_summary(source_balanced_pre_event_trajectory, 'n_cycle_rows', 0)} / {first_summary(source_balanced_pre_event_trajectory, 'n_sources', 0)} / {first_summary(source_balanced_pre_event_trajectory, 'n_event_cycles', 0)} / {first_summary(source_balanced_pre_event_trajectory, 'n_features_tested', 0)}; complete near/far event cycles {first_summary(source_balanced_pre_event_trajectory, 'full_event_cycles_with_near_and_far', 0)}",
+        f"- Top trajectory physics trend: {source_balanced_pre_event_traj_best.get('transform', 'NA')} {source_balanced_pre_event_traj_best.get('feature', 'NA')} rho {fmt(source_balanced_pre_event_traj_best.get('spearman_rho_vs_event_proximity'))}, p={fmt(source_balanced_pre_event_traj_best.get('spearman_p'))}, source-stratified permutation p={fmt(source_balanced_pre_event_traj_best.get('within_source_permutation_abs_rho_p'))}, near-far median {fmt(source_balanced_pre_event_traj_best.get('near_minus_far_median'))}",
+        f"- Trajectory guardrail: {first_summary(source_balanced_pre_event_trajectory, 'guardrail', 'Source-balanced pre-event trajectory audit unavailable.')}",
         f"- Guardrail: {first_summary(source_balanced_pre_event_readout, 'guardrail', 'Source-balanced pre-event readout unavailable.')}",
     ]
     for row in source_balanced_pre_event_readout_best[:10]:
         report_lines.append(
             f"- Event-relative readout {row.get('target', 'NA')} {row.get('transform', 'NA')} {row.get('feature', 'NA')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, p={fmt(row.get('mwu_p'))}, eta2 {fmt(row.get('source_eta2_after_transform'))}"
+        )
+    for row in source_balanced_pre_event_traj_physics[:6]:
+        report_lines.append(
+            f"- Event-distance trajectory {row.get('transform', 'NA')} {row.get('feature', 'NA')}: rho {fmt(row.get('spearman_rho_vs_event_proximity'))}, permutation p={fmt(row.get('within_source_permutation_abs_rho_p'))}, near-far median {fmt(row.get('near_minus_far_median'))}"
         )
 
     report_lines += [
@@ -3183,6 +3195,17 @@ def main() -> None:
                 "best_by_target_transform": source_balanced_pre_event_readout_best,
                 "best_source_residual_clean_pre_readouts": source_balanced_pre_event_readout_clean,
                 "guardrail": first_summary(source_balanced_pre_event_readout, "guardrail"),
+            },
+            "event_distance_trajectory": {
+                "n_cycle_rows": first_summary(source_balanced_pre_event_trajectory, "n_cycle_rows"),
+                "n_sources": first_summary(source_balanced_pre_event_trajectory, "n_sources"),
+                "n_event_cycles": first_summary(source_balanced_pre_event_trajectory, "n_event_cycles"),
+                "n_features_tested": first_summary(source_balanced_pre_event_trajectory, "n_features_tested"),
+                "n_permutations": first_summary(source_balanced_pre_event_trajectory, "n_permutations"),
+                "full_event_cycles_with_near_and_far": first_summary(source_balanced_pre_event_trajectory, "full_event_cycles_with_near_and_far"),
+                "top_physics_toward_event_tests": source_balanced_pre_event_traj_physics,
+                "top_source_residual_event_distance_tests": source_balanced_pre_event_traj_source,
+                "guardrail": first_summary(source_balanced_pre_event_trajectory, "guardrail"),
             },
         },
         "source_balanced_future_specific_residual_audit": {

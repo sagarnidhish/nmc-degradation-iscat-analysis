@@ -3399,3 +3399,26 @@ Cohort/result snapshot:
 Interpretation:
 
 The event-relative export makes the pre-event question more concrete. Raw optical contrast strongly separates near-pre-event from post/control bins, but it is still source structured. After source residualization, the surviving signal shifts to front-radius/slope and apparent-diffusion-like proxies with moderate AUC and weaker p-values. This is useful physics triage: it suggests pre-event organization in crop-local front geometry, while keeping the claim guarded because masks/fronts are automatic and not calibrated phase boundaries or diffusion coefficients.
+
+## 2026-05-22 Source-Balanced Pre-Event Event-Distance Trajectory Audit
+
+Added `scripts/tier4_source_balanced_pre_event_trajectory_audit.py` and ran it on Isambard using the source-balanced pre-event readout feature table. This audit collapses the two automatic ROI proposals per sampled cycle into one cycle-level row before testing whether rollout/front/mask/diffusion-like proxies change monotonically as sampled cycles approach abrupt optical event cycles.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_trajectory_audit`
+- `derived_local/source_balanced_pre_event_trajectory_audit`
+
+Cohort/result snapshot:
+
+- Input readout table: 128 ROI rows; pre-event subset: 76 ROI rows.
+- Cycle-level trajectory table: 38 cycle rows across 10 source movies and 4 event cycles, with 44 tested features.
+- Event-relative cycle bins: far pre-event 17-32 cycles = 11 cycle rows, mid pre-event 9-16 cycles = 11, near pre-event 1-8 cycles = 16.
+- Complete near/far event-cycle comparisons exist for 2 event cycles after allowing the far/mid/near bins around the same event to come from different source movies.
+- Leading source-residual physics-facing trend toward the event is `apparent_diffusion_q70_px2_per_norm_time`: Spearman rho versus event proximity = 0.272, source-stratified permutation p = 0.064, near-minus-far median = 8.259 px^2 per normalized time.
+- Related source-residual front trend: `front_radius_q70_slope_px_per_norm_time`, rho = 0.160, source-stratified permutation p = 0.084, near-minus-far median = 0.341 px per normalized time.
+- The strongest source-residual rows overall include ROI intensity drift terms with low permutation p-values, but those are not physics-specific and should remain secondary to the front/diffusion proxy rows.
+
+Interpretation:
+
+This adds a stricter pre-event trajectory question on top of the bin-classification audits: are particle-crop front/diffusion proxies progressively organized as an abrupt event approaches? The answer is suggestive but still guarded. The apparent q70 radius-squared proxy and q70 front-slope proxy move in the expected direction after source residualization, but p-values are marginal and the event-distance design is sparse. These results are useful for prioritizing phase-front/diffusion follow-up experiments and manual QC, not for claiming calibrated phase-boundary motion, diffusion coefficients, particle identity, or causal forecasting.

@@ -115,6 +115,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Source-balanced pre-event sampling addresses the future-specificity gap directly: it reconstructs 128 automatic ROI proposals from 64 event-relative cycles across 14 sources, with cycle bins {'far_pre_event_17_32': 11, 'mid_pre_event_9_16': 11, 'near_pre_event_1_8': 16, 'no_near_event_control': 6, 'post_event_1_16': 20} and 13 new cycle/source pairs.
 - Source-balanced pre-event sequence audit exports 128 event-relative particle crops and finds near-pre-event spatial video structure under leave-source AUC 0.759/AP 0.515, while broader any-pre transfer remains weak at AUC 0.463.
 - Pre-event rollout/mask audits on those crops find top future16 ROI signals in roi_norm_mean_delta_last_minus_first AUC 0.628 and masked_minus_background_mean_slope AUC 0.624; event-relative clean-pre source-residual readout peaks at front_radius_q60_slope_px_per_norm_time AUC 0.660.
+- Pre-event event-distance trajectory audit collapses duplicate ROI proposals to 38 cycle rows and tests monotonic approach-to-event physics proxies; the leading source-residual physics trend is apparent_diffusion_q70_px2_per_norm_time with rho 0.272 and source-stratified permutation p=0.064.
 - Source-balanced ROI sequence export converts that manifest into 96 particle-region crop tensors across 48 cycles and 14 sources with 0 export failures; the fast rollout audit finds strongest future16 ROI signal in roi_norm_mean_delta_last_minus_first at AUC 0.626, while prediction-error features are highly source-structured.
 - A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across 96 ROI tensors; top future16 mask/front proxy is masked_minus_background_mean_slope at AUC 0.690/AP 0.696, but source eta2 is 0.634.
 - A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.631/AP 0.634, and best within-source-rank proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.656/AP 0.677.
@@ -1318,6 +1319,9 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Top pre-event mask/front future-label row: future_any_drop_within_16cycles masked_minus_background_mean_slope AUC 0.624, AP 0.655, source eta2 0.578
 - Event-relative bins: {'far_pre_event_17_32': 22, 'mid_pre_event_9_16': 22, 'near_pre_event_1_8': 32, 'no_near_event_control': 12, 'post_event_1_16': 40}
 - Best source-residual clean-pre readout: clean_pre_1_8_vs_post_control front_radius_q60_slope_px_per_norm_time AUC 0.660, AP 0.665, p=0.083
+- Event-distance trajectory rows/sources/events/features: 38 / 10 / 4 / 44; complete near/far event cycles 2
+- Top trajectory physics trend: source_residual apparent_diffusion_q70_px2_per_norm_time rho 0.272, p=0.120, source-stratified permutation p=0.064, near-far median 8.259
+- Trajectory guardrail: Cycle-level event-distance trajectories reduce duplicate ROI counting and test monotonic pre-event organization, but automatic crops/masks and sparse full far-mid-near event trajectories mean these are physics triage signals, not calibrated phase boundaries, diffusion coefficients, or causal degradation forecasts.
 - Guardrail: Event-relative readouts use automatic ROI crops and weak event-distance bins. They test pre/post/control organization of optical/front/rollout proxies, not manual particle identity, causal mechanism, calibrated phase boundaries, or diffusion coefficients.
 - Event-relative readout clean_pre_1_16_vs_post_control raw mask_area_fraction_iqr: AUC 0.683, AP 0.661, p=0.001, eta2 0.384
 - Event-relative readout clean_pre_1_16_vs_post_control source_residual front_radius_q80_median_px: AUC 0.645, AP 0.570, p=0.010, eta2 4.321e-33
@@ -1329,6 +1333,12 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Event-relative readout clean_pre_1_8_vs_post_control source_residual front_radius_q60_slope_px_per_norm_time: AUC 0.660, AP 0.665, p=0.083, eta2 3.045e-33
 - Event-relative readout clean_pre_1_8_vs_post_control within_source_rank front_radius_q70_slope_px_per_norm_time: AUC 0.592, AP 0.479, p=0.306, eta2 0.024
 - Event-relative readout near_pre_vs_far_pre raw masked_minus_background_mean_slope: AUC 0.734, AP 0.815, p=0.004, eta2 0.578
+- Event-distance trajectory source_residual apparent_diffusion_q70_px2_per_norm_time: rho 0.272, permutation p=0.064, near-far median 8.259
+- Event-distance trajectory source_residual front_radius_q70_slope_px_per_norm_time: rho 0.160, permutation p=0.084, near-far median 0.341
+- Event-distance trajectory source_residual apparent_diffusion_q70_um2_per_norm_time: rho 0.272, permutation p=0.100, near-far median 0.304
+- Event-distance trajectory event_residual mask_centroid_path_px: rho 0.239, permutation p=0.167, near-far median 1.204
+- Event-distance trajectory source_residual front_radius_q60_slope_px_per_norm_time: rho 0.166, permutation p=0.191, near-far median 0.278
+- Event-distance trajectory event_residual mask_area_fraction_slope: rho 0.135, permutation p=0.191, near-far median 0.006
 
 ## Source-Balanced Degradation Mode Audit
 
