@@ -3893,3 +3893,26 @@ Results:
 Interpretation:
 
 This is a useful model-selection guardrail. Masked phase kinetics add signal relative to automatic front/echem-residual features, but they do not yet make a robust standalone leave-source predictor. The strongest source-heldout discrimination comes from consensus/visual-QC and echem-context features that are partly review-ranking or source/event-bin structured, so they should guide manual QC and experiment selection, not be reported as deployable precursor accuracy. The practical next target is a smaller, regularized manual-QC candidate set that combines consensus/QC ranking with masked kinetics rather than feeding every automatic feature into one model.
+
+## 2026-05-22 Source-Balanced Pre-Event Front/Kinetic Concordance Audit
+
+Added `scripts/tier4_source_balanced_pre_event_front_kinetic_concordance_audit.py` and ran it on Isambard. This audit joins the source-balanced pre-event phase-kinetics features, front-consensus proxies, visual QC scores, and strict front gates to ask whether the same ROI candidates carry both masked optical kinetics and front-like evidence.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit`
+- `derived_local/source_balanced_pre_event_front_kinetic_concordance_audit`
+- `source_balanced_pre_event_front_kinetic_concordance_ranked_candidates.csv`
+- `source_balanced_pre_event_front_kinetic_concordance_event_tests.csv`
+- `source_balanced_pre_event_front_kinetic_concordance_correlations.csv`
+- `source_balanced_pre_event_front_kinetic_concordance_summary.json`
+
+Results:
+
+- Ranked 128 ROI rows across 14 sources.
+- Tier counts are 99 routine/low-concordance, 13 front-only guardrail, 7 kinetic-only guardrail, 4 near-pre front/kinetic review, 4 non-near front/kinetic concordant, and 1 strict-gate manual-front-review row.
+- Top ranked row is `source_balanced_cycle154_rank30_obj2_17_c2_x10_HighHighCOV_150723`, near-pre, score 1.669, kinetic evidence 2.030, front evidence 1.585, tier `near_pre_front_kinetic_review`.
+- The strict-QC manual-front candidate `source_balanced_cycle80_rank62_obj2_9_c2_x10_010723` remains in the top set with score 1.124, kinetic evidence 0.672, front evidence 1.413, tier `strict_gate_manual_front_review`.
+- Best event-bin row is near-vs-any-non-near raw `kinetic_evidence_score`: AUC 0.770, AP 0.622, median difference 0.956, p = 5.00e-06. The composite concordance score reaches AUC 0.768, p = 3.90e-05.
+
+Interpretation: this audit turns the phase-kinetics/front-QC layers into an actionable review queue while preserving discordance as a guardrail. Near-pre rows with both kinetic and front evidence are good manual-QC targets, but front-only and kinetic-only rows show why automatic phase-boundary or diffusion claims remain blocked without manual inspection and calibration.
