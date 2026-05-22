@@ -2566,6 +2566,29 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - High fallback ROI source_balanced_cycle88_rank1_obj2_10_c2_x10_030723: fallback 0.740, IoU 0.941, blur q10 0.000, event bin post_event_1_16
 - Guardrail: History-based masks are an automatic robustness audit for cropped particle ROIs. Fallback flags indicate possible blur/drift mask instability; they are not manual segmentation labels or physical phase-boundary measurements.
 
+## History/Fallback Masked Rollout Ablation
+
+- Status/input/processed/failures/sources/cycles: history_fallback_masked_rollout_ablation_ready / 128 / 128 / 0 / 14 / 64
+- Median fallback fraction / adaptive one-step MSE / hybrid one-step MSE: 0.286 / 4.126e-05 / 3.673e-05
+- Median hybrid-adaptive one-step delta / latent-linear gain history / latent-linear gain hybrid: 0.000 / 0.158 / 0.082
+- Ablation summary one_step_hybrid_minus_adaptive_mse: median 0.000, q10 -4.090e-06, q90 1.734e-05
+- Ablation summary latent_linear_gain_vs_persistence_history: median 0.158, q10 -0.539, q90 0.540
+- Ablation summary latent_linear_gain_vs_persistence_hybrid: median 0.082, q10 -0.791, q90 0.472
+- Rollout ablation test near_vs_far_pre fallback_frame_fraction (raw): AUC 0.790, AP 0.799, med delta 0.286, p 3.280e-04
+- Rollout ablation test near_vs_post_control one_step_hybrid_mse (raw): AUC 0.701, AP 0.653, med delta 4.201e-05, p 0.002
+- Rollout ablation test near_vs_any_non_near fallback_frame_fraction (raw): AUC 0.679, AP 0.342, med delta 0.172, p 0.002
+- Rollout ablation test near_vs_post_control one_step_adaptive_mse (raw): AUC 0.698, AP 0.645, med delta 3.860e-05, p 0.002
+- Rollout ablation test near_vs_post_control one_step_history_mse (raw): AUC 0.696, AP 0.667, med delta 4.619e-05, p 0.003
+- Rollout ablation test near_vs_post_control centroid_jitter_q90_px (raw): AUC 0.696, AP 0.581, med delta 0.357, p 0.003
+- Rollout ablation test near_vs_far_pre one_step_hybrid_adaptive_abs_delta_median (source_residual): AUC 0.719, AP 0.816, med delta -2.250e-07, p 0.004
+- Rollout ablation test near_vs_post_control persistence_rollout_history_mse (raw): AUC 0.684, AP 0.602, med delta 0.003, p 0.005
+- Ablation source 10_c2_x10_030723: n=8, median fallback 0.620, latent gain history/hybrid -0.162/-0.693
+- Ablation source 17_c2_x10_HighHighCOV_150723: n=10, median fallback 0.406, latent gain history/hybrid 0.486/0.335
+- Ablation source 12_c2_x10_070723: n=10, median fallback 0.396, latent gain history/hybrid 0.170/0.137
+- Ablation source 6_c2_x10_270623_2: n=10, median fallback 0.380, latent gain history/hybrid 0.181/0.019
+- Ablation source 9_c2_x10_010723: n=10, median fallback 0.370, latent gain history/hybrid 0.074/-0.155
+- Guardrail: This is an automatic particle-mask ablation and compact latent-linear rollout benchmark. It uses history/fallback particle support for robustness under drift-correction blur, but it does not provide manual segmentation, validated phase-boundary velocities, or calibrated diffusion coefficients.
+
 ## Physics Consistency Claim Matrix
 
 - ROI/cycles: 52 / 11

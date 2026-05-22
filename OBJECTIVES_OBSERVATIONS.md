@@ -4473,3 +4473,32 @@ Results:
 Interpretation: this narrows the diffusion path substantially. If manual effort is available, the first concrete remeasurement target is `cycle78_rank22_obj2`; the rest of the current ledger mainly needs front-boundary retracking or remains guarded proxy evidence. The result does not unblock calibrated diffusion, but it prevents wasting effort on the wrong candidates.
 
 Guardrail: the diagnostic ranks blocker follow-up using existing automatic threshold/front ledgers. It does not accept labels, relax readiness gates, or emit calibrated diffusion coefficients.
+
+## 2026-05-22 History/Fallback Masked Rollout Ablation
+
+Added `scripts/tier4_history_fallback_masked_rollout_ablation.py` and ran it on Isambard to connect the history-based particle mask fallback directly to next-frame prediction and rollout. The audit compares adaptive frame masks, fixed history-prior masks, and hybrid fallback masks, then trains a compact latent-linear predictor using only history-mask particle pixels.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/history_fallback_masked_rollout_ablation`
+- `derived_local/history_fallback_masked_rollout_ablation`
+- `history_fallback_masked_rollout_ablation_per_roi.csv`
+- `history_fallback_masked_rollout_ablation_event_tests.csv`
+- `history_fallback_masked_rollout_ablation_source_summary.csv`
+- `history_fallback_masked_rollout_ablation_method_summary.csv`
+- `history_fallback_masked_rollout_ablation_failures.csv`
+- `history_fallback_masked_rollout_ablation_summary.json`
+
+Results:
+
+- Processed 128/128 source-balanced pre-event particle ROI sequences with 0 failures across 64 cycles and 14 sources.
+- Median fallback frame fraction is 0.286, consistent with the separate mask-history audit.
+- Hybrid fallback masking slightly improves the median one-step prediction residual relative to adaptive masks: median adaptive one-step MSE is 4.126e-05 and median hybrid one-step MSE is 3.673e-05, with median hybrid-minus-adaptive delta 0.
+- The particle-only latent-linear rollout improves over persistence on the median ROI: median gain is 0.158 when scored on the history mask and 0.0817 when scored on the hybrid fallback mask. The wide q10-q90 range shows this is a useful baseline but not a universally stable rollout model.
+- Event associations remain partly acquisition/source structured. Raw near-pre tests show higher fallback fraction and one-step residuals, for example near-vs-far fallback fraction AUC 0.790 and near-vs-post-control hybrid one-step MSE AUC 0.701, while the most source-residual signal is weaker and should be treated as a robustness cue rather than a physics claim.
+- Source-level behavior is explicit: high-fallback sources include `10_c2_x10_030723`, `17_c2_x10_HighHighCOV_150723`, `12_c2_x10_070723`, and `6_c2_x10_270623_2`; latent-linear gains are positive for several future-positive sources but negative for some low-motion/control-dominated sources.
+
+Interpretation: history/fallback masks are not just a post-hoc QC metric; they improve the predictive mask definition for next-frame residual scoring and give a particle-only latent rollout baseline that can beat persistence on the median ROI. However, the event-linked residual structure is still not strong enough to claim a source-invariant precursor model or calibrated phase/diffusion physics.
+
+Guardrail: this is an automatic particle-mask ablation and compact latent-linear rollout benchmark. It uses history/fallback particle support for robustness under drift-correction blur, but it does not provide manual segmentation, validated phase-boundary velocities, or calibrated diffusion coefficients.
+

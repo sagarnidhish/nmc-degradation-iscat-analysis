@@ -132,6 +132,7 @@ def main() -> None:
     cycle_state_mode_frequency = read_json(derived / "cycle_state_mode_frequency_bridge" / "cycle_state_mode_frequency_bridge_summary.json")
     particle_mask = read_json(derived / "particle_mask_stability_audit" / "particle_mask_stability_audit_summary.json")
     particle_mask_history_fallback = read_json(derived / "particle_mask_history_fallback_audit" / "particle_mask_history_fallback_summary.json")
+    history_fallback_rollout_ablation = read_json(derived / "history_fallback_masked_rollout_ablation" / "history_fallback_masked_rollout_ablation_summary.json")
     masked_rollout = read_json(derived / "masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
     masked_cycle_warning = read_json(derived / "masked_rollout_cycle_warning" / "masked_rollout_cycle_warning_summary.json")
     masked_residual_timing = read_json(derived / "masked_residual_transition_timing" / "masked_residual_transition_timing_summary.json")
@@ -392,6 +393,9 @@ def main() -> None:
     particle_mask_history_tests = top_items(first_summary(particle_mask_history_fallback, "top_event_tests", []), 16)
     particle_mask_history_sources = top_items(first_summary(particle_mask_history_fallback, "source_summary_top", []), 12)
     particle_mask_history_high = top_items(first_summary(particle_mask_history_fallback, "high_fallback_rois", []), 12)
+    history_fallback_rollout_tests = top_items(first_summary(history_fallback_rollout_ablation, "top_event_tests", []), 16)
+    history_fallback_rollout_methods = top_items(first_summary(history_fallback_rollout_ablation, "method_summary", []), 8)
+    history_fallback_rollout_sources = top_items(first_summary(history_fallback_rollout_ablation, "source_summary_top", []), 12)
     masked_rollout_methods = top_items(first_summary(masked_rollout, "method_summary", []), 8)
     masked_rollout_tests = top_items(first_summary(masked_rollout, "top_event_control_tests", []), 12)
     masked_rollout_corr = top_items(first_summary(masked_rollout, "top_correlations", []), 12)
@@ -3371,6 +3375,28 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## History/Fallback Masked Rollout Ablation",
+        "",
+        f"- Status/input/processed/failures/sources/cycles: {first_summary(history_fallback_rollout_ablation, 'overall_status', 'unavailable')} / {first_summary(history_fallback_rollout_ablation, 'n_input_rows', 0)} / {first_summary(history_fallback_rollout_ablation, 'n_ok', 0)} / {first_summary(history_fallback_rollout_ablation, 'n_failures', 0)} / {first_summary(history_fallback_rollout_ablation, 'n_sources', 0)} / {first_summary(history_fallback_rollout_ablation, 'n_cycles', 0)}",
+        f"- Median fallback fraction / adaptive one-step MSE / hybrid one-step MSE: {fmt(first_summary(history_fallback_rollout_ablation, 'median_fallback_frame_fraction'))} / {fmt(first_summary(history_fallback_rollout_ablation, 'median_one_step_adaptive_mse'))} / {fmt(first_summary(history_fallback_rollout_ablation, 'median_one_step_hybrid_mse'))}",
+        f"- Median hybrid-adaptive one-step delta / latent-linear gain history / latent-linear gain hybrid: {fmt(first_summary(history_fallback_rollout_ablation, 'median_hybrid_minus_adaptive_one_step_mse'))} / {fmt(first_summary(history_fallback_rollout_ablation, 'median_latent_gain_history'))} / {fmt(first_summary(history_fallback_rollout_ablation, 'median_latent_gain_hybrid'))}",
+    ]
+    for row in history_fallback_rollout_methods[:4]:
+        report_lines.append(
+            f"- Ablation summary {row.get('metric', 'NA')}: median {fmt(row.get('median'))}, q10 {fmt(row.get('q10'))}, q90 {fmt(row.get('q90'))}"
+        )
+    for row in history_fallback_rollout_tests[:8]:
+        report_lines.append(
+            f"- Rollout ablation test {row.get('target', 'NA')} {row.get('feature', 'NA')} ({row.get('transform', 'NA')}): AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, med delta {fmt(row.get('median_positive_minus_negative'))}, p {fmt(row.get('mwu_p'))}"
+        )
+    for row in history_fallback_rollout_sources[:5]:
+        report_lines.append(
+            f"- Ablation source {row.get('source_stem', 'NA')}: n={fmt(row.get('n_roi'), 0)}, median fallback {fmt(row.get('median_fallback'))}, latent gain history/hybrid {fmt(row.get('latent_gain_history'))}/{fmt(row.get('latent_gain_hybrid'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(history_fallback_rollout_ablation, 'guardrail', 'History/fallback masked rollout ablation unavailable.')}")
+
+    report_lines += [
+        "",
         "## Physics Consistency Claim Matrix",
         "",
         f"- ROI/cycles: {first_summary(physics_consistency, 'n_roi', 0)} / {first_summary(physics_consistency, 'n_cycles', 0)}",
@@ -4879,6 +4905,25 @@ def main() -> None:
             "high_fallback_rois": particle_mask_history_high,
             "outputs": first_summary(particle_mask_history_fallback, "outputs", {}),
             "guardrail": first_summary(particle_mask_history_fallback, "guardrail"),
+        },
+        "history_fallback_masked_rollout_ablation": {
+            "overall_status": first_summary(history_fallback_rollout_ablation, "overall_status"),
+            "n_input_rows": first_summary(history_fallback_rollout_ablation, "n_input_rows"),
+            "n_ok": first_summary(history_fallback_rollout_ablation, "n_ok"),
+            "n_failures": first_summary(history_fallback_rollout_ablation, "n_failures"),
+            "n_sources": first_summary(history_fallback_rollout_ablation, "n_sources"),
+            "n_cycles": first_summary(history_fallback_rollout_ablation, "n_cycles"),
+            "median_fallback_frame_fraction": first_summary(history_fallback_rollout_ablation, "median_fallback_frame_fraction"),
+            "median_one_step_adaptive_mse": first_summary(history_fallback_rollout_ablation, "median_one_step_adaptive_mse"),
+            "median_one_step_hybrid_mse": first_summary(history_fallback_rollout_ablation, "median_one_step_hybrid_mse"),
+            "median_hybrid_minus_adaptive_one_step_mse": first_summary(history_fallback_rollout_ablation, "median_hybrid_minus_adaptive_one_step_mse"),
+            "median_latent_gain_history": first_summary(history_fallback_rollout_ablation, "median_latent_gain_history"),
+            "median_latent_gain_hybrid": first_summary(history_fallback_rollout_ablation, "median_latent_gain_hybrid"),
+            "method_summary": history_fallback_rollout_methods,
+            "top_event_tests": history_fallback_rollout_tests,
+            "source_summary_top": history_fallback_rollout_sources,
+            "outputs": first_summary(history_fallback_rollout_ablation, "outputs", {}),
+            "guardrail": first_summary(history_fallback_rollout_ablation, "guardrail"),
         },
         "cycle_state_roi_bridge": {
             "n_roi_rows": first_summary(cycle_state_roi_bridge, "n_roi_rows"),
