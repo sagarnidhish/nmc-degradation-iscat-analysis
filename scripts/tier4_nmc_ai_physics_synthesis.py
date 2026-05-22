@@ -142,6 +142,7 @@ def main() -> None:
     qc_decision_ledger = read_json(derived / "qc_decision_evidence_ledger" / "qc_decision_evidence_ledger_summary.json")
     balanced_future_reconstruction = read_json(derived / "balanced_future_roi_reconstruction" / "balanced_future_roi_reconstruction_summary.json")
     source_balanced_expansion = read_json(derived / "source_balanced_roi_expansion_manifest" / "source_balanced_roi_expansion_summary.json")
+    source_balanced_pre_event_sampling = read_json(derived / "source_balanced_pre_event_sampling_manifest" / "source_balanced_pre_event_sampling_summary.json")
     source_balanced_sequences = read_json(derived / "source_balanced_roi_sequences" / "selected_roi_sequence_summary.json")
     source_balanced_sequence_rollout = read_json(derived / "source_balanced_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
     source_balanced_mask_front = read_json(derived / "source_balanced_mask_front_sanity_audit" / "source_balanced_mask_front_summary.json")
@@ -443,6 +444,9 @@ def main() -> None:
     source_balanced_future_specific_model_deltas = top_items(first_summary(source_balanced_future_specific_residual, "top_model_deltas_vs_past_context", []), 16)
     source_balanced_future_specific_top_delta = source_balanced_future_specific_model_deltas[0] if source_balanced_future_specific_model_deltas else {}
     source_balanced_future_specific_top_clean = source_balanced_future_specific_best_clean[0] if source_balanced_future_specific_best_clean else {}
+    source_balanced_pre_event_bins = first_summary(source_balanced_pre_event_sampling, "cycle_bin_counts", {}) or {}
+    source_balanced_pre_event_roi_bins = first_summary(source_balanced_pre_event_sampling, "roi_bin_counts", {}) or {}
+    source_balanced_pre_event_sources = top_items(first_summary(source_balanced_pre_event_sampling, "source_coverage", []), 16)
     source_balanced_degmode_clusters = top_items(first_summary(source_balanced_degradation_modes, "cluster_summary", []), 12)
     source_balanced_degmode_enrichment = top_items(first_summary(source_balanced_degradation_modes, "top_enrichment", []), 24)
     source_balanced_degmode_representatives = top_items(first_summary(source_balanced_degradation_modes, "representatives", []), 12)
@@ -874,6 +878,7 @@ def main() -> None:
         f"- QC decision evidence ledger converts the 47 pending labels into explicit reviewer actions without assigning labels: {qc_decision_actions}; top possible-accept ROI is {(qc_decision_accept[0] if qc_decision_accept else {}).get('roi_id', 'NA')}, while top artifact/reject-first ROI is {(qc_decision_artifact[0] if qc_decision_artifact else {}).get('roi_id', 'NA')}.",
         f"- Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling {first_summary(balanced_future_reconstruction, 'n_cycles_sampled', 0)} cycles and {first_summary(balanced_future_physics, 'n_roi', 0)} ROI rows with equal weak future8 positives/negatives; leave-cycle {balanced_future_best_oof.get('model', 'NA')} reaches AUC {fmt(balanced_future_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(balanced_future_best_oof.get('pooled_oof_average_precision'))}, permutation p={fmt(balanced_future_null.get('empirical_p_ge_observed'))}. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.",
         f"- Source-balanced ROI expansion attacks the remaining cohort-breadth bottleneck: it samples {first_summary(source_balanced_expansion, 'n_sampled_cycles', 0)} cycles across {first_summary(source_balanced_expansion, 'n_sources_selected', 0)} source movies, including {first_summary(source_balanced_expansion, 'n_new_selected_cycles', 0)} cycle/source pairs not already in video cohorts, and proposes {first_summary(source_balanced_expansion, 'n_roi_rows', 0)} automatic ROI rows for follow-up sequence export/QC.",
+        f"- Source-balanced pre-event sampling addresses the future-specificity gap directly: it reconstructs {first_summary(source_balanced_pre_event_sampling, 'n_roi_rows', 0)} automatic ROI proposals from {first_summary(source_balanced_pre_event_sampling, 'n_sampled_cycles', 0)} event-relative cycles across {first_summary(source_balanced_pre_event_sampling, 'n_sources_selected', 0)} sources, with cycle bins {source_balanced_pre_event_bins} and {first_summary(source_balanced_pre_event_sampling, 'n_new_selected_cycles', 0)} new cycle/source pairs.",
         f"- Source-balanced ROI sequence export converts that manifest into {first_summary(source_balanced_sequences, 'n_roi_sequences', 0)} particle-region crop tensors across {first_summary(source_balanced_sequences, 'n_cycles', 0)} cycles and {first_summary(source_balanced_sequences, 'n_sources', 0)} sources with {first_summary(source_balanced_sequences, 'n_failed', 0)} export failures; the fast rollout audit finds strongest future16 ROI signal in {source_balanced_rollout_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_rollout_top16.get('oriented_auc'))}, while prediction-error features are highly source-structured.",
         f"- A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across {first_summary(source_balanced_mask_front, 'n_roi_sequences', 0)} ROI tensors; top future16 mask/front proxy is {source_balanced_mask_front_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_top16.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_top16.get('average_precision'))}, but source eta2 is {fmt(source_balanced_mask_front_top16.get('source_eta2'))}.",
         f"- A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is {source_balanced_mask_front_resid_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_resid_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_resid_best.get('average_precision'))}, and best within-source-rank proxy is {source_balanced_mask_front_rank_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_rank_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_rank_best.get('average_precision'))}.",
@@ -1903,6 +1908,23 @@ def main() -> None:
         f"- Best grouped residual delta over past-event context: {source_balanced_future_specific_top_delta.get('group_col', 'NA')} {source_balanced_future_specific_top_delta.get('target', 'NA')} {source_balanced_future_specific_top_delta.get('feature_set', 'NA')} delta AUC {fmt(source_balanced_future_specific_top_delta.get('delta_roc_auc'))}, model AUC {fmt(source_balanced_future_specific_top_delta.get('roc_auc'))}, base AUC {fmt(source_balanced_future_specific_top_delta.get('base_roc_auc'))}",
         f"- Guardrail: {first_summary(source_balanced_future_specific_residual, 'guardrail', 'Source-balanced future-specific residual audit unavailable.')}",
     ]
+
+    report_lines += [
+        "",
+        "## Source-Balanced Pre-Event Sampling Manifest",
+        "",
+        f"- Selected/sample cycles/sources: {first_summary(source_balanced_pre_event_sampling, 'n_selected_cycles', 0)} / {first_summary(source_balanced_pre_event_sampling, 'n_sampled_cycles', 0)} / {first_summary(source_balanced_pre_event_sampling, 'n_sources_selected', 0)}",
+        f"- New cycle/source pairs vs existing video cohorts: {first_summary(source_balanced_pre_event_sampling, 'n_new_selected_cycles', 0)} of {first_summary(source_balanced_pre_event_sampling, 'n_selected_cycles', 0)}",
+        f"- Event cycles: {first_summary(source_balanced_pre_event_sampling, 'event_cycles', [])}",
+        f"- Cycle bins: {source_balanced_pre_event_bins}",
+        f"- ROI proposal bins: {source_balanced_pre_event_roi_bins}",
+        f"- Reconstructed candidates / ROI rows / missing cycles: {first_summary(source_balanced_pre_event_sampling, 'n_reconstructed_candidates', 0)} / {first_summary(source_balanced_pre_event_sampling, 'n_roi_rows', 0)} / {first_summary(source_balanced_pre_event_sampling, 'n_missing_cycles', 0)}",
+        f"- Guardrail: {first_summary(source_balanced_pre_event_sampling, 'guardrail', 'Source-balanced pre-event sampling manifest unavailable.')}",
+    ]
+    for row in source_balanced_pre_event_sources[:8]:
+        report_lines.append(
+            f"- Source coverage {row.get('source_stem', 'NA')}: selected={fmt(row.get('selected_cycles'), 0)}, near={fmt(row.get('near_pre'), 0)}, mid={fmt(row.get('mid_pre'), 0)}, far={fmt(row.get('far_pre'), 0)}, post={fmt(row.get('post_event'), 0)}, controls={fmt(row.get('controls'), 0)}, new={fmt(row.get('new_cycles'), 0)}"
+        )
 
     report_lines += [
         "",
@@ -3035,6 +3057,21 @@ def main() -> None:
             "primary_source_residual_rows": source_balanced_temporal_primary,
             "primary_future16_shift_null": source_balanced_temporal_shift16,
             "guardrail": first_summary(source_balanced_residual_temporal_specificity, "guardrail"),
+        },
+        "source_balanced_pre_event_sampling_manifest": {
+            "n_ranked_cycles": first_summary(source_balanced_pre_event_sampling, "n_ranked_cycles"),
+            "n_selected_cycles": first_summary(source_balanced_pre_event_sampling, "n_selected_cycles"),
+            "n_sampled_cycles": first_summary(source_balanced_pre_event_sampling, "n_sampled_cycles"),
+            "n_sources_selected": first_summary(source_balanced_pre_event_sampling, "n_sources_selected"),
+            "n_new_selected_cycles": first_summary(source_balanced_pre_event_sampling, "n_new_selected_cycles"),
+            "n_reconstructed_candidates": first_summary(source_balanced_pre_event_sampling, "n_reconstructed_candidates"),
+            "n_roi_rows": first_summary(source_balanced_pre_event_sampling, "n_roi_rows"),
+            "n_missing_cycles": first_summary(source_balanced_pre_event_sampling, "n_missing_cycles"),
+            "event_cycles": first_summary(source_balanced_pre_event_sampling, "event_cycles", []),
+            "cycle_bin_counts": source_balanced_pre_event_bins,
+            "roi_bin_counts": source_balanced_pre_event_roi_bins,
+            "source_coverage": source_balanced_pre_event_sources,
+            "guardrail": first_summary(source_balanced_pre_event_sampling, "guardrail"),
         },
         "source_balanced_future_specific_residual_audit": {
             "n_rows": first_summary(source_balanced_future_specific_residual, "n_rows"),

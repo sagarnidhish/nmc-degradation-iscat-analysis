@@ -3321,3 +3321,26 @@ Cohort/result snapshot:
 Interpretation:
 
 The source-balanced residual/front feature space organizes degradation-neighborhood states, but it does not yet support a validated degradation-mode taxonomy. The main practical value is manual-QC triage: the broad mode captures common front/dictionary residual state, while tiny temporal-dictionary outlier modes identify specific post-event or pre-event examples worth checking. This reinforces the current synthesis guardrail: use these modes as hypotheses and review candidates only, not calibrated phase boundaries, diffusion coefficients, causal mechanisms, or deployable warning classes.
+
+## 2026-05-22 Source-Balanced Pre-Event Sampling Manifest
+
+Added `scripts/tier4_source_balanced_pre_event_sampling_manifest.py` and ran it on Isambard against the full masked-residual cycle table, abrupt-event cycle list, and HDF5 movies. This is the follow-up to the future-specific residual audit: it creates an event-relative, source-balanced pool for testing true pre-event dynamics separately from current/post-event proximity.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest`
+- `derived_local/source_balanced_pre_event_sampling_manifest`
+
+Cohort/result snapshot:
+
+- Selected and sampled 64 cycles across 14 source movies, with 13 cycle/source pairs not already present in existing video cohorts.
+- Reconstructed 3,840 automatic particle-like candidates from sampled HDF5 segments and retained 128 top ROI proposal rows for follow-up particle-only sequence export.
+- No selected cycles were missing from the accessible HDF5 data.
+- Event cycles used for event-relative bins: 60, 86, 116, and 156.
+- Cycle bins after excluding current-event cycles from pre-event bins: near pre-event 1-8 cycles = 16, mid pre-event 9-16 cycles = 11, far pre-event 17-32 cycles = 11, post-event 1-16 cycles = 20, no-near-event controls = 6.
+- ROI proposal bins: near pre-event = 32, mid pre-event = 22, far pre-event = 22, post-event = 40, no-near-event controls = 12.
+- The first run exposed and then fixed an event-relative binning issue where current-event cycles could be mislabeled as far-pre-event relative to the next event; the committed script now labels current events separately and excludes them from selection.
+
+Interpretation:
+
+This closes the immediate sampling gap raised by the future-specific audit. The project now has a concrete source-balanced, event-relative ROI proposal set for exporting particle-only pre-event/post-event/control videos and for testing whether residual/front/rollout features are genuine precursors rather than event-neighborhood markers. The manifest is still automatic candidate generation, so it supports follow-up modeling and QC prioritization but not validated particle identity, phase-front motion, diffusion, or causal degradation claims.
