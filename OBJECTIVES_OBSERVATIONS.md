@@ -2546,3 +2546,26 @@ Key result:
 - Cycle 156 is the highest-yield immediate review group because it contains all three possible-accept-first candidates plus the strongest artifact-risk counterexample.
 
 Interpretation: this reduces the manual-QC bottleneck without pretending to automate acceptance. The immediate practical next review is a small cycle-156 panel: accept/reject `cycle156_rank7_obj27`, `cycle156_rank8_obj10`, and `cycle156_rank2_obj2` first, then inspect `cycle156_rank5_obj4` as an artifact-risk foil. No calibrated diffusion or validated degradation-mode claim is allowed until manual particle identity and front-mask checks are recorded.
+
+## 2026-05-22 Residual Dictionary Video Embedding Audit
+
+Added `scripts/tier4_residual_dictionary_embedding_audit.py` and ran it on Isambard to test a faster learned temporal-residual representation after the raw masked-video PCA components underperformed. The audit learns a label-free PCA dictionary on next-frame residual fields from selected, transfer-ranked, and balanced ROI crops, summarizes coefficient trajectories per ROI, and evaluates them under leave-one-cycle weak-label splits.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residual_dictionary_embedding_audit`
+
+Local compact copy:
+
+`derived_local/residual_dictionary_embedding_audit`
+
+Key result:
+
+- The audit covers 172 ROI videos across 34 cycles: 72 balanced-future, 52 selected event/control, and 48 transfer-ranked rows.
+- The residual dictionary uses 800 sampled residual frames at 24x24 resolution, rank 8, and explains 59.9% of sampled next-frame residual variance.
+- Residual-dictionary features beat raw masked-video PCA components for future8 classification: AUC 0.663 versus 0.566, delta +0.096; the fused residual-dictionary+handcrafted feature set reaches AUC 0.771 versus PCA AUC 0.566, delta +0.204.
+- Handcrafted scalar video descriptors remain strongest for future8 in this small table: AUC 0.825 and AP 0.865. Adding the residual dictionary to them reduces AUC to 0.771, so the dictionary is useful as a temporal-residual representation but not yet a better weak-label classifier.
+- Future16 remains weak for the residual dictionary: AUC 0.473 alone and 0.527 when fused with handcrafted features. The dictionary does not reproduce the echem+video future16 gain seen in the echem-video fusion audit.
+- The residual dictionary correctly reconstructs its own residual-energy quantities under leave-cycle regression (rho about 0.997-0.999 for residual energy and reconstruction-error targets), which validates the feature extraction pipeline but is not an external degradation result.
+
+Interpretation: a label-free next-frame residual basis is more informative than raw video PCA for future8 weak-label triage, but it does not beat the simpler hand-engineered particle/mask temporal descriptors. This suggests the next neural-video step should not merely learn a generic residual basis; it should be echem/context-conditioned or trained with a physics-aware objective around front motion and particle-local residual timing.

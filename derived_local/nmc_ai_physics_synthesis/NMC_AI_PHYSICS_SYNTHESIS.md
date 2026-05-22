@@ -110,6 +110,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
+- Residual dictionary embedding learns label-free next-frame residual bases over 172 ROI videos; residual-dictionary future8 AUC is 0.663 with p=0.005, and residual_dictionary_plus_handcrafted reaches AUC 0.771.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
 - Balanced spatial front-propagation audit builds 414 spatial kNN edges over 72 balanced ROI nodes; nearest next-cycle front descriptors autocorrelate strongly (radius2_slope_median_px2_per_s rho=0.594, p_perm=9.990e-04) and same future8-label homophily is high (0.867), but automatic ROI identity and cycle-level labels keep this as spatial hypothesis ranking.
@@ -1094,6 +1095,30 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Masked video embedding cluster 2: n=11, future8 positive fraction 0.000, prototype selected_event_control::cycle156_rank8_obj10
 - Masked video embedding cluster 3: n=15, future8 positive fraction 0.857, prototype transfer_ranked::cycle151_rank4_obj1
 - Masked video embedding cluster 4: n=32, future8 positive fraction 0.429, prototype transfer_ranked::cycle40_rank8_obj4
+
+## Residual Dictionary Embedding Audit
+
+- Rows/cycles: 172 / 34
+- Cohorts: {'balanced_future': 72, 'selected_event_control': 52, 'transfer_ranked': 48}
+- Dictionary: {'downsample': 4, 'explained_variance_ratio_sum': 0.5991450548171997, 'n_residual_samples': 800, 'rank': 8, 'stride': 2}
+- Feature set sizes: {'handcrafted_scalar': 55, 'pca_video': 16, 'residual_dictionary': 39, 'residual_dictionary_plus_handcrafted': 94}
+- Residual-dictionary classification future_any_drop_within_8cycles handcrafted_scalar: AUC 0.825, AP 0.865, p=0.005, n=72
+- Residual-dictionary classification future_any_drop_within_8cycles residual_dictionary_plus_handcrafted: AUC 0.771, AP 0.832, p=0.005, n=72
+- Residual-dictionary classification future_any_drop_within_8cycles residual_dictionary: AUC 0.663, AP 0.693, p=0.005, n=72
+- Residual-dictionary classification future_any_drop_within_16cycles handcrafted_scalar: AUC 0.662, AP 0.901, p=0.040, n=72
+- Residual-dictionary classification future_any_drop_within_8cycles pca_video: AUC 0.566, AP 0.620, p=0.169, n=72
+- Residual-dictionary classification future_any_drop_within_16cycles residual_dictionary_plus_handcrafted: AUC 0.527, AP 0.849, p=0.393, n=72
+- Residual-dictionary delta future_any_drop_within_8cycles residual_dictionary_plus_handcrafted_minus_pca_video: delta AUC 0.204, delta rho 0.354
+- Residual-dictionary delta future_any_drop_within_8cycles residual_dictionary_minus_pca_video: delta AUC 0.096, delta rho 0.167
+- Residual-dictionary delta future_any_drop_within_16cycles residual_dictionary_plus_handcrafted_minus_pca_video: delta AUC 0.021, delta rho 0.030
+- Residual-dictionary delta future_any_drop_within_16cycles residual_dictionary_minus_pca_video: delta AUC -0.034, delta rho -0.048
+- Residual-dictionary delta future_any_drop_within_8cycles residual_dictionary_plus_handcrafted_minus_handcrafted_scalar: delta AUC -0.054, delta rho -0.094
+- Residual-dictionary delta future_any_drop_within_16cycles residual_dictionary_plus_handcrafted_minus_handcrafted_scalar: delta AUC -0.135, delta rho -0.189
+- Residual-dictionary regression dictionary_recon_error_mse_mean residual_dictionary: R2 0.998, rho 0.999, n=172
+- Residual-dictionary regression residual_energy_mean residual_dictionary: R2 0.998, rho 0.998, n=172
+- Residual-dictionary regression residual_energy_mean residual_dictionary_plus_handcrafted: R2 0.992, rho 0.992, n=172
+- Residual-dictionary regression dictionary_recon_error_mse_mean residual_dictionary_plus_handcrafted: R2 0.990, rho 0.988, n=172
+- Guardrail: The residual dictionary is label-free and uses automatic ROI crops. It is a fast temporal-residual representation audit for model design and review prioritization, not a deployable detector, manual front label, or calibrated diffusion measurement.
 - Acquisition-context residual feature radius2_slope_median_px2_per_s: median positive-negative 9.596e-05, AUC 0.552, MW p=0.447
 - Acquisition-context residual feature diffusion_proxy_median_um2_per_s: median positive-negative 2.211e-07, AUC 0.552, MW p=0.447
 - Acquisition-context residual feature q70_radius2_slope_bootstrap_p50_px2_per_s: median positive-negative -4.025e-05, AUC 0.552, MW p=0.454
