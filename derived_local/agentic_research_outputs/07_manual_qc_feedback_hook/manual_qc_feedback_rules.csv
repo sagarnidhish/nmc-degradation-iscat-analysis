@@ -1,0 +1,4 @@
+gate,required_feedback,current_status,downstream_script
+front_or_diffusion_claim,manual accept label for ROI/front mask plus timing and spatial calibration evidence,waiting_for_labels,tier4_manual_qc_gated_front_effects.py
+degradation_mode_training_label,manual reject/accept/artifact label joined to automatic ROI evidence ledger,waiting_for_labels,tier4_qc_decision_evidence_ledger.py
+agentic_hypothesis_status_update,ledger status update from proposed/blocked_by_qc to supported/weakened after manual labels,ready_for_update,agentic_research/06_closed_loop_hypothesis_ledger/run_hypothesis_ledger.py

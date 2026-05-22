@@ -1,0 +1,12 @@
+{
+  "accepted_label_count": 0,
+  "feedback_state": "manual_labels_needed",
+  "guardrail": "This hook defines how manual QC should update downstream AI/physics claims. It does not fabricate labels.",
+  "label_status_counts": {},
+  "manual_label_template_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_label_workbook/manual_qc_label_template.csv",
+  "manual_qc_gated_summary_present": true,
+  "n_qc_rows": 47,
+  "n_queue_rows": 30,
+  "qc_ledger_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/qc_decision_evidence_ledger/qc_decision_evidence_ledger.csv",
+  "root": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho"
+}

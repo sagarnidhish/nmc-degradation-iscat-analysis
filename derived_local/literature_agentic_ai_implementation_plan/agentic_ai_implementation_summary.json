@@ -1,0 +1,28 @@
+{
+  "created": "2026-05-22",
+  "papers": [
+    {
+      "title": "A multi-agent system for automating scientific discovery",
+      "doi": "10.1038/s41586-026-10652-y",
+      "project_value": "closed-loop multi-agent hypothesis generation, data analysis, and lab-in-the-loop validation"
+    },
+    {
+      "title": "Accelerating scientific discovery with Co-Scientist",
+      "doi": "10.1038/s41586-026-10644-y",
+      "project_value": "hypothesis tournament, critique/refinement, and test-time compute allocation"
+    },
+    {
+      "title": "An AI system to help scientists write expert-level empirical software",
+      "doi": "10.1038/s41586-026-10658-6",
+      "project_value": "ERA-style search over analysis code and feature/model variants using explicit quality metrics"
+    }
+  ],
+  "recommended_next_modules": [
+    "tier4_agentic_metric_search.py",
+    "closed_loop_hypothesis_ledger",
+    "manual_qc_feedback_hook",
+    "guarded_code_generation_acceptance_tests"
+  ],
+  "highest_priority": "Build benchmark-driven analysis search over feature families, source/cycle splits, residualization controls, and weak-label targets.",
+  "guardrail": "Use agentic systems to rank and test hypotheses, not to emit validated battery-mechanism claims without source-balanced controls, manual ROI/front QC, and electrochemical consistency checks."
+}

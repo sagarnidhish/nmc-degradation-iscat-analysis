@@ -1,0 +1,7 @@
+paper,technique,project_adaptation,status,priority,risk_guardrail
+"Ghareeb et al. 2026 Robin","multi-agent literature and data analysis loop","generator/data-analyst/skeptic/lab-QC roles update NMC degradation hypotheses after each audit","partly_present","high","human ROI/front QC and echem checks remain required"
+"Gottweis et al. 2026 Co-Scientist","hypothesis tournament with critique and refinement","rank synchronized degradation, artifact, echem-conditioned residual, and propagation hypotheses with falsification tests","partly_present","high","include matched nulls and source-balanced splits"
+"Aygun et al. 2026 ERA","tree-search over empirical software variants","search feature families, splits, residualization settings, and targets against explicit scientific score","not_started","high","reject variants driven by acquisition/source leakage"
+"Gottweis et al. 2026 Co-Scientist","test-time compute scaling","allocate Isambard compute to unresolved high-value hypotheses instead of generic model scaling","manual","medium","require predeclared metrics and output schemas"
+"Ghareeb et al. 2026 Robin","lab-in-the-loop validation","feed manual ROI/front labels back into manual-QC-gated analyses","partly_present","high","no physical front/diffusion claim without accepted labels"
+"Aygun et al. 2026 ERA","metric-maximizing generated code","allow generated analysis stubs only with compile/schema/null/leakage tests","initial_stub","medium","generated scripts are reviewable candidates, not accepted evidence"

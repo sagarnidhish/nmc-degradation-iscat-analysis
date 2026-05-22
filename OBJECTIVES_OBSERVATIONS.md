@@ -3065,3 +3065,32 @@ Key result:
 - At the cycle-collapsed level, normalized ROI intensity drift is again the top future16 feature (AUC 0.648/AP 0.594), while future8 is weak and led by object contrast/late temporal energy around AUC 0.63/0.63.
 
 Interpretation: this is the first broad source-balanced direct-video cohort with particle-only tensors. It supports source-breadth and model-readiness more than strong warning performance: future labels are weak, automatic ROIs are not manually validated, and rollout-error features are heavily source dependent. The useful next step is to combine this cohort with mask/front QC and source-normalized modeling rather than claiming calibrated degradation physics from these automatic crops alone.
+
+## 2026-05-22 Agentic AI Implementation Folders 05-08
+
+Extended the paper-inspired agentic workflow on Isambard with four additional separate folders under `agentic_research` and reran the full workflow against `/scratch/u6hp/nsagar.u6hp/Alek_Jiho`.
+
+New folders:
+
+- `05_agentic_metric_search`: ERA-style benchmark search over real derived metric tables.
+- `06_closed_loop_hypothesis_ledger`: persistent claim ledger with support, counter-evidence, falsification test, next script, and status.
+- `07_manual_qc_feedback_hook`: lab-in-the-loop feedback gate that turns pending ROI/front labels into explicit downstream requirements.
+- `08_guarded_code_acceptance`: acceptance scanner for generated scripts using compile, split/null/schema, and destructive-operation guardrails.
+
+Output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/05_agentic_metric_search`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/06_closed_loop_hypothesis_ledger`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/07_manual_qc_feedback_hook`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/08_guarded_code_acceptance`
+- compact local copy: `derived_local/agentic_research_outputs`
+
+Key result:
+
+- Metric search aggregated 733 model/audit rows from 15 source metric tables and promoted 132 analysis variants for follow-up under the guarded score `AUC + 0.35*AP + 0.10*abs(rho) + control_bonus - leakage_penalty`.
+- The top promoted rows come from the echem-conditioned residual dictionary, especially leave-source future8/future16 variants. This is useful for planning, but future8 remains explicitly leakage/context guarded.
+- The closed-loop ledger now tracks 5 claims: future16 echem-conditioned residuals under test, future8 context dominance as a supported guardrail, manual QC as blocked-by-QC, calibrated diffusion as still proposed/guarded, and the agentic metric-search planner as implemented.
+- The QC feedback hook found 47 pending QC candidates and zero accepted manual labels, so downstream front/diffusion claims remain blocked by manual labels rather than inferred automatically.
+- The code acceptance gate scanned 3 generated experiment stubs. All compile, but all remain `needs_revision` because they are placeholders without real split/null/schema logic. This is the correct guardrail outcome.
+
+Interpretation: the three Nature agentic-AI ideas are now implemented as auditable project infrastructure over real Alek/Jiho derived evidence, not as an unrestricted LLM report. The immediate computational value is benchmark-driven prioritization and claim tracking. The scientific bottleneck is still manual ROI/front QC plus source-balanced validation before mechanism-level claims.

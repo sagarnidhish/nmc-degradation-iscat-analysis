@@ -1,0 +1,64 @@
+{
+  "claims": [
+    {
+      "claim": "Echem-conditioned optical/video residuals are the strongest longer-horizon weak-label signal.",
+      "claim_id": "C1_future16_echem_conditioned_video_residuals",
+      "do_not_claim": "Do not claim deployable degradation prediction or mechanism.",
+      "next_script": "tier4_agentic_metric_search follow-up candidate from 05_agentic_metric_search",
+      "required_falsification_test": "Require source-balanced or leave-source performance above matched null after acquisition/context residualization.",
+      "status": "under_test",
+      "strongest_counterevidence": "Future16 labels remain weak and source/acquisition imbalance is still present.",
+      "strongest_support": "132 metric-search variants promoted for follow-up; top tournament hypothesis: Longer-horizon future-drop signal is strongest when optical video descriptors are conditioned by echem regime."
+    },
+    {
+      "claim": "Short-horizon future8 labels are acquisition/context dominated and should not drive mechanisms alone.",
+      "claim_id": "C2_future8_context_dominated",
+      "do_not_claim": "Do not use future8 AUC as a physical degradation detector without residualized controls.",
+      "next_script": "tier4_residualized_future8_video_physics_benchmark.py",
+      "required_falsification_test": "Show future8 video/physics signal survives source-balanced acquisition residualization and shift/null controls.",
+      "status": "supported_guardrail",
+      "strongest_counterevidence": "Some physics-only future8 signals remain above chance in selected audits.",
+      "strongest_support": "Prior context audits and metric penalties flag acquisition/design-context variants as leakage guarded."
+    },
+    {
+      "claim": "Manual ROI/front QC is the decisive feedback signal before accepting front or diffusion-like claims.",
+      "claim_id": "C3_manual_qc_is_decisive",
+      "do_not_claim": "Do not report calibrated front/diffusion mechanisms from automatic masks alone.",
+      "next_script": "tier4_manual_qc_gated_front_effects.py",
+      "required_falsification_test": "Populate manual labels and rerun manual-QC-gated front/echem effects.",
+      "status": "blocked_by_qc",
+      "strongest_counterevidence": "No manually accepted front labels are available in the current derived summaries.",
+      "strongest_support": "QC decision ledger has 47 candidates, including 3 possible accept-first rows."
+    },
+    {
+      "claim": "The defensible physics claim is optical phase/front movement, not calibrated lithium diffusion.",
+      "claim_id": "C4_phase_front_direction_not_calibrated_diffusion",
+      "do_not_claim": "Do not call apparent front slopes diffusion coefficients without calibration/QC evidence.",
+      "next_script": "tier4_manual_qc_gated_diffusion_bounds.py",
+      "required_falsification_test": "Require pixel-size provenance, timing provenance, stable accepted masks, and manual front labels.",
+      "status": "proposed",
+      "strongest_counterevidence": "Some automatic front proxies show coherent directionality and kinetics.",
+      "strongest_support": "Calibration risk register and front audits preserve apparent-proxy wording."
+    },
+    {
+      "claim": "Agentic AI is useful here as a benchmark-driven planner and critic over real derived evidence.",
+      "claim_id": "C5_agentic_metric_search_as_planner",
+      "do_not_claim": "Do not frame the agentic layer as autonomous discovery; it is an auditable prioritizer.",
+      "next_script": "agentic_research/05_agentic_metric_search/run_agentic_metric_search.py",
+      "required_falsification_test": "Show top-ranked agentic follow-up candidates reproduce or improve guarded held-out evidence.",
+      "status": "implemented",
+      "strongest_counterevidence": "The workflow is deterministic and does not yet use external literature retrieval or online model-generated code repair.",
+      "strongest_support": "Metric search aggregated 733 rows from 15 metric tables."
+    }
+  ],
+  "guardrail": "The ledger tracks claim status and falsification requirements. It does not convert weak labels or automatic masks into validated mechanisms.",
+  "n_claims": 5,
+  "root": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho",
+  "status_counts": {
+    "blocked_by_qc": 1,
+    "implemented": 1,
+    "proposed": 1,
+    "supported_guardrail": 1,
+    "under_test": 1
+  }
+}
