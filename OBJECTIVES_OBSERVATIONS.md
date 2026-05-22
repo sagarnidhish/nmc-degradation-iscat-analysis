@@ -3249,3 +3249,27 @@ Cohort/result snapshot:
 Interpretation:
 
 This packet turns the current AI-derived residual dynamics signal into an actionable lab-in-the-loop queue. It does not improve the model by itself, but it reduces the next bottleneck: selecting which automatic crops should be manually checked before making stronger claims about phase-front movement, diffusion proxies, or degradation modes.
+
+## 2026-05-22 Source-Balanced Residual Temporal Specificity Audit
+
+Added `scripts/tier4_source_balanced_residual_temporal_specificity_audit.py` and ran it on Isambard against the source-balanced residual dictionary feature table plus the full particle abrupt-drop event cycle table. The audit tests whether the source-residual reconstruction-error drift behaves like a future precursor rather than a past/current event marker.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit`
+- `derived_local/source_balanced_residual_temporal_specificity_audit`
+
+Cohort/result snapshot:
+
+- 96 ROI rows, 48 cycles, 14 source movies.
+- Full particle abrupt-drop event cycles used for temporal labels: 60, 86, 116, 156.
+- Label counts on the source-balanced ROI rows: future8 28, future16 48, past8 10, past16 30, current-event 0.
+- Primary source-residual `dictionary_recon_error_last_minus_first` future16 remains positive: AUC 0.637/AP 0.637, rho 0.237, p=0.020.
+- The same primary candidate is weak for future8 and is not future-specific there: future8 AUC 0.539 versus past8 fixed-direction AUC 0.630.
+- For future16, the primary candidate barely exceeds the past16 control: future16 AUC 0.637 versus past16 fixed-direction AUC 0.625, future-minus-control AUC 0.012.
+- A 500 within-source circular-shift null for the primary future16 candidate is strong: null AUC p95 0.521, empirical p(AUC)=0.002 and p(AP)=0.002.
+- The most future-specific row overall is raw `masked_minus_background_mean_slope` at future8 AUC 0.821 versus past8 AUC 0.377, but this raw contrast proxy is already known to be strongly source structured.
+
+Interpretation:
+
+The source-residual reconstruction-error drift is temporally ordered relative to the event-cycle sequence, but it is not a clean precursor: it also marks cycles near past events. This downgrades the claim from future-warning evidence to a source-robust degradation-neighborhood dynamics marker. Raw optical contrast has stronger future8 temporal specificity, but source structure keeps it under the acquisition/confounding guardrail.
