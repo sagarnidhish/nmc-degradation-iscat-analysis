@@ -206,6 +206,7 @@ def main() -> None:
     residualized_future8_video_physics = read_json(derived / "residualized_future8_video_physics_benchmark" / "residualized_future8_video_physics_summary.json")
     source_balanced_pre_event_observable_forecast = read_json(derived / "source_balanced_pre_event_observable_forecast" / "source_balanced_pre_event_observable_forecast_summary.json")
     source_balanced_pre_event_optical_flow_transport = read_json(derived / "source_balanced_pre_event_optical_flow_transport_audit" / "source_balanced_pre_event_optical_flow_transport_summary.json")
+    source_balanced_pre_event_transport_kinetic_fusion = read_json(derived / "source_balanced_pre_event_transport_kinetic_fusion_audit" / "source_balanced_pre_event_transport_kinetic_fusion_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
@@ -745,6 +746,14 @@ def main() -> None:
     optical_flow_source_resid_tests = [optical_flow_source_resid_best] if optical_flow_source_resid_best else []
     optical_flow_method_summary = (first_summary(source_balanced_pre_event_optical_flow_transport, "method_summary", []) or [{}])[0]
     optical_flow_best = optical_flow_top_tests[0] if optical_flow_top_tests else {}
+    transport_fusion_tests = top_items(first_summary(source_balanced_pre_event_transport_kinetic_fusion, "top_event_tests", []), 16)
+    transport_fusion_best_by_target = top_items(first_summary(source_balanced_pre_event_transport_kinetic_fusion, "best_event_tests_by_target", []), 8)
+    transport_fusion_models = top_items(first_summary(source_balanced_pre_event_transport_kinetic_fusion, "top_leave_source_models", []), 12)
+    transport_fusion_candidates = top_items(first_summary(source_balanced_pre_event_transport_kinetic_fusion, "top_ranked_candidates", []), 12)
+    transport_fusion_best = transport_fusion_tests[0] if transport_fusion_tests else {}
+    transport_fusion_near_post = next((r for r in transport_fusion_best_by_target if r.get("target") == "near_vs_post_control"), {})
+    transport_fusion_top_model = transport_fusion_models[0] if transport_fusion_models else {}
+    transport_fusion_top_candidate = transport_fusion_candidates[0] if transport_fusion_candidates else {}
     acq_echem_cycle_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized"), {})
     acq_echem_cycle_bal_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized_cycle_balanced"), {})
     acq_echem_cycle_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
@@ -2375,6 +2384,27 @@ def main() -> None:
             f"- Optical-flow source-residual test {row.get('target', 'NA')} {row.get('feature', 'NA')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, p={fmt(row.get('mwu_p'))}, rho {fmt(row.get('spearman_rho'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(source_balanced_pre_event_optical_flow_transport, 'guardrail', 'Source-balanced pre-event optical-flow transport audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Source-Balanced Pre-Event Transport/Kinetic Fusion Audit",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_balanced_pre_event_transport_kinetic_fusion, 'n_rows', 0)} / {first_summary(source_balanced_pre_event_transport_kinetic_fusion, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_transport_kinetic_fusion, 'n_sources', 0)}",
+        f"- Feature set sizes: {first_summary(source_balanced_pre_event_transport_kinetic_fusion, 'feature_set_sizes', {})}",
+        f"- Top fused event test: {transport_fusion_best.get('target', 'NA')} {transport_fusion_best.get('score', 'NA')} AUC {fmt(transport_fusion_best.get('oriented_auc'))}, AP {fmt(transport_fusion_best.get('average_precision'))}, MW p={fmt(transport_fusion_best.get('mwu_p'))}, source-stratified p={fmt(transport_fusion_best.get('source_stratified_permutation_p'))}",
+        f"- Near-vs-post/control fused row: {transport_fusion_near_post.get('score', 'NA')} AUC {fmt(transport_fusion_near_post.get('oriented_auc'))}, AP {fmt(transport_fusion_near_post.get('average_precision'))}, source-stratified p={fmt(transport_fusion_near_post.get('source_stratified_permutation_p'))}",
+        f"- Top leave-source model: {transport_fusion_top_model.get('target', 'NA')} {transport_fusion_top_model.get('feature_set', 'NA')} AUC {fmt(transport_fusion_top_model.get('roc_auc'))}, AP {fmt(transport_fusion_top_model.get('average_precision'))}, n={fmt(transport_fusion_top_model.get('n_eval'), 0)}, sources={fmt(transport_fusion_top_model.get('n_sources_eval'), 0)}",
+        f"- Top fusion review candidate: {transport_fusion_top_candidate.get('roi_id', 'NA')} {transport_fusion_top_candidate.get('event_relative_bin', 'NA')} score {fmt(transport_fusion_top_candidate.get('fusion_review_priority_score'))}, action {transport_fusion_top_candidate.get('manual_qc_action_tier', 'NA')}",
+    ]
+    for row in transport_fusion_tests[:8]:
+        report_lines.append(
+            f"- Fusion event test {row.get('target', 'NA')} {row.get('score', 'NA')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, MW p={fmt(row.get('mwu_p'))}, source-stratified p={fmt(row.get('source_stratified_permutation_p'))}"
+        )
+    for row in transport_fusion_candidates[:6]:
+        report_lines.append(
+            f"- Fusion candidate {row.get('roi_id', 'NA')} {row.get('event_relative_bin', 'NA')}: priority {fmt(row.get('fusion_review_priority_score'))}, source-guarded {fmt(row.get('source_guarded_transport_kinetic_front_score'))}, action {row.get('manual_qc_action_tier', 'NA')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_pre_event_transport_kinetic_fusion, 'guardrail', 'Source-balanced pre-event transport/kinetic fusion audit unavailable.')}")
 
     report_lines += [
         "",
@@ -4136,6 +4166,20 @@ def main() -> None:
             "event_relative_diagnostics": observable_forecast_event_diag,
             "incremental_over_echem": observable_forecast_incremental,
             "guardrail": first_summary(source_balanced_pre_event_observable_forecast, "guardrail"),
+        },
+        "source_balanced_pre_event_transport_kinetic_fusion_audit": {
+            "n_rows": first_summary(source_balanced_pre_event_transport_kinetic_fusion, "n_rows"),
+            "n_cycles": first_summary(source_balanced_pre_event_transport_kinetic_fusion, "n_cycles"),
+            "n_sources": first_summary(source_balanced_pre_event_transport_kinetic_fusion, "n_sources"),
+            "event_relative_bin_counts": first_summary(source_balanced_pre_event_transport_kinetic_fusion, "event_relative_bin_counts", {}),
+            "feature_set_sizes": first_summary(source_balanced_pre_event_transport_kinetic_fusion, "feature_set_sizes", {}),
+            "score_columns": first_summary(source_balanced_pre_event_transport_kinetic_fusion, "score_columns", []),
+            "best_event_tests_by_target": transport_fusion_best_by_target,
+            "top_event_tests": transport_fusion_tests,
+            "top_leave_source_models": transport_fusion_models,
+            "top_ranked_candidates": transport_fusion_candidates,
+            "outputs": first_summary(source_balanced_pre_event_transport_kinetic_fusion, "outputs", {}),
+            "guardrail": first_summary(source_balanced_pre_event_transport_kinetic_fusion, "guardrail"),
         },
         "source_balanced_pre_event_optical_flow_transport_audit": {
             "n_input_rows": first_summary(source_balanced_pre_event_optical_flow_transport, "n_input_rows"),

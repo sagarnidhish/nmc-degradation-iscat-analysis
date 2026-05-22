@@ -4153,3 +4153,30 @@ Results:
 Interpretation: near-pre-event particle crops show stronger apparent radial image motion and curl-like flow than non-near rows, consistent with a particle-local instability/readiness proxy. The source-residual drop means this should be treated as a candidate transport descriptor, not a source-invariant mechanism claim. It is useful for ranking manual-QC candidates and for fusing with phase-kinetic/front evidence.
 
 Guardrail: apparent optical-flow transport is computed inside history-derived automatic masks on normalized ROI crops. It is an image-motion proxy only; it is not calibrated particle velocity, phase-boundary velocity, material flux, diffusion, or causal event evidence.
+
+## 2026-05-22 Source-Balanced Pre-Event Transport/Kinetic Fusion Audit
+
+Added `scripts/tier4_source_balanced_pre_event_transport_kinetic_fusion_audit.py` and ran it on Isambard to join the manual-QC decision ledger with the masked rollout benchmark and optical-flow transport audit. The audit builds component scores for transport, rollout difficulty, phase kinetics, front evidence, and QC evidence, then tests fused scores with source-residual variants, source-stratified permutation, and leave-source logistic comparisons.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_transport_kinetic_fusion_audit`
+- `derived_local/source_balanced_pre_event_transport_kinetic_fusion_audit`
+- `source_balanced_pre_event_transport_kinetic_fusion_per_roi.csv`
+- `source_balanced_pre_event_transport_kinetic_fusion_event_tests.csv`
+- `source_balanced_pre_event_transport_kinetic_fusion_leave_source_models.csv`
+- `source_balanced_pre_event_transport_kinetic_fusion_ranked_candidates.csv`
+- `source_balanced_pre_event_transport_kinetic_fusion_summary.json`
+
+Results:
+
+- Joined 128 ROI rows across 64 cycles and 14 sources. Feature sets cover 8 transport, 5 rollout, 14 kinetic/front, 22 transport+kinetic/front, and 27 all-core nonvisual features.
+- The best near-pre-event versus any non-near row is `manual_qc_augmented_fusion_score`: AUC 0.785, AP 0.616, MW p=1.49e-06, and source-stratified permutation p=0.00399.
+- The same fused score remains strong for near-pre-event versus post/control: AUC 0.798, AP 0.755, MW p=5.02e-06, source-stratified permutation p=0.0259.
+- A nonvisual `transport_kinetic_front_fusion_score` also passes source-stratified permutation for near versus any non-near (AUC 0.761, AP 0.615, p=1.03e-05, source-stratified p=0.00399) and near versus post/control (AUC 0.752, AP 0.724, source-stratified p=0.00599).
+- Leave-source models are encouraging but limited by class-balanced fold coverage; the best transport-only near-vs-post/control row scores AUC 0.889/AP 0.959 but evaluates only 18 rows from 2 sources. Treat this as exploratory, not a deployable classifier.
+- The top fusion review candidate is `source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723`, a near-pre-event row already queued as `review_front_and_kinetics_first`, followed by another near-pre row from the same cycle/source and several guardrail/control candidates.
+
+Interpretation: adding optical-flow transport and masked-rollout difficulty to existing phase/front/kinetic evidence improves the near-pre-event ranking signal under source-stratified permutation. The strongest defensible output is now a prioritized manual-review/fusion ledger, not a standalone automatic degradation detector. The source-balanced fusion result supports the idea that near-event particle regions show coupled apparent transport, prediction difficulty, and phase/front evidence before degradation events.
+
+Guardrail: fusion scores join automatic descriptors from history-derived particle ROI crops. They are ranking and hypothesis-generation tools only; they are not manual QC labels, calibrated phase-boundary velocities, material fluxes, diffusion coefficients, or causal degradation proof.

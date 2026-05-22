@@ -1530,6 +1530,30 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Optical-flow source-residual test near_vs_any_non_near abs_radial_flow_mean: AUC 0.632, AP 0.399, p=0.025, rho 0.199
 - Guardrail: Apparent optical-flow transport is computed inside history-derived automatic particle masks on normalized ROI crops. It is an image-motion proxy for hypothesis ranking, not calibrated particle velocity, phase-boundary velocity, material flux, or diffusion.
 
+## Source-Balanced Pre-Event Transport/Kinetic Fusion Audit
+
+- Rows/cycles/sources: 128 / 64 / 14
+- Feature set sizes: {'all_core_no_visual': 27, 'kinetic_front': 14, 'rollout_only': 5, 'transport_only': 8, 'transport_plus_kinetic_front': 22}
+- Top fused event test: near_vs_any_non_near manual_qc_augmented_fusion_score AUC 0.785, AP 0.616, MW p=1.493e-06, source-stratified p=0.004
+- Near-vs-post/control fused row: manual_qc_augmented_fusion_score AUC 0.798, AP 0.755, source-stratified p=0.026
+- Top leave-source model: near_vs_post_control transport_only AUC 0.889, AP 0.959, n=18, sources=2
+- Top fusion review candidate: source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723 near_pre_event_1_8 score 5.747, action review_front_and_kinetics_first
+- Fusion event test near_vs_any_non_near manual_qc_augmented_fusion_score: AUC 0.785, AP 0.616, MW p=1.493e-06, source-stratified p=0.004
+- Fusion event test near_vs_post_control manual_qc_augmented_fusion_score: AUC 0.798, AP 0.755, MW p=5.018e-06, source-stratified p=0.026
+- Fusion event test near_vs_any_non_near kinetic_score_raw: AUC 0.764, AP 0.592, MW p=7.987e-06, source-stratified p=0.022
+- Fusion event test near_vs_any_non_near transport_kinetic_front_fusion_score: AUC 0.761, AP 0.615, MW p=1.031e-05, source-stratified p=0.004
+- Fusion event test near_vs_post_control transport_kinetic_front_fusion_score: AUC 0.752, AP 0.724, MW p=1.158e-04, source-stratified p=0.006
+- Fusion event test near_vs_post_control kinetic_score_raw: AUC 0.746, AP 0.683, MW p=1.681e-04, source-stratified p=0.261
+- Fusion event test near_vs_any_non_near transport_score_raw: AUC 0.718, AP 0.572, MW p=2.295e-04, source-stratified p=0.004
+- Fusion event test near_vs_mid_pre kinetic_score_raw: AUC 0.793, AP 0.872, MW p=2.972e-04, source-stratified p=0.014
+- Fusion candidate source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723 near_pre_event_1_8: priority 5.747, source-guarded 1.920, action review_front_and_kinetics_first
+- Fusion candidate source_balanced_cycle152_rank29_obj2_17_c2_x10_HighHighCOV_150723 near_pre_event_1_8: priority 3.982, source-guarded 2.080, action review_front_and_kinetics_first
+- Fusion candidate source_balanced_cycle141_rank22_obj2_16_c2_x10_HighHighCOV_130723 mid_pre_event_9_16: priority 3.496, source-guarded 2.087, action routine_or_low_concordance
+- Fusion candidate source_balanced_cycle154_rank30_obj1_17_c2_x10_HighHighCOV_150723 near_pre_event_1_8: priority 3.319, source-guarded 0.333, action review_front_only_guardrail
+- Fusion candidate source_balanced_cycle151_rank28_obj2_17_c2_x10_HighHighCOV_150723 near_pre_event_1_8: priority 2.926, source-guarded 3.058, action review_kinetic_only_guardrail
+- Fusion candidate source_balanced_cycle141_rank22_obj1_16_c2_x10_HighHighCOV_130723 mid_pre_event_9_16: priority 2.712, source-guarded 2.076, action routine_or_low_concordance
+- Guardrail: Fusion scores join automatic transport, rollout, front, and kinetic descriptors from history-derived particle ROI crops. They are ranking and source-aware hypothesis-generation tools, not manual QC labels, calibrated phase-boundary velocities, diffusion coefficients, or causal degradation proof.
+
 ## Source-Balanced Degradation Mode Audit
 
 - Rows/cycles/sources/features: 96 / 48 / 14 / 18
