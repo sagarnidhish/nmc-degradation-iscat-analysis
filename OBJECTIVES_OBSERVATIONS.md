@@ -2614,3 +2614,26 @@ Key result:
 - Regression readouts support echem as a context bridge for residual descriptors: particle heterogeneity (`particle_norm_cv`) improves from poor residual-dictionary-only regression to residual_dictionary_plus_echem R2 0.327 / Spearman 0.815, while handcrafted scalars remain strongest for that target.
 
 Interpretation: echem/acquisition conditioning makes residual-basis video descriptors more predictive for weak future labels and particle-state readouts, but the perfect acquisition-context future8 score is a hard leakage/design guardrail. The useful claim is representation conditioning for review prioritization and model design, not deployable early warning or causal echem mechanism proof.
+
+## 2026-05-22 Acquisition-Residualized Video Physics Benchmark
+
+Added `scripts/tier4_residualized_future8_video_physics_benchmark.py` and ran it on Isambard to test the skeptical follow-up from the echem residual-dictionary fusion audit: whether particle-region video descriptors retain weak future-label signal after acquisition/context residualization.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark`
+
+Local compact copy:
+
+`derived_local/acquisition_residualized_video_physics_benchmark`
+
+Key result:
+
+- The benchmark covers the same 172 ROI rows across 34 cycles as the repaired residual-dictionary/echem fusion table, with 72 evaluable balanced weak-label rows over 24 cycles.
+- Future8 remains acquisition/context dominated: acquisition context alone reaches AUC 1.000/AP 1.000 with cycle-block permutation p=0.002, while raw all-video reaches AUC 0.756/AP 0.814.
+- After residualizing all video features against acquisition context, future8 all-video alone falls to AUC 0.319/AP 0.398. Adding the context logit back recovers AUC 0.922/AP 0.959, showing the predictive power is carried by context rather than context-independent video residuals.
+- Future16 has modest raw video signal: handcrafted particle descriptors reach AUC 0.796/AP 0.931, all-video reaches AUC 0.733/AP 0.913, and echem-context plus all-video improves over echem-context by +0.097 AUC. But residualized all-video alone is only AUC 0.620/AP 0.873, and residualized all-video plus context logit is below acquisition context by -0.188 AUC.
+- The strongest context-residual feature tests are future16 front/diffusion-proxy descriptors (`roi_threshold_robust_diffusion_score` and `threshold_robust_diffusion_score`, direction-free AUC 0.821), still under the same apparent-optical-proxy/manual-QC guardrail.
+
+Interpretation: this is an important negative/guardrail result. Future8 should not be treated as a context-independent video-physics degradation detector in the current weak-label design. Future16 remains the more plausible target for echem-conditioned video modeling, but the evidence should be framed as review-prioritization and hypothesis generation until source/cohort holdouts and manual-QC labels support it.
+

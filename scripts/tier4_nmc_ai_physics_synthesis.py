@@ -149,6 +149,7 @@ def main() -> None:
     masked_video_embedding = read_json(derived / "masked_video_embedding_audit" / "masked_video_embedding_audit_summary.json")
     residual_dictionary_embedding = read_json(derived / "residual_dictionary_embedding_audit" / "residual_dictionary_embedding_summary.json")
     echem_residual_dictionary_fusion = read_json(derived / "echem_residual_dictionary_fusion_audit" / "echem_residual_dictionary_summary.json")
+    acquisition_residualized_video = read_json(derived / "acquisition_residualized_video_physics_benchmark" / "acquisition_residualized_summary.json")
     agentic_current = read_json(derived / "agentic_current_hypothesis_tournament" / "agentic_current_hypothesis_tournament_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
@@ -399,6 +400,16 @@ def main() -> None:
     echem_resdict_deltas = top_items(first_summary(echem_residual_dictionary_fusion, "top_feature_set_deltas", []), 10)
     echem_resdict_acq_future8 = next((r for r in echem_resdict_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "acquisition_context"), {})
     echem_resdict_res_future8 = next((r for r in echem_resdict_class if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "residual_dictionary_plus_echem"), {})
+    acq_resid_metrics = top_items(first_summary(acquisition_residualized_video, "top_metrics", []), 40)
+    acq_resid_deltas = top_items(first_summary(acquisition_residualized_video, "top_feature_set_deltas", []), 14)
+    acq_resid_tests = top_items(first_summary(acquisition_residualized_video, "top_context_residual_feature_tests", []), 12)
+    acq_resid_context8 = next((r for r in acq_resid_metrics if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "acquisition_context"), {})
+    acq_resid_raw_video8 = next((r for r in acq_resid_metrics if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "all_video_raw"), {})
+    acq_resid_video_only8 = next((r for r in acq_resid_metrics if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "residualized_all_video"), {})
+    acq_resid_video_ctx8 = next((r for r in acq_resid_metrics if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "residualized_all_video_plus_context_logit"), {})
+    acq_resid_context16 = next((r for r in acq_resid_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "acquisition_context"), {})
+    acq_resid_raw_hand16 = next((r for r in acq_resid_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "handcrafted_particle_raw"), {})
+    acq_resid_video_only16 = next((r for r in acq_resid_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "residualized_all_video"), {})
     balanced_future_top_acq_resid = balanced_future_acq_resid[0] if balanced_future_acq_resid else {}
     temporal_future8 = (first_summary(temporal_directionality, "best_future8_model", []) or [{}])[0]
     temporal_past8 = (first_summary(temporal_directionality, "best_past8_model", []) or [{}])[0]
@@ -642,6 +653,7 @@ def main() -> None:
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
         f"- Residual dictionary embedding learns label-free next-frame residual bases over {first_summary(residual_dictionary_embedding, 'n_embedding_rows', 0)} ROI videos; residual-dictionary future8 AUC is {fmt(residual_dict_future8.get('roc_auc'))} with p={fmt(residual_dict_future8.get('empirical_p_ge_observed'))}, and residual_dictionary_plus_handcrafted reaches AUC {fmt(residual_dict_plus_future8.get('roc_auc'))}.",
         f"- Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to {fmt(echem_resdict_res_future8.get('roc_auc'))}, while acquisition/context alone reaches {fmt(echem_resdict_acq_future8.get('roc_auc'))}; treat this as context-sensitive representation evidence rather than deployable warning.",
+        f"- Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC {fmt(acq_resid_context8.get('roc_auc'))}, raw all-video reaches {fmt(acq_resid_raw_video8.get('roc_auc'))}, and context-residualized all-video alone reaches {fmt(acq_resid_video_only8.get('roc_auc'))}; future16 raw handcrafted reaches AUC {fmt(acq_resid_raw_hand16.get('roc_auc'))} but residualized all-video alone is {fmt(acq_resid_video_only16.get('roc_auc'))}.",
         f"- Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as {first_summary(agentic_current, 'top_hypothesis', {}).get('title', 'NA')} with score {fmt(first_summary(agentic_current, 'top_hypothesis', {}).get('tournament_score'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
         f"- Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with {temporal_future8.get('model', 'NA')} AUC {fmt(temporal_future8.get('pooled_oof_roc_auc'))}/AP {fmt(temporal_future8.get('pooled_oof_average_precision'))}, beating circular time-shift labels at empirical p={fmt(temporal_shift_null.get('empirical_p_ge_observed'))}; reversed labels remain nontrivial (best AUC {fmt(temporal_reversed8.get('pooled_oof_roc_auc'))}) and past8 is underpowered with {temporal_past8_counts.get('1', 0)} positives.",
@@ -1558,6 +1570,29 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Acquisition-Residualized Video Physics Benchmark",
+        "",
+        f"- Rows/cycles: {first_summary(acquisition_residualized_video, 'n_rows', 0)} / {first_summary(acquisition_residualized_video, 'n_cycles', 0)}",
+        f"- Feature group sizes: {first_summary(acquisition_residualized_video, 'feature_group_sizes', {})}",
+        f"- Future8 context/raw all-video/residualized all-video AUC: {fmt(acq_resid_context8.get('roc_auc'))} / {fmt(acq_resid_raw_video8.get('roc_auc'))} / {fmt(acq_resid_video_only8.get('roc_auc'))}",
+        f"- Future16 context/raw handcrafted/residualized all-video AUC: {fmt(acq_resid_context16.get('roc_auc'))} / {fmt(acq_resid_raw_hand16.get('roc_auc'))} / {fmt(acq_resid_video_only16.get('roc_auc'))}",
+    ]
+    for row in acq_resid_metrics[:8]:
+        report_lines.append(
+            f"- Acquisition-residualized metric {row.get('target')} {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, cycle-block p={fmt(row.get('empirical_p_ge_observed_cycle_block'))}, n={fmt(row.get('n_eval'), 0)}"
+        )
+    for row in acq_resid_deltas[:8]:
+        report_lines.append(
+            f"- Acquisition-residualized delta {row.get('target')} {row.get('comparison')}: delta AUC {fmt(row.get('delta_roc_auc'))}, delta AP {fmt(row.get('delta_average_precision'))}, delta rho {fmt(row.get('delta_spearman_rho'))}"
+        )
+    for row in acq_resid_tests[:6]:
+        report_lines.append(
+            f"- Context-residual feature {row.get('feature_group')} {row.get('feature')} vs {row.get('target')}: |rho|={fmt(row.get('spearman_abs_rho_vs_context_label_residual'))}, direction-free AUC {fmt(row.get('direction_free_auc_vs_label'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(acquisition_residualized_video, 'guardrail', 'Acquisition-residualized video benchmark unavailable.')}")
+
+    report_lines += [
+        "",
         "## Agentic Current Hypothesis Tournament",
         "",
         f"- Hypotheses ranked: {first_summary(agentic_current, 'n_hypotheses', 0)}",
@@ -2189,6 +2224,16 @@ def main() -> None:
             "top_regression_metrics": echem_resdict_reg,
             "top_feature_set_deltas": echem_resdict_deltas,
             "guardrail": first_summary(echem_residual_dictionary_fusion, "guardrail"),
+        },
+        "acquisition_residualized_video_physics_benchmark": {
+            "n_rows": first_summary(acquisition_residualized_video, "n_rows"),
+            "n_cycles": first_summary(acquisition_residualized_video, "n_cycles"),
+            "feature_group_sizes": first_summary(acquisition_residualized_video, "feature_group_sizes", {}),
+            "residualized_video_group_sizes": first_summary(acquisition_residualized_video, "residualized_video_group_sizes", {}),
+            "top_metrics": acq_resid_metrics,
+            "top_feature_set_deltas": acq_resid_deltas,
+            "top_context_residual_feature_tests": acq_resid_tests,
+            "guardrail": first_summary(acquisition_residualized_video, "guardrail"),
         },
         "agentic_current_hypothesis_tournament": {
             "n_hypotheses": first_summary(agentic_current, "n_hypotheses"),

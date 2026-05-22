@@ -112,6 +112,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Residual dictionary embedding learns label-free next-frame residual bases over 172 ROI videos; residual-dictionary future8 AUC is 0.663 with p=0.005, and residual_dictionary_plus_handcrafted reaches AUC 0.771.
 - Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to 0.917, while acquisition/context alone reaches 1.000; treat this as context-sensitive representation evidence rather than deployable warning.
+- Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC 1.000, raw all-video reaches 0.756, and context-residualized all-video alone reaches 0.319; future16 raw handcrafted reaches AUC 0.796 but residualized all-video alone is 0.620.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
@@ -1147,6 +1148,36 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Echem-resdict regression particle_norm_cv residual_dictionary_plus_handcrafted: R2 0.961, rho 0.978, n=172
 - Echem-resdict regression residual_energy_mean residual_dictionary_plus_handcrafted: R2 0.979, rho 0.973, n=172
 - Guardrail: Fusion uses weak cycle labels, automatic ROI crops, and echem/acquisition covariates. It tests representation conditioning and review prioritization, not deployable warning, manual particle/front labels, causal echem mechanism, or calibrated diffusion.
+
+## Acquisition-Residualized Video Physics Benchmark
+
+- Rows/cycles: 172 / 34
+- Feature group sizes: {'acquisition_context': 27, 'all_video_raw': 144, 'context_plus_all_video': 171, 'context_plus_handcrafted_particle': 116, 'context_plus_residual_dictionary': 66, 'context_plus_video_pca': 43, 'echem_context': 107, 'echem_context_plus_all_video': 251, 'handcrafted_particle_raw': 89, 'residual_dictionary_raw': 39, 'video_pca_raw': 16}
+- Future8 context/raw all-video/residualized all-video AUC: 1.000 / 0.756 / 0.319
+- Future16 context/raw handcrafted/residualized all-video AUC: 0.716 / 0.796 / 0.620
+- Acquisition-residualized metric future_any_drop_within_8cycles acquisition_context: AUC 1.000, AP 1.000, cycle-block p=0.002, n=72
+- Acquisition-residualized metric future_any_drop_within_8cycles context_plus_residual_dictionary: AUC 1.000, AP 1.000, cycle-block p=NA, n=72
+- Acquisition-residualized metric future_any_drop_within_8cycles context_plus_video_pca: AUC 1.000, AP 1.000, cycle-block p=NA, n=72
+- Acquisition-residualized metric future_any_drop_within_8cycles residualized_residual_dictionary_plus_context_logit: AUC 1.000, AP 1.000, cycle-block p=0.002, n=72
+- Acquisition-residualized metric future_any_drop_within_8cycles residualized_video_pca_plus_context_logit: AUC 1.000, AP 1.000, cycle-block p=0.002, n=72
+- Acquisition-residualized metric future_any_drop_within_8cycles context_plus_all_video: AUC 0.990, AP 0.991, cycle-block p=0.002, n=72
+- Acquisition-residualized metric future_any_drop_within_8cycles context_plus_handcrafted_particle: AUC 0.986, AP 0.988, cycle-block p=NA, n=72
+- Acquisition-residualized metric future_any_drop_within_8cycles residualized_all_video_plus_context_logit: AUC 0.922, AP 0.959, cycle-block p=0.002, n=72
+- Acquisition-residualized delta future_any_drop_within_16cycles echem_context_plus_all_video_minus_echem_context: delta AUC 0.097, delta AP 0.024, delta rho 0.136
+- Acquisition-residualized delta future_any_drop_within_16cycles handcrafted_particle_raw_minus_acquisition_context: delta AUC 0.081, delta AP -1.233e-04, delta rho 0.113
+- Acquisition-residualized delta future_any_drop_within_16cycles context_plus_handcrafted_particle_minus_acquisition_context: delta AUC 0.021, delta AP -0.020, delta rho 0.029
+- Acquisition-residualized delta future_any_drop_within_16cycles all_video_raw_minus_acquisition_context: delta AUC 0.018, delta AP -0.018, delta rho 0.024
+- Acquisition-residualized delta future_any_drop_within_8cycles context_plus_residual_dictionary_minus_acquisition_context: delta AUC 0.000, delta AP 0.000, delta rho -6.692e-04
+- Acquisition-residualized delta future_any_drop_within_8cycles context_plus_video_pca_minus_acquisition_context: delta AUC 0.000, delta AP 0.000, delta rho -6.692e-04
+- Acquisition-residualized delta future_any_drop_within_8cycles residualized_residual_dictionary_plus_context_logit_minus_acquisition_context: delta AUC 0.000, delta AP 0.000, delta rho -6.692e-04
+- Acquisition-residualized delta future_any_drop_within_8cycles residualized_video_pca_plus_context_logit_minus_acquisition_context: delta AUC 0.000, delta AP 0.000, delta rho -6.692e-04
+- Context-residual feature handcrafted_particle roi_threshold_robust_diffusion_score vs future_any_drop_within_16cycles: |rho|=0.501, direction-free AUC 0.821
+- Context-residual feature handcrafted_particle threshold_robust_diffusion_score vs future_any_drop_within_16cycles: |rho|=0.501, direction-free AUC 0.821
+- Context-residual feature all_video roi_threshold_robust_diffusion_score vs future_any_drop_within_16cycles: |rho|=0.501, direction-free AUC 0.821
+- Context-residual feature all_video threshold_robust_diffusion_score vs future_any_drop_within_16cycles: |rho|=0.501, direction-free AUC 0.821
+- Context-residual feature handcrafted_particle mask_low_area_fraction vs future_any_drop_within_8cycles: |rho|=0.477, direction-free AUC 0.596
+- Context-residual feature all_video mask_low_area_fraction vs future_any_drop_within_8cycles: |rho|=0.477, direction-free AUC 0.596
+- Guardrail: This is a weak-label, leave-one-cycle benchmark over automatically selected ROI embeddings. A strong acquisition-context score is treated as design/context structure, not a deployable warning model. Residualized video scores test whether particle-region video descriptors add signal after context conditioning.
 
 ## Agentic Current Hypothesis Tournament
 
