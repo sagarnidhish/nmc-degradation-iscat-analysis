@@ -208,6 +208,7 @@ def main() -> None:
     source_balanced_pre_event_optical_flow_transport = read_json(derived / "source_balanced_pre_event_optical_flow_transport_audit" / "source_balanced_pre_event_optical_flow_transport_summary.json")
     source_balanced_pre_event_transport_kinetic_fusion = read_json(derived / "source_balanced_pre_event_transport_kinetic_fusion_audit" / "source_balanced_pre_event_transport_kinetic_fusion_summary.json")
     source_balanced_transport_mechanism = read_json(derived / "source_balanced_transport_mechanism_dossier" / "source_balanced_transport_mechanism_summary.json")
+    source_balanced_transport_mechanism_falsification = read_json(derived / "source_balanced_transport_mechanism_falsification_audit" / "source_balanced_transport_mechanism_falsification_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
@@ -758,6 +759,10 @@ def main() -> None:
     transport_mechanism_top = first_summary(source_balanced_transport_mechanism, "top_candidate", {}) or {}
     transport_mechanism_tiers = top_items(first_summary(source_balanced_transport_mechanism, "tier_counts", []), 12)
     transport_mechanism_sources = top_items(first_summary(source_balanced_transport_mechanism, "source_summary_top", []), 12)
+    transport_mechanism_falsification_event = top_items(first_summary(source_balanced_transport_mechanism_falsification, "lead_event_tests_for_transport_mechanism_score", []), 3)
+    transport_mechanism_falsification_pair = top_items(first_summary(source_balanced_transport_mechanism_falsification, "lead_pair_tests_for_transport_mechanism_score", []), 3)
+    transport_mechanism_falsification_source = first_summary(source_balanced_transport_mechanism_falsification, "lead_source_test_for_transport_mechanism_score", {}) or {}
+    transport_mechanism_falsification_topk = top_items(first_summary(source_balanced_transport_mechanism_falsification, "topk_enrichment", []), 4)
     acq_echem_cycle_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized"), {})
     acq_echem_cycle_bal_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized_cycle_balanced"), {})
     acq_echem_cycle_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
@@ -2429,6 +2434,30 @@ def main() -> None:
             f"- Mechanism source {row.get('source_stem', 'NA')}: max score {fmt(row.get('max_transport_mechanism_score'))}, near-pre rows {fmt(row.get('n_near_pre'), 0)}, priority rows {fmt(row.get('n_priority'), 0)}, median source-residual transport {fmt(row.get('median_transport_source_residual_score'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(source_balanced_transport_mechanism, 'guardrail', 'Source-balanced transport mechanism dossier unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Source-Balanced Transport Mechanism Falsification Audit",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_balanced_transport_mechanism_falsification, 'n_rows', 0)} / {first_summary(source_balanced_transport_mechanism_falsification, 'n_cycles', 0)} / {first_summary(source_balanced_transport_mechanism_falsification, 'n_sources', 0)}",
+        f"- Near-pre rows / matched same-source pairs: {fmt(first_summary(source_balanced_transport_mechanism_falsification, 'n_near_pre'), 0)} / {fmt(first_summary(source_balanced_transport_mechanism_falsification, 'n_matched_pairs'), 0)}",
+    ]
+    for row in transport_mechanism_falsification_event:
+        report_lines.append(
+            f"- Event-local mechanism score test {row.get('target', 'NA')}: AUC {fmt(row.get('auc'))}, AP {fmt(row.get('average_precision'))}, median near-control diff {fmt(row.get('median_diff_pos_minus_neg'))}, source-stratified p {fmt(row.get('source_stratified_permutation_p'))}, n pos/neg {fmt(row.get('n_pos'), 0)}/{fmt(row.get('n_neg'), 0)}"
+        )
+    for row in transport_mechanism_falsification_pair:
+        report_lines.append(
+            f"- Same-source matched mechanism score {row.get('pair_set', 'NA')}: median near-control delta {fmt(row.get('median_delta_near_minus_control'))}, positive-delta fraction {fmt(row.get('positive_delta_fraction'))}, sign-flip p {fmt(row.get('sign_flip_p'))}, pairs/sources {fmt(row.get('n_pairs'), 0)}/{fmt(row.get('n_sources'), 0)}"
+        )
+    report_lines.append(
+        f"- Source-median mechanism contrast: median delta {fmt(transport_mechanism_falsification_source.get('median_source_delta_near_minus_non'))}, positive-source fraction {fmt(transport_mechanism_falsification_source.get('positive_source_fraction'))}, sign-flip p {fmt(transport_mechanism_falsification_source.get('sign_flip_p'))}, eligible sources {fmt(transport_mechanism_falsification_source.get('n_sources'), 0)}"
+    )
+    for row in transport_mechanism_falsification_topk:
+        report_lines.append(
+            f"- Top-{fmt(row.get('top_k'), 0)} enrichment: near-pre fraction {fmt(row.get('near_pre_fraction'))}, sources {fmt(row.get('n_sources'), 0)}, dominant source {row.get('dominant_source', 'NA')} fraction {fmt(row.get('dominant_source_fraction'))}, diffusion candidates {fmt(row.get('n_diffusion_claim_candidates'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_transport_mechanism_falsification, 'guardrail', 'Source-balanced transport mechanism falsification audit unavailable.')}")
 
     report_lines += [
         "",
@@ -4231,6 +4260,19 @@ def main() -> None:
             "source_summary_top": transport_mechanism_sources,
             "outputs": first_summary(source_balanced_transport_mechanism, "outputs", {}),
             "guardrail": first_summary(source_balanced_transport_mechanism, "guardrail"),
+        },
+        "source_balanced_transport_mechanism_falsification_audit": {
+            "n_rows": first_summary(source_balanced_transport_mechanism_falsification, "n_rows"),
+            "n_cycles": first_summary(source_balanced_transport_mechanism_falsification, "n_cycles"),
+            "n_sources": first_summary(source_balanced_transport_mechanism_falsification, "n_sources"),
+            "n_near_pre": first_summary(source_balanced_transport_mechanism_falsification, "n_near_pre"),
+            "n_matched_pairs": first_summary(source_balanced_transport_mechanism_falsification, "n_matched_pairs"),
+            "lead_event_tests_for_transport_mechanism_score": transport_mechanism_falsification_event,
+            "lead_pair_tests_for_transport_mechanism_score": transport_mechanism_falsification_pair,
+            "lead_source_test_for_transport_mechanism_score": transport_mechanism_falsification_source,
+            "topk_enrichment": transport_mechanism_falsification_topk,
+            "outputs": first_summary(source_balanced_transport_mechanism_falsification, "outputs", {}),
+            "guardrail": first_summary(source_balanced_transport_mechanism_falsification, "guardrail"),
         },
         "source_domain_video_echem_adaptation_audit": {
             "n_rows": first_summary(source_domain_video_echem, "n_rows"),

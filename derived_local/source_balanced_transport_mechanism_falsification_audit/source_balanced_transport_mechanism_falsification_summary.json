@@ -1,0 +1,139 @@
+{
+  "guardrail": "This is a falsification audit for the automatic mechanism review score. Same-source enrichment supports event-local ranking, but the scores remain optical/AI descriptors rather than calibrated transport, phase-boundary velocity, diffusion, or causal proof.",
+  "lead_event_tests_for_transport_mechanism_score": [
+    {
+      "auc": 0.783203125,
+      "average_precision": 0.6542328380789495,
+      "feature": "transport_mechanism_score",
+      "median_diff_pos_minus_neg": 0.21747955223503246,
+      "median_neg": 0.44055692506067956,
+      "median_pos": 0.658036477295712,
+      "n_neg": 96,
+      "n_pos": 32,
+      "n_rows": 128,
+      "n_sources": 14,
+      "source_stratified_permutation_p": 0.0004997501249375312,
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "auc": 0.7946428571428571,
+      "average_precision": 0.7516427885444539,
+      "feature": "transport_mechanism_score",
+      "median_diff_pos_minus_neg": 0.23121836443163435,
+      "median_neg": 0.42681811286407767,
+      "median_pos": 0.658036477295712,
+      "n_neg": 56,
+      "n_pos": 32,
+      "n_rows": 88,
+      "n_sources": 11,
+      "source_stratified_permutation_p": 0.005997001499250375,
+      "target": "near_vs_far_mid_control"
+    },
+    {
+      "auc": 0.7650240384615384,
+      "average_precision": 0.7460092851962301,
+      "feature": "transport_mechanism_score",
+      "median_diff_pos_minus_neg": 0.18612506952872176,
+      "median_neg": 0.47191140776699025,
+      "median_pos": 0.658036477295712,
+      "n_neg": 52,
+      "n_pos": 32,
+      "n_rows": 84,
+      "n_sources": 11,
+      "source_stratified_permutation_p": 0.001999000499750125,
+      "target": "near_vs_post_control"
+    }
+  ],
+  "lead_pair_tests_for_transport_mechanism_score": [
+    {
+      "feature": "transport_mechanism_score",
+      "mean_delta_near_minus_control": 0.18211977665478357,
+      "median_delta_near_minus_control": 0.20795149423543685,
+      "n_pairs": 32,
+      "n_sources": 5,
+      "pair_set": "same_source_any_non_near",
+      "positive_delta_fraction": 0.78125,
+      "sign_flip_p": 0.0004997501249375312
+    },
+    {
+      "feature": "transport_mechanism_score",
+      "mean_delta_near_minus_control": 0.18849599893810676,
+      "median_delta_near_minus_control": 0.2537763577063107,
+      "n_pairs": 20,
+      "n_sources": 3,
+      "pair_set": "same_source_far_mid_control",
+      "positive_delta_fraction": 0.7,
+      "sign_flip_p": 0.0034982508745627187
+    },
+    {
+      "feature": "transport_mechanism_score",
+      "mean_delta_near_minus_control": 0.17149273951591157,
+      "median_delta_near_minus_control": 0.20398532311893203,
+      "n_pairs": 12,
+      "n_sources": 2,
+      "pair_set": "same_source_post_control",
+      "positive_delta_fraction": 0.9166666666666666,
+      "sign_flip_p": 0.0014992503748125937
+    }
+  ],
+  "lead_source_test_for_transport_mechanism_score": {
+    "feature": "transport_mechanism_score",
+    "mean_source_delta_near_minus_non": 0.21102934112055016,
+    "median_source_delta_near_minus_non": 0.21612968370752428,
+    "n_sources": 5,
+    "positive_source_fraction": 1.0,
+    "sign_flip_p": 0.05697151424287856
+  },
+  "n_cycles": 64,
+  "n_matched_pairs": 64,
+  "n_near_pre": 32,
+  "n_rows": 128,
+  "n_sources": 14,
+  "outputs": {
+    "event_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_event_tests.csv",
+    "matched_pairs": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_matched_pairs.csv",
+    "pair_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_pair_tests.csv",
+    "source_contrasts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_source_contrasts.csv",
+    "source_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_source_tests.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_summary.json",
+    "topk": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_topk.csv"
+  },
+  "topk_enrichment": [
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "dominant_source_fraction": 0.8,
+      "n_diffusion_claim_candidates": 0,
+      "n_priority_tiers": 4,
+      "n_sources": 2,
+      "near_pre_fraction": 0.8,
+      "top_k": 5
+    },
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "dominant_source_fraction": 0.5,
+      "n_diffusion_claim_candidates": 0,
+      "n_priority_tiers": 5,
+      "n_sources": 5,
+      "near_pre_fraction": 0.8,
+      "top_k": 10
+    },
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "dominant_source_fraction": 0.25,
+      "n_diffusion_claim_candidates": 0,
+      "n_priority_tiers": 5,
+      "n_sources": 9,
+      "near_pre_fraction": 0.75,
+      "top_k": 20
+    },
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "dominant_source_fraction": 0.2,
+      "n_diffusion_claim_candidates": 0,
+      "n_priority_tiers": 5,
+      "n_sources": 14,
+      "near_pre_fraction": 0.55,
+      "top_k": 40
+    }
+  ]
+}

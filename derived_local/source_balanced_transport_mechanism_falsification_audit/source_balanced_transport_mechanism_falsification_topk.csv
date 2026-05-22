@@ -1,0 +1,5 @@
+top_k,near_pre_fraction,n_sources,dominant_source,dominant_source_fraction,n_priority_tiers,n_diffusion_claim_candidates
+5,0.8,2,17_c2_x10_HighHighCOV_150723,0.8,4,0
+10,0.8,5,17_c2_x10_HighHighCOV_150723,0.5,5,0
+20,0.75,9,17_c2_x10_HighHighCOV_150723,0.25,5,0
+40,0.55,14,17_c2_x10_HighHighCOV_150723,0.2,5,0

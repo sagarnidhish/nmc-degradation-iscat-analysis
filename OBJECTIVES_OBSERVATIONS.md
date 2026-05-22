@@ -4207,3 +4207,32 @@ Results:
 Interpretation: the dossier converts several separate AI/physics proxies into a practical manual-review ledger. The strongest candidates show coupled apparent transport, source-residual transport, front/kinetic concordance, future-observable tail signal, and QC evidence before abrupt optical drops, but the output is still a ranking/hypothesis tool rather than a mechanistic claim.
 
 Guardrail: automatic optical flow, front proxies, and fusion scores are not calibrated phase-boundary velocities, material fluxes, diffusion coefficients, or causal degradation proof. Diffusion and transport-mechanism claims remain blocked until strict gates and manual validation pass.
+
+## 2026-05-22 Source-Balanced Transport Mechanism Falsification Audit
+
+Added `scripts/tier4_source_balanced_transport_mechanism_falsification_audit.py` and ran it on Isambard to pressure-test the transport mechanism dossier with source-stratified permutation, same-source matched near-pre versus control/far/post comparisons, source-median contrasts, and top-k enrichment checks.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit`
+- `derived_local/source_balanced_transport_mechanism_falsification_audit`
+- `source_balanced_transport_mechanism_falsification_event_tests.csv`
+- `source_balanced_transport_mechanism_falsification_matched_pairs.csv`
+- `source_balanced_transport_mechanism_falsification_pair_tests.csv`
+- `source_balanced_transport_mechanism_falsification_source_contrasts.csv`
+- `source_balanced_transport_mechanism_falsification_source_tests.csv`
+- `source_balanced_transport_mechanism_falsification_topk.csv`
+- `source_balanced_transport_mechanism_falsification_summary.json`
+
+Results:
+
+- The mechanism score remains event-local under source-stratified permutation: near-pre versus any non-near row has AUC 0.783, AP 0.654, median near-minus-control score difference 0.217, and source-stratified p=0.00050.
+- Near-pre versus post/control remains positive: AUC 0.765, AP 0.746, median score difference 0.186, and source-stratified p=0.00200.
+- Same-source nearest-control matching supports the event-local ranking: near-pre rows beat the nearest same-source non-near row in 25 of 32 pairs, median score delta 0.208, sign-flip p=0.00050.
+- Same-source post/control matching is smaller but stronger by sign fraction: 11 of 12 pairs have positive near-control deltas, median delta 0.204, sign-flip p=0.00150.
+- Source-median contrasts are directionally consistent but underpowered: five sources have both near and non-near rows, all five have positive near-minus-non mechanism-score medians, median delta 0.216, sign-flip p=0.057.
+- Top-k enrichment still shows source concentration: top-5 rows are 80% near-pre but 80% from source `17_c2_x10_HighHighCOV_150723`; top-20 rows span 9 sources and are 75% near-pre. Zero top-k rows pass the diffusion-claim gate.
+
+Interpretation: this falsification audit strengthens the practical use of the mechanism dossier as an event-local manual-review ranker. The same-source paired comparisons argue against a purely cross-source artifact, while the top-k and five-source source-median limits keep the conclusion guarded. This supports a particle-local readiness/instability hypothesis, not a calibrated mechanism claim.
+
+Guardrail: the audit tests automatic optical/AI descriptors. It does not establish calibrated transport, phase-boundary velocity, diffusion, or causality; those claims remain blocked pending strict gates and manual validation.

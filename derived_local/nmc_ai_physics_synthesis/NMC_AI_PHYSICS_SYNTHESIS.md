@@ -1573,6 +1573,23 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Mechanism source 12_c2_x10_070723: max score 0.714, near-pre rows 8, priority rows 0, median source-residual transport 0.347
 - Guardrail: This dossier ranks apparent transport/front/kinetic candidates for manual review. Automatic optical flow and front proxies are not calibrated phase-boundary velocities, material fluxes, or diffusion coefficients; diffusion claims remain blocked unless strict gates and manual validation pass.
 
+## Source-Balanced Transport Mechanism Falsification Audit
+
+- Rows/cycles/sources: 128 / 64 / 14
+- Near-pre rows / matched same-source pairs: 32 / 64
+- Event-local mechanism score test near_vs_any_non_near: AUC 0.783, AP 0.654, median near-control diff 0.217, source-stratified p 4.998e-04, n pos/neg 32/96
+- Event-local mechanism score test near_vs_far_mid_control: AUC 0.795, AP 0.752, median near-control diff 0.231, source-stratified p 0.006, n pos/neg 32/56
+- Event-local mechanism score test near_vs_post_control: AUC 0.765, AP 0.746, median near-control diff 0.186, source-stratified p 0.002, n pos/neg 32/52
+- Same-source matched mechanism score same_source_any_non_near: median near-control delta 0.208, positive-delta fraction 0.781, sign-flip p 4.998e-04, pairs/sources 32/5
+- Same-source matched mechanism score same_source_far_mid_control: median near-control delta 0.254, positive-delta fraction 0.700, sign-flip p 0.003, pairs/sources 20/3
+- Same-source matched mechanism score same_source_post_control: median near-control delta 0.204, positive-delta fraction 0.917, sign-flip p 0.001, pairs/sources 12/2
+- Source-median mechanism contrast: median delta 0.216, positive-source fraction 1.000, sign-flip p 0.057, eligible sources 5
+- Top-5 enrichment: near-pre fraction 0.800, sources 2, dominant source 17_c2_x10_HighHighCOV_150723 fraction 0.800, diffusion candidates 0
+- Top-10 enrichment: near-pre fraction 0.800, sources 5, dominant source 17_c2_x10_HighHighCOV_150723 fraction 0.500, diffusion candidates 0
+- Top-20 enrichment: near-pre fraction 0.750, sources 9, dominant source 17_c2_x10_HighHighCOV_150723 fraction 0.250, diffusion candidates 0
+- Top-40 enrichment: near-pre fraction 0.550, sources 14, dominant source 17_c2_x10_HighHighCOV_150723 fraction 0.200, diffusion candidates 0
+- Guardrail: This is a falsification audit for the automatic mechanism review score. Same-source enrichment supports event-local ranking, but the scores remain optical/AI descriptors rather than calibrated transport, phase-boundary velocity, diffusion, or causal proof.
+
 ## Source-Balanced Degradation Mode Audit
 
 - Rows/cycles/sources/features: 96 / 48 / 14 / 18
