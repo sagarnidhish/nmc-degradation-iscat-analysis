@@ -155,6 +155,7 @@ def main() -> None:
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
+    source_invariant_family = read_json(derived / "source_invariant_physical_family_audit" / "source_invariant_family_summary.json")
     agentic_current = read_json(derived / "agentic_current_hypothesis_tournament" / "agentic_current_hypothesis_tournament_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
@@ -452,6 +453,14 @@ def main() -> None:
     source_invariant_best_vpe16 = max([r for r in source_invariant_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "video_plus_echem"], key=lambda r: (float(r.get("roc_auc") or float("nan")) if r.get("roc_auc") is not None else float("nan")), default={})
     source_invariant_best_video16 = max([r for r in source_invariant_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "video_all"], key=lambda r: (float(r.get("roc_auc") or float("nan")) if r.get("roc_auc") is not None else float("nan")), default={})
     source_invariant_best_vpe8 = max([r for r in source_invariant_metrics if r.get("target") == "future_any_drop_within_8cycles" and r.get("feature_set") == "video_plus_echem"], key=lambda r: (float(r.get("roc_auc") or float("nan")) if r.get("roc_auc") is not None else float("nan")), default={})
+    source_family_metrics = top_items(first_summary(source_invariant_family, "top_metrics", []), 64)
+    source_family_deltas = top_items(first_summary(source_invariant_family, "top_deltas", []), 32)
+    source_family_confounds = top_items(first_summary(source_invariant_family, "top_source_confounded_features", []), 16)
+    source_family_best16 = max([r for r in source_family_metrics if r.get("target") == "future_any_drop_within_16cycles"], key=lambda r: (float(r.get("roc_auc") or float("nan")) if r.get("roc_auc") is not None else float("nan")), default={})
+    source_family_norm16 = next((r for r in source_family_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_family") == "norm_heterogeneity" and r.get("method") == "source_mean_resid_4"), {})
+    source_family_contrast16 = next((r for r in source_family_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_family") == "particle_vs_context" and r.get("method") == "source_mean_resid_4"), {})
+    source_family_embed16 = next((r for r in source_family_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_family") == "video_embedding" and r.get("method") == "raw"), {})
+    source_family_best8 = max([r for r in source_family_metrics if r.get("target") == "future_any_drop_within_8cycles"], key=lambda r: (float(r.get("roc_auc") or float("nan")) if r.get("roc_auc") is not None else float("nan")), default={})
     balanced_future_top_acq_resid = balanced_future_acq_resid[0] if balanced_future_acq_resid else {}
     temporal_future8 = (first_summary(temporal_directionality, "best_future8_model", []) or [{}])[0]
     temporal_past8 = (first_summary(temporal_directionality, "best_past8_model", []) or [{}])[0]
@@ -701,6 +710,7 @@ def main() -> None:
         f"- Source-domain video/echem adaptation partially rescues leave-source future16 transfer: source-centered video_plus_echem reaches AUC {fmt(source_domain_centered.get('roc_auc'))} versus acquisition-only {fmt(source_domain_acq.get('roc_auc'))}, while CORAL reaches only {fmt(source_domain_coral.get('roc_auc'))}.",
         f"- Source-balanced transfer audit shows source-rank/weighting only modestly lifts video+echem future16 AUC to {fmt(source_balanced_vpe16.get('roc_auc'))} versus raw video+echem {fmt(source_balanced_raw16.get('roc_auc'))}, below acquisition context {fmt(source_balanced_acq16.get('roc_auc'))} and echem source-rank {fmt(source_balanced_echem16.get('roc_auc'))}; source label composition remains the dominant guardrail.",
         f"- Source-invariant projection is more promising but still guarded: best video_plus_echem future16 is {source_invariant_best_vpe16.get('method', 'NA')} at AUC {fmt(source_invariant_best_vpe16.get('roc_auc'))} versus raw {fmt(source_invariant_raw16.get('roc_auc'))} and acquisition context {fmt(source_invariant_acq16.get('roc_auc'))}; video-only source-confound filtering reaches AUC {fmt(source_invariant_best_video16.get('roc_auc'))}.",
+        f"- Source-invariant physical-family audit localizes the future16 rescue to normalized heterogeneity and particle-vs-context contrast: norm-heterogeneity source_mean_resid_4 reaches AUC {fmt(source_family_norm16.get('roc_auc'))}, contrast source_mean_resid_4 reaches {fmt(source_family_contrast16.get('roc_auc'))}, while raw embedding alone is {fmt(source_family_embed16.get('roc_auc'))}.",
         f"- Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as {first_summary(agentic_current, 'top_hypothesis', {}).get('title', 'NA')} with score {fmt(first_summary(agentic_current, 'top_hypothesis', {}).get('tournament_score'))}.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
         f"- Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with {temporal_future8.get('model', 'NA')} AUC {fmt(temporal_future8.get('pooled_oof_roc_auc'))}/AP {fmt(temporal_future8.get('pooled_oof_average_precision'))}, beating circular time-shift labels at empirical p={fmt(temporal_shift_null.get('empirical_p_ge_observed'))}; reversed labels remain nontrivial (best AUC {fmt(temporal_reversed8.get('pooled_oof_roc_auc'))}) and past8 is underpowered with {temporal_past8_counts.get('1', 0)} positives.",
@@ -1738,6 +1748,28 @@ def main() -> None:
         )
     report_lines.append(f"- Guardrail: {first_summary(source_invariant_video_echem, 'guardrail', 'Source-invariant video/echem transfer audit unavailable.')}")
 
+
+    report_lines += [
+        "",
+        "## Source-Invariant Physical Family Audit",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_invariant_family, 'n_rows', 0)} / {first_summary(source_invariant_family, 'n_cycles', 0)} / {first_summary(source_invariant_family, 'n_sources', 0)}",
+        f"- Feature family sizes: {first_summary(source_invariant_family, 'feature_family_sizes', {})}",
+        f"- Best future16 family/method: {source_family_best16.get('feature_family', 'NA')} {source_family_best16.get('method', 'NA')} AUC {fmt(source_family_best16.get('roc_auc'))}, AP {fmt(source_family_best16.get('average_precision'))}, p={fmt(source_family_best16.get('empirical_p_ge_observed'))}",
+        f"- Norm heterogeneity source_mean_resid_4: AUC {fmt(source_family_norm16.get('roc_auc'))}, AP {fmt(source_family_norm16.get('average_precision'))}, p={fmt(source_family_norm16.get('empirical_p_ge_observed'))}",
+        f"- Particle-vs-context source_mean_resid_4: AUC {fmt(source_family_contrast16.get('roc_auc'))}, AP {fmt(source_family_contrast16.get('average_precision'))}, p={fmt(source_family_contrast16.get('empirical_p_ge_observed'))}",
+        f"- Raw video embedding future16: AUC {fmt(source_family_embed16.get('roc_auc'))}, AP {fmt(source_family_embed16.get('average_precision'))}; best future8 family/method {source_family_best8.get('feature_family', 'NA')} {source_family_best8.get('method', 'NA')} AUC {fmt(source_family_best8.get('roc_auc'))}",
+    ]
+    for row in source_family_deltas[:8]:
+        report_lines.append(
+            f"- Family delta {row.get('target')} {row.get('comparison')}: delta AUC {fmt(row.get('delta_roc_auc'))}, delta AP {fmt(row.get('delta_average_precision'))}, delta rho {fmt(row.get('delta_spearman_rho'))}"
+        )
+    for row in source_family_confounds[:8]:
+        report_lines.append(
+            f"- Source-confounded feature {row.get('feature_family')} {row.get('feature')}: eta2 {fmt(row.get('source_eta2'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_invariant_family, 'guardrail', 'Source-invariant physical family audit unavailable.')}")
+
     report_lines += [
         "",
         "## Agentic Current Hypothesis Tournament",
@@ -2433,6 +2465,17 @@ def main() -> None:
             "top_deltas": source_invariant_deltas,
             "source_summary": source_invariant_sources,
             "guardrail": first_summary(source_invariant_video_echem, "guardrail"),
+        },
+        "source_invariant_physical_family_audit": {
+            "n_rows": first_summary(source_invariant_family, "n_rows"),
+            "n_cycles": first_summary(source_invariant_family, "n_cycles"),
+            "n_sources": first_summary(source_invariant_family, "n_sources"),
+            "methods": first_summary(source_invariant_family, "methods", []),
+            "feature_family_sizes": first_summary(source_invariant_family, "feature_family_sizes", {}),
+            "top_metrics": source_family_metrics,
+            "top_deltas": source_family_deltas,
+            "top_source_confounded_features": source_family_confounds,
+            "guardrail": first_summary(source_invariant_family, "guardrail"),
         },
         "agentic_current_hypothesis_tournament": {
             "n_hypotheses": first_summary(agentic_current, "n_hypotheses"),

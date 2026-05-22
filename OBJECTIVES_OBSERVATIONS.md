@@ -2749,3 +2749,26 @@ Key result:
 
 Interpretation: source-invariant projection is the best source-transfer rescue so far for particle-region video/echem features, especially for future16 and video-only descriptors. It still does not clear the warning-model guardrail because acquisition context remains competitive and source/outcome composition is severely entangled. The result supports pursuing explicit domain-invariant video representations and manual-QC-gated targets, not deployable weak-label source transfer.
 
+## 2026-05-22 Source-Invariant Physical Family Audit
+
+Added `scripts/tier4_source_invariant_physical_family_audit.py` and ran it on Isambard to decompose the source-invariant future16 rescue into particle-region physical feature families. The audit evaluates leave-source weak future labels for particle intensity, particle-vs-context contrast, particle gradients, normalized heterogeneity, video embedding PCs, handcrafted particle descriptors, and all video features under raw, source-mean residualized, and source-confound filtered variants.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_physical_family_audit`
+
+Local compact copy:
+
+`derived_local/source_invariant_physical_family_audit`
+
+Key result:
+
+- The audit covers 172 ROI rows, 34 cycles, and 12 source movies, using 72 leave-source evaluation rows over 24 cycles and 9 sources.
+- For future16, normalized heterogeneity is the strongest interpretable family after source-mean projection: `norm_heterogeneity` with `source_mean_resid_4` reaches AUC 0.738/AP 0.917/p=0.002, a +0.433 AUC gain over its raw family readout.
+- Particle-vs-context contrast is the next strongest interpretable family: `particle_vs_context` with `source_mean_resid_4` reaches AUC 0.703/AP 0.903/p=0.010.
+- The best all-video family result remains `all_video` with source-confound filtering at AUC 0.770/AP 0.919/p=0.002, but the family decomposition shows that normalized heterogeneity and contrast carry most of the interpretable future16 signal.
+- Raw self-supervised video embedding alone is weak for future16 (AUC 0.462/AP 0.753), so the current source-invariant rescue is not just opaque embedding capacity.
+- Source-confounded features are dominated by derivative-like intensity/gradient descriptors, especially `particle_gradient_diff_abs_mean` (eta2 0.811), `particle_gradient_std` (eta2 0.789), and particle intensity diff quantiles (eta2 about 0.67).
+
+Interpretation: the source-transfer rescue now has a more physical handle. The future16 particle-region signal that survives source-mean removal is concentrated in normalized heterogeneity and particle-vs-context contrast, consistent with degradation-mode/phase-front texture changes rather than raw brightness drift alone. It remains a review-prioritization result under weak labels and automatic masks, not a calibrated mechanism or warning model.
+

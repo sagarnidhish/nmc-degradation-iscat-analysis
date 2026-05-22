@@ -118,6 +118,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Source-domain video/echem adaptation partially rescues leave-source future16 transfer: source-centered video_plus_echem reaches AUC 0.737 versus acquisition-only 0.697, while CORAL reaches only 0.420.
 - Source-balanced transfer audit shows source-rank/weighting only modestly lifts video+echem future16 AUC to 0.614 versus raw video+echem 0.594, below acquisition context 0.704 and echem source-rank 0.642; source label composition remains the dominant guardrail.
 - Source-invariant projection is more promising but still guarded: best video_plus_echem future16 is source_mean_resid_4 at AUC 0.729 versus raw 0.612 and acquisition context 0.745; video-only source-confound filtering reaches AUC 0.770.
+- Source-invariant physical-family audit localizes the future16 rescue to normalized heterogeneity and particle-vs-context contrast: norm-heterogeneity source_mean_resid_4 reaches AUC 0.738, contrast source_mean_resid_4 reaches 0.703, while raw embedding alone is 0.462.
 - Current-evidence agentic hypothesis tournament ranks the next paper-inspired experiment as Echem-conditioned video residuals are the best longer-horizon weak-label signal with score 0.598.
 - Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC 0.851), while selection-design context is perfect by construction (AUC 1.000); after acquisition-context residualization, the top physics residual is radius2_slope_median_px2_per_s with p=0.447. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.
 - Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with logistic_l2 AUC 0.799/AP 0.793, beating circular time-shift labels at empirical p=0.042; reversed labels remain nontrivial (best AUC 0.750) and past8 is underpowered with 3 positives.
@@ -1297,6 +1298,32 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source 12_c2_x10_070723: rows/cycles 6/2, future16 fraction 1.000, mean video/echem z-shift 0.344
 - Source 18_c2_xN_HighHighCOV_170723: rows/cycles 21/3, future16 fraction 0.000, mean video/echem z-shift 0.449
 - Guardrail: Source-invariant projections and source-confound filters are trained without held-out source labels, but labels remain source-composition imbalanced. These results test robustness for review prioritization only; they do not validate source-transferable warning, causal degradation mechanisms, manual QC labels, or calibrated diffusion.
+
+## Source-Invariant Physical Family Audit
+
+- Rows/cycles/sources: 172 / 34 / 12
+- Feature family sizes: {'all_video': 64, 'handcrafted_particle': 48, 'norm_heterogeneity': 8, 'particle_gradient': 10, 'particle_intensity': 20, 'particle_vs_context': 10, 'video_embedding': 16}
+- Best future16 family/method: all_video source_confound_filter_0.50 AUC 0.770, AP 0.919, p=0.002
+- Norm heterogeneity source_mean_resid_4: AUC 0.738, AP 0.917, p=0.002
+- Particle-vs-context source_mean_resid_4: AUC 0.703, AP 0.903, p=0.010
+- Raw video embedding future16: AUC 0.462, AP 0.753; best future8 family/method all_video source_mean_resid_2 AUC 0.846
+- Family delta future_any_drop_within_16cycles norm_heterogeneity_source_mean_resid_4_minus_same_raw: delta AUC 0.433, delta AP 0.244, delta rho 0.609
+- Family delta future_any_drop_within_16cycles particle_gradient_source_confound_filter_0.50_minus_same_raw: delta AUC 0.407, delta AP 0.164, delta rho 0.573
+- Family delta future_any_drop_within_16cycles norm_heterogeneity_source_mean_resid_2_minus_same_raw: delta AUC 0.329, delta AP 0.169, delta rho 0.462
+- Family delta future_any_drop_within_16cycles particle_vs_context_source_mean_resid_4_minus_same_raw: delta AUC 0.289, delta AP 0.158, delta rho 0.406
+- Family delta future_any_drop_within_16cycles all_video_source_confound_filter_0.50_minus_same_raw: delta AUC 0.281, delta AP 0.104, delta rho 0.395
+- Family delta future_any_drop_within_16cycles norm_heterogeneity_source_mean_resid_4_minus_all_video_raw: delta AUC 0.249, delta AP 0.103, delta rho 0.351
+- Family delta future_any_drop_within_16cycles all_video_source_mean_resid_2_minus_same_raw: delta AUC 0.240, delta AP 0.107, delta rho 0.337
+- Family delta future_any_drop_within_16cycles particle_vs_context_source_mean_resid_2_minus_same_raw: delta AUC 0.239, delta AP 0.147, delta rho 0.336
+- Source-confounded feature all_video particle_norm_mean: eta2 0.932
+- Source-confounded feature handcrafted_particle particle_norm_mean: eta2 0.932
+- Source-confounded feature norm_heterogeneity particle_norm_mean: eta2 0.932
+- Source-confounded feature handcrafted_particle particle_norm_max: eta2 0.874
+- Source-confounded feature all_video particle_norm_max: eta2 0.874
+- Source-confounded feature norm_heterogeneity particle_norm_max: eta2 0.874
+- Source-confounded feature all_video particle_norm_min: eta2 0.840
+- Source-confounded feature handcrafted_particle particle_norm_min: eta2 0.840
+- Guardrail: Physical family readouts use automatic particle-region descriptors and weak future labels under leave-source splits. They identify candidate physics families for review prioritization only; source/outcome imbalance, automatic masks, missing manual QC, and uncalibrated optical-front diffusion remain guardrails.
 
 ## Agentic Current Hypothesis Tournament
 
