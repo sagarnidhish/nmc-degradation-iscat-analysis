@@ -154,6 +154,7 @@ def main() -> None:
     residual_dictionary_embedding = read_json(derived / "residual_dictionary_embedding_audit" / "residual_dictionary_embedding_summary.json")
     echem_residual_dictionary_fusion = read_json(derived / "echem_residual_dictionary_fusion_audit" / "echem_residual_dictionary_summary.json")
     echem_conditioned_residual_dictionary = read_json(derived / "echem_conditioned_residual_dictionary" / "echem_conditioned_residual_dictionary_summary.json")
+    conditioned_residual_physics_atlas = read_json(derived / "conditioned_residual_physics_atlas" / "conditioned_residual_physics_atlas_summary.json")
     acquisition_residualized_video = read_json(derived / "acquisition_residualized_video_physics_benchmark" / "acquisition_residualized_summary.json")
     acquisition_residualized_video_echem = read_json(derived / "acquisition_residualized_video_echem_warning" / "acquisition_residualized_video_echem_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
@@ -440,6 +441,12 @@ def main() -> None:
     echem_cond_resdict_ls16_plus = next((r for r in echem_cond_resdict_metrics if r.get("split") == "leave_source" and r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "conditioned_residual_plus_echem_context"), {})
     echem_cond_resdict_raw_ls16 = next((r for r in echem_cond_resdict_metrics if r.get("split") == "leave_source" and r.get("target") == "future_any_drop_within_16cycles" and r.get("feature_set") == "residual_dictionary_raw"), {})
     echem_cond_resdict_delta_ls16 = next((r for r in echem_cond_resdict_deltas if r.get("split") == "leave_source" and r.get("target") == "future_any_drop_within_16cycles" and r.get("comparison") == "conditioned_residual_dictionary_minus_residual_dictionary_raw"), {})
+    cond_atlas_align = top_items(first_summary(conditioned_residual_physics_atlas, "top_interpretable_source_centered_alignments", []), 30)
+    cond_atlas_targets = top_items(first_summary(conditioned_residual_physics_atlas, "top_target_tests", []), 30)
+    cond_atlas_modes = top_items(first_summary(conditioned_residual_physics_atlas, "top_modes", []), 30)
+    cond_atlas_categories = top_items(first_summary(conditioned_residual_physics_atlas, "category_summary", []), 20)
+    cond_atlas_top_align = cond_atlas_align[0] if cond_atlas_align else {}
+    cond_atlas_top_target = cond_atlas_targets[0] if cond_atlas_targets else {}
     acq_resid_metrics = top_items(first_summary(acquisition_residualized_video, "top_metrics", []), 40)
     acq_resid_deltas = top_items(first_summary(acquisition_residualized_video, "top_feature_set_deltas", []), 14)
     acq_resid_tests = top_items(first_summary(acquisition_residualized_video, "top_context_residual_feature_tests", []), 12)
@@ -804,6 +811,7 @@ def main() -> None:
         f"- Residual dictionary embedding learns label-free next-frame residual bases over {first_summary(residual_dictionary_embedding, 'n_embedding_rows', 0)} ROI videos; residual-dictionary future8 AUC is {fmt(residual_dict_future8.get('roc_auc'))} with p={fmt(residual_dict_future8.get('empirical_p_ge_observed'))}, and residual_dictionary_plus_handcrafted reaches AUC {fmt(residual_dict_plus_future8.get('roc_auc'))}.",
         f"- Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to {fmt(echem_resdict_res_future8.get('roc_auc'))}, while acquisition/context alone reaches {fmt(echem_resdict_acq_future8.get('roc_auc'))}; treat this as context-sensitive representation evidence rather than deployable warning.",
         f"- Echem-conditioned residual-dictionary audit converts post-hoc fusion into a split-specific residual objective: conditioned residual dictionary future16 reaches leave-source AUC {fmt(echem_cond_resdict_ls16.get('roc_auc'))} versus raw residual dictionary {fmt(echem_cond_resdict_raw_ls16.get('roc_auc'))} (delta {fmt(echem_cond_resdict_delta_ls16.get('delta_roc_auc'))}), while leave-cycle conditioned residual+echem reaches AUC {fmt(echem_cond_resdict_lc16_plus.get('roc_auc'))}; future8 remains context dominated.",
+        f"- Conditioned residual physics atlas makes that objective interpretable: top source-centered physics alignment is {cond_atlas_top_align.get('split', 'NA')} {cond_atlas_top_align.get('residual_base', 'NA')} to {cond_atlas_top_align.get('physics_feature', 'NA')} ({cond_atlas_top_align.get('physics_category', 'NA')}) with rho {fmt(cond_atlas_top_align.get('source_centered_rho'))}; top single residual future16 mode is {cond_atlas_top_target.get('residual_base', 'NA')} at AUC {fmt(cond_atlas_top_target.get('oriented_auc'))}/AP {fmt(cond_atlas_top_target.get('average_precision'))}.",
         f"- Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC {fmt(acq_resid_context8.get('roc_auc'))}, raw all-video reaches {fmt(acq_resid_raw_video8.get('roc_auc'))}, and context-residualized all-video alone reaches {fmt(acq_resid_video_only8.get('roc_auc'))}; future16 raw handcrafted reaches AUC {fmt(acq_resid_raw_hand16.get('roc_auc'))} but residualized all-video alone is {fmt(acq_resid_video_only16.get('roc_auc'))}.",
         f"- Acquisition-residualized video/echem warning audit executes the top tournament experiment: leave-cycle future16 residualized video_plus_echem reaches AUC {fmt(acq_echem_cycle_future16.get('roc_auc'))} versus acquisition-only {fmt(acq_echem_cycle_acq_future16.get('roc_auc'))}, but leave-source residualized AUC falls to {fmt(acq_echem_source_future16.get('roc_auc'))} versus acquisition-only {fmt(acq_echem_source_acq_future16.get('roc_auc'))}.",
         f"- Source-domain video/echem adaptation partially rescues leave-source future16 transfer: source-centered video_plus_echem reaches AUC {fmt(source_domain_centered.get('roc_auc'))} versus acquisition-only {fmt(source_domain_acq.get('roc_auc'))}, while CORAL reaches only {fmt(source_domain_coral.get('roc_auc'))}.",
@@ -1828,6 +1836,28 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Conditioned Residual Physics Atlas",
+        "",
+        f"- Rows/cycles/sources: {first_summary(conditioned_residual_physics_atlas, 'n_rows', 0)} / {first_summary(conditioned_residual_physics_atlas, 'n_cycles', 0)} / {first_summary(conditioned_residual_physics_atlas, 'n_sources', 0)}",
+        f"- Physics descriptor columns screened: {first_summary(conditioned_residual_physics_atlas, 'n_physics_features', 0)}",
+        f"- Conditioned residual modes per split: {first_summary(conditioned_residual_physics_atlas, 'n_conditioned_residual_modes_per_split', {})}",
+    ]
+    for row in cond_atlas_align[:10]:
+        report_lines.append(
+            f"- Source-centered atlas {row.get('split')} {row.get('residual_base')} vs {row.get('physics_feature')} ({row.get('physics_category')}): centered rho {fmt(row.get('source_centered_rho'))}, raw rho {fmt(row.get('spearman_rho'))}"
+        )
+    for row in cond_atlas_targets[:10]:
+        report_lines.append(
+            f"- Residual-mode target {row.get('split')} {row.get('target')} {row.get('residual_base')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, source eta2 {fmt(row.get('source_eta2'))}"
+        )
+    for row in cond_atlas_categories[:8]:
+        report_lines.append(
+            f"- Atlas category {row.get('split')} {row.get('physics_category')}: max centered |rho| {fmt(row.get('max_abs_source_centered_rho'))}, strong centered pairs {fmt(row.get('n_strong_centered'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(conditioned_residual_physics_atlas, 'guardrail', 'Conditioned residual physics atlas unavailable.')}")
+
+    report_lines += [
+        "",
         "## Acquisition-Residualized Video Physics Benchmark",
         "",
         f"- Rows/cycles: {first_summary(acquisition_residualized_video, 'n_rows', 0)} / {first_summary(acquisition_residualized_video, 'n_cycles', 0)}",
@@ -2763,6 +2793,19 @@ def main() -> None:
             "top_deltas": echem_cond_resdict_deltas,
             "top_context_fit_metrics": echem_cond_resdict_context,
             "guardrail": first_summary(echem_conditioned_residual_dictionary, "guardrail"),
+        },
+        "conditioned_residual_physics_atlas": {
+            "n_rows": first_summary(conditioned_residual_physics_atlas, "n_rows"),
+            "n_cycles": first_summary(conditioned_residual_physics_atlas, "n_cycles"),
+            "n_sources": first_summary(conditioned_residual_physics_atlas, "n_sources"),
+            "n_physics_features": first_summary(conditioned_residual_physics_atlas, "n_physics_features"),
+            "physics_category_counts": first_summary(conditioned_residual_physics_atlas, "physics_category_counts", {}),
+            "n_conditioned_residual_modes_per_split": first_summary(conditioned_residual_physics_atlas, "n_conditioned_residual_modes_per_split", {}),
+            "top_interpretable_source_centered_alignments": cond_atlas_align,
+            "top_target_tests": cond_atlas_targets,
+            "top_modes": cond_atlas_modes,
+            "category_summary": cond_atlas_categories,
+            "guardrail": first_summary(conditioned_residual_physics_atlas, "guardrail"),
         },
         "acquisition_residualized_video_physics_benchmark": {
             "n_rows": first_summary(acquisition_residualized_video, "n_rows"),

@@ -118,6 +118,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Residual dictionary embedding learns label-free next-frame residual bases over 172 ROI videos; residual-dictionary future8 AUC is 0.663 with p=0.005, and residual_dictionary_plus_handcrafted reaches AUC 0.771.
 - Echem residual-dictionary fusion shows conditioning boosts residual-dictionary future8 AUC to 0.917, while acquisition/context alone reaches 1.000; treat this as context-sensitive representation evidence rather than deployable warning.
 - Echem-conditioned residual-dictionary audit converts post-hoc fusion into a split-specific residual objective: conditioned residual dictionary future16 reaches leave-source AUC 0.785 versus raw residual dictionary 0.058 (delta 0.726), while leave-cycle conditioned residual+echem reaches AUC 0.834; future8 remains context dominated.
+- Conditioned residual physics atlas makes that objective interpretable: top source-centered physics alignment is leave_source resdict_pc04_mean to temporal_diffusion_proxy_median_um2_per_s (front_phase_diffusion) with rho 0.815; top single residual future16 mode is resdict_pc08_slope at AUC 0.821/AP 0.956.
 - Acquisition-residualized video benchmark confirms the context guardrail: future8 acquisition context reaches AUC 1.000, raw all-video reaches 0.756, and context-residualized all-video alone reaches 0.319; future16 raw handcrafted reaches AUC 0.796 but residualized all-video alone is 0.620.
 - Acquisition-residualized video/echem warning audit executes the top tournament experiment: leave-cycle future16 residualized video_plus_echem reaches AUC 0.697 versus acquisition-only 0.727, but leave-source residualized AUC falls to 0.512 versus acquisition-only 0.697.
 - Source-domain video/echem adaptation partially rescues leave-source future16 transfer: source-centered video_plus_echem reaches AUC 0.737 versus acquisition-only 0.697, while CORAL reaches only 0.420.
@@ -1281,6 +1282,41 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Context fit leave_cycle dictionary_recon_energy_mean: R2 -0.357, rho 0.546, residual std 2.972e-04
 - Context fit leave_cycle resdict_pc05_last_minus_first: R2 -0.542, rho 0.135, residual std 0.008
 - Guardrail: Echem-conditioned residual dictionary features are split-specific residuals from echem/acquisition predictions of label-free residual bases. They test whether video residual modes add signal beyond measured context, not deployable warning, manual QC, causal mechanism, or calibrated diffusion.
+
+## Conditioned Residual Physics Atlas
+
+- Rows/cycles/sources: 172 / 34 / 12
+- Physics descriptor columns screened: 212
+- Conditioned residual modes per split: {'leave_cycle': 39, 'leave_source': 39}
+- Source-centered atlas leave_source resdict_pc04_mean vs temporal_diffusion_proxy_median_um2_per_s (front_phase_diffusion): centered rho 0.815, raw rho 0.592
+- Source-centered atlas leave_source resdict_pc04_mean vs diffusion_proxy_median_um2_per_s (front_phase_diffusion): centered rho 0.815, raw rho 0.592
+- Source-centered atlas leave_source resdict_pc04_mean vs roi_radius2_slope_median_px2_per_s (front_phase_diffusion): centered rho 0.815, raw rho 0.592
+- Source-centered atlas leave_source resdict_pc04_mean vs temporal_radius2_slope_median_px2_per_s (front_phase_diffusion): centered rho 0.815, raw rho 0.592
+- Source-centered atlas leave_source resdict_pc04_mean vs radius2_slope_median_px2_per_s (front_phase_diffusion): centered rho 0.815, raw rho 0.592
+- Source-centered atlas leave_source resdict_pc04_last_minus_first vs q70_radius2_slope_bootstrap_p50_px2_per_s (front_phase_diffusion): centered rho -0.815, raw rho -0.559
+- Source-centered atlas leave_source resdict_pc04_last_minus_first vs temporal_diffusion_proxy_median_um2_per_s (front_phase_diffusion): centered rho -0.810, raw rho -0.576
+- Source-centered atlas leave_source resdict_pc04_last_minus_first vs diffusion_proxy_median_um2_per_s (front_phase_diffusion): centered rho -0.810, raw rho -0.576
+- Source-centered atlas leave_source resdict_pc04_last_minus_first vs roi_radius2_slope_median_px2_per_s (front_phase_diffusion): centered rho -0.810, raw rho -0.576
+- Source-centered atlas leave_source resdict_pc04_last_minus_first vs temporal_radius2_slope_median_px2_per_s (front_phase_diffusion): centered rho -0.810, raw rho -0.576
+- Residual-mode target leave_cycle future_any_drop_within_16cycles resdict_pc08_slope: AUC 0.821, AP 0.956, source eta2 0.096
+- Residual-mode target leave_cycle future_any_drop_within_16cycles resdict_pc08_last_minus_first: AUC 0.801, AP 0.951, source eta2 0.075
+- Residual-mode target leave_cycle future_any_drop_within_16cycles resdict_pc04_last_minus_first: AUC 0.800, AP 0.950, source eta2 0.058
+- Residual-mode target leave_cycle future_any_drop_within_16cycles resdict_pc04_slope: AUC 0.793, AP 0.942, source eta2 0.066
+- Residual-mode target leave_cycle future_any_drop_within_16cycles resdict_pc04_mean: AUC 0.786, AP 0.930, source eta2 0.067
+- Residual-mode target leave_cycle future_any_drop_within_16cycles resdict_pc07_mean: AUC 0.743, AP 0.895, source eta2 0.252
+- Residual-mode target leave_cycle future_any_drop_within_16cycles resdict_pc06_last_minus_first: AUC 0.742, AP 0.919, source eta2 0.092
+- Residual-mode target leave_cycle future_any_drop_within_16cycles resdict_pc01_last_minus_first: AUC 0.713, AP 0.924, source eta2 0.044
+- Residual-mode target leave_cycle future_any_drop_within_16cycles resdict_pc06_slope: AUC 0.706, AP 0.911, source eta2 0.071
+- Residual-mode target leave_cycle future_any_drop_within_16cycles resdict_pc07_last_minus_first: AUC 0.701, AP 0.917, source eta2 0.072
+- Atlas category leave_cycle echem_state: max centered |rho| 0.764, strong centered pairs 1489
+- Atlas category leave_cycle degradation_trace: max centered |rho| 0.676, strong centered pairs 71
+- Atlas category leave_cycle rollout_prediction: max centered |rho| 0.589, strong centered pairs 70
+- Atlas category leave_cycle front_phase_diffusion: max centered |rho| 0.500, strong centered pairs 70
+- Atlas category leave_cycle particle_optical: max centered |rho| 0.440, strong centered pairs 67
+- Atlas category leave_cycle mask_qc: max centered |rho| 0.428, strong centered pairs 40
+- Atlas category leave_source front_phase_diffusion: max centered |rho| 0.815, strong centered pairs 315
+- Atlas category leave_source echem_state: max centered |rho| 0.769, strong centered pairs 1296
+- Guardrail: Conditioned residual modes are split-specific, label-free video residual features; source-centered correlations reduce source/acquisition confounding but do not prove causal physics, calibrated diffusion, or deployable warning performance.
 
 ## Acquisition-Residualized Video Physics Benchmark
 

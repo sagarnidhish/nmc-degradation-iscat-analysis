@@ -3004,3 +3004,23 @@ Key result:
 - The selected cycle set includes 24 future16-positive cycles and 14 future8-positive cycles, plus source representatives and future16-negative controls. Source coverage spans early normal-COV movies, HighCOV movies, and HighHighCOV movies.
 
 Interpretation: this directly addresses the cohort-breadth bottleneck in the current video/physics analyses. It does not claim validated particles, fronts, diffusion, or degradation mechanisms; it creates a source-balanced expansion manifest for follow-up ROI sequence export, mask/front QC, and source-transfer tests on a broader direct-video cohort.
+## 2026-05-22 Conditioned Residual Physics Atlas
+
+Added and ran:
+
+`scripts/tier4_conditioned_residual_physics_atlas.py`
+
+Output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/conditioned_residual_physics_atlas`
+- `derived_local/conditioned_residual_physics_atlas`
+
+Key result:
+
+- The atlas maps 39 split-specific conditioned residual modes per split against 212 interpretable descriptor columns across 172 ROI rows, 34 cycles, and 12 sources.
+- The strongest non-degradation source-centered physics alignment is leave-source `resdict_pc04_mean` versus temporal/diffusion-radius proxies: `temporal_diffusion_proxy_median_um2_per_s` rho 0.815 after source centering, with raw rho 0.592. `resdict_pc04_last_minus_first` shows the opposite-sign radius/diffusion alignment around rho -0.815.
+- Category-level source-centered support is broad: leave-source front/phase/diffusion max |rho| 0.815 with 315 strong centered pairs; echem-state max |rho| 0.769 with 1296 strong pairs; rollout-prediction max |rho| 0.767 with 242 strong pairs.
+- Individual conditioned modes are predictive for future16 without using the full classifier: leave-cycle `resdict_pc08_slope` reaches AUC 0.821/AP 0.956; `resdict_pc08_last_minus_first` reaches AUC 0.801/AP 0.951; `resdict_pc04_last_minus_first` reaches AUC 0.800/AP 0.950.
+- Top mode summaries connect target-predictive residuals to interpretable families: leave-source `residual_energy_mean` aligns with low-rank-DMD particle reconstruction error (centered rho 0.659), and leave-source `resdict_pc04_mean` aligns with apparent diffusion/front-radius motion (centered rho 0.815).
+
+Interpretation: the conditioned residual objective is not just a black-box weak-label predictor. Several residual bases line up, after source centering, with apparent phase/front/diffusion motion, rollout reconstruction difficulty, and echem-regime structure. These are still optical proxies and split-specific residual features, so they support physics triage and model-objective design rather than calibrated diffusion coefficients or causal mechanism claims.
