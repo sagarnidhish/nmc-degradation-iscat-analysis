@@ -289,7 +289,7 @@ def cohort_role_from_row(row: pd.Series) -> str:
     if "control" in label:
         return "control"
     role = str(row.get("cohort_role", "")).lower()
-    if role in {"event", "control"}:
+    if role in {"event", "control", "future8_positive", "future8_negative"}:
         return role
     return ""
 
@@ -316,6 +316,35 @@ def event_control_tests(df: pd.DataFrame) -> pd.DataFrame:
         control = df[df["cohort_role"] == "control"][feature]
         row = safe_mwu(event, control)
         row.update({"feature": feature, "contrast": "event_minus_control"})
+        rows.append(row)
+    return pd.DataFrame(rows).sort_values("p_value", na_position="last")
+
+
+def future_label_tests(df: pd.DataFrame) -> pd.DataFrame:
+    features = [
+        "fallback_frame_fraction",
+        "low_area_fraction",
+        "high_area_fraction",
+        "fragmented_fraction",
+        "centroid_jump_fraction",
+        "candidate_area_cv",
+        "accepted_area_cv",
+        "accepted_area_fraction_iqr",
+        "accepted_centroid_path_px",
+        "accepted_centroid_max_step_px",
+        "mask_instability_score",
+    ]
+    if "future_any_drop_within_8cycles" not in df.columns:
+        return pd.DataFrame()
+    y = pd.to_numeric(df["future_any_drop_within_8cycles"], errors="coerce")
+    rows = []
+    for feature in features:
+        if feature not in df.columns:
+            continue
+        positive = df.loc[y == 1, feature]
+        negative = df.loc[y == 0, feature]
+        row = safe_mwu(positive, negative)
+        row.update({"feature": feature, "contrast": "future8_positive_minus_negative"})
         rows.append(row)
     return pd.DataFrame(rows).sort_values("p_value", na_position="last")
 
@@ -389,6 +418,9 @@ def main() -> None:
             "cycleNo": finite_float(row.get("cycleNo")),
             "cohort_role": cohort_role_from_row(row),
             "event_reference_cycle": finite_float(row.get("event_reference_cycle"), finite_float(row.get("cycleNo")) if cohort_role_from_row(row) == "event" else np.nan),
+            "future_any_drop_within_8cycles": finite_float(row.get("future_any_drop_within_8cycles")),
+            "future_any_drop_within_16cycles": finite_float(row.get("future_any_drop_within_16cycles")),
+            "any_abrupt_drop": finite_float(row.get("any_abrupt_drop")),
             "n_frames": int(frames.shape[0]),
             "height": int(frames.shape[1]),
             "width": int(frames.shape[2]),
@@ -405,11 +437,13 @@ def main() -> None:
     per_roi = add_optional_tables(per_roi, Path(args.mobility), Path(args.rollout_calibration))
     frame_summary = pd.concat(frame_rows, ignore_index=True) if frame_rows else pd.DataFrame()
     tests = event_control_tests(per_roi)
+    future_tests = future_label_tests(per_roi)
     corr = correlation_table(per_roi)
 
     per_roi.to_csv(out_dir / "particle_mask_stability_per_roi.csv", index=False)
     frame_summary.to_csv(out_dir / "particle_mask_stability_frame_summary.csv", index=False)
     tests.to_csv(out_dir / "particle_mask_stability_event_control_tests.csv", index=False)
+    future_tests.to_csv(out_dir / "particle_mask_stability_future_label_tests.csv", index=False)
     corr.to_csv(out_dir / "particle_mask_stability_correlations.csv", index=False)
 
     role_summary = (
@@ -442,6 +476,7 @@ def main() -> None:
         },
         "role_summary": role_summary.to_dict("records"),
         "top_event_control_tests": tests.head(12).to_dict("records"),
+        "top_future_label_tests": future_tests.head(12).to_dict("records") if not future_tests.empty else [],
         "top_correlations": corr.head(12).to_dict("records") if not corr.empty else [],
         "highest_instability_rois": per_roi.sort_values("mask_instability_score", ascending=False).head(12).to_dict("records"),
     }

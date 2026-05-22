@@ -1,0 +1,12 @@
+n_event,n_control,median_event,median_control,median_diff_event_minus_control,p_value,feature,contrast
+36,36,9.720734945744915,7.567342807311849,2.153392138433066,0.17474756355189647,accepted_centroid_max_step_px,future8_positive_minus_negative
+36,36,0.07785297724433327,0.07014676858327966,0.007706208661053607,0.2483424898920782,accepted_area_cv,future8_positive_minus_negative
+36,36,135.94103030938612,132.55635556011174,3.3846747492743816,0.3951567225679119,accepted_centroid_path_px,future8_positive_minus_negative
+36,36,0.07785297724433327,0.07314555436449852,0.0047074228798347495,0.4142050768961312,candidate_area_cv,future8_positive_minus_negative
+36,36,1.5007457893873566,1.4676753658649946,0.033070423522362,0.4607089457976392,mask_instability_score,future8_positive_minus_negative
+36,36,0.0,0.0,0.0,0.5691954054635728,low_area_fraction,future8_positive_minus_negative
+36,36,0.0,0.0,0.0,0.6920182831099695,fallback_frame_fraction,future8_positive_minus_negative
+36,36,0.0,0.0,0.0,0.6920182831099695,centroid_jump_fraction,future8_positive_minus_negative
+36,36,0.015687199312246325,0.016018471944263063,-0.00033127263201673807,0.9058663716009356,accepted_area_fraction_iqr,future8_positive_minus_negative
+36,36,0.0,0.0,0.0,1.0,high_area_fraction,future8_positive_minus_negative
+36,36,0.0,0.0,0.0,1.0,fragmented_fraction,future8_positive_minus_negative

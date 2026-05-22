@@ -3968,6 +3968,116 @@
     "n_roi": 72,
     "n_roi_rows": 72,
     "n_roi_sequences": 72,
+    "particle_mask_stability": {
+      "n_frames_total": 6912,
+      "n_roi": 72,
+      "overall": {
+        "median_accepted_area_cv": 0.07390347879875156,
+        "median_centroid_path_px": 133.39177039942166,
+        "median_fallback_frame_fraction": 0.0,
+        "median_mask_instability_score": 1.4906788486948246
+      },
+      "role_summary": [
+        {
+          "accepted_area_cv": 0.07014676858327966,
+          "accepted_centroid_path_px": 132.55635556011174,
+          "cohort_role": "future8_negative",
+          "fallback_frame_fraction": 0.0,
+          "mask_instability_score": 1.4676753658649946,
+          "n_roi": 36
+        },
+        {
+          "accepted_area_cv": 0.07785297724433327,
+          "accepted_centroid_path_px": 135.94103030938612,
+          "cohort_role": "future8_positive",
+          "fallback_frame_fraction": 0.0,
+          "mask_instability_score": 1.5007457893873566,
+          "n_roi": 36
+        }
+      ],
+      "top_future_label_tests": [
+        {
+          "contrast": "future8_positive_minus_negative",
+          "feature": "accepted_centroid_max_step_px",
+          "median_control": 7.567342807311849,
+          "median_diff_event_minus_control": 2.153392138433066,
+          "median_event": 9.720734945744915,
+          "n_control": 36,
+          "n_event": 36,
+          "p_value": 0.17474756355189647
+        },
+        {
+          "contrast": "future8_positive_minus_negative",
+          "feature": "accepted_area_cv",
+          "median_control": 0.07014676858327966,
+          "median_diff_event_minus_control": 0.007706208661053607,
+          "median_event": 0.07785297724433327,
+          "n_control": 36,
+          "n_event": 36,
+          "p_value": 0.2483424898920782
+        },
+        {
+          "contrast": "future8_positive_minus_negative",
+          "feature": "accepted_centroid_path_px",
+          "median_control": 132.55635556011174,
+          "median_diff_event_minus_control": 3.3846747492743816,
+          "median_event": 135.94103030938612,
+          "n_control": 36,
+          "n_event": 36,
+          "p_value": 0.3951567225679119
+        },
+        {
+          "contrast": "future8_positive_minus_negative",
+          "feature": "candidate_area_cv",
+          "median_control": 0.07314555436449852,
+          "median_diff_event_minus_control": 0.0047074228798347495,
+          "median_event": 0.07785297724433327,
+          "n_control": 36,
+          "n_event": 36,
+          "p_value": 0.4142050768961312
+        },
+        {
+          "contrast": "future8_positive_minus_negative",
+          "feature": "mask_instability_score",
+          "median_control": 1.4676753658649946,
+          "median_diff_event_minus_control": 0.033070423522362,
+          "median_event": 1.5007457893873566,
+          "n_control": 36,
+          "n_event": 36,
+          "p_value": 0.4607089457976392
+        },
+        {
+          "contrast": "future8_positive_minus_negative",
+          "feature": "low_area_fraction",
+          "median_control": 0.0,
+          "median_diff_event_minus_control": 0.0,
+          "median_event": 0.0,
+          "n_control": 36,
+          "n_event": 36,
+          "p_value": 0.5691954054635728
+        },
+        {
+          "contrast": "future8_positive_minus_negative",
+          "feature": "fallback_frame_fraction",
+          "median_control": 0.0,
+          "median_diff_event_minus_control": 0.0,
+          "median_event": 0.0,
+          "n_control": 36,
+          "n_event": 36,
+          "p_value": 0.6920182831099695
+        },
+        {
+          "contrast": "future8_positive_minus_negative",
+          "feature": "centroid_jump_fraction",
+          "median_control": 0.0,
+          "median_diff_event_minus_control": 0.0,
+          "median_event": 0.0,
+          "n_control": 36,
+          "n_event": 36,
+          "p_value": 0.6920182831099695
+        }
+      ]
+    },
     "permutation_null": {
       "empirical_p_ge_observed": 0.04878048780487805,
       "group_col": "cycleNo",

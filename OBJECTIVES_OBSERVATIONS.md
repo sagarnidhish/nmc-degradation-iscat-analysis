@@ -1750,7 +1750,7 @@ Interpretation: the cycle-level early-warning signal is not only an artifact of 
 
 Command:
 
-`python scripts/tier4_cycle_state_roi_bridge.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge --n-permutation 2000`
+`python scripts/tier4_cycle_state_roi_bridge.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge --n-permutation 4000`
 
 Remote output:
 
@@ -2006,7 +2006,7 @@ Interpretation: this addresses the direct masked-rollout future-warning underpow
 
 Added and ran:
 
-`scripts/tier4_cycle_hazard_warning_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_hazard_warning_audit --n-permutation 20`
+`scripts/tier4_cycle_hazard_warning_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_hazard_warning_audit --n-permutation 40`
 
 Remote output directory:
 
@@ -2198,11 +2198,11 @@ Added and ran a separate class-balanced direct-video ROI workflow on Isambard:
 
 `python scripts/tier2_export_selected_roi_sequences.py --root /scratch/u6hp/nsagar.u6hp/Alek_Jiho --roi-table /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_reconstruction/balanced_future_roi_table.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences --crop-size-full 192 --output-size 96 --samples-per-roi 96`
 
-`python scripts/tier3_multicycle_threshold_robust_fronts.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts`
+`python scripts/tier3_multicycle_threshold_robust_fronts.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --cohort-table /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_reconstruction/balanced_future_roi_table.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts --n-bootstrap 200`
 
-`python scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --mask-stability /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_particle_mask_stability/particle_mask_stability_roi_summary.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_masked_roi_rollout_audit`
+`python scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_masked_roi_rollout_audit --rank 16 --train-fraction 0.67`
 
-`python scripts/tier4_balanced_future_roi_physics_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_physics_audit --n-permutation 20`
+`python scripts/tier4_balanced_future_roi_physics_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_physics_audit --n-permutation 40`
 
 Remote output directories:
 
@@ -2220,8 +2220,32 @@ Key result:
 - Reconstructed 24 direct-video cycles, 1,920 automatic particle-like components, and 72 ROI rows from a deliberately balanced weak future8 design: 36 positive ROI rows and 36 negative ROI rows across 12 positive and 12 negative cycles.
 - Exported 72 fixed 96-frame particle-region crop tensors for front/rollout analyses.
 - Masked rollout again picks persistence as best inside particle masks for all 72 ROIs; low-rank DMD remains a useful residual descriptor rather than a better pixel forecaster.
-- The balanced future8 physics audit uses 26 direct-video features and leave-cycle-out scoring. Logistic L2 reaches AUC=0.716 and AP=0.761; the 20-permutation cycle-label sanity null gives null mean AUC=0.481, p95=0.630, empirical p=0.0476.
-- The strongest ROI-level weak future8 features are radius2/front-motion proxies and masked rollout residual fractions: radius2 slope median and apparent diffusion-proxy median both have oriented AUC=0.717 and permutation p=0.0476; persistence and velocity particle-MSE fractions are also positive-associated.
+- The balanced future8 physics audit uses 26 direct-video features and leave-cycle-out scoring. Logistic L2 reaches AUC=0.716 and AP=0.761; the 40-permutation cycle-label sanity null gives null mean AUC=0.489, p95=0.701, empirical p=0.0488.
+- The strongest ROI-level weak future8 features are radius2/front-motion proxies and masked rollout residual fractions: radius2 slope median and apparent diffusion-proxy median both have oriented AUC=0.717 and permutation p=0.0244; persistence and velocity particle-MSE fractions are also positive-associated.
 - The reused threshold-front script's event/control summary is not meaningful for this cohort because labels are `future8_positive` / `future8_negative`, not `event` / `control`; the final balanced audit uses the explicit `future_any_drop_within_8cycles` label.
 
 Interpretation: this addresses the main class-balance weakness of the transfer-ranked video audit. Future-drop signal persists in a more balanced direct-video cohort, but the top features still include apparent optical-front proxies and automatic particle-mask residuals, so this remains weak-label physics-prioritization evidence pending manual QC and calibrated diffusion validation.
+
+## 2026-05-22 Balanced Future-Drop Particle-Mask Stability Guardrail
+
+Updated and reran the particle-mask stability audit on the balanced future-drop ROI tensors:
+
+`python scripts/tier4_particle_mask_stability_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_particle_mask_stability`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_particle_mask_stability`
+
+Local compact copy:
+
+`derived_local/balanced_future_particle_mask_stability`
+
+Key result:
+
+- Extended the mask-stability audit to preserve `future8_positive` and `future8_negative` cohort roles and to emit direct future8-positive/minus-negative mask-stability tests.
+- The refreshed balanced sequence manifest now carries weak future8 labels and transferred warning scores alongside the ROI tensor paths.
+- The audit covers 72 balanced ROI tensors and 6,912 frames.
+- Median fallback fraction is 0.0 in both weak future8 classes; median accepted-area CV is 0.0779 for positives versus 0.0701 for negatives.
+- The strongest mask-stability contrast is accepted-centroid max step, positive-negative +2.15 px, Mann-Whitney p=0.175. Mask instability score is also non-significant (positive-negative +0.033, p=0.461).
+
+Interpretation: this is a useful artifact guardrail for the balanced future-drop audit. The weak future8 signal in the balanced direct-video cohort is not explained by a simple difference in mask fallback, fragmentation, or aggregate mask instability between positive and negative rows.
