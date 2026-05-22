@@ -128,6 +128,7 @@ def main() -> None:
     transfer_ranked_front_physics = read_json(derived / "transfer_ranked_front_physics_audit" / "transfer_ranked_front_physics_audit_summary.json")
     transfer_ranked_residual_timing = read_json(derived / "transfer_ranked_residual_transition_timing" / "transfer_ranked_residual_transition_timing_summary.json")
     multicohort_future_drop = read_json(derived / "multicohort_future_drop_model" / "multicohort_future_drop_model_summary.json")
+    active_learning_qc = read_json(derived / "active_learning_qc_prioritization" / "active_learning_qc_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
     diffusion_sanity = read_json(derived / "diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
     control_balanced_front_tracking = read_json(derived / "control_balanced_front_tracking" / "selected_front_roi_tracking_summary.json")
@@ -305,6 +306,10 @@ def main() -> None:
     multicohort_features = top_items(first_summary(multicohort_future_drop, "top_feature_tests", []), 12)
     multicohort_importance = top_items(first_summary(multicohort_future_drop, "top_feature_importance", []), 12)
     multicohort_leave = top_items(first_summary(multicohort_future_drop, "leave_cohort_eval", []), 8)
+    active_qc_top = top_items(first_summary(active_learning_qc, "top_priority_rows", []), 12)
+    active_qc_cycles = top_items(first_summary(active_learning_qc, "top_cycles", []), 12)
+    active_qc_reasons = top_items(first_summary(active_learning_qc, "reason_counts", []), 12)
+    active_qc_tiers = first_summary(active_learning_qc, "tier_counts", {}) or {}
     multicohort_best_oof = max(multicohort_oof, key=lambda r: (float(r.get("pooled_oof_roc_auc") or float("nan")) if r.get("pooled_oof_roc_auc") is not None else float("nan"))) if multicohort_oof else {}
     cross_cohort_shift = top_items(first_summary(cross_cohort_rollout, "domain_shift", []), 12)
     cross_cohort_corr = top_items(first_summary(cross_cohort_rollout, "top_correlations", []), 12)
@@ -448,6 +453,7 @@ def main() -> None:
         f"- Transfer-ranked front physics ROI/cycles: {first_summary(transfer_ranked_front_physics, 'n_roi', 0)} / {first_summary(transfer_ranked_front_physics, 'n_cycles', 0)}",
         f"- Transfer-ranked residual transition timing ROI/method rows: {first_summary(transfer_ranked_residual_timing, 'n_roi', 0)} / {first_summary(transfer_ranked_residual_timing, 'n_roi_method_rows', 0)}",
         f"- Multi-cohort future-drop model rows/features: {first_summary(multicohort_future_drop, 'n_roi_rows', 0)} / {first_summary(multicohort_future_drop, 'n_features', 0)}",
+        f"- Active-learning QC candidates/visual/immediate: {first_summary(active_learning_qc, 'n_candidate_rows', 0)} / {first_summary(active_learning_qc, 'n_rows_with_visual_asset', 0)} / {active_qc_tiers.get('immediate_manual_qc', 0)}",
         f"- Cross-cohort rollout transfer selected/transfer ROIs: {first_summary(cross_cohort_rollout, 'n_selected_roi', 0)} / {first_summary(cross_cohort_rollout, 'n_transfer_ranked_roi', 0)}",
         f"- Diffusion sanity selected-front/publication candidates: {first_summary(diffusion_sanity, 'n_selected_front_rois', 0)} / {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
         f"- Control-balanced high-res front tracking/sanity candidates: {first_summary(control_balanced_front_tracking, 'n_tracked_rois', 0)} / {first_summary(control_balanced_diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
@@ -498,6 +504,7 @@ def main() -> None:
         f"- Transfer-ranked residual transition timing gives a stronger temporal residual/phase link than the broader event-control cohort: {((transfer_ranked_timing_align[0] if transfer_ranked_timing_align else {}).get('method', 'NA'))} {((transfer_ranked_timing_align[0] if transfer_ranked_timing_align else {}).get('distance_feature', 'NA'))} median distance {fmt((transfer_ranked_timing_align[0] if transfer_ranked_timing_align else {}).get('median_distance_to_transition'))} versus null mean {fmt((transfer_ranked_timing_align[0] if transfer_ranked_timing_align else {}).get('null_median_distance_mean'))}, p={fmt((transfer_ranked_timing_align[0] if transfer_ranked_timing_align else {}).get('empirical_p_distance_le_observed'))}; top future8 timing target is {((transfer_ranked_timing_target[0] if transfer_ranked_timing_target else {}).get('method', 'NA'))} {((transfer_ranked_timing_target[0] if transfer_ranked_timing_target else {}).get('feature', 'NA'))}, AUC {fmt((transfer_ranked_timing_target[0] if transfer_ranked_timing_target else {}).get('abs_oriented_auc'))}.",
         f"- Cross-cohort rollout transfer audit shows the late transfer-ranked crops are a distinct video-dynamics domain: selected-cohort DMD evaluated on transfer-ranked ROIs has median particle MSE {fmt(selected_to_transfer_shift.get('median_particle_mse'))}, {fmt(selected_to_transfer_shift.get('median_particle_mse_ratio_vs_internal'))}x the transfer-internal DMD baseline (p={fmt(selected_to_transfer_shift.get('mwu_p_vs_internal'))}), while pooled training is close to transfer-internal ({fmt(pooled_to_transfer_shift.get('median_particle_mse_ratio_vs_internal'))}x).",
         f"- Multi-cohort future-drop model combines selected and transfer-ranked ROI physics features across {first_summary(multicohort_future_drop, 'n_roi_rows', 0)} rows / {first_summary(multicohort_future_drop, 'n_features', 0)} features; leave-cycle random forest reaches AUC {fmt(multicohort_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(multicohort_best_oof.get('pooled_oof_average_precision'))} with {fmt(multicohort_null.get('n_permutation'), 0)}-permutation p={fmt(multicohort_null.get('empirical_p_ge_observed'))}, but leave-cohort transfer is not evaluable because the selected cohort has no positive future8 labels.",
+        f"- Active-learning QC prioritization merges manual-QC, precursor, weak-model, front, and timing evidence into {first_summary(active_learning_qc, 'n_candidate_rows', 0)} review candidates; {first_summary(active_learning_qc, 'n_rows_with_visual_asset', 0)} have visual assets and {active_qc_tiers.get('immediate_manual_qc', 0)} are immediate manual-QC picks, led by {(active_qc_top[0] if active_qc_top else {}).get('roi_id', 'NA')}. No manual labels are assigned.",
         f"- Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p={fmt((masked_residual_timing_align[0] if masked_residual_timing_align else {}).get('empirical_p_distance_le_observed'))}), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.",
         f"- Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: {first_summary(weak_label_benchmark, 'n_trainable_weak_label_rows', 0)} trainable weak rows ({first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} positive / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)} negative), and only {weak_label_leakage.get('n_usable_binary_folds', 0)} leave-reference fold is class-balanced enough for binary evaluation.",
         "",
@@ -1083,6 +1090,27 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Active-Learning QC Prioritization",
+        "",
+        f"- Candidate/visual/immediate rows: {first_summary(active_learning_qc, 'n_candidate_rows', 0)} / {first_summary(active_learning_qc, 'n_rows_with_visual_asset', 0)} / {active_qc_tiers.get('immediate_manual_qc', 0)}",
+        f"- Tier counts: {active_qc_tiers}",
+    ]
+    for row in active_qc_top[:8]:
+        report_lines.append(
+            f"- Active-QC ROI {row.get('roi_id')}: rank {fmt(row.get('active_learning_rank'), 0)}, tier {row.get('recommended_qc_tier')}, score {fmt(row.get('active_learning_qc_score'))}, cycle {fmt(row.get('cycleNo'), 0)}, tags {row.get('review_reason_tags')}, model p={fmt(row.get('model_future_drop_probability'))}"
+        )
+    for row in active_qc_cycles[:6]:
+        report_lines.append(
+            f"- Active-QC cycle {fmt(row.get('cycleNo'), 0)}: max score {fmt(row.get('max_active_learning_qc_score'))}, mean score {fmt(row.get('mean_active_learning_qc_score'))}, ROI {fmt(row.get('n_roi'), 0)}, immediate {fmt(row.get('n_immediate'), 0)}"
+        )
+    for row in active_qc_reasons[:8]:
+        report_lines.append(
+            f"- Active-QC reason {row.get('reason_tag')}: n={fmt(row.get('n_roi'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(active_learning_qc, 'guardrail', 'Active-learning QC prioritization unavailable.')}")
+
+    report_lines += [
+        "",
         "## Cross-Cohort Rollout Transfer",
         "",
         f"- ROI cohorts selected/transfer-ranked: {first_summary(cross_cohort_rollout, 'n_selected_roi', 0)} / {first_summary(cross_cohort_rollout, 'n_transfer_ranked_roi', 0)}",
@@ -1545,6 +1573,16 @@ def main() -> None:
             "top_transition_correlations": transfer_ranked_timing_transition_corr,
             "top_near_transition_residual_rois": transfer_ranked_timing_top_rois,
             "guardrail": first_summary(transfer_ranked_residual_timing, "guardrail"),
+        },
+        "active_learning_qc_prioritization": {
+            "n_candidate_rows": first_summary(active_learning_qc, "n_candidate_rows"),
+            "n_cycles": first_summary(active_learning_qc, "n_cycles"),
+            "n_rows_with_visual_asset": first_summary(active_learning_qc, "n_rows_with_visual_asset"),
+            "tier_counts": active_qc_tiers,
+            "reason_counts": active_qc_reasons,
+            "top_priority_rows": active_qc_top,
+            "top_cycles": active_qc_cycles,
+            "guardrail": first_summary(active_learning_qc, "guardrail"),
         },
         "multicohort_future_drop_model": {
             "n_roi_rows": first_summary(multicohort_future_drop, "n_roi_rows"),

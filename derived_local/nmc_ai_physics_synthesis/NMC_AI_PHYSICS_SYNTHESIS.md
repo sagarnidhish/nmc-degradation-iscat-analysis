@@ -43,6 +43,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Transfer-ranked front physics ROI/cycles: 48 / 12
 - Transfer-ranked residual transition timing ROI/method rows: 48 / 144
 - Multi-cohort future-drop model rows/features: 59 / 44
+- Active-learning QC candidates/visual/immediate: 97 / 47 / 4
 - Cross-cohort rollout transfer selected/transfer ROIs: 11 / 48
 - Diffusion sanity selected-front/publication candidates: 12 / 0
 - Control-balanced high-res front tracking/sanity candidates: 40 / 0
@@ -93,6 +94,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Transfer-ranked residual transition timing gives a stronger temporal residual/phase link than the broader event-control cohort: low_rank_dmd weighted_center_distance_to_transition_frac median distance 0.087 versus null mean 0.250, p=2.000e-04; top future8 timing target is persistence particle_to_nonparticle_mse_ratio_median, AUC 0.832.
 - Cross-cohort rollout transfer audit shows the late transfer-ranked crops are a distinct video-dynamics domain: selected-cohort DMD evaluated on transfer-ranked ROIs has median particle MSE 0.020, 3.494x the transfer-internal DMD baseline (p=3.277e-09), while pooled training is close to transfer-internal (1.061x).
 - Multi-cohort future-drop model combines selected and transfer-ranked ROI physics features across 59 rows / 44 features; leave-cycle random forest reaches AUC 0.886/AP 0.914 with 40-permutation p=0.024, but leave-cohort transfer is not evaluable because the selected cohort has no positive future8 labels.
+- Active-learning QC prioritization merges manual-QC, precursor, weak-model, front, and timing evidence into 97 review candidates; 47 have visual assets and 4 are immediate manual-QC picks, led by cycle116_rank7_obj37. No manual labels are assigned.
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
@@ -720,6 +722,33 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Leave-cohort transfer_ranked -> selected logistic_l2: status missing_class, train positives/negatives 28/20, test positives/negatives 0/10
 - Leave-cohort transfer_ranked -> selected random_forest: status missing_class, train positives/negatives 28/20, test positives/negatives 0/10
 - Guardrail: Future-drop labels are weak cycle-level labels projected onto ROI rows. Grouped splits reduce cycle leakage, but this is a review-prioritization model, not a deployment-ready degradation detector or manual-QC label set.
+
+## Active-Learning QC Prioritization
+
+- Candidate/visual/immediate rows: 97 / 47 / 4
+- Tier counts: {'control_balance_review': 47, 'front_diffusion_guardrail_review': 2, 'immediate_manual_qc': 4, 'model_boundary_case': 8, 'standard_manual_qc': 36}
+- Active-QC ROI cycle116_rank7_obj37: rank 1, tier immediate_manual_qc, score 0.463, cycle 116, tags model_boundary_case;control_balance_review;visual_asset_available, model p=0.456
+- Active-QC ROI cycle156_rank3_obj2: rank 2, tier model_boundary_case, score 0.462, cycle 156, tags model_boundary_case;control_balance_review, model p=0.529
+- Active-QC ROI cycle147_rank11_obj2: rank 3, tier model_boundary_case, score 0.437, cycle 147, tags model_boundary_case;control_balance_review, model p=0.503
+- Active-QC ROI cycle86_rank4_obj9: rank 4, tier immediate_manual_qc, score 0.414, cycle 86, tags control_balance_review;visual_asset_available, model p=0.369
+- Active-QC ROI cycle151_rank4_obj2: rank 5, tier front_diffusion_guardrail_review, score 0.406, cycle 151, tags high_future_drop_probability;front_diffusion_guardrail_review, model p=0.929
+- Active-QC ROI cycle156_rank3_obj1: rank 6, tier model_boundary_case, score 0.396, cycle 156, tags model_boundary_case;control_balance_review, model p=0.428
+- Active-QC ROI cycle156_rank3_obj4: rank 7, tier control_balance_review, score 0.391, cycle 156, tags control_balance_review, model p=0.640
+- Active-QC ROI cycle146_rank2_obj2: rank 8, tier control_balance_review, score 0.390, cycle 146, tags control_balance_review, model p=0.663
+- Active-QC cycle 116: max score 0.463, mean score 0.230, ROI 11, immediate 1
+- Active-QC cycle 156: max score 0.462, mean score 0.360, ROI 10, immediate 1
+- Active-QC cycle 147: max score 0.437, mean score 0.367, ROI 4, immediate 0
+- Active-QC cycle 86: max score 0.414, mean score 0.291, ROI 6, immediate 1
+- Active-QC cycle 151: max score 0.406, mean score 0.353, ROI 4, immediate 0
+- Active-QC cycle 146: max score 0.390, mean score 0.294, ROI 4, immediate 0
+- Active-QC reason control_balance_review: n=54
+- Active-QC reason visual_asset_available: n=47
+- Active-QC reason high_future_drop_probability: n=19
+- Active-QC reason model_boundary_case: n=9
+- Active-QC reason general_pending_qc: n=6
+- Active-QC reason front_diffusion_guardrail_review: n=4
+- Active-QC reason transition_timing_residual_review: n=3
+- Guardrail: Active-learning QC ranks pending ROI review candidates from automatic and weak-label evidence only; manual labels, diffusion claims, and deployment decisions remain withheld until human QC.
 
 ## Cross-Cohort Rollout Transfer
 

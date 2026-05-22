@@ -2165,3 +2165,27 @@ Key result:
 - The strongest univariate feature is velocity particle-MSE fraction of full crop: oriented AUC=0.968, median positive-negative +0.599, Mann-Whitney p=1.01e-9.
 
 Interpretation: this is the most model-like ROI/video warning audit so far, but it remains a weak-label review-prioritization model. The apparent performance mostly reflects transfer-ranked future-positive rows and cannot be treated as deployable until a class-balanced selected/control cohort and manual QC labels are available.
+
+## 2026-05-22 Active-Learning QC Prioritization
+
+Added and ran:
+
+`python scripts/tier4_active_learning_qc_prioritization.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/active_learning_qc_prioritization`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/active_learning_qc_prioritization`
+
+Local compact copy:
+
+`derived_local/active_learning_qc_prioritization`
+
+Key result:
+
+- Merged the manual-QC workbook, precursor-informed review manifest, multi-cohort weak future-drop predictions, transfer-ranked front physics review table, residual transition timing audit, and transfer reconstruction metadata into a single manual-review queue.
+- The queue contains 97 ROI candidates across 21 cycles; 47 rows already have at least one visual QC/preview asset.
+- Four rows are promoted to immediate manual-QC review, with remaining rows split across model-boundary, front/diffusion guardrail, control-balance, and standard manual-QC tiers.
+- Top-ranked candidates include `cycle116_rank7_obj37`, `cycle156_rank3_obj2`, `cycle147_rank11_obj2`, `cycle86_rank4_obj9`, and `cycle151_rank4_obj2`.
+- The most common review tags are control-balance review, visual asset available, high future-drop probability, model boundary case, and front/diffusion guardrail review.
+
+Interpretation: this closes the loop from AI/physics discovery into a concrete human-review worklist. It does not assign manual labels or validate diffusion/degradation claims; it prioritizes where manual particle identity, front-mask quality, and diffusion-interpretability checks should be spent next.
