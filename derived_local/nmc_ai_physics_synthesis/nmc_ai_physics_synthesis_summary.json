@@ -9623,6 +9623,307 @@
       }
     ]
   },
+  "multicohort_future_drop_model": {
+    "cycle_group_oof_metrics": [
+      {
+        "group_col": "cycleNo",
+        "model": "logistic_l2",
+        "n_negative_scored": 30,
+        "n_positive_scored": 28,
+        "n_scored": 58,
+        "n_scored_folds": 13,
+        "n_total_folds": 13,
+        "pooled_oof_average_precision": 0.7773557378543848,
+        "pooled_oof_roc_auc": 0.6916666666666667
+      },
+      {
+        "group_col": "cycleNo",
+        "model": "random_forest",
+        "n_negative_scored": 30,
+        "n_positive_scored": 28,
+        "n_scored": 58,
+        "n_scored_folds": 13,
+        "n_total_folds": 13,
+        "pooled_oof_average_precision": 0.9137697862759439,
+        "pooled_oof_roc_auc": 0.8857142857142857
+      }
+    ],
+    "guardrail": "Future-drop labels are weak cycle-level labels projected onto ROI rows. Grouped splits reduce cycle leakage, but this is a review-prioritization model, not a deployment-ready degradation detector or manual-QC label set.",
+    "label_counts": [
+      {
+        "n": 10,
+        "video_cohort": "selected",
+        "weak_future_drop_label": 0.0
+      },
+      {
+        "n": 1,
+        "video_cohort": "selected",
+        "weak_future_drop_label": null
+      },
+      {
+        "n": 28,
+        "video_cohort": "transfer_ranked",
+        "weak_future_drop_label": 1.0
+      },
+      {
+        "n": 20,
+        "video_cohort": "transfer_ranked",
+        "weak_future_drop_label": 0.0
+      }
+    ],
+    "leave_cohort_eval": [
+      {
+        "average_precision": null,
+        "model": "logistic_l2",
+        "n_negative_test": 20,
+        "n_negative_train": 10,
+        "n_positive_test": 28,
+        "n_positive_train": 0,
+        "n_test": 48,
+        "n_train": 10,
+        "roc_auc": null,
+        "status": "missing_class",
+        "test_cohort": "transfer_ranked",
+        "train_cohort": "selected"
+      },
+      {
+        "average_precision": null,
+        "model": "random_forest",
+        "n_negative_test": 20,
+        "n_negative_train": 10,
+        "n_positive_test": 28,
+        "n_positive_train": 0,
+        "n_test": 48,
+        "n_train": 10,
+        "roc_auc": null,
+        "status": "missing_class",
+        "test_cohort": "transfer_ranked",
+        "train_cohort": "selected"
+      },
+      {
+        "average_precision": null,
+        "model": "logistic_l2",
+        "n_negative_test": 10,
+        "n_negative_train": 20,
+        "n_positive_test": 0,
+        "n_positive_train": 28,
+        "n_test": 10,
+        "n_train": 48,
+        "roc_auc": null,
+        "status": "missing_class",
+        "test_cohort": "selected",
+        "train_cohort": "transfer_ranked"
+      },
+      {
+        "average_precision": null,
+        "model": "random_forest",
+        "n_negative_test": 10,
+        "n_negative_train": 20,
+        "n_positive_test": 0,
+        "n_positive_train": 28,
+        "n_test": 10,
+        "n_train": 48,
+        "roc_auc": null,
+        "status": "missing_class",
+        "test_cohort": "selected",
+        "train_cohort": "transfer_ranked"
+      }
+    ],
+    "n_features": 44,
+    "n_roi_rows": 59,
+    "n_selected_rows": 11,
+    "n_transfer_ranked_rows": 48,
+    "permutation_null": {
+      "empirical_p_ge_observed": 0.024390243902439025,
+      "group_col": "cycleNo",
+      "model": "random_forest",
+      "n_permutation": 40,
+      "null_auc_mean": 0.44119047619047624,
+      "null_auc_p95": 0.5906547619047618,
+      "observed_auc": 0.8857142857142857,
+      "status": "ok"
+    },
+    "top_feature_importance": [
+      {
+        "feature": "velocity_particle_mse_fraction_of_full_mean",
+        "importance": 1.3007246974547872,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "persistence_particle_mse_fraction_of_full_mean",
+        "importance": 0.9314390221991983,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+        "importance": 0.718615118420801,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "transferred_masked_residual_signature",
+        "importance": 0.7030090956223776,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "stage_drift_xy_sampled",
+        "importance": 0.6514840066415817,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "object_mean_abs_z",
+        "importance": 0.5878025163450543,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "persistence_particle_to_nonparticle_mse_ratio_mean",
+        "importance": 0.5274803264404699,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "roi_mean_delta_last_minus_first",
+        "importance": 0.4980043235138091,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "threshold_robust_diffusion_score",
+        "importance": 0.44656193869820043,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "roi_norm_mean_delta_last_minus_first",
+        "importance": 0.35455637008938234,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "phase_slope_abs_median_per_s",
+        "importance": 0.3515295366036304,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "phase_slope_positive_fraction",
+        "importance": 0.31074185210754895,
+        "model": "logistic_l2"
+      },
+      {
+        "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+        "importance": 0.15141572991265945,
+        "model": "random_forest"
+      },
+      {
+        "feature": "velocity_particle_mse_fraction_of_full_mean",
+        "importance": 0.13697154164228126,
+        "model": "random_forest"
+      },
+      {
+        "feature": "velocity_particle_mse_mean",
+        "importance": 0.13369657081926117,
+        "model": "random_forest"
+      },
+      {
+        "feature": "persistence_particle_mse_fraction_of_full_mean",
+        "importance": 0.09412684172844063,
+        "model": "random_forest"
+      }
+    ],
+    "top_feature_tests": [
+      {
+        "feature": "velocity_particle_mse_fraction_of_full_mean",
+        "mannwhitney_p": 1.0119347578845035e-09,
+        "median_positive_minus_negative": 0.5991965626017162,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.967857142857143
+      },
+      {
+        "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+        "mannwhitney_p": 1.3541698471719088e-09,
+        "median_positive_minus_negative": 1.573178998290219,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.9642857142857143
+      },
+      {
+        "feature": "velocity_particle_mse_mean",
+        "mannwhitney_p": 1.3541698471719088e-09,
+        "median_positive_minus_negative": 0.00135742189058875,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.9642857142857142
+      },
+      {
+        "feature": "persistence_particle_mse_mean",
+        "mannwhitney_p": 8.944232938682496e-09,
+        "median_positive_minus_negative": 0.0006252698498201064,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.9404761904761905
+      },
+      {
+        "feature": "persistence_particle_to_nonparticle_mse_ratio_mean",
+        "mannwhitney_p": 4.1324899916421746e-08,
+        "median_positive_minus_negative": 1.430886907313873,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.9202380952380952
+      },
+      {
+        "feature": "persistence_particle_mse_fraction_of_full_mean",
+        "mannwhitney_p": 1.6398251957215188e-07,
+        "median_positive_minus_negative": 0.6292652078127152,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.9011904761904762
+      },
+      {
+        "feature": "phase_slope_positive_fraction",
+        "mannwhitney_p": 1.3765485454698253e-05,
+        "median_positive_minus_negative": -0.0714285714285714,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.75
+      },
+      {
+        "feature": "radius2_slope_median_px2_per_s",
+        "mannwhitney_p": 1.4668161415268634e-05,
+        "median_positive_minus_negative": 0.002014885989688,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.8321428571428572
+      },
+      {
+        "feature": "diffusion_proxy_median_um2_per_s",
+        "mannwhitney_p": 1.4668161415268634e-05,
+        "median_positive_minus_negative": 4.642297320241341e-06,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.8321428571428572
+      },
+      {
+        "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+        "mannwhitney_p": 7.016640564684469e-05,
+        "median_positive_minus_negative": 0.00203283820306995,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.8047619047619048
+      },
+      {
+        "feature": "phase_slope_median_per_s",
+        "mannwhitney_p": 0.0001713637493181298,
+        "median_positive_minus_negative": -1.8051071608734053e-06,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.7880952380952381
+      },
+      {
+        "feature": "q70_phase_slope_bootstrap_p50",
+        "mannwhitney_p": 0.0002331696308596921,
+        "median_positive_minus_negative": -1.7677955974362553e-06,
+        "n_negative": 30,
+        "n_positive": 28,
+        "oriented_auc": 0.7821428571428571
+      }
+    ]
+  },
   "n_calibration_rows": 12,
   "n_cycles": 11,
   "n_event_reference_cycles": 4,

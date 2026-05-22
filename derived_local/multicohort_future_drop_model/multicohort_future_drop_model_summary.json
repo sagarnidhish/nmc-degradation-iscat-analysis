@@ -1,0 +1,761 @@
+{
+  "cycle_group_oof_metrics": [
+    {
+      "group_col": "cycleNo",
+      "model": "logistic_l2",
+      "n_negative_scored": 30,
+      "n_positive_scored": 28,
+      "n_scored": 58,
+      "n_scored_folds": 13,
+      "n_total_folds": 13,
+      "pooled_oof_average_precision": 0.7773557378543848,
+      "pooled_oof_roc_auc": 0.6916666666666667
+    },
+    {
+      "group_col": "cycleNo",
+      "model": "random_forest",
+      "n_negative_scored": 30,
+      "n_positive_scored": 28,
+      "n_scored": 58,
+      "n_scored_folds": 13,
+      "n_total_folds": 13,
+      "pooled_oof_average_precision": 0.9137697862759439,
+      "pooled_oof_roc_auc": 0.8857142857142857
+    }
+  ],
+  "features": [
+    "phase_slope_median_per_s",
+    "phase_slope_abs_median_per_s",
+    "phase_slope_positive_fraction",
+    "radius2_slope_median_px2_per_s",
+    "radius2_slope_positive_fraction",
+    "diffusion_proxy_median_um2_per_s",
+    "diffusion_proxy_abs_median_um2_per_s",
+    "threshold_robust_phase_score",
+    "threshold_robust_diffusion_score",
+    "q70_phase_slope_bootstrap_p50",
+    "q70_radius2_slope_bootstrap_p50_px2_per_s",
+    "roi_mean_delta_last_minus_first",
+    "roi_norm_mean_delta_last_minus_first",
+    "stage_drift_xy_sampled",
+    "validation_score",
+    "front_quality_score",
+    "object_mean_abs_z",
+    "object_mean_residual",
+    "transferred_masked_residual_signature",
+    "transfer_rank",
+    "persistence_particle_mse_mean",
+    "persistence_particle_to_nonparticle_mse_ratio_mean",
+    "persistence_particle_mse_fraction_of_full_mean",
+    "low_rank_dmd_particle_mse_mean",
+    "low_rank_dmd_particle_to_nonparticle_mse_ratio_mean",
+    "low_rank_dmd_particle_mse_fraction_of_full_mean",
+    "velocity_particle_mse_mean",
+    "velocity_particle_to_nonparticle_mse_ratio_mean",
+    "velocity_particle_mse_fraction_of_full_mean",
+    "mask_fallback_used_mean",
+    "accepted_area_fraction_median",
+    "cycle_state_pc1",
+    "cycle_state_pc2",
+    "cycle_state_pc3",
+    "cycle_state_pc4",
+    "degradation_state_axis",
+    "state_step_norm",
+    "axis_step",
+    "physics_consistency_score",
+    "front_direction_score",
+    "optical_change_score",
+    "rollout_residual_score",
+    "kinetic_transition_score",
+    "mode_taxonomy_score"
+  ],
+  "guardrail": "Future-drop labels are weak cycle-level labels projected onto ROI rows. Grouped splits reduce cycle leakage, but this is a review-prioritization model, not a deployment-ready degradation detector or manual-QC label set.",
+  "label_counts": [
+    {
+      "n": 10,
+      "video_cohort": "selected",
+      "weak_future_drop_label": 0.0
+    },
+    {
+      "n": 1,
+      "video_cohort": "selected",
+      "weak_future_drop_label": null
+    },
+    {
+      "n": 28,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 1.0
+    },
+    {
+      "n": 20,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 0.0
+    }
+  ],
+  "leave_cohort_eval": [
+    {
+      "average_precision": null,
+      "model": "logistic_l2",
+      "n_negative_test": 20,
+      "n_negative_train": 10,
+      "n_positive_test": 28,
+      "n_positive_train": 0,
+      "n_test": 48,
+      "n_train": 10,
+      "roc_auc": null,
+      "status": "missing_class",
+      "test_cohort": "transfer_ranked",
+      "train_cohort": "selected"
+    },
+    {
+      "average_precision": null,
+      "model": "random_forest",
+      "n_negative_test": 20,
+      "n_negative_train": 10,
+      "n_positive_test": 28,
+      "n_positive_train": 0,
+      "n_test": 48,
+      "n_train": 10,
+      "roc_auc": null,
+      "status": "missing_class",
+      "test_cohort": "transfer_ranked",
+      "train_cohort": "selected"
+    },
+    {
+      "average_precision": null,
+      "model": "logistic_l2",
+      "n_negative_test": 10,
+      "n_negative_train": 20,
+      "n_positive_test": 0,
+      "n_positive_train": 28,
+      "n_test": 10,
+      "n_train": 48,
+      "roc_auc": null,
+      "status": "missing_class",
+      "test_cohort": "selected",
+      "train_cohort": "transfer_ranked"
+    },
+    {
+      "average_precision": null,
+      "model": "random_forest",
+      "n_negative_test": 10,
+      "n_negative_train": 20,
+      "n_positive_test": 0,
+      "n_positive_train": 28,
+      "n_test": 10,
+      "n_train": 48,
+      "roc_auc": null,
+      "status": "missing_class",
+      "test_cohort": "selected",
+      "train_cohort": "transfer_ranked"
+    }
+  ],
+  "n_features": 44,
+  "n_roi_rows": 59,
+  "n_selected_rows": 11,
+  "n_transfer_ranked_rows": 48,
+  "outputs": {
+    "cycle_oof_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_cycle_oof_metrics.csv",
+    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_cycle_summary.csv",
+    "feature_importance": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_importance.csv",
+    "feature_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_table.csv",
+    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_tests.csv",
+    "feature_tests_by_cohort": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_tests_by_cohort.csv",
+    "label_counts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_label_counts.csv",
+    "leave_cohort_eval": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_leave_cohort_eval.csv",
+    "oof_predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_oof_predictions.csv"
+  },
+  "permutation_null": {
+    "empirical_p_ge_observed": 0.024390243902439025,
+    "group_col": "cycleNo",
+    "model": "random_forest",
+    "n_permutation": 40,
+    "null_auc_mean": 0.44119047619047624,
+    "null_auc_p95": 0.5906547619047618,
+    "observed_auc": 0.8857142857142857,
+    "status": "ok"
+  },
+  "rf_trees": 80,
+  "top_cycle_summary": [
+    {
+      "cycleNo": 153.0,
+      "low_rank_dmd_particle_mse_mean": 0.0109301441298157,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 0.00274015241981825,
+      "phase_slope_median_per_s": -1.3935186192669693e-06,
+      "radius2_slope_median_px2_per_s": 0.0058643302259366505,
+      "threshold_robust_phase_score": 0.12239583333333334,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 1.0
+    },
+    {
+      "cycleNo": 154.0,
+      "low_rank_dmd_particle_mse_mean": 0.0086876133937039,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 0.000675018958645475,
+      "phase_slope_median_per_s": -6.67914978256358e-07,
+      "radius2_slope_median_px2_per_s": 0.0032410684589924002,
+      "threshold_robust_phase_score": -0.140625,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 1.0
+    },
+    {
+      "cycleNo": 155.0,
+      "low_rank_dmd_particle_mse_mean": 0.0072207720477308,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 0.00279528787362435,
+      "phase_slope_median_per_s": -6.67807191344622e-07,
+      "radius2_slope_median_px2_per_s": 0.0025268947217784252,
+      "threshold_robust_phase_score": 0.015624999999999944,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 1.0
+    },
+    {
+      "cycleNo": 152.0,
+      "low_rank_dmd_particle_mse_mean": 0.008501239724864674,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 0.000685936834457775,
+      "phase_slope_median_per_s": -1.5472924804072575e-07,
+      "radius2_slope_median_px2_per_s": 0.002254357184167925,
+      "threshold_robust_phase_score": -0.04687500000000004,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 1.0
+    },
+    {
+      "cycleNo": 151.0,
+      "low_rank_dmd_particle_mse_mean": 0.01038921096369445,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 0.0008459397190847,
+      "phase_slope_median_per_s": 1.225881190181032e-06,
+      "radius2_slope_median_px2_per_s": 0.0020580840618898,
+      "threshold_robust_phase_score": 0.3984374999999999,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 1.0
+    },
+    {
+      "cycleNo": 150.0,
+      "low_rank_dmd_particle_mse_mean": 0.004174375328147975,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 0.000159983973134025,
+      "phase_slope_median_per_s": 2.4705466750303487e-06,
+      "radius2_slope_median_px2_per_s": 0.000594076006033925,
+      "threshold_robust_phase_score": 1.0104166666666665,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 1.0
+    },
+    {
+      "cycleNo": 148.0,
+      "low_rank_dmd_particle_mse_mean": 0.003833961683085325,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 0.00017044649067085,
+      "phase_slope_median_per_s": 3.3765221287578366e-06,
+      "radius2_slope_median_px2_per_s": -0.001889590585943375,
+      "threshold_robust_phase_score": 0.8124999999999999,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 1.0
+    },
+    {
+      "cycleNo": 40.0,
+      "low_rank_dmd_particle_mse_mean": 0.005194904845666299,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 8.209054432482284e-05,
+      "phase_slope_median_per_s": 1.5799598276205668e-06,
+      "radius2_slope_median_px2_per_s": 0.0007313126953457501,
+      "threshold_robust_phase_score": 0.6614583333333333,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 0.0
+    },
+    {
+      "cycleNo": 116.0,
+      "low_rank_dmd_particle_mse_mean": 0.00560250631533558,
+      "n_roi": 6,
+      "persistence_particle_mse_mean": 8.906306652532454e-05,
+      "phase_slope_median_per_s": 3.593001559653213e-06,
+      "radius2_slope_median_px2_per_s": -8.029257566325998e-05,
+      "threshold_robust_phase_score": 0.698076923076923,
+      "video_cohort": "selected",
+      "weak_future_drop_label": 0.0
+    },
+    {
+      "cycleNo": 156.0,
+      "low_rank_dmd_particle_mse_mean": 0.0089509379395167,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 0.00017011805610419678,
+      "phase_slope_median_per_s": 2.3041508190211656e-06,
+      "radius2_slope_median_px2_per_s": -9.358048427107616e-05,
+      "threshold_robust_phase_score": 0.9843749999999998,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 0.0
+    },
+    {
+      "cycleNo": 86.0,
+      "low_rank_dmd_particle_mse_mean": 0.00834096568505624,
+      "n_roi": 5,
+      "persistence_particle_mse_mean": 0.00014480162370772404,
+      "phase_slope_median_per_s": 3.26955286871634e-06,
+      "radius2_slope_median_px2_per_s": -0.00017579335415258,
+      "threshold_robust_phase_score": 0.5365384615384616,
+      "video_cohort": "selected",
+      "weak_future_drop_label": 0.0
+    },
+    {
+      "cycleNo": 116.0,
+      "low_rank_dmd_particle_mse_mean": 0.00449492949019255,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 7.024267657127811e-05,
+      "phase_slope_median_per_s": 3.254343253030876e-06,
+      "radius2_slope_median_px2_per_s": -0.0007283046675398001,
+      "threshold_robust_phase_score": 0.96875,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 0.0
+    },
+    {
+      "cycleNo": 146.0,
+      "low_rank_dmd_particle_mse_mean": 0.005118631439927375,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 0.00013213735709876906,
+      "phase_slope_median_per_s": 2.6414309254655345e-06,
+      "radius2_slope_median_px2_per_s": -0.0024685355287310997,
+      "threshold_robust_phase_score": 0.609375,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 0.0
+    },
+    {
+      "cycleNo": 147.0,
+      "low_rank_dmd_particle_mse_mean": 0.0028719752376673,
+      "n_roi": 4,
+      "persistence_particle_mse_mean": 0.00012671898741697043,
+      "phase_slope_median_per_s": 3.909132403986564e-06,
+      "radius2_slope_median_px2_per_s": -0.00274935232829705,
+      "threshold_robust_phase_score": 0.7291666666666666,
+      "video_cohort": "transfer_ranked",
+      "weak_future_drop_label": 0.0
+    }
+  ],
+  "top_feature_importance": [
+    {
+      "feature": "velocity_particle_mse_fraction_of_full_mean",
+      "importance": 1.3007246974547872,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "persistence_particle_mse_fraction_of_full_mean",
+      "importance": 0.9314390221991983,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+      "importance": 0.718615118420801,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "transferred_masked_residual_signature",
+      "importance": 0.7030090956223776,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "stage_drift_xy_sampled",
+      "importance": 0.6514840066415817,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "object_mean_abs_z",
+      "importance": 0.5878025163450543,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "persistence_particle_to_nonparticle_mse_ratio_mean",
+      "importance": 0.5274803264404699,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "roi_mean_delta_last_minus_first",
+      "importance": 0.4980043235138091,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "threshold_robust_diffusion_score",
+      "importance": 0.44656193869820043,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "roi_norm_mean_delta_last_minus_first",
+      "importance": 0.35455637008938234,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "phase_slope_abs_median_per_s",
+      "importance": 0.3515295366036304,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "phase_slope_positive_fraction",
+      "importance": 0.31074185210754895,
+      "model": "logistic_l2"
+    },
+    {
+      "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+      "importance": 0.15141572991265945,
+      "model": "random_forest"
+    },
+    {
+      "feature": "velocity_particle_mse_fraction_of_full_mean",
+      "importance": 0.13697154164228126,
+      "model": "random_forest"
+    },
+    {
+      "feature": "velocity_particle_mse_mean",
+      "importance": 0.13369657081926117,
+      "model": "random_forest"
+    },
+    {
+      "feature": "persistence_particle_mse_fraction_of_full_mean",
+      "importance": 0.09412684172844063,
+      "model": "random_forest"
+    },
+    {
+      "feature": "persistence_particle_mse_mean",
+      "importance": 0.09016029811238442,
+      "model": "random_forest"
+    },
+    {
+      "feature": "persistence_particle_to_nonparticle_mse_ratio_mean",
+      "importance": 0.06123144940346435,
+      "model": "random_forest"
+    },
+    {
+      "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+      "importance": 0.03621841414116394,
+      "model": "random_forest"
+    },
+    {
+      "feature": "diffusion_proxy_median_um2_per_s",
+      "importance": 0.03344602354796116,
+      "model": "random_forest"
+    },
+    {
+      "feature": "phase_slope_median_per_s",
+      "importance": 0.024303854074464233,
+      "model": "random_forest"
+    },
+    {
+      "feature": "object_mean_abs_z",
+      "importance": 0.023881773301107308,
+      "model": "random_forest"
+    },
+    {
+      "feature": "q70_phase_slope_bootstrap_p50",
+      "importance": 0.023000689574321883,
+      "model": "random_forest"
+    },
+    {
+      "feature": "transferred_masked_residual_signature",
+      "importance": 0.020233201550066353,
+      "model": "random_forest"
+    }
+  ],
+  "top_feature_tests": [
+    {
+      "feature": "velocity_particle_mse_fraction_of_full_mean",
+      "mannwhitney_p": 1.0119347578845035e-09,
+      "median_positive_minus_negative": 0.5991965626017162,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.967857142857143
+    },
+    {
+      "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+      "mannwhitney_p": 1.3541698471719088e-09,
+      "median_positive_minus_negative": 1.573178998290219,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.9642857142857143
+    },
+    {
+      "feature": "velocity_particle_mse_mean",
+      "mannwhitney_p": 1.3541698471719088e-09,
+      "median_positive_minus_negative": 0.00135742189058875,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.9642857142857142
+    },
+    {
+      "feature": "persistence_particle_mse_mean",
+      "mannwhitney_p": 8.944232938682496e-09,
+      "median_positive_minus_negative": 0.0006252698498201064,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.9404761904761905
+    },
+    {
+      "feature": "persistence_particle_to_nonparticle_mse_ratio_mean",
+      "mannwhitney_p": 4.1324899916421746e-08,
+      "median_positive_minus_negative": 1.430886907313873,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.9202380952380952
+    },
+    {
+      "feature": "persistence_particle_mse_fraction_of_full_mean",
+      "mannwhitney_p": 1.6398251957215188e-07,
+      "median_positive_minus_negative": 0.6292652078127152,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.9011904761904762
+    },
+    {
+      "feature": "phase_slope_positive_fraction",
+      "mannwhitney_p": 1.3765485454698253e-05,
+      "median_positive_minus_negative": -0.0714285714285714,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.75
+    },
+    {
+      "feature": "radius2_slope_median_px2_per_s",
+      "mannwhitney_p": 1.4668161415268634e-05,
+      "median_positive_minus_negative": 0.002014885989688,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.8321428571428572
+    },
+    {
+      "feature": "diffusion_proxy_median_um2_per_s",
+      "mannwhitney_p": 1.4668161415268634e-05,
+      "median_positive_minus_negative": 4.642297320241341e-06,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.8321428571428572
+    },
+    {
+      "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+      "mannwhitney_p": 7.016640564684469e-05,
+      "median_positive_minus_negative": 0.00203283820306995,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.8047619047619048
+    },
+    {
+      "feature": "phase_slope_median_per_s",
+      "mannwhitney_p": 0.0001713637493181298,
+      "median_positive_minus_negative": -1.8051071608734053e-06,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.7880952380952381
+    },
+    {
+      "feature": "q70_phase_slope_bootstrap_p50",
+      "mannwhitney_p": 0.0002331696308596921,
+      "median_positive_minus_negative": -1.7677955974362553e-06,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.7821428571428571
+    },
+    {
+      "feature": "radius2_slope_positive_fraction",
+      "mannwhitney_p": 0.000296093260620098,
+      "median_positive_minus_negative": 0.7857142857142858,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.7696428571428571
+    },
+    {
+      "feature": "low_rank_dmd_particle_to_nonparticle_mse_ratio_mean",
+      "mannwhitney_p": 0.002230812337459362,
+      "median_positive_minus_negative": 3.845230374624136,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.7345238095238096
+    },
+    {
+      "feature": "diffusion_proxy_abs_median_um2_per_s",
+      "mannwhitney_p": 0.011452186603498407,
+      "median_positive_minus_negative": 2.8028826733176264e-06,
+      "n_negative": 30,
+      "n_positive": 28,
+      "oriented_auc": 0.694047619047619
+    }
+  ],
+  "top_feature_tests_by_cohort": [
+    {
+      "feature": "velocity_particle_mse_mean",
+      "mannwhitney_p": 2.821379923152598e-08,
+      "median_positive_minus_negative": 0.00135335734910315,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.9750000000000001,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "velocity_particle_to_nonparticle_mse_ratio_mean",
+      "mannwhitney_p": 1.1502594203689684e-07,
+      "median_positive_minus_negative": 1.4791873861797975,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.9535714285714286,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "velocity_particle_mse_fraction_of_full_mean",
+      "mannwhitney_p": 1.1502594203689684e-07,
+      "median_positive_minus_negative": 0.5408866407624333,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.9535714285714286,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "persistence_particle_mse_mean",
+      "mannwhitney_p": 2.028923649128284e-07,
+      "median_positive_minus_negative": 0.0006219690539524,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.9446428571428571,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "persistence_particle_to_nonparticle_mse_ratio_mean",
+      "mannwhitney_p": 8.016498105559536e-06,
+      "median_positive_minus_negative": 1.195635428582459,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.8821428571428571,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "persistence_particle_mse_fraction_of_full_mean",
+      "mannwhitney_p": 3.6252895078397236e-05,
+      "median_positive_minus_negative": 0.5040327218156357,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.8535714285714285,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "radius2_slope_median_px2_per_s",
+      "mannwhitney_p": 5.198913684811424e-05,
+      "median_positive_minus_negative": 0.0022341155431609997,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.8464285714285715,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "diffusion_proxy_median_um2_per_s",
+      "mannwhitney_p": 5.198913684811424e-05,
+      "median_positive_minus_negative": 5.1474022114430505e-06,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.8464285714285715,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "q70_radius2_slope_bootstrap_p50_px2_per_s",
+      "mannwhitney_p": 0.0001353765242108208,
+      "median_positive_minus_negative": 0.0022217691644882,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.8267857142857143,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "phase_slope_positive_fraction",
+      "mannwhitney_p": 0.0002733115517972088,
+      "median_positive_minus_negative": -0.0714285714285714,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.75,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "radius2_slope_positive_fraction",
+      "mannwhitney_p": 0.0006721590013250507,
+      "median_positive_minus_negative": 0.8571428571428572,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.7812499999999999,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "phase_slope_median_per_s",
+      "mannwhitney_p": 0.0016479834444807794,
+      "median_positive_minus_negative": -1.8051071608734053e-06,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.7696428571428571,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "q70_phase_slope_bootstrap_p50",
+      "mannwhitney_p": 0.0025127246849293797,
+      "median_positive_minus_negative": -1.7085615252248586e-06,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.7589285714285714,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "low_rank_dmd_particle_mse_mean",
+      "mannwhitney_p": 0.009226058407522594,
+      "median_positive_minus_negative": 0.00306799922327625,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.7232142857142858,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "threshold_robust_phase_score",
+      "mannwhitney_p": 0.0131739791519599,
+      "median_positive_minus_negative": -0.27083333333333326,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.7125,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "low_rank_dmd_particle_to_nonparticle_mse_ratio_mean",
+      "mannwhitney_p": 0.03558214820254566,
+      "median_positive_minus_negative": 2.5527757593458578,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.680357142857143,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "diffusion_proxy_abs_median_um2_per_s",
+      "mannwhitney_p": 0.08831762907801916,
+      "median_positive_minus_negative": 2.088314133027256e-06,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.6464285714285714,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "phase_slope_abs_median_per_s",
+      "mannwhitney_p": 0.10964760839009746,
+      "median_positive_minus_negative": -6.200591778551986e-07,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.6375000000000001,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "roi_norm_mean_delta_last_minus_first",
+      "mannwhitney_p": 0.14039917154904114,
+      "median_positive_minus_negative": -0.0005596280097960452,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.6267857142857143,
+      "video_cohort": "transfer_ranked"
+    },
+    {
+      "feature": "low_rank_dmd_particle_mse_fraction_of_full_mean",
+      "mannwhitney_p": 0.18420415004093327,
+      "median_positive_minus_negative": 0.1678595187615608,
+      "n_negative": 20,
+      "n_positive": 28,
+      "oriented_auc": 0.6142857142857142,
+      "video_cohort": "transfer_ranked"
+    }
+  ]
+}

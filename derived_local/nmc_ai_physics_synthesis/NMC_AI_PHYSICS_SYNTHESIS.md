@@ -42,6 +42,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Transfer-ranked masked rollout ROI/frame rows: 48 / 4608
 - Transfer-ranked front physics ROI/cycles: 48 / 12
 - Transfer-ranked residual transition timing ROI/method rows: 48 / 144
+- Multi-cohort future-drop model rows/features: 59 / 44
 - Cross-cohort rollout transfer selected/transfer ROIs: 11 / 48
 - Diffusion sanity selected-front/publication candidates: 12 / 0
 - Control-balanced high-res front tracking/sanity candidates: 40 / 0
@@ -90,7 +91,9 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Transfer-ranked ROI reconstruction converts that state-transfer hypothesis list back into direct video crops: 12 cycles yielded 960 reconstructed components and 48 ROI rows; masked rollout on the exported crops again picks persistence as best for 48 of 48 ROIs, while low-rank DMD particle residuals remain much larger than nonparticle context.
 - Transfer-ranked front physics audit links those crops to phase/front proxies across 48 ROIs; strongest ROI-level future8 association is radius2_slope_positive_fraction with median positive-negative 0.857, AUC 0.781, and permutation p=3.999e-04; radius/diffusion-like values remain apparent optical-front proxies only.
 - Transfer-ranked residual transition timing gives a stronger temporal residual/phase link than the broader event-control cohort: low_rank_dmd weighted_center_distance_to_transition_frac median distance 0.087 versus null mean 0.250, p=2.000e-04; top future8 timing target is persistence particle_to_nonparticle_mse_ratio_median, AUC 0.832.
+- Multi-cohort weak future-drop modeling combines selected and transfer-ranked video features into 59 ROI rows; best cycle-group OOF model random_forest reaches AUC 0.886 and AP 0.914 with permutation p=0.024, but leave-cohort tests are missing-class because selected rows contain no future8 positives.
 - Cross-cohort rollout transfer audit shows the late transfer-ranked crops are a distinct video-dynamics domain: selected-cohort DMD evaluated on transfer-ranked ROIs has median particle MSE 0.020, 3.494x the transfer-internal DMD baseline (p=3.277e-09), while pooled training is close to transfer-internal (1.061x).
+- Multi-cohort future-drop model combines selected and transfer-ranked ROI physics features across 59 rows / 44 features; leave-cycle random forest reaches AUC 0.886/AP 0.914 with 40-permutation p=0.024, but leave-cohort transfer is not evaluable because the selected cohort has no positive future8 labels.
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
@@ -690,6 +693,35 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Near-transition transfer ROI cycle156_rank3_obj1 persistence: near residual fraction 0.486, peak MSE 7.274e-04, future8=0
 - Guardrail: Transfer-ranked transition timing uses automatic phase-fraction kinetics and masked rollout residuals from warning-ranked ROI crops. It tests temporal alignment and future-label association only; it is not manual phase-boundary annotation or calibrated transport.
 
+## Multi-Cohort Future-Drop Weak Model
+
+- ROI rows selected/transfer/features: 11 / 48 / 44
+- RF trees/permutation null: 80 / 40
+- Multi-cohort OOF logistic_l2: AUC 0.692, AP 0.777, scored 58 rows over 13/13 folds
+- Multi-cohort OOF random_forest: AUC 0.886, AP 0.914, scored 58 rows over 13/13 folds
+- Multi-cohort permutation null random_forest: observed AUC 0.886, null mean 0.441, p95 0.591, empirical p=0.024
+- Multi-cohort feature velocity_particle_mse_fraction_of_full_mean: median positive-negative 0.599, oriented AUC 0.968, p=1.012e-09, n=28/30
+- Multi-cohort feature velocity_particle_to_nonparticle_mse_ratio_mean: median positive-negative 1.573, oriented AUC 0.964, p=1.354e-09, n=28/30
+- Multi-cohort feature velocity_particle_mse_mean: median positive-negative 0.001, oriented AUC 0.964, p=1.354e-09, n=28/30
+- Multi-cohort feature persistence_particle_mse_mean: median positive-negative 6.253e-04, oriented AUC 0.940, p=8.944e-09, n=28/30
+- Multi-cohort feature persistence_particle_to_nonparticle_mse_ratio_mean: median positive-negative 1.431, oriented AUC 0.920, p=4.132e-08, n=28/30
+- Multi-cohort feature persistence_particle_mse_fraction_of_full_mean: median positive-negative 0.629, oriented AUC 0.901, p=1.640e-07, n=28/30
+- Multi-cohort feature phase_slope_positive_fraction: median positive-negative -0.071, oriented AUC 0.750, p=1.377e-05, n=28/30
+- Multi-cohort feature radius2_slope_median_px2_per_s: median positive-negative 0.002, oriented AUC 0.832, p=1.467e-05, n=28/30
+- Multi-cohort importance logistic_l2 velocity_particle_mse_fraction_of_full_mean: 1.301
+- Multi-cohort importance logistic_l2 persistence_particle_mse_fraction_of_full_mean: 0.931
+- Multi-cohort importance logistic_l2 velocity_particle_to_nonparticle_mse_ratio_mean: 0.719
+- Multi-cohort importance logistic_l2 transferred_masked_residual_signature: 0.703
+- Multi-cohort importance logistic_l2 stage_drift_xy_sampled: 0.651
+- Multi-cohort importance logistic_l2 object_mean_abs_z: 0.588
+- Multi-cohort importance logistic_l2 persistence_particle_to_nonparticle_mse_ratio_mean: 0.527
+- Multi-cohort importance logistic_l2 roi_mean_delta_last_minus_first: 0.498
+- Leave-cohort selected -> transfer_ranked logistic_l2: status missing_class, train positives/negatives 0/10, test positives/negatives 28/20
+- Leave-cohort selected -> transfer_ranked random_forest: status missing_class, train positives/negatives 0/10, test positives/negatives 28/20
+- Leave-cohort transfer_ranked -> selected logistic_l2: status missing_class, train positives/negatives 28/20, test positives/negatives 0/10
+- Leave-cohort transfer_ranked -> selected random_forest: status missing_class, train positives/negatives 28/20, test positives/negatives 0/10
+- Guardrail: Future-drop labels are weak cycle-level labels projected onto ROI rows. Grouped splits reduce cycle leakage, but this is a review-prioritization model, not a deployment-ready degradation detector or manual-QC label set.
+
 ## Cross-Cohort Rollout Transfer
 
 - ROI cohorts selected/transfer-ranked: 11 / 48
@@ -713,6 +745,35 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Transfer-ranked hard ROI cycle150_rank1_obj4 via selected_internal: particle MSE 0.040, DMD/persistence 325.487, cycle 150
 - Transfer-ranked hard ROI cycle154_rank6_obj3 via selected_internal: particle MSE 0.039, DMD/persistence 104.473, cycle 154
 - Guardrail: Cross-cohort low-rank rollout transfer compares interpretable linear dynamics across automatic ROI cohorts. It is evidence about video-domain generalization and difficult particle-local dynamics, not manual QC, calibrated diffusion, or a deployable learned video predictor.
+
+## Multi-Cohort Future-Drop Model
+
+- ROI rows selected/transfer-ranked/features: 11 / 48 / 44
+- Label counts: [{'n': 10, 'video_cohort': 'selected', 'weak_future_drop_label': 0.0}, {'n': 1, 'video_cohort': 'selected', 'weak_future_drop_label': None}, {'n': 28, 'video_cohort': 'transfer_ranked', 'weak_future_drop_label': 1.0}, {'n': 20, 'video_cohort': 'transfer_ranked', 'weak_future_drop_label': 0.0}]
+- Leave-cycle logistic_l2: AUC 0.692, AP 0.777, scored 58 rows across 13/13 folds
+- Leave-cycle random_forest: AUC 0.886, AP 0.914, scored 58 rows across 13/13 folds
+- Permutation sanity null random_forest: observed AUC 0.886, null mean 0.441, null p95 0.591, empirical p=0.024, n=40
+- Feature test velocity_particle_mse_fraction_of_full_mean: median positive-negative 0.599, AUC 0.968, MW p=1.012e-09, n=28/30
+- Feature test velocity_particle_to_nonparticle_mse_ratio_mean: median positive-negative 1.573, AUC 0.964, MW p=1.354e-09, n=28/30
+- Feature test velocity_particle_mse_mean: median positive-negative 0.001, AUC 0.964, MW p=1.354e-09, n=28/30
+- Feature test persistence_particle_mse_mean: median positive-negative 6.253e-04, AUC 0.940, MW p=8.944e-09, n=28/30
+- Feature test persistence_particle_to_nonparticle_mse_ratio_mean: median positive-negative 1.431, AUC 0.920, MW p=4.132e-08, n=28/30
+- Feature test persistence_particle_mse_fraction_of_full_mean: median positive-negative 0.629, AUC 0.901, MW p=1.640e-07, n=28/30
+- Feature test phase_slope_positive_fraction: median positive-negative -0.071, AUC 0.750, MW p=1.377e-05, n=28/30
+- Feature test radius2_slope_median_px2_per_s: median positive-negative 0.002, AUC 0.832, MW p=1.467e-05, n=28/30
+- Importance logistic_l2 velocity_particle_mse_fraction_of_full_mean: 1.301
+- Importance logistic_l2 persistence_particle_mse_fraction_of_full_mean: 0.931
+- Importance logistic_l2 velocity_particle_to_nonparticle_mse_ratio_mean: 0.719
+- Importance logistic_l2 transferred_masked_residual_signature: 0.703
+- Importance logistic_l2 stage_drift_xy_sampled: 0.651
+- Importance logistic_l2 object_mean_abs_z: 0.588
+- Importance logistic_l2 persistence_particle_to_nonparticle_mse_ratio_mean: 0.527
+- Importance logistic_l2 roi_mean_delta_last_minus_first: 0.498
+- Leave-cohort selected -> transfer_ranked logistic_l2: missing_class, train positives/negatives 0/10, test positives/negatives 28/20
+- Leave-cohort selected -> transfer_ranked random_forest: missing_class, train positives/negatives 0/10, test positives/negatives 28/20
+- Leave-cohort transfer_ranked -> selected logistic_l2: missing_class, train positives/negatives 28/20, test positives/negatives 0/10
+- Leave-cohort transfer_ranked -> selected random_forest: missing_class, train positives/negatives 28/20, test positives/negatives 0/10
+- Guardrail: Future-drop labels are weak cycle-level labels projected onto ROI rows. Grouped splits reduce cycle leakage, but this is a review-prioritization model, not a deployment-ready degradation detector or manual-QC label set. The permutation null is a runtime-bounded sanity check and selected/transfer label balance prevents cohort-transfer validation.
 
 ## Masked Residual Transition Timing
 

@@ -2140,3 +2140,28 @@ Key result:
 - Future8 positives also have much larger persistence residual peaks: median positive-negative +0.0104 particle MSE, AUC=0.879, Mann-Whitney p=9.74e-6, permutation p=0.00180.
 
 Interpretation: unlike the broader event/control timing audit, the warning-ranked transfer cohort gives a strong temporal link between low-rank rollout residual centers and automatic phase-transition centers. This is still an automatic optical proxy, but it strengthens the case that rollout residuals are tracking real transition-like particle dynamics in the late warning-window crops.
+
+## 2026-05-22 Multi-Cohort Future-Drop Weak Model
+
+Added and ran:
+
+`python scripts/tier4_multicohort_future_drop_model.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model --n-permutation 40 --rf-trees 80`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model`
+
+Local compact copy:
+
+`derived_local/multicohort_future_drop_model`
+
+Key result:
+
+- Built a combined direct-video feature table from 11 original selected ROI rows and 48 transfer-ranked ROI rows, using 44 optical front, masked rollout, ROI intensity, cycle-state, and consistency features.
+- Labels are weak cycle-level future-drop-within-8-cycles labels projected onto ROI rows, not manual degradation labels. The selected cohort contributes no positive future8 ROI rows, so leave-cohort evaluation is intentionally marked missing-class.
+- Cycle-grouped out-of-fold random forest scores 58 labeled ROI rows with AUC=0.886 and average precision=0.914. A 40-permutation cycle-label null gives null mean AUC=0.441, null p95=0.591, empirical p=0.0244.
+- Logistic L2 is weaker but still above chance: AUC=0.692 and AP=0.777.
+- The strongest univariate and model features are masked rollout residual features, especially velocity and persistence particle MSE fractions/ratios, followed by radius2/front-motion proxies and the transferred masked residual signature.
+- The strongest univariate feature is velocity particle-MSE fraction of full crop: oriented AUC=0.968, median positive-negative +0.599, Mann-Whitney p=1.01e-9.
+
+Interpretation: this is the most model-like ROI/video warning audit so far, but it remains a weak-label review-prioritization model. The apparent performance mostly reflects transfer-ranked future-positive rows and cannot be treated as deployable until a class-balanced selected/control cohort and manual QC labels are available.

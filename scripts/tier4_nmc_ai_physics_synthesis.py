@@ -127,6 +127,7 @@ def main() -> None:
     transfer_ranked_fronts = read_json(derived / "transfer_ranked_threshold_robust_fronts" / "threshold_robust_front_summary.json")
     transfer_ranked_front_physics = read_json(derived / "transfer_ranked_front_physics_audit" / "transfer_ranked_front_physics_audit_summary.json")
     transfer_ranked_residual_timing = read_json(derived / "transfer_ranked_residual_transition_timing" / "transfer_ranked_residual_transition_timing_summary.json")
+    multicohort_future_drop = read_json(derived / "multicohort_future_drop_model" / "multicohort_future_drop_model_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
     diffusion_sanity = read_json(derived / "diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
     control_balanced_front_tracking = read_json(derived / "control_balanced_front_tracking" / "selected_front_roi_tracking_summary.json")
@@ -299,6 +300,12 @@ def main() -> None:
     transfer_ranked_timing_target_corr = top_items(first_summary(transfer_ranked_residual_timing, "top_timing_target_correlations", []), 12)
     transfer_ranked_timing_transition_corr = top_items(first_summary(transfer_ranked_residual_timing, "top_transition_correlations", []), 12)
     transfer_ranked_timing_top_rois = top_items(first_summary(transfer_ranked_residual_timing, "top_near_transition_residual_rois", []), 12)
+    multicohort_oof = top_items(first_summary(multicohort_future_drop, "cycle_group_oof_metrics", []), 6)
+    multicohort_null = first_summary(multicohort_future_drop, "permutation_null", {}) or {}
+    multicohort_features = top_items(first_summary(multicohort_future_drop, "top_feature_tests", []), 12)
+    multicohort_importance = top_items(first_summary(multicohort_future_drop, "top_feature_importance", []), 12)
+    multicohort_leave = top_items(first_summary(multicohort_future_drop, "leave_cohort_eval", []), 8)
+    multicohort_best_oof = max(multicohort_oof, key=lambda r: (float(r.get("pooled_oof_roc_auc") or float("nan")) if r.get("pooled_oof_roc_auc") is not None else float("nan"))) if multicohort_oof else {}
     cross_cohort_shift = top_items(first_summary(cross_cohort_rollout, "domain_shift", []), 12)
     cross_cohort_corr = top_items(first_summary(cross_cohort_rollout, "top_correlations", []), 12)
     cross_cohort_difficult = top_items(first_summary(cross_cohort_rollout, "top_transfer_ranked_difficult_rois", []), 12)
@@ -440,6 +447,7 @@ def main() -> None:
         f"- Transfer-ranked masked rollout ROI/frame rows: {first_summary(transfer_ranked_rollout, 'n_roi', 0)} / {first_summary(transfer_ranked_rollout, 'n_frame_metric_rows', 0)}",
         f"- Transfer-ranked front physics ROI/cycles: {first_summary(transfer_ranked_front_physics, 'n_roi', 0)} / {first_summary(transfer_ranked_front_physics, 'n_cycles', 0)}",
         f"- Transfer-ranked residual transition timing ROI/method rows: {first_summary(transfer_ranked_residual_timing, 'n_roi', 0)} / {first_summary(transfer_ranked_residual_timing, 'n_roi_method_rows', 0)}",
+        f"- Multi-cohort future-drop model rows/features: {first_summary(multicohort_future_drop, 'n_roi_rows', 0)} / {first_summary(multicohort_future_drop, 'n_features', 0)}",
         f"- Cross-cohort rollout transfer selected/transfer ROIs: {first_summary(cross_cohort_rollout, 'n_selected_roi', 0)} / {first_summary(cross_cohort_rollout, 'n_transfer_ranked_roi', 0)}",
         f"- Diffusion sanity selected-front/publication candidates: {first_summary(diffusion_sanity, 'n_selected_front_rois', 0)} / {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
         f"- Control-balanced high-res front tracking/sanity candidates: {first_summary(control_balanced_front_tracking, 'n_tracked_rois', 0)} / {first_summary(control_balanced_diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
@@ -489,6 +497,7 @@ def main() -> None:
         f"- Transfer-ranked front physics audit links those crops to phase/front proxies across {first_summary(transfer_ranked_front_physics, 'n_roi', 0)} ROIs; strongest ROI-level future8 association is {((transfer_ranked_front_target_tests[0] if transfer_ranked_front_target_tests else {}).get('feature', 'NA'))} with median positive-negative {fmt((transfer_ranked_front_target_tests[0] if transfer_ranked_front_target_tests else {}).get('median_positive_minus_negative'))}, AUC {fmt((transfer_ranked_front_target_tests[0] if transfer_ranked_front_target_tests else {}).get('abs_oriented_auc'))}, and permutation p={fmt((transfer_ranked_front_target_tests[0] if transfer_ranked_front_target_tests else {}).get('permutation_p_abs_median_diff'))}; radius/diffusion-like values remain apparent optical-front proxies only.",
         f"- Transfer-ranked residual transition timing gives a stronger temporal residual/phase link than the broader event-control cohort: {((transfer_ranked_timing_align[0] if transfer_ranked_timing_align else {}).get('method', 'NA'))} {((transfer_ranked_timing_align[0] if transfer_ranked_timing_align else {}).get('distance_feature', 'NA'))} median distance {fmt((transfer_ranked_timing_align[0] if transfer_ranked_timing_align else {}).get('median_distance_to_transition'))} versus null mean {fmt((transfer_ranked_timing_align[0] if transfer_ranked_timing_align else {}).get('null_median_distance_mean'))}, p={fmt((transfer_ranked_timing_align[0] if transfer_ranked_timing_align else {}).get('empirical_p_distance_le_observed'))}; top future8 timing target is {((transfer_ranked_timing_target[0] if transfer_ranked_timing_target else {}).get('method', 'NA'))} {((transfer_ranked_timing_target[0] if transfer_ranked_timing_target else {}).get('feature', 'NA'))}, AUC {fmt((transfer_ranked_timing_target[0] if transfer_ranked_timing_target else {}).get('abs_oriented_auc'))}.",
         f"- Cross-cohort rollout transfer audit shows the late transfer-ranked crops are a distinct video-dynamics domain: selected-cohort DMD evaluated on transfer-ranked ROIs has median particle MSE {fmt(selected_to_transfer_shift.get('median_particle_mse'))}, {fmt(selected_to_transfer_shift.get('median_particle_mse_ratio_vs_internal'))}x the transfer-internal DMD baseline (p={fmt(selected_to_transfer_shift.get('mwu_p_vs_internal'))}), while pooled training is close to transfer-internal ({fmt(pooled_to_transfer_shift.get('median_particle_mse_ratio_vs_internal'))}x).",
+        f"- Multi-cohort future-drop model combines selected and transfer-ranked ROI physics features across {first_summary(multicohort_future_drop, 'n_roi_rows', 0)} rows / {first_summary(multicohort_future_drop, 'n_features', 0)} features; leave-cycle random forest reaches AUC {fmt(multicohort_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(multicohort_best_oof.get('pooled_oof_average_precision'))} with {fmt(multicohort_null.get('n_permutation'), 0)}-permutation p={fmt(multicohort_null.get('empirical_p_ge_observed'))}, but leave-cohort transfer is not evaluable because the selected cohort has no positive future8 labels.",
         f"- Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p={fmt((masked_residual_timing_align[0] if masked_residual_timing_align else {}).get('empirical_p_distance_le_observed'))}), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.",
         f"- Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: {first_summary(weak_label_benchmark, 'n_trainable_weak_label_rows', 0)} trainable weak rows ({first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} positive / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)} negative), and only {weak_label_leakage.get('n_usable_binary_folds', 0)} leave-reference fold is class-balanced enough for binary evaluation.",
         "",
@@ -1046,6 +1055,34 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Multi-Cohort Future-Drop Weak Model",
+        "",
+        f"- ROI rows selected/transfer/features: {first_summary(multicohort_future_drop, 'n_selected_rows', 0)} / {first_summary(multicohort_future_drop, 'n_transfer_ranked_rows', 0)} / {first_summary(multicohort_future_drop, 'n_features', 0)}",
+        f"- RF trees/permutation null: {first_summary(multicohort_future_drop, 'rf_trees', 0)} / {multicohort_null.get('n_permutation', 0)}",
+    ]
+    for row in multicohort_oof:
+        report_lines.append(
+            f"- Multi-cohort OOF {row.get('model')}: AUC {fmt(row.get('pooled_oof_roc_auc'))}, AP {fmt(row.get('pooled_oof_average_precision'))}, scored {fmt(row.get('n_scored'), 0)} rows over {fmt(row.get('n_scored_folds'), 0)}/{fmt(row.get('n_total_folds'), 0)} folds"
+        )
+    report_lines.append(
+        f"- Multi-cohort permutation null {multicohort_null.get('model', 'NA')}: observed AUC {fmt(multicohort_null.get('observed_auc'))}, null mean {fmt(multicohort_null.get('null_auc_mean'))}, p95 {fmt(multicohort_null.get('null_auc_p95'))}, empirical p={fmt(multicohort_null.get('empirical_p_ge_observed'))}"
+    )
+    for row in multicohort_features[:8]:
+        report_lines.append(
+            f"- Multi-cohort feature {row.get('feature')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, oriented AUC {fmt(row.get('oriented_auc'))}, p={fmt(row.get('mannwhitney_p'))}, n={fmt(row.get('n_positive'), 0)}/{fmt(row.get('n_negative'), 0)}"
+        )
+    for row in multicohort_importance[:8]:
+        report_lines.append(
+            f"- Multi-cohort importance {row.get('model')} {row.get('feature')}: {fmt(row.get('importance'))}"
+        )
+    for row in multicohort_leave:
+        report_lines.append(
+            f"- Leave-cohort {row.get('train_cohort')} -> {row.get('test_cohort')} {row.get('model')}: status {row.get('status')}, train positives/negatives {fmt(row.get('n_positive_train'), 0)}/{fmt(row.get('n_negative_train'), 0)}, test positives/negatives {fmt(row.get('n_positive_test'), 0)}/{fmt(row.get('n_negative_test'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(multicohort_future_drop, 'guardrail', 'Multi-cohort future-drop model unavailable.')}")
+
+    report_lines += [
+        "",
         "## Cross-Cohort Rollout Transfer",
         "",
         f"- ROI cohorts selected/transfer-ranked: {first_summary(cross_cohort_rollout, 'n_selected_roi', 0)} / {first_summary(cross_cohort_rollout, 'n_transfer_ranked_roi', 0)}",
@@ -1508,6 +1545,20 @@ def main() -> None:
             "top_transition_correlations": transfer_ranked_timing_transition_corr,
             "top_near_transition_residual_rois": transfer_ranked_timing_top_rois,
             "guardrail": first_summary(transfer_ranked_residual_timing, "guardrail"),
+        },
+        "multicohort_future_drop_model": {
+            "n_roi_rows": first_summary(multicohort_future_drop, "n_roi_rows"),
+            "n_selected_rows": first_summary(multicohort_future_drop, "n_selected_rows"),
+            "n_transfer_ranked_rows": first_summary(multicohort_future_drop, "n_transfer_ranked_rows"),
+            "n_features": first_summary(multicohort_future_drop, "n_features"),
+            "rf_trees": first_summary(multicohort_future_drop, "rf_trees"),
+            "label_counts": first_summary(multicohort_future_drop, "label_counts", []),
+            "cycle_group_oof_metrics": multicohort_oof,
+            "permutation_null": multicohort_null,
+            "top_feature_tests": multicohort_features,
+            "top_feature_importance": multicohort_importance,
+            "leave_cohort_eval": multicohort_leave,
+            "guardrail": first_summary(multicohort_future_drop, "guardrail"),
         },
         "cross_cohort_rollout_transfer_audit": {
             "n_selected_roi": first_summary(cross_cohort_rollout, "n_selected_roi"),

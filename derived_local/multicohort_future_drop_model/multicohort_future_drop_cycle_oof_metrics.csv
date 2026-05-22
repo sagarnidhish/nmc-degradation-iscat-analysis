@@ -1,0 +1,3 @@
+model,group_col,n_scored,n_positive_scored,n_negative_scored,pooled_oof_roc_auc,pooled_oof_average_precision,n_scored_folds,n_total_folds
+logistic_l2,cycleNo,58,28,30,0.6916666666666667,0.7773557378543848,13,13
+random_forest,cycleNo,58,28,30,0.8857142857142857,0.9137697862759439,13,13

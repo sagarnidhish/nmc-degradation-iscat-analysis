@@ -1,0 +1,5 @@
+model,train_cohort,test_cohort,n_train,n_test,n_positive_train,n_negative_train,n_positive_test,n_negative_test,status,roc_auc,average_precision
+logistic_l2,selected,transfer_ranked,10,48,0,10,28,20,missing_class,,
+random_forest,selected,transfer_ranked,10,48,0,10,28,20,missing_class,,
+logistic_l2,transfer_ranked,selected,48,10,28,20,0,10,missing_class,,
+random_forest,transfer_ranked,selected,48,10,28,20,0,10,missing_class,,
