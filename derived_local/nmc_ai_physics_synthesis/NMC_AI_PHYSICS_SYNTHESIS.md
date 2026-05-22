@@ -116,6 +116,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across 96 ROI tensors; top future16 mask/front proxy is masked_minus_background_mean_slope at AUC 0.690/AP 0.696, but source eta2 is 0.634.
 - A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.631/AP 0.634, and best within-source-rank proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.656/AP 0.677.
 - A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC 0.602/AP 0.581, but leave-source future16 drops to AUC 0.375, marking source transfer as the main failure mode.
+- Source-normalizing the source-balanced residual dictionary leaves a source-residual future16 residual-dynamics candidate, dictionary_recon_error_last_minus_first, at AUC 0.637/AP 0.637 with source eta2 1.484e-33; within-source-rank residual PCs are weaker at AUC 0.574.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
 - Masked video embedding audit extracts particle-prior self-supervised descriptors across 172 ROI tensors; balanced future leave-cycle AUC/AP is 0.816/0.865 with label-permutation p=0.012, while selected event/control readout is weaker at AUC 0.588.
 - Learned residual-CNN embeddings trained label-free for next-frame residual prediction reach future8 leave-cycle AUC 0.849 versus PCA-video 0.569 and handcrafted scalar 0.828; future16 learned_all remains weak at AUC 0.538 versus handcrafted 0.680.
@@ -1215,6 +1216,15 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source-balanced residual dictionary cycle feature future_any_drop_within_16cycles masked_minus_background_mean_slope: AUC 0.688, AP 0.703, source eta2 0.649
 - Source-balanced residual dictionary cycle feature future_any_drop_within_16cycles resdict_pc07_slope: AUC 0.682, AP 0.725, source eta2 0.536
 - Guardrail: Residual dictionary bases are label-free PCA summaries of automatic source-balanced ROI crops. They are useful for ranking dynamics hypotheses, not a trained deployable predictor or calibrated physics model.
+
+## Source-Balanced Residual Dictionary Source-Residual Audit
+
+- Rows/features/sources: 96 / 102 / 14
+- Feature family counts: {'residual_dictionary': 72, 'mask_front_scalar': 24, 'object_reconstruction': 6}
+- Best future16 source-residual residual dictionary feature: dictionary_recon_error_last_minus_first AUC 0.637, AP 0.637, eta2 1.484e-33, median pos-neg 2.537e-06
+- Best future16 within-source-rank residual dictionary feature: dictionary_recon_error_mse_slope AUC 0.574, AP 0.551, eta2 0.004
+- Best future16 source-residual feature overall: dictionary_recon_error_last_minus_first (residual_dictionary) AUC 0.637, AP 0.637
+- Guardrail: Source-normalized residual dictionary tests are in-cohort weak-label audits. They can identify source-robust residual dynamics candidates for follow-up, but they do not prove source-transferable prediction or calibrated phase/diffusion physics.
 
 ## Balanced Future-Drop Direct-Video ROI Audit
 

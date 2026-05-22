@@ -3159,3 +3159,26 @@ Cohort/result snapshot:
 Interpretation:
 
 Label-free residual bases capture temporal-dynamics modes that are complementary to crop-local mask/front intensity contrast and less source dominated at the ROI scalar level. However, grouped predictive readouts do not yet transfer across held-out source movies, so the next modeling step should either residualize/domain-adapt these residual coefficients by source or explicitly train source-invariant residual dynamics objectives before making any degradation warning claim.
+
+## 2026-05-22 Source-Balanced Residual Dictionary Source-Residual Audit
+
+Added `scripts/tier4_source_balanced_residual_dictionary_source_residual_audit.py` and ran it on Isambard against the source-balanced residual dictionary feature table. The audit tests raw, source-mean-only, source-residual, within-source-z, and within-source-rank transforms across residual-dictionary, mask/front, and object-reconstruction scalar families.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit`
+- `derived_local/source_balanced_residual_dictionary_source_residual_audit`
+
+Cohort/result snapshot:
+
+- 96 ROI sequences, 48 cycles, 14 source movies.
+- Tested 119 numeric descriptors: 72 residual dictionary, 24 mask/front scalar, 6 object-reconstruction, and 17 other scalar controls.
+- Raw future16 best overall remains `masked_minus_background_mean_slope`, AUC 0.690/AP 0.696/source eta2 0.634.
+- Raw future16 best residual-dictionary feature remains `resdict_pc01_mean`, AUC 0.668/AP 0.670/source eta2 0.187.
+- Source-residual future16 best overall and best residual-dictionary feature is `dictionary_recon_error_last_minus_first`, AUC 0.637/AP 0.637 with source eta2 effectively zero and median positive-negative 2.54e-6.
+- Within-source-rank future16 best residual-dictionary feature is weaker: `dictionary_recon_error_mse_slope`, AUC 0.574/AP 0.551/source eta2 0.004.
+- Source-mean-only transforms are very strong, e.g. residual `resdict_pc01_mean` future16 AUC 0.824, confirming that source-level acquisition/protocol structure carries a large share of the apparent degradation signal.
+
+Interpretation:
+
+This audit separates three effects: source-level structure is very predictive, raw crop-local mask/front contrast is strong but source structured, and source-residual residual-dictionary reconstruction-error drift retains a moderate future16 association without source variance. The source-residual residual feature is the best current candidate for a source-robust temporal-dynamics physics proxy, but it remains an in-cohort weak-label scalar audit and needs held-out-source/domain-adapted modeling before any warning claim.
