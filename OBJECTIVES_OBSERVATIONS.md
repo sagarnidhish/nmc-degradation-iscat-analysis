@@ -4311,3 +4311,31 @@ Results:
 Interpretation: the project currently supports source-aware particle-region manual-review ranking and optical-proxy hypothesis generation. It does not yet support calibrated diffusion, causal mechanism, broad source-robust forecasting, or deployable warning claims.
 
 Guardrail: the matrix is a wording/readiness ledger over existing automatic audits. It adds no manual labels, calibrated spatial metadata, causal validation, or prospective deployment validation.
+
+## 2026-05-22 Source-Heldout Event Rank Transfer Audit
+
+Added `scripts/tier4_source_heldout_event_rank_transfer_audit.py` and ran it on Isambard to test whether particle-region event ranking transfers when each acquisition source is held out. The audit trains only feature orientation and empirical scaling on all other sources, excludes precomputed source-residual features from the learned transfer score, and scores the held-out source without using its labels.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit`
+- `derived_local/source_heldout_event_rank_transfer_audit`
+- `source_heldout_event_rank_transfer_predictions.csv`
+- `source_heldout_event_rank_transfer_folds.csv`
+- `source_heldout_event_rank_transfer_feature_weights.csv`
+- `source_heldout_event_rank_transfer_score_tests.csv`
+- `source_heldout_event_rank_transfer_topk.csv`
+- `source_heldout_event_rank_transfer_summary.json`
+
+Results:
+
+- The audit starts from the 128-row source-balanced transport-mechanism dossier with 14 sources and 60 candidate raw automatic descriptors. Five sources have both near-pre and non-near rows and therefore support held-out evaluation.
+- The transfer-learned oriented feature score reaches near-pre versus any non-near AUC 0.832 and AP 0.924 over 48 held-out prediction rows, with median near-minus-control score difference 0.237. The source-level sign-flip p-value is 0.125 across the five eligible held-out sources.
+- Fixed `transport_mechanism_score` remains slightly higher by pooled AUC at 0.838/AP 0.938, but its top-5 is 80% dominated by source `17_c2_x10_HighHighCOV_150723`.
+- The transfer-learned score improves top-k source diversity while preserving high near-pre enrichment: top-5 is 100% near-pre across 3 sources with max source fraction 0.40; top-10 is 100% near-pre across 4 sources; top-20 is 95% near-pre across 4 sources.
+- The eligible-source count is still small, so this strengthens the review-ranker claim but does not yet establish a deployable source-transfer detector.
+
+Interpretation: a simple held-out-source orientation/scaling procedure can preserve most of the event-local ranking signal while reducing top-k source concentration. This is useful for building a fair manual-review queue and for separating robust particle-region optical descriptors from source-specific acquisition artifacts.
+
+Guardrail: this is an automatic particle-region ranking diagnostic. It adds no manual labels, calibrated velocities, diffusion coefficients, causal mechanism proof, or prospective deployment validation.
+

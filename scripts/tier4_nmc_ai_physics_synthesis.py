@@ -106,6 +106,7 @@ def main() -> None:
     apparent_diffusion_calibration = read_json(derived / "apparent_diffusion_calibration_bounds" / "apparent_diffusion_calibration_bounds_summary.json")
     diffusion_physics_consistency = read_json(derived / "diffusion_physics_consistency_audit" / "diffusion_physics_consistency_summary.json")
     diffusion_claim_readiness = read_json(derived / "diffusion_claim_readiness_audit" / "diffusion_claim_readiness_summary.json")
+    all_cycle_coverage = read_json(derived / "all_cycle_dataset_coverage_atlas" / "all_cycle_dataset_coverage_summary.json")
     current_claim_readiness = read_json(derived / "current_claim_readiness_matrix" / "current_claim_readiness_summary.json")
     diffusion_unblock_sensitivity = read_json(derived / "diffusion_unblock_sensitivity_audit" / "diffusion_unblock_sensitivity_summary.json")
     cross_modal_consensus = read_json(derived / "cross_modal_degradation_consensus" / "cross_modal_degradation_consensus_summary.json")
@@ -212,6 +213,7 @@ def main() -> None:
     source_balanced_pre_event_transport_kinetic_fusion = read_json(derived / "source_balanced_pre_event_transport_kinetic_fusion_audit" / "source_balanced_pre_event_transport_kinetic_fusion_summary.json")
     source_balanced_transport_mechanism = read_json(derived / "source_balanced_transport_mechanism_dossier" / "source_balanced_transport_mechanism_summary.json")
     source_balanced_transport_mechanism_falsification = read_json(derived / "source_balanced_transport_mechanism_falsification_audit" / "source_balanced_transport_mechanism_falsification_summary.json")
+    source_heldout_event_rank_transfer = read_json(derived / "source_heldout_event_rank_transfer_audit" / "source_heldout_event_rank_transfer_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
@@ -772,6 +774,9 @@ def main() -> None:
     transport_mechanism_falsification_pair = top_items(first_summary(source_balanced_transport_mechanism_falsification, "lead_pair_tests_for_transport_mechanism_score", []), 3)
     transport_mechanism_falsification_source = first_summary(source_balanced_transport_mechanism_falsification, "lead_source_test_for_transport_mechanism_score", {}) or {}
     transport_mechanism_falsification_topk = top_items(first_summary(source_balanced_transport_mechanism_falsification, "topk_enrichment", []), 4)
+    heldout_rank_transfer_tests = top_items(first_summary(source_heldout_event_rank_transfer, "best_score_tests_by_target", []), 8)
+    heldout_rank_transfer_transfer_tests = top_items(first_summary(source_heldout_event_rank_transfer, "transfer_score_tests", []), 4)
+    heldout_rank_transfer_topk = top_items(first_summary(source_heldout_event_rank_transfer, "topk_summary", []), 12)
     acq_echem_cycle_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized"), {})
     acq_echem_cycle_bal_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized_cycle_balanced"), {})
     acq_echem_cycle_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
@@ -908,6 +913,10 @@ def main() -> None:
     diffusion_physics_source_summary = top_items(first_summary(diffusion_physics_consistency, "source_summary", []), 12)
     diffusion_claim_top_candidates = top_items(first_summary(diffusion_claim_readiness, "top_candidates", []), 8)
     diffusion_claim_hard_blockers = top_items(first_summary(diffusion_claim_readiness, "hard_blockers", []), 12)
+    all_cycle_source_gaps = top_items(first_summary(all_cycle_coverage, "top_source_gaps", []), 12)
+    all_cycle_gap_cycles = top_items(first_summary(all_cycle_coverage, "top_coverage_gap_cycles", []), 12)
+    all_cycle_roi_cohorts = top_items(first_summary(all_cycle_coverage, "roi_cohort_summary", []), 18)
+    all_cycle_outputs = top_items(first_summary(all_cycle_coverage, "cycle_output_summary", []), 10)
     current_claim_status_counts = top_items(first_summary(current_claim_readiness, "status_counts", []), 12)
     current_claim_positive = first_summary(current_claim_readiness, "top_positive_evidence", {}) or {}
     current_claim_negative = first_summary(current_claim_readiness, "top_negative_evidence", {}) or {}
@@ -947,10 +956,10 @@ def main() -> None:
         ),
         evidence_row(
             "Focus on Alek_Jiho NMC degradation dataset on Isambard",
-            "implemented",
-            f"Synthesis reads Isambard derived directory with {n_roi} ROI rows, {n_cycles} cycles, and {n_event_refs} event-reference cycles.",
-            "The current multi-cycle ROI cohort is selected around event/reference cycles, not every raw video in the full dataset.",
-            "Expand ROI extraction to all cycles after manual QC stabilizes particle identity selection.",
+            "implemented_with_guardrail",
+            f"Synthesis reads Isambard derived directory with {n_roi} core ROI rows, while the all-cycle coverage atlas maps {first_summary(all_cycle_coverage, 'n_cycle_rows', 0)} cycle rows, {first_summary(all_cycle_coverage, 'n_sources', 0)} sources, {first_summary(all_cycle_coverage, 'n_h5_inventory_rows', 0)} HDF5 inventory rows, and {first_summary(all_cycle_coverage, 'n_cycles_with_any_roi_video_sequence', 0)} cycles with tracked ROI/video-sequence coverage.",
+            "The atlas proves broad source/cycle coverage across accumulated cohorts, but it is still a manifest-level coverage audit rather than exhaustive per-particle segmentation of every raw movie.",
+            "Use the all-cycle coverage gap queue to prioritize any remaining source/cycle extraction and manual-QC expansion.",
         ),
         evidence_row(
             "Next-frame prediction and rollout",
@@ -1478,6 +1487,28 @@ def main() -> None:
             f"- Readiness candidate {row.get('roi_id')}: source {row.get('candidate_source')}, cycle {fmt(row.get('cycleNo'), 0)}, publication_ready={row.get('publication_ready')}, blockers={row.get('blockers')}"
         )
     report_lines.append(f"- Guardrail: {first_summary(diffusion_claim_readiness, 'guardrail', 'Diffusion claim readiness audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## All-Cycle Dataset Coverage Atlas",
+        "",
+        f"- Status/cycles/sources/HDF5 rows: {first_summary(all_cycle_coverage, 'overall_status', 'unavailable')} / {first_summary(all_cycle_coverage, 'n_cycle_rows', 0)} / {first_summary(all_cycle_coverage, 'n_sources', 0)} / {first_summary(all_cycle_coverage, 'n_h5_inventory_rows', 0)}",
+        f"- ROI/video cycle coverage: any tracked sequence {first_summary(all_cycle_coverage, 'n_cycles_with_any_roi_video_sequence', 0)} cycles ({fmt(first_summary(all_cycle_coverage, 'any_roi_cycle_coverage_fraction'))}); primary sequence {first_summary(all_cycle_coverage, 'n_cycles_with_primary_roi_sequence', 0)} cycles ({fmt(first_summary(all_cycle_coverage, 'primary_roi_cycle_coverage_fraction'))}).",
+        f"- Future16-positive cycles without any tracked ROI sequence: {first_summary(all_cycle_coverage, 'n_future16_positive_cycles_without_any_roi_sequence', 0)}",
+    ]
+    for row in all_cycle_source_gaps[:6]:
+        report_lines.append(
+            f"- Source coverage {row.get('source_stem')}: cycles {fmt(row.get('n_cycle_rows'), 0)}, ROI-covered {fmt(row.get('n_cycles_with_any_roi'), 0)}, primary-covered {fmt(row.get('n_cycles_with_primary_roi'), 0)}, future16+ {fmt(row.get('n_future16_positive'), 0)}, primary fraction {fmt(row.get('primary_roi_cycle_coverage_fraction'))}"
+        )
+    for row in all_cycle_gap_cycles[:6]:
+        report_lines.append(
+            f"- Coverage-priority cycle {fmt(row.get('cycleNo'), 0)} / {row.get('source_stem')}: priority {fmt(row.get('coverage_gap_priority'))}, ROI rows {fmt(row.get('n_roi_total_across_tracked_cohorts'), 0)}, future8 {fmt(row.get('future_any_drop_within_8cycles'), 0)}, future16 {fmt(row.get('future_any_drop_within_16cycles'), 0)}, consensus {fmt(row.get('cross_modal_consensus_score'))}"
+        )
+    for row in all_cycle_roi_cohorts[:8]:
+        report_lines.append(
+            f"- ROI cohort coverage {row.get('cohort')}: rows {fmt(row.get('n_rows'), 0)}, cycles {fmt(row.get('n_cycles'), 0)}, sources {fmt(row.get('n_sources'), 0)}, status {row.get('status', 'NA')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(all_cycle_coverage, 'guardrail', 'All-cycle coverage atlas unavailable.')}")
 
     report_lines += [
         "",
@@ -2529,6 +2560,26 @@ def main() -> None:
             f"- Top-{fmt(row.get('top_k'), 0)} enrichment: near-pre fraction {fmt(row.get('near_pre_fraction'))}, sources {fmt(row.get('n_sources'), 0)}, dominant source {row.get('dominant_source', 'NA')} fraction {fmt(row.get('dominant_source_fraction'))}, diffusion candidates {fmt(row.get('n_diffusion_claim_candidates'), 0)}"
         )
     report_lines.append(f"- Guardrail: {first_summary(source_balanced_transport_mechanism_falsification, 'guardrail', 'Source-balanced transport mechanism falsification audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Source-Heldout Event Rank Transfer Audit",
+        "",
+        f"- Input rows/sources/candidate features/folds: {first_summary(source_heldout_event_rank_transfer, 'n_input_rows', 0)} / {first_summary(source_heldout_event_rank_transfer, 'n_sources', 0)} / {first_summary(source_heldout_event_rank_transfer, 'n_candidate_features', 0)} / {first_summary(source_heldout_event_rank_transfer, 'n_folds', 0)}",
+    ]
+    for row in heldout_rank_transfer_transfer_tests:
+        report_lines.append(
+            f"- Transfer-learned heldout score {row.get('target', 'NA')}: AUC {fmt(row.get('auc'))}, AP {fmt(row.get('average_precision'))}, median near-control diff {fmt(row.get('median_diff_pos_minus_neg'))}, eligible sources {fmt(row.get('n_eligible_heldout_sources'), 0)}, source sign-flip p {fmt(row.get('source_auc_minus_half_sign_flip_p'))}"
+        )
+    for row in heldout_rank_transfer_tests:
+        report_lines.append(
+            f"- Heldout comparator {row.get('score', 'NA')} {row.get('target', 'NA')}: AUC {fmt(row.get('auc'))}, AP {fmt(row.get('average_precision'))}, source sign-flip p {fmt(row.get('source_auc_minus_half_sign_flip_p'))}"
+        )
+    for row in heldout_rank_transfer_topk[:8]:
+        report_lines.append(
+            f"- Heldout top-{fmt(row.get('k'), 0)} {row.get('score', 'NA')}: near-pre fraction {fmt(row.get('near_pre_fraction'))}, sources {fmt(row.get('n_sources'), 0)}, dominant source {row.get('dominant_source', 'NA')} fraction {fmt(row.get('max_source_fraction'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_heldout_event_rank_transfer, 'guardrail', 'Source-heldout event rank transfer audit unavailable.')}")
 
     report_lines += [
         "",
@@ -4360,6 +4411,18 @@ def main() -> None:
             "outputs": first_summary(source_balanced_transport_mechanism_falsification, "outputs", {}),
             "guardrail": first_summary(source_balanced_transport_mechanism_falsification, "guardrail"),
         },
+        "source_heldout_event_rank_transfer_audit": {
+            "n_input_rows": first_summary(source_heldout_event_rank_transfer, "n_input_rows"),
+            "n_sources": first_summary(source_heldout_event_rank_transfer, "n_sources"),
+            "n_candidate_features": first_summary(source_heldout_event_rank_transfer, "n_candidate_features"),
+            "n_folds": first_summary(source_heldout_event_rank_transfer, "n_folds"),
+            "targets": first_summary(source_heldout_event_rank_transfer, "targets", []),
+            "transfer_score_tests": heldout_rank_transfer_transfer_tests,
+            "best_score_tests_by_target": heldout_rank_transfer_tests,
+            "topk_summary": heldout_rank_transfer_topk,
+            "outputs": first_summary(source_heldout_event_rank_transfer, "outputs", {}),
+            "guardrail": first_summary(source_heldout_event_rank_transfer, "guardrail"),
+        },
         "source_domain_video_echem_adaptation_audit": {
             "n_rows": first_summary(source_domain_video_echem, "n_rows"),
             "n_cycles": first_summary(source_domain_video_echem, "n_cycles"),
@@ -4814,6 +4877,25 @@ def main() -> None:
             "n_publication_ready_candidates": first_summary(diffusion_claim_readiness, "n_publication_ready_candidates"),
             "top_candidates": diffusion_claim_top_candidates,
             "guardrail": first_summary(diffusion_claim_readiness, "guardrail"),
+        },
+        "all_cycle_dataset_coverage_atlas": {
+            "overall_status": first_summary(all_cycle_coverage, "overall_status"),
+            "n_cycle_rows": first_summary(all_cycle_coverage, "n_cycle_rows"),
+            "n_sources": first_summary(all_cycle_coverage, "n_sources"),
+            "n_h5_inventory_rows": first_summary(all_cycle_coverage, "n_h5_inventory_rows"),
+            "n_roi_cohorts_checked": first_summary(all_cycle_coverage, "n_roi_cohorts_checked"),
+            "n_cycle_outputs_checked": first_summary(all_cycle_coverage, "n_cycle_outputs_checked"),
+            "n_cycles_with_any_roi_video_sequence": first_summary(all_cycle_coverage, "n_cycles_with_any_roi_video_sequence"),
+            "n_cycles_with_primary_roi_sequence": first_summary(all_cycle_coverage, "n_cycles_with_primary_roi_sequence"),
+            "any_roi_cycle_coverage_fraction": first_summary(all_cycle_coverage, "any_roi_cycle_coverage_fraction"),
+            "primary_roi_cycle_coverage_fraction": first_summary(all_cycle_coverage, "primary_roi_cycle_coverage_fraction"),
+            "n_future16_positive_cycles_without_any_roi_sequence": first_summary(all_cycle_coverage, "n_future16_positive_cycles_without_any_roi_sequence"),
+            "top_source_gaps": all_cycle_source_gaps,
+            "top_coverage_gap_cycles": all_cycle_gap_cycles,
+            "roi_cohort_summary": all_cycle_roi_cohorts,
+            "cycle_output_summary": all_cycle_outputs,
+            "outputs": first_summary(all_cycle_coverage, "outputs", {}),
+            "guardrail": first_summary(all_cycle_coverage, "guardrail"),
         },
         "current_claim_readiness_matrix": {
             "n_claims": first_summary(current_claim_readiness, "n_claims"),

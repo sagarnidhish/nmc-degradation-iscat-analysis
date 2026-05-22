@@ -1,0 +1,206 @@
+{
+  "best_score_tests_by_target": [
+    {
+      "auc": 0.837890625,
+      "average_precision": 0.9377066194055037,
+      "median_diff_pos_minus_neg": 0.23236350247775084,
+      "median_neg": 0.4256729748179612,
+      "median_pos": 0.658036477295712,
+      "n_eligible_heldout_sources": 5,
+      "n_neg": 16,
+      "n_pos": 32,
+      "n_rows": 48,
+      "n_sources": 5,
+      "score": "fixed_transport_mechanism_score",
+      "source_auc_minus_half_sign_flip_p": 0.125,
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "auc": 0.83203125,
+      "average_precision": 0.9244863648009517,
+      "median_diff_pos_minus_neg": 0.23663520864999,
+      "median_neg": 0.4226662246071634,
+      "median_pos": 0.6593014332571534,
+      "n_eligible_heldout_sources": 5,
+      "n_neg": 16,
+      "n_pos": 32,
+      "n_rows": 48,
+      "n_sources": 5,
+      "score": "transfer_oriented_feature_score",
+      "source_auc_minus_half_sign_flip_p": 0.125,
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "auc": 0.8095703125,
+      "average_precision": 0.9206144949033692,
+      "median_diff_pos_minus_neg": 0.5191406249999999,
+      "median_neg": 0.2986328125,
+      "median_pos": 0.8177734375,
+      "n_eligible_heldout_sources": 5,
+      "n_neg": 16,
+      "n_pos": 32,
+      "n_rows": 48,
+      "n_sources": 5,
+      "score": "fixed_transport_raw_score",
+      "source_auc_minus_half_sign_flip_p": 0.125,
+      "target": "near_vs_any_non_near"
+    }
+  ],
+  "guardrail": "Held-out-source transfer scores are automatic particle-region ranking diagnostics. They do not add manual labels, calibrated velocities, diffusion coefficients, or deployment validation.",
+  "n_candidate_features": 60,
+  "n_folds": 5,
+  "n_input_rows": 128,
+  "n_prediction_rows": 48,
+  "n_sources": 14,
+  "outputs": {
+    "feature_weights": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_feature_weights.csv",
+    "folds": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_folds.csv",
+    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_predictions.csv",
+    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/README.md",
+    "score_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_score_tests.csv",
+    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_summary.json",
+    "topk": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_topk.csv"
+  },
+  "targets": [
+    "near_vs_any_non_near"
+  ],
+  "topk_summary": [
+    {
+      "dominant_source": "12_c2_x10_070723",
+      "k": 5,
+      "max_source_fraction": 0.4,
+      "n_rows": 5,
+      "n_sources": 3,
+      "near_pre_fraction": 1.0,
+      "score": "transfer_oriented_feature_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "9_c2_x10_010723",
+      "k": 10,
+      "max_source_fraction": 0.5,
+      "n_rows": 10,
+      "n_sources": 4,
+      "near_pre_fraction": 1.0,
+      "score": "transfer_oriented_feature_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "k": 20,
+      "max_source_fraction": 0.4,
+      "n_rows": 20,
+      "n_sources": 4,
+      "near_pre_fraction": 0.95,
+      "score": "transfer_oriented_feature_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "k": 40,
+      "max_source_fraction": 0.25,
+      "n_rows": 40,
+      "n_sources": 5,
+      "near_pre_fraction": 0.725,
+      "score": "transfer_oriented_feature_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "k": 5,
+      "max_source_fraction": 0.8,
+      "n_rows": 5,
+      "n_sources": 2,
+      "near_pre_fraction": 1.0,
+      "score": "fixed_transport_mechanism_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "k": 10,
+      "max_source_fraction": 0.5,
+      "n_rows": 10,
+      "n_sources": 4,
+      "near_pre_fraction": 1.0,
+      "score": "fixed_transport_mechanism_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "k": 20,
+      "max_source_fraction": 0.35,
+      "n_rows": 20,
+      "n_sources": 5,
+      "near_pre_fraction": 1.0,
+      "score": "fixed_transport_mechanism_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "9_c2_x10_010723",
+      "k": 40,
+      "max_source_fraction": 0.25,
+      "n_rows": 40,
+      "n_sources": 5,
+      "near_pre_fraction": 0.7,
+      "score": "fixed_transport_mechanism_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "9_c2_x10_010723",
+      "k": 5,
+      "max_source_fraction": 0.6,
+      "n_rows": 5,
+      "n_sources": 3,
+      "near_pre_fraction": 0.8,
+      "score": "fixed_qc_review_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "9_c2_x10_010723",
+      "k": 10,
+      "max_source_fraction": 0.4,
+      "n_rows": 10,
+      "n_sources": 4,
+      "near_pre_fraction": 0.9,
+      "score": "fixed_qc_review_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "k": 20,
+      "max_source_fraction": 0.4,
+      "n_rows": 20,
+      "n_sources": 5,
+      "near_pre_fraction": 0.95,
+      "score": "fixed_qc_review_score",
+      "target": "near_vs_any_non_near"
+    },
+    {
+      "dominant_source": "17_c2_x10_HighHighCOV_150723",
+      "k": 40,
+      "max_source_fraction": 0.25,
+      "n_rows": 40,
+      "n_sources": 5,
+      "near_pre_fraction": 0.7,
+      "score": "fixed_qc_review_score",
+      "target": "near_vs_any_non_near"
+    }
+  ],
+  "transfer_score_tests": [
+    {
+      "auc": 0.83203125,
+      "average_precision": 0.9244863648009517,
+      "median_diff_pos_minus_neg": 0.23663520864999,
+      "median_neg": 0.4226662246071634,
+      "median_pos": 0.6593014332571534,
+      "n_eligible_heldout_sources": 5,
+      "n_neg": 16,
+      "n_pos": 32,
+      "n_rows": 48,
+      "n_sources": 5,
+      "score": "transfer_oriented_feature_score",
+      "source_auc_minus_half_sign_flip_p": 0.125,
+      "target": "near_vs_any_non_near"
+    }
+  ]
+}

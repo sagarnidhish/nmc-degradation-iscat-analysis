@@ -467,6 +467,33 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Readiness candidate cycle116_rank7_obj37: source control_balanced_selected_front, cycle 116, publication_ready=False, blockers=selected nonnegative; manual QC accepted; publication-ready gate
 - Guardrail: Calibrated diffusion remains blocked unless raw spatial calibration, timestamp semantics, internal front-motion gates, control-balanced sanity checks, and manual QC labels all pass. Current outputs support optical-front proxy review only.
 
+## All-Cycle Dataset Coverage Atlas
+
+- Status/cycles/sources/HDF5 rows: all_cycle_coverage_atlas_ready / 89 / 16 / 33
+- ROI/video cycle coverage: any tracked sequence 88 cycles (0.989); primary sequence 88 cycles (0.989).
+- Future16-positive cycles without any tracked ROI sequence: 0
+- Source coverage 16_c2_x10_HighHighCOV_130723: cycles 10, ROI-covered 9, primary-covered 9, future16+ 6, primary fraction 0.900
+- Source coverage 17_c2_x10_HighHighCOV_150723: cycles 10, ROI-covered 10, primary-covered 10, future16+ 10, primary fraction 1.000
+- Source coverage 12_c2_x10_070723: cycles 5, ROI-covered 5, primary-covered 5, future16+ 5, primary fraction 1.000
+- Source coverage 6_c2_x10_270623_2: cycles 5, ROI-covered 5, primary-covered 5, future16+ 5, primary fraction 1.000
+- Source coverage 9_c2_x10_010723: cycles 5, ROI-covered 5, primary-covered 5, future16+ 5, primary fraction 1.000
+- Source coverage 11_c2_x10_050723: cycles 5, ROI-covered 5, primary-covered 5, future16+ 3, primary fraction 1.000
+- Coverage-priority cycle 150 / 17_c2_x10_HighHighCOV_150723: priority 5.067, ROI rows 22, future8 1, future16 1, consensus 0.646
+- Coverage-priority cycle 110 / 12_c2_x10_070723: priority 4.946, ROI rows 14, future8 1, future16 1, consensus 0.611
+- Coverage-priority cycle 80 / 9_c2_x10_010723: priority 4.942, ROI rows 8, future8 1, future16 1, consensus 0.574
+- Coverage-priority cycle 78 / 9_c2_x10_010723: priority 4.854, ROI rows 14, future8 1, future16 1, consensus 0.587
+- Coverage-priority cycle 82 / 9_c2_x10_010723: priority 4.853, ROI rows 8, future8 1, future16 1, consensus 0.504
+- Coverage-priority cycle 108 / 12_c2_x10_070723: priority 4.788, ROI rows 14, future8 1, future16 1, consensus 0.459
+- ROI cohort coverage selected_roi_sequences: rows 11, cycles 2, sources 2, status ok
+- ROI cohort coverage multi_cycle_roi_sequences: rows 52, cycles 11, sources 4, status ok
+- ROI cohort coverage balanced_future_roi_sequences: rows 72, cycles 24, sources 9, status ok
+- ROI cohort coverage control_roi_sequences: rows 16, cycles 2, sources 2, status ok
+- ROI cohort coverage control_roi_sequences_expanded: rows 32, cycles 4, sources 2, status ok
+- ROI cohort coverage source_balanced_roi_sequences: rows 96, cycles 48, sources 14, status ok
+- ROI cohort coverage source_balanced_pre_event_roi_sequences: rows 128, cycles 64, sources 14, status ok
+- ROI cohort coverage transfer_ranked_roi_sequences: rows 48, cycles 12, sources 4, status ok
+- Guardrail: This atlas audits dataset and ROI-analysis coverage only. It does not extract new ROIs, validate particle identity, train deployment models, or make calibrated diffusion/phase-boundary claims.
+
 ## Current Claim Readiness Matrix
 
 - Claims audited: 7
@@ -500,7 +527,7 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Diffusion blocker sensitivity HDF5 spatial calibration metadata present: 60 candidate rows, criterion status fail
 - Diffusion blocker sensitivity Radius2 linear-fit quality: 53 candidate rows, criterion status fail
 - Diffusion blocker sensitivity q70 positive confidence interval: 51 candidate rows, criterion status fail
-- Diffusion blocker sensitivity Positive front expansion: 35 candidate rows, criterion status
+- Diffusion blocker sensitivity Positive front expansion: 35 candidate rows, criterion status 
 - Diffusion blocker sensitivity Manual QC accepted labels: 30 candidate rows, criterion status blocked_pending_manual_qc
 - Nearest diffusion-unblock candidate cycle78_rank22_obj2: blockers 5, priority 56.473, blocker summary Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; q70 positive confidence interval
 - Nearest diffusion-unblock candidate cycle62_rank1_obj4: blockers 6, priority 15.003, blocker summary Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Radius2 linear-fit quality
@@ -1654,6 +1681,23 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Top-40 enrichment: near-pre fraction 0.550, sources 14, dominant source 17_c2_x10_HighHighCOV_150723 fraction 0.200, diffusion candidates 0
 - Guardrail: This is a falsification audit for the automatic mechanism review score. Same-source enrichment supports event-local ranking, but the scores remain optical/AI descriptors rather than calibrated transport, phase-boundary velocity, diffusion, or causal proof.
 
+## Source-Heldout Event Rank Transfer Audit
+
+- Input rows/sources/candidate features/folds: 128 / 14 / 60 / 5
+- Transfer-learned heldout score near_vs_any_non_near: AUC 0.832, AP 0.924, median near-control diff 0.237, eligible sources 5, source sign-flip p 0.125
+- Heldout comparator fixed_transport_mechanism_score near_vs_any_non_near: AUC 0.838, AP 0.938, source sign-flip p 0.125
+- Heldout comparator transfer_oriented_feature_score near_vs_any_non_near: AUC 0.832, AP 0.924, source sign-flip p 0.125
+- Heldout comparator fixed_transport_raw_score near_vs_any_non_near: AUC 0.810, AP 0.921, source sign-flip p 0.125
+- Heldout top-5 transfer_oriented_feature_score: near-pre fraction 1.000, sources 3, dominant source 12_c2_x10_070723 fraction 0.400
+- Heldout top-10 transfer_oriented_feature_score: near-pre fraction 1.000, sources 4, dominant source 9_c2_x10_010723 fraction 0.500
+- Heldout top-20 transfer_oriented_feature_score: near-pre fraction 0.950, sources 4, dominant source 17_c2_x10_HighHighCOV_150723 fraction 0.400
+- Heldout top-40 transfer_oriented_feature_score: near-pre fraction 0.725, sources 5, dominant source 17_c2_x10_HighHighCOV_150723 fraction 0.250
+- Heldout top-5 fixed_transport_mechanism_score: near-pre fraction 1.000, sources 2, dominant source 17_c2_x10_HighHighCOV_150723 fraction 0.800
+- Heldout top-10 fixed_transport_mechanism_score: near-pre fraction 1.000, sources 4, dominant source 17_c2_x10_HighHighCOV_150723 fraction 0.500
+- Heldout top-20 fixed_transport_mechanism_score: near-pre fraction 1.000, sources 5, dominant source 17_c2_x10_HighHighCOV_150723 fraction 0.350
+- Heldout top-40 fixed_transport_mechanism_score: near-pre fraction 0.700, sources 5, dominant source 9_c2_x10_010723 fraction 0.250
+- Guardrail: Held-out-source transfer scores are automatic particle-region ranking diagnostics. They do not add manual labels, calibrated velocities, diffusion coefficients, or deployment validation.
+
 ## Source-Balanced Degradation Mode Audit
 
 - Rows/cycles/sources/features: 96 / 48 / 14 / 18
@@ -2639,7 +2683,7 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 ## Completion Audit
 
 - Implement paper-inspired agentic workflows in separate Isambard folders: implemented. Evidence: agentic_research outputs plus derived tier1/tier2/tier3 experiment folders were created on Isambard and compact outputs synced locally. Limitation: The synthesis script summarizes the outputs but does not rerun the original literature analysis.
-- Focus on Alek_Jiho NMC degradation dataset on Isambard: implemented. Evidence: Synthesis reads Isambard derived directory with 52 ROI rows, 11 cycles, and 4 event-reference cycles. Limitation: The current multi-cycle ROI cohort is selected around event/reference cycles, not every raw video in the full dataset.
+- Focus on Alek_Jiho NMC degradation dataset on Isambard: implemented_with_guardrail. Evidence: Synthesis reads Isambard derived directory with 52 core ROI rows, while the all-cycle coverage atlas maps 89 cycle rows, 16 sources, 33 HDF5 inventory rows, and 88 cycles with tracked ROI/video-sequence coverage. Limitation: The atlas proves broad source/cycle coverage across accumulated cohorts, but it is still a manifest-level coverage audit rather than exhaustive per-particle segmentation of every raw movie.
 - Next-frame prediction and rollout: implemented_with_guardrail. Evidence: Persistence, velocity, low-rank DMD, PCA latent trajectories, PCA-ridge, residual-CNN guardrails, and prefix-only ROI forecasts were run. Persistence is best across raw pixel rollouts: True; best prefix classifier target is front_positive_residual_binary with AUC 0.691. Limitation: Learned/full rollout models do not yet beat persistence robustly; use residuals, latent paths, and prefix forecasts as physics descriptors rather than claiming superior pixel prediction.
 - Select and guard particle-region-only ROIs: implemented_with_guardrail. Evidence: Model inputs use cropped ROI tensors and the particle-mask stability audit covers 52 ROI rows / 4992 frames; median fallback fraction is 0.000. Limitation: The audit uses automatic contrast/history masks and is not a manual segmentation of each particle boundary.
 - Track phase-boundary movement: implemented_as_proxy. Evidence: Front/phase mobility descriptors, selected-front tracking, and threshold-robust sweeps exist; threshold sweep covers 52 ROI rows. Limitation: Front masks are automatic; after protocol/echem conditioning, front-direction sign consistency survives more strongly than front-magnitude metrics and is robust in 5 automatic QC strata.
