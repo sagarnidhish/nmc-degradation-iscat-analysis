@@ -3604,3 +3604,27 @@ Cohort/result snapshot:
 Interpretation:
 
 This is a useful negative result. In the source-balanced pre-event cohort, coarse unsupervised source-residual modes do not recover a repeatable near-pre-event degradation state. The more defensible signal remains continuous: front/diffusion-like clocks and source-invariant feature-family readouts. Mode labels from this audit should be used only as broad review strata, not as validated degradation modes, phase boundaries, diffusion coefficients, or causal warning classes.
+
+## 2026-05-22 Source-Balanced Pre-Event Echem/Front Coupling Audit
+
+Added `scripts/tier4_source_balanced_pre_event_echem_front_coupling_audit.py` and ran it on Isambard. This audit joins the source-balanced pre-event ROI/front/kymograph descriptors to the cycle-level electrochemical regime atlas, then asks which optical proxies are explained by echem/context and which event-bin effects remain after source plus echem/context residualization.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit`
+- `derived_local/source_balanced_pre_event_echem_front_coupling_audit`
+
+Cohort/result snapshot:
+
+- Joined table: 128 ROI rows, 64 cycles, 14 source movies.
+- Conditioning set: 39 cycle-level echem descriptors, 15 acquisition/context descriptors, and 20 front/mask/kymograph targets.
+- Strongest raw event-bin result is clean near-pre versus post/control `masked_minus_background_mean_slope`: n=32 versus 52, median difference 0.005637, AUC 0.797, Mann-Whitney p=5.48e-06.
+- Raw clean near-pre versus post/control `kymograph_temporal_energy` remains visible: median difference 3.87e-06, AUC 0.717, p=0.000898.
+- The strongest echem/optical correlation is `shape_V_mean` versus `kymograph_temporal_energy`: rho=0.592, n=122, p=7.05e-13. Other leading echem correlations also concentrate on kymograph temporal energy and masked-background slope.
+- Source+echem residualization weakens the raw near-pre optical separations. The top residual event-bin row is clean near-pre versus post/control `front_radius_slope_px_per_norm_time`: residual median difference 0.210 px/norm time, AUC 0.641, p=0.080.
+- The source+echem residual `front_radius2_slope_px2_per_norm_time` row is similar but underpowered: residual median difference 2.616 px^2/norm time, AUC 0.634, p=0.0965.
+- Echem/context/source models explain large fractions of some proxy variance, especially `front_gradient_strength_median` (0.943 variance explained) and `mask_centroid_path_px` (0.916), reinforcing that raw ROI readouts are heavily context-structured.
+
+Interpretation:
+
+This audit is an important guardrail. Cycle-level echem descriptors explain substantial structure in kymograph energy and mask/front proxies, and source+echem residualization removes most of the strongest raw clean-pre contrast/mask signal. The remaining residual evidence is a modest front-radius/front-radius-squared slope hint rather than a calibrated diffusion or phase-boundary result. These outputs support manual front QC and better source/echem matched sampling; they argue against presenting the current automatic optical signals as standalone causal precursors or deployable warnings.
