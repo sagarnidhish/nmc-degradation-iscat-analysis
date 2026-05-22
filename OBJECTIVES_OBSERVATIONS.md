@@ -2458,7 +2458,7 @@ Key result:
 Interpretation: this closes the immediate review-prioritization gap without pretending to replace manual QC. The output identifies high-yield visual-review candidates and explicit artifact/diffusion guardrails, but it must not be used as particle identity, front-mask acceptance, diffusion interpretability, or degradation-mode validation.
 ## 2026-05-22 Echem-Conditioned Optical Predictor
 
-Added `scripts/tier4_echem_conditioned_optical_predictor.py` and ran it on Isambard to test whether electrochemical regime descriptors add predictive signal for weak optical degradation targets beyond acquisition/frame-count context. The audit uses the `echem_optical_regime_atlas` cycle table and compares `acquisition_context`, `echem_regime`, `echem_plus_acquisition`, and a `cycle_state_upper_bound` feature set under leave-one-cycle and rolling-origin splits. Rare 2-4 positive labels are excluded from this model-comparison table and remain descriptive atlas/consensus targets.
+Added `scripts/tier4_echem_conditioned_optical_predictor.py` and ran it on Isambard to test whether electrochemical regime descriptors add predictive signal for weak optical degradation targets beyond acquisition/frame-count context. The refreshed audit uses blocked cycle-CV plus rolling-origin block splits to avoid the expensive leave-one retraining loop. Rare 2-4 positive labels are excluded from this model-comparison table and remain descriptive atlas/consensus targets.
 
 Remote output:
 
@@ -2471,14 +2471,14 @@ Local compact copy:
 Key result:
 
 - The refreshed audit covers 89 cycles, 5 weak optical targets, and feature sets of size 7 (`acquisition_context`), 49 (`echem_regime`), 56 (`echem_plus_acquisition`), and 14 (`cycle_state_upper_bound`).
-- Leave-one-cycle high cross-modal consensus prediction improves from acquisition-only AUC 0.688 to echem-regime AUC 0.785 (delta +0.0968) and echem+acquisition AUC 0.789 (delta +0.1008). Both echem feature sets beat the held-out score-label shuffle null with empirical p=0.00020 over 5,000 shuffles.
-- Leave-one-cycle high particle heterogeneity improves from acquisition-only AUC 0.527 to echem-regime AUC 0.643 (delta +0.116, empirical p=0.0210) and echem+acquisition AUC 0.642 (delta +0.115, empirical p=0.0226).
-- Rolling-origin checks retain smaller positive echem gains: high particle heterogeneity AUC improves +0.101 for echem-regime over acquisition, and high cross-modal consensus improves +0.0595.
-- High ROI phase-slope targets are highly separable but under-covered: only 24 cycles have the target, with acquisition-only AUC 0.944, echem-regime AUC 0.944, and echem+acquisition AUC 0.981.
-- Future8 prediction does not improve with echem regime: leave-one acquisition-only AUC 0.676 versus echem+acquisition 0.650 and echem-regime 0.621; rolling-origin echem-regime is also worse than acquisition-only.
-- The `cycle_state_upper_bound` remains strongest for future8 (leave-one AUC 0.812), confirming that direct cycle-state/trace axes are better early-warning features than echem-regime descriptors alone.
+- Blocked cycle-CV high cross-modal consensus prediction has acquisition-only AUC 0.730, echem-regime AUC 0.760, and echem+acquisition AUC 0.804. All three beat the 5,000 held-out score-label shuffle null, with echem+acquisition p=0.00020.
+- Blocked cycle-CV high particle heterogeneity is where echem helps most: acquisition-only AUC 0.482, echem-regime AUC 0.634 (delta +0.152, p=0.0340), and echem+acquisition AUC 0.609 (delta +0.127, p=0.0632).
+- Rolling-origin block checks are weaker but retain a small high-particle-heterogeneity gain for echem-regime over acquisition (+0.0358 AUC) and a high-consensus gain (+0.0266 AUC).
+- High ROI phase-slope targets are highly separable but under-covered: only 24 cycles have the target, with acquisition-only AUC 0.944, echem-regime AUC 1.000, and echem+acquisition AUC 0.991.
+- Future8 remains unstable and not a deployable echem warning result: blocked acquisition-only AUC is below random at 0.316, echem-regime rises to 0.440, and echem+acquisition is 0.333; none beats the score-label null.
+- The `cycle_state_upper_bound` remains useful as an internal state-control check for optical state labels, reaching blocked-CV AUC 0.857 for high state-step targets and 0.846 for high cross-modal consensus; it does not rescue future8 in the refreshed blocked split.
 
-Interpretation: electrochemical regime descriptors add conditional signal for broad cross-modal optical degradation state and particle heterogeneity, especially under leave-one-cycle evaluation and modestly under rolling-origin evaluation. They do not rescue future8 prediction; echem regime is a conditioning/context axis for optical AI models rather than a standalone warning model or causal mechanism proof.
+Interpretation: electrochemical regime descriptors add conditional signal for broad cross-modal optical degradation state and particle heterogeneity, particularly when compared against acquisition-only context. They do not provide a standalone future-drop warning model; echem regime is a conditioning/context axis for optical AI models rather than causal mechanism proof or calibrated dQ/dV.
 
 ## 2026-05-22 Echem-Conditioned ROI Rollout/Front Audit
 

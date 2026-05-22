@@ -4,7 +4,7 @@
 The echem optical regime atlas is descriptive. This audit turns it into a
 controlled model comparison: acquisition/frame-count context versus echem
 regime descriptors versus their combination, evaluated on cycle-level optical
-targets with leave-one-cycle and rolling-origin splits.
+targets with blocked cycle-CV and rolling-origin block splits.
 """
 
 from __future__ import annotations
@@ -194,52 +194,82 @@ def metric_row(pred: pd.DataFrame, split: str, feature_set: str, target: str) ->
     return row
 
 
-def leave_one_predictions(df: pd.DataFrame, features: List[str], target: str, seed: int) -> pd.DataFrame:
-    rows: List[Dict[str, Any]] = []
-    use = df[["cycleNo", target] + features].copy()
-    use[target] = pd.to_numeric(use[target], errors="coerce")
-    valid = use[target].isin([0, 1])
-    indices = list(use.index[valid])
-    for idx in indices:
-        train_idx = [i for i in indices if i != idx]
-        y_train = use.loc[train_idx, target].astype(int).to_numpy()
-        row = {"cycleNo": float(use.loc[idx, "cycleNo"]), "observed": int(use.loc[idx, target]), "status": "ok"}
-        if len(train_idx) < 8 or len(np.unique(y_train)) < 2:
-            row.update({"predicted_probability": np.nan, "status": "skipped_train_class_or_size"})
-            rows.append(row)
-            continue
-        clf = model(seed)
-        clf.fit(use.loc[train_idx, features], y_train)
-        row["predicted_probability"] = float(clf.predict_proba(use.loc[[idx], features])[0, 1])
-        rows.append(row)
-    return pd.DataFrame(rows)
-
-
-def rolling_origin_predictions(df: pd.DataFrame, features: List[str], target: str, seed: int, purge_cycles: int, min_train: int) -> pd.DataFrame:
+def cycle_block_predictions(df: pd.DataFrame, features: List[str], target: str, seed: int, n_blocks: int = 5) -> pd.DataFrame:
     rows: List[Dict[str, Any]] = []
     use = df[["cycleNo", target] + features].copy().sort_values("cycleNo").reset_index(drop=True)
     use[target] = pd.to_numeric(use[target], errors="coerce")
-    cycles = pd.to_numeric(use["cycleNo"], errors="coerce")
-    for idx, row0 in use.iterrows():
-        y_test = use.loc[idx, target]
-        row = {"cycleNo": float(row0["cycleNo"]), "observed": int(y_test) if y_test in {0, 1} else np.nan, "status": "ok"}
-        if y_test not in {0, 1}:
-            row.update({"predicted_probability": np.nan, "status": "skipped_missing_target"})
+    valid_idx = list(use.index[use[target].isin([0, 1])])
+    if len(valid_idx) < n_blocks:
+        n_blocks = max(2, len(valid_idx))
+    blocks = np.array_split(np.asarray(valid_idx), n_blocks)
+    for block_id, test_idx_arr in enumerate(blocks, start=1):
+        test_idx = [int(i) for i in test_idx_arr]
+        test_set = set(test_idx)
+        train_idx = [i for i in valid_idx if i not in test_set]
+        y_train = use.loc[train_idx, target].astype(int).to_numpy()
+        status = "ok"
+        clf = None
+        if len(train_idx) < 8 or len(np.unique(y_train)) < 2:
+            status = "skipped_train_class_or_size"
+        else:
+            clf = model(seed + block_id)
+            clf.fit(use.loc[train_idx, features], y_train)
+        for idx in test_idx:
+            row = {
+                "cycleNo": float(use.loc[idx, "cycleNo"]),
+                "observed": int(use.loc[idx, target]),
+                "block_id": int(block_id),
+                "n_train": int(len(train_idx)),
+                "n_positive_train": int(y_train.sum()) if len(y_train) else 0,
+                "status": status,
+            }
+            row["predicted_probability"] = np.nan if clf is None else float(clf.predict_proba(use.loc[[idx], features])[0, 1])
             rows.append(row)
-            continue
-        train_mask = (cycles <= cycles.iloc[idx] - purge_cycles) & use[target].isin([0, 1])
+    return pd.DataFrame(rows)
+
+
+def rolling_origin_block_predictions(
+    df: pd.DataFrame,
+    features: List[str],
+    target: str,
+    seed: int,
+    purge_cycles: int,
+    min_train: int,
+    n_test_blocks: int = 5,
+) -> pd.DataFrame:
+    rows: List[Dict[str, Any]] = []
+    use = df[["cycleNo", target] + features].copy().sort_values("cycleNo").reset_index(drop=True)
+    use[target] = pd.to_numeric(use[target], errors="coerce")
+    valid_idx = list(use.index[use[target].isin([0, 1])])
+    eligible = [i for i in valid_idx if i >= min_train]
+    if not eligible:
+        return pd.DataFrame()
+    blocks = np.array_split(np.asarray(eligible), min(n_test_blocks, len(eligible)))
+    cycles = pd.to_numeric(use["cycleNo"], errors="coerce")
+    for block_id, test_idx_arr in enumerate(blocks, start=1):
+        test_idx = [int(i) for i in test_idx_arr]
+        min_test_cycle = float(cycles.iloc[test_idx].min())
+        train_mask = (cycles <= min_test_cycle - purge_cycles) & use[target].isin([0, 1])
         train_idx = list(use.index[train_mask])
         y_train = use.loc[train_idx, target].astype(int).to_numpy()
-        row["n_train"] = int(len(train_idx))
-        row["n_positive_train"] = int(y_train.sum()) if len(y_train) else 0
+        status = "ok"
+        clf = None
         if len(train_idx) < min_train or len(np.unique(y_train)) < 2:
-            row.update({"predicted_probability": np.nan, "status": "skipped_train_class_or_size"})
+            status = "skipped_train_class_or_size"
+        else:
+            clf = model(seed + 100 + block_id)
+            clf.fit(use.loc[train_idx, features], y_train)
+        for idx in test_idx:
+            row = {
+                "cycleNo": float(use.loc[idx, "cycleNo"]),
+                "observed": int(use.loc[idx, target]),
+                "block_id": int(block_id),
+                "n_train": int(len(train_idx)),
+                "n_positive_train": int(y_train.sum()) if len(y_train) else 0,
+                "status": status,
+            }
+            row["predicted_probability"] = np.nan if clf is None else float(clf.predict_proba(use.loc[[idx], features])[0, 1])
             rows.append(row)
-            continue
-        clf = model(seed)
-        clf.fit(use.loc[train_idx, features], y_train)
-        row["predicted_probability"] = float(clf.predict_proba(use.loc[[idx], features])[0, 1])
-        rows.append(row)
     return pd.DataFrame(rows)
 
 def score_permutation_null(pred: pd.DataFrame, observed_auc: float, seed: int, n_perm: int) -> Dict[str, Any]:
@@ -325,20 +355,20 @@ def main() -> None:
         if y.isin([0, 1]).sum() < 10 or y[y.isin([0, 1])].nunique() < 2:
             continue
         for feature_set, features in feature_sets.items():
-            for split in ["leave_one_cycle", "rolling_origin"]:
-                if split == "rolling_origin" and (target not in rolling_targets or feature_set == "cycle_state_upper_bound"):
+            for split in ["cycle_block_cv", "rolling_origin_block"]:
+                if split == "rolling_origin_block" and (target not in rolling_targets or feature_set == "cycle_state_upper_bound"):
                     continue
-                if split == "leave_one_cycle":
-                    pred = leave_one_predictions(table, features, target, args.seed)
+                if split == "cycle_block_cv":
+                    pred = cycle_block_predictions(table, features, target, args.seed, n_blocks=5)
                 else:
-                    pred = rolling_origin_predictions(table, features, target, args.seed, purge_cycles=2, min_train=16)
+                    pred = rolling_origin_block_predictions(table, features, target, args.seed, purge_cycles=2, min_train=16, n_test_blocks=5)
                 pred["target"] = target
                 pred["feature_set"] = feature_set
                 pred["split"] = split
                 predictions.append(pred)
                 met = metric_row(pred, split, feature_set, target)
                 metrics.append(met)
-                if split == "leave_one_cycle" and feature_set in {"acquisition_context", "echem_regime", "echem_plus_acquisition"}:
+                if split == "cycle_block_cv" and feature_set in {"acquisition_context", "echem_regime", "echem_plus_acquisition"}:
                     null = score_permutation_null(pred, met.get("roc_auc", np.nan), args.seed, args.n_permutation)
                     null.update({"split": split, "feature_set": feature_set, "target": target, "observed_roc_auc": met.get("roc_auc", np.nan), "null_mode": "heldout_score_label_shuffle"})
                     nulls.append(null)
@@ -361,7 +391,7 @@ def main() -> None:
         )
     deltas = []
     for target in targets:
-        for split in ["leave_one_cycle", "rolling_origin"]:
+        for split in ["cycle_block_cv", "rolling_origin_block"]:
             sub = metrics_df[(metrics_df["target"] == target) & (metrics_df["split"] == split)]
             if sub.empty:
                 continue
@@ -413,7 +443,7 @@ def main() -> None:
         "top_metrics": best.to_dict("records"),
         "top_feature_set_deltas": best_deltas.to_dict("records") if not best_deltas.empty else [],
         "top_coefficients": coeff_df.head(50).to_dict("records") if not coeff_df.empty else [],
-        "guardrail": "This is a cycle-level weak-label model comparison with leave-one-cycle and rolling-origin splits. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics. Rare 2-4 positive targets are excluded from the model-comparison table, and the permutation null shuffles labels against held-out prediction scores rather than retraining every permutation.",
+        "guardrail": "This is a cycle-level weak-label model comparison with blocked cycle-CV and rolling-origin block splits. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics. Rare 2-4 positive targets are excluded from the model-comparison table, and the permutation null shuffles labels against held-out prediction scores rather than retraining every permutation.",
         "outputs": {k: str(v) for k, v in paths.items()},
     }
     with paths["summary"].open("w") as f:
