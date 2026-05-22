@@ -1,0 +1,5 @@
+visual_mode_cluster,visual_mode_name,n,median_visual_review_score,median_front_plausibility_score,median_artifact_risk_score,near_pre_count,matched_support_front_qc_count
+2,low front-plausibility context,7,0.5192751931411008,0.24679705384164427,0.2388533284265356,7,7
+0,low front-plausibility context,3,0.5055752064152222,0.26282811961196284,0.009862623968744983,3,3
+3,moderate front-like followup,1,0.4316758884734325,0.4924705140032908,0.010507337177361643,0,0
+1,low front-plausibility context,13,0.3297002878767946,0.20000000000000004,0.2116393142490642,9,9

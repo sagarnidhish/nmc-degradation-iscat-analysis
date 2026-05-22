@@ -162,6 +162,8 @@ def main() -> None:
     source_balanced_pre_event_echem_matched_far = read_json(derived / "source_balanced_pre_event_echem_matched_far_control_audit" / "source_balanced_pre_event_echem_matched_far_summary.json")
     source_balanced_pre_event_consensus_review = read_json(derived / "source_balanced_pre_event_consensus_review_queue" / "source_balanced_pre_event_consensus_review_summary.json")
     source_balanced_pre_event_consensus_visual = read_json(derived / "source_balanced_pre_event_consensus_visual_packet" / "source_balanced_pre_event_consensus_visual_summary.json")
+    source_balanced_pre_event_visual_sanity = read_json(derived / "source_balanced_pre_event_visual_sanity_audit" / "source_balanced_pre_event_visual_sanity_summary.json")
+    source_balanced_pre_event_visual_qc_modes = read_json(derived / "source_balanced_pre_event_visual_qc_modes" / "source_balanced_pre_event_visual_qc_modes_summary.json")
     source_balanced_pre_event_physics_modes = read_json(derived / "source_balanced_pre_event_physics_mode_taxonomy" / "source_balanced_pre_event_physics_mode_summary.json")
     source_balanced_sequences = read_json(derived / "source_balanced_roi_sequences" / "selected_roi_sequence_summary.json")
     source_balanced_sequence_rollout = read_json(derived / "source_balanced_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
@@ -567,6 +569,16 @@ def main() -> None:
     source_balanced_pre_event_visual_top = top_items(first_summary(source_balanced_pre_event_consensus_visual, "rendered_candidates", []), 12)
     source_balanced_pre_event_visual_best = source_balanced_pre_event_visual_top[0] if source_balanced_pre_event_visual_top else {}
     source_balanced_pre_event_visual_outputs = first_summary(source_balanced_pre_event_consensus_visual, "outputs", {}) or {}
+    source_balanced_pre_event_visual_sanity_reviewable = top_items(first_summary(source_balanced_pre_event_visual_sanity, "top_reviewable_candidates", []), 12)
+    source_balanced_pre_event_visual_sanity_artifact = top_items(first_summary(source_balanced_pre_event_visual_sanity, "top_artifact_risk_candidates", []), 8)
+    source_balanced_pre_event_visual_sanity_sources = top_items(first_summary(source_balanced_pre_event_visual_sanity, "source_summary", []), 8)
+    source_balanced_pre_event_visual_sanity_flags = first_summary(source_balanced_pre_event_visual_sanity, "visual_sanity_flag_counts", {}) or {}
+    source_balanced_pre_event_visual_sanity_best = source_balanced_pre_event_visual_sanity_reviewable[0] if source_balanced_pre_event_visual_sanity_reviewable else {}
+    source_balanced_pre_event_visual_qc_top = top_items(first_summary(source_balanced_pre_event_visual_qc_modes, "top_candidates", []), 12)
+    source_balanced_pre_event_visual_qc_modes_summary = top_items(first_summary(source_balanced_pre_event_visual_qc_modes, "mode_summary", []), 8)
+    source_balanced_pre_event_visual_qc_tiers = first_summary(source_balanced_pre_event_visual_qc_modes, "visual_qc_tier_counts", {}) or {}
+    source_balanced_pre_event_visual_qc_mode_counts = first_summary(source_balanced_pre_event_visual_qc_modes, "visual_mode_counts", {}) or {}
+    source_balanced_pre_event_visual_qc_best = source_balanced_pre_event_visual_qc_top[0] if source_balanced_pre_event_visual_qc_top else {}
     source_balanced_pre_event_mode_summary = top_items(first_summary(source_balanced_pre_event_physics_modes, "mode_summary", []), 12)
     source_balanced_pre_event_mode_enrich = top_items(first_summary(source_balanced_pre_event_physics_modes, "top_enrichment", []), 16)
     source_balanced_pre_event_mode_clocks = top_items(first_summary(source_balanced_pre_event_physics_modes, "clock_tests", []), 8)
@@ -1021,6 +1033,7 @@ def main() -> None:
         f"- Pre-event echem-matched far-control audit explicitly stress-tests the missing same-source near/far gap: source-class+echem/context matching forms {source_balanced_pre_event_echem_matched_far_pair_counts.get('same_source_class_echem_context', 0)} near-vs-far pairs from {source_balanced_pre_event_echem_matched_far_control_sources.get('same_source_class_echem_context', 0)} far-control sources; best row is {source_balanced_pre_event_echem_matched_far_best.get('match_scheme', 'NA')} {source_balanced_pre_event_echem_matched_far_best.get('feature', 'NA')} median diff {fmt(source_balanced_pre_event_echem_matched_far_best.get('median_treated_minus_control'))}, sign-flip p={fmt(source_balanced_pre_event_echem_matched_far_best.get('signflip_mean_abs_p'))}.",
         f"- Pre-event consensus review queue combines source-invariant review scores, radial fronts, source/echem residuals, and matched-control support into {first_summary(source_balanced_pre_event_consensus_review, 'n_candidates', 0)} ranked manual-QC candidates; {source_balanced_pre_event_consensus_tiers.get('matched_support_front_qc', 0)} are matched-support front-QC candidates, led by {source_balanced_pre_event_consensus_best.get('roi_id', 'NA')} at score {fmt(source_balanced_pre_event_consensus_best.get('consensus_review_score'))}.",
         f"- Pre-event consensus visual packet renders {first_summary(source_balanced_pre_event_consensus_visual, 'n_rendered', 0)} frame strips and {first_summary(source_balanced_pre_event_consensus_visual, 'n_rendered', 0)} radial kymographs for the consensus top candidates, with contact sheets for manual QC; top visual ROI is {source_balanced_pre_event_visual_best.get('roi_id', 'NA')}.",
+        f"- Pre-event visual QC modes score the {first_summary(source_balanced_pre_event_visual_qc_modes, 'n_scored', 0)} rendered candidates with front-trace plausibility and artifact-risk features; none reach accepted-front status, {source_balanced_pre_event_visual_qc_tiers.get('front_plausible_followup', 0)} are follow-up candidates, and the top automatic QC candidate is {source_balanced_pre_event_visual_qc_best.get('roi_id', 'NA')} at score {fmt(source_balanced_pre_event_visual_qc_best.get('visual_review_score'))}.",
         f"- Pre-event physics-mode taxonomy clusters source-residual front/diffusion/heterogeneity features into k={fmt(first_summary(source_balanced_pre_event_physics_modes, 'chosen_k'), 0)} broad states but finds no strong near-pre enrichment (best Fisher p={fmt(source_balanced_pre_event_mode_enrich_best.get('fisher_p'))}), so continuous front/diffusion clocks remain more informative than coarse modes for this cohort.",
         f"- Source-balanced ROI sequence export converts that manifest into {first_summary(source_balanced_sequences, 'n_roi_sequences', 0)} particle-region crop tensors across {first_summary(source_balanced_sequences, 'n_cycles', 0)} cycles and {first_summary(source_balanced_sequences, 'n_sources', 0)} sources with {first_summary(source_balanced_sequences, 'n_failed', 0)} export failures; the fast rollout audit finds strongest future16 ROI signal in {source_balanced_rollout_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_rollout_top16.get('oriented_auc'))}, while prediction-error features are highly source-structured.",
         f"- A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across {first_summary(source_balanced_mask_front, 'n_roi_sequences', 0)} ROI tensors; top future16 mask/front proxy is {source_balanced_mask_front_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_top16.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_top16.get('average_precision'))}, but source eta2 is {fmt(source_balanced_mask_front_top16.get('source_eta2'))}.",
@@ -2164,6 +2177,11 @@ def main() -> None:
         f"- Consensus visual packet queue/rendered/sources: {first_summary(source_balanced_pre_event_consensus_visual, 'n_queue_rows', 0)} / {first_summary(source_balanced_pre_event_consensus_visual, 'n_rendered', 0)} / {first_summary(source_balanced_pre_event_consensus_visual, 'n_sources_rendered', 0)}; contact sheet: {first_summary(source_balanced_pre_event_consensus_visual, 'contact_sheet', 'NA')}",
         f"- Top consensus visual candidate: rank {fmt(source_balanced_pre_event_visual_best.get('consensus_review_rank'), 0)} {source_balanced_pre_event_visual_best.get('roi_id', 'NA')} {source_balanced_pre_event_visual_best.get('event_relative_bin', 'NA')} score {fmt(source_balanced_pre_event_visual_best.get('consensus_review_score'))}, matched support {fmt(source_balanced_pre_event_visual_best.get('matched_positive_support_count'), 0)}",
         f"- Consensus visual packet guardrail: {first_summary(source_balanced_pre_event_consensus_visual, 'guardrail', 'Source-balanced pre-event consensus visual packet unavailable.')}",
+        f"- Visual sanity audit scored {first_summary(source_balanced_pre_event_visual_sanity, 'n_ok', 0)} rendered candidates: flags {source_balanced_pre_event_visual_sanity_flags}, median score {fmt(first_summary(source_balanced_pre_event_visual_sanity, 'median_visual_sanity_score'))}; top reviewable candidate is rank {fmt(source_balanced_pre_event_visual_sanity_best.get('consensus_review_rank'), 0)} {source_balanced_pre_event_visual_sanity_best.get('roi_id', 'NA')} sanity {fmt(source_balanced_pre_event_visual_sanity_best.get('visual_sanity_score'))}.",
+        f"- Visual sanity guardrail: {first_summary(source_balanced_pre_event_visual_sanity, 'guardrail', 'Source-balanced pre-event visual sanity audit unavailable.')}",
+        f"- Visual QC modes scored/rendered: {first_summary(source_balanced_pre_event_visual_qc_modes, 'n_scored', 0)} / {first_summary(source_balanced_pre_event_consensus_visual, 'n_rendered', 0)}; tiers {source_balanced_pre_event_visual_qc_tiers}; mode counts {source_balanced_pre_event_visual_qc_mode_counts}",
+        f"- Top visual QC mode candidate: rank {fmt(source_balanced_pre_event_visual_qc_best.get('consensus_review_rank'), 0)} {source_balanced_pre_event_visual_qc_best.get('roi_id', 'NA')} tier {source_balanced_pre_event_visual_qc_best.get('visual_qc_tier', 'NA')} score {fmt(source_balanced_pre_event_visual_qc_best.get('visual_review_score'))}, front score {fmt(source_balanced_pre_event_visual_qc_best.get('visual_front_plausibility_score'))}, artifact risk {fmt(source_balanced_pre_event_visual_qc_best.get('visual_artifact_risk_score'))}",
+        f"- Visual QC modes guardrail: {first_summary(source_balanced_pre_event_visual_qc_modes, 'guardrail', 'Source-balanced pre-event visual QC modes unavailable.')}",
         f"- Physics-mode taxonomy rows/cycles/sources/features/k: {first_summary(source_balanced_pre_event_physics_modes, 'n_rows', 0)} / {first_summary(source_balanced_pre_event_physics_modes, 'n_cycles', 0)} / {first_summary(source_balanced_pre_event_physics_modes, 'n_sources', 0)} / {first_summary(source_balanced_pre_event_physics_modes, 'n_features_used', 0)} / {fmt(first_summary(source_balanced_pre_event_physics_modes, 'chosen_k'), 0)}",
         f"- Top physics mode: mode {source_balanced_pre_event_mode_best.get('mode', 'NA')} {source_balanced_pre_event_mode_best.get('mode_label', 'NA')} n={fmt(source_balanced_pre_event_mode_best.get('n_roi'), 0)}, near-pre fraction {fmt(source_balanced_pre_event_mode_best.get('near_pre_fraction'))}, post fraction {fmt(source_balanced_pre_event_mode_best.get('post_event_fraction'))}, loadings {source_balanced_pre_event_mode_best.get('top_loading_features', 'NA')}",
         f"- Best mode enrichment row: mode {source_balanced_pre_event_mode_enrich_best.get('mode', 'NA')} {source_balanced_pre_event_mode_enrich_best.get('label', 'NA')} fraction {fmt(source_balanced_pre_event_mode_enrich_best.get('mode_fraction'))} vs outside {fmt(source_balanced_pre_event_mode_enrich_best.get('outside_fraction'))}, p={fmt(source_balanced_pre_event_mode_enrich_best.get('fisher_p'))}",
@@ -3539,6 +3557,28 @@ def main() -> None:
                 "contact_sheet": first_summary(source_balanced_pre_event_consensus_visual, "contact_sheet"),
                 "outputs": source_balanced_pre_event_visual_outputs,
                 "guardrail": first_summary(source_balanced_pre_event_consensus_visual, "guardrail"),
+            },
+            "visual_sanity_audit": {
+                "n_audited": first_summary(source_balanced_pre_event_visual_sanity, "n_audited"),
+                "n_ok": first_summary(source_balanced_pre_event_visual_sanity, "n_ok"),
+                "n_sources": first_summary(source_balanced_pre_event_visual_sanity, "n_sources"),
+                "event_relative_bin_counts": first_summary(source_balanced_pre_event_visual_sanity, "event_relative_bin_counts", {}),
+                "visual_sanity_flag_counts": source_balanced_pre_event_visual_sanity_flags,
+                "median_visual_sanity_score": first_summary(source_balanced_pre_event_visual_sanity, "median_visual_sanity_score"),
+                "source_summary": source_balanced_pre_event_visual_sanity_sources,
+                "top_reviewable_candidates": source_balanced_pre_event_visual_sanity_reviewable,
+                "top_artifact_risk_candidates": source_balanced_pre_event_visual_sanity_artifact,
+                "guardrail": first_summary(source_balanced_pre_event_visual_sanity, "guardrail"),
+            },
+            "visual_qc_modes": {
+                "n_input_candidates": first_summary(source_balanced_pre_event_visual_qc_modes, "n_input_candidates"),
+                "n_scored": first_summary(source_balanced_pre_event_visual_qc_modes, "n_scored"),
+                "visual_qc_tier_counts": source_balanced_pre_event_visual_qc_tiers,
+                "visual_mode_counts": source_balanced_pre_event_visual_qc_mode_counts,
+                "mode_summary": source_balanced_pre_event_visual_qc_modes_summary,
+                "top_candidates": source_balanced_pre_event_visual_qc_top,
+                "outputs": first_summary(source_balanced_pre_event_visual_qc_modes, "outputs", {}),
+                "guardrail": first_summary(source_balanced_pre_event_visual_qc_modes, "guardrail"),
             },
             "physics_mode_taxonomy": {
                 "n_rows": first_summary(source_balanced_pre_event_physics_modes, "n_rows"),

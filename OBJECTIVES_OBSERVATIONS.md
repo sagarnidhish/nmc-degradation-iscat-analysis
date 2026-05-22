@@ -3774,3 +3774,50 @@ Cohort/result snapshot:
 Interpretation:
 
 This is the practical handoff from automatic AI/physics evidence to manual QC. It does not add a new model claim; it makes the highest-priority candidates inspectable with synchronized scalar evidence, frame strips, mask overlays, and radial kymographs. The packet should be used to decide which ROIs have interpretable particle/front behavior and which are artifacts or ambiguous crops. It assigns no labels and does not validate particle identity, front masks, calibrated diffusion, phase-boundary motion, degradation causality, or deployable warnings.
+
+## 2026-05-22 Source-Balanced Pre-Event Visual Sanity Audit
+
+Added `scripts/tier4_source_balanced_pre_event_visual_sanity_audit.py` and ran it on Isambard. This audit adds a machine-readable QC layer to the consensus visual packet by scoring each rendered candidate from the ROI tensors for stable-mask size/edge contact, frame-to-frame centroid stability, focus/blur proxy, temporal contrast, radial-front trace fit, and front-trace monotonicity.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_visual_sanity_audit`
+- `derived_local/source_balanced_pre_event_visual_sanity_audit`
+
+Cohort/result snapshot:
+
+- Audited all 24 rendered consensus visual candidates; all 24 ROI tensors loaded successfully.
+- The 24 candidates span 8 source movies.
+- Automatic visual sanity flags are 9 `reviewable_auto` and 15 `uncertain_auto`; no rendered candidate was assigned the hard `artifact_risk_auto` flag.
+- Median visual sanity score is 0.579.
+- Event-bin composition remains 19 near-pre rows, 1 mid-pre row, 1 far-pre row, 2 post-event rows, and 1 no-near-event control row.
+- The main source concentrations are `17_c2_x10_HighHighCOV_150723` with 8 candidates and median sanity 0.541, `9_c2_x10_010723` with 5 candidates and median sanity 0.698, and `6_c2_x10_270623_2` with 4 candidates and median sanity 0.632.
+- Event-bin tests on the visual sanity score are weak and non-significant: near-pre median 0.590 versus rendered non-near median 0.572, p = 0.679; near-pre versus post/control p = 0.191.
+- The top artifact-risk/low-sanity rows are still `uncertain_auto`, not hard rejects, so they should remain in manual review with caution rather than being dropped automatically.
+
+Interpretation:
+
+This is a QC guardrail for the visual packet, not an event classifier or physical mechanism result. The candidates are generally inspectable enough for manual review, but most remain automatically uncertain and source concentration is still visible. Manual QC should prioritize the `reviewable_auto` rows while retaining the uncertainty flags, source metadata, and matched-control evidence when judging whether any ROI has interpretable particle/front behavior.
+
+## 2026-05-22 Source-Balanced Pre-Event Visual QC Modes
+
+Added `scripts/tier4_source_balanced_pre_event_visual_qc_modes.py` and ran it on Isambard. This is a conservative automatic visual/front plausibility layer over the consensus visual packet: it reloads the rendered ROI sequences, recomputes stable masks and radial front traces, scores front-trace fit, direction consistency, mask fraction, temporal SNR, kymograph energy, and artifact risk, then clusters the 24 rendered candidates into review modes.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_visual_qc_modes`
+- `derived_local/source_balanced_pre_event_visual_qc_modes`
+- `source_balanced_pre_event_visual_qc_modes.csv`
+- `source_balanced_pre_event_visual_qc_mode_summary.csv`
+- `visual_qc_priority_contact_sheet.png`
+- `source_balanced_pre_event_visual_qc_modes_summary.json`
+
+Results:
+
+- Scored all 24 rendered consensus candidates.
+- Automatic tiers: 8 `front_plausible_followup`, 16 `routine_or_low_front_plausibility`, and 0 accepted-front/priority labels.
+- Mode counts: 23 `low front-plausibility context` and 1 `moderate front-like followup`.
+- Top automatic visual-QC candidate is `source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723`, consensus rank 2, near-pre-event, visual review score 0.590, front plausibility score 0.262, artifact risk 0.050.
+- The previous consensus rank 1 candidate remains high but is downgraded to follow-up rather than priority because the automatically traced front has weak linear fit/direction consistency.
+
+Interpretation: this is a useful negative/guardrail result. The scalar consensus/matched-control evidence still identifies near-pre-event candidates worth reviewing, but the rendered kymograph/front-trace plausibility audit does not yet support automatic acceptance of coherent phase-front motion. Diffusion and phase-boundary claims should therefore remain gated on manual ROI/front QC and calibration. The new contact sheet orders review by visual-QC score so manual inspection can start with the strongest follow-up cases while preserving likely low-plausibility context rows.
