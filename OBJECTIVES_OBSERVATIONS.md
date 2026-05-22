@@ -3273,3 +3273,28 @@ Cohort/result snapshot:
 Interpretation:
 
 The source-residual reconstruction-error drift is temporally ordered relative to the event-cycle sequence, but it is not a clean precursor: it also marks cycles near past events. This downgrades the claim from future-warning evidence to a source-robust degradation-neighborhood dynamics marker. Raw optical contrast has stronger future8 temporal specificity, but source structure keeps it under the acquisition/confounding guardrail.
+
+## 2026-05-22 Source-Balanced Future-Specific Residual Audit
+
+Added `scripts/tier4_source_balanced_future_specific_residual_audit.py` and ran it on Isambard against the source-balanced residual dictionary table plus full particle abrupt-drop event cycles. This audit follows the temporal-specificity result by excluding past-event windows and by comparing grouped future prediction against a past-event-context-only baseline.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_future_specific_residual_audit`
+- `derived_local/source_balanced_future_specific_residual_audit`
+
+Cohort/result snapshot:
+
+- 96 ROI rows, 48 cycles, 14 source movies.
+- Full abrupt-drop event cycles: 60, 86, 116, 156.
+- Label counts: future8 28, future16 48, past8 10, past16 30; no-past8 rows 86 and no-past16 rows 66.
+- Primary source-residual `dictionary_recon_error_last_minus_first` future16 drops from AUC 0.637/AP 0.637 on all rows to AUC 0.589/AP 0.708 after excluding past16 rows, and to AUC 0.541/AP 0.329 in pre-first-event rows.
+- The strongest clean scalar after excluding past8 remains raw `masked_minus_background_mean_slope`, future8 AUC 0.812/AP 0.713, but this is still a source-structured optical contrast proxy.
+- After excluding past16, raw residual dictionary PCs retain clean future16 scalar signal: `resdict_pc01_mean` AUC 0.702/AP 0.783 and `resdict_pc09_slope` AUC 0.695/AP 0.790.
+- Grouped models without future-distance leakage show past-event context alone is already strong: leave-cycle future16 AUC 0.755 and leave-source future16 AUC 0.720.
+- Adding source-residual mask contrast gives the largest future16 delta over past-event context: leave-cycle delta AUC +0.065 (AUC 0.820) and leave-source delta AUC +0.017 (AUC 0.737).
+- Adding the primary source-residual reconstruction-error feature gives a smaller future16 delta: leave-cycle +0.055 and leave-source +0.004, with lower AP than the past-context baseline. Future8 deltas are mostly zero or negative.
+
+Interpretation:
+
+Past-event proximity explains much of the apparent future-warning structure in this source-balanced cohort. Some future16 optical/residual signal remains after removing past16 rows or modeling past-event context, but the deployable precursor claim is still weak: the strongest increments are modest, source-transfer increments are small, and the clean scalar winners are raw/source-structured optical contrast and residual PC features rather than the source-residual reconstruction-error candidate. The useful next direction is to treat these as event-neighborhood degradation state features and expand source-balanced pre-event sampling before claiming forecasting.

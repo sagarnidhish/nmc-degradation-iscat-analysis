@@ -119,6 +119,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Source-normalizing the source-balanced residual dictionary leaves a source-residual future16 residual-dynamics candidate, dictionary_recon_error_last_minus_first, at AUC 0.637/AP 0.637 with source eta2 1.484e-33; within-source-rank residual PCs are weaker at AUC 0.574.
 - The grouped normalized residual-dictionary readout partially rescues held-out-source future16 transfer: raw residual dictionary AUC 0.375 improves to 0.550 after source residualization, while the single dictionary_recon_error_last_minus_first_source_residual readout reaches AUC 0.612/AP 0.613; permutation p=0.100 keeps it provisional.
 - Temporal-specificity controls show the same source-residual reconstruction-error drift is temporally ordered but not cleanly precursor-specific: future16 AUC 0.637 beats a within-source shift null (p=0.002) but barely exceeds past16 AUC 0.625; raw masked-minus-background slope is more future8-specific but source structured.
+- Future-specific residual controls sharpen that guardrail: after excluding past16 rows, the primary source-residual reconstruction-error feature drops to AUC 0.589, while grouped future16 prediction gains only modestly over past-event context (best delta AUC 0.065 from mask_contrast_source_residual_plus_context).
 - Source-balanced residual-physics coupling links the best source-residual dictionary candidate to crop-local physics proxies: top target-aligned pair is dictionary_recon_error_last_minus_first vs masked_minus_background_mean_slope with rho 0.373, residual AUC 0.637, and physics AUC 0.628; apparent diffusion coupling remains weak.
 - Source-balanced residual candidate review packet converts the residual/readout/coupling evidence into 96 pending manual-QC candidates; 8 are immediate-review, led by source_balanced_cycle108_rank6_obj2_12_c2_x10_070723 with score 0.917.
 - Balanced future particle-mask stability audit covers 72 ROIs / 6912 frames; median fallback fraction is 0.000, and the strongest future8 mask-stability contrast is accepted_centroid_max_step_px with p=0.175, so the balanced future signal is not explained by a simple mask-instability split.
@@ -1251,6 +1252,17 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Primary future16 within-source shift null: n=500, null AUC p95=0.521, empirical p(AUC)=0.002
 - Most future-specific row overall: masked_minus_background_mean_slope / raw / 8 cycles, future AUC 0.821, past-control AUC 0.377, delta 0.444
 - Guardrail: Temporal labels come from full particle abrupt-drop cycles but are evaluated on the 96 source-balanced ROI rows. Future-oriented scores use the future-label sign and apply the same sign to past/current controls. This tests temporal specificity, not causality or deployable warning.
+
+## Source-Balanced Future-Specific Residual Audit
+
+- Rows/cycles/sources: 96 / 48 / 14
+- Event cycles and label counts: [60.0, 86.0, 116.0, 156.0] / {'current_any_event': 0, 'future8': 28, 'future16': 48, 'past8': 10, 'past16': 30, 'no_past8_rows': 86, 'no_past16_rows': 66}
+- Primary source-residual reconstruction-error future16 all rows: AUC 0.637, AP 0.637
+- Primary source-residual reconstruction-error future16 excluding past16 rows: AUC 0.589, AP 0.708, n=66
+- Primary source-residual reconstruction-error future16 pre-first-event only: AUC 0.541, AP 0.329, n=32
+- Top clean scalar row: masked_minus_background_mean_slope / raw / window 8 / exclude_past8 AUC 0.812, AP 0.713
+- Best grouped residual delta over past-event context: cycleNo full_future_any_event_within_16cycles mask_contrast_source_residual_plus_context delta AUC 0.065, model AUC 0.820, base AUC 0.755
+- Guardrail: Past-event context uses event-cycle labels derived from full particle abrupt-drop cycles. Excluding or modeling past windows tests future specificity on the source-balanced ROI table; it does not prove causality, source transfer, or calibrated phase/diffusion physics.
 
 ## Source-Balanced Residual-Physics Coupling Audit
 
