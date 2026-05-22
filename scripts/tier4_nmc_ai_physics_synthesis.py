@@ -115,6 +115,7 @@ def main() -> None:
     echem_shape_conditioned = read_json(derived / "echem_shape_conditioned_roi_front_effects" / "echem_shape_conditioned_roi_front_effects_summary.json")
     echem_optical_breakpoint = read_json(derived / "echem_optical_breakpoint_audit" / "echem_optical_breakpoint_audit_summary.json")
     echem_optical_regime = read_json(derived / "echem_optical_regime_atlas" / "echem_optical_regime_atlas_summary.json")
+    echem_conditioned_predictor = read_json(derived / "echem_conditioned_optical_predictor" / "echem_conditioned_optical_predictor_summary.json")
     physics_consistency = read_json(derived / "physics_consistency_claim_matrix" / "physics_consistency_claim_matrix_summary.json")
     rollout_calibration = read_json(derived / "probabilistic_rollout_calibration" / "probabilistic_rollout_calibration_summary.json")
     cycle_state_space = read_json(derived / "cycle_state_space_transition_audit" / "cycle_state_space_transition_audit_summary.json")
@@ -260,6 +261,9 @@ def main() -> None:
     echem_regime_top_cycles = top_items(first_summary(echem_optical_regime, "top_cycles", []), 12)
     echem_regime_top_binary = echem_regime_binary[0] if echem_regime_binary else {}
     echem_regime_top_corr = echem_regime_corr[0] if echem_regime_corr else {}
+    echem_predictor_metrics = top_items(first_summary(echem_conditioned_predictor, "top_metrics", []), 16)
+    echem_predictor_deltas = top_items(first_summary(echem_conditioned_predictor, "top_feature_set_deltas", []), 16)
+    echem_predictor_top_delta = echem_predictor_deltas[0] if echem_predictor_deltas else {}
     physics_consistency_top = top_items(first_summary(physics_consistency, "top_consistency_rows", []), 12)
     physics_consistency_tests = top_items(first_summary(physics_consistency, "top_event_tests", []), 12)
     rollout_calibration_coverage = top_items(first_summary(rollout_calibration, "coverage_summary", []), 30)
@@ -566,6 +570,7 @@ def main() -> None:
         f"- Cross-modal consensus ranks cycles {cross_modal_sync_cycle_labels} as synchronized multimodal degradation candidates; the top cycle has {fmt(cross_modal_top_cycle.get('n_modal_votes'), 0)} modal votes and consensus score {fmt(cross_modal_top_cycle.get('cross_modal_consensus_score'))}, while the score remains an audit statistic rather than a calibrated probability.",
         f"- Echem/optical breakpoint audit tests {first_summary(echem_optical_breakpoint, 'n_features_tested', 0)} cycle-level echem/trace features around synchronized cycles {first_summary(echem_optical_breakpoint, 'event_cycles', [])}; strongest event-centered shift is {echem_breakpoint_top.get('feature', 'NA')} over +/-{fmt(echem_breakpoint_top.get('window_cycles'), 0)} cycles (scaled shift {fmt(echem_breakpoint_top.get('event_median_scaled_shift'))}, bootstrap p={fmt(echem_breakpoint_top.get('bootstrap_p_abs_vs_control_centers'))}).",
         f"- Echem-optical regime atlas organizes {first_summary(echem_optical_regime, 'n_cycles', 0)} cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is {echem_regime_top_binary.get('feature', 'NA')} vs {echem_regime_top_binary.get('target', 'NA')} (median shift {fmt(echem_regime_top_binary.get('median_positive_minus_negative'))}, p={fmt(echem_regime_top_binary.get('mannwhitney_p'))}), and top continuous link is {echem_regime_top_corr.get('feature', 'NA')} vs {echem_regime_top_corr.get('target', 'NA')} (rho={fmt(echem_regime_top_corr.get('spearman_rho'))}).",
+        f"- Echem-conditioned optical predictor shows the clearest echem gain for {echem_predictor_top_delta.get('target', 'NA')} under {echem_predictor_top_delta.get('split', 'NA')}: {echem_predictor_top_delta.get('comparison', 'NA')} changes AUC by {fmt(echem_predictor_top_delta.get('delta_roc_auc'))}; same-cycle synchronized candidates remain acquisition/context dominated and underpowered.",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
         f"- Automatic front-QC sensitivity keeps the positive phase-front residual in {len(robust_phase_strata)} strata: {', '.join(robust_phase_strata) if robust_phase_strata else 'none'}; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.",
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
@@ -920,6 +925,23 @@ def main() -> None:
             f"- Echem-optical priority cycle {fmt(row.get('cycleNo'), 0)}: score {fmt(row.get('echem_optical_priority_score'))}, regime {row.get('echem_pc1_tertile')}, consensus {fmt(row.get('cross_modal_consensus_score'))}, class {row.get('consensus_class')}, CE-flag={fmt(row.get('echem_ce_extreme_or_missing'), 0)}"
         )
     report_lines.append(f"- Guardrail: {first_summary(echem_optical_regime, 'guardrail', 'Echem optical regime atlas unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Echem-Conditioned Optical Predictor",
+        "",
+        f"- Cycles/targets: {first_summary(echem_conditioned_predictor, 'n_cycles', 0)} / {len(first_summary(echem_conditioned_predictor, 'targets', []))}",
+        f"- Feature set sizes: {first_summary(echem_conditioned_predictor, 'feature_set_sizes', {})}",
+    ]
+    for row in echem_predictor_deltas[:10]:
+        report_lines.append(
+            f"- Echem feature-set delta {row.get('split')} {row.get('target')} {row.get('comparison')}: delta AUC {fmt(row.get('delta_roc_auc'))}, base {fmt(row.get('base_roc_auc'))}, comparison {fmt(row.get('comparison_roc_auc'))}"
+        )
+    for row in echem_predictor_metrics[:10]:
+        report_lines.append(
+            f"- Echem-conditioned metric {row.get('split')} {row.get('target')} {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, AP {fmt(row.get('average_precision'))}, n={fmt(row.get('n_eval'), 0)}, positives={fmt(row.get('n_positive'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(echem_conditioned_predictor, 'guardrail', 'Echem-conditioned optical predictor unavailable.')}")
 
     report_lines += [
         "",
@@ -2202,6 +2224,14 @@ def main() -> None:
             "top_correlations": echem_regime_corr,
             "top_cycles": echem_regime_top_cycles,
             "guardrail": first_summary(echem_optical_regime, "guardrail"),
+        },
+        "echem_conditioned_optical_predictor": {
+            "n_cycles": first_summary(echem_conditioned_predictor, "n_cycles"),
+            "targets": first_summary(echem_conditioned_predictor, "targets", []),
+            "feature_set_sizes": first_summary(echem_conditioned_predictor, "feature_set_sizes", {}),
+            "top_metrics": echem_predictor_metrics,
+            "top_feature_set_deltas": echem_predictor_deltas,
+            "guardrail": first_summary(echem_conditioned_predictor, "guardrail"),
         },
         "calibration_claim_risk_register": {
             "n_claim_families": first_summary(calibration_claim_risk, "n_claim_families"),

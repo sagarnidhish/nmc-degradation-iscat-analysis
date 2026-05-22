@@ -71,6 +71,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cross-modal consensus ranks cycles 86, 116 as synchronized multimodal degradation candidates; the top cycle has 4 modal votes and consensus score 0.813, while the score remains an audit statistic rather than a calibrated probability.
 - Echem/optical breakpoint audit tests 84 cycle-level echem/trace features around synchronized cycles [86.0, 116.0]; strongest event-centered shift is state_step_norm_delta_prev over +/-4 cycles (scaled shift -2.263, bootstrap p=0.002).
 - Echem-optical regime atlas organizes 89 cycles by charge/discharge asymmetry and dQ/dV-proxy shape; top binary contrast is pos_dq_abs_peak_voltage vs multimodal_outlier_without_trace_drop (median shift 0.050, p=1.453e-04), and top continuous link is shape_dVdt_abs_p95 vs cross_modal_consensus_score (rho=0.617).
+- Echem-conditioned optical predictor shows the clearest echem gain for high_cross_modal_consensus_q75 under leave_one_cycle: echem_regime_minus_acquisition changes AUC by 0.113; same-cycle synchronized candidates remain acquisition/context dominated and underpowered.
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
@@ -443,6 +444,32 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Echem-optical priority cycle 86: score 0.781, regime pc1_mid, consensus 0.813, class synchronized_multimodal_degradation_candidate, CE-flag=0
 - Echem-optical priority cycle 112: score 0.777, regime pc1_high, consensus 0.649, class low_consensus, CE-flag=0
 - Guardrail: This atlas uses echem shape and dQ/dV-like proxy descriptors to organize optical degradation hypotheses. It is not calibrated dQ/dV, not a mechanistic phase diagram, and does not remove the acquisition/frame-count confounder by itself.
+
+## Echem-Conditioned Optical Predictor
+
+- Cycles/targets: 89 / 7
+- Feature set sizes: {'acquisition_context': 7, 'cycle_state_upper_bound': 14, 'echem_plus_acquisition': 56, 'echem_regime': 49}
+- Echem feature-set delta leave_one_cycle high_cross_modal_consensus_q75 echem_regime_minus_acquisition: delta AUC 0.113, base 0.686, comparison 0.799
+- Echem feature-set delta leave_one_cycle high_particle_norm_cv_q75 echem_regime_minus_acquisition: delta AUC 0.113, base 0.527, comparison 0.640
+- Echem feature-set delta leave_one_cycle high_cross_modal_consensus_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.111, base 0.686, comparison 0.797
+- Echem feature-set delta leave_one_cycle high_particle_norm_cv_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.103, base 0.527, comparison 0.630
+- Echem feature-set delta rolling_origin high_particle_norm_cv_q75 echem_regime_minus_acquisition: delta AUC 0.084, base 0.525, comparison 0.609
+- Echem feature-set delta rolling_origin high_cross_modal_consensus_q75 echem_regime_minus_acquisition: delta AUC 0.067, base 0.625, comparison 0.692
+- Echem feature-set delta rolling_origin high_particle_norm_cv_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.052, base 0.525, comparison 0.577
+- Echem feature-set delta leave_one_cycle high_roi_phase_slope_abs_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.046, base 0.944, comparison 0.991
+- Echem feature-set delta leave_one_cycle high_roi_phase_slope_abs_q75 echem_regime_minus_acquisition: delta AUC 0.037, base 0.944, comparison 0.981
+- Echem feature-set delta rolling_origin high_cross_modal_consensus_q75 echem_plus_acquisition_minus_acquisition: delta AUC 0.014, base 0.625, comparison 0.639
+- Echem-conditioned metric leave_one_cycle synchronized_multimodal_candidate cycle_state_upper_bound: AUC 0.994, AP 0.833, n=89, positives=2
+- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 echem_plus_acquisition: AUC 0.991, AP 0.976, n=24, positives=6
+- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 echem_regime: AUC 0.981, AP 0.958, n=24, positives=6
+- Echem-conditioned metric leave_one_cycle synchronized_multimodal_candidate acquisition_context: AUC 0.966, AP 0.325, n=89, positives=2
+- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 acquisition_context: AUC 0.944, AP 0.735, n=24, positives=6
+- Echem-conditioned metric leave_one_cycle high_roi_phase_slope_abs_q75 cycle_state_upper_bound: AUC 0.944, AP 0.735, n=24, positives=6
+- Echem-conditioned metric leave_one_cycle high_state_step_norm_q75 cycle_state_upper_bound: AUC 0.899, AP 0.835, n=88, positives=22
+- Echem-conditioned metric leave_one_cycle high_cross_modal_consensus_q75 cycle_state_upper_bound: AUC 0.829, AP 0.684, n=89, positives=23
+- Echem-conditioned metric leave_one_cycle future_any_drop_within_8cycles cycle_state_upper_bound: AUC 0.808, AP 0.530, n=89, positives=20
+- Echem-conditioned metric leave_one_cycle high_cross_modal_consensus_q75 echem_regime: AUC 0.799, AP 0.522, n=89, positives=23
+- Guardrail: This is a cycle-level weak-label model comparison. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics.
 
 ## Diffusion Proxy Sanity Audit
 

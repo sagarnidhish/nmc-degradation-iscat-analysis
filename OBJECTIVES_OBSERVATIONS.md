@@ -2456,3 +2456,27 @@ Key result:
 - Internal checks behave as expected: diffusion interpretability is strongly lower in diffusion-guardrail rows (median positive-negative -0.515, p=6.68e-9), front-mask score is higher in likely-interpretable rows (median shift 0.453, p=7.45e-7), and particle-identity score correlates with total surrogate score (rho=0.722, p=9.96e-9).
 
 Interpretation: this closes the immediate review-prioritization gap without pretending to replace manual QC. The output identifies high-yield visual-review candidates and explicit artifact/diffusion guardrails, but it must not be used as particle identity, front-mask acceptance, diffusion interpretability, or degradation-mode validation.
+## 2026-05-22 Echem-Conditioned Optical Predictor
+
+Added `scripts/tier4_echem_conditioned_optical_predictor.py` and ran it on Isambard to test whether electrochemical regime descriptors add predictive signal for weak optical degradation targets beyond acquisition/frame-count context. The audit uses the `echem_optical_regime_atlas` cycle table and compares `acquisition_context`, `echem_regime`, `echem_plus_acquisition`, and a `cycle_state_upper_bound` feature set under leave-one-cycle and rolling-origin splits.
+
+Remote output:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_optical_predictor`
+
+Local compact copy:
+
+`derived_local/echem_conditioned_optical_predictor`
+
+Key result:
+
+- The audit covers 89 cycles, 7 weak optical targets, and feature sets of size 7 (`acquisition_context`), 49 (`echem_regime`), 56 (`echem_plus_acquisition`), and 14 (`cycle_state_upper_bound`).
+- Leave-one-cycle high cross-modal consensus prediction improves from acquisition-only AUC 0.686 to echem-regime AUC 0.799 (delta +0.113) and echem+acquisition AUC 0.797 (delta +0.111). Average precision only improves for echem+acquisition, so this is useful but not a final model.
+- Leave-one-cycle high particle heterogeneity improves from acquisition-only AUC 0.527 to echem-regime AUC 0.640 (delta +0.113) and echem+acquisition AUC 0.630 (delta +0.103).
+- Rolling-origin checks retain smaller positive echem gains: high particle heterogeneity AUC improves +0.084 for echem-regime over acquisition, and high cross-modal consensus improves +0.067.
+- High ROI phase-slope targets are highly separable, but only 24 cycles have the target available; echem+acquisition AUC is 0.991 versus acquisition-only 0.944.
+- Same-cycle synchronized multimodal candidates are not an echem-regime prediction success: acquisition-only AUC is 0.966 for the two positives, while echem-regime alone performs poorly. This reinforces the acquisition/frame-count confounder around cycles 86/116.
+- Future8 prediction does not improve with echem regime in leave-one-cycle mode: acquisition-only AUC 0.674 versus echem+acquisition 0.648 and echem-regime 0.620.
+- The fast run used zero permutation resamples after a 100-permutation run was too slow; the audit is therefore a controlled model-comparison screen, not a final significance test.
+
+Interpretation: electrochemical regime descriptors add conditional signal for broad cross-modal optical degradation state and particle heterogeneity, especially under leave-one-cycle evaluation and modestly under rolling-origin evaluation. They do not rescue future8 prediction or explain the two synchronized multimodal candidates without acquisition context. Use this as evidence that echem regime should condition optical AI models, not as deployable warning performance or causal proof.
