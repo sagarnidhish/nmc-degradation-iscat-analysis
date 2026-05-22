@@ -4421,3 +4421,55 @@ Interpretation: apparent temporal countdown structure exists in pooled pre-event
 
 Guardrail: temporal dose-response tests use automatic particle-region optical/front descriptors and event-relative labels. They support precursor-ranking hypotheses only, not causal mechanisms, calibrated phase-boundary velocities, or diffusion coefficients.
 
+## 2026-05-22 Particle Mask History/Fallback Audit
+
+Added `scripts/tier4_particle_mask_history_fallback_audit.py` and ran it on Isambard over the 128-row source-balanced transport-mechanism dossier. This directly tests the drift-correction/blurriness concern by building a history-based particle mask from early frames, comparing each framewise contrast mask to that prior, and flagging frames where low history IoU, centroid displacement, or low sharpness would justify falling back to the prior particle support.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_history_fallback_audit`
+- `derived_local/particle_mask_history_fallback_audit`
+- `particle_mask_history_fallback_metrics.csv`
+- `particle_mask_history_fallback_event_tests.csv`
+- `particle_mask_history_fallback_source_summary.csv`
+- `particle_mask_history_fallback_high_risk_rois.csv`
+- `particle_mask_history_fallback_failures.csv`
+- `particle_mask_history_fallback_summary.json`
+
+Results:
+
+- Processed 128/128 source-balanced particle ROI sequences with 0 failures across 14 sources.
+- The history-prior mask is broadly stable but not trivial: median fallback frame fraction is 0.292, q90 fallback fraction is 0.575, median history IoU is 0.865, and median q90 centroid jitter is 0.874 px.
+- Near-pre rows have a higher pooled fallback fraction than non-near rows by 0.167, but this is not source-robust. For near-vs-any/non-near, fallback fraction has AUC 0.677 but source-stratified p=0.083, while source-residual fallback fraction has AUC 0.520 and p=0.712.
+- The mechanism/review scores remain stronger than mask-instability metrics under source-stratified testing: `qc_review_score` AUC 0.831/source-stratified p=0.0015 and `transport_mechanism_score` AUC 0.783/source-stratified p=0.0005 for near/future8 labels.
+- High-fallback cases are now explicitly queued, including `source_balanced_cycle72_rank58_obj1_8_c2_x10_300623`, `source_balanced_cycle52_rank49_obj1_6_c2_x10_270623_2`, and `source_balanced_cycle46_rank46_obj2_6_c2_x10_270623_2`.
+
+Interpretation: history-based particle masks are useful as a robustness guardrail for blur/drift-correction artifacts, especially in the high-fallback tail. However, mask fallback/blur metrics do not explain the source-aware event-ranking signal, so the current transport-mechanism score is not simply a mask-instability artifact.
+
+Guardrail: these are automatic cropped-particle mask robustness diagnostics. Fallback flags do not provide manual segmentation labels, validated particle boundaries, phase-boundary velocities, or diffusion coefficients.
+
+## 2026-05-22 Targeted Diffusion Blocker Diagnostic
+
+Added `scripts/tier4_targeted_diffusion_blocker_diagnostic.py` and ran it on Isambard to recheck the diffusion-readiness candidates against threshold-sweep front metrics plus same-source and same-cycle reference percentiles. This is a targeted follow-up to the diffusion readiness/unblock audits: it asks which candidates deserve manual front remeasurement, not whether the project can yet claim calibrated diffusion.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic`
+- `derived_local/targeted_diffusion_blocker_diagnostic`
+- `targeted_diffusion_candidate_diagnostic.csv`
+- `targeted_diffusion_threshold_variants.csv`
+- `targeted_diffusion_remeasurement_queue.csv`
+- `targeted_diffusion_diagnostic_action_counts.csv`
+- `targeted_diffusion_blocker_diagnostic_summary.json`
+
+Results:
+
+- The diagnostic covers 20 targeted diffusion/front candidates and 140 threshold-variant rows.
+- Action counts are 16 `fit_quality_blocked_retrack_front`, 2 `guarded_review_only`, 1 `remeasure_q70_ci_and_manual_front_qc`, and 1 `source_context_common_not_candidate_specific`.
+- The one nearest diffusion follow-up remains `cycle78_rank22_obj2` from `9_c2_x10_010723`, cycle 78. It is automatic-physics-consistent with 6 gates passing, HDF5 timing stable, positive-D fraction 1.0, q70 apparent D 3.457e-06 um2/s, q70 radius2 fit R2 0.424, max positive-fit R2 0.513, and same-source median-D percentile 0.75.
+- Its remaining blocker is not broad candidate discovery; it is specifically q70 positive-CI/manual-front-QC/publication-gate follow-up.
+- Most other candidate rows do not provide a diffusion shortcut. They are dominated by weak radius2 fit quality and should be treated as optical-front proxy/retracking tasks, not calibrated transport estimates.
+
+Interpretation: this narrows the diffusion path substantially. If manual effort is available, the first concrete remeasurement target is `cycle78_rank22_obj2`; the rest of the current ledger mainly needs front-boundary retracking or remains guarded proxy evidence. The result does not unblock calibrated diffusion, but it prevents wasting effort on the wrong candidates.
+
+Guardrail: the diagnostic ranks blocker follow-up using existing automatic threshold/front ledgers. It does not accept labels, relax readiness gates, or emit calibrated diffusion coefficients.

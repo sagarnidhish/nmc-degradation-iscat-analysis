@@ -564,6 +564,22 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Nearest diffusion-unblock candidate cycle116_rank7_obj37: blockers 6, priority 10.612, blocker summary Automatic/publication diffusion candidates; Control-balanced diffusion sanity candidates; Event/control diffusion separability; HDF5 spatial calibration metadata present; Manual QC accepted labels; Positive front expansion
 - Guardrail: This sensitivity audit removes blockers only in explicit what-if scenarios. It does not change the diffusion readiness status, accept manual labels, relax gates in production, or create calibrated diffusion coefficients.
 
+## Targeted Diffusion Blocker Diagnostic
+
+- Status/target candidates/threshold rows: targeted_diffusion_blocker_diagnostic_ready / 20 / 140
+- Nearest candidate: cycle78_rank22_obj2 from 9_c2_x10_010723 cycle 78; action remeasure_q70_ci_and_manual_front_qc; blockers q70 positive CI; publication-ready gate
+- Nearest candidate threshold evidence: positive-D fraction 1.000, q70 D 3.457e-06 um2/s, q70 fit R2 0.424, same-source D percentile 0.750
+- Diffusion diagnostic action fit_quality_blocked_retrack_front: n=16
+- Diffusion diagnostic action guarded_review_only: n=2
+- Diffusion diagnostic action remeasure_q70_ci_and_manual_front_qc: n=1
+- Diffusion diagnostic action source_context_common_not_candidate_specific: n=1
+- Targeted diffusion candidate cycle78_rank22_obj2: action remeasure_q70_ci_and_manual_front_qc, score 74.749, max positive-fit R2 0.513, source percentile 0.750
+- Targeted diffusion candidate cycle60_rank2_obj2: action guarded_review_only, score 24.103, max positive-fit R2 0.702, source percentile 0.900
+- Targeted diffusion candidate cycle62_rank1_obj4: action fit_quality_blocked_retrack_front, score 22.253, max positive-fit R2 0.375, source percentile 0.500
+- Targeted diffusion candidate cycle156_rank2_obj2: action fit_quality_blocked_retrack_front, score 18.234, max positive-fit R2 0.107, source percentile 0.917
+- Targeted diffusion candidate cycle116_rank7_obj37: action fit_quality_blocked_retrack_front, score 18.124, max positive-fit R2 0.131, source percentile 0.750
+- Guardrail: This diagnostic ranks diffusion-blocker follow-up candidates using existing automatic threshold/front tables. It does not accept manual labels, relax readiness gates, or emit calibrated diffusion coefficients.
+
 ## Cross-Modal Degradation Consensus
 
 - Cycles scored/with votes: 89 / 53
@@ -2524,6 +2540,31 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - High-instability ROI cycle88_rank2_obj4 (control, cycle 88): score 2.115, area-CV 0.115, centroid path 301.115 px
 - High-instability ROI cycle116_rank2_obj2 (event, cycle 116): score 2.113, area-CV 0.113, centroid path 290.833 px
 - Guardrail: guardrail audit of particle-region mask stability, not manual segmentation
+
+## Particle Mask History/Fallback Audit
+
+- Status/input/processed/failures/sources: particle_mask_history_fallback_audit_ready / 128 / 128 / 0 / 14
+- Median fallback fraction / q90 fallback / median history IoU: 0.292 / 0.575 / 0.865
+- Median centroid q90 jitter / blur q10 ratio / near-non fallback median diff: 0.874 px / 0.562 / 0.167
+- Mask-history test future16 qc_review_score: AUC 0.658, AP 0.730, med pos/neg 0.406/0.367, source-strat p 0.564
+- Mask-history test future16 fallback_frame_fraction: AUC 0.623, AP 0.600, med pos/neg 0.365/0.193, source-strat p 0.605
+- Mask-history test future16 centroid_jitter_q90_px: AUC 0.599, AP 0.640, med pos/neg 1.051/0.840, source-strat p 0.755
+- Mask-history test future16 transport_mechanism_score: AUC 0.587, AP 0.647, med pos/neg 0.491/0.455, source-strat p 0.670
+- Mask-history test future16 median_history_iou_source_residual: AUC 0.581, AP 0.649, med pos/neg 3.865e-04/0.000, source-strat p 0.348
+- Mask-history test future16 blur_ratio_q10_source_residual: AUC 0.510, AP 0.524, med pos/neg 0.001/0.000, source-strat p 0.852
+- Mask-history test future16 fallback_frame_fraction_source_residual: AUC 0.488, AP 0.528, med pos/neg -0.008/0.003, source-strat p 0.726
+- Mask-history test future16 centroid_jitter_q90_px_source_residual: AUC 0.454, AP 0.506, med pos/neg -0.048/0.035, source-strat p 0.186
+- Mask-history source 10_c2_x10_030723: n=8, median fallback 0.620, median IoU 0.932, near-pre fraction 0.000
+- Mask-history source 17_c2_x10_HighHighCOV_150723: n=10, median fallback 0.406, median IoU 0.791, near-pre fraction 0.800
+- Mask-history source 12_c2_x10_070723: n=10, median fallback 0.396, median IoU 0.749, near-pre fraction 0.800
+- Mask-history source 6_c2_x10_270623_2: n=10, median fallback 0.380, median IoU 0.870, near-pre fraction 0.400
+- Mask-history source 9_c2_x10_010723: n=10, median fallback 0.370, median IoU 0.658, near-pre fraction 0.800
+- Mask-history source 11_c2_x10_050723: n=10, median fallback 0.349, median IoU 0.869, near-pre fraction 0.000
+- High fallback ROI source_balanced_cycle72_rank58_obj1_8_c2_x10_300623: fallback 0.781, IoU 0.970, blur q10 0.000, event bin post_event_1_16
+- High fallback ROI source_balanced_cycle52_rank49_obj1_6_c2_x10_270623_2: fallback 0.750, IoU 0.970, blur q10 0.000, event bin near_pre_event_1_8
+- High fallback ROI source_balanced_cycle46_rank46_obj2_6_c2_x10_270623_2: fallback 0.740, IoU 0.614, blur q10 0.328, event bin mid_pre_event_9_16
+- High fallback ROI source_balanced_cycle88_rank1_obj2_10_c2_x10_030723: fallback 0.740, IoU 0.941, blur q10 0.000, event bin post_event_1_16
+- Guardrail: History-based masks are an automatic robustness audit for cropped particle ROIs. Fallback flags indicate possible blur/drift mask instability; they are not manual segmentation labels or physical phase-boundary measurements.
 
 ## Physics Consistency Claim Matrix
 

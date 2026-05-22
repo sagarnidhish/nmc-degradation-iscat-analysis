@@ -109,6 +109,7 @@ def main() -> None:
     all_cycle_coverage = read_json(derived / "all_cycle_dataset_coverage_atlas" / "all_cycle_dataset_coverage_summary.json")
     current_claim_readiness = read_json(derived / "current_claim_readiness_matrix" / "current_claim_readiness_summary.json")
     diffusion_unblock_sensitivity = read_json(derived / "diffusion_unblock_sensitivity_audit" / "diffusion_unblock_sensitivity_summary.json")
+    targeted_diffusion_blocker = read_json(derived / "targeted_diffusion_blocker_diagnostic" / "targeted_diffusion_blocker_diagnostic_summary.json")
     cross_modal_consensus = read_json(derived / "cross_modal_degradation_consensus" / "cross_modal_degradation_consensus_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
@@ -130,6 +131,7 @@ def main() -> None:
     cycle_state_roi_bridge = read_json(derived / "cycle_state_roi_bridge" / "cycle_state_roi_bridge_summary.json")
     cycle_state_mode_frequency = read_json(derived / "cycle_state_mode_frequency_bridge" / "cycle_state_mode_frequency_bridge_summary.json")
     particle_mask = read_json(derived / "particle_mask_stability_audit" / "particle_mask_stability_audit_summary.json")
+    particle_mask_history_fallback = read_json(derived / "particle_mask_history_fallback_audit" / "particle_mask_history_fallback_summary.json")
     masked_rollout = read_json(derived / "masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
     masked_cycle_warning = read_json(derived / "masked_rollout_cycle_warning" / "masked_rollout_cycle_warning_summary.json")
     masked_residual_timing = read_json(derived / "masked_residual_transition_timing" / "masked_residual_transition_timing_summary.json")
@@ -387,6 +389,9 @@ def main() -> None:
     particle_mask_corr = top_items(first_summary(particle_mask, "top_correlations", []), 12)
     particle_mask_top = top_items(first_summary(particle_mask, "highest_instability_rois", []), 12)
     particle_mask_overall = first_summary(particle_mask, "overall", {}) or {}
+    particle_mask_history_tests = top_items(first_summary(particle_mask_history_fallback, "top_event_tests", []), 16)
+    particle_mask_history_sources = top_items(first_summary(particle_mask_history_fallback, "source_summary_top", []), 12)
+    particle_mask_history_high = top_items(first_summary(particle_mask_history_fallback, "high_fallback_rois", []), 12)
     masked_rollout_methods = top_items(first_summary(masked_rollout, "method_summary", []), 8)
     masked_rollout_tests = top_items(first_summary(masked_rollout, "top_event_control_tests", []), 12)
     masked_rollout_corr = top_items(first_summary(masked_rollout, "top_correlations", []), 12)
@@ -933,6 +938,9 @@ def main() -> None:
     diffusion_unblock_blockers = top_items(first_summary(diffusion_unblock_sensitivity, "top_blockers", []), 12)
     diffusion_unblock_scenarios = top_items(first_summary(diffusion_unblock_sensitivity, "scenario_summary", []), 8)
     diffusion_unblock_candidates = top_items(first_summary(diffusion_unblock_sensitivity, "top_nearest_unblock_candidates", []), 8)
+    targeted_diffusion_actions = top_items(first_summary(targeted_diffusion_blocker, "action_counts", []), 8)
+    targeted_diffusion_candidates = top_items(first_summary(targeted_diffusion_blocker, "top_remeasurement_candidates", []), 10)
+    targeted_diffusion_nearest = first_summary(targeted_diffusion_blocker, "nearest_diffusion_candidate", {}) or {}
     cross_modal_top = top_items(first_summary(cross_modal_consensus, "top_cycles", []), 12)
     cross_modal_classes = top_items(first_summary(cross_modal_consensus, "class_summary", []), 8)
     cross_modal_contrasts = top_items(first_summary(cross_modal_consensus, "target_contrasts", []), 12)
@@ -1580,6 +1588,24 @@ def main() -> None:
             f"- Nearest diffusion-unblock candidate {row.get('roi_id')}: blockers {fmt(row.get('n_all_blockers'), 0)}, priority {fmt(row.get('review_priority'))}, blocker summary {row.get('blocker_summary', 'NA')}"
         )
     report_lines.append(f"- Guardrail: {first_summary(diffusion_unblock_sensitivity, 'guardrail', 'Diffusion unblock sensitivity audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Targeted Diffusion Blocker Diagnostic",
+        "",
+        f"- Status/target candidates/threshold rows: {first_summary(targeted_diffusion_blocker, 'overall_status', 'unavailable')} / {first_summary(targeted_diffusion_blocker, 'n_target_candidates_with_thresholds', 0)} / {first_summary(targeted_diffusion_blocker, 'n_threshold_variant_rows', 0)}",
+        f"- Nearest candidate: {targeted_diffusion_nearest.get('roi_id', 'NA')} from {targeted_diffusion_nearest.get('source_stem', 'NA')} cycle {fmt(targeted_diffusion_nearest.get('cycleNo'), 0)}; action {targeted_diffusion_nearest.get('diagnostic_action', 'NA')}; blockers {targeted_diffusion_nearest.get('blockers', 'NA')}",
+        f"- Nearest candidate threshold evidence: positive-D fraction {fmt(targeted_diffusion_nearest.get('positive_D_fraction'))}, q70 D {fmt(targeted_diffusion_nearest.get('q70_D_um2_per_s'))} um2/s, q70 fit R2 {fmt(targeted_diffusion_nearest.get('q70_radius2_fit_r2'))}, same-source D percentile {fmt(targeted_diffusion_nearest.get('median_D_um2_per_s_same_source_percentile'))}",
+    ]
+    for row in targeted_diffusion_actions:
+        report_lines.append(
+            f"- Diffusion diagnostic action {row.get('diagnostic_action')}: n={fmt(row.get('n'), 0)}"
+        )
+    for row in targeted_diffusion_candidates[:5]:
+        report_lines.append(
+            f"- Targeted diffusion candidate {row.get('roi_id')}: action {row.get('diagnostic_action')}, score {fmt(row.get('targeted_remeasurement_score'))}, max positive-fit R2 {fmt(row.get('max_positive_fit_r2'))}, source percentile {fmt(row.get('median_D_um2_per_s_same_source_percentile'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(targeted_diffusion_blocker, 'guardrail', 'Targeted diffusion blocker diagnostic unavailable.')}")
 
     report_lines += [
         "",
@@ -3323,6 +3349,28 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Particle Mask History/Fallback Audit",
+        "",
+        f"- Status/input/processed/failures/sources: {first_summary(particle_mask_history_fallback, 'overall_status', 'unavailable')} / {first_summary(particle_mask_history_fallback, 'n_input_rows', 0)} / {first_summary(particle_mask_history_fallback, 'n_ok', 0)} / {first_summary(particle_mask_history_fallback, 'n_failures', 0)} / {first_summary(particle_mask_history_fallback, 'n_sources', 0)}",
+        f"- Median fallback fraction / q90 fallback / median history IoU: {fmt(first_summary(particle_mask_history_fallback, 'median_fallback_frame_fraction'))} / {fmt(first_summary(particle_mask_history_fallback, 'q90_fallback_frame_fraction'))} / {fmt(first_summary(particle_mask_history_fallback, 'median_history_iou'))}",
+        f"- Median centroid q90 jitter / blur q10 ratio / near-non fallback median diff: {fmt(first_summary(particle_mask_history_fallback, 'median_centroid_jitter_q90_px'))} px / {fmt(first_summary(particle_mask_history_fallback, 'median_blur_ratio_q10'))} / {fmt(first_summary(particle_mask_history_fallback, 'near_vs_non_median_fallback_diff'))}",
+    ]
+    for row in particle_mask_history_tests[:8]:
+        report_lines.append(
+            f"- Mask-history test {row.get('target', 'NA')} {row.get('feature', 'NA')}: AUC {fmt(row.get('auc'))}, AP {fmt(row.get('average_precision'))}, med pos/neg {fmt(row.get('median_pos'))}/{fmt(row.get('median_neg'))}, source-strat p {fmt(row.get('source_stratified_permutation_p'))}"
+        )
+    for row in particle_mask_history_sources[:6]:
+        report_lines.append(
+            f"- Mask-history source {row.get('source_stem', 'NA')}: n={fmt(row.get('n_rows'), 0)}, median fallback {fmt(row.get('median_fallback_fraction'))}, median IoU {fmt(row.get('median_iou'))}, near-pre fraction {fmt(row.get('near_pre_fraction'))}"
+        )
+    for row in particle_mask_history_high[:4]:
+        report_lines.append(
+            f"- High fallback ROI {row.get('roi_id', 'NA')}: fallback {fmt(row.get('fallback_frame_fraction'))}, IoU {fmt(row.get('median_history_iou'))}, blur q10 {fmt(row.get('blur_ratio_q10'))}, event bin {row.get('event_relative_bin', 'NA')}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(particle_mask_history_fallback, 'guardrail', 'Particle mask history/fallback audit unavailable.')}")
+
+    report_lines += [
+        "",
         "## Physics Consistency Claim Matrix",
         "",
         f"- ROI/cycles: {first_summary(physics_consistency, 'n_roi', 0)} / {first_summary(physics_consistency, 'n_cycles', 0)}",
@@ -4814,6 +4862,24 @@ def main() -> None:
             "highest_instability_rois": particle_mask_top,
             "method": first_summary(particle_mask, "method", {}),
         },
+        "particle_mask_history_fallback_audit": {
+            "overall_status": first_summary(particle_mask_history_fallback, "overall_status"),
+            "n_input_rows": first_summary(particle_mask_history_fallback, "n_input_rows"),
+            "n_ok": first_summary(particle_mask_history_fallback, "n_ok"),
+            "n_failures": first_summary(particle_mask_history_fallback, "n_failures"),
+            "n_sources": first_summary(particle_mask_history_fallback, "n_sources"),
+            "median_fallback_frame_fraction": first_summary(particle_mask_history_fallback, "median_fallback_frame_fraction"),
+            "q90_fallback_frame_fraction": first_summary(particle_mask_history_fallback, "q90_fallback_frame_fraction"),
+            "median_history_iou": first_summary(particle_mask_history_fallback, "median_history_iou"),
+            "median_centroid_jitter_q90_px": first_summary(particle_mask_history_fallback, "median_centroid_jitter_q90_px"),
+            "median_blur_ratio_q10": first_summary(particle_mask_history_fallback, "median_blur_ratio_q10"),
+            "near_vs_non_median_fallback_diff": first_summary(particle_mask_history_fallback, "near_vs_non_median_fallback_diff"),
+            "top_event_tests": particle_mask_history_tests,
+            "source_summary_top": particle_mask_history_sources,
+            "high_fallback_rois": particle_mask_history_high,
+            "outputs": first_summary(particle_mask_history_fallback, "outputs", {}),
+            "guardrail": first_summary(particle_mask_history_fallback, "guardrail"),
+        },
         "cycle_state_roi_bridge": {
             "n_roi_rows": first_summary(cycle_state_roi_bridge, "n_roi_rows"),
             "n_cycles": first_summary(cycle_state_roi_bridge, "n_cycles"),
@@ -4998,6 +5064,16 @@ def main() -> None:
             "top_nearest_unblock_candidates": diffusion_unblock_candidates,
             "outputs": first_summary(diffusion_unblock_sensitivity, "outputs", {}),
             "guardrail": first_summary(diffusion_unblock_sensitivity, "guardrail"),
+        },
+        "targeted_diffusion_blocker_diagnostic": {
+            "overall_status": first_summary(targeted_diffusion_blocker, "overall_status"),
+            "n_target_candidates_with_thresholds": first_summary(targeted_diffusion_blocker, "n_target_candidates_with_thresholds"),
+            "n_threshold_variant_rows": first_summary(targeted_diffusion_blocker, "n_threshold_variant_rows"),
+            "action_counts": targeted_diffusion_actions,
+            "nearest_diffusion_candidate": targeted_diffusion_nearest,
+            "top_remeasurement_candidates": targeted_diffusion_candidates,
+            "outputs": first_summary(targeted_diffusion_blocker, "outputs", {}),
+            "guardrail": first_summary(targeted_diffusion_blocker, "guardrail"),
         },
         "cross_modal_degradation_consensus": {
             "n_cycles": first_summary(cross_modal_consensus, "n_cycles"),
