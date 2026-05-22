@@ -103,6 +103,7 @@ def main() -> None:
     phase_kinetics = read_json(derived / "phase_kinetics_avrami" / "phase_kinetics_avrami_summary.json")
     calibration_metadata = read_json(derived / "calibration_metadata_audit" / "calibration_metadata_audit_summary.json")
     calibration_claim_risk = read_json(derived / "calibration_claim_risk_register" / "calibration_claim_risk_summary.json")
+    apparent_diffusion_calibration = read_json(derived / "apparent_diffusion_calibration_bounds" / "apparent_diffusion_calibration_bounds_summary.json")
     particle_trace = read_json(derived / "particle_trace_physics_audit" / "particle_trace_physics_audit_summary.json")
     particle_precursor = read_json(derived / "particle_event_precursor_atlas" / "particle_event_precursor_atlas_summary.json")
     roi_trace_fusion = read_json(derived / "roi_trace_fusion_audit" / "roi_trace_fusion_audit_summary.json")
@@ -137,7 +138,6 @@ def main() -> None:
     balanced_future_context = read_json(derived / "balanced_future_context_region_audit" / "balanced_future_context_region_summary.json")
     temporal_directionality = read_json(derived / "temporal_directionality_physics_audit" / "temporal_directionality_physics_audit_summary.json")
     masked_video_embedding = read_json(derived / "masked_video_embedding_audit" / "masked_video_embedding_audit_summary.json")
-    temporal_directionality = read_json(derived / "temporal_directionality_physics_audit" / "temporal_directionality_physics_audit_summary.json")
     balanced_future_physics = read_json(derived / "balanced_future_roi_physics_audit" / "balanced_future_roi_physics_audit_summary.json")
     cross_cohort_rollout = read_json(derived / "cross_cohort_rollout_transfer_audit" / "cross_cohort_rollout_transfer_summary.json")
     diffusion_sanity = read_json(derived / "diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
@@ -359,6 +359,11 @@ def main() -> None:
     cross_cohort_difficult = top_items(first_summary(cross_cohort_rollout, "top_transfer_ranked_difficult_rois", []), 12)
     selected_to_transfer_shift = next((r for r in cross_cohort_shift if r.get("eval_cohort") == "transfer_ranked" and r.get("model_name") == "selected_internal"), {})
     pooled_to_transfer_shift = next((r for r in cross_cohort_shift if r.get("eval_cohort") == "transfer_ranked" and r.get("model_name") == "pooled"), {})
+    apparent_diffusion_sources = top_items(first_summary(apparent_diffusion_calibration, "source_timing_summary", []), 12)
+    apparent_diffusion_thresholds = top_items(first_summary(apparent_diffusion_calibration, "threshold_summary", []), 10)
+    apparent_diffusion_q70_tests = top_items(first_summary(apparent_diffusion_calibration, "future8_feature_tests_q70", []), 10)
+    apparent_diffusion_corr = top_items(first_summary(apparent_diffusion_calibration, "calibration_correlations", []), 8)
+    apparent_diffusion_q70_test = apparent_diffusion_q70_tests[0] if apparent_diffusion_q70_tests else {}
     diffusion_sanity_gate = top_items(first_summary(diffusion_sanity, "gate_counts", []), 12)
     diffusion_sanity_candidates = top_items(first_summary(diffusion_sanity, "top_automatic_candidates", []), 12)
     diffusion_sanity_corr = top_items(first_summary(diffusion_sanity, "top_correlations", []), 8)
@@ -519,6 +524,7 @@ def main() -> None:
         f"- Control-balanced high-resolution front tracking expands this check to {first_summary(control_balanced_front_tracking, 'n_tracked_rois', 0)} ROIs ({first_summary(control_balanced_diffusion_sanity, 'selected_front_cohort_counts', {})}); it still yields {first_summary(control_balanced_diffusion_sanity, 'n_automatic_positive_diffusion_proxy_candidates', 0)} automatic positive diffusion candidates and event/control selected-D separation remains non-significant (top p={fmt((control_balanced_diffusion_tests[0] if control_balanced_diffusion_tests else {}).get('mannwhitney_p'))}).",
         f"- Calibration metadata audit finds camera-timing datasets in {first_summary(calibration_metadata, 'n_h5_with_camera_timing', 0)} of {first_summary(calibration_metadata, 'n_h5_files', 0)} scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.",
         f"- Calibration claim-risk register audits {first_summary(calibration_claim_risk, 'n_claim_families', 0)} front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.",
+        f"- Apparent diffusion calibration-bounds audit maps all {first_summary(apparent_diffusion_calibration, 'n_roi_with_h5_timing', 0)} balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is {fmt(first_summary(apparent_diffusion_calibration, 'median_roi_elapsed_to_h5_median_ratio'))}, q70 median apparent D at 96 nm/px is {fmt(first_summary(apparent_diffusion_calibration, 'median_q70_apparent_D_h5median_um2_per_s'))} um2/s, and q70 future8 separation is non-significant (top p={fmt(apparent_diffusion_q70_test.get('mannwhitney_p'))}).",
         "- Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.",
         f"- Automatic front-QC sensitivity keeps the positive phase-front residual in {len(robust_phase_strata)} strata: {', '.join(robust_phase_strata) if robust_phase_strata else 'none'}; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.",
         f"- Protocol-adjusted residual mode taxonomy chooses k={first_summary(residual_modes, 'chosen_k', 0)}; its most event-enriched mode is {top_residual_mode.get('mode_label', 'NA')} with event fraction {fmt(top_residual_mode.get('event_fraction'))} and Fisher p={fmt(top_residual_mode.get('fisher_p_value'))}.",
@@ -772,6 +778,34 @@ def main() -> None:
             f"- {row.get('analysis')}: {row.get('claim_status')} - {row.get('recommended_wording')}"
         )
     report_lines.append(f"- Guardrail: {first_summary(calibration_claim_risk, 'guardrail', 'Calibration claim risk register unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Apparent Diffusion Calibration Bounds",
+        "",
+        f"- Threshold rows/ROI/cycles: {first_summary(apparent_diffusion_calibration, 'n_threshold_rows', 0)} / {first_summary(apparent_diffusion_calibration, 'n_roi', 0)} / {first_summary(apparent_diffusion_calibration, 'n_cycles', 0)}",
+        f"- ROI with HDF5 timing: {first_summary(apparent_diffusion_calibration, 'n_roi_with_h5_timing', 0)}",
+        f"- Pixel-size assumptions: {first_summary(apparent_diffusion_calibration, 'pixel_size_um_assumptions', [])}; default {fmt(first_summary(apparent_diffusion_calibration, 'default_pixel_size_um'))} um/px",
+        f"- Median ROI elapsed / HDF5 elapsed ratio: {fmt(first_summary(apparent_diffusion_calibration, 'median_roi_elapsed_to_h5_median_ratio'))}",
+        f"- q70 median apparent D at 96 nm/px: {fmt(first_summary(apparent_diffusion_calibration, 'median_q70_apparent_D_h5median_um2_per_s'))} um2/s; median abs {fmt(first_summary(apparent_diffusion_calibration, 'median_q70_abs_apparent_D_h5median_um2_per_s'))} um2/s; positive fraction {fmt(first_summary(apparent_diffusion_calibration, 'q70_positive_D_fraction'))}",
+    ]
+    for row in apparent_diffusion_thresholds:
+        report_lines.append(
+            f"- Threshold {fmt(row.get('threshold_quantile'))}: median D {fmt(row.get('median_D_um2_per_s'))}, median abs D {fmt(row.get('median_abs_D_um2_per_s'))}, positive fraction {fmt(row.get('positive_D_fraction'))}"
+        )
+    for row in apparent_diffusion_q70_tests[:6]:
+        report_lines.append(
+            f"- q70 calibration future8 test {row.get('feature')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, p={fmt(row.get('mannwhitney_p'))}"
+        )
+    for row in apparent_diffusion_sources[:8]:
+        report_lines.append(
+            f"- Source timing {row.get('source_stem')}: dt median {fmt(row.get('h5_dt_median_s'))}s, max/median {fmt(row.get('h5_dt_max_to_median_ratio'))}, ROI/H5 elapsed {fmt(row.get('roi_elapsed_to_h5_median_ratio'))}, median abs D {fmt(row.get('median_abs_D_um2_per_s'))}"
+        )
+    for row in apparent_diffusion_corr[:4]:
+        report_lines.append(
+            f"- Calibration-bound link {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(apparent_diffusion_calibration, 'guardrail', 'Apparent diffusion calibration-bounds audit unavailable.')}")
 
     report_lines += [
         "",
@@ -1232,6 +1266,18 @@ def main() -> None:
         report_lines.append(
             f"- Temporal timing correlation {row.get('feature')} vs {row.get('timing_target')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}"
         )
+    for row in apparent_diffusion_q70_tests[:5]:
+        report_lines.append(
+            f"- Apparent diffusion q70 {row.get('feature')}: median future8 positive-negative {fmt(row.get('median_positive_minus_negative'))}, positive fractions {fmt(row.get('positive_fraction_positive'))}/{fmt(row.get('positive_fraction_negative'))}, MW p={fmt(row.get('mannwhitney_p'))}"
+        )
+    for row in apparent_diffusion_corr[:4]:
+        report_lines.append(
+            f"- Apparent diffusion calibration correlation {row.get('x')} vs {row.get('y')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
+        )
+    report_lines.append(
+        f"- Apparent diffusion timing guardrail: ROI/HDF5 elapsed median ratio {fmt(first_summary(apparent_diffusion_calibration, 'median_roi_elapsed_to_h5_median_ratio'))}, max source dt max/median ratio {fmt(first_summary(apparent_diffusion_calibration, 'max_source_h5_dt_max_to_median_ratio'))}, q70 positive-D fraction {fmt(first_summary(apparent_diffusion_calibration, 'q70_positive_D_fraction'))}"
+    )
+    report_lines.append(f"- Apparent diffusion guardrail: {first_summary(apparent_diffusion_calibration, 'guardrail', 'Apparent diffusion calibration audit unavailable.')}")
     report_lines.append(f"- Temporal guardrail: {first_summary(temporal_directionality, 'guardrail', 'Temporal directionality audit unavailable.')}")
     report_lines.append(f"- Context guardrail: {first_summary(balanced_future_context, 'guardrail', 'Balanced future context/region audit unavailable.')}")
     report_lines.append(f"- Front-script guardrail: {first_summary(balanced_future_fronts, 'diffusion_guardrail', 'Balanced future fronts unavailable.')}")
@@ -1955,6 +2001,22 @@ def main() -> None:
             "high_risk_claim_families": first_summary(calibration_claim_risk, "high_risk_claim_families", []),
             "calibration_evidence": first_summary(calibration_claim_risk, "calibration_evidence", {}),
             "guardrail": first_summary(calibration_claim_risk, "guardrail"),
+        },
+        "apparent_diffusion_calibration_bounds": {
+            "n_threshold_rows": first_summary(apparent_diffusion_calibration, "n_threshold_rows"),
+            "n_roi": first_summary(apparent_diffusion_calibration, "n_roi"),
+            "n_cycles": first_summary(apparent_diffusion_calibration, "n_cycles"),
+            "n_roi_with_h5_timing": first_summary(apparent_diffusion_calibration, "n_roi_with_h5_timing"),
+            "pixel_size_um_assumptions": first_summary(apparent_diffusion_calibration, "pixel_size_um_assumptions", []),
+            "median_roi_elapsed_to_h5_median_ratio": first_summary(apparent_diffusion_calibration, "median_roi_elapsed_to_h5_median_ratio"),
+            "median_q70_apparent_D_h5median_um2_per_s": first_summary(apparent_diffusion_calibration, "median_q70_apparent_D_h5median_um2_per_s"),
+            "median_q70_abs_apparent_D_h5median_um2_per_s": first_summary(apparent_diffusion_calibration, "median_q70_abs_apparent_D_h5median_um2_per_s"),
+            "q70_positive_D_fraction": first_summary(apparent_diffusion_calibration, "q70_positive_D_fraction"),
+            "threshold_summary": apparent_diffusion_thresholds,
+            "source_timing_summary": apparent_diffusion_sources,
+            "future8_feature_tests_q70": apparent_diffusion_q70_tests,
+            "calibration_correlations": apparent_diffusion_corr,
+            "guardrail": first_summary(apparent_diffusion_calibration, "guardrail"),
         },
         "calibration_metadata_audit": {
             "n_h5_discovered_before_cap": first_summary(calibration_metadata, "n_h5_discovered_before_cap"),

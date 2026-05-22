@@ -2328,3 +2328,29 @@ Key result:
 - Timing correlations show aftermath/context structure: diffusion/radius2 slope IQR correlates with cycles since previous drop (rho=0.644, p=5.4e-9), and persistence particle/full-MSE fraction anticorrelates with cycles to next drop (rho=-0.493, p=1.66e-5).
 
 Interpretation: this strengthens the precursor-style evidence because the observed future8 physics model beats circular time-shifted labels, but the nontrivial reversed-label, past-drop timing structure, and context-confound guardrails mean the result remains weak-label hypothesis-ranking evidence pending more balanced acquisition design and manual ROI/front QC.
+
+## 2026-05-22 Apparent Diffusion Calibration Bounds Audit
+
+Added and ran an HDF5-timebase calibration guardrail for the balanced future-drop front/diffusion proxies:
+
+`python scripts/tier4_apparent_diffusion_calibration_bounds.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/apparent_diffusion_calibration_bounds`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/apparent_diffusion_calibration_bounds`
+
+Local compact copy:
+
+`derived_local/apparent_diffusion_calibration_bounds`
+
+Key result:
+
+- Mapped all 72 balanced ROI rows, 504 threshold rows, and 24 cycles back to source HDF5 camera timing metadata.
+- ROI elapsed time and HDF5 median camera timing agree closely: median ROI elapsed / HDF5 elapsed ratio = 1.0016.
+- Used slide-derived pixel-size assumptions of 0.08, 0.096, and 0.12 um/px; no HDF5 pixel-size attribute is available, so values remain apparent optical-front proxies.
+- At the q70 threshold and 96 nm/px, median apparent D is 4.32e-08 um2/s, median absolute apparent D is 2.60e-06 um2/s, and 51.4% of ROI rows are positive.
+- q70 future8 separation is non-significant after HDF5-timebase recalibration: apparent D positive-negative median difference = -6.33e-07 um2/s, Mann-Whitney p=0.175.
+- Some source files have rare timing gaps: maximum source-level HDF5 dt max/median ratio is 13.78, so timing envelopes should accompany any front-motion claim.
+- The strongest calibration correlation is HDF5 dt max/median ratio versus transferred masked residual signature, rho=0.728, p=2.86e-84, showing source/timing context remains an important guardrail.
+
+Interpretation: the video timebase itself is well matched for ROI spans, but the apparent diffusion proxy is threshold/context sensitive and not a calibrated material diffusion coefficient. This supports retaining diffusion-like values as optical-front descriptors for QC and hypothesis ranking only.

@@ -66,6 +66,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Control-balanced high-resolution front tracking expands this check to 40 ROIs ({'control': 24, 'event': 16}); it still yields 0 automatic positive diffusion candidates and event/control selected-D separation remains non-significant (top p=0.314).
 - Calibration metadata audit finds camera-timing datasets in 32 of 33 scanned HDF5 files and no HDF5 pixel-size attributes; sampled timing rows can be sparse segment/cycle timing, while the 96 nm/px scale remains slide-derived pending raw microscope metadata confirmation.
 - Calibration claim-risk register audits 11 front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.
+- Apparent diffusion calibration-bounds audit maps all 72 balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is 1.002, q70 median apparent D at 96 nm/px is 4.322e-08 um2/s, and q70 future8 separation is non-significant (top p=0.175).
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
@@ -314,6 +315,40 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - manual_qc_gated_front_effects: publication_gate_pending - No manual-QC accepted front/diffusion claim should be made until this table is populated.
 - roi_front_qc_package: review_prioritization_only - Use to assign labels and inspect artifacts; it does not validate diffusion by itself.
 - Guardrail: This register audits wording risk, not numerical correctness. Current front/kinetic outputs are strongest as optical particle-region proxies; diffusion-like values remain apparent proxies until spatial calibration, true frame cadence, masks, and manual QC are jointly validated.
+
+## Apparent Diffusion Calibration Bounds
+
+- Threshold rows/ROI/cycles: 504 / 72 / 24
+- ROI with HDF5 timing: 72
+- Pixel-size assumptions: [0.08, 0.096, 0.12]; default 0.096 um/px
+- Median ROI elapsed / HDF5 elapsed ratio: 1.002
+- q70 median apparent D at 96 nm/px: 4.322e-08 um2/s; median abs 2.597e-06 um2/s; positive fraction 0.514
+- Threshold 0.550: median D 3.899e-07, median abs D 1.489e-06, positive fraction 0.556
+- Threshold 0.600: median D 3.868e-07, median abs D 1.672e-06, positive fraction 0.556
+- Threshold 0.650: median D 2.259e-07, median abs D 2.087e-06, positive fraction 0.500
+- Threshold 0.700: median D 4.320e-08, median abs D 2.597e-06, positive fraction 0.514
+- Threshold 0.750: median D 1.058e-07, median abs D 2.909e-06, positive fraction 0.514
+- Threshold 0.800: median D 6.785e-07, median abs D 3.799e-06, positive fraction 0.556
+- Threshold 0.850: median D 1.032e-06, median abs D 4.461e-06, positive fraction 0.569
+- q70 calibration future8 test apparent_D_h5median_px0p08_um2_per_s: median positive-negative -4.398e-07, p=0.175
+- q70 calibration future8 test apparent_D_h5median_px0p096_um2_per_s: median positive-negative -6.334e-07, p=0.175
+- q70 calibration future8 test apparent_D_h5median_px0p12_um2_per_s: median positive-negative -9.896e-07, p=0.175
+- q70 calibration future8 test roi_elapsed_to_h5_median_ratio: median positive-negative 3.021e-04, p=0.189
+- q70 calibration future8 test apparent_D_h5_timing_envelope_abs_min_um2_per_s: median positive-negative -1.272e-07, p=0.313
+- q70 calibration future8 test apparent_D_h5median_abs_um2_per_s: median positive-negative -1.013e-07, p=0.377
+- Source timing 11_c2_x10_050723: dt median 10.039s, max/median 1.124, ROI/H5 elapsed 1.002, median abs D 1.594e-06
+- Source timing 12_c2_x10_070723: dt median 10.062s, max/median 1.143, ROI/H5 elapsed 1.000, median abs D 3.175e-06
+- Source timing 14_c2_x10_HighCOV_110723: dt median 10.062s, max/median 1.185, ROI/H5 elapsed 1.001, median abs D 1.016e-06
+- Source timing 15_c2_x5_HighCOV_120723: dt median 10.039s, max/median 13.753, ROI/H5 elapsed 1.009, median abs D 1.157e-06
+- Source timing 16_c2_x10_HighHighCOV_130723: dt median 10.039s, max/median 13.736, ROI/H5 elapsed 1.002, median abs D 7.629e-06
+- Source timing 17_c2_x10_HighHighCOV_150723: dt median 10.039s, max/median 13.757, ROI/H5 elapsed 1.002, median abs D 2.543e-06
+- Source timing 18_c2_xN_HighHighCOV_170723: dt median 10.062s, max/median 1.157, ROI/H5 elapsed 1.001, median abs D 2.730e-06
+- Source timing 5_c2_x10_260623: dt median 10.039s, max/median 13.783, ROI/H5 elapsed 1.002, median abs D 2.373e-06
+- Calibration-bound link h5_dt_max_to_median_ratio vs transferred_masked_residual_signature: rho=0.728, p=2.858e-84
+- Calibration-bound link apparent_D_h5median_px0p096_um2_per_s vs transferred_masked_residual_signature: rho=-0.257, p=4.700e-09
+- Calibration-bound link roi_elapsed_to_h5_median_ratio vs validation_score_recon: rho=0.222, p=5.050e-07
+- Calibration-bound link apparent_D_h5median_abs_um2_per_s vs transferred_masked_residual_signature: rho=-0.153, p=5.768e-04
+- Guardrail: Apparent diffusion values are recalibrated from HDF5 camera timing and slide-derived pixel-size assumptions. No HDF5 pixel-size attribute was found, and the values remain optical-front proxies, not validated material diffusion coefficients.
 
 ## Diffusion Proxy Sanity Audit
 
@@ -836,6 +871,17 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Temporal timing correlation velocity_particle_mse_fraction_of_full_mean vs cycles_since_previous_drop: rho=0.518, p=8.539e-06
 - Temporal timing correlation persistence_particle_mse_fraction_of_full_mean vs cycles_to_next_drop: rho=-0.493, p=1.665e-05
 - Temporal timing correlation diffusion_proxy_abs_median_um2_per_s vs cycles_since_previous_drop: rho=0.492, p=2.671e-05
+- Apparent diffusion q70 apparent_D_h5median_px0p08_um2_per_s: median future8 positive-negative -4.398e-07, positive fractions 0.472/0.556, MW p=0.175
+- Apparent diffusion q70 apparent_D_h5median_px0p096_um2_per_s: median future8 positive-negative -6.334e-07, positive fractions 0.472/0.556, MW p=0.175
+- Apparent diffusion q70 apparent_D_h5median_px0p12_um2_per_s: median future8 positive-negative -9.896e-07, positive fractions 0.472/0.556, MW p=0.175
+- Apparent diffusion q70 roi_elapsed_to_h5_median_ratio: median future8 positive-negative 3.021e-04, positive fractions 1.000/1.000, MW p=0.189
+- Apparent diffusion q70 apparent_D_h5_timing_envelope_abs_min_um2_per_s: median future8 positive-negative -1.272e-07, positive fractions 1.000/1.000, MW p=0.313
+- Apparent diffusion calibration correlation h5_dt_max_to_median_ratio vs transferred_masked_residual_signature: rho=0.728, p=2.858e-84, n=504
+- Apparent diffusion calibration correlation apparent_D_h5median_px0p096_um2_per_s vs transferred_masked_residual_signature: rho=-0.257, p=4.700e-09, n=504
+- Apparent diffusion calibration correlation roi_elapsed_to_h5_median_ratio vs validation_score_recon: rho=0.222, p=5.050e-07, n=504
+- Apparent diffusion calibration correlation apparent_D_h5median_abs_um2_per_s vs transferred_masked_residual_signature: rho=-0.153, p=5.768e-04, n=504
+- Apparent diffusion timing guardrail: ROI/HDF5 elapsed median ratio 1.002, max source dt max/median ratio 13.783, q70 positive-D fraction 0.514
+- Apparent diffusion guardrail: Apparent diffusion values are recalibrated from HDF5 camera timing and slide-derived pixel-size assumptions. No HDF5 pixel-size attribute was found, and the values remain optical-front proxies, not validated material diffusion coefficients.
 - Temporal guardrail: Temporal directionality audit compares ROI physics against future, past, reversed, and circularly shifted weak degradation labels. It uses automatic ROI/front descriptors and weak cycle-level abrupt-drop labels.
 - Context guardrail: Context/region audit tests whether balanced future8 ROI signal is explainable by acquisition context or spatial position. It still uses weak cycle labels and automatic ROI candidates.
 - Front-script guardrail: Diffusion values are apparent optical-front proxies computed as slope(radius^2) * pixel_size_um^2 / 4. They are not validated Li diffusion coefficients and require manual front QC.
