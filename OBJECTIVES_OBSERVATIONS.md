@@ -3423,6 +3423,28 @@ Interpretation:
 
 The source-invariant audit strengthens a narrow physics hypothesis: pre-event organization is most consistently carried by front/mask/apparent-diffusion feature families when source structure is handled in the model. It also exposes an important guardrail: intensity and object-context terms can still perform under some transforms, so these models are mechanism-ranking tools for manual QC and follow-up, not deployable warning models or validated phase-boundary/diffusion measurements.
 
+## 2026-05-22 Source-Balanced Pre-Event Review Packet
+
+Added `scripts/tier4_source_balanced_pre_event_review_packet.py` and ran it on Isambard. This converts the source-invariant/front/diffusion pre-event hypotheses into a concrete manual-QC queue with ranked ROI rows, individual frame-strip PNGs, and a contact sheet.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_review_packet`
+- `derived_local/source_balanced_pre_event_review_packet`
+
+Cohort/result snapshot:
+
+- Ranked 128 source-balanced pre-event candidate ROI rows across 64 cycles and 14 source movies.
+- Rendered 24 top candidate frame strips plus `pre_event_review_contact_sheet.png` for quick visual screening.
+- Event-relative bins in the packet: near pre-event 32 rows, mid pre-event 22, far pre-event 22, post-event 40, and no-near-event controls 12.
+- Review reasons: 13 `near_pre_high_source_invariant_front_score`, 19 `near_pre_front_diffusion_review`, 22 `mid_pre_followup_front_diffusion_review`, and 74 context/guardrail rows.
+- Top candidate: `source_balanced_cycle152_rank29_obj1_17_c2_x10_HighHighCOV_150723`, near-pre, score 4.789, source-invariant clean-front probability 0.941, near/far physics probability 0.522, front q60 slope 1.130 px/norm time, apparent q70 diffusion proxy 0.576 um2/norm time.
+- The top six rows are all from source `17_c2_x10_HighHighCOV_150723` around cycles 150-152, so source clustering remains an explicit review guardrail rather than a discovery claim.
+
+Interpretation:
+
+This packet makes the most actionable current AI output visual: it tells a reviewer which automatic crops to inspect first for pre-event front/diffusion-like behavior. It does not assign manual labels, validate particle identity, validate phase boundaries, calibrate diffusion, or establish causal precursors. The immediate use is reviewer triage and failure-mode discovery, especially checking whether the source-17 near-pre cluster reflects real particle morphology or an acquisition/source artifact.
+
 ## 2026-05-22 Source-Balanced Pre-Event Directionality Audit
 
 Added `scripts/tier4_source_balanced_pre_event_directionality_audit.py` and ran it on Isambard as a ROI-level complement to the cycle-collapsed event-distance trajectory audit. The audit merges pre-event sequence features with rollout/mask/front readouts and compares clean near-pre-event, near-versus-far-pre-event, and post-versus-control readouts while tracking whether features correlate with pre-event and post-event clocks.
