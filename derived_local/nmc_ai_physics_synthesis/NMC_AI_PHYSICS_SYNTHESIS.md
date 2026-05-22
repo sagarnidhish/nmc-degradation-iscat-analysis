@@ -113,6 +113,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling 24 cycles and 72 ROI rows with equal weak future8 positives/negatives; leave-cycle logistic_l2 reaches AUC 0.716/AP 0.761, permutation p=0.049. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.
 - Source-balanced ROI expansion attacks the remaining cohort-breadth bottleneck: it samples 48 cycles across 14 source movies, including 41 cycle/source pairs not already in video cohorts, and proposes 96 automatic ROI rows for follow-up sequence export/QC.
 - Source-balanced pre-event sampling addresses the future-specificity gap directly: it reconstructs 128 automatic ROI proposals from 64 event-relative cycles across 14 sources, with cycle bins {'far_pre_event_17_32': 11, 'mid_pre_event_9_16': 11, 'near_pre_event_1_8': 16, 'no_near_event_control': 6, 'post_event_1_16': 20} and 13 new cycle/source pairs.
+- Source-balanced pre-event sequence audit exports 128 event-relative particle crops and finds near-pre-event spatial video structure under leave-source AUC 0.759/AP 0.515, while broader any-pre transfer remains weak at AUC 0.463.
 - Source-balanced ROI sequence export converts that manifest into 96 particle-region crop tensors across 48 cycles and 14 sources with 0 export failures; the fast rollout audit finds strongest future16 ROI signal in roi_norm_mean_delta_last_minus_first at AUC 0.626, while prediction-error features are highly source-structured.
 - A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across 96 ROI tensors; top future16 mask/front proxy is masked_minus_background_mean_slope at AUC 0.690/AP 0.696, but source eta2 is 0.634.
 - A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.631/AP 0.634, and best within-source-rank proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.656/AP 0.677.
@@ -1283,6 +1284,31 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source coverage 16_c2_x10_HighHighCOV_130723: selected=5, near=0, mid=4, far=1, post=0, controls=0, new=2
 - Source coverage 17_c2_x10_HighHighCOV_150723: selected=5, near=4, mid=1, far=0, post=0, controls=0, new=0
 - Source coverage 2_c2_x14_200623: selected=5, near=0, mid=0, far=0, post=0, controls=5, new=3
+
+## Source-Balanced Pre-Event ROI Sequence Export
+
+- ROI sequences/cycles/sources/failures: 128 / 64 / 14 / 0
+- Future8/future16 sequence positives from event proximity: 32 / 66
+- Guardrail: Source-balanced sequences are fixed padded particle-region crops around automatic reconstructed candidates. They broaden source coverage for model/physics tests, but are not manual particle annotations or validated front labels.
+
+## Source-Balanced Pre-Event Sequence Audit
+
+- Feature rows/cycles/sources/failures: 128 / 64 / 14 / 0
+- Bin counts: {'far_pre_event_17_32': 22, 'mid_pre_event_9_16': 22, 'near_pre_event_1_8': 32, 'no_near_event_control': 12, 'post_event_1_16': 40}
+- Target positives: {'target_any_pre_vs_post_control': 76, 'target_near_pre_vs_rest': 32, 'target_pre16_clean_vs_post_control': 54}
+- Near-pre-event spatial readout: leave-cycle AUC 0.763/AP 0.536; leave-source AUC 0.759/AP 0.515
+- Clean pre16 vs post/control all-video leave-cycle readout: AUC 0.723/AP 0.759
+- Any-pre vs post/control all-video leave-source guardrail: AUC 0.463/AP 0.645
+- Top near-pre scalar: NA / NA AUC NA, AP NA, p=NA
+- Guardrail: Event-relative sequence features are computed from automatic fixed particle crops and labels are derived from abrupt-event cycle proximity. Positive readouts indicate pre/post/control optical-dynamics separation for follow-up QC and modeling, not validated precursors, particle identities, phase boundaries, diffusion coefficients, or causal degradation mechanisms.
+- Event-relative model target_any_pre_vs_post_control cycleNo all_video: AUC 0.637, AP 0.758, n=128
+- Event-relative model target_any_pre_vs_post_control cycleNo spatial: AUC 0.608, AP 0.701, n=128
+- Event-relative model target_any_pre_vs_post_control cycleNo dynamics: AUC 0.600, AP 0.736, n=128
+- Event-relative model target_any_pre_vs_post_control source_stem spatial: AUC 0.550, AP 0.652, n=128
+- Event-relative model target_any_pre_vs_post_control cycleNo intensity: AUC 0.530, AP 0.708, n=128
+- Event-relative model target_any_pre_vs_post_control source_stem dynamics: AUC 0.501, AP 0.676, n=128
+- Event-relative model target_any_pre_vs_post_control source_stem all_video: AUC 0.463, AP 0.645, n=128
+- Event-relative model target_any_pre_vs_post_control source_stem intensity: AUC 0.408, AP 0.595, n=128
 
 ## Source-Balanced Degradation Mode Audit
 

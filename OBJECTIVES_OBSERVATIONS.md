@@ -3344,3 +3344,28 @@ Cohort/result snapshot:
 Interpretation:
 
 This closes the immediate sampling gap raised by the future-specific audit. The project now has a concrete source-balanced, event-relative ROI proposal set for exporting particle-only pre-event/post-event/control videos and for testing whether residual/front/rollout features are genuine precursors rather than event-neighborhood markers. The manifest is still automatic candidate generation, so it supports follow-up modeling and QC prioritization but not validated particle identity, phase-front motion, diffusion, or causal degradation claims.
+
+## 2026-05-22 Source-Balanced Pre-Event ROI Sequence Export and Audit
+
+Exported the pre-event sampling manifest into particle-region crop tensors with `scripts/tier4_export_source_balanced_roi_sequences.py`, preserving event-relative bin metadata, and added `scripts/tier4_source_balanced_pre_event_sequence_audit.py` to measure simple video dynamics across near/mid/far pre-event, post-event, and no-near-event controls.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit`
+- `derived_local/source_balanced_pre_event_roi_sequences` contains only compact manifest/summary files; NPZ tensors remain on Isambard.
+- `derived_local/source_balanced_pre_event_sequence_audit`
+
+Cohort/result snapshot:
+
+- Exported 128 ROI sequences across 64 cycles and 14 source movies with 0 failures; each sequence has 96 frames from fixed padded particle-region crops.
+- Event-relative audit feature rows match the export: 128 rows, 64 cycles, 14 sources, 0 feature failures.
+- Bin counts are near pre-event 32 ROI rows, mid pre-event 22, far pre-event 22, post-event 40, and no-near-event controls 12.
+- Near-pre-event versus all other bins has a strong spatial video readout: leave-cycle spatial AUC 0.763/AP 0.536 and leave-source spatial AUC 0.759/AP 0.515.
+- The top near-pre scalar is raw `spatial_std_slope`, AUC 0.803/AP 0.591, p = 3.14e-07, indicating stronger growth in crop heterogeneity near abrupt-event windows.
+- Clean pre16 versus post/control is moderate under leave-cycle all-video readout: AUC 0.723/AP 0.759.
+- Broader any-pre versus post/control does not transfer robustly by source: all-video leave-source AUC 0.463/AP 0.645, while leave-cycle AUC is 0.637/AP 0.758.
+
+Interpretation:
+
+The new pre-event tensors make the earlier future-specificity gap actionable. There is a localized near-pre-event spatial/heterogeneity signal that survives held-out-source testing, but it does not generalize as a broad all-pre-event warning axis. The physics-facing hypothesis is therefore narrower: the final 1-8 cycles before abrupt event windows may show increasing particle-crop spatial heterogeneity/front disorder. This remains automatic-crop, event-proximity evidence, not validated phase-boundary motion, diffusion, particle identity, or causal forecasting.
