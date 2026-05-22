@@ -41,6 +41,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Transfer-ranked reconstructed cycles/ROI rows: 12 / 48
 - Transfer-ranked masked rollout ROI/frame rows: 48 / 4608
 - Transfer-ranked front physics ROI/cycles: 48 / 12
+- Transfer-ranked residual transition timing ROI/method rows: 48 / 144
 - Cross-cohort rollout transfer selected/transfer ROIs: 11 / 48
 - Diffusion sanity selected-front/publication candidates: 12 / 0
 - Control-balanced high-res front tracking/sanity candidates: 40 / 0
@@ -88,6 +89,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Masked residual state-transfer warning expands the masked-residual signature from 11 video-backed cycles to 89 cycle-state rows; the transferred score separates future 8-cycle drops (AUC 0.708, permutation p=0.004), but anchor leave-one-cycle transfer is weak (rho=-0.155, p=0.650) and cycle-state PC2 remains the stronger direct future8 baseline (AUC 0.772).
 - Transfer-ranked ROI reconstruction converts that state-transfer hypothesis list back into direct video crops: 12 cycles yielded 960 reconstructed components and 48 ROI rows; masked rollout on the exported crops again picks persistence as best for 48 of 48 ROIs, while low-rank DMD particle residuals remain much larger than nonparticle context.
 - Transfer-ranked front physics audit links those crops to phase/front proxies across 48 ROIs; strongest ROI-level future8 association is radius2_slope_positive_fraction with median positive-negative 0.857, AUC 0.781, and permutation p=3.999e-04; radius/diffusion-like values remain apparent optical-front proxies only.
+- Transfer-ranked residual transition timing gives a stronger temporal residual/phase link than the broader event-control cohort: low_rank_dmd weighted_center_distance_to_transition_frac median distance 0.087 versus null mean 0.250, p=2.000e-04; top future8 timing target is persistence particle_to_nonparticle_mse_ratio_median, AUC 0.832.
 - Cross-cohort rollout transfer audit shows the late transfer-ranked crops are a distinct video-dynamics domain: selected-cohort DMD evaluated on transfer-ranked ROIs has median particle MSE 0.020, 3.494x the transfer-internal DMD baseline (p=3.277e-09), while pooled training is close to transfer-internal (1.061x).
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
@@ -655,6 +657,38 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Front-physics review ROI cycle146_rank2_obj1: score 2.771, future8=0, phase score 0.885, apparent D -5.805e-06, DMD particle MSE 0.006
 - Front-physics review ROI cycle153_rank7_obj4: score 2.760, future8=1, phase score 0.594, apparent D 1.101e-05, DMD particle MSE 0.013
 - Guardrail: Transfer-ranked front descriptors are automatic optical phase/radius proxies from ROI crops. Diffusion-like values are apparent front-motion descriptors, not calibrated transport coefficients, and the cohort is warning-ranked rather than an event/control design.
+
+## Transfer-Ranked Residual Transition Timing
+
+- Phase-kinetic ROI/timing rows/permutations: 48 / 144 / 5000
+- Timing target positives: {'any_abrupt_drop': 8, 'future_any_drop_within_16cycles': 36, 'future_any_drop_within_8cycles': 28}
+- Transfer timing alignment low_rank_dmd weighted_center_distance_to_transition_frac: median distance 0.087, null mean 0.250, empirical p=2.000e-04, n=48
+- Transfer timing alignment persistence weighted_center_distance_to_transition_frac: median distance 0.156, null mean 0.252, empirical p=0.004, n=48
+- Transfer timing alignment velocity weighted_center_distance_to_transition_frac: median distance 0.170, null mean 0.251, empirical p=0.012, n=48
+- Transfer timing alignment low_rank_dmd peak_distance_to_transition_frac: median distance 0.421, null mean 0.439, empirical p=0.400, n=48
+- Transfer timing alignment persistence peak_distance_to_transition_frac: median distance 0.318, null mean 0.329, empirical p=0.441, n=48
+- Transfer timing alignment velocity peak_distance_to_transition_frac: median distance 0.324, null mean 0.312, empirical p=0.591, n=48
+- Transfer timing target future_any_drop_within_8cycles persistence particle_to_nonparticle_mse_ratio_median: median positive-negative 0.648, AUC 0.832, permutation p=3.999e-04, n=28/20
+- Transfer timing target future_any_drop_within_16cycles persistence particle_to_nonparticle_mse_ratio_median: median positive-negative 0.645, AUC 0.808, permutation p=7.998e-04, n=36/12
+- Transfer timing target future_any_drop_within_8cycles persistence residual_peak_particle_mse: median positive-negative 0.010, AUC 0.879, permutation p=0.002, n=28/20
+- Transfer timing target future_any_drop_within_8cycles velocity residual_peak_particle_mse: median positive-negative 0.012, AUC 0.923, permutation p=0.002, n=28/20
+- Transfer timing target any_abrupt_drop low_rank_dmd near_transition_residual_fraction: median positive-negative -0.073, AUC 0.772, permutation p=0.002, n=8/40
+- Transfer timing target future_any_drop_within_16cycles low_rank_dmd weighted_center_distance_to_transition_frac: median positive-negative -0.199, AUC 0.778, permutation p=0.003, n=36/12
+- Transfer timing target future_any_drop_within_8cycles low_rank_dmd weighted_center_distance_to_transition_frac: median positive-negative -0.116, AUC 0.645, permutation p=0.003, n=28/20
+- Transfer timing target future_any_drop_within_16cycles low_rank_dmd peak_distance_to_transition_frac: median positive-negative -0.146, AUC 0.736, permutation p=0.004, n=36/12
+- Transfer timing/target link velocity residual_peak_particle_mse vs future_any_drop_within_8cycles: rho=0.723, p=6.528e-09, n=48
+- Transfer timing/target link persistence residual_peak_particle_mse vs future_any_drop_within_8cycles: rho=0.647, p=6.850e-07, n=48
+- Transfer timing/target link velocity residual_peak_particle_mse vs future_any_drop_within_16cycles: rho=0.629, p=1.717e-06, n=48
+- Transfer timing/target link velocity particle_to_nonparticle_mse_ratio_median vs future_any_drop_within_16cycles: rho=0.583, p=1.346e-05, n=48
+- Transfer timing/target link persistence particle_to_nonparticle_mse_ratio_median vs future_any_drop_within_8cycles: rho=0.567, p=2.610e-05, n=48
+- Transfer timing/target link persistence residual_peak_particle_mse vs future_any_drop_within_16cycles: rho=0.542, p=6.981e-05, n=48
+- Near-transition transfer ROI cycle152_rank5_obj3 persistence: near residual fraction 0.700, peak MSE 0.011, future8=1
+- Near-transition transfer ROI cycle152_rank5_obj4 persistence: near residual fraction 0.693, peak MSE 0.010, future8=1
+- Near-transition transfer ROI cycle152_rank5_obj1 persistence: near residual fraction 0.660, peak MSE 0.017, future8=1
+- Near-transition transfer ROI cycle152_rank5_obj4 velocity: near residual fraction 0.528, peak MSE 0.010, future8=1
+- Near-transition transfer ROI cycle152_rank5_obj3 velocity: near residual fraction 0.504, peak MSE 0.010, future8=1
+- Near-transition transfer ROI cycle156_rank3_obj1 persistence: near residual fraction 0.486, peak MSE 7.274e-04, future8=0
+- Guardrail: Transfer-ranked transition timing uses automatic phase-fraction kinetics and masked rollout residuals from warning-ranked ROI crops. It tests temporal alignment and future-label association only; it is not manual phase-boundary annotation or calibrated transport.
 
 ## Cross-Cohort Rollout Transfer
 

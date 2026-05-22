@@ -2115,3 +2115,28 @@ Key result:
 - The review-priority table ranks ROIs that jointly combine transfer score, phase/front proxy strength, rollout residual difficulty, and future-drop context for manual inspection.
 
 Interpretation: this connects the cycle-level warning loop back to front/phase physics on direct video crops. It supports using transfer-ranked ROIs for hypothesis ranking and domain-adapted rollout/front modeling, but it still does not justify calibrated diffusion or manual front claims without QC labels and calibration confirmation.
+
+## 2026-05-22 Transfer-Ranked Residual Transition Timing
+
+Added and ran:
+
+`python scripts/tier4_transfer_ranked_residual_transition_timing.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing --n-permutation 5000`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing`
+
+Local compact copy:
+
+`derived_local/transfer_ranked_residual_transition_timing`
+
+Key result:
+
+- Computed optical phase-kinetic transition centers directly from all 48 transfer-ranked ROI movies, then aligned them to held-out masked rollout residual timing for persistence, velocity, and low-rank DMD.
+- The audit yields 144 ROI-method timing rows with 5,000-permutation alignment tests.
+- Low-rank-DMD residual weighted centers are strongly phase-transition aligned: median distance to transition center is 0.087 of the held-out tail versus null mean 0.250, empirical p=0.000200.
+- Persistence and velocity weighted residual centers are also closer than random, but weaker: persistence median distance 0.156, p=0.00360; velocity median distance 0.170, p=0.0122.
+- Future-drop-positive transfer-ranked ROIs have higher persistence particle/nonparticle residual ratios: future8 median positive-negative +0.648, AUC=0.832, Mann-Whitney p=1.05e-4, permutation p=0.000400.
+- Future8 positives also have much larger persistence residual peaks: median positive-negative +0.0104 particle MSE, AUC=0.879, Mann-Whitney p=9.74e-6, permutation p=0.00180.
+
+Interpretation: unlike the broader event/control timing audit, the warning-ranked transfer cohort gives a strong temporal link between low-rank rollout residual centers and automatic phase-transition centers. This is still an automatic optical proxy, but it strengthens the case that rollout residuals are tracking real transition-like particle dynamics in the late warning-window crops.
