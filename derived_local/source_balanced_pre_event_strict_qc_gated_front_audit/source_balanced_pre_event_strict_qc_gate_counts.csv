@@ -1,0 +1,9 @@
+gate,n_pass,n_fail,fraction_pass
+stable_mask_gate,24,0,1.0
+centroid_stability_gate,20,4,0.8333333333333334
+visual_sanity_gate,9,15,0.375
+visual_mode_gate,6,18,0.25
+front_trace_fit_gate,4,20,0.16666666666666666
+front_direction_agreement_gate,11,13,0.4583333333333333
+manual_front_review_gate,1,23,0.041666666666666664
+automatic_diffusion_claim_gate,0,24,0.0

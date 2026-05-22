@@ -3821,3 +3821,25 @@ Results:
 - The previous consensus rank 1 candidate remains high but is downgraded to follow-up rather than priority because the automatically traced front has weak linear fit/direction consistency.
 
 Interpretation: this is a useful negative/guardrail result. The scalar consensus/matched-control evidence still identifies near-pre-event candidates worth reviewing, but the rendered kymograph/front-trace plausibility audit does not yet support automatic acceptance of coherent phase-front motion. Diffusion and phase-boundary claims should therefore remain gated on manual ROI/front QC and calibration. The new contact sheet orders review by visual-QC score so manual inspection can start with the strongest follow-up cases while preserving likely low-plausibility context rows.
+
+## 2026-05-22 Source-Balanced Pre-Event Strict QC-Gated Front Audit
+
+Added `scripts/tier4_source_balanced_pre_event_strict_qc_gated_front_audit.py` and ran it on Isambard. This audit turns the consensus visual packet, visual sanity metrics, and visual QC modes into explicit gate-level review decisions for candidate front motion and diffusion-readout claims.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_strict_qc_gated_front_audit`
+- `derived_local/source_balanced_pre_event_strict_qc_gated_front_audit`
+- `source_balanced_pre_event_strict_qc_gated_front_candidates.csv`
+- `source_balanced_pre_event_strict_qc_gate_counts.csv`
+- `strict_qc_front_review_contact_sheet.png`
+- `source_balanced_pre_event_strict_qc_gated_front_summary.json`
+
+Results:
+
+- Scored all 24 rendered consensus candidates.
+- Gate pass counts: stable mask 24, centroid stability 20, visual sanity 9, visual mode 6, front-trace fit 4, front-direction agreement 11, manual front-review 1, automatic diffusion claim 0.
+- Only one candidate survives the automatic manual-front-review gate: `source_balanced_cycle80_rank62_obj2_9_c2_x10_010723`, consensus rank 8, near-pre-event, strict QC score 0.600, visual sanity score 0.761, visual review score 0.506, front-trace r2 0.279, consensus front-radius2 slope 15.449 px^2/norm time.
+- Zero candidates pass the automatic diffusion-claim gate.
+
+Interpretation: this is a conservative review-prioritization guardrail. The automatic evidence can nominate one ROI for manual front inspection, but it does not validate particle identity, masks, coherent phase-boundary motion, calibrated diffusion, degradation causality, or deployable warnings. Diffusion coefficient/material transport claims remain blocked until manual ROI/front QC and calibration are done.
