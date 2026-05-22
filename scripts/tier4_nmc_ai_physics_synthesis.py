@@ -121,6 +121,9 @@ def main() -> None:
     masked_cycle_warning = read_json(derived / "masked_rollout_cycle_warning" / "masked_rollout_cycle_warning_summary.json")
     masked_residual_timing = read_json(derived / "masked_residual_transition_timing" / "masked_residual_transition_timing_summary.json")
     masked_residual_transfer = read_json(derived / "masked_residual_state_transfer_warning" / "masked_residual_state_transfer_warning_summary.json")
+    transfer_ranked_reconstruction = read_json(derived / "transfer_ranked_roi_reconstruction" / "transfer_ranked_roi_reconstruction_summary.json")
+    transfer_ranked_sequences = read_json(derived / "transfer_ranked_roi_sequences" / "selected_roi_sequence_summary.json")
+    transfer_ranked_rollout = read_json(derived / "transfer_ranked_masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
     diffusion_sanity = read_json(derived / "diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
     control_balanced_front_tracking = read_json(derived / "control_balanced_front_tracking" / "selected_front_roi_tracking_summary.json")
     control_balanced_diffusion_sanity = read_json(derived / "control_balanced_diffusion_proxy_sanity_audit" / "diffusion_proxy_sanity_audit_summary.json")
@@ -274,6 +277,12 @@ def main() -> None:
     masked_residual_transfer_anchor = first_summary(masked_residual_transfer, "anchor_loo_summary", {}) or {}
     masked_residual_transfer_future8 = next((r for r in masked_residual_transfer_tests if r.get("target") == "future_any_drop_within_8cycles" and r.get("score") == "transferred_masked_residual_signature"), {})
     masked_residual_transfer_pc2_future8 = next((r for r in masked_residual_transfer_tests if r.get("target") == "future_any_drop_within_8cycles" and r.get("score") == "cycle_state_pc2"), {})
+    transfer_ranked_sampled = top_items(first_summary(transfer_ranked_reconstruction, "sampled_cycles", []), 12)
+    transfer_ranked_top_rois = top_items(first_summary(transfer_ranked_reconstruction, "top_roi_rows", []), 12)
+    transfer_ranked_sequence_cycles = first_summary(transfer_ranked_sequences, "cycle_summary", {}) or {}
+    transfer_ranked_rollout_methods = top_items(first_summary(transfer_ranked_rollout, "method_summary", []), 8)
+    transfer_ranked_rollout_difficult = top_items(first_summary(transfer_ranked_rollout, "top_particle_difficulty_rois", []), 12)
+    transfer_ranked_rollout_best_counts = first_summary(transfer_ranked_rollout, "best_method_counts_inside_particle", {}) or {}
     diffusion_sanity_gate = top_items(first_summary(diffusion_sanity, "gate_counts", []), 12)
     diffusion_sanity_candidates = top_items(first_summary(diffusion_sanity, "top_automatic_candidates", []), 12)
     diffusion_sanity_corr = top_items(first_summary(diffusion_sanity, "top_correlations", []), 8)
@@ -406,6 +415,8 @@ def main() -> None:
         f"- Masked rollout cycle-warning ROI cycles/features: {first_summary(masked_cycle_warning, 'n_roi_cycles', 0)} / {first_summary(masked_cycle_warning, 'n_rollout_features_tested', 0)}",
         f"- Masked residual transition ROI/method rows: {first_summary(masked_residual_timing, 'n_roi_method_rows', 0)}",
         f"- Masked residual state-transfer anchor/full cycles: {first_summary(masked_residual_transfer, 'n_anchor_cycles', 0)} / {first_summary(masked_residual_transfer, 'n_full_cycles', 0)}",
+        f"- Transfer-ranked reconstructed cycles/ROI rows: {first_summary(transfer_ranked_reconstruction, 'n_cycles_sampled', 0)} / {first_summary(transfer_ranked_reconstruction, 'n_roi_rows', 0)}",
+        f"- Transfer-ranked masked rollout ROI/frame rows: {first_summary(transfer_ranked_rollout, 'n_roi', 0)} / {first_summary(transfer_ranked_rollout, 'n_frame_metric_rows', 0)}",
         f"- Diffusion sanity selected-front/publication candidates: {first_summary(diffusion_sanity, 'n_selected_front_rois', 0)} / {first_summary(diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
         f"- Control-balanced high-res front tracking/sanity candidates: {first_summary(control_balanced_front_tracking, 'n_tracked_rois', 0)} / {first_summary(control_balanced_diffusion_sanity, 'n_publication_diffusion_candidates', 0)}",
         f"- Weak-label benchmark trainable positives/negatives: {first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)}",
@@ -450,6 +461,7 @@ def main() -> None:
         f"- Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for {masked_rollout_best_counts.get('persistence', 0)} of {first_summary(masked_rollout, 'n_roi', 0)} ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho={fmt((masked_rollout_corr[0] if masked_rollout_corr else {}).get('spearman_rho'))}, p={fmt((masked_rollout_corr[0] if masked_rollout_corr else {}).get('p_value'))}).",
         f"- Cycle-collapsed masked-rollout warning audit covers {first_summary(masked_cycle_warning, 'n_roi_cycles', 0)} observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p={fmt((masked_cycle_warning_tests[0] if masked_cycle_warning_tests else {}).get('permutation_p_abs_median_diff'))}), while future-drop evaluation is underpowered with only {masked_cycle_warning_targets.get('future_any_drop_within_8cycles', 0)} positive 8-cycle warning case.",
         f"- Masked residual state-transfer warning expands the masked-residual signature from {first_summary(masked_residual_transfer, 'n_anchor_cycles', 0)} video-backed cycles to {first_summary(masked_residual_transfer, 'n_full_cycles', 0)} cycle-state rows; the transferred score separates future 8-cycle drops (AUC {fmt(masked_residual_transfer_future8.get('abs_oriented_auc'))}, permutation p={fmt(masked_residual_transfer_future8.get('permutation_p_abs_median_diff'))}), but anchor leave-one-cycle transfer is weak (rho={fmt(masked_residual_transfer_anchor.get('rho'))}, p={fmt(masked_residual_transfer_anchor.get('p_value'))}) and cycle-state PC2 remains the stronger direct future8 baseline (AUC {fmt(masked_residual_transfer_pc2_future8.get('abs_oriented_auc'))}).",
+        f"- Transfer-ranked ROI reconstruction converts that state-transfer hypothesis list back into direct video crops: {first_summary(transfer_ranked_reconstruction, 'n_cycles_sampled', 0)} cycles yielded {first_summary(transfer_ranked_reconstruction, 'n_reconstructed_candidates', 0)} reconstructed components and {first_summary(transfer_ranked_reconstruction, 'n_roi_rows', 0)} ROI rows; masked rollout on the exported crops again picks persistence as best for {transfer_ranked_rollout_best_counts.get('persistence', 0)} of {first_summary(transfer_ranked_rollout, 'n_roi', 0)} ROIs, while low-rank DMD particle residuals remain much larger than nonparticle context.",
         f"- Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p={fmt((masked_residual_timing_align[0] if masked_residual_timing_align else {}).get('empirical_p_distance_le_observed'))}), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.",
         f"- Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: {first_summary(weak_label_benchmark, 'n_trainable_weak_label_rows', 0)} trainable weak rows ({first_summary(weak_label_benchmark, 'n_positive_weak_labels', 0)} positive / {first_summary(weak_label_benchmark, 'n_negative_weak_labels', 0)} negative), and only {weak_label_leakage.get('n_usable_binary_folds', 0)} leave-reference fold is class-balanced enough for binary evaluation.",
         "",
@@ -922,6 +934,37 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Transfer-Ranked ROI Reconstruction And Masked Rollout",
+        "",
+        f"- Sampled cycles/reconstructed candidates/ROI rows: {first_summary(transfer_ranked_reconstruction, 'n_cycles_sampled', 0)} / {first_summary(transfer_ranked_reconstruction, 'n_reconstructed_candidates', 0)} / {first_summary(transfer_ranked_reconstruction, 'n_roi_rows', 0)}",
+        f"- Exported ROI sequences: {first_summary(transfer_ranked_sequences, 'n_roi_sequences', 0)} at {first_summary(transfer_ranked_sequences, 'samples_per_roi', 0)} frames per ROI",
+        f"- Masked rollout ROI/frame rows: {first_summary(transfer_ranked_rollout, 'n_roi', 0)} / {first_summary(transfer_ranked_rollout, 'n_frame_metric_rows', 0)}",
+        f"- Best method counts inside particle masks: {transfer_ranked_rollout_best_counts}",
+    ]
+    for row in transfer_ranked_sampled[:8]:
+        report_lines.append(
+            f"- Transfer sampled cycle {fmt(row.get('cycleNo'), 0)} rank {fmt(row.get('transfer_rank'), 0)}: score {fmt(row.get('transferred_masked_residual_signature'))}, future8={fmt(row.get('future_any_drop_within_8cycles'), 0)}, future16={fmt(row.get('future_any_drop_within_16cycles'), 0)}, candidates={fmt(row.get('n_candidates'), 0)}"
+        )
+    for cycle_key, row in list(transfer_ranked_sequence_cycles.items())[:8]:
+        report_lines.append(
+            f"- Transfer sequence cycle {cycle_key}: mean ROI delta {fmt(row.get('mean_roi_delta'))}, norm delta {fmt(row.get('mean_norm_roi_delta'))}, n={fmt(row.get('n_roi_sequences'), 0)}"
+        )
+    for row in transfer_ranked_rollout_methods:
+        report_lines.append(
+            f"- Transfer-ranked {row.get('method')}: particle-MSE median {fmt(row.get('particle_mse_mean_median'))}, nonparticle-MSE median {fmt(row.get('nonparticle_mse_mean_median'))}, particle/nonparticle ratio median {fmt(row.get('particle_to_nonparticle_mse_ratio_mean_median'))}"
+        )
+    for row in transfer_ranked_rollout_difficult[:6]:
+        report_lines.append(
+            f"- Transfer-ranked difficult ROI {row.get('roi_id')} {row.get('method')} cycle {fmt(row.get('cycleNo'), 0)}: particle MSE {fmt(row.get('particle_mse_mean'))}, particle/nonparticle ratio {fmt(row.get('particle_to_nonparticle_mse_ratio_mean'))}"
+        )
+    for row in transfer_ranked_top_rois[:6]:
+        report_lines.append(
+            f"- Transfer-ranked ROI candidate cycle {fmt(row.get('cycleNo'), 0)} obj {fmt(row.get('object_candidate_rank'), 0)}: validation score {fmt(row.get('validation_score'))}, mean abs z {fmt(row.get('object_mean_abs_z'))}, future8={fmt(row.get('future_any_drop_within_8cycles'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(transfer_ranked_reconstruction, 'guardrail', 'Automatic transfer-ranked reconstruction unavailable.')} {first_summary(transfer_ranked_rollout, 'guardrail', 'Masked rollout unavailable.')}")
+
+    report_lines += [
+        "",
         "## Masked Residual Transition Timing",
         "",
         f"- ROI/method rows/permutations: {first_summary(masked_residual_timing, 'n_roi_method_rows', 0)} / {first_summary(masked_residual_timing, 'n_permutation', 0)}",
@@ -1314,6 +1357,29 @@ def main() -> None:
             "top_automatic_candidates": diffusion_sanity_candidates,
             "top_correlations": diffusion_sanity_corr,
             "guardrail": first_summary(diffusion_sanity, "guardrail"),
+        },
+        "transfer_ranked_roi_reconstruction": {
+            "n_cycles_sampled": first_summary(transfer_ranked_reconstruction, "n_cycles_sampled"),
+            "n_reconstructed_candidates": first_summary(transfer_ranked_reconstruction, "n_reconstructed_candidates"),
+            "n_roi_rows": first_summary(transfer_ranked_reconstruction, "n_roi_rows"),
+            "n_missing_cycles": first_summary(transfer_ranked_reconstruction, "n_missing_cycles"),
+            "sampled_cycles": transfer_ranked_sampled,
+            "top_roi_rows": transfer_ranked_top_rois,
+            "sequence_summary": {
+                "n_roi_sequences": first_summary(transfer_ranked_sequences, "n_roi_sequences"),
+                "samples_per_roi": first_summary(transfer_ranked_sequences, "samples_per_roi"),
+                "cycle_summary": transfer_ranked_sequence_cycles,
+                "guardrail": first_summary(transfer_ranked_sequences, "guardrail"),
+            },
+            "masked_rollout": {
+                "n_roi": first_summary(transfer_ranked_rollout, "n_roi"),
+                "n_frame_metric_rows": first_summary(transfer_ranked_rollout, "n_frame_metric_rows"),
+                "best_method_counts_inside_particle": transfer_ranked_rollout_best_counts,
+                "method_summary": transfer_ranked_rollout_methods,
+                "top_particle_difficulty_rois": transfer_ranked_rollout_difficult,
+                "guardrail": first_summary(transfer_ranked_rollout, "guardrail"),
+            },
+            "guardrail": first_summary(transfer_ranked_reconstruction, "guardrail"),
         },
         "masked_residual_state_transfer_warning": {
             "n_anchor_cycles": first_summary(masked_residual_transfer, "n_anchor_cycles"),

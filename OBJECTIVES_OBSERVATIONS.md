@@ -2026,3 +2026,39 @@ Key result:
 - Warning probabilities correlate most with cycle_state_pc2 (rho=0.456, p=1.96e-4), linking the rolling warning model back to the earlier cycle-state manifold.
 
 Interpretation: this strengthens the cycle-level early-warning story using a stricter chronological protocol than the shuffled-fold classifier. The result supports particle-trace/echem warning covariates and review prioritization, but it is not a localized ROI/front detector and does not validate diffusion or degradation labels without manual QC.
+
+## 2026-05-22 Transfer-Ranked ROI Reconstruction And Masked Rollout
+
+Added and ran:
+
+`scripts/tier4_transfer_ranked_roi_reconstruction.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction --top-cycles 12 --top-candidates-per-cycle 4`
+
+Then exported particle-region sequences from the generated ROI table and ran the masked rollout audit on those transfer-ranked crops:
+
+`python scripts/tier2_export_selected_roi_sequences.py --roi-table /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/transfer_ranked_roi_table.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_sequences --crop-size-full 192 --output-size 96 --samples-per-roi 96`
+
+`python scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_masked_roi_rollout_audit --rank 16 --train-fraction 0.67`
+
+Remote output directories:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_sequences`
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_masked_roi_rollout_audit`
+
+Local compact copies:
+
+- `derived_local/transfer_ranked_roi_reconstruction`
+- `derived_local/transfer_ranked_roi_sequences`
+- `derived_local/transfer_ranked_masked_roi_rollout_audit`
+
+Key result:
+
+- Converted the masked residual state-transfer warning ranks into direct video-backed ROI candidates. The top 12 transfer-ranked cycles were sampled from their HDF5 segments; all 12 resolved successfully with 0 missing cycles.
+- Reconstructed 960 automatic particle-like candidate components and retained 48 ROI rows, four per transfer-ranked cycle, compatible with the existing ROI sequence exporter.
+- The sampled cycles include the late high-COV warning window around cycles 146-156 plus cycle 116 and cycle 40. Top-ranked cycle 150 is future-drop positive within 8 cycles and produced 80 candidates; cycles 151, 152, 153, 154, 155, and 148 are also future8-positive.
+- Exported 48 fixed particle-region sequences, each with 96 frames and 96x96 output crops. Cycle 156 transfer-ranked ROIs show a large mean ROI delta (+702.6 raw intensity; +0.0273 normalized), while other late-window cycles show smaller mixed deltas.
+- Masked rollout on the transfer-ranked crops produced 4,608 frame-metric rows. Persistence remains the best particle-mask predictor for all 48 ROIs; low-rank DMD has much higher particle-local residuals than nonparticle context, with median particle/nonparticle MSE ratio 8.31.
+- The most difficult low-rank-DMD transfer-ranked ROIs include `cycle151_rank4_obj3`, `cycle153_rank7_obj4`, `cycle156_rank3_obj2`, `cycle154_rank6_obj2`, and `cycle151_rank4_obj2`.
+
+Interpretation: this closes the loop from cycle-level warning to direct video data. It does not validate the transfer-ranked crops as manual particle annotations or fronts, but it gives a concrete new ROI cohort for next-frame prediction, masked rollout, and eventual manual QC in cycles that the warning models said were worth inspecting.
+

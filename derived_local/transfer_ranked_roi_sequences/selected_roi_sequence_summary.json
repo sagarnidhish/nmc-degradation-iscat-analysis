@@ -1,0 +1,82 @@
+{
+  "crop_size_full": 192,
+  "cycle_summary": {
+    "116.0": {
+      "mean_norm_roi_delta": -0.0004390943795442581,
+      "mean_roi_delta": -10.2520751953125,
+      "mean_stage_drift_xy_sampled": 0.22360679774992814,
+      "n_roi_sequences": 4
+    },
+    "146.0": {
+      "mean_norm_roi_delta": -0.00028872862458229065,
+      "mean_roi_delta": -3.925537109375,
+      "mean_stage_drift_xy_sampled": 0.25,
+      "n_roi_sequences": 4
+    },
+    "147.0": {
+      "mean_norm_roi_delta": 0.0009638089686632156,
+      "mean_roi_delta": 6.301513671875,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 4
+    },
+    "148.0": {
+      "mean_norm_roi_delta": 0.0005269050598144531,
+      "mean_roi_delta": 1.051513671875,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 4
+    },
+    "150.0": {
+      "mean_norm_roi_delta": -0.00015561934560537338,
+      "mean_roi_delta": -4.9737548828125,
+      "mean_stage_drift_xy_sampled": 0.2236067977500298,
+      "n_roi_sequences": 4
+    },
+    "151.0": {
+      "mean_norm_roi_delta": 6.861984729766846e-05,
+      "mean_roi_delta": 2.846435546875,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 4
+    },
+    "152.0": {
+      "mean_norm_roi_delta": -0.00036108866333961487,
+      "mean_roi_delta": -5.4957275390625,
+      "mean_stage_drift_xy_sampled": 0.29154759474225334,
+      "n_roi_sequences": 4
+    },
+    "153.0": {
+      "mean_norm_roi_delta": -0.0007463656365871429,
+      "mean_roi_delta": -13.52197265625,
+      "mean_stage_drift_xy_sampled": 0.2121320343559321,
+      "n_roi_sequences": 4
+    },
+    "154.0": {
+      "mean_norm_roi_delta": -0.0004633888602256775,
+      "mean_roi_delta": -8.864013671875,
+      "mean_stage_drift_xy_sampled": 0.28284271247460296,
+      "n_roi_sequences": 4
+    },
+    "155.0": {
+      "mean_norm_roi_delta": 0.0015589762479066849,
+      "mean_roi_delta": 30.4580078125,
+      "mean_stage_drift_xy_sampled": 0.1802775637731301,
+      "n_roi_sequences": 4
+    },
+    "156.0": {
+      "mean_norm_roi_delta": 0.027319597080349922,
+      "mean_roi_delta": 702.610107421875,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 4
+    },
+    "40.0": {
+      "mean_norm_roi_delta": 0.00030657462775707245,
+      "mean_roi_delta": 5.802490234375,
+      "mean_stage_drift_xy_sampled": 0.2500000000000227,
+      "n_roi_sequences": 4
+    }
+  },
+  "guardrail": "Sequences are fixed padded crops around automatically selected ROIs; they are particle-region model inputs, not manual annotations.",
+  "n_roi_sequences": 48,
+  "output_size": 96,
+  "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/transfer_ranked_roi_table.csv",
+  "samples_per_roi": 96
+}

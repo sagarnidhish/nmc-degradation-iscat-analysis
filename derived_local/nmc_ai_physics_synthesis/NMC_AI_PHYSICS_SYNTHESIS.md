@@ -38,6 +38,8 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Masked rollout cycle-warning ROI cycles/features: 11 / 105
 - Masked residual transition ROI/method rows: 156
 - Masked residual state-transfer anchor/full cycles: 11 / 89
+- Transfer-ranked reconstructed cycles/ROI rows: 12 / 48
+- Transfer-ranked masked rollout ROI/frame rows: 48 / 4608
 - Diffusion sanity selected-front/publication candidates: 12 / 0
 - Control-balanced high-res front tracking/sanity candidates: 40 / 0
 - Weak-label benchmark trainable positives/negatives: 3 / 4
@@ -82,6 +84,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for 52 of 52 ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho=0.637, p=3.909e-07).
 - Cycle-collapsed masked-rollout warning audit covers 11 observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p=0.014), while future-drop evaluation is underpowered with only 1 positive 8-cycle warning case.
 - Masked residual state-transfer warning expands the masked-residual signature from 11 video-backed cycles to 89 cycle-state rows; the transferred score separates future 8-cycle drops (AUC 0.708, permutation p=0.004), but anchor leave-one-cycle transfer is weak (rho=-0.155, p=0.650) and cycle-state PC2 remains the stronger direct future8 baseline (AUC 0.772).
+- Transfer-ranked ROI reconstruction converts that state-transfer hypothesis list back into direct video crops: 12 cycles yielded 960 reconstructed components and 48 ROI rows; masked rollout on the exported crops again picks persistence as best for 48 of 48 ROIs, while low-rank DMD particle residuals remain much larger than nonparticle context.
 - Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p=0.056), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.
 - Weak-label degradation benchmark converts consensus physics/mode/mask evidence into a guarded manifest: 7 trainable weak rows (3 positive / 4 negative), and only 1 leave-reference fold is class-balanced enough for binary evaluation.
 
@@ -567,6 +570,45 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Transfer-ranked cycle 152: score 1.188, future8=1, future16=1, abrupt=0
 - Transfer-ranked cycle 154: score 1.010, future8=1, future16=1, abrupt=0
 - Guardrail: Masked residual signature is learned from 11 video-backed ROI cycles and transferred through the cycle-state/echem manifold to 89 cycles; use as hypothesis-ranking evidence, not a deployable warning model or direct video residual measurement for unexported cycles.
+
+## Transfer-Ranked ROI Reconstruction And Masked Rollout
+
+- Sampled cycles/reconstructed candidates/ROI rows: 12 / 960 / 48
+- Exported ROI sequences: 48 at 96 frames per ROI
+- Masked rollout ROI/frame rows: 48 / 4608
+- Best method counts inside particle masks: {'persistence': 48}
+- Transfer sampled cycle 150 rank 1: score 40.972, future8=1, future16=1, candidates=80
+- Transfer sampled cycle 146 rank 2: score 3.217, future8=0, future16=1, candidates=80
+- Transfer sampled cycle 156 rank 3: score 1.612, future8=0, future16=0, candidates=80
+- Transfer sampled cycle 151 rank 4: score 1.439, future8=1, future16=1, candidates=80
+- Transfer sampled cycle 152 rank 5: score 1.188, future8=1, future16=1, candidates=80
+- Transfer sampled cycle 154 rank 6: score 1.010, future8=1, future16=1, candidates=80
+- Transfer sampled cycle 153 rank 7: score 0.871, future8=1, future16=1, candidates=80
+- Transfer sampled cycle 40 rank 8: score 0.784, future8=0, future16=0, candidates=80
+- Transfer sequence cycle 116.0: mean ROI delta -10.252, norm delta -4.391e-04, n=4
+- Transfer sequence cycle 146.0: mean ROI delta -3.926, norm delta -2.887e-04, n=4
+- Transfer sequence cycle 147.0: mean ROI delta 6.302, norm delta 9.638e-04, n=4
+- Transfer sequence cycle 148.0: mean ROI delta 1.052, norm delta 5.269e-04, n=4
+- Transfer sequence cycle 150.0: mean ROI delta -4.974, norm delta -1.556e-04, n=4
+- Transfer sequence cycle 151.0: mean ROI delta 2.846, norm delta 6.862e-05, n=4
+- Transfer sequence cycle 152.0: mean ROI delta -5.496, norm delta -3.611e-04, n=4
+- Transfer sequence cycle 153.0: mean ROI delta -13.522, norm delta -7.464e-04, n=4
+- Transfer-ranked persistence: particle-MSE median 1.847e-04, nonparticle-MSE median 8.412e-05, particle/nonparticle ratio median 2.155
+- Transfer-ranked velocity: particle-MSE median 4.602e-04, nonparticle-MSE median 2.397e-04, particle/nonparticle ratio median 1.827
+- Transfer-ranked low_rank_dmd: particle-MSE median 0.006, nonparticle-MSE median 6.980e-04, particle/nonparticle ratio median 8.308
+- Transfer-ranked difficult ROI cycle151_rank4_obj3 low_rank_dmd cycle 151: particle MSE 0.014, particle/nonparticle ratio 8.196
+- Transfer-ranked difficult ROI cycle153_rank7_obj4 low_rank_dmd cycle 153: particle MSE 0.013, particle/nonparticle ratio 7.656
+- Transfer-ranked difficult ROI cycle156_rank3_obj2 low_rank_dmd cycle 156: particle MSE 0.013, particle/nonparticle ratio 4.500
+- Transfer-ranked difficult ROI cycle154_rank6_obj2 low_rank_dmd cycle 154: particle MSE 0.012, particle/nonparticle ratio 8.299
+- Transfer-ranked difficult ROI cycle151_rank4_obj2 low_rank_dmd cycle 151: particle MSE 0.012, particle/nonparticle ratio 9.524
+- Transfer-ranked difficult ROI cycle153_rank7_obj2 low_rank_dmd cycle 153: particle MSE 0.011, particle/nonparticle ratio 12.454
+- Transfer-ranked ROI candidate cycle 150 obj 4: validation score 32.064, mean abs z 29.677, future8=1
+- Transfer-ranked ROI candidate cycle 150 obj 1: validation score 31.252, mean abs z 25.298, future8=1
+- Transfer-ranked ROI candidate cycle 150 obj 2: validation score 30.291, mean abs z 20.694, future8=1
+- Transfer-ranked ROI candidate cycle 150 obj 3: validation score 30.065, mean abs z 19.134, future8=1
+- Transfer-ranked ROI candidate cycle 146 obj 4: validation score 25.085, mean abs z 13.691, future8=0
+- Transfer-ranked ROI candidate cycle 146 obj 3: validation score 24.258, mean abs z 20.728, future8=0
+- Guardrail: Automatic transfer-ranked ROI candidates reconstructed from sampled HDF5 cycle segments; compatible with particle-region sequence export, but not manual annotations or validated fronts. Held-out rollout errors are scored inside automatic history-aware particle masks; this is not manual segmentation or a new learned video model.
 
 ## Masked Residual Transition Timing
 
