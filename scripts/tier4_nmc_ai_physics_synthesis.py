@@ -124,6 +124,7 @@ def main() -> None:
     cycle_state_space = read_json(derived / "cycle_state_space_transition_audit" / "cycle_state_space_transition_audit_summary.json")
     cycle_hazard_warning = read_json(derived / "cycle_hazard_warning_audit" / "cycle_hazard_warning_audit_summary.json")
     cycle_state_roi_bridge = read_json(derived / "cycle_state_roi_bridge" / "cycle_state_roi_bridge_summary.json")
+    cycle_state_mode_frequency = read_json(derived / "cycle_state_mode_frequency_bridge" / "cycle_state_mode_frequency_bridge_summary.json")
     particle_mask = read_json(derived / "particle_mask_stability_audit" / "particle_mask_stability_audit_summary.json")
     masked_rollout = read_json(derived / "masked_roi_rollout_audit" / "masked_roi_rollout_audit_summary.json")
     masked_cycle_warning = read_json(derived / "masked_rollout_cycle_warning" / "masked_rollout_cycle_warning_summary.json")
@@ -312,6 +313,11 @@ def main() -> None:
     cycle_state_roi_centered_tests = top_items(first_summary(cycle_state_roi_bridge, "top_reference_centered_tests", []), 12)
     cycle_state_roi_collapsed_tests = top_items(first_summary(cycle_state_roi_bridge, "top_cycle_collapsed_tests", []), 12)
     cycle_state_roi_clusters = top_items(first_summary(cycle_state_roi_bridge, "cluster_summary", []), 8)
+    cycle_state_mode_metrics = top_items(first_summary(cycle_state_mode_frequency, "top_metrics", []), 30)
+    cycle_state_mode_nulls = top_items(first_summary(cycle_state_mode_frequency, "permutation_null", []), 12)
+    cycle_state_mode_clusters = top_items(first_summary(cycle_state_mode_frequency, "cluster_summary", []), 8)
+    cycle_state_mode_best = first_summary(cycle_state_mode_frequency, "best_macro_model", {}) or {}
+    cycle_state_mode_context = first_summary(cycle_state_mode_frequency, "context_macro_model", {}) or {}
     particle_mask_role_summary = top_items(first_summary(particle_mask, "role_summary", []), 8)
     particle_mask_tests = top_items(first_summary(particle_mask, "top_event_control_tests", []), 12)
     particle_mask_corr = top_items(first_summary(particle_mask, "top_correlations", []), 12)
@@ -667,6 +673,7 @@ def main() -> None:
         f"- Cycle state-space rows/clusters: {first_summary(cycle_state_space, 'n_cycles', 0)} / {first_summary(cycle_state_space, 'chosen_k', 0)}",
         f"- Cycle hazard warning evaluated cycles/events: {((cycle_hazard_feature_sets[0] if cycle_hazard_feature_sets else {}).get('n_evaluated_cycles', 0))} / {first_summary(cycle_hazard_warning, 'n_event_cycles', 0)}",
         f"- Cycle-state ROI bridge rows/cycles: {first_summary(cycle_state_roi_bridge, 'n_roi_rows', 0)} / {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)}",
+        f"- Cycle-state mode-frequency bridge cycles/modes: {first_summary(cycle_state_mode_frequency, 'n_cycles', 0)} / {first_summary(cycle_state_mode_frequency, 'n_mode_targets', 0)}",
         f"- Particle-mask stability ROI/frame rows: {first_summary(particle_mask, 'n_roi', 0)} / {first_summary(particle_mask, 'n_frames_total', 0)}",
         f"- Masked ROI rollout frame rows: {first_summary(masked_rollout, 'n_frame_metric_rows', 0)}",
         f"- Masked rollout cycle-warning ROI cycles/features: {first_summary(masked_cycle_warning, 'n_roi_cycles', 0)} / {first_summary(masked_cycle_warning, 'n_rollout_features_tested', 0)}",
@@ -730,6 +737,7 @@ def main() -> None:
         f"- Cycle state-space transition audit builds a {first_summary(cycle_state_space, 'chosen_k', 0)}-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p={fmt((cycle_state_tests[0] if cycle_state_tests else {}).get('permutation_p'))}), the shuffled-fold classifier reaches mean AUC {fmt(cycle_state_classifier.get('mean_roc_auc'))}, and stricter temporal holdout reaches AUC {fmt(cycle_state_temporal.get('mean_roc_auc'))} across {fmt(cycle_state_temporal.get('n_evaluated_blocks'), 0)} usable blocks.",
         f"- Rolling-origin cycle hazard warning audit evaluates {((cycle_hazard_feature_sets[0] if cycle_hazard_feature_sets else {}).get('n_evaluated_cycles', 0))} cycles for future 8-cycle abrupt drops; best AUC is {fmt((cycle_hazard_feature_sets[0] if cycle_hazard_feature_sets else {}).get('roc_auc'))} with permutation p={fmt(cycle_hazard_null.get('empirical_p_ge_observed'))}, and 8-cycle pre-event warnings hit {fmt((cycle_hazard_lead[1] if len(cycle_hazard_lead) > 1 else {}).get('hit_rate'))} of event cycles.",
         f"- Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to {first_summary(cycle_state_roi_bridge, 'n_cycles', 0)} cycles: top collapsed test {((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('predictor', 'NA'))} vs {((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('target', 'NA'))}, rho={fmt((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('rho'))}, permutation p={fmt((cycle_state_roi_collapsed_tests[0] if cycle_state_roi_collapsed_tests else {}).get('permutation_p'))}.",
+        f"- Cycle-state mode-frequency bridge tests whether cycle/echem state organizes ROI degradation modes across {first_summary(cycle_state_mode_frequency, 'n_cycles', 0)} cycles: best macro model {cycle_state_mode_best.get('feature_set', 'NA')} has MAE {fmt(cycle_state_mode_best.get('mae'))} versus context-only MAE {fmt(cycle_state_mode_context.get('mae'))}; compact permutation p={fmt((cycle_state_mode_nulls[0] if cycle_state_mode_nulls else {}).get('empirical_p_le_observed_mae'))} keeps this as a guarded organization signal.",
         f"- Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction {fmt(particle_mask_overall.get('median_fallback_frame_fraction'))}, accepted-area CV {fmt(particle_mask_overall.get('median_accepted_area_cv'))}, centroid path {fmt(particle_mask_overall.get('median_centroid_path_px'))} px; event/control mask instability is not significantly different in the current cohort.",
         f"- Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for {masked_rollout_best_counts.get('persistence', 0)} of {first_summary(masked_rollout, 'n_roi', 0)} ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho={fmt((masked_rollout_corr[0] if masked_rollout_corr else {}).get('spearman_rho'))}, p={fmt((masked_rollout_corr[0] if masked_rollout_corr else {}).get('p_value'))}).",
         f"- Cycle-collapsed masked-rollout warning audit covers {first_summary(masked_cycle_warning, 'n_roi_cycles', 0)} observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p={fmt((masked_cycle_warning_tests[0] if masked_cycle_warning_tests else {}).get('permutation_p_abs_median_diff'))}), while future-drop evaluation is underpowered with only {masked_cycle_warning_targets.get('future_any_drop_within_8cycles', 0)} positive 8-cycle warning case.",
@@ -2228,6 +2236,27 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Cycle-State Mode-Frequency Bridge",
+        "",
+        f"- Cycles/ROI rows/mode targets: {first_summary(cycle_state_mode_frequency, 'n_cycles', 0)} / {first_summary(cycle_state_mode_frequency, 'n_roi_rows', 0)} / {first_summary(cycle_state_mode_frequency, 'n_mode_targets', 0)}",
+        f"- Best macro model: {cycle_state_mode_best.get('feature_set', 'NA')} MAE {fmt(cycle_state_mode_best.get('mae'))}; context-only MAE {fmt(cycle_state_mode_context.get('mae'))}; reduction {fmt(first_summary(cycle_state_mode_frequency, 'best_minus_context_macro_mae_reduction'))}",
+    ]
+    for row in cycle_state_mode_metrics[:10]:
+        report_lines.append(
+            f"- Mode-frequency model {row.get('feature_set')} -> {row.get('target')}: MAE {fmt(row.get('mae'))}, R2 {fmt(row.get('r2'))}, rho {fmt(row.get('spearman_rho'))}"
+        )
+    for row in cycle_state_mode_nulls[:6]:
+        report_lines.append(
+            f"- Mode-frequency null {row.get('feature_set')}: observed macro MAE {fmt(row.get('observed_macro_mae'))}, null mean {fmt(row.get('null_mae_mean'))}, p={fmt(row.get('empirical_p_le_observed_mae'))}"
+        )
+    for row in cycle_state_mode_clusters[:4]:
+        report_lines.append(
+            f"- Cycle-state cluster {row.get('cycle_state_cluster')}: cycles={fmt(row.get('n_cycles'), 0)}, ROI={fmt(row.get('total_roi'), 0)}, median cycle={fmt(row.get('median_cycle'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(cycle_state_mode_frequency, 'guardrail', 'Cycle-state mode-frequency bridge unavailable.')}")
+
+    report_lines += [
+        "",
         "## Top ROI/Echem Or Protocol Couplings",
         "",
     ]
@@ -2887,6 +2916,19 @@ def main() -> None:
             "top_cycle_collapsed_tests": cycle_state_roi_collapsed_tests,
             "cluster_summary": cycle_state_roi_clusters,
             "guardrail": first_summary(cycle_state_roi_bridge, "guardrail"),
+        },
+        "cycle_state_mode_frequency_bridge": {
+            "n_cycles": first_summary(cycle_state_mode_frequency, "n_cycles"),
+            "n_roi_rows": first_summary(cycle_state_mode_frequency, "n_roi_rows"),
+            "n_mode_targets": first_summary(cycle_state_mode_frequency, "n_mode_targets"),
+            "feature_set_sizes": first_summary(cycle_state_mode_frequency, "feature_set_sizes", {}),
+            "best_macro_model": cycle_state_mode_best,
+            "context_macro_model": cycle_state_mode_context,
+            "best_minus_context_macro_mae_reduction": first_summary(cycle_state_mode_frequency, "best_minus_context_macro_mae_reduction"),
+            "top_metrics": cycle_state_mode_metrics,
+            "permutation_null": cycle_state_mode_nulls,
+            "cluster_summary": cycle_state_mode_clusters,
+            "guardrail": first_summary(cycle_state_mode_frequency, "guardrail"),
         },
         "echem_shape_conditioned_roi_front_effects": {
             "n_rows": first_summary(echem_shape_conditioned, "n_rows"),

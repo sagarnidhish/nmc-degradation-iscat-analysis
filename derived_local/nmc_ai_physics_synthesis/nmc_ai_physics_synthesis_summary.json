@@ -12168,6 +12168,383 @@
     "n_cycles": 11,
     "n_xy_regions": 7
   },
+  "cycle_state_mode_frequency_bridge": {
+    "best_macro_model": {
+      "feature_set": "cycle_state_only",
+      "mae": 0.26083887965781316,
+      "n_eval_cycles": 11,
+      "r2": null,
+      "spearman_p": null,
+      "spearman_rho": null,
+      "target": "macro_mode_fraction"
+    },
+    "best_minus_context_macro_mae_reduction": 0.04264688057103,
+    "cluster_summary": [
+      {
+        "cycle_state_cluster": 1,
+        "mean_mode_fraction__front_negative_high_apparent_front_proxy": 0.21296296296296294,
+        "mean_mode_fraction__near_baseline_or_context_like": 0.42592592592592593,
+        "mean_mode_fraction__optical_brightening_decorrelating_rollout_hard_front_positive": 0.24074074074074073,
+        "mean_mode_fraction__optical_loss_rollout_hard": 0.12037037037037036,
+        "median_cycle": 88.0,
+        "n_cycles": 9,
+        "total_roi": 42
+      },
+      {
+        "cycle_state_cluster": 0,
+        "mean_mode_fraction__front_negative_high_apparent_front_proxy": 0.16666666666666666,
+        "mean_mode_fraction__near_baseline_or_context_like": 0.75,
+        "mean_mode_fraction__optical_brightening_decorrelating_rollout_hard_front_positive": 0.08333333333333333,
+        "mean_mode_fraction__optical_loss_rollout_hard": 0.0,
+        "median_cycle": 117.0,
+        "n_cycles": 2,
+        "total_roi": 10
+      }
+    ],
+    "context_macro_model": {
+      "feature_set": "context_only",
+      "mae": 0.30348576022884316,
+      "n_eval_cycles": 11,
+      "r2": null,
+      "spearman_p": null,
+      "spearman_rho": null,
+      "target": "macro_mode_fraction"
+    },
+    "feature_set_sizes": {
+      "context_only": 28,
+      "cycle_state_echem_context": 96,
+      "cycle_state_only": 12,
+      "cycle_state_plus_context": 40,
+      "echem_only": 61,
+      "echem_plus_context": 84
+    },
+    "guardrail": "Cycle-state mode-frequency bridge predicts automatic ROI mode composition at cycle resolution from cycle/echem descriptors. It is a degradation-mode organization audit, not manual QC, causal proof, or calibrated diffusion validation.",
+    "n_cycles": 11,
+    "n_mode_targets": 4,
+    "n_roi_rows": 52,
+    "permutation_null": [
+      {
+        "empirical_p_le_observed_mae": 0.38095238095238093,
+        "feature_set": "cycle_state_only",
+        "n_permutation": 20,
+        "null_mae_mean": 0.28983594292821174,
+        "null_mae_p05": 0.2058123264072204,
+        "observed_macro_mae": 0.26083887965781316
+      },
+      {
+        "empirical_p_le_observed_mae": 0.38095238095238093,
+        "feature_set": "echem_plus_context",
+        "n_permutation": 20,
+        "null_mae_mean": 0.434951995545836,
+        "null_mae_p05": 0.2209967194931221,
+        "observed_macro_mae": 0.4087298325304406
+      },
+      {
+        "empirical_p_le_observed_mae": 0.42857142857142855,
+        "feature_set": "context_only",
+        "n_permutation": 20,
+        "null_mae_mean": 0.343167888777052,
+        "null_mae_p05": 0.23092925023489305,
+        "observed_macro_mae": 0.30348576022884316
+      },
+      {
+        "empirical_p_le_observed_mae": 0.5238095238095238,
+        "feature_set": "cycle_state_echem_context",
+        "n_permutation": 20,
+        "null_mae_mean": 0.39147372523345675,
+        "null_mae_p05": 0.24937046827441808,
+        "observed_macro_mae": 0.39479627039913506
+      },
+      {
+        "empirical_p_le_observed_mae": 0.6666666666666666,
+        "feature_set": "cycle_state_plus_context",
+        "n_permutation": 20,
+        "null_mae_mean": 0.34438124582182905,
+        "null_mae_p05": 0.24086400949833853,
+        "observed_macro_mae": 0.3484362128764394
+      },
+      {
+        "empirical_p_le_observed_mae": 0.7142857142857143,
+        "feature_set": "echem_only",
+        "n_permutation": 20,
+        "null_mae_mean": 0.37722916451248734,
+        "null_mae_p05": 0.25360772719492025,
+        "observed_macro_mae": 0.3955182839575299
+      }
+    ],
+    "top_metrics": [
+      {
+        "feature_set": "cycle_state_only",
+        "mae": 0.26083887965781316,
+        "n_eval_cycles": 11,
+        "r2": null,
+        "spearman_p": null,
+        "spearman_rho": null,
+        "target": "macro_mode_fraction"
+      },
+      {
+        "feature_set": "context_only",
+        "mae": 0.30348576022884316,
+        "n_eval_cycles": 11,
+        "r2": null,
+        "spearman_p": null,
+        "spearman_rho": null,
+        "target": "macro_mode_fraction"
+      },
+      {
+        "feature_set": "cycle_state_plus_context",
+        "mae": 0.3484362128764394,
+        "n_eval_cycles": 11,
+        "r2": null,
+        "spearman_p": null,
+        "spearman_rho": null,
+        "target": "macro_mode_fraction"
+      },
+      {
+        "feature_set": "cycle_state_echem_context",
+        "mae": 0.39479627039913506,
+        "n_eval_cycles": 11,
+        "r2": null,
+        "spearman_p": null,
+        "spearman_rho": null,
+        "target": "macro_mode_fraction"
+      },
+      {
+        "feature_set": "echem_only",
+        "mae": 0.3955182839575299,
+        "n_eval_cycles": 11,
+        "r2": null,
+        "spearman_p": null,
+        "spearman_rho": null,
+        "target": "macro_mode_fraction"
+      },
+      {
+        "feature_set": "echem_plus_context",
+        "mae": 0.4087298325304406,
+        "n_eval_cycles": 11,
+        "r2": null,
+        "spearman_p": null,
+        "spearman_rho": null,
+        "target": "macro_mode_fraction"
+      },
+      {
+        "feature_set": "cycle_state_only",
+        "mae": 0.31188014339204523,
+        "n_eval_cycles": 11,
+        "r2": -1.2505143605058708,
+        "spearman_p": 0.5636426452185316,
+        "spearman_rho": -0.19595032047695293,
+        "target": "mode_fraction__front_negative_high_apparent_front_proxy"
+      },
+      {
+        "feature_set": "context_only",
+        "mae": 0.3283345688611863,
+        "n_eval_cycles": 11,
+        "r2": -1.272297308920387,
+        "spearman_p": 0.5930410024112571,
+        "spearman_rho": -0.18161249214937103,
+        "target": "mode_fraction__front_negative_high_apparent_front_proxy"
+      },
+      {
+        "feature_set": "cycle_state_plus_context",
+        "mae": 0.38977941090166096,
+        "n_eval_cycles": 11,
+        "r2": -2.075452704756123,
+        "spearman_p": 0.5066652378770767,
+        "spearman_rho": -0.2246259771321168,
+        "target": "mode_fraction__front_negative_high_apparent_front_proxy"
+      },
+      {
+        "feature_set": "echem_only",
+        "mae": 0.6032671618483488,
+        "n_eval_cycles": 11,
+        "r2": -8.539258454073357,
+        "spearman_p": 0.06788340701032025,
+        "spearman_rho": -0.5687338569940829,
+        "target": "mode_fraction__front_negative_high_apparent_front_proxy"
+      },
+      {
+        "feature_set": "cycle_state_echem_context",
+        "mae": 0.6051581147918008,
+        "n_eval_cycles": 11,
+        "r2": -7.04790698554425,
+        "spearman_p": 0.17598678735328546,
+        "spearman_rho": -0.43969340204584567,
+        "target": "mode_fraction__front_negative_high_apparent_front_proxy"
+      },
+      {
+        "feature_set": "echem_plus_context",
+        "mae": 0.6255396788948316,
+        "n_eval_cycles": 11,
+        "r2": -8.03762199416715,
+        "spearman_p": 0.11177620482191233,
+        "spearman_rho": -0.5066032675745612,
+        "target": "mode_fraction__front_negative_high_apparent_front_proxy"
+      },
+      {
+        "feature_set": "cycle_state_only",
+        "mae": 0.2684836532428032,
+        "n_eval_cycles": 11,
+        "r2": -0.16028513173705639,
+        "spearman_p": 0.386100121923995,
+        "spearman_rho": 0.2905328045096922,
+        "target": "mode_fraction__near_baseline_or_context_like"
+      },
+      {
+        "feature_set": "context_only",
+        "mae": 0.4375188232179479,
+        "n_eval_cycles": 11,
+        "r2": -1.9241596819008393,
+        "spearman_p": 0.7205837243200962,
+        "spearman_rho": -0.1221141857116416,
+        "target": "mode_fraction__near_baseline_or_context_like"
+      },
+      {
+        "feature_set": "cycle_state_plus_context",
+        "mae": 0.4558173436182696,
+        "n_eval_cycles": 11,
+        "r2": -2.2237854043393392,
+        "spearman_p": 0.6398374832638809,
+        "spearman_rho": -0.15932444118273442,
+        "target": "mode_fraction__near_baseline_or_context_like"
+      },
+      {
+        "feature_set": "echem_only",
+        "mae": 0.5536197973258242,
+        "n_eval_cycles": 11,
+        "r2": -3.9561521055357964,
+        "spearman_p": 0.8587820949108719,
+        "spearman_rho": -0.0609181686875161,
+        "target": "mode_fraction__near_baseline_or_context_like"
+      },
+      {
+        "feature_set": "cycle_state_echem_context",
+        "mae": 0.571395363828084,
+        "n_eval_cycles": 11,
+        "r2": -3.496273733027353,
+        "spearman_p": 0.479108774527858,
+        "spearman_rho": -0.2389866617741017,
+        "target": "mode_fraction__near_baseline_or_context_like"
+      },
+      {
+        "feature_set": "echem_plus_context",
+        "mae": 0.6362281913754809,
+        "n_eval_cycles": 11,
+        "r2": -4.840624520635364,
+        "spearman_p": 0.39415442741820994,
+        "spearman_rho": -0.28584679153372944,
+        "target": "mode_fraction__near_baseline_or_context_like"
+      },
+      {
+        "feature_set": "echem_plus_context",
+        "mae": 0.17300401322763873,
+        "n_eval_cycles": 11,
+        "r2": 0.46474870340495145,
+        "spearman_p": 0.14045297087829414,
+        "spearman_rho": 0.4743416490252569,
+        "target": "mode_fraction__optical_brightening_decorrelating_rollout_hard_front_positive"
+      },
+      {
+        "feature_set": "cycle_state_echem_context",
+        "mae": 0.17768237153425354,
+        "n_eval_cycles": 11,
+        "r2": 0.4418982875190631,
+        "spearman_p": 0.02251735535056164,
+        "spearman_rho": 0.6755775001268811,
+        "target": "mode_fraction__optical_brightening_decorrelating_rollout_hard_front_positive"
+      },
+      {
+        "feature_set": "echem_only",
+        "mae": 0.1952074056779253,
+        "n_eval_cycles": 11,
+        "r2": 0.2865410679658552,
+        "spearman_p": 0.08213989920574079,
+        "spearman_rho": 0.5462115958472655,
+        "target": "mode_fraction__optical_brightening_decorrelating_rollout_hard_front_positive"
+      },
+      {
+        "feature_set": "cycle_state_only",
+        "mae": 0.2801002292463704,
+        "n_eval_cycles": 11,
+        "r2": -0.5368820068022471,
+        "spearman_p": 0.11072592299086084,
+        "spearman_rho": 0.5078809575421943,
+        "target": "mode_fraction__optical_brightening_decorrelating_rollout_hard_front_positive"
+      },
+      {
+        "feature_set": "context_only",
+        "mae": 0.28455943380733123,
+        "n_eval_cycles": 11,
+        "r2": -0.23241640301716782,
+        "spearman_p": 0.05893937328927071,
+        "spearman_rho": 0.5845422341523367,
+        "target": "mode_fraction__optical_brightening_decorrelating_rollout_hard_front_positive"
+      },
+      {
+        "feature_set": "cycle_state_plus_context",
+        "mae": 0.3725001191409972,
+        "n_eval_cycles": 11,
+        "r2": -1.1086360333739589,
+        "spearman_p": 0.31331056216054093,
+        "spearman_rho": 0.33539308516937355,
+        "target": "mode_fraction__optical_brightening_decorrelating_rollout_hard_front_positive"
+      },
+      {
+        "feature_set": "context_only",
+        "mae": 0.16353021502890727,
+        "n_eval_cycles": 11,
+        "r2": -0.747388222150178,
+        "spearman_p": 0.7221495669317727,
+        "spearman_rho": 0.12140553864150608,
+        "target": "mode_fraction__optical_loss_rollout_hard"
+      },
+      {
+        "feature_set": "cycle_state_plus_context",
+        "mae": 0.17564797784483005,
+        "n_eval_cycles": 11,
+        "r2": -0.8431220221643687,
+        "spearman_p": 0.8925892307369571,
+        "spearman_rho": 0.046249729006288036,
+        "target": "mode_fraction__optical_loss_rollout_hard"
+      },
+      {
+        "feature_set": "cycle_state_only",
+        "mae": 0.18289149275003377,
+        "n_eval_cycles": 11,
+        "r2": -0.7541328230326168,
+        "spearman_p": 0.6967242913182145,
+        "spearman_rho": -0.1329679708930781,
+        "target": "mode_fraction__optical_loss_rollout_hard"
+      },
+      {
+        "feature_set": "echem_plus_context",
+        "mae": 0.20014744662381193,
+        "n_eval_cycles": 11,
+        "r2": -0.9526206786151719,
+        "spearman_p": 0.8792428935247815,
+        "spearman_rho": 0.052030945132074034,
+        "target": "mode_fraction__optical_loss_rollout_hard"
+      },
+      {
+        "feature_set": "cycle_state_echem_context",
+        "mae": 0.22494923144240167,
+        "n_eval_cycles": 11,
+        "r2": -1.5947529909210725,
+        "spearman_p": 0.9461940481133146,
+        "spearman_rho": 0.023124864503144018,
+        "target": "mode_fraction__optical_loss_rollout_hard"
+      },
+      {
+        "feature_set": "echem_only",
+        "mae": 0.2299787709780214,
+        "n_eval_cycles": 11,
+        "r2": -1.624063672534386,
+        "spearman_p": 0.9327661536520415,
+        "spearman_rho": -0.02890608062893002,
+        "target": "mode_fraction__optical_loss_rollout_hard"
+      }
+    ]
+  },
   "cycle_state_roi_bridge": {
     "cluster_summary": [
       {

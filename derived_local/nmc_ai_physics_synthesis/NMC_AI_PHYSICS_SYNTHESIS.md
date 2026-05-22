@@ -33,6 +33,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle state-space rows/clusters: 89 / 4
 - Cycle hazard warning evaluated cycles/events: 62 / 4
 - Cycle-state ROI bridge rows/cycles: 52 / 11
+- Cycle-state mode-frequency bridge cycles/modes: 11 / 4
 - Particle-mask stability ROI/frame rows: 52 / 4992
 - Masked ROI rollout frame rows: 4992
 - Masked rollout cycle-warning ROI cycles/features: 11 / 105
@@ -96,6 +97,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Cycle state-space transition audit builds a 4-state cycle manifold from trace plus echem-shape features; PC2 is the strongest future 8-cycle abrupt-drop separator (permutation p=0.016), the shuffled-fold classifier reaches mean AUC 0.781, and stricter temporal holdout reaches AUC 0.779 across 2 usable blocks.
 - Rolling-origin cycle hazard warning audit evaluates 62 cycles for future 8-cycle abrupt drops; best AUC is 0.783 with permutation p=0.048, and 8-cycle pre-event warnings hit 0.750 of event cycles.
 - Cycle-state to ROI/front bridge links state PC2 to ROI physics-consistency after collapsing repeated ROI rows to 11 cycles: top collapsed test cycle_state_pc2 vs mode_taxonomy_score, rho=0.855, permutation p=0.002.
+- Cycle-state mode-frequency bridge tests whether cycle/echem state organizes ROI degradation modes across 11 cycles: best macro model cycle_state_only has MAE 0.261 versus context-only MAE 0.303; compact permutation p=0.381 keeps this as a guarded organization signal.
 - Particle-mask stability audit confirms ROI-only crops can be processed with a history-aware particle support guardrail: median fallback fraction 0.000, accepted-area CV 0.042, centroid path 73.607 px; event/control mask instability is not significantly different in the current cohort.
 - Masked ROI rollout audit scores held-out predictions only inside accepted particle masks; persistence remains best for 52 of 52 ROIs, while low-rank DMD particle MSE tracks cumulative optical change (top rho=0.637, p=3.909e-07).
 - Cycle-collapsed masked-rollout warning audit covers 11 observed ROI cycles; strongest tests align residual jumps with same-cycle abrupt drops (top permutation p=0.014), while future-drop evaluation is underpowered with only 1 positive 8-cycle warning case.
@@ -1749,6 +1751,30 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Cycle-state cluster 1: ROI n=42, cycles=9, cross-modal priority fraction=0.238
 - Cycle-state cluster 0: ROI n=10, cycles=2, cross-modal priority fraction=0.000
 - Guardrail: Cycle-state to ROI/front bridge joins cycle-level state coordinates to selected automatic ROI rows. Row-level associations are not independent within cycle; reference-centered and cycle-collapsed tests are the stricter evidence. This does not create manual QC labels or calibrated diffusion claims.
+
+## Cycle-State Mode-Frequency Bridge
+
+- Cycles/ROI rows/mode targets: 11 / 52 / 4
+- Best macro model: cycle_state_only MAE 0.261; context-only MAE 0.303; reduction 0.043
+- Mode-frequency model cycle_state_only -> macro_mode_fraction: MAE 0.261, R2 NA, rho NA
+- Mode-frequency model context_only -> macro_mode_fraction: MAE 0.303, R2 NA, rho NA
+- Mode-frequency model cycle_state_plus_context -> macro_mode_fraction: MAE 0.348, R2 NA, rho NA
+- Mode-frequency model cycle_state_echem_context -> macro_mode_fraction: MAE 0.395, R2 NA, rho NA
+- Mode-frequency model echem_only -> macro_mode_fraction: MAE 0.396, R2 NA, rho NA
+- Mode-frequency model echem_plus_context -> macro_mode_fraction: MAE 0.409, R2 NA, rho NA
+- Mode-frequency model cycle_state_only -> mode_fraction__front_negative_high_apparent_front_proxy: MAE 0.312, R2 -1.251, rho -0.196
+- Mode-frequency model context_only -> mode_fraction__front_negative_high_apparent_front_proxy: MAE 0.328, R2 -1.272, rho -0.182
+- Mode-frequency model cycle_state_plus_context -> mode_fraction__front_negative_high_apparent_front_proxy: MAE 0.390, R2 -2.075, rho -0.225
+- Mode-frequency model echem_only -> mode_fraction__front_negative_high_apparent_front_proxy: MAE 0.603, R2 -8.539, rho -0.569
+- Mode-frequency null cycle_state_only: observed macro MAE 0.261, null mean 0.290, p=0.381
+- Mode-frequency null echem_plus_context: observed macro MAE 0.409, null mean 0.435, p=0.381
+- Mode-frequency null context_only: observed macro MAE 0.303, null mean 0.343, p=0.429
+- Mode-frequency null cycle_state_echem_context: observed macro MAE 0.395, null mean 0.391, p=0.524
+- Mode-frequency null cycle_state_plus_context: observed macro MAE 0.348, null mean 0.344, p=0.667
+- Mode-frequency null echem_only: observed macro MAE 0.396, null mean 0.377, p=0.714
+- Cycle-state cluster 1: cycles=9, ROI=42, median cycle=88.000
+- Cycle-state cluster 0: cycles=2, ROI=10, median cycle=117.000
+- Guardrail: Cycle-state mode-frequency bridge predicts automatic ROI mode composition at cycle resolution from cycle/echem descriptors. It is a degradation-mode organization audit, not manual QC, causal proof, or calibrated diffusion validation.
 
 ## Top ROI/Echem Or Protocol Couplings
 

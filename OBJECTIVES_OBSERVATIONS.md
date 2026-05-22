@@ -2889,3 +2889,28 @@ Key result:
 - Mechanism clustering yields an echem-degraded-state-dominant group (39 rows, future16 rate 0.795, future8 rate 0.718), a front-contraction-dominant group (30 rows, future16 rate 0.767, future8 rate 0.167), and a tiny rollout-difficulty-dominant source-local group (3 rows, future16/future8 rate 1.0).
 
 Interpretation: this is the clearest signed-mechanism split so far. Future16 looks like a combined echem-degraded plus optical-loss state, while future8 is more tied to front-contraction/proxy motion. The result is still not a deployable warning or calibrated transport model because weak labels, automatic masks, source structure, and absent manual QC remain limiting.
+## 2026-05-22 Cycle-State Mode-Frequency Bridge
+
+Added and ran:
+
+`scripts/tier4_cycle_state_mode_frequency_bridge.py`
+
+Remote output directory:
+
+`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_mode_frequency_bridge`
+
+Local compact copy:
+
+`derived_local/cycle_state_mode_frequency_bridge`
+
+Key result:
+
+- The audit collapsed automatic ROI degradation-mode assignments to 11 cycle-level mode-frequency rows covering 52 ROI rows and 4 mode-fraction targets.
+- It tests the agentic hypothesis that cycle-state transitions organize ROI degradation modes, using leave-one-cycle ridge models and explicit cycle/acquisition context baselines.
+- The best macro mode-frequency model is `cycle_state_only`: macro MAE 0.261 across held-out cycles.
+- The context-only baseline has macro MAE 0.303, so cycle-state features reduce macro MAE by 0.043 in this small cohort.
+- The compact permutation null is not significant: cycle-state-only observed macro MAE 0.261 versus null mean 0.290, empirical p = 0.381 with 20 permutations.
+- For the optical-brightening/decorrelating/rollout-hard/front-positive mode, echem-plus-context and cycle-state/echem/context models give the best per-mode fits (MAE 0.173 and 0.178; the latter has rho 0.676, p = 0.0225), but sample size is only 11 cycles.
+- Cycle-state cluster 1 carries most sampled ROI rows (42/52) and has higher mixed mode fractions, while cluster 0 is smaller and mostly near-baseline/context-like.
+
+Interpretation: cycle-state coordinates appear useful for organizing automatic ROI degradation-mode composition beyond simple context, but the evidence is exploratory rather than confirmatory. The model improves over context-only on macro MAE, yet the permutation null and tiny 11-cycle cohort prevent a strong claim. This should guide which cycles/modes to expand and manually QC next, not be treated as a causal degradation-mode predictor.
