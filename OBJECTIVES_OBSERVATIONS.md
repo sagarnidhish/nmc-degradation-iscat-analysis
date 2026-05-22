@@ -4716,3 +4716,35 @@ Results:
 Interpretation: expanding source-balanced particle crops was useful because it revealed a boundary. ROI-only rollout/intensity features contain weak temporal structure and useful negative controls, but the current source-balanced cohort does not justify a source-transferable future-drop detector. These features should feed review prioritization, source-aware mechanism dossiers, and cohort-design diagnostics rather than deployment claims.
 
 Guardrail: within-source transforms are review tools, not prospective source-transfer models. This audit does not assign manual QC labels, validate degradation mechanisms, or calibrate diffusion.
+
+## 2026-05-22 Timebase-Aware Source-Balanced Rollout Audit
+
+Added `scripts/tier4_timebase_aware_source_balanced_rollout_audit.py` and ran it on Isambard to join HDF5 timebase provenance onto the 96-row source-balanced ROI rollout cohort. This tests whether ROI-only rollout/temporal-energy signals are stable across strict versus pause-heavy HDF5 timing regimes.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit`
+- `derived_local/timebase_aware_source_balanced_rollout_audit`
+- `timebase_aware_rollout_joined.csv`
+- `timebase_aware_rollout_target_tests.csv`
+- `timebase_aware_rollout_timebase_correlations.csv`
+- `timebase_aware_rollout_class_tests.csv`
+- `timebase_aware_rollout_model_metrics.csv`
+- `timebase_aware_rollout_model_deltas.csv`
+- `timebase_aware_rollout_predictions.csv`
+- `timebase_aware_rollout_summary.json`
+
+Results:
+
+- The joined audit covers 96 ROI rows, 48 cycles, and 14 sources.
+- Timebase classes are 30 strict rows, 26 pause-heavy rows, and 40 timebase-unknown rows.
+- Pause-heavy sources are strongly separable from strict sources by ROI-only rollout difficulty/temporal-energy features: `persistence_mse_mean` timebase-class AUC 0.837/AP 0.859, `temporal_energy_mean` AUC 0.821/AP 0.846, and `velocity_mse_mean` AUC 0.821/AP 0.844.
+- HDF5 pause severity correlates with rollout difficulty: `h5_dt_max_to_median_ratio` vs `persistence_mse_mean` rho 0.568, vs `temporal_energy_mean` rho 0.553, and vs `velocity_mse_mean` rho 0.549.
+- Target-feature tests are timebase-sensitive: best strict-timebase target AUC 0.830 and best pause-heavy target AUC 1.000, but these subsets are small and source/acquisition structured.
+- Leave-cycle future16 `rollout_plus_timebase` reaches AUC 0.694, but source-heldout addition of timebase reverses/hurts transfer (`rollout_plus_timebase` AUC 0.361; `timebase_context` AUC 0.213). This makes timebase a guardrail/acquisition covariate, not a deployable predictor.
+- Final verdict: `rollout_signal_timebase_sensitive_pause_heavy_enriched`.
+
+Interpretation: ROI rollout/temporal-energy features are strongly coupled to HDF5 pause-heavy timing structure. This does not remove their value as review descriptors, but it means rollout warning signals must be stratified by timebase quality and cannot be promoted as source-transferable degradation predictors without acquisition controls.
+
+Guardrail: this audit uses automatic ROI crops and source-level HDF5 timing provenance. It does not assign manual QC labels, validate degradation mechanisms, or calibrate diffusion.
+
