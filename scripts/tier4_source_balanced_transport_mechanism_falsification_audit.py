@@ -244,7 +244,7 @@ def main() -> None:
     for source, sub in df.groupby("source_stem", dropna=False):
         near = sub[sub["near_pre_flag"].eq(1)]
         non = sub[sub["near_pre_flag"].eq(0)]
-        if near.empty or non.empty:
+        if near.empty or len(non) == 0:
             continue
         row: Dict[str, Any] = {
             "source_stem": source,

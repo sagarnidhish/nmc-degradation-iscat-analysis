@@ -1199,6 +1199,29 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Sequence guardrail: Source-balanced sequences are fixed padded particle-region crops around automatic reconstructed candidates. They broaden source coverage for model/physics tests, but are not manual particle annotations or validated front labels.
 - Rollout guardrail: Source-balanced rollout features are computed from automatic particle-centered crops and weak future labels. They quantify ROI-only temporal prediction difficulty and optical drift/intensity dynamics, not manual QC, causal degradation, or calibrated diffusion.
 
+## Source-Balanced Expansion Transport/Front Audit
+
+- Expanded transport/front rows OK/failed/cycles/sources: 96 / 0 / 48 / 14
+- Future8/future16 positive rows: 28 / 48; flow method farneback
+- Best future8 transport/front row: abs_radial_flow_mean raw AUC 0.727, AP 0.645, source-stratified p=0.078
+- Best future16 transport/front row: gradient_aligned_flow_slope raw AUC 0.666, AP 0.683, source-stratified p=0.138
+- Top expanded candidate: source_balanced_cycle108_rank6_obj1_12_c2_x10_070723 score 0.892, future8 1, future16 1
+- Expansion transport/front test future_any_drop_within_16cycles gradient_aligned_flow_slope raw: AUC 0.666, AP 0.683, MW p=0.005, source-stratified p=0.138
+- Expansion transport/front test future_any_drop_within_16cycles divergence_q90 source_residual: AUC 0.642, AP 0.723, MW p=0.017, source-stratified p=0.034
+- Expansion transport/front test future_any_drop_within_16cycles gradient_aligned_flow_mean raw: AUC 0.605, AP 0.541, MW p=0.078, source-stratified p=0.246
+- Expansion transport/front test future_any_drop_within_16cycles context_flow_mag_slope raw: AUC 0.593, AP 0.619, MW p=0.116, source-stratified p=0.224
+- Expansion transport/front test future_any_drop_within_16cycles divergence_slope source_residual: AUC 0.593, AP 0.556, MW p=0.118, source-stratified p=0.066
+- Expansion transport/front test future_any_drop_within_16cycles divergence_slope raw: AUC 0.590, AP 0.555, MW p=0.128, source-stratified p=0.220
+- Expansion transport/front test future_any_drop_within_16cycles radial_flow_mean raw: AUC 0.583, AP 0.555, MW p=0.161, source-stratified p=0.458
+- Expansion transport/front test future_any_drop_within_16cycles curl_abs_slope raw: AUC 0.581, AP 0.637, MW p=0.174, source-stratified p=0.080
+- Expansion transport/front source 12_c2_x10_070723: ROI 8, cycles 4, max score 0.892, future16 rows 8
+- Expansion transport/front source 17_c2_x10_HighHighCOV_150723: ROI 6, cycles 3, max score 0.856, future16 rows 6
+- Expansion transport/front source 2_c2_x14_200623: ROI 8, cycles 4, max score 0.850, future16 rows 0
+- Expansion transport/front source 9_c2_x10_010723: ROI 8, cycles 4, max score 0.838, future16 rows 8
+- Expansion transport/front source 16_c2_x10_HighHighCOV_130723: ROI 8, cycles 4, max score 0.803, future16 rows 6
+- Expansion transport/front source 14_c2_x10_HighCOV_110723: ROI 8, cycles 4, max score 0.776, future16 rows 0
+- Guardrail: Expanded-cohort apparent transport/front descriptors are computed from automatic fixed ROI crops. They test generalization of image-motion and front-radius proxies across broader source-balanced cycles, but they are not manual particle labels, calibrated transport, diffusion coefficients, or degradation causality.
+
 ## Source-Balanced Mask/Front Sanity Audit
 
 - Mask/front ROI sequences/cycles/sources: 96 / 48 / 14

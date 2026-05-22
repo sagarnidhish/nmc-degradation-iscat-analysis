@@ -178,6 +178,7 @@ def main() -> None:
     source_balanced_pre_event_physics_modes = read_json(derived / "source_balanced_pre_event_physics_mode_taxonomy" / "source_balanced_pre_event_physics_mode_summary.json")
     source_balanced_sequences = read_json(derived / "source_balanced_roi_sequences" / "selected_roi_sequence_summary.json")
     source_balanced_sequence_rollout = read_json(derived / "source_balanced_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
+    source_balanced_expansion_transport_front = read_json(derived / "source_balanced_expansion_transport_front_audit" / "source_balanced_expansion_transport_front_summary.json")
     source_balanced_mask_front = read_json(derived / "source_balanced_mask_front_sanity_audit" / "source_balanced_mask_front_summary.json")
     source_balanced_mask_front_source_residual = read_json(derived / "source_balanced_mask_front_source_residual_audit" / "source_balanced_mask_front_source_residual_summary.json")
     source_balanced_residual_dictionary = read_json(derived / "source_balanced_residual_dictionary_audit" / "source_balanced_residual_dictionary_summary.json")
@@ -446,6 +447,12 @@ def main() -> None:
     source_balanced_rollout_sources = top_items(first_summary(source_balanced_sequence_rollout, "source_summary", []), 20)
     source_balanced_rollout_top16 = next((r for r in source_balanced_rollout_roi_tests if r.get("target") == "future_any_drop_within_16cycles"), {})
     source_balanced_rollout_top8 = next((r for r in source_balanced_rollout_roi_tests if r.get("target") == "future_any_drop_within_8cycles"), {})
+    source_balanced_expansion_transport_tests = top_items(first_summary(source_balanced_expansion_transport_front, "top_feature_tests", []), 120)
+    source_balanced_expansion_transport_sources = top_items(first_summary(source_balanced_expansion_transport_front, "source_summary_top", []), 14)
+    source_balanced_expansion_transport_candidates = top_items(first_summary(source_balanced_expansion_transport_front, "top_candidates", []), 12)
+    source_balanced_expansion_transport_best_future8 = next((r for r in source_balanced_expansion_transport_tests if r.get("target") == "future_any_drop_within_8cycles"), {})
+    source_balanced_expansion_transport_best_future16 = next((r for r in source_balanced_expansion_transport_tests if r.get("target") == "future_any_drop_within_16cycles"), {})
+    source_balanced_expansion_transport_top_candidate = source_balanced_expansion_transport_candidates[0] if source_balanced_expansion_transport_candidates else {}
     source_balanced_mask_front_roi_tests = top_items(first_summary(source_balanced_mask_front, "top_roi_feature_tests", []), 30)
     source_balanced_mask_front_cycle_tests = top_items(first_summary(source_balanced_mask_front, "top_cycle_feature_tests", []), 20)
     source_balanced_mask_front_sources = top_items(first_summary(source_balanced_mask_front, "source_summary", []), 20)
@@ -2078,6 +2085,26 @@ def main() -> None:
 
     report_lines += [
         "",
+        "## Source-Balanced Expansion Transport/Front Audit",
+        "",
+        f"- Expanded transport/front rows OK/failed/cycles/sources: {first_summary(source_balanced_expansion_transport_front, 'n_ok', 0)} / {first_summary(source_balanced_expansion_transport_front, 'n_failed', 0)} / {first_summary(source_balanced_expansion_transport_front, 'n_cycles', 0)} / {first_summary(source_balanced_expansion_transport_front, 'n_sources', 0)}",
+        f"- Future8/future16 positive rows: {first_summary(source_balanced_expansion_transport_front, 'future8_positive_rows', 0)} / {first_summary(source_balanced_expansion_transport_front, 'future16_positive_rows', 0)}; flow method {first_summary(source_balanced_expansion_transport_front, 'flow_method', 'NA')}",
+        f"- Best future8 transport/front row: {source_balanced_expansion_transport_best_future8.get('feature', 'NA')} {source_balanced_expansion_transport_best_future8.get('transform', 'NA')} AUC {fmt(source_balanced_expansion_transport_best_future8.get('oriented_auc'))}, AP {fmt(source_balanced_expansion_transport_best_future8.get('average_precision'))}, source-stratified p={fmt(source_balanced_expansion_transport_best_future8.get('source_stratified_permutation_p'))}",
+        f"- Best future16 transport/front row: {source_balanced_expansion_transport_best_future16.get('feature', 'NA')} {source_balanced_expansion_transport_best_future16.get('transform', 'NA')} AUC {fmt(source_balanced_expansion_transport_best_future16.get('oriented_auc'))}, AP {fmt(source_balanced_expansion_transport_best_future16.get('average_precision'))}, source-stratified p={fmt(source_balanced_expansion_transport_best_future16.get('source_stratified_permutation_p'))}",
+        f"- Top expanded candidate: {source_balanced_expansion_transport_top_candidate.get('roi_id', 'NA')} score {fmt(source_balanced_expansion_transport_top_candidate.get('expansion_transport_front_score'))}, future8 {fmt(source_balanced_expansion_transport_top_candidate.get('future_any_drop_within_8cycles'), 0)}, future16 {fmt(source_balanced_expansion_transport_top_candidate.get('future_any_drop_within_16cycles'), 0)}",
+    ]
+    for row in source_balanced_expansion_transport_tests[:8]:
+        report_lines.append(
+            f"- Expansion transport/front test {row.get('target', 'NA')} {row.get('feature', 'NA')} {row.get('transform', 'NA')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}, MW p={fmt(row.get('mwu_p'))}, source-stratified p={fmt(row.get('source_stratified_permutation_p'))}"
+        )
+    for row in source_balanced_expansion_transport_sources[:6]:
+        report_lines.append(
+            f"- Expansion transport/front source {row.get('source_stem', 'NA')}: ROI {fmt(row.get('n_roi'), 0)}, cycles {fmt(row.get('n_cycles'), 0)}, max score {fmt(row.get('max_expansion_transport_front_score'))}, future16 rows {fmt(row.get('future16_positive_rows'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_expansion_transport_front, 'guardrail', 'Source-balanced expansion transport/front audit unavailable.')}")
+
+    report_lines += [
+        "",
         "## Source-Balanced Mask/Front Sanity Audit",
         "",
         f"- Mask/front ROI sequences/cycles/sources: {first_summary(source_balanced_mask_front, 'n_roi_sequences', 0)} / {first_summary(source_balanced_mask_front, 'n_cycles', 0)} / {first_summary(source_balanced_mask_front, 'n_sources', 0)}",
@@ -3548,6 +3575,21 @@ def main() -> None:
             "top_cycle_feature_tests": source_balanced_rollout_cycle_tests,
             "source_summary": source_balanced_rollout_sources,
             "guardrail": first_summary(source_balanced_sequence_rollout, "guardrail"),
+        },
+        "source_balanced_expansion_transport_front_audit": {
+            "n_input_rows": first_summary(source_balanced_expansion_transport_front, "n_input_rows"),
+            "n_ok": first_summary(source_balanced_expansion_transport_front, "n_ok"),
+            "n_failed": first_summary(source_balanced_expansion_transport_front, "n_failed"),
+            "n_cycles": first_summary(source_balanced_expansion_transport_front, "n_cycles"),
+            "n_sources": first_summary(source_balanced_expansion_transport_front, "n_sources"),
+            "future8_positive_rows": first_summary(source_balanced_expansion_transport_front, "future8_positive_rows"),
+            "future16_positive_rows": first_summary(source_balanced_expansion_transport_front, "future16_positive_rows"),
+            "flow_method": first_summary(source_balanced_expansion_transport_front, "flow_method"),
+            "top_feature_tests": source_balanced_expansion_transport_tests,
+            "source_summary_top": source_balanced_expansion_transport_sources,
+            "top_candidates": source_balanced_expansion_transport_candidates,
+            "outputs": first_summary(source_balanced_expansion_transport_front, "outputs", {}),
+            "guardrail": first_summary(source_balanced_expansion_transport_front, "guardrail"),
         },
         "source_balanced_mask_front_sanity_audit": {
             "n_roi_sequences": first_summary(source_balanced_mask_front, "n_roi_sequences"),

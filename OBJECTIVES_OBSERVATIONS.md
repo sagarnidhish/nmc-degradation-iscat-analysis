@@ -4236,3 +4236,29 @@ Results:
 Interpretation: this falsification audit strengthens the practical use of the mechanism dossier as an event-local manual-review ranker. The same-source paired comparisons argue against a purely cross-source artifact, while the top-k and five-source source-median limits keep the conclusion guarded. This supports a particle-local readiness/instability hypothesis, not a calibrated mechanism claim.
 
 Guardrail: the audit tests automatic optical/AI descriptors. It does not establish calibrated transport, phase-boundary velocity, diffusion, or causality; those claims remain blocked pending strict gates and manual validation.
+
+## 2026-05-22 Source-Balanced Expansion Transport/Front Audit
+
+Added `scripts/tier4_source_balanced_expansion_transport_front_audit.py` and ran it on Isambard over the broader `source_balanced_roi_sequences` cohort. This extends the pre-event transport/front analysis from the review-focused pre-event dossier to the 96 expanded source-balanced ROI sequences sampled across more cycles and sources.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_expansion_transport_front_audit`
+- `derived_local/source_balanced_expansion_transport_front_audit`
+- `source_balanced_expansion_transport_front_features.csv`
+- `source_balanced_expansion_transport_front_tests.csv`
+- `source_balanced_expansion_transport_front_source_summary.csv`
+- `source_balanced_expansion_transport_front_top40.csv`
+- `source_balanced_expansion_transport_front_summary.json`
+
+Results:
+
+- Processed 96/96 expanded ROI rows across 48 cycles and 14 sources with Farneback optical flow; future8/future16 positives are 28/48 rows.
+- The strongest future8 raw transport rows are radial/flow magnitude features: `abs_radial_flow_mean` AUC 0.727/AP 0.645, `abs_radial_flow_q90` AUC 0.722/AP 0.636. Their source-stratified permutation p-values are only 0.078 and 0.062, so they are suggestive but not strict source-invariant evidence.
+- The strongest future16 row is raw `gradient_aligned_flow_slope` with AUC 0.666/AP 0.683, but source-stratified p=0.138. A source-residual `divergence_q90` row is weaker in AUC (0.642/AP 0.723) but passes source-stratified p=0.034.
+- The composite `expansion_transport_front_score` is not a strong future16 classifier in raw form (AUC 0.549), although its source-residual permutation p=0.012 flags within-source ranking structure that needs follow-up rather than direct interpretation.
+- Top expanded candidates include future-positive rows from sources `12_c2_x10_070723`, `17_c2_x10_HighHighCOV_150723`, and `9_c2_x10_010723`, but also high-scoring future-negative control rows such as `source_balanced_cycle6_rank25_obj1_2_c2_x14_200623`.
+
+Interpretation: apparent transport/front descriptors partially generalize to the broader source-balanced expansion cohort, especially for future8 raw radial-flow features, but the evidence is weaker and more source-sensitive than in the pre-event review dossier. This is useful as a falsification/generalization check: the transport signal is not simply universal across all expanded crops, and high-score future-negative controls should be used during manual QC and model refinement.
+
+Guardrail: expanded-cohort optical flow and front-radius descriptors are automatic fixed-crop image-motion proxies. They are not manual particle labels, calibrated transport velocities, phase-boundary velocities, diffusion coefficients, or causal degradation proof.
