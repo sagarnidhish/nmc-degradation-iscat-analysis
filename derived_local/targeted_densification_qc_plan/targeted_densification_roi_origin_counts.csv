@@ -1,0 +1,5 @@
+candidate_origin,n_roi_rows
+manual_qc_decision_packet,128
+diffusion_unblock_review_queue,60
+source_heldout_transfer,48
+transport_mechanism_dossier,40

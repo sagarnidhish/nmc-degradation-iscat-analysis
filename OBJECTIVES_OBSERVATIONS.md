@@ -4368,3 +4368,31 @@ Interpretation: the project has moved beyond a small event/reference-only core c
 
 Guardrail: this atlas audits dataset and ROI-analysis coverage only. It does not extract new ROIs, validate particle identity, train deployment models, or make calibrated diffusion/phase-boundary claims.
 
+## 2026-05-22 Targeted Densification and Manual-QC Plan
+
+Added `scripts/tier4_targeted_densification_qc_plan.py` and ran it on Isambard to convert the all-cycle coverage atlas plus candidate-level transfer, mechanism, manual-QC, and diffusion-blocker ledgers into a concrete action queue for the next project phase.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/targeted_densification_qc_plan`
+- `derived_local/targeted_densification_qc_plan`
+- `targeted_densification_cycle_plan.csv`
+- `targeted_densification_source_plan.csv`
+- `targeted_manual_qc_roi_queue.csv`
+- `targeted_densification_action_counts.csv`
+- `targeted_densification_roi_origin_counts.csv`
+- `targeted_densification_qc_summary.json`
+
+Results:
+
+- The plan ranks 89 cycle rows across 16 sources and produces 276 ROI-level action rows.
+- Recommended cycle actions are 64 cycles for manual QC of existing visual assets, 13 cycles for diffusion-blocker follow-up, 9 cycles for densifying existing ROI candidates, 2 cycles for lower-priority existing-ROI review, and 1 cycle for extracting ROI candidates for the uncovered cycle.
+- The highest-priority sources are `9_c2_x10_010723`, `17_c2_x10_HighHighCOV_150723`, and `12_c2_x10_070723`; they combine future-event labels, source-heldout transfer support, mechanism/front evidence, and existing visual assets.
+- The highest-priority cycle is cycle 78 from `9_c2_x10_010723`, driven by the nearest diffusion-unblock candidate `cycle78_rank22_obj2` plus source-balanced visual/manual-QC candidates from the same cycle.
+- The top ROI action is `cycle78_rank22_obj2` from the diffusion-unblock queue, followed by visual-asset-backed source-balanced candidates `source_balanced_cycle78_rank61_obj2_9_c2_x10_010723` and related cycle-78 transport/mechanism rows.
+- The single uncovered cycle remains cycle 137 from `16_c2_x10_HighHighCOV_130723`; it is an extraction target but lower priority than the existing high-evidence manual-QC/diffusion rows because it is not future8/future16 positive.
+
+Interpretation: the next useful work is no longer blind all-cycle extraction. The plan makes the immediate handoff explicit: manually review the cycle-78/cycle-152/cycle-154/cycle-82/cycle-80 assets first, use cycle 78 to test whether diffusion blockers can be resolved by human front/QC labels, and only then densify low-ROI cycles or extract the one uncovered cycle.
+
+Guardrail: this plan prioritizes ROI densification and manual-QC review using existing automatic ledgers. It does not extract new ROIs, accept labels, relax gates, or create calibrated diffusion/phase-boundary claims.
+

@@ -214,6 +214,7 @@ def main() -> None:
     source_balanced_transport_mechanism = read_json(derived / "source_balanced_transport_mechanism_dossier" / "source_balanced_transport_mechanism_summary.json")
     source_balanced_transport_mechanism_falsification = read_json(derived / "source_balanced_transport_mechanism_falsification_audit" / "source_balanced_transport_mechanism_falsification_summary.json")
     source_heldout_event_rank_transfer = read_json(derived / "source_heldout_event_rank_transfer_audit" / "source_heldout_event_rank_transfer_summary.json")
+    targeted_densification_qc = read_json(derived / "targeted_densification_qc_plan" / "targeted_densification_qc_summary.json")
     source_domain_video_echem = read_json(derived / "source_domain_video_echem_adaptation_audit" / "source_domain_video_echem_summary.json")
     source_balanced_video_echem = read_json(derived / "source_balanced_video_echem_transfer_audit" / "source_balanced_video_echem_summary.json")
     source_invariant_video_echem = read_json(derived / "source_invariant_video_echem_transfer_audit" / "source_invariant_video_echem_summary.json")
@@ -777,6 +778,11 @@ def main() -> None:
     heldout_rank_transfer_tests = top_items(first_summary(source_heldout_event_rank_transfer, "best_score_tests_by_target", []), 8)
     heldout_rank_transfer_transfer_tests = top_items(first_summary(source_heldout_event_rank_transfer, "transfer_score_tests", []), 4)
     heldout_rank_transfer_topk = top_items(first_summary(source_heldout_event_rank_transfer, "topk_summary", []), 12)
+    targeted_densification_cycle_actions = top_items(first_summary(targeted_densification_qc, "top_cycle_actions", []), 12)
+    targeted_densification_roi_actions = top_items(first_summary(targeted_densification_qc, "top_roi_actions", []), 12)
+    targeted_densification_source_plan = top_items(first_summary(targeted_densification_qc, "source_plan_top", []), 10)
+    targeted_densification_action_counts = top_items(first_summary(targeted_densification_qc, "action_counts", []), 10)
+    targeted_densification_origin_counts = top_items(first_summary(targeted_densification_qc, "roi_origin_counts", []), 8)
     acq_echem_cycle_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized"), {})
     acq_echem_cycle_bal_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "video_plus_echem" and r.get("mode") == "acquisition_residualized_cycle_balanced"), {})
     acq_echem_cycle_acq_future16 = next((r for r in acq_echem_metrics if r.get("target") == "future_any_drop_within_16cycles" and r.get("group_col") == "cycleNo" and r.get("feature_set") == "acquisition_context" and r.get("mode") == "raw"), {})
@@ -1509,6 +1515,31 @@ def main() -> None:
             f"- ROI cohort coverage {row.get('cohort')}: rows {fmt(row.get('n_rows'), 0)}, cycles {fmt(row.get('n_cycles'), 0)}, sources {fmt(row.get('n_sources'), 0)}, status {row.get('status', 'NA')}"
         )
     report_lines.append(f"- Guardrail: {first_summary(all_cycle_coverage, 'guardrail', 'All-cycle coverage atlas unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Targeted Densification and Manual-QC Plan",
+        "",
+        f"- Status/cycles/sources/ROI action rows: {first_summary(targeted_densification_qc, 'overall_status', 'unavailable')} / {first_summary(targeted_densification_qc, 'n_cycle_rows', 0)} / {first_summary(targeted_densification_qc, 'n_sources', 0)} / {first_summary(targeted_densification_qc, 'n_roi_queue_rows', 0)}",
+        f"- Uncovered cycles / low-ROI cycles (<10 rows): {first_summary(targeted_densification_qc, 'n_uncovered_cycles', 0)} / {first_summary(targeted_densification_qc, 'n_low_roi_cycles_lt10', 0)}",
+    ]
+    for row in targeted_densification_action_counts:
+        report_lines.append(
+            f"- Recommended cycle action {row.get('recommended_cycle_action')}: n={fmt(row.get('n_cycles'), 0)}"
+        )
+    for row in targeted_densification_source_plan[:6]:
+        report_lines.append(
+            f"- Densification source priority {row.get('source_stem')}: max priority {fmt(row.get('max_cycle_action_priority'))}, future16+ {fmt(row.get('n_future16_positive'), 0)}, low-ROI cycles {fmt(row.get('n_low_roi_cycles'), 0)}, uncovered {fmt(row.get('n_uncovered_cycles'), 0)}"
+        )
+    for row in targeted_densification_cycle_actions[:6]:
+        report_lines.append(
+            f"- Densification cycle priority {fmt(row.get('cycleNo'), 0)} / {row.get('source_stem')}: action {row.get('recommended_cycle_action')}, priority {fmt(row.get('cycle_action_priority'))}, ROI rows {fmt(row.get('n_roi_total_across_tracked_cohorts'), 0)}"
+        )
+    for row in targeted_densification_roi_actions[:6]:
+        report_lines.append(
+            f"- Manual-QC ROI priority {row.get('roi_id')}: origin {row.get('candidate_origin')}, action {row.get('candidate_action')}, priority {fmt(row.get('roi_action_priority'))}, cycle {fmt(row.get('cycleNo'), 0)}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(targeted_densification_qc, 'guardrail', 'Targeted densification/QC plan unavailable.')}")
 
     report_lines += [
         "",
@@ -2580,6 +2611,23 @@ def main() -> None:
             f"- Heldout top-{fmt(row.get('k'), 0)} {row.get('score', 'NA')}: near-pre fraction {fmt(row.get('near_pre_fraction'))}, sources {fmt(row.get('n_sources'), 0)}, dominant source {row.get('dominant_source', 'NA')} fraction {fmt(row.get('max_source_fraction'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(source_heldout_event_rank_transfer, 'guardrail', 'Source-heldout event rank transfer audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Pre-Event Temporal Dose-Response Audit",
+        "",
+        f"- Status/input/pre-event rows/cycles/sources: {first_summary(pre_event_temporal_dose_response, 'overall_status', 'unavailable')} / {first_summary(pre_event_temporal_dose_response, 'n_input_rows', 0)} / {first_summary(pre_event_temporal_dose_response, 'n_pre_event_rows', 0)} / {first_summary(pre_event_temporal_dose_response, 'n_pre_event_cycles', 0)} / {first_summary(pre_event_temporal_dose_response, 'n_pre_event_sources', 0)}",
+        f"- Distance bin counts: {first_summary(pre_event_temporal_dose_response, 'distance_bin_counts', {})}",
+    ]
+    for row in temporal_dose_key_tests:
+        report_lines.append(
+            f"- Temporal key {row.get('feature', 'NA')}: raw rho {fmt(row.get('raw_spearman_rho'))} (p {fmt(row.get('raw_permutation_p'))}), source-centered rho {fmt(row.get('source_centered_spearman_rho'))} (p {fmt(row.get('source_centered_permutation_p'))}), positive source-slope fraction {fmt(row.get('positive_source_slope_fraction'))}, sign-flip p {fmt(row.get('source_slope_sign_flip_p'))}"
+        )
+    for row in temporal_dose_slopes[:5]:
+        report_lines.append(
+            f"- Directional source-slope candidate {row.get('feature', 'NA')}: median slope {fmt(row.get('median_source_slope'))}, positive source-slope fraction {fmt(row.get('positive_source_slope_fraction'))}, source sign-flip p {fmt(row.get('source_slope_sign_flip_p'))}, source-centered rho {fmt(row.get('source_centered_spearman_rho'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(pre_event_temporal_dose_response, 'guardrail', 'Pre-event temporal dose-response audit unavailable.')}")
 
     report_lines += [
         "",
@@ -4422,6 +4470,21 @@ def main() -> None:
             "topk_summary": heldout_rank_transfer_topk,
             "outputs": first_summary(source_heldout_event_rank_transfer, "outputs", {}),
             "guardrail": first_summary(source_heldout_event_rank_transfer, "guardrail"),
+        },
+        "targeted_densification_qc_plan": {
+            "overall_status": first_summary(targeted_densification_qc, "overall_status"),
+            "n_cycle_rows": first_summary(targeted_densification_qc, "n_cycle_rows"),
+            "n_sources": first_summary(targeted_densification_qc, "n_sources"),
+            "n_uncovered_cycles": first_summary(targeted_densification_qc, "n_uncovered_cycles"),
+            "n_low_roi_cycles_lt10": first_summary(targeted_densification_qc, "n_low_roi_cycles_lt10"),
+            "n_roi_queue_rows": first_summary(targeted_densification_qc, "n_roi_queue_rows"),
+            "action_counts": targeted_densification_action_counts,
+            "roi_origin_counts": targeted_densification_origin_counts,
+            "source_plan_top": targeted_densification_source_plan,
+            "top_cycle_actions": targeted_densification_cycle_actions,
+            "top_roi_actions": targeted_densification_roi_actions,
+            "outputs": first_summary(targeted_densification_qc, "outputs", {}),
+            "guardrail": first_summary(targeted_densification_qc, "guardrail"),
         },
         "source_domain_video_echem_adaptation_audit": {
             "n_rows": first_summary(source_domain_video_echem, "n_rows"),

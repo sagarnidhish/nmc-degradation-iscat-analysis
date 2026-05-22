@@ -1,0 +1,6 @@
+recommended_cycle_action,n_cycles
+manual_qc_existing_visual_assets,64
+manual_qc_diffusion_blocker_followup,13
+densify_existing_cycle_roi_candidates,9
+manual_qc_existing_roi_assets,2
+extract_roi_candidates_for_uncovered_cycle,1

@@ -494,6 +494,35 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - ROI cohort coverage transfer_ranked_roi_sequences: rows 48, cycles 12, sources 4, status ok
 - Guardrail: This atlas audits dataset and ROI-analysis coverage only. It does not extract new ROIs, validate particle identity, train deployment models, or make calibrated diffusion/phase-boundary claims.
 
+## Targeted Densification and Manual-QC Plan
+
+- Status/cycles/sources/ROI action rows: targeted_densification_qc_plan_ready / 89 / 16 / 276
+- Uncovered cycles / low-ROI cycles (<10 rows): 1 / 60
+- Recommended cycle action manual_qc_existing_visual_assets: n=64
+- Recommended cycle action manual_qc_diffusion_blocker_followup: n=13
+- Recommended cycle action densify_existing_cycle_roi_candidates: n=9
+- Recommended cycle action manual_qc_existing_roi_assets: n=2
+- Recommended cycle action extract_roi_candidates_for_uncovered_cycle: n=1
+- Densification source priority 9_c2_x10_010723: max priority 16.454, future16+ 5, low-ROI cycles 2, uncovered 0
+- Densification source priority 17_c2_x10_HighHighCOV_150723: max priority 15.117, future16+ 10, low-ROI cycles 1, uncovered 0
+- Densification source priority 12_c2_x10_070723: max priority 11.611, future16+ 5, low-ROI cycles 3, uncovered 0
+- Densification source priority 7_c2_x10_290623: max priority 10.382, future16+ 2, low-ROI cycles 2, uncovered 0
+- Densification source priority 6_c2_x10_270623_2: max priority 10.245, future16+ 5, low-ROI cycles 5, uncovered 0
+- Densification source priority 16_c2_x10_HighHighCOV_130723: max priority 6.972, future16+ 6, low-ROI cycles 9, uncovered 1
+- Densification cycle priority 78 / 9_c2_x10_010723: action manual_qc_existing_visual_assets, priority 16.454, ROI rows 14
+- Densification cycle priority 152 / 17_c2_x10_HighHighCOV_150723: action manual_qc_existing_visual_assets, priority 15.117, ROI rows 22
+- Densification cycle priority 154 / 17_c2_x10_HighHighCOV_150723: action manual_qc_existing_visual_assets, priority 15.002, ROI rows 18
+- Densification cycle priority 82 / 9_c2_x10_010723: action manual_qc_existing_visual_assets, priority 14.431, ROI rows 8
+- Densification cycle priority 80 / 9_c2_x10_010723: action manual_qc_existing_visual_assets, priority 14.366, ROI rows 8
+- Densification cycle priority 151 / 17_c2_x10_HighHighCOV_150723: action manual_qc_existing_visual_assets, priority 14.259, ROI rows 22
+- Manual-QC ROI priority cycle78_rank22_obj2: origin diffusion_unblock_review_queue, action manual_qc_diffusion_blocker_followup, priority 20.454, cycle 78
+- Manual-QC ROI priority source_balanced_cycle78_rank61_obj2_9_c2_x10_010723: origin manual_qc_decision_packet, action manual_qc_existing_visual_assets, priority 17.277, cycle 78
+- Manual-QC ROI priority source_balanced_cycle78_rank61_obj2_9_c2_x10_010723: origin transport_mechanism_dossier, action manual_qc_transport_mechanism_roi, priority 17.247, cycle 78
+- Manual-QC ROI priority cycle78_rank22_obj3: origin diffusion_unblock_review_queue, action manual_qc_diffusion_blocker_followup, priority 16.830, cycle 78
+- Manual-QC ROI priority cycle78_rank22_obj1: origin diffusion_unblock_review_queue, action manual_qc_diffusion_blocker_followup, priority 16.756, cycle 78
+- Manual-QC ROI priority source_balanced_cycle78_rank61_obj1_9_c2_x10_010723: origin transport_mechanism_dossier, action manual_qc_transport_mechanism_roi, priority 16.501, cycle 78
+- Guardrail: This plan prioritizes ROI densification and manual-QC review using existing automatic ledgers. It does not extract new ROIs, accept labels, relax gates, or create calibrated diffusion/phase-boundary claims.
+
 ## Current Claim Readiness Matrix
 
 - Claims audited: 7
