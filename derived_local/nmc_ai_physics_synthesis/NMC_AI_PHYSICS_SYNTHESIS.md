@@ -68,6 +68,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Calibration claim-risk register audits 11 front/kinetic/diffusion claim families; it classifies diffusion-like values as apparent proxies and keeps manual-QC-gated diffusion/front claims pending.
 - Apparent diffusion calibration-bounds audit maps all 72 balanced ROIs to HDF5 timing; ROI elapsed/HDF5 elapsed median ratio is 1.002, q70 median apparent D at 96 nm/px is 4.322e-08 um2/s, and q70 future8 separation is non-significant (top p=0.175).
 - Cross-modal consensus ranks cycles 86, 116 as synchronized multimodal degradation candidates; the top cycle has 4 modal votes and consensus score 0.813, while the score remains an audit statistic rather than a calibrated probability.
+- Echem/optical breakpoint audit tests 84 cycle-level echem/trace features around synchronized cycles [86.0, 116.0]; strongest event-centered shift is state_step_norm_delta_prev over +/-4 cycles (scaled shift -2.263, bootstrap p=0.002).
 - Protocol-conditioned front residuals preserve phase-slope sign consistency, but not front-magnitude or diffusion-proxy separability.
 - Automatic front-QC sensitivity keeps the positive phase-front residual in 5 strata: all_front_rois, complete_threshold_sweep, q70_phase_ci_excludes_zero, q70_phase_ci_positive, review_panel_selected; review-panel diffusion proxy differences are selection-sensitive and not calibrated transport.
 - Protocol-adjusted residual mode taxonomy chooses k=4; its most event-enriched mode is optical_brightening_decorrelating_rollout_hard_front_positive with event fraction 0.846 and Fisher p=0.003.
@@ -375,6 +376,39 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Consensus contrast cross_modal_consensus_score vs future_any_drop_within_8cycles: median positive-negative 0.009, rho=0.062, n=89
 - Consensus contrast n_modal_votes vs future_any_drop_within_8cycles: median positive-negative 0.000, rho=0.068, n=89
 - Guardrail: Consensus score is an audit/ranking statistic across already-derived modalities; it is not a calibrated probability and keeps frame-count/acquisition as an explicit confounder.
+
+## Echem Optical Breakpoint Audit
+
+- Cycles/features/permutations: 89 / 84 / 5000
+- Event cycles tested: [86.0, 116.0]
+- Event-centered breakpoint state_step_norm_delta_prev +/-4 cycles: scaled shift -2.263, control p95 abs 1.774, empirical p=0.040, bootstrap p=0.002
+- Event-centered breakpoint mean_abs_delta_prev_delta_prev +/-4 cycles: scaled shift -1.753, control p95 abs 1.506, empirical p=0.053, bootstrap p=0.003
+- Event-centered breakpoint axis_step_delta_prev +/-4 cycles: scaled shift -1.459, control p95 abs 1.073, empirical p=0.053, bootstrap p=0.006
+- Event-centered breakpoint all_dq_abs_midV_frac_delta_prev +/-4 cycles: scaled shift 7.882, control p95 abs 10.640, empirical p=0.074, bootstrap p=0.011
+- Event-centered breakpoint cycle_state_pc2 +/-8 cycles: scaled shift -1.390, control p95 abs 1.540, empirical p=0.150, bootstrap p=0.014
+- Event-centered breakpoint shape_V_std_delta_prev +/-4 cycles: scaled shift -4.038, control p95 abs 4.307, empirical p=0.074, bootstrap p=0.023
+- Event-centered breakpoint cycle_state_pc2 +/-12 cycles: scaled shift -1.348, control p95 abs 1.473, empirical p=0.175, bootstrap p=0.023
+- Event-centered breakpoint shape_V_mean +/-12 cycles: scaled shift 0.492, control p95 abs 0.866, empirical p=0.125, bootstrap p=0.024
+- Echem/trace label link axis_step vs any_abrupt_drop: median positive-negative 2.149, MW p=8.062e-05, rho=0.339
+- Echem/trace label link cycle_state_pc1_delta_prev vs any_abrupt_drop: median positive-negative -2.149, MW p=8.062e-05, rho=-0.339
+- Echem/trace label link degradation_state_axis_delta_prev vs any_abrupt_drop: median positive-negative 2.149, MW p=8.062e-05, rho=0.339
+- Echem/trace label link mean_abs_delta_prev_delta_prev vs any_abrupt_drop: median positive-negative 0.093, MW p=1.087e-04, rho=0.339
+- Echem/trace label link state_step_norm_delta_prev vs any_abrupt_drop: median positive-negative 6.141, MW p=2.165e-04, rho=0.332
+- Echem/trace label link cycle_state_pc2 vs future_any_drop_within_8cycles: median positive-negative 0.730, MW p=2.322e-04, rho=0.393
+- Echem/trace label link frames_percentile vs future_sync2_drop_within_8cycles: median positive-negative -0.362, MW p=9.666e-04, rho=-0.353
+- Echem/trace label link n_frames vs future_sync2_drop_within_8cycles: median positive-negative -36.500, MW p=9.666e-04, rho=-0.353
+- Event-cycle breakpoint rank cycle 116 all_dq_abs_midV_frac +/-12: rank 1, percentile 1.000, scaled shift -0.822
+- Event-cycle breakpoint rank cycle 116 axis_step_rolling5_slope +/-8: rank 1, percentile 1.000, scaled shift 2.171
+- Event-cycle breakpoint rank cycle 86 particle_norm_cv_delta_prev +/-8: rank 1, percentile 1.000, scaled shift 1.782
+- Event-cycle breakpoint rank cycle 86 shape_I_abs_mean_mA +/-12: rank 1, percentile 0.890, scaled shift -1.125
+- Event-cycle breakpoint rank cycle 116 shape_V_mean +/-12: rank 1, percentile 1.000, scaled shift 0.958
+- Event-cycle breakpoint rank cycle 116 shape_V_std +/-12: rank 1, percentile 1.000, scaled shift 0.700
+- Global echem breakpoint candidate cycle 150 coulombic_efficiency_pct_rolling5_slope: scaled shift -237.256, rank 1, pre/post n=12/2
+- Global echem breakpoint candidate cycle 150 coulombic_efficiency_pct_rolling5_slope: scaled shift -237.143, rank 1, pre/post n=8/2
+- Global echem breakpoint candidate cycle 150 coulombic_efficiency_pct_rolling5_slope: scaled shift -233.602, rank 1, pre/post n=4/2
+- Global echem breakpoint candidate cycle 150 all_dq_abs_entropy_rolling5_slope: scaled shift -194.381, rank 1, pre/post n=12/2
+- Global echem breakpoint candidate cycle 150 all_dq_abs_entropy_rolling5_slope: scaled shift -193.995, rank 1, pre/post n=8/2
+- Guardrail: Cycle-level echem/optical breakpoint audit uses compact derived cycle features and weak optical event labels. It tests temporal co-occurrence and trajectory shifts, not causality, manual ROI validation, or calibrated material transport.
 
 ## Diffusion Proxy Sanity Audit
 

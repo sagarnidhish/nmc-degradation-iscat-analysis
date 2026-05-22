@@ -2395,3 +2395,18 @@ Key result:
 
 Interpretation: cross-modal agreement strengthens cycles 86/116 as coordinated degradation candidates, but the same result also confirms that the strongest synchronized events are acquisition-confounded low-frame-count regimes. Use the consensus table as a QC and hypothesis-ranking index, not as a calibrated probability model.
 
+## 2026-05-22 Echem Optical Breakpoint Audit
+
+Added `scripts/tier4_echem_optical_breakpoint_audit.py` and ran it on Isambard to test whether synchronized optical degradation cycles align with local shifts in electrochemical and cycle-state trajectories. The audit uses compact cycle-level outputs from the cycle-state, particle-trace, integrated-event, and cross-modal consensus analyses rather than rescanning raw videos.
+
+Key result:
+
+- The audit scored 89 cycles and 84 cycle-level echem/trace/state features plus derivatives around synchronized event cycles 86 and 116, using 5,000 bootstrap/permutation draws.
+- The strongest synchronized-event-centered shift is `state_step_norm_delta_prev` over +/-4 cycles: median post-pre shift -4.49, IQR-scaled shift -2.26, control-center p95 abs 1.77, empirical p=0.040, bootstrap p=0.0018.
+- Other event-centered shifts include `mean_abs_delta_prev_delta_prev` (scaled -1.75, bootstrap p=0.0030), `axis_step_delta_prev` (scaled -1.46, bootstrap p=0.0056), and `cycle_state_pc2` over +/-8 cycles (scaled -1.39, bootstrap p=0.014).
+- The future-warning signal is not identical to the event-centered signal: `cycle_state_pc2` separates future8 cycles from non-future8 cycles with median positive-negative 0.730, Mann-Whitney p=2.32e-4, rho=0.393.
+- Future synchronized-drop cycles are again associated with low frame count/frame percentile: future_sync2 median frame percentile 0.183 vs 0.545, p=9.67e-4.
+- The global breakpoint scan ranks late cycles around 149/150 as the largest electrochemical slope breakpoints, especially coulombic-efficiency and capacity/dQ features. This supports treating cycles 150/151 as late-stage echem transition candidates rather than assuming all electrochemical structure is concentrated at optical event cycles 86/116.
+
+Interpretation: cycles 86/116 are not just isolated optical drops; they sit near measurable cycle-state/echem trajectory changes. However, the largest electrochemical breakpoints occur later near 149/150, so the mechanistic story is multi-stage: early synchronized optical degradation candidates plus later electrochemical trajectory collapse/outlier behavior. This remains a cycle-level association audit, not proof of causality or calibrated transport.
+
