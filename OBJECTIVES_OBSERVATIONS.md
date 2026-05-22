@@ -2325,6 +2325,6 @@ Key result:
 - Top future8 features remain front-motion/apparent-diffusion and particle-mask residual descriptors: q70 radius2 slope p95 AUC=0.731, apparent diffusion median AUC=0.717, radius2 slope median AUC=0.717, persistence particle-MSE fraction AUC=0.709.
 - Past8 labels are underpowered in this balanced cohort, with only 3 positive ROI rows and no evaluable leave-cycle-out positive predictions; past16 is evaluable but has a different class balance.
 - Time-reversed future8 labels remain nontrivial, especially with random forest AUC=0.750, so directionality is supportive rather than causal proof.
+- Timing correlations show aftermath/context structure: diffusion/radius2 slope IQR correlates with cycles since previous drop (rho=0.644, p=5.4e-9), and persistence particle/full-MSE fraction anticorrelates with cycles to next drop (rho=-0.493, p=1.66e-5).
 
-Interpretation: this strengthens the precursor-style evidence because the observed future8 physics model beats circular time-shifted labels, but the nontrivial reversed-label and context-confound guardrails mean the result remains weak-label hypothesis-ranking evidence pending more balanced acquisition design and manual ROI/front QC.
-
+Interpretation: this strengthens the precursor-style evidence because the observed future8 physics model beats circular time-shifted labels, but the nontrivial reversed-label, past-drop timing structure, and context-confound guardrails mean the result remains weak-label hypothesis-ranking evidence pending more balanced acquisition design and manual ROI/front QC.

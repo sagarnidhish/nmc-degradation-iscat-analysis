@@ -351,6 +351,7 @@ def main() -> None:
     temporal_counts = first_summary(temporal_directionality, "target_label_counts", {}) or {}
     temporal_past8_counts = temporal_counts.get("past_any_drop_within_8cycles", {}) if isinstance(temporal_counts, dict) else {}
     temporal_future_tests = top_items(first_summary(temporal_directionality, "top_future8_feature_tests", []), 10)
+    temporal_past_tests = top_items(first_summary(temporal_directionality, "top_past8_feature_tests", []), 6)
     temporal_timing_corr = top_items(first_summary(temporal_directionality, "top_timing_correlations", []), 10)
     multicohort_best_oof = max(multicohort_oof, key=lambda r: (float(r.get("pooled_oof_roc_auc") or float("nan")) if r.get("pooled_oof_roc_auc") is not None else float("nan"))) if multicohort_oof else {}
     cross_cohort_shift = top_items(first_summary(cross_cohort_rollout, "domain_shift", []), 12)
@@ -551,7 +552,6 @@ def main() -> None:
         f"- Balanced future-drop direct-video audit removes the transfer-ranked class imbalance by sampling {first_summary(balanced_future_reconstruction, 'n_cycles_sampled', 0)} cycles and {first_summary(balanced_future_physics, 'n_roi', 0)} ROI rows with equal weak future8 positives/negatives; leave-cycle {balanced_future_best_oof.get('model', 'NA')} reaches AUC {fmt(balanced_future_best_oof.get('pooled_oof_roc_auc'))}/AP {fmt(balanced_future_best_oof.get('pooled_oof_average_precision'))}, permutation p={fmt(balanced_future_null.get('empirical_p_ge_observed'))}. Top positive-associated features are radius2/front-motion proxies and particle-mask rollout residual fractions, still under optical-proxy/manual-QC guardrails.",
         f"- Balanced future particle-mask stability audit covers {first_summary(balanced_future_mask, 'n_roi', 0)} ROIs / {first_summary(balanced_future_mask, 'n_frames_total', 0)} frames; median fallback fraction is {fmt(balanced_future_mask_overall.get('median_fallback_frame_fraction'))}, and the strongest future8 mask-stability contrast is {balanced_future_mask_top_test.get('feature', 'NA')} with p={fmt(balanced_future_mask_top_test.get('p_value'))}, so the balanced future signal is not explained by a simple mask-instability split.",
         f"- Masked video embedding audit extracts particle-prior self-supervised descriptors across {first_summary(masked_video_embedding, 'n_embedding_rows', 0)} ROI tensors; balanced future leave-cycle AUC/AP is {fmt(masked_video_future_metric.get('pooled_oof_roc_auc'))}/{fmt(masked_video_future_metric.get('pooled_oof_average_precision'))} with label-permutation p={fmt(masked_video_null.get('empirical_p_ge_observed'))}, while selected event/control readout is weaker at AUC {fmt(masked_video_event_metric.get('pooled_oof_roc_auc'))}.",
-        f"- Temporal directionality audit tests whether balanced ROI physics is more future-facing than time-shifted context: future8 physics-only leave-cycle {temporal_best_future.get('model', 'NA')} reaches AUC {fmt(temporal_best_future.get('pooled_oof_roc_auc'))}/AP {fmt(temporal_best_future.get('pooled_oof_average_precision'))}, circular-shift empirical p={fmt(temporal_shift_null.get('empirical_p_ge_observed'))}; reversed-label AUC remains {fmt(temporal_best_reversed.get('pooled_oof_roc_auc'))}, so directionality is useful but not causal proof.",
         f"- Balanced future context/region guardrail shows acquisition/spatial context alone predicts weak future8 labels strongly (best AUC {fmt(balanced_future_best_acq_context.get('pooled_oof_roc_auc'))}), while selection-design context is perfect by construction (AUC {fmt(balanced_future_best_design_context.get('pooled_oof_roc_auc'))}); after acquisition-context residualization, the top physics residual is {balanced_future_top_acq_resid.get('feature', 'NA')} with p={fmt(balanced_future_top_acq_resid.get('mannwhitney_p'))}. Treat balanced physics features as review hypotheses, not context-independent degradation detectors.",
         f"- Temporal directionality audit supports a precursor interpretation but not a causal claim: balanced ROI physics predicts future8 with {temporal_future8.get('model', 'NA')} AUC {fmt(temporal_future8.get('pooled_oof_roc_auc'))}/AP {fmt(temporal_future8.get('pooled_oof_average_precision'))}, beating circular time-shift labels at empirical p={fmt(temporal_shift_null.get('empirical_p_ge_observed'))}; reversed labels remain nontrivial (best AUC {fmt(temporal_reversed8.get('pooled_oof_roc_auc'))}) and past8 is underpowered with {temporal_past8_counts.get('1', 0)} positives.",
         f"- Masked residual transition timing finds low-rank DMD residual weighted centers are closer to automatic phase-transition centers than random at borderline strength (empirical p={fmt((masked_residual_timing_align[0] if masked_residual_timing_align else {}).get('empirical_p_distance_le_observed'))}), but peak-frame timing is not aligned and persistence particle/nonparticle ratios track kinetic rates.",
@@ -1210,20 +1210,6 @@ def main() -> None:
         report_lines.append(
             f"- Masked video embedding cluster {fmt(row.get('video_embedding_cluster'), 0)}: n={fmt(row.get('n_roi'), 0)}, future8 positive fraction {fmt(row.get('future8_positive_fraction'))}, prototype {row.get('prototype_roi', 'NA')}"
         )
-    report_lines.append(
-        f"- Temporal directionality future8 {temporal_best_future.get('model', 'NA')}: AUC {fmt(temporal_best_future.get('pooled_oof_roc_auc'))}, AP {fmt(temporal_best_future.get('pooled_oof_average_precision'))}; shifted-label null p={fmt(temporal_shift_null.get('empirical_p_ge_observed'))}, null p95={fmt(temporal_shift_null.get('shift_null_auc_p95'))}"
-    )
-    report_lines.append(
-        f"- Temporal directionality reversed future8 {temporal_best_reversed.get('model', 'NA')}: AUC {fmt(temporal_best_reversed.get('pooled_oof_roc_auc'))}, AP {fmt(temporal_best_reversed.get('pooled_oof_average_precision'))}; past8 positives are only {fmt(temporal_best_past.get('n_positive_scored'), 0)} scored rows."
-    )
-    for row in temporal_future_tests[:5]:
-        report_lines.append(
-            f"- Temporal future8 feature {row.get('feature')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, oriented AUC {fmt(row.get('oriented_auc'))}, MW p={fmt(row.get('mannwhitney_p'))}"
-        )
-    for row in temporal_timing_corr[:5]:
-        report_lines.append(
-            f"- Temporal timing correlation {row.get('feature')} vs {row.get('timing_target')}: rho={fmt(row.get('spearman_rho'))}, p={fmt(row.get('p_value'))}, n={fmt(row.get('n'), 0)}"
-        )
     for row in balanced_future_acq_resid[:6]:
         report_lines.append(
             f"- Acquisition-context residual feature {row.get('feature')}: median positive-negative {fmt(row.get('median_positive_minus_negative'))}, AUC {fmt(row.get('oriented_auc'))}, MW p={fmt(row.get('mannwhitney_p'))}"
@@ -1776,20 +1762,6 @@ def main() -> None:
             "top_feature_tests": masked_video_feature_tests,
             "cluster_summary": masked_video_clusters,
             "guardrail": first_summary(masked_video_embedding, "guardrail"),
-        },
-        "temporal_directionality_physics_audit": {
-            "n_roi": first_summary(temporal_directionality, "n_roi"),
-            "n_cycles": first_summary(temporal_directionality, "n_cycles"),
-            "n_physics_features": first_summary(temporal_directionality, "n_physics_features"),
-            "target_label_counts": first_summary(temporal_directionality, "target_label_counts", {}),
-            "best_future8_model": temporal_best_future,
-            "best_past8_model": temporal_best_past,
-            "best_reversed_future8_model": temporal_best_reversed,
-            "shift_null_summary": temporal_shift_null,
-            "top_future8_feature_tests": temporal_future_tests,
-            "top_past8_feature_tests": temporal_past_tests,
-            "top_timing_correlations": temporal_timing_corr,
-            "guardrail": first_summary(temporal_directionality, "guardrail"),
         },
         "active_learning_qc_prioritization": {
             "n_candidate_rows": first_summary(active_learning_qc, "n_candidate_rows"),
