@@ -4748,3 +4748,34 @@ Interpretation: ROI rollout/temporal-energy features are strongly coupled to HDF
 
 Guardrail: this audit uses automatic ROI crops and source-level HDF5 timing provenance. It does not assign manual QC labels, validate degradation mechanisms, or calibrate diffusion.
 
+## 2026-05-24 Timebase-Aware Transport Mechanism Audit
+
+Added `scripts/tier4_timebase_aware_transport_mechanism_audit.py` and ran it on Isambard to join source-level HDF5 timebase provenance onto the 128-row source-balanced transport/front dossier. This tests whether transport, front-kinetic, and observable-tail descriptors stay meaningful once source timing quality is accounted for.
+
+Outputs:
+
+- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit`
+- `derived_local/timebase_aware_transport_mechanism_audit`
+- `timebase_aware_transport_mechanism_joined.csv`
+- `timebase_aware_transport_mechanism_target_tests.csv`
+- `timebase_aware_transport_mechanism_timebase_correlations.csv`
+- `timebase_aware_transport_mechanism_class_tests.csv`
+- `timebase_aware_transport_mechanism_model_metrics.csv`
+- `timebase_aware_transport_mechanism_model_deltas.csv`
+- `timebase_aware_transport_mechanism_predictions.csv`
+- `timebase_aware_transport_mechanism_summary.json`
+
+Results:
+
+- The joined audit covers 128 ROI rows, 64 cycles, and 14 sources.
+- Timebase classes are 38 strict rows, 34 pause-heavy rows, and 56 timebase-unknown rows.
+- Final verdict: `transport_physics_signal_source_transferable`.
+- Leave-cycle future16 models keep meaningful signal: `transport_scores` AUC 0.698/AP 0.745, `transport_plus_physics` AUC 0.685/AP 0.741, and `physics_family` AUC 0.605/AP 0.633.
+- Leave-source future16 transport ranking remains usable, but the physics family alone does not generalize as well: `transport_scores` AUC 0.629/AP 0.700, `transport_plus_physics` AUC 0.569/AP 0.660, `physics_family` AUC 0.496/AP 0.534, `physics_residual` AUC 0.437/AP 0.500, and `timebase_context` AUC 0.373/AP 0.504.
+- The strongest timebase entanglement appears in review/QC descriptors rather than the transport score itself: `visual_artifact_risk_score` correlates with `h5_dt_max_to_median_ratio` at rho 0.784 and with `strict_timebase_fraction` at rho -0.698; `observable_tail_frame_diff_energy` also correlates with `h5_dt_max_to_median_ratio` at rho 0.484.
+- Source-heldout deltas still exist for the physics-aware feature family, but they do not turn the raw physics descriptors into a stronger transfer model than the transport review score baseline.
+
+Interpretation: the source-balanced transport/front dossier does carry transferable review signal, which is useful for prioritization and candidate mechanism ranking. However, the physics-family and residual-physics descriptors are still weaker as source-heldout predictors than the transport score itself, and the visual/tail-energy features remain entangled with HDF5 timing quality. That makes this a review-grade mechanism atlas, not a calibrated diffusion or phase-velocity estimator.
+
+Guardrail: this audit uses automatic particle-region crops and source-level HDF5 timing provenance. It does not assign manual QC labels, validate degradation mechanisms, or calibrate diffusion.
+
