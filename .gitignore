@@ -22,3 +22,10 @@ derived/
 # Conda/pip
 *.conda
 echemDF_full/echemDF_partial_*.csv
+
+# Local/cluster derived outputs
+derived_local/
+
+# Presentation/manuscript drafts
+Battery_Degradation_Project/
+agentic_research_update_tmp/
