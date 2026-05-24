@@ -145,6 +145,7 @@ This report consolidates the Alek_Jiho NMC charge/discharge photometry analyses 
 - Pre-event physics-mode taxonomy clusters source-residual front/diffusion/heterogeneity features into k=2 broad states but finds no strong near-pre enrichment (best Fisher p=0.689), so continuous front/diffusion clocks remain more informative than coarse modes for this cohort.
 - Source-balanced ROI sequence export converts that manifest into 96 particle-region crop tensors across 48 cycles and 14 sources with 0 export failures; the fast rollout audit finds strongest future16 ROI signal in roi_norm_mean_delta_last_minus_first at AUC 0.626, while prediction-error features are highly source-structured.
 - Source-balanced sequence source-control audit stress-tests those rollout features across 96 rows and 14 sources; verdict `not_source_controlled_predictive;use_for_review_negative_controls` with 0 strict scalar rows and 0 source-heldout model rows above AUC 0.65.
+- Timebase-aware front/kinetic concordance audit joins HDF5 timing quality to the 128-row source-balanced front dossier; verdict `front_kinetic_signal_source_transferable` with timebase classes {'pause_heavy': 34, 'strict': 38, 'unknown': 56} and source-heldout front delta AUC 0.568.
 - A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across 96 ROI tensors; top future16 mask/front proxy is masked_minus_background_mean_slope at AUC 0.690/AP 0.696, but source eta2 is 0.634.
 - A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.631/AP 0.634, and best within-source-rank proxy is front_radius_q80_slope_px_per_norm_time at AUC 0.656/AP 0.677.
 - A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC 0.602/AP 0.581, but leave-source future16 drops to AUC 0.375, marking source transfer as the main failure mode.
@@ -1415,6 +1416,44 @@ Interpretation: the stricter model is above random but not deployable. QC/acquis
 - Source-control model delta future_any_drop_within_8cycles cycleNo rollout_raw: AUC 0.660, delta vs context 0.189, AP 0.507
 - Source-control model delta future_any_drop_within_16cycles source_stem rollout_raw_plus_context: AUC 0.604, delta vs context 0.171, AP 0.639
 - Guardrail: This audit stress-tests source-balanced rollout descriptors under source/cycle controls and weak future-drop labels. Within-source transforms are useful for review and negative-control design, but are not prospective source-transfer models. Results do not assign manual QC labels, validate degradation mechanisms, or calibrate diffusion.
+
+
+## Timebase-Aware Front/Kinetic Concordance Audit
+
+- Rows/cycles/sources: 128 / 64 / 14
+- Timebase class counts: {'pause_heavy': 34, 'strict': 38, 'unknown': 56}
+- Verdict: front_kinetic_signal_source_transferable
+- Best strict/pause-heavy/source-heldout AUCs: 1.000 / 1.000 / 0.568
+- Timebase correlation visual_artifact_risk_score vs h5_dt_max_to_median_ratio: rho 0.784, p 1.969e-04, n 17
+- Timebase correlation visual_review_score vs roi_elapsed_to_h5_max_abs_error: rho 0.713, p 1.318e-03, n 17
+- Timebase correlation visual_artifact_risk_score vs strict_timebase_fraction: rho -0.698, p 1.849e-03, n 17
+- Timebase correlation visual_sanity_score vs h5_dt_max_to_median_ratio: rho -0.693, p 2.033e-03, n 17
+- Timebase correlation visual_artifact_risk_score vs roi_elapsed_to_h5_max_abs_error: rho 0.597, p 1.134e-02, n 17
+- Target test all_rows near_vs_any_non_near visual_review_score raw: AUC 0.905, AP 0.970
+- Target test all_rows near_vs_any_non_near masked_minus_bg_slope raw: AUC 0.816, AP 0.634
+- Target test all_rows near_vs_any_non_near visual_artifact_risk_score source_residual: AUC 0.800, AP 0.950
+- Target test all_rows near_vs_any_non_near visual_sanity_score within_source_rank: AUC 0.795, AP 0.917
+- Target test all_rows near_vs_any_non_near visual_review_score within_source_rank: AUC 0.795, AP 0.917
+- Source-heldout model delta near_vs_any_non_near front_plus_kinetic_plus_timebase on cycleNo: AUC 0.798, delta vs acquisition 0.192, AP 0.661
+- Source-heldout model delta near_vs_any_non_near kinetic_family on cycleNo: AUC 0.778, delta vs acquisition 0.172, AP 0.606
+- Source-heldout model delta near_vs_any_non_near front_plus_kinetic_plus_qc on cycleNo: AUC 0.752, delta vs acquisition 0.145, AP 0.629
+- Source-heldout model delta near_vs_any_non_near front_plus_kinetic on cycleNo: AUC 0.733, delta vs acquisition 0.126, AP 0.568
+- Source-heldout model delta near_vs_any_non_near concordance_score on cycleNo: AUC 0.709, delta vs acquisition 0.103, AP 0.475
+- Guardrail: This audit tests whether source-balanced front/kinetic candidates are stable under HDF5 timebase quality classes. It uses automatic particle-region crops and source-level timing provenance, not manual particle labels, prospective validation, or calibrated diffusion.
+
+## Source-Balanced Timebase-Corrected Front Fit
+
+- Rows / successful fits: 128 / 128
+- Timing dt max/median p90: 1.111
+- Thr50 median apparent D / median R2: -3.842e-07 / 0.056
+- Guardrail: Timebase-corrected front fits are apparent kinematics for ranking/diagnosis. They are not calibrated diffusion coefficients.
+
+## Source-Balanced Segmented Timebase Front Fit
+
+- Rows / successful fits: 128 / 128
+- Min window points: 24
+- Thr50 median apparent D / median R2: 2.800e-06 / 0.813
+- Guardrail: Segmented timebase fits select the best linear window; this is for diagnosis/ranking and is not a calibrated diffusion claim.
 
 ## Source-Balanced Expansion Transport/Front Audit
 

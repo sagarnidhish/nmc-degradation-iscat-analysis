@@ -192,6 +192,11 @@ def main() -> None:
     source_balanced_sequences = read_json(derived / "source_balanced_roi_sequences" / "selected_roi_sequence_summary.json")
     source_balanced_sequence_rollout = read_json(derived / "source_balanced_sequence_rollout_audit" / "source_balanced_sequence_rollout_summary.json")
     source_balanced_sequence_source_control = read_json(derived / "source_balanced_sequence_source_control_audit" / "source_balanced_sequence_source_control_summary.json")
+    source_balanced_timebase_aware_front_kinetic = read_json(derived / "timebase_aware_front_kinetic_concordance_audit" / "timebase_aware_front_kinetic_concordance_summary.json")
+    source_balanced_timebase_corrected_front_fit = read_json(derived / "source_balanced_timebase_corrected_front_fit_v1" / "timebase_corrected_front_fit_summary.json")
+    source_balanced_segmented_timebase_front_fit = read_json(derived / "source_balanced_segmented_timebase_front_fit_v1" / "segmented_timebase_front_fit_summary.json")
+    source_balanced_timebase_corrected_rois = read_csv(derived / "source_balanced_timebase_corrected_front_fit_v1" / "timebase_corrected_front_fit_rois.csv")
+    source_balanced_segmented_timebase_rois = read_csv(derived / "source_balanced_segmented_timebase_front_fit_v1" / "segmented_timebase_front_fit_rois.csv")
     source_balanced_expansion_transport_front = read_json(derived / "source_balanced_expansion_transport_front_audit" / "source_balanced_expansion_transport_front_summary.json")
     source_balanced_mask_front = read_json(derived / "source_balanced_mask_front_sanity_audit" / "source_balanced_mask_front_summary.json")
     source_balanced_mask_front_source_residual = read_json(derived / "source_balanced_mask_front_source_residual_audit" / "source_balanced_mask_front_source_residual_summary.json")
@@ -476,8 +481,25 @@ def main() -> None:
     source_balanced_source_control_scalars = top_items(first_summary(source_balanced_sequence_source_control, "top_source_stratified_scalars", []), 12)
     source_balanced_source_control_models = top_items(first_summary(source_balanced_sequence_source_control, "top_source_heldout_models", []), 12)
     source_balanced_source_control_deltas = top_items(first_summary(source_balanced_sequence_source_control, "top_model_deltas_vs_context", []), 12)
+    source_balanced_timebase_corrected_thr50_stats: Dict[str, Any] = {}
+    if not source_balanced_timebase_corrected_rois.empty and {"thr50_apparent_D_um2_per_s", "thr50_radius2_slope_r2", "timing_dt_max_to_median_ratio"}.issubset(source_balanced_timebase_corrected_rois.columns):
+        source_balanced_timebase_corrected_thr50_stats = {
+            "median_apparent_D": float(pd.to_numeric(source_balanced_timebase_corrected_rois["thr50_apparent_D_um2_per_s"], errors="coerce").median()),
+            "median_r2": float(pd.to_numeric(source_balanced_timebase_corrected_rois["thr50_radius2_slope_r2"], errors="coerce").median()),
+            "timing_dt_max_to_median_ratio_p90": float(pd.to_numeric(source_balanced_timebase_corrected_rois["timing_dt_max_to_median_ratio"], errors="coerce").quantile(0.9)),
+        }
+    source_balanced_segmented_timebase_thr50_stats: Dict[str, Any] = {}
+    if not source_balanced_segmented_timebase_rois.empty and {"thr50_seg_apparent_D_um2_per_s", "thr50_seg_r2"}.issubset(source_balanced_segmented_timebase_rois.columns):
+        source_balanced_segmented_timebase_thr50_stats = {
+            "median_apparent_D": float(pd.to_numeric(source_balanced_segmented_timebase_rois["thr50_seg_apparent_D_um2_per_s"], errors="coerce").median()),
+            "median_r2": float(pd.to_numeric(source_balanced_segmented_timebase_rois["thr50_seg_r2"], errors="coerce").median()),
+        }
     source_balanced_source_control_best_scalar = source_balanced_source_control_scalars[0] if source_balanced_source_control_scalars else {}
     source_balanced_source_control_best_model = source_balanced_source_control_models[0] if source_balanced_source_control_models else {}
+    source_balanced_timebase_aware_front_kinetic_top_timebase = top_items(first_summary(source_balanced_timebase_aware_front_kinetic, "top_timebase_correlations", []), 6)
+    source_balanced_timebase_aware_front_kinetic_top_target = top_items(first_summary(source_balanced_timebase_aware_front_kinetic, "top_target_tests", []), 6)
+    source_balanced_timebase_aware_front_kinetic_top_class = top_items(first_summary(source_balanced_timebase_aware_front_kinetic, "top_timebase_class_features", []), 6)
+    source_balanced_timebase_aware_front_kinetic_top_models = top_items(first_summary(source_balanced_timebase_aware_front_kinetic, "top_model_deltas", []), 6)
     source_balanced_rollout_top16 = next((r for r in source_balanced_rollout_roi_tests if r.get("target") == "future_any_drop_within_16cycles"), {})
     source_balanced_rollout_top8 = next((r for r in source_balanced_rollout_roi_tests if r.get("target") == "future_any_drop_within_8cycles"), {})
     source_balanced_expansion_transport_tests = top_items(first_summary(source_balanced_expansion_transport_front, "top_feature_tests", []), 120)
@@ -1225,6 +1247,7 @@ def main() -> None:
         f"- Pre-event physics-mode taxonomy clusters source-residual front/diffusion/heterogeneity features into k={fmt(first_summary(source_balanced_pre_event_physics_modes, 'chosen_k'), 0)} broad states but finds no strong near-pre enrichment (best Fisher p={fmt(source_balanced_pre_event_mode_enrich_best.get('fisher_p'))}), so continuous front/diffusion clocks remain more informative than coarse modes for this cohort.",
         f"- Source-balanced ROI sequence export converts that manifest into {first_summary(source_balanced_sequences, 'n_roi_sequences', 0)} particle-region crop tensors across {first_summary(source_balanced_sequences, 'n_cycles', 0)} cycles and {first_summary(source_balanced_sequences, 'n_sources', 0)} sources with {first_summary(source_balanced_sequences, 'n_failed', 0)} export failures; the fast rollout audit finds strongest future16 ROI signal in {source_balanced_rollout_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_rollout_top16.get('oriented_auc'))}, while prediction-error features are highly source-structured.",
         f"- Source-balanced sequence source-control audit stress-tests those rollout features across {first_summary(source_balanced_sequence_source_control, 'n_rows', 0)} rows and {first_summary(source_balanced_sequence_source_control, 'n_sources', 0)} sources; verdict `{first_summary(source_balanced_sequence_source_control, 'verdict', 'missing')}` with {first_summary(source_balanced_sequence_source_control, 'n_strict_scalar_rows', 0)} strict scalar rows and {first_summary(source_balanced_sequence_source_control, 'n_source_model_auc_ge_065', 0)} source-heldout model rows above AUC 0.65.",
+        f"- Timebase-aware front/kinetic concordance audit joins HDF5 timing quality to the 128-row source-balanced front dossier; verdict `{first_summary(source_balanced_timebase_aware_front_kinetic, 'verdict', 'missing')}` with timebase classes {first_summary(source_balanced_timebase_aware_front_kinetic, 'timebase_class_counts', {})} and source-heldout front delta AUC {fmt(first_summary(source_balanced_timebase_aware_front_kinetic, 'best_source_heldout_front_delta_auc'))}.",
         f"- A source-balanced mask/front sanity audit adds crop-local particle masks, centroid stability, radial front proxies, and apparent q70 radius-squared slopes across {first_summary(source_balanced_mask_front, 'n_roi_sequences', 0)} ROI tensors; top future16 mask/front proxy is {source_balanced_mask_front_top16.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_top16.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_top16.get('average_precision'))}, but source eta2 is {fmt(source_balanced_mask_front_top16.get('source_eta2'))}.",
         f"- A source-residual mask/front audit tests whether those crop-local descriptors survive source structure: best source-residual future16 proxy is {source_balanced_mask_front_resid_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_resid_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_resid_best.get('average_precision'))}, and best within-source-rank proxy is {source_balanced_mask_front_rank_best.get('feature', 'NA')} at AUC {fmt(source_balanced_mask_front_rank_best.get('oriented_auc'))}/AP {fmt(source_balanced_mask_front_rank_best.get('average_precision'))}.",
         f"- A source-balanced residual dictionary learns label-free next-frame residual bases on the same 96 crop tensors; residual_dictionary leave-cycle future16 reaches AUC {fmt(source_balanced_resdict_cycle16.get('roc_auc'))}/AP {fmt(source_balanced_resdict_cycle16.get('average_precision'))}, but leave-source future16 drops to AUC {fmt(source_balanced_resdict_source16.get('roc_auc'))}, marking source transfer as the main failure mode.",
@@ -2373,6 +2396,46 @@ def main() -> None:
             f"- Source-control model delta {row.get('target')} {row.get('group_col')} {row.get('feature_set')}: AUC {fmt(row.get('roc_auc'))}, delta vs context {fmt(row.get('delta_roc_auc_vs_context'))}, AP {fmt(row.get('average_precision'))}"
         )
     report_lines.append(f"- Guardrail: {first_summary(source_balanced_sequence_source_control, 'guardrail', 'Source-balanced sequence source-control audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Timebase-Aware Front/Kinetic Concordance Audit",
+        "",
+        f"- Rows/cycles/sources: {first_summary(source_balanced_timebase_aware_front_kinetic, 'n_rows', 0)} / {first_summary(source_balanced_timebase_aware_front_kinetic, 'n_cycles', 0)} / {first_summary(source_balanced_timebase_aware_front_kinetic, 'n_sources', 0)}",
+        f"- Timebase class counts: {first_summary(source_balanced_timebase_aware_front_kinetic, 'timebase_class_counts', {})}",
+        f"- Verdict: {first_summary(source_balanced_timebase_aware_front_kinetic, 'verdict', 'missing')}",
+        f"- Best strict/pause-heavy/source-heldout AUCs: {fmt(first_summary(source_balanced_timebase_aware_front_kinetic, 'best_strict_timebase_target_auc'))} / {fmt(first_summary(source_balanced_timebase_aware_front_kinetic, 'best_pause_heavy_target_auc'))} / {fmt(first_summary(source_balanced_timebase_aware_front_kinetic, 'best_source_heldout_front_delta_auc'))}",
+    ]
+    for row in source_balanced_timebase_aware_front_kinetic_top_timebase[:5]:
+        report_lines.append(
+            f"- Timebase correlation {row.get('feature')} vs {row.get('timebase_feature')}: rho {fmt(row.get('spearman_rho'))}, p {fmt(row.get('p_value'))}, n {fmt(row.get('n'), 0)}"
+        )
+    for row in source_balanced_timebase_aware_front_kinetic_top_target[:5]:
+        report_lines.append(
+            f"- Target test {row.get('scenario')} {row.get('target')} {row.get('feature')} {row.get('transform')}: AUC {fmt(row.get('oriented_auc'))}, AP {fmt(row.get('average_precision'))}"
+        )
+    for row in source_balanced_timebase_aware_front_kinetic_top_models[:5]:
+        report_lines.append(
+            f"- Source-heldout model delta {row.get('target')} {row.get('feature_set')} on {row.get('group_col')}: AUC {fmt(row.get('roc_auc'))}, delta vs acquisition {fmt(row.get('delta_roc_auc_vs_acquisition'))}, AP {fmt(row.get('average_precision'))}"
+        )
+    report_lines.append(f"- Guardrail: {first_summary(source_balanced_timebase_aware_front_kinetic, 'guardrail', 'Timebase-aware front/kinetic audit unavailable.')}")
+
+    report_lines += [
+        "",
+        "## Source-Balanced Timebase-Corrected Front Fit",
+        "",
+        f"- Rows / successful fits: {first_summary(source_balanced_timebase_corrected_front_fit, 'n_rows', 0)} / {first_summary(source_balanced_timebase_corrected_front_fit, 'n_ok', 0)}",
+        f"- Timing dt max/median p90: {fmt(first_summary(source_balanced_timebase_corrected_front_fit, 'timing_dt_max_to_median_ratio_p90'))}",
+        f"- Thr50 median apparent D / median R2: {fmt(source_balanced_timebase_corrected_thr50_stats.get('median_apparent_D'))} / {fmt(source_balanced_timebase_corrected_thr50_stats.get('median_r2'))}",
+        f"- Guardrail: {first_summary(source_balanced_timebase_corrected_front_fit, 'guardrail', 'Timebase-corrected front fit unavailable.')}",
+        "",
+        "## Source-Balanced Segmented Timebase Front Fit",
+        "",
+        f"- Rows / successful fits: {first_summary(source_balanced_segmented_timebase_front_fit, 'n_rows', 0)} / {first_summary(source_balanced_segmented_timebase_front_fit, 'n_ok', 0)}",
+        f"- Min window points: {first_summary(source_balanced_segmented_timebase_front_fit, 'min_window_points', 0)}",
+        f"- Thr50 median apparent D / median R2: {fmt(source_balanced_segmented_timebase_thr50_stats.get('median_apparent_D'))} / {fmt(source_balanced_segmented_timebase_thr50_stats.get('median_r2'))}",
+        f"- Guardrail: {first_summary(source_balanced_segmented_timebase_front_fit, 'guardrail', 'Segmented timebase front fit unavailable.')}",
+    ]
 
     report_lines += [
         "",
@@ -3985,6 +4048,37 @@ def main() -> None:
             "top_source_heldout_models": source_balanced_source_control_models,
             "top_model_deltas_vs_context": source_balanced_source_control_deltas,
             "guardrail": first_summary(source_balanced_sequence_source_control, "guardrail"),
+        },
+        "timebase_aware_front_kinetic_concordance_audit": {
+            "n_rows": first_summary(source_balanced_timebase_aware_front_kinetic, "n_rows"),
+            "n_cycles": first_summary(source_balanced_timebase_aware_front_kinetic, "n_cycles"),
+            "n_sources": first_summary(source_balanced_timebase_aware_front_kinetic, "n_sources"),
+            "timebase_class_counts": first_summary(source_balanced_timebase_aware_front_kinetic, "timebase_class_counts"),
+            "best_strict_timebase_target_auc": first_summary(source_balanced_timebase_aware_front_kinetic, "best_strict_timebase_target_auc"),
+            "best_pause_heavy_target_auc": first_summary(source_balanced_timebase_aware_front_kinetic, "best_pause_heavy_target_auc"),
+            "best_source_heldout_front_delta_auc": first_summary(source_balanced_timebase_aware_front_kinetic, "best_source_heldout_front_delta_auc"),
+            "verdict": first_summary(source_balanced_timebase_aware_front_kinetic, "verdict"),
+            "top_timebase_correlations": source_balanced_timebase_aware_front_kinetic_top_timebase,
+            "top_target_tests": source_balanced_timebase_aware_front_kinetic_top_target,
+            "top_timebase_class_features": source_balanced_timebase_aware_front_kinetic_top_class,
+            "top_model_deltas": source_balanced_timebase_aware_front_kinetic_top_models,
+            "guardrail": first_summary(source_balanced_timebase_aware_front_kinetic, "guardrail"),
+        },
+        "source_balanced_timebase_corrected_front_fit": {
+            "n_rows": first_summary(source_balanced_timebase_corrected_front_fit, "n_rows"),
+            "n_ok": first_summary(source_balanced_timebase_corrected_front_fit, "n_ok"),
+            "timing_dt_max_to_median_ratio_p90": first_summary(source_balanced_timebase_corrected_front_fit, "timing_dt_max_to_median_ratio_p90"),
+            "thr50_median_apparent_D": source_balanced_timebase_corrected_thr50_stats.get("median_apparent_D"),
+            "thr50_median_r2": source_balanced_timebase_corrected_thr50_stats.get("median_r2"),
+            "guardrail": first_summary(source_balanced_timebase_corrected_front_fit, "guardrail"),
+        },
+        "source_balanced_segmented_timebase_front_fit": {
+            "n_rows": first_summary(source_balanced_segmented_timebase_front_fit, "n_rows"),
+            "n_ok": first_summary(source_balanced_segmented_timebase_front_fit, "n_ok"),
+            "min_window_points": first_summary(source_balanced_segmented_timebase_front_fit, "min_window_points"),
+            "thr50_median_apparent_D": source_balanced_segmented_timebase_thr50_stats.get("median_apparent_D"),
+            "thr50_median_r2": source_balanced_segmented_timebase_thr50_stats.get("median_r2"),
+            "guardrail": first_summary(source_balanced_segmented_timebase_front_fit, "guardrail"),
         },
         "source_balanced_expansion_transport_front_audit": {
             "n_input_rows": first_summary(source_balanced_expansion_transport_front, "n_input_rows"),

@@ -1,6 +1,6 @@
 # Objectives And Observations
 
-Last updated: 2026-05-22
+Last updated: 2026-05-25
 
 ## Working Objective
 
@@ -4778,4 +4778,53 @@ Results:
 Interpretation: the source-balanced transport/front dossier does carry transferable review signal, which is useful for prioritization and candidate mechanism ranking. However, the physics-family and residual-physics descriptors are still weaker as source-heldout predictors than the transport score itself, and the visual/tail-energy features remain entangled with HDF5 timing quality. That makes this a review-grade mechanism atlas, not a calibrated diffusion or phase-velocity estimator.
 
 Guardrail: this audit uses automatic particle-region crops and source-level HDF5 timing provenance. It does not assign manual QC labels, validate degradation mechanisms, or calibrate diffusion.
+
+## 2026-05-25 Source-Balanced Timebase Front-Fit Result
+
+Added and ran two new separate Isambard folders for the source-balanced pre-event ROI cohort:
+
+- `source_balanced_timebase_corrected_front_fit_v1`
+- `source_balanced_segmented_timebase_front_fit_v1`
+
+Commands:
+
+- `scripts/tier5_timebase_corrected_front_fit.py --manifest-csv /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1`
+- `scripts/tier5_segmented_timebase_front_fit.py --manifest-csv /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_segmented_timebase_front_fit_v1`
+
+Results:
+
+- Both runs cover 128 ROI rows and succeed for all 128.
+- The direct timebase-corrected global fit has timing dt max/median p90 of 1.111 and a weak thr50 median apparent-D of -3.84e-07 um2/s with median thr50 R2 of 0.056.
+- The segmented-window fit keeps all 128 rows, searches windows of at least 24 points, and recovers a much cleaner thr50 median apparent-D of 2.80e-06 um2/s with median thr50 R2 of 0.813.
+- Interpretation: the global radius^2-vs-real-time fit is still too noisy to act as a stable transport estimate, but segmented windows expose a clearer apparent front interval structure. These remain apparent optical-front kinematics, not calibrated diffusion coefficients.
+- The direct-fit loader had a 2D `camera_timing` bug on first run; it was fixed and rerun before the results were recorded.
+- The synthesis report and machine-readable summary were updated to include both new folders.
+
+## 2026-05-25 Timebase-Aware Front/Kinetic Concordance Audit
+
+Added `scripts/tier4_timebase_aware_front_kinetic_concordance_audit.py` and ran it on Isambard in a fresh remote folder under `/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out`, then synced the compact outputs back to `derived_local/timebase_aware_front_kinetic_concordance_audit`.
+
+Outputs:
+
+- `timebase_aware_front_kinetic_concordance_joined.csv`
+- `timebase_aware_front_kinetic_concordance_target_tests.csv`
+- `timebase_aware_front_kinetic_concordance_timebase_correlations.csv`
+- `timebase_aware_front_kinetic_concordance_class_tests.csv`
+- `timebase_aware_front_kinetic_concordance_model_metrics.csv`
+- `timebase_aware_front_kinetic_concordance_model_deltas.csv`
+- `timebase_aware_front_kinetic_concordance_predictions.csv`
+- `timebase_aware_front_kinetic_concordance_summary.json`
+- `README.md`
+
+Results:
+
+- The joined audit covers 128 ROI rows, 64 cycles, and 14 sources.
+- Timebase classes split into 38 strict rows, 34 pause-heavy rows, and 56 unknown rows.
+- Final verdict: `front_kinetic_signal_source_transferable`.
+- Strongest source-heldout front delta AUC is 0.568, which is below the earlier source-control threshold but above random, so front/kinetic signal survives source splitting more clearly than the prior rollout-only source-control audit.
+- The strongest source-heldout model family is `front_plus_kinetic_plus_timebase` for near-vs-any-non-near, with cycle-heldout AUC 0.798 and AP 0.661, delta AUC +0.192 over acquisition context.
+- The strongest timebase entanglement is in review/QC descriptors rather than the transport score itself: `visual_artifact_risk_score` vs `h5_dt_max_to_median_ratio` rho 0.784, `visual_review_score` vs `roi_elapsed_to_h5_max_abs_error` rho 0.713, and `visual_artifact_risk_score` vs `strict_timebase_fraction` rho -0.698.
+- Target tests show the strongest kinetics/front signal on near-vs-far pre-event and near-vs-mid-pre comparisons, while source-heldout source-transfer remains weaker than cycle-heldout performance.
+
+Interpretation: the front/kinetic descriptors do carry transferable signal, but the strongest apparent timebase effects are still concentrated in review/QC features. This is useful for candidate ranking and guardrails, not for calibrated diffusion claims.
 
