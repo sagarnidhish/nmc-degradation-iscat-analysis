@@ -298,8 +298,8 @@ def tests(roi: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_physics_consistency_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_physics_consistency_audit")
     args = parser.parse_args()
 
     derived = Path(args.derived_dir)

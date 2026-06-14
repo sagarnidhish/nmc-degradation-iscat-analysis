@@ -38,9 +38,9 @@ def add_neighbor_deltas(local: pd.DataFrame) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--cycle-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv")
-    parser.add_argument("--echem-summary", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/echem_cycle_summary.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_local_window_scan")
+    parser.add_argument("--cycle-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv")
+    parser.add_argument("--echem-summary", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling/echem_cycle_summary.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/protocol_local_window_scan")
     parser.add_argument("--half-width", type=int, default=6)
     args = parser.parse_args()
 

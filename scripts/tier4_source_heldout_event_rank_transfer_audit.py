@@ -208,8 +208,8 @@ def summarize_predictions(df: pd.DataFrame, target: str, score_col: str) -> Dict
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit")
     parser.add_argument("--max-features", type=int, default=12)
     args = parser.parse_args()
 

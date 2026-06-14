@@ -92,10 +92,10 @@
   ],
   "near_fraction_tolerance": 0.1,
   "outputs": {
-    "evidence_statements": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit/calibration_provenance_evidence_statements.csv",
-    "file_inventory": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit/calibration_provenance_file_inventory.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit/README.md",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit/calibration_provenance_summary.json"
+    "evidence_statements": "/scratch/<account>/<username>/Alek_Jiho/derived/calibration_provenance_evidence_audit/calibration_provenance_evidence_statements.csv",
+    "file_inventory": "/scratch/<account>/<username>/Alek_Jiho/derived/calibration_provenance_evidence_audit/calibration_provenance_file_inventory.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/calibration_provenance_evidence_audit/README.md",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/calibration_provenance_evidence_audit/calibration_provenance_summary.json"
   },
   "provenance_status": "slide_or_project_text_supported_but_raw_metadata_blocked",
   "statement_type_counts": {

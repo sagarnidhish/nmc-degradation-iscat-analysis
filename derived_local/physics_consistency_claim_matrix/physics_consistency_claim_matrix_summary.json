@@ -15,11 +15,11 @@
   "n_cycles": 11,
   "n_roi": 52,
   "outputs": {
-    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix/physics_consistency_cycle_summary.csv",
-    "event_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix/physics_consistency_event_tests.csv",
-    "matrix": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix/physics_consistency_claim_matrix.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix/physics_consistency_claim_matrix_summary.json",
-    "tier_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix/physics_consistency_tier_summary.csv"
+    "cycle_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/physics_consistency_claim_matrix/physics_consistency_cycle_summary.csv",
+    "event_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/physics_consistency_claim_matrix/physics_consistency_event_tests.csv",
+    "matrix": "/scratch/<account>/<username>/Alek_Jiho/derived/physics_consistency_claim_matrix/physics_consistency_claim_matrix.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/physics_consistency_claim_matrix/physics_consistency_claim_matrix_summary.json",
+    "tier_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/physics_consistency_claim_matrix/physics_consistency_tier_summary.csv"
   },
   "tier_counts": {
     "cross_modal_high_priority": 2,

@@ -77,6 +77,6 @@
   "guardrail": "Sequences are fixed padded crops around automatically selected ROIs; they are particle-region model inputs, not manual annotations.",
   "n_roi_sequences": 48,
   "output_size": 96,
-  "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/transfer_ranked_roi_table.csv",
+  "roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/transfer_ranked_roi_table.csv",
   "samples_per_roi": 96
 }

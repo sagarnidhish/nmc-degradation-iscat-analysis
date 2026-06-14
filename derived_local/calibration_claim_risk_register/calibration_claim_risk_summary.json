@@ -72,8 +72,8 @@
   "n_claim_families": 11,
   "n_source_tables_present": 11,
   "outputs": {
-    "register": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_claim_risk_register/calibration_claim_risk_register.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_claim_risk_register/calibration_claim_risk_summary.json"
+    "register": "/scratch/<account>/<username>/Alek_Jiho/derived/calibration_claim_risk_register/calibration_claim_risk_register.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/calibration_claim_risk_register/calibration_claim_risk_summary.json"
   },
   "risk_level_counts": {
     "high": 3,

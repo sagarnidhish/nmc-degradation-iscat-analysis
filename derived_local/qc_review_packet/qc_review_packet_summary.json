@@ -4,8 +4,8 @@
   "n_control_candidates": 14,
   "n_event_candidates": 16,
   "outputs": {
-    "manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/qc_review_packet/qc_review_manifest.csv",
-    "report": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/qc_review_packet/QC_REVIEW_PACKET.md"
+    "manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/qc_review_packet/qc_review_manifest.csv",
+    "report": "/scratch/<account>/<username>/Alek_Jiho/derived/qc_review_packet/QC_REVIEW_PACKET.md"
   },
   "top_candidates": [
     {
@@ -28,9 +28,9 @@
       "qc_reason": "event_roi;hard_rollout;diffusion_proxy;conditioned_front_direction;",
       "roi_id": "cycle60_rank3_obj9",
       "roi_norm_mean_delta_protocol_residual": 0.0029702592449481,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle60_rank3_obj9.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle60_rank3_obj9.png",
       "rollout_mobility_difficulty_score": 2.846153846153846,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle60_rank3_obj9_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle60_rank3_obj9_dmd_rollout.png",
       "threshold_robust_diffusion_score": 1.4423076923076923,
       "threshold_robust_phase_score": 0.6057692307692307
     },
@@ -54,9 +54,9 @@
       "qc_reason": "event_roi;hard_rollout;phase_front;diffusion_proxy;conditioned_optical_shift;",
       "roi_id": "cycle156_rank7_obj27",
       "roi_norm_mean_delta_protocol_residual": 0.0103061226079044,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle156_rank7_obj27.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle156_rank7_obj27.png",
       "rollout_mobility_difficulty_score": 3.019230769230769,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle156_rank7_obj27_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle156_rank7_obj27_dmd_rollout.png",
       "threshold_robust_diffusion_score": 0.9807692307692308,
       "threshold_robust_phase_score": 0.701923076923077
     },
@@ -80,9 +80,9 @@
       "qc_reason": "event_roi;hard_rollout;phase_front;conditioned_optical_shift;",
       "roi_id": "cycle156_rank2_obj2",
       "roi_norm_mean_delta_protocol_residual": 0.0055542242595729,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle156_rank2_obj2.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle156_rank2_obj2.png",
       "rollout_mobility_difficulty_score": 2.865384615384616,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle156_rank2_obj2_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle156_rank2_obj2_dmd_rollout.png",
       "threshold_robust_diffusion_score": 0.6730769230769231,
       "threshold_robust_phase_score": 0.7788461538461539
     },
@@ -106,9 +106,9 @@
       "qc_reason": "event_roi;hard_rollout;phase_front;conditioned_front_direction;conditioned_optical_shift;",
       "roi_id": "cycle60_rank2_obj2",
       "roi_norm_mean_delta_protocol_residual": 0.0042428109603221,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle60_rank2_obj2.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle60_rank2_obj2.png",
       "rollout_mobility_difficulty_score": 2.307692307692308,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle60_rank2_obj2_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle60_rank2_obj2_dmd_rollout.png",
       "threshold_robust_diffusion_score": 0.5576923076923077,
       "threshold_robust_phase_score": 0.9134615384615384
     },
@@ -132,9 +132,9 @@
       "qc_reason": "event_roi;phase_front;diffusion_proxy;conditioned_optical_shift;",
       "roi_id": "cycle156_rank1_obj1",
       "roi_norm_mean_delta_protocol_residual": -0.0127029690077724,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle156_rank1_obj1.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle156_rank1_obj1.png",
       "rollout_mobility_difficulty_score": 1.826923076923077,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle156_rank1_obj1_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle156_rank1_obj1_dmd_rollout.png",
       "threshold_robust_diffusion_score": 1.3269230769230769,
       "threshold_robust_phase_score": 0.7596153846153847
     },
@@ -158,9 +158,9 @@
       "qc_reason": "event_roi;hard_rollout;conditioned_optical_shift;",
       "roi_id": "cycle156_rank5_obj4",
       "roi_norm_mean_delta_protocol_residual": 0.0060401921042976,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle156_rank5_obj4.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle156_rank5_obj4.png",
       "rollout_mobility_difficulty_score": 3.0384615384615383,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle156_rank5_obj4_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle156_rank5_obj4_dmd_rollout.png",
       "threshold_robust_diffusion_score": 0.0288461538461538,
       "threshold_robust_phase_score": 0.6826923076923077
     },
@@ -184,9 +184,9 @@
       "qc_reason": "hard_rollout;",
       "roi_id": "cycle62_rank3_obj9",
       "roi_norm_mean_delta_protocol_residual": -0.0037434281175023,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle62_rank3_obj9.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle62_rank3_obj9.png",
       "rollout_mobility_difficulty_score": 3.057692307692308,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle62_rank3_obj9_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle62_rank3_obj9_dmd_rollout.png",
       "threshold_robust_diffusion_score": 0.8076923076923077,
       "threshold_robust_phase_score": 0.5096153846153847
     },
@@ -210,9 +210,9 @@
       "qc_reason": "diffusion_proxy;conditioned_optical_shift;",
       "roi_id": "cycle157_rank2_obj2",
       "roi_norm_mean_delta_protocol_residual": -0.0101483748808666,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle157_rank2_obj2.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle157_rank2_obj2.png",
       "rollout_mobility_difficulty_score": 1.8846153846153844,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle157_rank2_obj2_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle157_rank2_obj2_dmd_rollout.png",
       "threshold_robust_diffusion_score": 0.9423076923076924,
       "threshold_robust_phase_score": 0.451923076923077
     },
@@ -236,9 +236,9 @@
       "qc_reason": "event_roi;phase_front;conditioned_optical_shift;",
       "roi_id": "cycle156_rank6_obj3",
       "roi_norm_mean_delta_protocol_residual": -0.005452749424261,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle156_rank6_obj3.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle156_rank6_obj3.png",
       "rollout_mobility_difficulty_score": 2.0576923076923075,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle156_rank6_obj3_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle156_rank6_obj3_dmd_rollout.png",
       "threshold_robust_diffusion_score": -0.1153846153846153,
       "threshold_robust_phase_score": 0.951923076923077
     },
@@ -262,9 +262,9 @@
       "qc_reason": "event_roi;hard_rollout;diffusion_proxy;conditioned_front_direction;",
       "roi_id": "cycle60_rank4_obj5",
       "roi_norm_mean_delta_protocol_residual": 0.0025610063033398,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle60_rank4_obj5.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle60_rank4_obj5.png",
       "rollout_mobility_difficulty_score": 2.596153846153846,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle60_rank4_obj5_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle60_rank4_obj5_dmd_rollout.png",
       "threshold_robust_diffusion_score": 1.0192307692307692,
       "threshold_robust_phase_score": 0.4903846153846154
     },
@@ -288,9 +288,9 @@
       "qc_reason": "event_roi;hard_rollout;conditioned_front_direction;",
       "roi_id": "cycle60_rank6_obj26",
       "roi_norm_mean_delta_protocol_residual": 0.0024656910257634,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle60_rank6_obj26.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle60_rank6_obj26.png",
       "rollout_mobility_difficulty_score": 2.615384615384616,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle60_rank6_obj26_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle60_rank6_obj26_dmd_rollout.png",
       "threshold_robust_diffusion_score": 0.0480769230769231,
       "threshold_robust_phase_score": 0.625
     },
@@ -314,9 +314,9 @@
       "qc_reason": "event_roi;conditioned_front_direction;",
       "roi_id": "cycle60_rank1_obj1",
       "roi_norm_mean_delta_protocol_residual": 0.0028464082436855,
-      "roi_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle60_rank1_obj1.png",
+      "roi_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/previews/cycle60_rank1_obj1.png",
       "rollout_mobility_difficulty_score": 1.8846153846153848,
-      "rollout_preview_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle60_rank1_obj1_dmd_rollout.png",
+      "rollout_preview_path": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/rollout_previews/cycle60_rank1_obj1_dmd_rollout.png",
       "threshold_robust_diffusion_score": 0.7884615384615384,
       "threshold_robust_phase_score": 0.451923076923077
     }

@@ -334,7 +334,7 @@ def cluster_summary(df: pd.DataFrame, features: List[str], n_clusters: int, seed
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--n-components", type=int, default=16)
     parser.add_argument("--n-time-bins", type=int, default=8)

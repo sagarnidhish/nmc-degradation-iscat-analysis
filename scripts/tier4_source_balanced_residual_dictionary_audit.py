@@ -285,9 +285,9 @@ def prediction_metrics(pred: pd.DataFrame, feature_set: str) -> Dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--roi-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences")
-    parser.add_argument("--mask-front-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit")
+    parser.add_argument("--roi-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences")
+    parser.add_argument("--mask-front-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit")
     parser.add_argument("--downsample", type=int, default=2)
     parser.add_argument("--stride", type=int, default=2)
     parser.add_argument("--max-samples", type=int, default=9000)

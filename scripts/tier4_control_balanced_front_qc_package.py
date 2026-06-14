@@ -162,8 +162,8 @@ def review_flags(row: pd.Series, stats: Dict[str, object]) -> List[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_qc_package")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_qc_package")
     parser.add_argument("--n-per-role", type=int, default=16)
     parser.add_argument("--n-extra-controls", type=int, default=8)
     args = parser.parse_args()

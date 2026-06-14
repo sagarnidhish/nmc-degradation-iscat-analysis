@@ -414,8 +414,8 @@ def deltas(metrics_df: pd.DataFrame) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_echem_warning")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_echem_warning")
     parser.add_argument("--seed", type=int, default=53)
     parser.add_argument("--n-permutation", type=int, default=500)
     args = parser.parse_args()

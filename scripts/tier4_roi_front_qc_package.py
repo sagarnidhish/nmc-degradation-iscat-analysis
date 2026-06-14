@@ -145,8 +145,8 @@ def add_rank(source: pd.DataFrame, score_col: str, rank_name: str, ascending: bo
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_front_qc_package")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/roi_front_qc_package")
     parser.add_argument("--top-n", type=int, default=24)
     args = parser.parse_args()
 

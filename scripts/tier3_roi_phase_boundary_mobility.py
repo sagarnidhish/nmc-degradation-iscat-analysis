@@ -292,11 +292,11 @@ def save_plot(df: pd.DataFrame, tests: pd.DataFrame, out_png: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--event-manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences/selected_roi_sequence_manifest.csv")
-    parser.add_argument("--control-manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences_expanded/selected_roi_sequence_manifest.csv")
-    parser.add_argument("--control-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection_expanded/selected_control_rois.csv")
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_phase_boundary_mobility")
+    parser.add_argument("--event-manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences/selected_roi_sequence_manifest.csv")
+    parser.add_argument("--control-manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_sequences_expanded/selected_roi_sequence_manifest.csv")
+    parser.add_argument("--control-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_selection_expanded/selected_control_rois.csv")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/roi_phase_boundary_mobility")
     args = parser.parse_args()
 
     control_map = load_control_map(args.control_table)

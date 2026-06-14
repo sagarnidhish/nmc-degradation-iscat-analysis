@@ -53,7 +53,7 @@
   ],
   "guardrail": "The ledger tracks claim status and falsification requirements. It does not convert weak labels or automatic masks into validated mechanisms.",
   "n_claims": 5,
-  "root": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho",
+  "root": "/scratch/<account>/<username>/Alek_Jiho",
   "status_counts": {
     "blocked_by_qc": 1,
     "implemented": 1,

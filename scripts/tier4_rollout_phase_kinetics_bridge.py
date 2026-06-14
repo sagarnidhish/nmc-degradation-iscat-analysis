@@ -186,15 +186,15 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument(
         "--rollout-csv",
-        default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_features.csv",
+        default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_features.csv",
     )
     ap.add_argument(
         "--phase-csv",
-        default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_phase_kinetics_audit/source_balanced_pre_event_phase_kinetics_features.csv",
+        default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_phase_kinetics_audit/source_balanced_pre_event_phase_kinetics_features.csv",
     )
     ap.add_argument(
         "--out-dir",
-        default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_phase_kinetics_bridge",
+        default="/scratch/<account>/<username>/Alek_Jiho/derived/rollout_phase_kinetics_bridge",
     )
     args = ap.parse_args()
 

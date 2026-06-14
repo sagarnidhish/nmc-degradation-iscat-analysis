@@ -179,9 +179,9 @@ def export_one_roi(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--roi-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--roi-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences")
     parser.add_argument("--crop-size-full", type=int, default=192)
     parser.add_argument("--output-size", type=int, default=96)
     parser.add_argument("--samples-per-roi", type=int, default=96)

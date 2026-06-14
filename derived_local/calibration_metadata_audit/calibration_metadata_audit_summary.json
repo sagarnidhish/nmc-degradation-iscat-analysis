@@ -27,25 +27,25 @@
   "n_pptx_calibration_hits": 3,
   "n_pptx_files_scanned": 3,
   "outputs": {
-    "csv_timebase_metadata": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit/csv_timebase_metadata.csv",
-    "h5_calibration_metadata": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit/h5_calibration_metadata.csv",
-    "pptx_calibration_text_hits": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit/pptx_calibration_text_hits.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit/calibration_metadata_audit_summary.json"
+    "csv_timebase_metadata": "/scratch/<account>/<username>/Alek_Jiho/derived/calibration_metadata_audit/csv_timebase_metadata.csv",
+    "h5_calibration_metadata": "/scratch/<account>/<username>/Alek_Jiho/derived/calibration_metadata_audit/h5_calibration_metadata.csv",
+    "pptx_calibration_text_hits": "/scratch/<account>/<username>/Alek_Jiho/derived/calibration_metadata_audit/pptx_calibration_text_hits.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/calibration_metadata_audit/calibration_metadata_audit_summary.json"
   },
   "top_h5_calibration_attr_hits": [],
   "top_pptx_hits": [
     {
-      "pptx_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
+      "pptx_path": "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
       "slide": 16,
       "snippets": "We also plot the minimum viable facet size based on the point spread function of the microscope as ~0.2um^2 (dotted line)(check value). ADD COMPARISON TO MANUFACTURER\u2019S EXPECTED FACET SIZES. The consistency of facet sizes as"
     },
     {
-      "pptx_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
+      "pptx_path": "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Paper Outline.pptx",
       "slide": 3,
       "snippets": "an improved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active || proved microscope design, iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active material ma || iterating on the instrument used by Merryweather et al., that offers 96nm pixel size and 180x120um FoV , compared to XXnm and YYxZZum . Example image of an NMC-811 electrode with 60%(?) active material mass loading acquire"
     },
     {
-      "pptx_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Project.pptx",
+      "pptx_path": "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/Battery_Degradation_Project/Degradation Project.pptx",
       "slide": 3,
       "snippets": "and wouldn\u2019t cycle again. Switched to second cell\u2026 Cell 2: Cycled from pristine. No bubbles visible FOV: full field of view, including 4 drilled holes on left half, and undrilled holes on right half. Imaging camera exposure || \u2019t cycle again. Switched to second cell\u2026 Cell 2: Cycled from pristine. No bubbles visible FOV: full field of view, including 4 drilled holes on left half, and undrilled holes on right half. Imaging camera exposure time = 2 ms (for al"
     }

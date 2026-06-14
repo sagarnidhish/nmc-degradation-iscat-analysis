@@ -355,11 +355,11 @@
   "n_rows": 172,
   "n_sources": 12,
   "outputs": {
-    "deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residualized_future8_video_physics_benchmark/residualized_future8_video_physics_deltas.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residualized_future8_video_physics_benchmark/residualized_future8_video_physics_metrics.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residualized_future8_video_physics_benchmark/residualized_future8_video_physics_predictions.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residualized_future8_video_physics_benchmark/README.md",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residualized_future8_video_physics_benchmark/residualized_future8_video_physics_summary.json"
+    "deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/residualized_future8_video_physics_benchmark/residualized_future8_video_physics_deltas.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/residualized_future8_video_physics_benchmark/residualized_future8_video_physics_metrics.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/residualized_future8_video_physics_benchmark/residualized_future8_video_physics_predictions.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/residualized_future8_video_physics_benchmark/README.md",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/residualized_future8_video_physics_benchmark/residualized_future8_video_physics_summary.json"
   },
   "target": "future_any_drop_within_8cycles",
   "top_metrics": [

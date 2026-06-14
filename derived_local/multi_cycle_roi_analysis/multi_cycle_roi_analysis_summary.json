@@ -1,5 +1,5 @@
 {
-  "cohort_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort/multi_cycle_roi_table.csv",
+  "cohort_table": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_cohort/multi_cycle_roi_table.csv",
   "event_reference_cycles": [
     60.0,
     86.0,
@@ -105,17 +105,17 @@
     }
   ],
   "guardrail": "Expanded cohort descriptors are automatic ROI-crop measurements. They rank physics candidates but do not replace manual particle/front validation.",
-  "manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv",
+  "manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv",
   "n_control_roi": 28,
   "n_event_roi": 24,
   "n_roi": 52,
   "outputs": {
-    "descriptors": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_descriptors.csv",
-    "evidence_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_event_evidence_correlations.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_event_control_feature_tests.csv",
-    "group_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_group_summary.csv",
-    "ranked": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_ranked.csv",
-    "sync_vs_single_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_sync_vs_single_summary.csv"
+    "descriptors": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_descriptors.csv",
+    "evidence_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_event_evidence_correlations.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_event_control_feature_tests.csv",
+    "group_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_group_summary.csv",
+    "ranked": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_ranked.csv",
+    "sync_vs_single_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_sync_vs_single_summary.csv"
   },
   "sync_vs_single_summary": [
     {

@@ -20,10 +20,10 @@ Why this matters:
 
 Planned outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_phase_kinetics_bridge/rollout_phase_kinetics_bridge_merged.csv`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_phase_kinetics_bridge/rollout_phase_kinetics_bridge_correlations.csv`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_phase_kinetics_bridge/rollout_phase_kinetics_bridge_source_residual_correlations.csv`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_phase_kinetics_bridge/rollout_phase_kinetics_bridge_event_tests.csv`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/rollout_phase_kinetics_bridge/rollout_phase_kinetics_bridge_merged.csv`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/rollout_phase_kinetics_bridge/rollout_phase_kinetics_bridge_correlations.csv`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/rollout_phase_kinetics_bridge/rollout_phase_kinetics_bridge_source_residual_correlations.csv`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/rollout_phase_kinetics_bridge/rollout_phase_kinetics_bridge_event_tests.csv`
 
 Guardrail:
 

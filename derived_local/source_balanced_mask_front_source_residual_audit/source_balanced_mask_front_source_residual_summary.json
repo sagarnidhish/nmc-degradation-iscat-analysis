@@ -247,9 +247,9 @@
     "raw_source_eta2": 0.10433684331820878
   },
   "outputs": {
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_source_residual_audit/source_balanced_mask_front_source_residual_metrics.csv",
-    "best_by_transform": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_source_residual_audit/source_balanced_mask_front_source_residual_best_by_transform.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_source_residual_audit/source_balanced_mask_front_source_residual_summary.json"
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_source_residual_audit/source_balanced_mask_front_source_residual_metrics.csv",
+    "best_by_transform": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_source_residual_audit/source_balanced_mask_front_source_residual_best_by_transform.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_source_residual_audit/source_balanced_mask_front_source_residual_summary.json"
   },
   "guardrail": "Source residualization tests whether automatic mask/front proxies survive source structure. Passing this audit would still be weak-label, automatic-mask evidence; failing it means the feature is useful mainly for QC/source triage."
 }

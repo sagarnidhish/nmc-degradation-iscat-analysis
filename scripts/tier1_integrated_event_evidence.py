@@ -68,8 +68,8 @@ def score_row(row: pd.Series) -> float:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/integrated_event_evidence")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/integrated_event_evidence")
     args = parser.parse_args()
 
     event_targets = read_csv_if_exists(os.path.join(args.derived_dir, "particle_event_targets", "particle_abrupt_events.csv"))

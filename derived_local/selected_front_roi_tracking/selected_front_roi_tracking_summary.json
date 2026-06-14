@@ -24,5 +24,5 @@
   ],
   "guardrail": "Radius-squared slopes are apparent full-pixel/second front-motion proxies from automatic ROIs, not calibrated diffusion coefficients without spatial calibration and manual QC.",
   "n_tracked_rois": 12,
-  "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv"
+  "roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv"
 }

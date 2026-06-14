@@ -489,9 +489,9 @@
     "empirical_p_average_precision": 0.001996007984031936
   },
   "outputs": {
-    "temporal_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit/source_balanced_residual_temporal_specificity_tests.csv",
-    "shift_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit/source_balanced_residual_temporal_specificity_shift_null.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit/source_balanced_residual_temporal_specificity_summary.json"
+    "temporal_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit/source_balanced_residual_temporal_specificity_tests.csv",
+    "shift_null": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit/source_balanced_residual_temporal_specificity_shift_null.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit/source_balanced_residual_temporal_specificity_summary.json"
   },
   "guardrail": "Temporal labels come from full particle abrupt-drop cycles but are evaluated on the 96 source-balanced ROI rows. Future-oriented scores use the future-label sign and apply the same sign to past/current controls. This tests temporal specificity, not causality or deployable warning."
 }

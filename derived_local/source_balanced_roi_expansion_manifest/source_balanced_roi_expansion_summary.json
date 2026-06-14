@@ -11,16 +11,16 @@
   "n_selected_cycles": 48,
   "n_sources_selected": 14,
   "outputs": {
-    "candidates": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_reconstructed_candidates.csv",
-    "cycle_plan": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_cycle_expansion_plan.csv",
-    "missing": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_missing_cycles.csv",
-    "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_roi_table.csv",
-    "segments": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_reconstructed_segments.csv",
-    "source_coverage": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_source_coverage.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_roi_expansion_summary.json"
+    "candidates": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_reconstructed_candidates.csv",
+    "cycle_plan": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_cycle_expansion_plan.csv",
+    "missing": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_missing_cycles.csv",
+    "roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_roi_table.csv",
+    "segments": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_reconstructed_segments.csv",
+    "source_coverage": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_source_coverage.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_roi_expansion_summary.json"
   },
   "per_source": 4,
-  "ranked_cycles": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_full_cycles.csv",
+  "ranked_cycles": "/scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_full_cycles.csv",
   "selected_label_counts": {
     "future16_positive": 24,
     "future8_positive": 14,
@@ -211,7 +211,7 @@
       "segment_end_frame": 7254,
       "segment_start_frame": 6347,
       "selection_reason": "source_representative",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_92_rank1_10_c2_x10_030723_local7.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_92_rank1_10_c2_x10_030723_local7.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 25.928656580292166
@@ -237,7 +237,7 @@
       "segment_end_frame": 7254,
       "segment_start_frame": 6347,
       "selection_reason": "source_representative",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_92_rank1_10_c2_x10_030723_local7.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_92_rank1_10_c2_x10_030723_local7.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 24.775464360551318
@@ -263,7 +263,7 @@
       "segment_end_frame": 9068,
       "segment_start_frame": 8161,
       "selection_reason": "future16_negative",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_94_rank2_10_c2_x10_030723_local9.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_94_rank2_10_c2_x10_030723_local9.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 25.61083171634987
@@ -289,7 +289,7 @@
       "segment_end_frame": 9068,
       "segment_start_frame": 8161,
       "selection_reason": "future16_negative",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_94_rank2_10_c2_x10_030723_local9.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_94_rank2_10_c2_x10_030723_local9.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 24.42825610271029
@@ -315,7 +315,7 @@
       "segment_end_frame": 3608,
       "segment_start_frame": 2706,
       "selection_reason": "future16_negative",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_98_rank3_11_c2_x10_050723_local3.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_98_rank3_11_c2_x10_050723_local3.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 25.034909812946132
@@ -341,7 +341,7 @@
       "segment_end_frame": 3608,
       "segment_start_frame": 2706,
       "selection_reason": "future16_negative",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_98_rank3_11_c2_x10_050723_local3.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_98_rank3_11_c2_x10_050723_local3.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 23.986083525321504
@@ -367,7 +367,7 @@
       "segment_end_frame": 5412,
       "segment_start_frame": 4510,
       "selection_reason": "future16_positive",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_100_rank4_11_c2_x10_050723_local5.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_100_rank4_11_c2_x10_050723_local5.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 24.767484170170583
@@ -393,7 +393,7 @@
       "segment_end_frame": 5412,
       "segment_start_frame": 4510,
       "selection_reason": "future16_positive",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_100_rank4_11_c2_x10_050723_local5.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_100_rank4_11_c2_x10_050723_local5.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 24.009890706615767
@@ -419,7 +419,7 @@
       "segment_end_frame": 7216,
       "segment_start_frame": 6314,
       "selection_reason": "source_representative",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_102_rank5_11_c2_x10_050723_local7.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_102_rank5_11_c2_x10_050723_local7.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 24.812869033330575
@@ -445,7 +445,7 @@
       "segment_end_frame": 7216,
       "segment_start_frame": 6314,
       "selection_reason": "source_representative",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_102_rank5_11_c2_x10_050723_local7.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_102_rank5_11_c2_x10_050723_local7.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 23.360671263050325
@@ -471,7 +471,7 @@
       "segment_end_frame": 3616,
       "segment_start_frame": 2712,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_108_rank6_12_c2_x10_070723_local3.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_108_rank6_12_c2_x10_070723_local3.png",
       "source_stem": "12_c2_x10_070723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 23.516560988539883
@@ -497,7 +497,7 @@
       "segment_end_frame": 3616,
       "segment_start_frame": 2712,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_108_rank6_12_c2_x10_070723_local3.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_108_rank6_12_c2_x10_070723_local3.png",
       "source_stem": "12_c2_x10_070723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 23.365257710020515
@@ -523,7 +523,7 @@
       "segment_end_frame": 5425,
       "segment_start_frame": 4521,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_110_rank7_12_c2_x10_070723_local5.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_110_rank7_12_c2_x10_070723_local5.png",
       "source_stem": "12_c2_x10_070723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 23.874389180648002
@@ -549,7 +549,7 @@
       "segment_end_frame": 5425,
       "segment_start_frame": 4521,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_110_rank7_12_c2_x10_070723_local5.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_110_rank7_12_c2_x10_070723_local5.png",
       "source_stem": "12_c2_x10_070723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 23.136898638745315
@@ -575,7 +575,7 @@
       "segment_end_frame": 7233,
       "segment_start_frame": 6329,
       "selection_reason": "future16_positive",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_112_rank8_12_c2_x10_070723_local7.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_112_rank8_12_c2_x10_070723_local7.png",
       "source_stem": "12_c2_x10_070723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 24.433332988208193
@@ -601,7 +601,7 @@
       "segment_end_frame": 7233,
       "segment_start_frame": 6329,
       "selection_reason": "future16_positive",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_112_rank8_12_c2_x10_070723_local7.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_112_rank8_12_c2_x10_070723_local7.png",
       "source_stem": "12_c2_x10_070723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 23.38806596464201
@@ -627,7 +627,7 @@
       "segment_end_frame": 9042,
       "segment_start_frame": 8137,
       "selection_reason": "source_representative",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_114_rank9_12_c2_x10_070723_local9.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_114_rank9_12_c2_x10_070723_local9.png",
       "source_stem": "12_c2_x10_070723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 24.341180100195942
@@ -653,7 +653,7 @@
       "segment_end_frame": 9042,
       "segment_start_frame": 8137,
       "selection_reason": "source_representative",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_114_rank9_12_c2_x10_070723_local9.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_114_rank9_12_c2_x10_070723_local9.png",
       "source_stem": "12_c2_x10_070723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 24.046731379998924
@@ -679,7 +679,7 @@
       "segment_end_frame": 3570,
       "segment_start_frame": 2380,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_123_rank10_14_c2_x10_HighCOV_110723_local2.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_123_rank10_14_c2_x10_HighCOV_110723_local2.png",
       "source_stem": "14_c2_x10_HighCOV_110723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 24.18449265574761
@@ -705,7 +705,7 @@
       "segment_end_frame": 3570,
       "segment_start_frame": 2380,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_123_rank10_14_c2_x10_HighCOV_110723_local2.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/overlays/cycle_123_rank10_14_c2_x10_HighCOV_110723_local2.png",
       "source_stem": "14_c2_x10_HighCOV_110723",
       "validation_label": "source_balanced_expansion_candidate",
       "validation_score": 23.408876847510307

@@ -67,12 +67,12 @@
   "n_sources": 9,
   "n_threshold_rows": 504,
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_correlations.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_feature_tests.csv",
-    "gate_counts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_gate_counts.csv",
-    "roi_scores": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_roi_scores.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_summary.json"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_correlations.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_feature_tests.csv",
+    "gate_counts": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_gate_counts.csv",
+    "roi_scores": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_roi_scores.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_physics_consistency_audit/diffusion_physics_consistency_summary.json"
   },
   "source_summary": [
     {

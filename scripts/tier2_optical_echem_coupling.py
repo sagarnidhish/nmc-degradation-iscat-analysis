@@ -150,7 +150,7 @@ def run_cca(X: np.ndarray, Y: np.ndarray, n_components: int = 1) -> Tuple[float,
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument("--max-lag", type=int, default=10)
     args = parser.parse_args()
 

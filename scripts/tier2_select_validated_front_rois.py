@@ -120,10 +120,10 @@ def validation_score(row: Dict[str, object]) -> float:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--fronts", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_front_metrics.csv")
-    parser.add_argument("--objects", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_object_candidate_reconstruction/reconstructed_object_candidates.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--fronts", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_front_metrics.csv")
+    parser.add_argument("--objects", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_object_candidate_reconstruction/reconstructed_object_candidates.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/validated_front_rois")
     parser.add_argument("--cycles", type=float, nargs="+", default=[86.0, 116.0])
     parser.add_argument("--top-per-cycle", type=int, default=5)
     args = parser.parse_args()

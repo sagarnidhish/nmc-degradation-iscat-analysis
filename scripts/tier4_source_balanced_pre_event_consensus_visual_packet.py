@@ -250,10 +250,10 @@ def write_readme(out: Path, summary: Dict[str, Any]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument(
         "--out-dir",
-        default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_consensus_visual_packet",
+        default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_consensus_visual_packet",
     )
     parser.add_argument("--top-n", type=int, default=24)
     args = parser.parse_args()

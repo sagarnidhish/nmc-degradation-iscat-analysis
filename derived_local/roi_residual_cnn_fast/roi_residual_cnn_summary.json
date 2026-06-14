@@ -30,6 +30,6 @@
   "n_roi": 11,
   "overall_relative_mse_improvement": -4.230546581125441,
   "overall_relative_residual_mse_improvement": -9.091540930400841,
-  "plot_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_residual_cnn_fast/roi_residual_cnn_summary.png",
-  "roi_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences"
+  "plot_path": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_residual_cnn_fast/roi_residual_cnn_summary.png",
+  "roi_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences"
 }

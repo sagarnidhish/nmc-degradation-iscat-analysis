@@ -386,10 +386,10 @@ def correlation_table(df: pd.DataFrame) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv")
-    parser.add_argument("--mobility", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_descriptors.csv")
-    parser.add_argument("--rollout-calibration", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_roi_table.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_stability_audit")
+    parser.add_argument("--manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv")
+    parser.add_argument("--mobility", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_descriptors.csv")
+    parser.add_argument("--rollout-calibration", default="/scratch/<account>/<username>/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_roi_table.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_stability_audit")
     args = parser.parse_args()
 
     manifest_path = Path(args.manifest)

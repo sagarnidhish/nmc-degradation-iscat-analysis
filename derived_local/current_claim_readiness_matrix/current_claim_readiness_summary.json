@@ -37,10 +37,10 @@
   "guardrail": "Claim readiness is wording guidance over existing automatic audits. It does not add manual labels, calibrated spatial metadata, causal tests, or deployable validation.",
   "n_claims": 7,
   "outputs": {
-    "matrix_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/current_claim_readiness_matrix/current_claim_readiness_matrix.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/current_claim_readiness_matrix/README.md",
-    "status_counts_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/current_claim_readiness_matrix/current_claim_readiness_status_counts.csv",
-    "summary_json": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/current_claim_readiness_matrix/current_claim_readiness_summary.json"
+    "matrix_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/current_claim_readiness_matrix/current_claim_readiness_matrix.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/current_claim_readiness_matrix/README.md",
+    "status_counts_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/current_claim_readiness_matrix/current_claim_readiness_status_counts.csv",
+    "summary_json": "/scratch/<account>/<username>/Alek_Jiho/derived/current_claim_readiness_matrix/current_claim_readiness_summary.json"
   },
   "overall_position": "The project supports source-aware particle-region review ranking and optical-proxy hypothesis generation, while calibrated diffusion, causal mechanism, and deployable warning claims remain blocked.",
   "status_counts": [

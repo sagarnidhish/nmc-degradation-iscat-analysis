@@ -72,11 +72,11 @@ def candidate_validation_score(cand: pd.Series, transfer_score: float, transfer_
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--ranked-cycles", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_ranked_cycles.csv")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--ranked-cycles", default="/scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_ranked_cycles.csv")
     parser.add_argument("--particles-csv", default="")
     parser.add_argument("--cycle-frames-csv", default="")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction")
     parser.add_argument("--top-cycles", type=int, default=12)
     parser.add_argument("--top-candidates-per-cycle", type=int, default=4)
     parser.add_argument("--downsample", type=int, default=4)

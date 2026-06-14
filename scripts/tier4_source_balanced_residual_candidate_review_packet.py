@@ -82,10 +82,10 @@ def load_predictions(readout_dir: Path) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--residual-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit")
-    parser.add_argument("--readout-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout")
-    parser.add_argument("--coupling-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet")
+    parser.add_argument("--residual-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit")
+    parser.add_argument("--readout-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout")
+    parser.add_argument("--coupling-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet")
     args = parser.parse_args()
 
     residual_dir = Path(args.residual_dir)

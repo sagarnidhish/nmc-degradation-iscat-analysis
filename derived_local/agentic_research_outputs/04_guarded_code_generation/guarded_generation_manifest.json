@@ -3,20 +3,20 @@
     {
       "experiment_id": "E1_frame_count_matched_event_artifact_control",
       "question": "Are synchronized events still enriched after matching cycles by frame count and protocol block?",
-      "script_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E1_frame_count_matched_event_artifact_control.py",
-      "smoke_command": "python /scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E1_frame_count_matched_event_artifact_control.py --root /scratch/u6hp/nsagar.u6hp/Alek_Jiho --smoke"
+      "script_path": "/scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E1_frame_count_matched_event_artifact_control.py",
+      "smoke_command": "python /scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E1_frame_count_matched_event_artifact_control.py --root /scratch/<account>/<username>/Alek_Jiho --smoke"
     },
     {
       "experiment_id": "E2_protocol_local_echem_window_scan",
       "question": "Do cycles 86/116 show local dV/dt, dQ/dV, current, or capacity anomalies compared with neighboring cycles?",
-      "script_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E2_protocol_local_echem_window_scan.py",
-      "smoke_command": "python /scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E2_protocol_local_echem_window_scan.py --root /scratch/u6hp/nsagar.u6hp/Alek_Jiho --smoke"
+      "script_path": "/scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E2_protocol_local_echem_window_scan.py",
+      "smoke_command": "python /scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E2_protocol_local_echem_window_scan.py --root /scratch/<account>/<username>/Alek_Jiho --smoke"
     },
     {
       "experiment_id": "E5_roi_event_visual_qc_manifest",
       "question": "Do raw ROI frames around event cycles show real particle changes rather than threshold/drift artifacts?",
-      "script_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E5_roi_event_visual_qc_manifest.py",
-      "smoke_command": "python /scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E5_roi_event_visual_qc_manifest.py --root /scratch/u6hp/nsagar.u6hp/Alek_Jiho --smoke"
+      "script_path": "/scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E5_roi_event_visual_qc_manifest.py",
+      "smoke_command": "python /scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts/E5_roi_event_visual_qc_manifest.py --root /scratch/<account>/<username>/Alek_Jiho --smoke"
     }
   ]
 }

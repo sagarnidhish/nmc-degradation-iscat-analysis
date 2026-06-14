@@ -6,10 +6,10 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "null_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit/source_balanced_pre_event_front_kinetic_null_tests.csv",
-    "proximity_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit/source_balanced_pre_event_front_kinetic_proximity_tests.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit/source_balanced_pre_event_front_kinetic_null_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit/source_balanced_pre_event_front_kinetic_null_summary.json"
+    "null_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit/source_balanced_pre_event_front_kinetic_null_tests.csv",
+    "proximity_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit/source_balanced_pre_event_front_kinetic_proximity_tests.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit/source_balanced_pre_event_front_kinetic_null_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit/source_balanced_pre_event_front_kinetic_null_summary.json"
   },
   "source_summary": [
     {

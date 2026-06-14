@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-ROOT="${1:-/scratch/u6hp/nsagar.u6hp/Alek_Jiho}"
+ROOT="${1:-/scratch/<account>/<username>/Alek_Jiho}"
 OUT="${2:-$ROOT/agentic_research_outputs}"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PYTHON_BIN="${PYTHON:-python3}"

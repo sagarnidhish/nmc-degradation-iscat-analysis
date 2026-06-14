@@ -1,18 +1,18 @@
 #!/bin/bash
 #SBATCH --job-name=tier5_timebase_fit_xfer
-#SBATCH --account=brics.u6hp
+#SBATCH --account=<slurm-account>
 #SBATCH --partition=workq
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gpus-per-node=0
 #SBATCH --time=00:45:00
-#SBATCH --output=/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/logs/tier5_timebase_fit_xfer_%j.out
-#SBATCH --error=/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/logs/tier5_timebase_fit_xfer_%j.err
+#SBATCH --output=/scratch/<account>/<username>/Alek_Jiho/derived/logs/tier5_timebase_fit_xfer_%j.out
+#SBATCH --error=/scratch/<account>/<username>/Alek_Jiho/derived/logs/tier5_timebase_fit_xfer_%j.err
 
 set -euo pipefail
 
-WORKDIR="/scratch/u6hp/nsagar.u6hp/Alek_Jiho"
+WORKDIR="/scratch/<account>/<username>/Alek_Jiho"
 DERIVED="${WORKDIR}/derived"
 LOGS="${DERIVED}/logs"
 

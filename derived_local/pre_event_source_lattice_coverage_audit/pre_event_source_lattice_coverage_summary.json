@@ -156,10 +156,10 @@
     }
   ],
   "outputs": {
-    "candidate_controls": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_candidate_controls.csv",
-    "cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_cycle_table.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_coverage_summary.json"
+    "candidate_controls": "/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_candidate_controls.csv",
+    "cycle_table": "/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_cycle_table.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit/pre_event_source_lattice_coverage_summary.json"
   },
   "recommended_design": [
     "Do not claim same-source near-vs-far evidence from current raw coverage: no source with near-pre rows also has far-pre rows.",

@@ -1,10 +1,10 @@
 {
-  "control_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences_expanded",
-  "event_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences",
+  "control_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_sequences_expanded",
+  "event_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences",
   "guardrail": "Controls are automatic reconstructed non-event ROIs from adjacent source segments; this is a matched-control screen, not manual annotation.",
   "n_control_roi": 32,
   "n_event_roi": 11,
-  "plot_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_comparison.png",
+  "plot_path": "/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_comparison.png",
   "top_metric_differences": [
     {
       "cohens_d_event_vs_control": -1.5022943532848814,

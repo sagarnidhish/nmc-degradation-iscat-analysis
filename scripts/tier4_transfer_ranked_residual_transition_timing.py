@@ -127,8 +127,8 @@ def timing_target_correlations(per_roi: pd.DataFrame, targets: List[str], featur
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_residual_transition_timing")
     parser.add_argument("--n-permutation", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=61)
     args = parser.parse_args()

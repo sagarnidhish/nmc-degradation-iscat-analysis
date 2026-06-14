@@ -9,16 +9,16 @@
   "n_event_roi": 24,
   "n_rows": 52,
   "outputs": {
-    "context_fit": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_context_fit_summary.csv",
-    "effect_retention": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/shape_conditioning_effect_retention.csv",
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_conditioned_joined.csv",
-    "leave_reference_classifier": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/leave_reference_shape_residual_classifier_metrics.csv",
-    "pc_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/shape_pc_target_correlations.csv",
-    "pc_loadings": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_pc_loadings.csv",
-    "raw_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/raw_event_control_tests.csv",
-    "residuals": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_conditioned_residuals.csv",
-    "shape_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/shape_conditioned_event_control_tests.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_conditioned_roi_front_effects_summary.json"
+    "context_fit": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_context_fit_summary.csv",
+    "effect_retention": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/shape_conditioning_effect_retention.csv",
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_conditioned_joined.csv",
+    "leave_reference_classifier": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/leave_reference_shape_residual_classifier_metrics.csv",
+    "pc_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/shape_pc_target_correlations.csv",
+    "pc_loadings": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_pc_loadings.csv",
+    "raw_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/raw_event_control_tests.csv",
+    "residuals": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_conditioned_residuals.csv",
+    "shape_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/shape_conditioned_event_control_tests.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects/echem_shape_conditioned_roi_front_effects_summary.json"
   },
   "shape_features_used": [
     "echem_shape_duration_s",
@@ -80,7 +80,7 @@
     "n_components": 6,
     "n_shape_features_used": 45
   },
-  "source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_roi_joined.csv",
+  "source": "/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_roi_joined.csv",
   "target_features": [
     "roi_norm_mean_delta_protocol_residual",
     "high_fraction_delta_protocol_residual",

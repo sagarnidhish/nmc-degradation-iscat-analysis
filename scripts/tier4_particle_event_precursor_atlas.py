@@ -226,8 +226,8 @@ def trajectory_summary(aligned: pd.DataFrame, features: List[str]) -> pd.DataFra
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_precursor_atlas")
     parser.add_argument("--control-k", type=int, default=6)
     parser.add_argument("--event-exclusion-cycles", type=int, default=16)
     args = parser.parse_args()

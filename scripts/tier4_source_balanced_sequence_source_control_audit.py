@@ -391,8 +391,8 @@ def write_readme(out: Path, summary: Dict[str, Any]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--rollout-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_source_control_audit")
+    parser.add_argument("--rollout-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_rollout_audit")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_source_control_audit")
     parser.add_argument("--seed", type=int, default=71)
     parser.add_argument("--n-permutation", type=int, default=1000)
     args = parser.parse_args()

@@ -250,9 +250,9 @@ def shift_null(df: pd.DataFrame, feature: str, transform: str, window: int, perm
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--feature-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit")
-    parser.add_argument("--event-cycles", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_abrupt_events.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit")
+    parser.add_argument("--feature-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit")
+    parser.add_argument("--event-cycles", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets/particle_abrupt_events.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit")
     parser.add_argument("--permutations", type=int, default=500)
     parser.add_argument("--seed", type=int, default=29)
     args = parser.parse_args()

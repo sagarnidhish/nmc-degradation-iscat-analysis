@@ -1,5 +1,5 @@
 {
-  "ranked_cycles": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_ranked_cycles.csv",
+  "ranked_cycles": "/scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_ranked_cycles.csv",
   "n_ranked_cycles_requested": 12,
   "n_cycles_sampled": 12,
   "n_missing_cycles": 0,
@@ -132,7 +132,7 @@
       "segment_start_frame": 4950,
       "segment_end_frame": 6188,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_150_17_c2_x10_HighHighCOV_150723_local4.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_150_17_c2_x10_HighHighCOV_150723_local4.png"
     },
     {
       "cycleNo": 150.0,
@@ -159,7 +159,7 @@
       "segment_start_frame": 4950,
       "segment_end_frame": 6188,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_150_17_c2_x10_HighHighCOV_150723_local4.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_150_17_c2_x10_HighHighCOV_150723_local4.png"
     },
     {
       "cycleNo": 150.0,
@@ -186,7 +186,7 @@
       "segment_start_frame": 4950,
       "segment_end_frame": 6188,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_150_17_c2_x10_HighHighCOV_150723_local4.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_150_17_c2_x10_HighHighCOV_150723_local4.png"
     },
     {
       "cycleNo": 150.0,
@@ -213,7 +213,7 @@
       "segment_start_frame": 4950,
       "segment_end_frame": 6188,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_150_17_c2_x10_HighHighCOV_150723_local4.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_150_17_c2_x10_HighHighCOV_150723_local4.png"
     },
     {
       "cycleNo": 146.0,
@@ -240,7 +240,7 @@
       "segment_start_frame": 0,
       "segment_end_frame": 1237,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_146_17_c2_x10_HighHighCOV_150723_local0.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_146_17_c2_x10_HighHighCOV_150723_local0.png"
     },
     {
       "cycleNo": 146.0,
@@ -267,7 +267,7 @@
       "segment_start_frame": 0,
       "segment_end_frame": 1237,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_146_17_c2_x10_HighHighCOV_150723_local0.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_146_17_c2_x10_HighHighCOV_150723_local0.png"
     },
     {
       "cycleNo": 146.0,
@@ -294,7 +294,7 @@
       "segment_start_frame": 0,
       "segment_end_frame": 1237,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_146_17_c2_x10_HighHighCOV_150723_local0.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_146_17_c2_x10_HighHighCOV_150723_local0.png"
     },
     {
       "cycleNo": 146.0,
@@ -321,7 +321,7 @@
       "segment_start_frame": 0,
       "segment_end_frame": 1237,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_146_17_c2_x10_HighHighCOV_150723_local0.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_146_17_c2_x10_HighHighCOV_150723_local0.png"
     },
     {
       "cycleNo": 156.0,
@@ -348,7 +348,7 @@
       "segment_start_frame": 0,
       "segment_end_frame": 1939,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_156_18_c2_xN_HighHighCOV_170723_local0.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_156_18_c2_xN_HighHighCOV_170723_local0.png"
     },
     {
       "cycleNo": 156.0,
@@ -375,7 +375,7 @@
       "segment_start_frame": 0,
       "segment_end_frame": 1939,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_156_18_c2_xN_HighHighCOV_170723_local0.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_156_18_c2_xN_HighHighCOV_170723_local0.png"
     },
     {
       "cycleNo": 156.0,
@@ -402,7 +402,7 @@
       "segment_start_frame": 0,
       "segment_end_frame": 1939,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_156_18_c2_xN_HighHighCOV_170723_local0.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_156_18_c2_xN_HighHighCOV_170723_local0.png"
     },
     {
       "cycleNo": 156.0,
@@ -429,7 +429,7 @@
       "segment_start_frame": 0,
       "segment_end_frame": 1939,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_156_18_c2_xN_HighHighCOV_170723_local0.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_156_18_c2_xN_HighHighCOV_170723_local0.png"
     },
     {
       "cycleNo": 151.0,
@@ -456,7 +456,7 @@
       "segment_start_frame": 6188,
       "segment_end_frame": 7426,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_151_17_c2_x10_HighHighCOV_150723_local5.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_151_17_c2_x10_HighHighCOV_150723_local5.png"
     },
     {
       "cycleNo": 151.0,
@@ -483,7 +483,7 @@
       "segment_start_frame": 6188,
       "segment_end_frame": 7426,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_151_17_c2_x10_HighHighCOV_150723_local5.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_151_17_c2_x10_HighHighCOV_150723_local5.png"
     },
     {
       "cycleNo": 151.0,
@@ -510,7 +510,7 @@
       "segment_start_frame": 6188,
       "segment_end_frame": 7426,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_151_17_c2_x10_HighHighCOV_150723_local5.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_151_17_c2_x10_HighHighCOV_150723_local5.png"
     },
     {
       "cycleNo": 151.0,
@@ -537,7 +537,7 @@
       "segment_start_frame": 6188,
       "segment_end_frame": 7426,
       "downsample": 4,
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_151_17_c2_x10_HighHighCOV_150723_local5.png"
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/overlays/cycle_151_17_c2_x10_HighHighCOV_150723_local5.png"
     }
   ],
   "guardrail": "Automatic transfer-ranked ROI candidates reconstructed from sampled HDF5 cycle segments; compatible with particle-region sequence export, but not manual annotations or validated fronts."

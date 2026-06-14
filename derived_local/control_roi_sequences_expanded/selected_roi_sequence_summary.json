@@ -29,6 +29,6 @@
   "guardrail": "Sequences are fixed padded crops around automatically selected ROIs; they are particle-region model inputs, not manual annotations.",
   "n_roi_sequences": 32,
   "output_size": 96,
-  "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection_expanded/selected_control_rois.csv",
+  "roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_selection_expanded/selected_control_rois.csv",
   "samples_per_roi": 96
 }

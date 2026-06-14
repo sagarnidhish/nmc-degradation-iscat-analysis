@@ -156,12 +156,12 @@
   "n_rows": 172,
   "n_sources": 12,
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_correlations.csv",
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_joined.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_source_summary.csv",
-    "strata": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_stratum_tests.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_summary.json",
-    "target_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_target_metrics.csv"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_correlations.csv",
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_joined.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_source_summary.csv",
+    "strata": "/scratch/<account>/<username>/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_stratum_tests.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_summary.json",
+    "target_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit/exact_feature_mechanism_target_metrics.csv"
   },
   "primary_features": [
     "particle_vs_context_mean_diff_positive_fraction",

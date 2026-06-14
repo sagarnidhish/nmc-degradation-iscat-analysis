@@ -6,14 +6,14 @@
   "n_roi_sequences": 96,
   "n_sources": 14,
   "outputs": {
-    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_cycle_summary.csv",
-    "cycle_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_cycle_tests.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_feature_tests.csv",
-    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_features.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_summary.json"
+    "cycle_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_cycle_summary.csv",
+    "cycle_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_cycle_tests.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_feature_tests.csv",
+    "features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_features.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_summary.json"
   },
-  "roi_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences",
+  "roi_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences",
   "source_summary": [
     {
       "future_any_drop_within_16cycles": 0.0,

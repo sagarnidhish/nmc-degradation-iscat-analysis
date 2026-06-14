@@ -1,5 +1,5 @@
 {
-  "contact_sheet": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_review_packet/pre_event_review_contact_sheet.png",
+  "contact_sheet": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_review_packet/pre_event_review_contact_sheet.png",
   "event_relative_bin_counts": {
     "far_pre_event_17_32": 22,
     "mid_pre_event_9_16": 22,
@@ -13,11 +13,11 @@
   "n_rendered_frame_strips": 24,
   "n_sources": 14,
   "outputs": {
-    "asset_index": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_review_packet/source_balanced_pre_event_review_assets.csv",
-    "contact_sheet": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_review_packet/pre_event_review_contact_sheet.png",
-    "frame_strips": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_review_packet/candidate_frame_strips",
-    "ranked_candidates": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_review_packet/source_balanced_pre_event_review_ranked_candidates.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_review_packet/source_balanced_pre_event_review_packet_summary.json"
+    "asset_index": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_review_packet/source_balanced_pre_event_review_assets.csv",
+    "contact_sheet": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_review_packet/pre_event_review_contact_sheet.png",
+    "frame_strips": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_review_packet/candidate_frame_strips",
+    "ranked_candidates": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_review_packet/source_balanced_pre_event_review_ranked_candidates.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_review_packet/source_balanced_pre_event_review_packet_summary.json"
   },
   "review_reason_counts": {
     "context_or_guardrail_row": 74,

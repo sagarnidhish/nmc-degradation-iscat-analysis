@@ -103,8 +103,8 @@ def load_rollout_features(rollout_dir: str) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling")
     args = parser.parse_args()
 
     roi_path = os.path.join(args.derived_dir, "multi_cycle_roi_analysis", "multi_cycle_roi_descriptors.csv")

@@ -216,9 +216,9 @@ def write_html(manifest: pd.DataFrame, out_dir: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--roi-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences")
-    parser.add_argument("--remeasure-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_front_identity_review_packet")
+    parser.add_argument("--roi-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_sequences")
+    parser.add_argument("--remeasure-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_front_identity_review_packet")
     args = parser.parse_args()
 
     roi_dir = Path(args.roi_dir)

@@ -278,8 +278,8 @@ def event_tests(df: pd.DataFrame, features: List[str], rng: np.random.Generator,
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/physics_consistency_claim_matrix")
     parser.add_argument("--n-permutation", type=int, default=2000)
     parser.add_argument("--seed", type=int, default=29)
     args = parser.parse_args()

@@ -1,5 +1,5 @@
 {
-  "context_source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context/event_protocol_context_table.csv",
+  "context_source": "/scratch/<account>/<username>/Alek_Jiho/derived/event_protocol_context/event_protocol_context_table.csv",
   "event_reference_summary": [
     {
       "I_abs_mean_mA": 0.500889,
@@ -185,20 +185,20 @@
     }
   ],
   "guardrail": "Correlations join automatic ROI candidates to cycle-level echem/protocol summaries. They are hypothesis screens and are not causal evidence or calibrated transport constants.",
-  "local_window_source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_local_window_scan/local_echem_window_features.csv",
+  "local_window_source": "/scratch/<account>/<username>/Alek_Jiho/derived/protocol_local_window_scan/local_echem_window_features.csv",
   "n_cycles": 11,
   "n_event_reference_cycles": 4,
   "n_joined_roi": 52,
   "outputs": {
-    "block_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/roi_protocol_block_summary.csv",
-    "event_reference_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/event_reference_roi_echem_correlations.csv",
-    "event_reference_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/event_reference_roi_echem_summary.csv",
-    "group_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/roi_echem_group_summary.csv",
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/multi_cycle_roi_echem_joined.csv",
-    "roi_echem_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/roi_echem_spearman_correlations.csv",
-    "within_reference_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/within_reference_event_control_tests.csv"
+    "block_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/roi_protocol_block_summary.csv",
+    "event_reference_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/event_reference_roi_echem_correlations.csv",
+    "event_reference_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/event_reference_roi_echem_summary.csv",
+    "group_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/roi_echem_group_summary.csv",
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/multi_cycle_roi_echem_joined.csv",
+    "roi_echem_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/roi_echem_spearman_correlations.csv",
+    "within_reference_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/within_reference_event_control_tests.csv"
   },
-  "roi_source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_descriptors.csv",
+  "roi_source": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_descriptors.csv",
   "top_roi_echem_correlations": [
     {
       "echem_feature": "n_frames_percentile",

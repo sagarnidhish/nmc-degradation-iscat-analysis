@@ -9,10 +9,10 @@
   "n_criteria": 14,
   "n_global_hard_blockers_applied": 3,
   "outputs": {
-    "blocker_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_blocker_table.csv",
-    "review_queue": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_review_queue.csv",
-    "scenario_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_scenario_table.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_sensitivity_summary.json"
+    "blocker_table": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_blocker_table.csv",
+    "review_queue": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_review_queue.csv",
+    "scenario_table": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_scenario_table.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit/diffusion_unblock_sensitivity_summary.json"
   },
   "overall_status": "diffusion_claim_still_blocked",
   "scenario_summary": [

@@ -85,9 +85,9 @@ def corr_table(df: pd.DataFrame, x_cols: List[str], y_cols: List[str]) -> pd.Dat
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--rollout-csv", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_features.csv")
-    ap.add_argument("--phase-csv", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_phase_kinetics_audit/source_balanced_pre_event_phase_kinetics_features.csv")
-    ap.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_phase_kinetics_bridge_v2")
+    ap.add_argument("--rollout-csv", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_rollout_audit/source_balanced_sequence_rollout_features.csv")
+    ap.add_argument("--phase-csv", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_phase_kinetics_audit/source_balanced_pre_event_phase_kinetics_features.csv")
+    ap.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/rollout_phase_kinetics_bridge_v2")
     args = ap.parse_args()
 
     out_dir = Path(args.out_dir)

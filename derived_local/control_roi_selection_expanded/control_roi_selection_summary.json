@@ -22,9 +22,9 @@
     }
   ],
   "controls_per_event_cycle": 24,
-  "event_roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv",
+  "event_roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv",
   "guardrail": "Control ROIs are automatic reconstructed candidates from nearby non-event segments, not manual annotations.",
   "max_controls_per_control_cycle": 8,
   "n_control_rois": 32,
-  "recon_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_object_candidate_reconstruction/reconstructed_object_candidates.csv"
+  "recon_path": "/scratch/<account>/<username>/Alek_Jiho/derived/event_object_candidate_reconstruction/reconstructed_object_candidates.csv"
 }

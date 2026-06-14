@@ -144,11 +144,11 @@
   "n_event_roi": 24,
   "n_roi": 52,
   "outputs": {
-    "by_event_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_by_event_tests.csv",
-    "descriptors": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_descriptors.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_feature_tests.csv",
-    "group_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_group_summary.csv",
-    "ranked": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_ranked.csv"
+    "by_event_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_by_event_tests.csv",
+    "descriptors": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_descriptors.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_feature_tests.csv",
+    "group_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_group_summary.csv",
+    "ranked": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_ranked.csv"
   },
   "top_by_event_feature_tests": [
     {

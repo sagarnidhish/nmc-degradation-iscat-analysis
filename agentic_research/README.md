@@ -20,7 +20,7 @@ bounded: they read raw data and derived summaries, write new outputs under
 
 ## Isambard Usage
 
-From `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg`:
+From `/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg`:
 
 ```bash
 bash agentic_research/run_all_agentic_smoke.sh
@@ -29,7 +29,7 @@ bash agentic_research/run_all_agentic_smoke.sh
 Outputs are written to:
 
 ```text
-/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/
+/scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/
 ```
 
 For full HPC submission, use:

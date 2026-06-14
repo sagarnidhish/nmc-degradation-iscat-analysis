@@ -23,12 +23,12 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "clock_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_clock_tests.csv",
-    "event_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_event_tests.csv",
-    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_features.csv",
-    "matched_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_matched_tests.csv",
-    "ranked_candidates": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_ranked_candidates.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_summary.json"
+    "clock_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_clock_tests.csv",
+    "event_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_event_tests.csv",
+    "features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_features.csv",
+    "matched_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_matched_tests.csv",
+    "ranked_candidates": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_ranked_candidates.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit/source_balanced_pre_event_front_consensus_summary.json"
   },
   "top_clock_tests": [
     {

@@ -360,13 +360,13 @@
   "n_sources": 14,
   "near_vs_non_median_fallback_diff": 0.16666666666666666,
   "outputs": {
-    "event_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_event_tests.csv",
-    "failures": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_failures.csv",
-    "high_fallback": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_high_risk_rois.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_metrics.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_history_fallback_audit/README.md",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_summary.json"
+    "event_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_event_tests.csv",
+    "failures": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_failures.csv",
+    "high_fallback": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_high_risk_rois.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_metrics.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_history_fallback_audit/README.md",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_history_fallback_audit/particle_mask_history_fallback_summary.json"
   },
   "overall_status": "particle_mask_history_fallback_audit_ready",
   "q90_fallback_frame_fraction": 0.5749999999999998,

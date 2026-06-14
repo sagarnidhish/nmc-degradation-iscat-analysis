@@ -139,9 +139,9 @@ def feature_importance(model_name: str, model: object, feature_names: List[str])
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--analysis-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis")
-    parser.add_argument("--rollout-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor")
+    parser.add_argument("--analysis-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis")
+    parser.add_argument("--rollout-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor")
     parser.add_argument("--random-state", type=int, default=29)
     args = parser.parse_args()
 

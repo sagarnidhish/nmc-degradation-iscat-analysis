@@ -172,7 +172,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--particles-csv", default="")
     parser.add_argument("--cycle-frames-csv", default="")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets")
     parser.add_argument("--horizons", type=int, nargs="+", default=[10, 20, 40])
     parser.add_argument("--window", type=int, default=5)
     parser.add_argument("--sigma-multiplier", type=float, default=2.0)
@@ -180,15 +180,15 @@ def main() -> None:
 
     particles_path = resolve_existing_path([
         args.particles_csv,
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/exampleParticles.csv",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/exampleParticles.csv",
-        "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/exampleParticles.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/exampleParticles.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/exampleParticles.csv",
+        "/path/to/alek_jiho_nmc_deg/echemDF_full/exampleParticles.csv",
     ])
     frames_path = resolve_existing_path([
         args.cycle_frames_csv,
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/cycleFrames.csv",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
-        "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/cycleFrames.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
+        "/path/to/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
     ])
     if not particles_path:
         raise SystemExit("exampleParticles.csv not found")

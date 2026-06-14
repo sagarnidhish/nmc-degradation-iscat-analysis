@@ -9,7 +9,7 @@ This packet renders the manual-QC decision queue, not just the earlier consensus
 - Sources rendered: 12
 - Action tiers rendered: {'review_front_only_guardrail': 11, 'routine_or_low_concordance': 11, 'review_kinetic_only_guardrail': 8, 'review_front_and_kinetics_first': 5, 'context_control_concordant': 4, 'review_strict_front_gate': 1}
 - Event bins rendered: {'near_pre_event_1_8': 23, 'post_event_1_16': 6, 'mid_pre_event_9_16': 4, 'far_pre_event_17_32': 4, 'no_near_event_control': 3}
-- Contact sheet: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_visual_packet/manual_qc_visual_contact_sheet.png`
+- Contact sheet: `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_visual_packet/manual_qc_visual_contact_sheet.png`
 
 ## Top Rendered Candidates
 

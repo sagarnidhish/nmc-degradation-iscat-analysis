@@ -1,6 +1,6 @@
 {
-  "selected_manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences/selected_roi_sequence_manifest.csv",
-  "transfer_manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_sequences/selected_roi_sequence_manifest.csv",
+  "selected_manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences/selected_roi_sequence_manifest.csv",
+  "transfer_manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_sequences/selected_roi_sequence_manifest.csv",
   "n_selected_roi": 11,
   "n_transfer_ranked_roi": 48,
   "rank": 16,

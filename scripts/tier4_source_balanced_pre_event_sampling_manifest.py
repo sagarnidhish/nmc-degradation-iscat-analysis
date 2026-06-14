@@ -236,11 +236,11 @@ def candidate_validation_score(cand: pd.Series, cyc: pd.Series) -> float:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--ranked-cycles", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_full_cycles.csv")
-    parser.add_argument("--event-cycles", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_abrupt_events.csv")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--ranked-cycles", default="/scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_full_cycles.csv")
+    parser.add_argument("--event-cycles", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets/particle_abrupt_events.csv")
     parser.add_argument("--particles-csv", default="")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest")
     parser.add_argument("--per-source", type=int, default=5)
     parser.add_argument("--max-cycles", type=int, default=64)
     parser.add_argument("--top-candidates-per-cycle", type=int, default=2)

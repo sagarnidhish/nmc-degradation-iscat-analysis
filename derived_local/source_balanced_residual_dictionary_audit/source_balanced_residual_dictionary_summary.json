@@ -822,13 +822,13 @@
     }
   ],
   "outputs": {
-    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_features.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_feature_tests.csv",
-    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_cycle_summary.csv",
-    "cycle_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_cycle_tests.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_predictions.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_metrics.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_summary.json"
+    "features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_features.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_feature_tests.csv",
+    "cycle_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_cycle_summary.csv",
+    "cycle_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_cycle_tests.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_predictions.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_metrics.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit/source_balanced_residual_dictionary_summary.json"
   },
   "guardrail": "Residual dictionary bases are label-free PCA summaries of automatic source-balanced ROI crops. They are useful for ranking dynamics hypotheses, not a trained deployable predictor or calibrated physics model."
 }

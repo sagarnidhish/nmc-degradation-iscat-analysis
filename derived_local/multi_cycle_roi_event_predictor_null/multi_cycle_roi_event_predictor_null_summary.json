@@ -74,8 +74,8 @@
     }
   ],
   "outputs": {
-    "observed_vs_permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null/observed_vs_permutation_null.csv",
-    "permutation_null_model_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null/permutation_null_model_summary.csv"
+    "observed_vs_permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null/observed_vs_permutation_null.csv",
+    "permutation_null_model_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null/permutation_null_model_summary.csv"
   },
-  "predictor_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor"
+  "predictor_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor"
 }

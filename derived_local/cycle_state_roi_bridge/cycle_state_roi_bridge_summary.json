@@ -38,14 +38,14 @@
   "n_roi_rows": 52,
   "n_targets": 13,
   "outputs": {
-    "cluster_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_cluster_summary.csv",
-    "cycle_collapsed": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_cycle_collapsed.csv",
-    "cycle_collapsed_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_cycle_collapsed_tests.csv",
-    "future_state_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_future_state_tests.csv",
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_joined.csv",
-    "reference_centered_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_reference_centered_tests.csv",
-    "row_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_row_tests.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_summary.json"
+    "cluster_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_cluster_summary.csv",
+    "cycle_collapsed": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_cycle_collapsed.csv",
+    "cycle_collapsed_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_cycle_collapsed_tests.csv",
+    "future_state_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_future_state_tests.csv",
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_joined.csv",
+    "reference_centered_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_reference_centered_tests.csv",
+    "row_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_row_tests.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_roi_bridge/cycle_state_roi_bridge_summary.json"
   },
   "top_cycle_collapsed_tests": [
     {

@@ -8,8 +8,8 @@
   },
   "missing_roi_ids": [],
   "outputs": {
-    "tracker_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking_table/control_balanced_front_rois_for_tracking.csv",
-    "missing_rows": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking_table/control_balanced_front_tracking_missing.csv"
+    "tracker_table": "/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_tracking_table/control_balanced_front_rois_for_tracking.csv",
+    "missing_rows": "/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_tracking_table/control_balanced_front_tracking_missing.csv"
   },
   "guardrail": "This table only joins automatic front/object candidates into the high-resolution tracker schema; it does not create manual QC labels."
 }

@@ -5,15 +5,15 @@
   "n_roi_rows": 52,
   "n_shape_features": 48,
   "outputs": {
-    "cycle_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_cycle_correlations.csv",
-    "cycle_shape_features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_shape_features.csv",
-    "event_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_event_tests.csv",
-    "roi_binary_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_roi_binary_tests.csv",
-    "roi_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_roi_correlations.csv",
-    "roi_joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_roi_joined.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_shape_audit_summary.json",
-    "sync_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_sync_tests.csv",
-    "trace_joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_trace_joined.csv"
+    "cycle_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_cycle_correlations.csv",
+    "cycle_shape_features": "/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_shape_features.csv",
+    "event_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_event_tests.csv",
+    "roi_binary_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_roi_binary_tests.csv",
+    "roi_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_roi_correlations.csv",
+    "roi_joined": "/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_roi_joined.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_shape_audit_summary.json",
+    "sync_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_sync_tests.csv",
+    "trace_joined": "/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit/within_cycle_echem_trace_joined.csv"
   },
   "top_cycle_shape_correlations": [
     {

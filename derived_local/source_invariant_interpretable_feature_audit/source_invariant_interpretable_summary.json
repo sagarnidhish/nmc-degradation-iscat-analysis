@@ -15,13 +15,13 @@
   "n_rows": 72,
   "n_sources": 9,
   "outputs": {
-    "feature_inventory": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_inventory.csv",
-    "permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_permutation_null.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_set_predictions.csv",
-    "set_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_set_metrics.csv",
-    "source_stability": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_source_stability.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/source_invariant_interpretable_summary.json",
-    "univariate": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_univariate_metrics.csv"
+    "feature_inventory": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_inventory.csv",
+    "permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_permutation_null.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_set_predictions.csv",
+    "set_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_set_metrics.csv",
+    "source_stability": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_source_stability.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/source_invariant_interpretable_summary.json",
+    "univariate": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_interpretable_feature_audit/interpretable_feature_univariate_metrics.csv"
   },
   "source_stability": [
     {

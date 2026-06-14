@@ -157,9 +157,9 @@ def correlations(df: pd.DataFrame, features: List[str]) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--cohort-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort/multi_cycle_roi_table.csv")
-    parser.add_argument("--manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis")
+    parser.add_argument("--cohort-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_cohort/multi_cycle_roi_table.csv")
+    parser.add_argument("--manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis")
     args = parser.parse_args()
 
     cohort = pd.read_csv(args.cohort_table)

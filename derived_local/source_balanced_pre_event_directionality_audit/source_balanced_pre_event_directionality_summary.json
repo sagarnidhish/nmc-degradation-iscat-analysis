@@ -613,10 +613,10 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "best_by_target": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_best_by_target.csv",
-    "clock_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_clock_metrics.csv",
-    "merged_features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_features.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_metrics.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_summary.json"
+    "best_by_target": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_best_by_target.csv",
+    "clock_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_clock_metrics.csv",
+    "merged_features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_features.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_metrics.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_summary.json"
   }
 }

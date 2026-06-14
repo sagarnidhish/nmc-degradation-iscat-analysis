@@ -10,14 +10,14 @@ import numpy as np
 import pandas as pd
 
 
-DEFAULT_REMOTE_ROOT = Path("/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
+DEFAULT_REMOTE_ROOT = Path("/scratch/<account>/<username>/Alek_Jiho")
 
 
 def resolve_root(root: str = "") -> Path:
     candidates = [
         Path(root).expanduser() if root else None,
         DEFAULT_REMOTE_ROOT,
-        Path("/home/ns2038/Downloads/alek_jiho_nmc_deg"),
+        Path("/path/to/alek_jiho_nmc_deg"),
         Path.cwd(),
     ]
     for candidate in candidates:

@@ -313,8 +313,8 @@ def permutation_null_auc(df: pd.DataFrame, target: str, features: List[str], pre
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast")
     parser.add_argument("--n-permutation", type=int, default=200)
     args = parser.parse_args()
 

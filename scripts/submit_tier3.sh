@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=tier3_nmc_dl
-#SBATCH --account=brics.u6hp
+#SBATCH --account=<slurm-account>
 #SBATCH --partition=workq
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -8,13 +8,13 @@
 #SBATCH --gpus-per-node=2
 #SBATCH --time=10:00:00
 #SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=sagarnidhish26@gmail.com
-#SBATCH --output=/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/logs/tier3_%j.out
-#SBATCH --error=/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/logs/tier3_%j.err
+#SBATCH --mail-user=your-email@example.com
+#SBATCH --output=/scratch/<account>/<username>/Alek_Jiho/derived/logs/tier3_%j.out
+#SBATCH --error=/scratch/<account>/<username>/Alek_Jiho/derived/logs/tier3_%j.err
 
 set -euo pipefail
 
-WORKDIR="/scratch/u6hp/nsagar.u6hp/Alek_Jiho"
+WORKDIR="/scratch/<account>/<username>/Alek_Jiho"
 DERIVED="${WORKDIR}/derived"
 LOGS="${DERIVED}/logs"
 SCRIPTS="${WORKDIR}/scripts"

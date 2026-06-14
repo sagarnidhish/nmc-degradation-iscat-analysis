@@ -59,12 +59,12 @@
   "n_mode_targets": 4,
   "n_roi_rows": 52,
   "outputs": {
-    "cluster_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_cluster_summary.csv",
-    "cycle_mode_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_table.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_model_metrics.csv",
-    "permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_permutation_null.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_predictions.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_bridge_summary.json"
+    "cluster_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_cluster_summary.csv",
+    "cycle_mode_table": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_table.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_model_metrics.csv",
+    "permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_permutation_null.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_predictions.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_mode_frequency_bridge/cycle_state_mode_frequency_bridge_summary.json"
   },
   "permutation_null": [
     {

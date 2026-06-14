@@ -7,15 +7,15 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "joined": "/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_joined.csv",
-    "model_deltas": "/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_model_deltas.csv",
-    "model_metrics": "/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_model_metrics.csv",
-    "predictions": "/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_predictions.csv",
-    "readme": "/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/README.md",
-    "summary": "/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_summary.json",
-    "target_tests": "/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_target_tests.csv",
-    "timebase_class_tests": "/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_class_tests.csv",
-    "timebase_correlations": "/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_timebase_correlations.csv"
+    "joined": "/home/u6hp/<username>/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_joined.csv",
+    "model_deltas": "/home/u6hp/<username>/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_model_deltas.csv",
+    "model_metrics": "/home/u6hp/<username>/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_model_metrics.csv",
+    "predictions": "/home/u6hp/<username>/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_predictions.csv",
+    "readme": "/home/u6hp/<username>/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/README.md",
+    "summary": "/home/u6hp/<username>/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_summary.json",
+    "target_tests": "/home/u6hp/<username>/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_target_tests.csv",
+    "timebase_class_tests": "/home/u6hp/<username>/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_class_tests.csv",
+    "timebase_correlations": "/home/u6hp/<username>/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out/timebase_aware_front_kinetic_concordance_timebase_correlations.csv"
   },
   "scenario_counts": {
     "all_rows": {

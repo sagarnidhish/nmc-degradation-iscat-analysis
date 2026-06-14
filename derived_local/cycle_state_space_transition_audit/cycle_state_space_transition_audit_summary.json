@@ -150,16 +150,16 @@
   "n_features_used": 107,
   "n_trace_cycles": 89,
   "outputs": {
-    "classifier_folds": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_future_drop_classifier_folds.csv",
-    "cluster_selection": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_cluster_selection.csv",
-    "cluster_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_cluster_summary.csv",
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_correlations.csv",
-    "cycle_state_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_space_table.csv",
-    "future_drop_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_future_drop_tests.csv",
-    "pc_loadings": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_pc_loadings.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_space_transition_audit_summary.json",
-    "temporal_holdout": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_future_drop_temporal_holdout.csv",
-    "transition_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_transition_summary.csv"
+    "classifier_folds": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_future_drop_classifier_folds.csv",
+    "cluster_selection": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_cluster_selection.csv",
+    "cluster_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_cluster_summary.csv",
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_correlations.csv",
+    "cycle_state_table": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_space_table.csv",
+    "future_drop_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_future_drop_tests.csv",
+    "pc_loadings": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_pc_loadings.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_space_transition_audit_summary.json",
+    "temporal_holdout": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_future_drop_temporal_holdout.csv",
+    "transition_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_transition_summary.csv"
   },
   "pca_explained_variance": [
     0.35332899170315657,

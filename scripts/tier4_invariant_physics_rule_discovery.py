@@ -350,8 +350,8 @@ def discover_rules(df: pd.DataFrame, tests: pd.DataFrame, target: str, quantile:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/invariant_physics_rule_discovery")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/invariant_physics_rule_discovery")
     parser.add_argument("--target", default=TARGET)
     parser.add_argument("--quantile", type=float, default=0.75)
     parser.add_argument("--max-pair-features", type=int, default=18)

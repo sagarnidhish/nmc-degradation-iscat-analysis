@@ -574,10 +574,10 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit/source_balanced_pre_event_source_invariant_metrics.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit/source_balanced_pre_event_source_invariant_predictions.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit/source_balanced_pre_event_source_invariant_summary.json",
-    "univariate": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit/source_balanced_pre_event_source_invariant_univariate.csv"
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit/source_balanced_pre_event_source_invariant_metrics.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit/source_balanced_pre_event_source_invariant_predictions.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit/source_balanced_pre_event_source_invariant_summary.json",
+    "univariate": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit/source_balanced_pre_event_source_invariant_univariate.csv"
   },
   "targets": [
     "clean_pre8_vs_post_control",

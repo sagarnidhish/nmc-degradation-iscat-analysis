@@ -4,7 +4,7 @@ Inspection bundle for the top precursor-informed ROI candidates.
 
 - Ranked candidates included: 12
 - Candidates with at least one visual asset: 12
-- Contact sheet: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_review_visual_bundle/top_candidate_contact_sheet.png`
+- Contact sheet: `/scratch/<account>/<username>/Alek_Jiho/derived/precursor_review_visual_bundle/top_candidate_contact_sheet.png`
 
 ## Top Candidates
 - 1. cycle156_rank7_obj27 (event, cycle 156.0): score=5.527, tier=high

@@ -314,9 +314,9 @@ def correlation_table(per_roi: pd.DataFrame, ratios: pd.DataFrame, mask_stabilit
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv")
-    parser.add_argument("--mask-stability", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_stability_audit/particle_mask_stability_per_roi.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_roi_rollout_audit")
+    parser.add_argument("--manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv")
+    parser.add_argument("--mask-stability", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_stability_audit/particle_mask_stability_per_roi.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/masked_roi_rollout_audit")
     parser.add_argument("--rank", type=int, default=16)
     parser.add_argument("--ridge", type=float, default=1e-4)
     parser.add_argument("--train-fraction", type=float, default=0.67)

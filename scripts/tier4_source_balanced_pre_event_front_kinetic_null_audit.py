@@ -253,8 +253,8 @@ def top_items(df: pd.DataFrame, n: int = 12) -> List[Dict[str, Any]]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit")
     parser.add_argument("--n-perm", type=int, default=50)
     parser.add_argument("--n-boot", type=int, default=0)
     parser.add_argument("--seed", type=int, default=20260522)

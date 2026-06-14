@@ -90,15 +90,15 @@
   "n_rows": 172,
   "n_sources": 9,
   "outputs": {
-    "axis_model_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_axis_model_metrics.csv",
-    "axis_model_predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_axis_model_predictions.csv",
-    "axis_scores": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_axis_scores.csv",
-    "axis_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_axis_tests.csv",
-    "mechanism_mode_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_mechanism_mode_summary.csv",
-    "mechanism_modes": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_mechanism_modes.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_mechanism_summary.json",
-    "top_candidates": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_top_candidates.csv"
+    "axis_model_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_axis_model_metrics.csv",
+    "axis_model_predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_axis_model_predictions.csv",
+    "axis_scores": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_axis_scores.csv",
+    "axis_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_axis_tests.csv",
+    "mechanism_mode_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_mechanism_mode_summary.csv",
+    "mechanism_modes": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_mechanism_modes.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_mechanism_summary.json",
+    "top_candidates": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_optical_loss_mechanism_audit/signed_optical_loss_top_candidates.csv"
   },
   "source_summary": [
     {

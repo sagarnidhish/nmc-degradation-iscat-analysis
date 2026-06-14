@@ -61,7 +61,7 @@
   "full_event_cycles_with_near_and_far": 2,
   "full_event_delta_rows": 88,
   "guardrail": "Cycle-level event-distance trajectories reduce duplicate ROI counting and test monotonic pre-event organization, but automatic crops/masks and sparse full far-mid-near event trajectories mean these are physics triage signals, not calibrated phase boundaries, diffusion coefficients, or causal degradation forecasts.",
-  "input_readout_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit",
+  "input_readout_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_readout_audit",
   "n_cycle_rows": 38,
   "n_event_cycles": 4,
   "n_features_tested": 44,

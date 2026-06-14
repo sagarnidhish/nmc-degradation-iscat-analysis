@@ -243,9 +243,9 @@ def correlation_tests(df: pd.DataFrame, score: str, context_cols: List[str]) -> 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--masked-cycle-warning", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_rollout_cycle_warning/masked_rollout_cycle_warning_joined.csv")
-    parser.add_argument("--cycle-state", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_space_table.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning")
+    parser.add_argument("--masked-cycle-warning", default="/scratch/<account>/<username>/Alek_Jiho/derived/masked_rollout_cycle_warning/masked_rollout_cycle_warning_joined.csv")
+    parser.add_argument("--cycle-state", default="/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_space_table.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_state_transfer_warning")
     parser.add_argument("--top-k", type=int, default=8)
     parser.add_argument("--ridge-alpha", type=float, default=2.0)
     parser.add_argument("--n-permutation", type=int, default=5000)

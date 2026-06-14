@@ -40,13 +40,13 @@
   "n_ok": 128,
   "n_sources": 14,
   "outputs": {
-    "event_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_event_tests.csv",
-    "failures": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_failures.csv",
-    "method_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_method_summary.csv",
-    "per_roi": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_per_roi.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/README.md",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_summary.json"
+    "event_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_event_tests.csv",
+    "failures": "/scratch/<account>/<username>/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_failures.csv",
+    "method_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_method_summary.csv",
+    "per_roi": "/scratch/<account>/<username>/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_per_roi.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/README.md",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/history_fallback_masked_rollout_ablation/history_fallback_masked_rollout_ablation_summary.json"
   },
   "overall_status": "history_fallback_masked_rollout_ablation_ready",
   "source_summary_top": [

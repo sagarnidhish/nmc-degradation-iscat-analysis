@@ -239,11 +239,11 @@ def correlation_tests(df: pd.DataFrame, features: List[str], n_perm: int, seed: 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--masked-per-roi", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_roi_rollout_audit/masked_roi_rollout_per_roi_metrics.csv")
-    parser.add_argument("--masked-ratios", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_roi_rollout_audit/masked_roi_rollout_method_ratios.csv")
-    parser.add_argument("--trace-cycles", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_cycle_features.csv")
-    parser.add_argument("--cycle-state", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_space_table.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_rollout_cycle_warning")
+    parser.add_argument("--masked-per-roi", default="/scratch/<account>/<username>/Alek_Jiho/derived/masked_roi_rollout_audit/masked_roi_rollout_per_roi_metrics.csv")
+    parser.add_argument("--masked-ratios", default="/scratch/<account>/<username>/Alek_Jiho/derived/masked_roi_rollout_audit/masked_roi_rollout_method_ratios.csv")
+    parser.add_argument("--trace-cycles", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_cycle_features.csv")
+    parser.add_argument("--cycle-state", default="/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit/cycle_state_space_table.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/masked_rollout_cycle_warning")
     parser.add_argument("--n-permutation", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()

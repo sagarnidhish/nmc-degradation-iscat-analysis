@@ -1,7 +1,7 @@
 {
   "n_roi": 72,
   "n_frames_total": 6912,
-  "manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv",
+  "manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv",
   "method": {
     "candidate_mask": "per-frame local contrast plus temporal-std evidence inside a sequence-level central prior",
     "fallback": "previous accepted mask when area, fragmentation, or centroid jump violates rolling-history constraints",

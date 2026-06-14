@@ -3,10 +3,10 @@
   "n_kinetic_features": 40,
   "n_roi": 52,
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/phase_kinetics_avrami/phase_kinetics_avrami_correlations.csv",
-    "group_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/phase_kinetics_avrami/phase_kinetics_avrami_group_tests.csv",
-    "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/phase_kinetics_avrami/phase_kinetics_avrami_roi_table.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/phase_kinetics_avrami/phase_kinetics_avrami_summary.json"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/phase_kinetics_avrami/phase_kinetics_avrami_correlations.csv",
+    "group_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/phase_kinetics_avrami/phase_kinetics_avrami_group_tests.csv",
+    "roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/phase_kinetics_avrami/phase_kinetics_avrami_roi_table.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/phase_kinetics_avrami/phase_kinetics_avrami_summary.json"
   },
   "threshold_quantiles": [
     0.6,

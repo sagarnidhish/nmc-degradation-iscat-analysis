@@ -654,11 +654,11 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "family_deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor/source_balanced_pre_event_multimodal_family_deltas.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor/source_balanced_pre_event_multimodal_metrics.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor/source_balanced_pre_event_multimodal_predictions.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor/source_balanced_pre_event_multimodal_summary.json",
-    "univariate": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor/source_balanced_pre_event_multimodal_univariate.csv"
+    "family_deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor/source_balanced_pre_event_multimodal_family_deltas.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor/source_balanced_pre_event_multimodal_metrics.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor/source_balanced_pre_event_multimodal_predictions.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor/source_balanced_pre_event_multimodal_summary.json",
+    "univariate": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor/source_balanced_pre_event_multimodal_univariate.csv"
   },
   "targets": [
     "near_vs_post_control",

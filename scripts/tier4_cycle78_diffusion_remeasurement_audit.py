@@ -381,9 +381,9 @@ def save_target_plot(meta: dict[str, Any], out_png: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--roi-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--roi-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_sequences")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit")
     parser.add_argument("--n-bootstrap", type=int, default=1000)
     parser.add_argument("--block-len", type=int, default=8)
     parser.add_argument("--seed", type=int, default=78)

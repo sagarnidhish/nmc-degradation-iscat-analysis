@@ -277,8 +277,8 @@ def compute_roi_features(row: pd.Series) -> Dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--roi-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit")
+    parser.add_argument("--roi-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit")
     args = parser.parse_args()
 
     roi_dir = Path(args.roi_dir)

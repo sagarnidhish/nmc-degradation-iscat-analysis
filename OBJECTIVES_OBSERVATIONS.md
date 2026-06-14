@@ -8,8 +8,8 @@ Use the Alek_Jiho NMC degradation data and the SP/FOV charge-photometry video wo
 
 ## Current Evidence
 
-- Alek_Jiho raw/derived data are on Isambard under `/scratch/u6hp/nsagar.u6hp/Alek_Jiho`.
-- The large electrochemistry CSV is present at `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv`; Tier 1 path discovery has been updated to search this location.
+- Alek_Jiho raw/derived data are on Isambard under `/scratch/<account>/<username>/Alek_Jiho`.
+- The large electrochemistry CSV is present at `/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv`; Tier 1 path discovery has been updated to search this location.
 - Particle intensity event targets are already generated under `derived/particle_event_targets`.
 - The event target table has 356 particle-cycle rows from 4 particles across 89 cycles.
 - Abrupt optical drop events are concentrated around cycles 86 and 116 for particles 0-2, with particle1 also at 156 and particle3 at 60. This makes synchronized degradation events a strong hypothesis rather than isolated particle noise.
@@ -46,7 +46,7 @@ The strongest route is a two-track program. For Alek_Jiho NMC degradation, focus
 
 A new lightweight synchrony analysis was added in `scripts/tier1_event_synchrony_analysis.py` and run on Isambard. It preserves each particle's number of abrupt-drop events while randomly permuting event cycles over that particle's observed cycle grid.
 
-Output directory: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_synchrony`
+Output directory: `/scratch/<account>/<username>/Alek_Jiho/derived/event_synchrony`
 
 Key result:
 
@@ -61,7 +61,7 @@ Interpretation: synchronized optical degradation timing is now a concrete hypoth
 
 A targeted chunked scan of `echemDF_full.csv` was added in `scripts/tier1_event_echem_coupling.py` and run on Isambard while the larger Slurm jobs remained pending.
 
-Output directory: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling`
+Output directory: `/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling`
 
 Key result:
 
@@ -78,7 +78,7 @@ Interpretation: the synchronized optical events are unlikely to be random partic
 
 A protocol-context pass was added in `scripts/tier1_event_protocol_context.py` using the compact event/echem cycle table.
 
-Output directory: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context`
+Output directory: `/scratch/<account>/<username>/Alek_Jiho/derived/event_protocol_context`
 
 Key result:
 
@@ -92,7 +92,7 @@ Interpretation: synchronized optical degradation events are now linked most clea
 
 A recovery/persistence QC pass was added in `scripts/tier1_event_recovery_qc.py` and run on Isambard using the provided particle intensity traces, cycle-frame metadata, and source HDF5 address strings.
 
-Output directory: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_recovery_qc`
+Output directory: `/scratch/<account>/<username>/Alek_Jiho/derived/event_recovery_qc`
 
 Key result:
 
@@ -108,7 +108,7 @@ Interpretation: the strongest synchronized events behave like persistent degrada
 
 A sampled full-frame QC pass was added in `scripts/tier1_event_frame_proxy_qc.py` and run on Isambard because the chopped cycle HDF5 files referenced by `exampleParticles.csv` are not present on Isambard.
 
-Output directory: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_frame_proxy_qc`
+Output directory: `/scratch/<account>/<username>/Alek_Jiho/derived/event_frame_proxy_qc`
 
 Key result:
 
@@ -127,7 +127,7 @@ Interpretation: full-HDF5 sampled-frame QC did not reveal an obvious missing-fra
 
 An integrated evidence table was added in `scripts/tier1_integrated_event_evidence.py` and run on Isambard. It merges synchrony, electrochemistry, protocol/frame-count context, recovery persistence, and full-HDF5 proxy frame QC into one auditable degradation-mode ranking.
 
-Output directory: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/integrated_event_evidence`
+Output directory: `/scratch/<account>/<username>/Alek_Jiho/derived/integrated_event_evidence`
 
 Key result:
 
@@ -143,7 +143,7 @@ Interpretation: the strongest NMC finding so far is not a diffusion coefficient 
 
 Implemented the four paper-inspired workflows as separate Isambard folders under:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/agentic_research`
+`/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/agentic_research`
 
 The four workflows are:
 
@@ -154,7 +154,7 @@ The four workflows are:
 
 Smoke outputs are written on Isambard under:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs`
+`/scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs`
 
 Current ERA ranking prioritizes: frame-count/protocol matched controls, protocol-local echem window scans, ROI event visual QC, hazard calibration, and degradation-mode clustering.
 
@@ -184,7 +184,7 @@ Added and ran:
 
 Output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/frame_count_matched_controls`
+`/scratch/<account>/<username>/Alek_Jiho/derived/frame_count_matched_controls`
 
 Key result:
 
@@ -205,7 +205,7 @@ Added and ran:
 
 Output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_local_window_scan`
+`/scratch/<account>/<username>/Alek_Jiho/derived/protocol_local_window_scan`
 
 Key result:
 
@@ -223,7 +223,7 @@ Added and ran:
 
 Output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/degradation_mode_clustering`
+`/scratch/<account>/<username>/Alek_Jiho/derived/degradation_mode_clustering`
 
 Key result:
 
@@ -243,9 +243,9 @@ Three additional scripts were validated and run on Isambard:
 
 Output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/frame_count_matched_controls`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_local_window_scan`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/degradation_mode_clustering`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/frame_count_matched_controls`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/protocol_local_window_scan`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/degradation_mode_clustering`
 
 Key result:
 
@@ -266,8 +266,8 @@ Pulled the Isambard-only proxy QC and integrated event evidence scripts into the
 
 Remote output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_frame_proxy_qc`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/integrated_event_evidence`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/event_frame_proxy_qc`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/integrated_event_evidence`
 
 Key proxy-QC result:
 
@@ -299,7 +299,7 @@ Search targets:
 
 Result:
 
-- No original `Output - .../particleInfo.csv` or `particleTraces.csv` folders were found under `/scratch/u6hp/nsagar.u6hp/Alek_Jiho`.
+- No original `Output - .../particleInfo.csv` or `particleTraces.csv` folders were found under `/scratch/<account>/<username>/Alek_Jiho`.
 - The `exampleParticles.csv` address field points to Windows paths such as `D://NMC_degradation_3_160623_Halfthedata\10_c2_x10_030723chopped\10_c2_x10_030723_cycle1.hdf5`, but those chopped cycle files and their object-detection output folders are not present on Isambard.
 - The repo contains legacy object detection code using SEP (`config/ObjectDetection.py`) and matching by `x`, `y`, and `npix`, so particle coordinates can likely be reconstructed from full HDF5 frames, but this is not identical to recovering the original detector outputs.
 
@@ -313,7 +313,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts`
+`/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts`
 
 Key result:
 
@@ -333,7 +333,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_object_candidate_reconstruction`
+`/scratch/<account>/<username>/Alek_Jiho/derived/event_object_candidate_reconstruction`
 
 Local compact copy:
 
@@ -357,7 +357,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_roi_validation`
+`/scratch/<account>/<username>/Alek_Jiho/derived/event_roi_validation`
 
 Local compact copy:
 
@@ -381,7 +381,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences`
+`/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences`
 
 Local compact copy, excluding NPZ tensors:
 
@@ -407,7 +407,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois`
+`/scratch/<account>/<username>/Alek_Jiho/derived/validated_front_rois`
 
 Local compact copy:
 
@@ -433,7 +433,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines`
+`/scratch/<account>/<username>/Alek_Jiho/derived/roi_rollout_baselines`
 
 Local compact copy:
 
@@ -460,7 +460,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_physics_descriptors`
+`/scratch/<account>/<username>/Alek_Jiho/derived/roi_physics_descriptors`
 
 Local compact copy:
 
@@ -487,7 +487,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_front_roi_tracking`
+`/scratch/<account>/<username>/Alek_Jiho/derived/selected_front_roi_tracking`
 
 Local compact copy:
 
@@ -512,7 +512,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_event_conditioned_nextframe`
+`/scratch/<account>/<username>/Alek_Jiho/derived/roi_event_conditioned_nextframe`
 
 Local compact copy:
 
@@ -538,7 +538,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_residual_cnn_fast`
+`/scratch/<account>/<username>/Alek_Jiho/derived/roi_residual_cnn_fast`
 
 Local compact copy:
 
@@ -565,9 +565,9 @@ Added and ran:
 
 Remote output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_selection`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_sequences`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_comparison`
 
 Local compact copies:
 
@@ -595,7 +595,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_classifier`
+`/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_classifier`
 
 Local compact copy:
 
@@ -620,7 +620,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes`
+`/scratch/<account>/<username>/Alek_Jiho/derived/roi_joint_physics_degradation_modes`
 
 Local compact copy:
 
@@ -646,9 +646,9 @@ Added and ran:
 
 Remote output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_selection`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_sequences`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/event_vs_control_roi_physics`
 
 Local compact copies:
 
@@ -678,10 +678,10 @@ Added and ran expanded controls using:
 
 Remote output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection_expanded`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences_expanded`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_classifier_expanded`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_selection_expanded`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_sequences_expanded`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_comparison_expanded`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_classifier_expanded`
 
 Local compact copies use the same names under `derived_local/`.
 
@@ -705,7 +705,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_phase_boundary_mobility`
+`/scratch/<account>/<username>/Alek_Jiho/derived/roi_phase_boundary_mobility`
 
 Local compact copy:
 
@@ -733,7 +733,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_roi_calibration_qc`
+`/scratch/<account>/<username>/Alek_Jiho/derived/front_roi_calibration_qc`
 
 Local compact copy:
 
@@ -760,9 +760,9 @@ Added and ran:
 
 Remote output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_cohort`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis`
 
 Local compact copies use the same names under `derived_local/`.
 
@@ -787,9 +787,9 @@ Added and ran:
 
 Remote output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_mobility`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_cohort`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_mobility`
 
 Local compact copies:
 
@@ -814,11 +814,11 @@ Interpretation: the analysis now has a broader event/control ROI dataset instead
 
 Added and ran the existing rollout baseline on the expanded 52-ROI cohort:
 
-`python scripts/tier3_roi_rollout_baselines.py --roi-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines --rank 16 --train-fraction 0.67`
+`python scripts/tier3_roi_rollout_baselines.py --roi-dir /scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines --rank 16 --train-fraction 0.67`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines`
+`/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines`
 
 Local compact copy:
 
@@ -841,7 +841,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling`
+`/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling`
 
 Local compact copy:
 
@@ -863,11 +863,11 @@ Interpretation: the multi-cycle rollout analysis supports a guarded modeling con
 
 Added and ran:
 
-`python scripts/tier3_multicycle_roi_event_predictor.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor`
+`python scripts/tier3_multicycle_roi_event_predictor.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor`
+`/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor`
 
 Local compact copy:
 
@@ -889,11 +889,11 @@ Interpretation: ROI physics and rollout descriptors contain some event/control s
 
 Added and ran:
 
-`python scripts/tier3_multicycle_roi_echem_coupling.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling`
+`python scripts/tier3_multicycle_roi_echem_coupling.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling`
+`/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling`
 
 Local compact copy:
 
@@ -914,11 +914,11 @@ Interpretation: the new coupling analysis makes the main caveat explicit. ROI mo
 
 Added and ran:
 
-`python scripts/tier4_nmc_ai_physics_synthesis.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis`
+`python scripts/tier4_nmc_ai_physics_synthesis.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/nmc_ai_physics_synthesis`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis`
+`/scratch/<account>/<username>/Alek_Jiho/derived/nmc_ai_physics_synthesis`
 
 Local compact copy:
 
@@ -941,11 +941,11 @@ Interpretation: the project now has an auditable top-level index tying the reque
 
 Added and ran:
 
-`python scripts/tier3_multicycle_roi_event_predictor_null.py --n-permutations 200 --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null`
+`python scripts/tier3_multicycle_roi_event_predictor_null.py --n-permutations 200 --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null`
+`/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null`
 
 Local compact copy:
 
@@ -964,11 +964,11 @@ Interpretation: the predictor signal is real relative to shuffled labels when QC
 
 Added and ran:
 
-`python scripts/tier4_protocol_conditioned_roi_effects.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_roi_effects`
+`python scripts/tier4_protocol_conditioned_roi_effects.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_roi_effects`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_roi_effects`
+`/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_roi_effects`
 
 Local compact copy:
 
@@ -988,11 +988,11 @@ Interpretation: this is the strongest guardrail-aware evidence so far that event
 
 Added and ran:
 
-`python scripts/tier3_multicycle_threshold_robust_fronts.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts --n-bootstrap 200`
+`python scripts/tier3_multicycle_threshold_robust_fronts.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts --n-bootstrap 200`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts`
+`/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts`
 
 Local compact copy:
 
@@ -1013,11 +1013,11 @@ Interpretation: threshold-swept ROI fronts strengthen the phase-boundary movemen
 
 Added and ran:
 
-`python scripts/tier4_protocol_conditioned_front_effects.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects`
+`python scripts/tier4_protocol_conditioned_front_effects.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_front_effects`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects`
+`/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_front_effects`
 
 Local compact copy:
 
@@ -1039,11 +1039,11 @@ Interpretation: protocol/echem conditioning sharpens the mechanistic guardrail. 
 
 Added and ran:
 
-`python scripts/tier4_roi_front_qc_package.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_front_qc_package --top-n 24`
+`python scripts/tier4_roi_front_qc_package.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/roi_front_qc_package --top-n 24`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_front_qc_package`
+`/scratch/<account>/<username>/Alek_Jiho/derived/roi_front_qc_package`
 
 Local compact copy:
 
@@ -1064,11 +1064,11 @@ Interpretation: this closes a practical review gap. The project now has a concre
 
 Added and ran:
 
-`python scripts/tier4_qc_review_packet.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/qc_review_packet`
+`python scripts/tier4_qc_review_packet.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/qc_review_packet`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/qc_review_packet`
+`/scratch/<account>/<username>/Alek_Jiho/derived/qc_review_packet`
 
 Local compact copy:
 
@@ -1088,11 +1088,11 @@ Interpretation: this does not replace manual QC, but it closes the workflow gap 
 
 Added and ran:
 
-`python scripts/tier4_residual_physics_mode_taxonomy.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residual_physics_mode_taxonomy`
+`python scripts/tier4_residual_physics_mode_taxonomy.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/residual_physics_mode_taxonomy`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residual_physics_mode_taxonomy`
+`/scratch/<account>/<username>/Alek_Jiho/derived/residual_physics_mode_taxonomy`
 
 Local compact copy:
 
@@ -1114,11 +1114,11 @@ Interpretation: the current mode taxonomy points to a reproducible event-enriche
 
 Added and ran:
 
-`python scripts/tier4_front_qc_sensitivity.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_qc_sensitivity`
+`python scripts/tier4_front_qc_sensitivity.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/front_qc_sensitivity`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_qc_sensitivity`
+`/scratch/<account>/<username>/Alek_Jiho/derived/front_qc_sensitivity`
 
 Local compact copy:
 
@@ -1142,11 +1142,11 @@ Interpretation: automatic QC filtering strengthens the confidence that event ROI
 
 Added and ran:
 
-`python scripts/tier4_cycle_region_mode_context.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context`
+`python scripts/tier4_cycle_region_mode_context.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context`
+`/scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context`
 
 Local compact copy:
 
@@ -1168,11 +1168,11 @@ Interpretation: the residual mode taxonomy is not uniformly distributed over cyc
 
 Added and ran:
 
-`python scripts/tier4_control_balanced_front_qc_package.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_qc_package --n-per-role 16 --n-extra-controls 8`
+`python scripts/tier4_control_balanced_front_qc_package.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_qc_package --n-per-role 16 --n-extra-controls 8`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_qc_package`
+`/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_qc_package`
 
 Local compact copy:
 
@@ -1193,11 +1193,11 @@ Interpretation: this closes a practical review-design gap rather than a scientif
 
 Added and ran:
 
-`python scripts/tier4_prefix_roi_forecast.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast --n-permutation 500`
+`python scripts/tier4_prefix_roi_forecast.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast --n-permutation 500`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast`
+`/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast`
 
 Local compact copy:
 
@@ -1219,11 +1219,11 @@ Interpretation: early particle-region ROI video contains useful information abou
 
 Added and ran:
 
-`python scripts/tier4_manual_qc_label_workbook.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_label_workbook`
+`python scripts/tier4_manual_qc_label_workbook.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/manual_qc_label_workbook`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_label_workbook`
+`/scratch/<account>/<username>/Alek_Jiho/derived/manual_qc_label_workbook`
 
 Local compact copy:
 
@@ -1248,7 +1248,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_qc_sensitivity`
+`/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_qc_sensitivity`
 
 Local compact copy:
 
@@ -1269,11 +1269,11 @@ Interpretation: the phase-front directionality finding survives the control-bala
 
 Added and ran:
 
-`python scripts/tier4_manual_qc_gated_front_effects.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_gated_front_effects --n-bootstrap 1000 --n-permutation 1000`
+`python scripts/tier4_manual_qc_gated_front_effects.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/manual_qc_gated_front_effects --n-bootstrap 1000 --n-permutation 1000`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/manual_qc_gated_front_effects`
+`/scratch/<account>/<username>/Alek_Jiho/derived/manual_qc_gated_front_effects`
 
 Local compact copy:
 
@@ -1293,11 +1293,11 @@ Interpretation: this creates the hard reproducibility gate for final front/diffu
 
 Added and ran:
 
-`python scripts/tier4_prefix_roi_feature_importance.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance --n-permutation-repeats 50 --n-null 300`
+`python scripts/tier4_prefix_roi_feature_importance.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance --n-permutation-repeats 50 --n-null 300`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance`
+`/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance`
 
 Local compact copy:
 
@@ -1324,13 +1324,13 @@ Updated and reran:
 
 Also updated and reran:
 
-`python scripts/tier4_prefix_roi_feature_importance.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance --n-permutation-repeats 50 --n-null 300`
+`python scripts/tier4_prefix_roi_feature_importance.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance --n-permutation-repeats 50 --n-null 300`
 
 Remote output directories:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast`
+`/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast`
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance`
+`/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance`
 
 Local compact copies:
 
@@ -1357,7 +1357,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/spatiotemporal_degradation_graph`
+`/scratch/<account>/<username>/Alek_Jiho/derived/spatiotemporal_degradation_graph`
 
 Local compact copy:
 
@@ -1382,7 +1382,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/phase_kinetics_avrami`
+`/scratch/<account>/<username>/Alek_Jiho/derived/phase_kinetics_avrami`
 
 Local compact copy:
 
@@ -1402,11 +1402,11 @@ Interpretation: the kinetic audit adds a physics-shaped layer beyond raw front s
 
 Added and ran:
 
-`python scripts/tier4_particle_trace_physics_audit.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit --n-permutation 500`
+`python scripts/tier4_particle_trace_physics_audit.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit --n-permutation 500`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit`
 
 Local compact copy:
 
@@ -1429,11 +1429,11 @@ Interpretation: this is the first stronger early-warning result from the broader
 
 Added and ran:
 
-`python scripts/tier4_particle_event_precursor_atlas.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas`
+`python scripts/tier4_particle_event_precursor_atlas.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/particle_event_precursor_atlas`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas`
+`/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_precursor_atlas`
 
 Local compact copy:
 
@@ -1456,11 +1456,11 @@ Interpretation: this turns the broader cycle-level early-warning classifier into
 
 Added and ran:
 
-`python scripts/tier4_roi_trace_fusion_audit.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit`
+`python scripts/tier4_roi_trace_fusion_audit.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_audit`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_audit`
 
 Local compact copy:
 
@@ -1480,11 +1480,11 @@ Interpretation: this links global particle-trace precursor state to localized RO
 
 Added and ran:
 
-`python scripts/tier4_precursor_informed_roi_review.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_informed_roi_review`
+`python scripts/tier4_precursor_informed_roi_review.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/precursor_informed_roi_review`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_informed_roi_review`
+`/scratch/<account>/<username>/Alek_Jiho/derived/precursor_informed_roi_review`
 
 Local compact copy:
 
@@ -1504,11 +1504,11 @@ Interpretation: this converts the many automatic analyses into a concrete manual
 
 Added and ran:
 
-`python scripts/tier4_precursor_review_visual_bundle.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_review_visual_bundle --top-n 12`
+`python scripts/tier4_precursor_review_visual_bundle.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/precursor_review_visual_bundle --top-n 12`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_review_visual_bundle`
+`/scratch/<account>/<username>/Alek_Jiho/derived/precursor_review_visual_bundle`
 
 Local compact copy:
 
@@ -1518,7 +1518,7 @@ Key result:
 
 - Packaged the top 12 precursor-informed ROI review candidates into a visual inspection bundle.
 - All 12 ranked candidates have at least one copied automatic QC/preview asset on Isambard.
-- Created a contact sheet at `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_review_visual_bundle/top_candidate_contact_sheet.png`; the compact contact sheet was synced locally.
+- Created a contact sheet at `/scratch/<account>/<username>/Alek_Jiho/derived/precursor_review_visual_bundle/top_candidate_contact_sheet.png`; the compact contact sheet was synced locally.
 - The bundle starts with the same highest-ranked candidates: `cycle156_rank7_obj27`, `cycle60_rank5_obj18`, `cycle156_rank6_obj3`, `cycle156_rank5_obj4`, and `cycle156_rank2_obj2`.
 - Per-candidate asset folders remain on Isambard under `precursor_review_visual_bundle/assets`; only the compact index, summary, README, and contact sheet are copied locally.
 
@@ -1528,11 +1528,11 @@ Interpretation: this does not solve manual QC, but it removes the path-chasing f
 
 Added and ran:
 
-`python scripts/tier4_roi_trace_fusion_cycle_null.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null --n-permutation 1000`
+`python scripts/tier4_roi_trace_fusion_cycle_null.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_cycle_null --n-permutation 1000`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null`
+`/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_cycle_null`
 
 Local compact copy:
 
@@ -1553,11 +1553,11 @@ Interpretation: this audit upgrades the trace-fusion story from a simple row-lev
 
 Added and ran:
 
-`python scripts/tier4_within_cycle_echem_shape_audit.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit`
+`python scripts/tier4_within_cycle_echem_shape_audit.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit`
 
 Local compact copy:
 
@@ -1579,11 +1579,11 @@ Interpretation: raw echem trajectory shape is a useful physics/protocol context 
 
 Added and ran a metadata-only audit using top-level HDF5 attributes/datasets, small CSV samples, and PPTX text extraction:
 
-`python scripts/tier4_calibration_metadata_audit.py --base-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho --repo-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit`
+`python scripts/tier4_calibration_metadata_audit.py --base-dir /scratch/<account>/<username>/Alek_Jiho --repo-dir /scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/calibration_metadata_audit`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/calibration_metadata_audit`
 
 Local compact copy:
 
@@ -1604,11 +1604,11 @@ Interpretation: this improves the calibration evidence boundary. HDF5 timing met
 
 Added and ran:
 
-`python scripts/tier4_calibration_claim_risk_register.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_claim_risk_register`
+`python scripts/tier4_calibration_claim_risk_register.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/calibration_claim_risk_register`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_claim_risk_register`
+`/scratch/<account>/<username>/Alek_Jiho/derived/calibration_claim_risk_register`
 
 Local compact copy:
 
@@ -1630,11 +1630,11 @@ Interpretation: this is a useful paper-writing and future-analysis guardrail. It
 
 Added and ran:
 
-`python scripts/tier4_echem_shape_conditioned_roi_front_effects.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects`
+`python scripts/tier4_echem_shape_conditioned_roi_front_effects.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects`
+`/scratch/<account>/<username>/Alek_Jiho/derived/echem_shape_conditioned_roi_front_effects`
 
 Local compact copy:
 
@@ -1660,11 +1660,11 @@ Interpretation: this is a stronger covariate test than the previous coarse proto
 
 Added and ran:
 
-`python scripts/tier4_physics_consistency_claim_matrix.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix --n-permutation 5000`
+`python scripts/tier4_physics_consistency_claim_matrix.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/physics_consistency_claim_matrix --n-permutation 5000`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/physics_consistency_claim_matrix`
+`/scratch/<account>/<username>/Alek_Jiho/derived/physics_consistency_claim_matrix`
 
 Local compact copy:
 
@@ -1688,11 +1688,11 @@ Interpretation: this matrix is the current best review-prioritization map. It co
 
 Added and ran:
 
-`python scripts/tier4_probabilistic_rollout_calibration.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration`
+`python scripts/tier4_probabilistic_rollout_calibration.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/probabilistic_rollout_calibration`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration`
+`/scratch/<account>/<username>/Alek_Jiho/derived/probabilistic_rollout_calibration`
 
 Local compact copy:
 
@@ -1716,11 +1716,11 @@ Interpretation: this fills the uncertainty-calibration gap without pretending to
 
 Added and ran:
 
-`python scripts/tier4_cycle_state_space_transition_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit --n-permutation 5000`
+`python scripts/tier4_cycle_state_space_transition_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit --n-permutation 5000`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit`
 
 Local compact copy:
 
@@ -1744,11 +1744,11 @@ Interpretation: this creates a cycle-level companion to the ROI/front analyses. 
 
 Command:
 
-`python scripts/tier4_cycle_state_space_transition_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit --n-permutation 5000`
+`python scripts/tier4_cycle_state_space_transition_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit --n-permutation 5000`
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_space_transition_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_space_transition_audit`
 
 Local synced output:
 
@@ -1768,11 +1768,11 @@ Interpretation: the cycle-level early-warning signal is not only an artifact of 
 
 Command:
 
-`python scripts/tier4_cycle_state_roi_bridge.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge --n-permutation 4000`
+`python scripts/tier4_cycle_state_roi_bridge.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_roi_bridge --n-permutation 4000`
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_roi_bridge`
+`/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_roi_bridge`
 
 Local synced output:
 
@@ -1793,11 +1793,11 @@ Interpretation: the cycle-level AI state coordinate is not isolated from localiz
 
 Added and ran:
 
-`scripts/tier4_particle_mask_stability_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_stability_audit`
+`scripts/tier4_particle_mask_stability_audit.py --manifest /scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_stability_audit`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_stability_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_stability_audit`
 
 Local compact copy:
 
@@ -1818,11 +1818,11 @@ Interpretation: the selected tensors remain particle-region-only, and the automa
 
 Command:
 
-`python scripts/tier4_weak_label_degradation_benchmark.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/weak_label_degradation_benchmark`
+`python scripts/tier4_weak_label_degradation_benchmark.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/weak_label_degradation_benchmark`
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/weak_label_degradation_benchmark`
+`/scratch/<account>/<username>/Alek_Jiho/derived/weak_label_degradation_benchmark`
 
 Local synced output:
 
@@ -1843,11 +1843,11 @@ Interpretation: this turns the automatic evidence into a usable but heavily guar
 
 Added and ran:
 
-`scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv --mask-stability /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_stability_audit/particle_mask_stability_per_roi.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_roi_rollout_audit --rank 16 --train-fraction 0.67`
+`scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv --mask-stability /scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_stability_audit/particle_mask_stability_per_roi.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/masked_roi_rollout_audit --rank 16 --train-fraction 0.67`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_roi_rollout_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/masked_roi_rollout_audit`
 
 Local compact copy:
 
@@ -1868,11 +1868,11 @@ Interpretation: this strengthens the ROI-only modeling guardrail. The full-crop 
 
 Added and ran:
 
-`scripts/tier4_diffusion_proxy_sanity_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit`
+`scripts/tier4_diffusion_proxy_sanity_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/diffusion_proxy_sanity_audit`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_proxy_sanity_audit`
 
 Local compact copy:
 
@@ -1894,22 +1894,22 @@ Interpretation: this closes the current diffusion-claim loophole. The project ca
 
 Added and ran:
 
-`scripts/tier4_control_balanced_front_tracking_table.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking_table`
+`scripts/tier4_control_balanced_front_tracking_table.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_tracking_table`
 
 Then ran the existing high-resolution tracker, provisional calibration, and diffusion sanity gate on the generated 40-row balanced table:
 
-`python scripts/tier3_track_selected_front_rois.py --roi-table /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking_table/control_balanced_front_rois_for_tracking.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking --crop-size-full 192 --baseline-frames 5`
+`python scripts/tier3_track_selected_front_rois.py --roi-table /scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_tracking_table/control_balanced_front_rois_for_tracking.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_tracking --crop-size-full 192 --baseline-frames 5`
 
-`python scripts/tier3_front_roi_calibration_qc.py --front-tracking-csv /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking/selected_front_roi_tracking_summary.csv --joint-modes-csv /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_calibration_qc --top-n 40`
+`python scripts/tier3_front_roi_calibration_qc.py --front-tracking-csv /scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_tracking/selected_front_roi_tracking_summary.csv --joint-modes-csv /scratch/<account>/<username>/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_calibration_qc --top-n 40`
 
-`python scripts/tier4_diffusion_proxy_sanity_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --front-calibration-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_calibration_qc --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_diffusion_proxy_sanity_audit`
+`python scripts/tier4_diffusion_proxy_sanity_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --front-calibration-dir /scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_calibration_qc --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_diffusion_proxy_sanity_audit`
 
 Remote output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking_table`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_calibration_qc`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_diffusion_proxy_sanity_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_tracking_table`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_tracking`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_calibration_qc`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_diffusion_proxy_sanity_audit`
 
 Local compact copies:
 
@@ -1934,11 +1934,11 @@ Interpretation: this removes the main weakness of the previous selected-front di
 
 Added and ran:
 
-`scripts/tier4_masked_rollout_cycle_warning.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_rollout_cycle_warning --n-permutation 5000`
+`scripts/tier4_masked_rollout_cycle_warning.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/masked_rollout_cycle_warning --n-permutation 5000`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_rollout_cycle_warning`
+`/scratch/<account>/<username>/Alek_Jiho/derived/masked_rollout_cycle_warning`
 
 Local compact copy:
 
@@ -1960,15 +1960,15 @@ Interpretation: masked particle-local rollout residuals are useful as same-cycle
 
 Added and ran:
 
-`scripts/tier4_masked_residual_transition_timing.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_transition_timing --n-permutation 5000`
+`scripts/tier4_masked_residual_transition_timing.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_transition_timing --n-permutation 5000`
 
 Then regenerated the synthesis:
 
-`python scripts/tier4_nmc_ai_physics_synthesis.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis`
+`python scripts/tier4_nmc_ai_physics_synthesis.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/nmc_ai_physics_synthesis`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_transition_timing`
+`/scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_transition_timing`
 
 Local compact copy:
 
@@ -1992,15 +1992,15 @@ Interpretation: this adds a timing guardrail between AI residuals and optical ph
 
 Added and ran:
 
-`scripts/tier4_masked_residual_state_transfer_warning.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning --n-permutation 5000`
+`scripts/tier4_masked_residual_state_transfer_warning.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_state_transfer_warning --n-permutation 5000`
 
 Then regenerated the synthesis:
 
-`python scripts/tier4_nmc_ai_physics_synthesis.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/nmc_ai_physics_synthesis`
+`python scripts/tier4_nmc_ai_physics_synthesis.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/nmc_ai_physics_synthesis`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning`
+`/scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_state_transfer_warning`
 
 Local compact copy:
 
@@ -2024,11 +2024,11 @@ Interpretation: this addresses the direct masked-rollout future-warning underpow
 
 Added and ran:
 
-`scripts/tier4_cycle_hazard_warning_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_hazard_warning_audit --n-permutation 40`
+`scripts/tier4_cycle_hazard_warning_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/cycle_hazard_warning_audit --n-permutation 40`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_hazard_warning_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/cycle_hazard_warning_audit`
 
 Local compact copy:
 
@@ -2049,19 +2049,19 @@ Interpretation: this strengthens the cycle-level early-warning story using a str
 
 Added and ran:
 
-`scripts/tier4_transfer_ranked_roi_reconstruction.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction --top-cycles 12 --top-candidates-per-cycle 4`
+`scripts/tier4_transfer_ranked_roi_reconstruction.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction --top-cycles 12 --top-candidates-per-cycle 4`
 
 Then exported particle-region sequences from the generated ROI table and ran the masked rollout audit on those transfer-ranked crops:
 
-`python scripts/tier2_export_selected_roi_sequences.py --roi-table /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/transfer_ranked_roi_table.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_sequences --crop-size-full 192 --output-size 96 --samples-per-roi 96`
+`python scripts/tier2_export_selected_roi_sequences.py --roi-table /scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction/transfer_ranked_roi_table.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_sequences --crop-size-full 192 --output-size 96 --samples-per-roi 96`
 
-`python scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_masked_roi_rollout_audit --rank 16 --train-fraction 0.67`
+`python scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_masked_roi_rollout_audit --rank 16 --train-fraction 0.67`
 
 Remote output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_reconstruction`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_sequences`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_masked_roi_rollout_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_reconstruction`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_sequences`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_masked_roi_rollout_audit`
 
 Local compact copies:
 
@@ -2084,11 +2084,11 @@ Interpretation: this closes the loop from cycle-level warning to direct video da
 
 Added and ran:
 
-`python scripts/tier4_cross_cohort_rollout_transfer_audit.py --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cross_cohort_rollout_transfer_audit --rank 16 --train-fraction 0.67`
+`python scripts/tier4_cross_cohort_rollout_transfer_audit.py --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/cross_cohort_rollout_transfer_audit --rank 16 --train-fraction 0.67`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cross_cohort_rollout_transfer_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/cross_cohort_rollout_transfer_audit`
 
 Local compact copy:
 
@@ -2109,14 +2109,14 @@ Interpretation: this adds a stricter model-generalization test around next-frame
 
 Added and ran transfer-ranked threshold/front extraction, then joined those phase/front proxies back to warning-ranked ROI crops, masked rollout residuals, and future-drop labels:
 
-`python scripts/tier3_multicycle_threshold_robust_fronts.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_threshold_robust_fronts`
+`python scripts/tier3_multicycle_threshold_robust_fronts.py --manifest /scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_threshold_robust_fronts`
 
-`python scripts/tier4_transfer_ranked_front_physics_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit --n-permutation 5000`
+`python scripts/tier4_transfer_ranked_front_physics_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_front_physics_audit --n-permutation 5000`
 
 Remote output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_threshold_robust_fronts`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_threshold_robust_fronts`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_front_physics_audit`
 
 Local compact copies:
 
@@ -2138,11 +2138,11 @@ Interpretation: this connects the cycle-level warning loop back to front/phase p
 
 Added and ran:
 
-`python scripts/tier4_transfer_ranked_residual_transition_timing.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing --n-permutation 5000`
+`python scripts/tier4_transfer_ranked_residual_transition_timing.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_residual_transition_timing --n-permutation 5000`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing`
+`/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_residual_transition_timing`
 
 Local compact copy:
 
@@ -2163,11 +2163,11 @@ Interpretation: unlike the broader event/control timing audit, the warning-ranke
 
 Added and ran:
 
-`python scripts/tier4_multicohort_future_drop_model.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model --n-permutation 40 --rf-trees 80`
+`python scripts/tier4_multicohort_future_drop_model.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model --n-permutation 40 --rf-trees 80`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model`
+`/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model`
 
 Local compact copy:
 
@@ -2188,11 +2188,11 @@ Interpretation: this is the most model-like ROI/video warning audit so far, but 
 
 Added and ran:
 
-`python scripts/tier4_active_learning_qc_prioritization.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/active_learning_qc_prioritization`
+`python scripts/tier4_active_learning_qc_prioritization.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/active_learning_qc_prioritization`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/active_learning_qc_prioritization`
+`/scratch/<account>/<username>/Alek_Jiho/derived/active_learning_qc_prioritization`
 
 Local compact copy:
 
@@ -2212,24 +2212,24 @@ Interpretation: this closes the loop from AI/physics discovery into a concrete h
 
 Added and ran a separate class-balanced direct-video ROI workflow on Isambard:
 
-`python scripts/tier4_balanced_future_roi_reconstruction.py --root /scratch/u6hp/nsagar.u6hp/Alek_Jiho --ranked-cycles /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_ranked_cycles.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_reconstruction --positive-cycles 12 --negative-cycles 12 --top-candidates-per-cycle 3 --samples-per-segment 16`
+`python scripts/tier4_balanced_future_roi_reconstruction.py --root /scratch/<account>/<username>/Alek_Jiho --ranked-cycles /scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_ranked_cycles.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_reconstruction --positive-cycles 12 --negative-cycles 12 --top-candidates-per-cycle 3 --samples-per-segment 16`
 
-`python scripts/tier2_export_selected_roi_sequences.py --root /scratch/u6hp/nsagar.u6hp/Alek_Jiho --roi-table /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_reconstruction/balanced_future_roi_table.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences --crop-size-full 192 --output-size 96 --samples-per-roi 96`
+`python scripts/tier2_export_selected_roi_sequences.py --root /scratch/<account>/<username>/Alek_Jiho --roi-table /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_reconstruction/balanced_future_roi_table.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_sequences --crop-size-full 192 --output-size 96 --samples-per-roi 96`
 
-`python scripts/tier3_multicycle_threshold_robust_fronts.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --cohort-table /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_reconstruction/balanced_future_roi_table.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts --n-bootstrap 200`
+`python scripts/tier3_multicycle_threshold_robust_fronts.py --manifest /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --cohort-table /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_reconstruction/balanced_future_roi_table.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_threshold_robust_fronts --n-bootstrap 200`
 
-`python scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_masked_roi_rollout_audit --rank 16 --train-fraction 0.67`
+`python scripts/tier4_masked_roi_rollout_audit.py --manifest /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_masked_roi_rollout_audit --rank 16 --train-fraction 0.67`
 
-`python scripts/tier4_balanced_future_roi_physics_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_physics_audit --n-permutation 40`
+`python scripts/tier4_balanced_future_roi_physics_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_physics_audit --n-permutation 40`
 
 Remote output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_reconstruction`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_particle_mask_stability`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_masked_roi_rollout_audit`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_physics_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_reconstruction`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_sequences`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_particle_mask_stability`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_threshold_robust_fronts`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_masked_roi_rollout_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_physics_audit`
 
 Local compact copies exclude heavy NPZ/previews/overlays where applicable.
 
@@ -2248,11 +2248,11 @@ Interpretation: this addresses the main class-balance weakness of the transfer-r
 
 Updated and reran the particle-mask stability audit on the balanced future-drop ROI tensors:
 
-`python scripts/tier4_particle_mask_stability_audit.py --manifest /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_particle_mask_stability`
+`python scripts/tier4_particle_mask_stability_audit.py --manifest /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_particle_mask_stability`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_particle_mask_stability`
+`/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_particle_mask_stability`
 
 Local compact copy:
 
@@ -2272,11 +2272,11 @@ Interpretation: this is a useful artifact guardrail for the balanced future-drop
 
 Added and ran a context/region guardrail on the balanced future-drop ROI table:
 
-`python scripts/tier4_balanced_future_context_region_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_context_region_audit`
+`python scripts/tier4_balanced_future_context_region_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_context_region_audit`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_context_region_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_context_region_audit`
 
 Local compact copy:
 
@@ -2298,11 +2298,11 @@ Interpretation: the balanced future-drop physics signal is useful for review pri
 
 Added and ran a self-supervised masked video embedding audit over the existing ROI tensor cohorts on Isambard:
 
-`python scripts/tier4_masked_video_embedding_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_video_embedding_audit --n-permutation 80`
+`python scripts/tier4_masked_video_embedding_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/masked_video_embedding_audit --n-permutation 80`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_video_embedding_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/masked_video_embedding_audit`
 
 Local compact copy:
 
@@ -2324,11 +2324,11 @@ Interpretation: this is the strongest particle-masked video-embedding evidence s
 
 Added and ran a temporal directionality guardrail for the balanced future-drop ROI physics descriptors:
 
-`python scripts/tier4_temporal_directionality_physics_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/temporal_directionality_physics_audit`
+`python scripts/tier4_temporal_directionality_physics_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/temporal_directionality_physics_audit`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/temporal_directionality_physics_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/temporal_directionality_physics_audit`
 
 Local compact copy:
 
@@ -2351,11 +2351,11 @@ Interpretation: this strengthens the precursor-style evidence because the observ
 
 Added and ran an HDF5-timebase calibration guardrail for the balanced future-drop front/diffusion proxies:
 
-`python scripts/tier4_apparent_diffusion_calibration_bounds.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/apparent_diffusion_calibration_bounds`
+`python scripts/tier4_apparent_diffusion_calibration_bounds.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/apparent_diffusion_calibration_bounds`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/apparent_diffusion_calibration_bounds`
+`/scratch/<account>/<username>/Alek_Jiho/derived/apparent_diffusion_calibration_bounds`
 
 Local compact copy:
 
@@ -2377,11 +2377,11 @@ Interpretation: the video timebase itself is well matched for ROI spans, but the
 
 Added and ran a balanced-cohort spatial/temporal propagation audit over reconstructed ROI front/rollout physics:
 
-`python scripts/tier4_balanced_spatial_front_propagation_audit.py --derived-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_spatial_front_propagation_audit --k-neighbors 3 --n-permutation 1000`
+`python scripts/tier4_balanced_spatial_front_propagation_audit.py --derived-dir /scratch/<account>/<username>/Alek_Jiho/derived --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/balanced_spatial_front_propagation_audit --k-neighbors 3 --n-permutation 1000`
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_spatial_front_propagation_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/balanced_spatial_front_propagation_audit`
 
 Local compact copy:
 
@@ -2433,7 +2433,7 @@ Added `scripts/tier4_echem_optical_regime_atlas.py` and ran it on Isambard to or
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas`
+`/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_regime_atlas`
 
 Local compact copy:
 
@@ -2458,7 +2458,7 @@ Added `scripts/tier4_automatic_qc_triage_surrogate.py` and ran it on Isambard to
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/automatic_qc_triage_surrogate`
+`/scratch/<account>/<username>/Alek_Jiho/derived/automatic_qc_triage_surrogate`
 
 Local compact copy:
 
@@ -2480,7 +2480,7 @@ Added `scripts/tier4_echem_conditioned_optical_predictor.py` and ran it on Isamb
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_optical_predictor`
+`/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_optical_predictor`
 
 Local compact copy:
 
@@ -2504,7 +2504,7 @@ Added `scripts/tier4_echem_conditioned_roi_rollout_front_audit.py` and ran it on
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_roi_rollout_front_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_roi_rollout_front_audit`
 
 Local compact copy:
 
@@ -2527,7 +2527,7 @@ Added `scripts/tier4_echem_video_embedding_fusion_audit.py` and ran it on Isamba
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_video_embedding_fusion_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/echem_video_embedding_fusion_audit`
 
 Local compact copy:
 
@@ -2549,7 +2549,7 @@ Added `scripts/tier4_qc_decision_evidence_ledger.py` and ran it on Isambard to c
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/qc_decision_evidence_ledger`
+`/scratch/<account>/<username>/Alek_Jiho/derived/qc_decision_evidence_ledger`
 
 Local compact copy:
 
@@ -2571,7 +2571,7 @@ Added `scripts/tier4_residual_dictionary_embedding_audit.py` and ran it on Isamb
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residual_dictionary_embedding_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/residual_dictionary_embedding_audit`
 
 Local compact copy:
 
@@ -2594,7 +2594,7 @@ Added `scripts/tier4_agentic_current_hypothesis_tournament.py` and ran it on Isa
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/agentic_current_hypothesis_tournament`
+`/scratch/<account>/<username>/Alek_Jiho/derived/agentic_current_hypothesis_tournament`
 
 Local compact copy:
 
@@ -2616,7 +2616,7 @@ Added `scripts/tier4_echem_residual_dictionary_fusion_audit.py` and ran it on Is
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_residual_dictionary_fusion_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/echem_residual_dictionary_fusion_audit`
 
 Local compact copy:
 
@@ -2639,7 +2639,7 @@ Added `scripts/tier4_residualized_future8_video_physics_benchmark.py` and ran it
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark`
+`/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark`
 
 Local compact copy:
 
@@ -2661,7 +2661,7 @@ Added `scripts/tier4_acquisition_residualized_video_echem_warning.py` and ran it
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_echem_warning`
+`/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_echem_warning`
 
 Local compact copy:
 
@@ -2684,7 +2684,7 @@ Added `scripts/tier4_source_domain_video_echem_adaptation_audit.py` and ran it o
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_domain_video_echem_adaptation_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/source_domain_video_echem_adaptation_audit`
 
 Local compact copy:
 
@@ -2706,7 +2706,7 @@ Added `scripts/tier4_source_balanced_video_echem_transfer_audit.py` and ran it o
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_video_echem_transfer_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_video_echem_transfer_audit`
 
 Local compact copy:
 
@@ -2729,7 +2729,7 @@ Added `scripts/tier4_learned_video_residual_embedding_audit.py` and ran it on Is
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/learned_video_residual_embedding_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/learned_video_residual_embedding_audit`
 
 Local compact copy:
 
@@ -2752,7 +2752,7 @@ Added `scripts/tier4_source_invariant_video_echem_transfer_audit.py` and ran it 
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit`
 
 Local compact copy:
 
@@ -2774,7 +2774,7 @@ Added `scripts/tier4_source_invariant_physical_family_audit.py` and ran it on Is
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_physical_family_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_physical_family_audit`
 
 Local compact copy:
 
@@ -2797,7 +2797,7 @@ Added `scripts/tier4_diffusion_physics_consistency_audit.py` and reran it on Isa
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_physics_consistency_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_physics_consistency_audit`
 
 Local compact copy:
 
@@ -2822,7 +2822,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_interpretable_feature_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_interpretable_feature_audit`
 
 Local compact copy:
 
@@ -2846,7 +2846,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/invariant_physics_rule_discovery`
+`/scratch/<account>/<username>/Alek_Jiho/derived/invariant_physics_rule_discovery`
 
 Local compact copy:
 
@@ -2870,7 +2870,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/exact_feature_mechanism_consistency_audit`
 
 Local compact copy:
 
@@ -2892,7 +2892,7 @@ Added `scripts/tier4_signed_optical_loss_mechanism_audit.py` and ran it on Isamb
 
 Remote output:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_optical_loss_mechanism_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/signed_optical_loss_mechanism_audit`
 
 Local compact copy:
 
@@ -2916,7 +2916,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_state_mode_frequency_bridge`
+`/scratch/<account>/<username>/Alek_Jiho/derived/cycle_state_mode_frequency_bridge`
 
 Local compact copy:
 
@@ -2942,7 +2942,7 @@ Added and completed:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_loss_source_robustness_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/signed_loss_source_robustness_audit`
 
 Local compact copy:
 
@@ -2967,7 +2967,7 @@ Added and ran:
 
 Remote output directory:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_source_residual_audit`
+`/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_source_residual_audit`
 
 Local compact copy:
 
@@ -2990,7 +2990,7 @@ Added and ran:
 
 Output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_residual_dictionary`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_residual_dictionary`
 - `derived_local/echem_conditioned_residual_dictionary`
 
 Key result:
@@ -3011,7 +3011,7 @@ Added and ran:
 
 Output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest`
 - `derived_local/source_balanced_roi_expansion_manifest`
 
 Key result:
@@ -3031,7 +3031,7 @@ Added and ran:
 
 Output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/conditioned_residual_physics_atlas`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/conditioned_residual_physics_atlas`
 - `derived_local/conditioned_residual_physics_atlas`
 
 Key result:
@@ -3052,8 +3052,8 @@ Added and ran:
 
 Output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_rollout_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_rollout_audit`
 - `derived_local/source_balanced_roi_sequences` (manifest/summary only; NPZ tensors stay remote)
 - `derived_local/source_balanced_sequence_rollout_audit`
 
@@ -3069,7 +3069,7 @@ Interpretation: this is the first broad source-balanced direct-video cohort with
 
 ## 2026-05-22 Agentic AI Implementation Folders 05-08
 
-Extended the paper-inspired agentic workflow on Isambard with four additional separate folders under `agentic_research` and reran the full workflow against `/scratch/u6hp/nsagar.u6hp/Alek_Jiho`.
+Extended the paper-inspired agentic workflow on Isambard with four additional separate folders under `agentic_research` and reran the full workflow against `/scratch/<account>/<username>/Alek_Jiho`.
 
 New folders:
 
@@ -3080,10 +3080,10 @@ New folders:
 
 Output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/05_agentic_metric_search`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/06_closed_loop_hypothesis_ledger`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/07_manual_qc_feedback_hook`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/08_guarded_code_acceptance`
+- `/scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/05_agentic_metric_search`
+- `/scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/06_closed_loop_hypothesis_ledger`
+- `/scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/07_manual_qc_feedback_hook`
+- `/scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/08_guarded_code_acceptance`
 - compact local copy: `derived_local/agentic_research_outputs`
 
 Key result:
@@ -3102,7 +3102,7 @@ Added `scripts/tier4_source_balanced_mask_front_sanity_audit.py` and ran it on I
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit`
 - `derived_local/source_balanced_mask_front_sanity_audit`
 
 Cohort/result snapshot:
@@ -3126,7 +3126,7 @@ Added and ran:
 
 Output directories:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_source_residual_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_source_residual_audit`
 - `derived_local/source_balanced_mask_front_source_residual_audit`
 
 Key result:
@@ -3145,7 +3145,7 @@ Added `scripts/tier4_source_balanced_residual_dictionary_audit.py` and ran it on
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit`
 - `derived_local/source_balanced_residual_dictionary_audit`
 
 Cohort/result snapshot:
@@ -3167,7 +3167,7 @@ Added `scripts/tier4_source_balanced_residual_dictionary_source_residual_audit.p
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit`
 - `derived_local/source_balanced_residual_dictionary_source_residual_audit`
 
 Cohort/result snapshot:
@@ -3190,7 +3190,7 @@ Added `scripts/tier4_source_balanced_residual_physics_coupling_audit.py` and ran
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit`
 - `derived_local/source_balanced_residual_physics_coupling_audit`
 
 Cohort/result snapshot:
@@ -3213,7 +3213,7 @@ Added `scripts/tier4_source_balanced_residual_dictionary_normalized_readout.py` 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout`
 - `derived_local/source_balanced_residual_dictionary_normalized_readout`
 
 Cohort/result snapshot:
@@ -3235,7 +3235,7 @@ Added `scripts/tier4_source_balanced_residual_candidate_review_packet.py` and ra
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet`
 - `derived_local/source_balanced_residual_candidate_review_packet`
 
 Cohort/result snapshot:
@@ -3257,7 +3257,7 @@ Added `scripts/tier4_source_balanced_residual_temporal_specificity_audit.py` and
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_temporal_specificity_audit`
 - `derived_local/source_balanced_residual_temporal_specificity_audit`
 
 Cohort/result snapshot:
@@ -3281,7 +3281,7 @@ Added `scripts/tier4_source_balanced_future_specific_residual_audit.py` and ran 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_future_specific_residual_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_future_specific_residual_audit`
 - `derived_local/source_balanced_future_specific_residual_audit`
 
 Cohort/result snapshot:
@@ -3306,7 +3306,7 @@ Added `scripts/tier4_source_balanced_degradation_mode_audit.py` and ran it on Is
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_degradation_mode_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_degradation_mode_audit`
 - `derived_local/source_balanced_degradation_mode_audit`
 
 Cohort/result snapshot:
@@ -3329,7 +3329,7 @@ Added `scripts/tier4_source_balanced_pre_event_sampling_manifest.py` and ran it 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest`
 - `derived_local/source_balanced_pre_event_sampling_manifest`
 
 Cohort/result snapshot:
@@ -3352,8 +3352,8 @@ Exported the pre-event sampling manifest into particle-region crop tensors with 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit`
 - `derived_local/source_balanced_pre_event_roi_sequences` contains only compact manifest/summary files; NPZ tensors remain on Isambard.
 - `derived_local/source_balanced_pre_event_sequence_audit`
 
@@ -3377,10 +3377,10 @@ Exported the source-balanced pre-event proposal manifest into particle-region cr
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_rollout_audit`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_mask_front_audit`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_rollout_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_mask_front_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_readout_audit`
 - `derived_local/source_balanced_pre_event_roi_sequences` (manifest/summary only; NPZ tensors stay remote)
 - `derived_local/source_balanced_pre_event_sequence_rollout_audit`
 - `derived_local/source_balanced_pre_event_mask_front_audit`
@@ -3407,7 +3407,7 @@ Added `scripts/tier4_source_balanced_pre_event_source_invariant_audit.py` and ra
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_source_invariant_audit`
 - `derived_local/source_balanced_pre_event_source_invariant_audit`
 
 Cohort/result snapshot:
@@ -3430,7 +3430,7 @@ Added `scripts/tier4_source_balanced_pre_event_review_packet.py` and ran it on I
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_review_packet`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_review_packet`
 - `derived_local/source_balanced_pre_event_review_packet`
 
 Cohort/result snapshot:
@@ -3452,7 +3452,7 @@ Added `scripts/tier4_source_balanced_pre_event_directionality_audit.py` and ran 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit`
 - `derived_local/source_balanced_pre_event_directionality_audit`
 
 Cohort/result snapshot:
@@ -3475,7 +3475,7 @@ Added `scripts/tier4_source_balanced_pre_event_trajectory_audit.py` and ran it o
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_trajectory_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_trajectory_audit`
 - `derived_local/source_balanced_pre_event_trajectory_audit`
 
 Cohort/result snapshot:
@@ -3498,7 +3498,7 @@ Added `scripts/tier4_source_balanced_pre_event_matched_counterfactual_audit.py` 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit`
 - `derived_local/source_balanced_pre_event_matched_counterfactual_audit`
 
 Cohort/result snapshot:
@@ -3522,7 +3522,7 @@ Added `scripts/tier4_pre_event_source_lattice_coverage_audit.py` and ran it on I
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_source_lattice_coverage_audit`
 - `derived_local/pre_event_source_lattice_coverage_audit`
 
 Cohort/result snapshot:
@@ -3543,7 +3543,7 @@ Added `scripts/tier4_source_balanced_pre_event_same_source_ladder_audit.py` and 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit`
 - `derived_local/source_balanced_pre_event_same_source_ladder_audit`
 
 Cohort/result snapshot:
@@ -3567,7 +3567,7 @@ Added `scripts/tier4_source_balanced_pre_event_radial_kymograph_audit.py` and ra
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit`
 - `derived_local/source_balanced_pre_event_radial_kymograph_audit`
 
 Cohort/result snapshot:
@@ -3589,7 +3589,7 @@ Added `scripts/tier4_source_balanced_pre_event_physics_mode_taxonomy.py` and ran
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy`
 - `derived_local/source_balanced_pre_event_physics_mode_taxonomy`
 
 Cohort/result snapshot:
@@ -3612,7 +3612,7 @@ Added `scripts/tier4_source_balanced_pre_event_echem_front_coupling_audit.py` an
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit`
 - `derived_local/source_balanced_pre_event_echem_front_coupling_audit`
 
 Cohort/result snapshot:
@@ -3637,7 +3637,7 @@ Added `scripts/tier4_source_balanced_pre_event_echem_matched_residual_audit.py` 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit`
 - `derived_local/source_balanced_pre_event_echem_matched_residual_audit`
 
 Cohort/result snapshot:
@@ -3663,7 +3663,7 @@ Added `scripts/tier4_source_balanced_pre_event_front_consensus_audit.py` and ran
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit`
 - `derived_local/source_balanced_pre_event_front_consensus_audit`
 
 Cohort/result snapshot:
@@ -3689,7 +3689,7 @@ Added `scripts/tier4_source_balanced_pre_event_echem_matched_far_control_audit.p
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_far_control_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_far_control_audit`
 - `derived_local/source_balanced_pre_event_echem_matched_far_control_audit`
 
 Cohort/result snapshot:
@@ -3713,7 +3713,7 @@ Added `scripts/tier4_source_balanced_pre_event_consensus_review_queue.py` and ra
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_consensus_review_queue`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_consensus_review_queue`
 - `derived_local/source_balanced_pre_event_consensus_review_queue`
 
 Cohort/result snapshot:
@@ -3735,7 +3735,7 @@ Added `scripts/tier4_source_balanced_pre_event_front_consensus_audit.py` and ran
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_consensus_audit`
 - `derived_local/source_balanced_pre_event_front_consensus_audit`
 
 Cohort/result snapshot:
@@ -3759,7 +3759,7 @@ Added `scripts/tier4_source_balanced_pre_event_consensus_visual_packet.py` and r
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_consensus_visual_packet`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_consensus_visual_packet`
 - `derived_local/source_balanced_pre_event_consensus_visual_packet`
 
 Cohort/result snapshot:
@@ -3782,7 +3782,7 @@ Added `scripts/tier4_source_balanced_pre_event_visual_sanity_audit.py` and ran i
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_visual_sanity_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_visual_sanity_audit`
 - `derived_local/source_balanced_pre_event_visual_sanity_audit`
 
 Cohort/result snapshot:
@@ -3806,7 +3806,7 @@ Added `scripts/tier4_source_balanced_pre_event_visual_qc_modes.py` and ran it on
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_visual_qc_modes`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_visual_qc_modes`
 - `derived_local/source_balanced_pre_event_visual_qc_modes`
 - `source_balanced_pre_event_visual_qc_modes.csv`
 - `source_balanced_pre_event_visual_qc_mode_summary.csv`
@@ -3829,7 +3829,7 @@ Added `scripts/tier4_source_balanced_pre_event_strict_qc_gated_front_audit.py` a
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_strict_qc_gated_front_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_strict_qc_gated_front_audit`
 - `derived_local/source_balanced_pre_event_strict_qc_gated_front_audit`
 - `source_balanced_pre_event_strict_qc_gated_front_candidates.csv`
 - `source_balanced_pre_event_strict_qc_gate_counts.csv`
@@ -3851,7 +3851,7 @@ Added `scripts/tier4_source_balanced_pre_event_phase_kinetics_audit.py` and ran 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_phase_kinetics_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_phase_kinetics_audit`
 - `derived_local/source_balanced_pre_event_phase_kinetics_audit`
 - `source_balanced_pre_event_phase_kinetics_features.csv`
 - `source_balanced_pre_event_phase_kinetics_event_tests.csv`
@@ -3877,7 +3877,7 @@ Added `scripts/tier4_source_balanced_pre_event_multimodal_predictor.py` and ran 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_multimodal_predictor`
 - `derived_local/source_balanced_pre_event_multimodal_predictor`
 
 Results:
@@ -3901,7 +3901,7 @@ Added `scripts/tier4_source_balanced_pre_event_front_kinetic_concordance_audit.p
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit`
 - `derived_local/source_balanced_pre_event_front_kinetic_concordance_audit`
 - `source_balanced_pre_event_front_kinetic_concordance_ranked_candidates.csv`
 - `source_balanced_pre_event_front_kinetic_concordance_event_tests.csv`
@@ -3924,7 +3924,7 @@ Added `scripts/tier4_source_balanced_pre_event_front_kinetic_null_audit.py` and 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_null_audit`
 - `derived_local/source_balanced_pre_event_front_kinetic_null_audit`
 - `source_balanced_pre_event_front_kinetic_null_tests.csv`
 - `source_balanced_pre_event_front_kinetic_proximity_tests.csv`
@@ -3947,7 +3947,7 @@ Added `scripts/tier4_source_balanced_pre_event_manual_qc_decision_packet.py` and
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_decision_packet`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_decision_packet`
 - `derived_local/source_balanced_pre_event_manual_qc_decision_packet`
 - `source_balanced_pre_event_manual_qc_decision_queue.csv`
 - `source_balanced_pre_event_manual_qc_top40.csv`
@@ -3972,7 +3972,7 @@ Added `scripts/tier4_source_balanced_pre_event_manual_qc_visual_packet.py` as th
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_visual_packet`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_visual_packet`
 - `derived_local/source_balanced_pre_event_manual_qc_visual_packet`
 - `source_balanced_pre_event_manual_qc_visual_assets.csv`
 - `manual_qc_visual_contact_sheet.png`
@@ -3993,7 +3993,7 @@ Added `scripts/tier4_source_balanced_pre_event_manual_qc_blind_workbook.py` and 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook`
 - `derived_local/source_balanced_pre_event_manual_qc_blind_workbook`
 - `source_balanced_pre_event_manual_qc_blinded_workbook.csv`
 - `source_balanced_pre_event_manual_qc_blinded_key.csv`
@@ -4017,7 +4017,7 @@ Added scripts/tier4_diffusion_claim_readiness_audit.py and ran it on Isambard to
 
 Remote output:
 
-/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_claim_readiness_audit
+/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_claim_readiness_audit
 
 Local compact mirror:
 
@@ -4049,7 +4049,7 @@ Added `scripts/tier4_source_balanced_pre_event_masked_rollout_benchmark.py` and 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark`
 - `derived_local/source_balanced_pre_event_masked_rollout_benchmark`
 - `source_balanced_pre_event_masked_rollout_per_roi.csv`
 - `source_balanced_pre_event_masked_rollout_frame_samples.csv`
@@ -4077,7 +4077,7 @@ Added `scripts/tier4_residualized_future8_video_physics_benchmark.py` and ran it
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residualized_future8_video_physics_benchmark`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/residualized_future8_video_physics_benchmark`
 - `derived_local/residualized_future8_video_physics_benchmark`
 - `residualized_future8_video_physics_metrics.csv`
 - `residualized_future8_video_physics_predictions.csv`
@@ -4105,7 +4105,7 @@ Added `scripts/tier4_source_balanced_pre_event_observable_forecast.py` and ran i
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast`
 - `derived_local/source_balanced_pre_event_observable_forecast`
 - `source_balanced_pre_event_observable_forecast_features.csv`
 - `source_balanced_pre_event_observable_forecast_metrics.csv`
@@ -4134,7 +4134,7 @@ Added `scripts/tier4_source_balanced_pre_event_optical_flow_transport_audit.py` 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_optical_flow_transport_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_optical_flow_transport_audit`
 - `derived_local/source_balanced_pre_event_optical_flow_transport_audit`
 - `source_balanced_pre_event_optical_flow_transport_per_roi.csv`
 - `source_balanced_pre_event_optical_flow_transport_frame_samples.csv`
@@ -4160,7 +4160,7 @@ Added `scripts/tier4_source_balanced_pre_event_transport_kinetic_fusion_audit.py
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_transport_kinetic_fusion_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_transport_kinetic_fusion_audit`
 - `derived_local/source_balanced_pre_event_transport_kinetic_fusion_audit`
 - `source_balanced_pre_event_transport_kinetic_fusion_per_roi.csv`
 - `source_balanced_pre_event_transport_kinetic_fusion_event_tests.csv`
@@ -4187,7 +4187,7 @@ Added `scripts/tier4_source_balanced_transport_mechanism_dossier.py` and ran it 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_dossier`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_transport_mechanism_dossier`
 - `derived_local/source_balanced_transport_mechanism_dossier`
 - `source_balanced_transport_mechanism_dossier.csv`
 - `source_balanced_transport_mechanism_top40.csv`
@@ -4214,7 +4214,7 @@ Added `scripts/tier4_source_balanced_transport_mechanism_falsification_audit.py`
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit`
 - `derived_local/source_balanced_transport_mechanism_falsification_audit`
 - `source_balanced_transport_mechanism_falsification_event_tests.csv`
 - `source_balanced_transport_mechanism_falsification_matched_pairs.csv`
@@ -4243,7 +4243,7 @@ Added `scripts/tier4_source_balanced_expansion_transport_front_audit.py` and ran
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_expansion_transport_front_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_expansion_transport_front_audit`
 - `derived_local/source_balanced_expansion_transport_front_audit`
 - `source_balanced_expansion_transport_front_features.csv`
 - `source_balanced_expansion_transport_front_tests.csv`
@@ -4269,7 +4269,7 @@ Added `scripts/tier4_diffusion_unblock_sensitivity_audit.py` and ran it on Isamb
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_unblock_sensitivity_audit`
 - `derived_local/diffusion_unblock_sensitivity_audit`
 - `diffusion_unblock_blocker_table.csv`
 - `diffusion_unblock_review_queue.csv`
@@ -4295,7 +4295,7 @@ Added `scripts/tier4_current_claim_readiness_matrix.py` and ran it on Isambard t
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/current_claim_readiness_matrix`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/current_claim_readiness_matrix`
 - `derived_local/current_claim_readiness_matrix`
 - `current_claim_readiness_matrix.csv`
 - `current_claim_readiness_status_counts.csv`
@@ -4318,7 +4318,7 @@ Added `scripts/tier4_source_heldout_event_rank_transfer_audit.py` and ran it on 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit`
 - `derived_local/source_heldout_event_rank_transfer_audit`
 - `source_heldout_event_rank_transfer_predictions.csv`
 - `source_heldout_event_rank_transfer_folds.csv`
@@ -4345,7 +4345,7 @@ Added `scripts/tier4_all_cycle_dataset_coverage_atlas.py` and ran it on Isambard
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/all_cycle_dataset_coverage_atlas`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/all_cycle_dataset_coverage_atlas`
 - `derived_local/all_cycle_dataset_coverage_atlas`
 - `all_cycle_coverage_table.csv`
 - `all_cycle_source_coverage_summary.csv`
@@ -4374,7 +4374,7 @@ Added `scripts/tier4_targeted_densification_qc_plan.py` and ran it on Isambard t
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/targeted_densification_qc_plan`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/targeted_densification_qc_plan`
 - `derived_local/targeted_densification_qc_plan`
 - `targeted_densification_cycle_plan.csv`
 - `targeted_densification_source_plan.csv`
@@ -4402,7 +4402,7 @@ Added `scripts/tier4_pre_event_temporal_dose_response_audit.py` and ran it on Is
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_temporal_dose_response_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_temporal_dose_response_audit`
 - `derived_local/pre_event_temporal_dose_response_audit`
 - `pre_event_temporal_dose_response_feature_tests.csv`
 - `pre_event_temporal_dose_response_bin_summary.csv`
@@ -4427,7 +4427,7 @@ Added `scripts/tier4_particle_mask_history_fallback_audit.py` and ran it on Isam
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_mask_history_fallback_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/particle_mask_history_fallback_audit`
 - `derived_local/particle_mask_history_fallback_audit`
 - `particle_mask_history_fallback_metrics.csv`
 - `particle_mask_history_fallback_event_tests.csv`
@@ -4454,7 +4454,7 @@ Added `scripts/tier4_targeted_diffusion_blocker_diagnostic.py` and ran it on Isa
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic`
 - `derived_local/targeted_diffusion_blocker_diagnostic`
 - `targeted_diffusion_candidate_diagnostic.csv`
 - `targeted_diffusion_threshold_variants.csv`
@@ -4480,7 +4480,7 @@ Added `scripts/tier4_history_fallback_masked_rollout_ablation.py` and ran it on 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/history_fallback_masked_rollout_ablation`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/history_fallback_masked_rollout_ablation`
 - `derived_local/history_fallback_masked_rollout_ablation`
 - `history_fallback_masked_rollout_ablation_per_roi.csv`
 - `history_fallback_masked_rollout_ablation_event_tests.csv`
@@ -4508,7 +4508,7 @@ Added `scripts/tier4_rollout_front_mode_coupling_audit.py` and ran it on Isambar
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_front_mode_coupling_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/rollout_front_mode_coupling_audit`
 - `derived_local/rollout_front_mode_coupling_audit`
 - `rollout_front_mode_coupling_merged.csv`
 - `rollout_front_mode_coupling_feature_tests.csv`
@@ -4536,7 +4536,7 @@ Added `scripts/tier4_cycle78_diffusion_remeasurement_audit.py` and ran it on Isa
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit`
 - `derived_local/cycle78_diffusion_remeasurement_audit`
 - `cycle78_diffusion_remeasurement_per_variant.csv`
 - `cycle78_diffusion_remeasurement_roi_summary.csv`
@@ -4563,7 +4563,7 @@ Added `scripts/tier4_post_remeasurement_diffusion_gate_audit.py` and ran it on I
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit`
 - `derived_local/post_remeasurement_diffusion_gate_audit`
 - `post_remeasurement_diffusion_candidate_update.csv`
 - `post_remeasurement_diffusion_gate_table.csv`
@@ -4588,7 +4588,7 @@ Added `scripts/tier4_cycle78_front_identity_review_packet.py` and ran it on Isam
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_front_identity_review_packet`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_front_identity_review_packet`
 - `derived_local/cycle78_front_identity_review_packet`
 - `cycle78_front_identity_review_manifest.csv`
 - `cycle78_front_identity_review.html`
@@ -4614,7 +4614,7 @@ Added `scripts/tier4_cycle78_component_front_retracking_audit.py` and ran it on 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_component_front_retracking_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_component_front_retracking_audit`
 - `derived_local/cycle78_component_front_retracking_audit`
 - `cycle78_component_front_retracking_per_strategy.csv`
 - `cycle78_component_front_retracking_summary.json`
@@ -4638,7 +4638,7 @@ Added `scripts/tier4_calibration_provenance_evidence_audit.py` and ran it on Isa
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/calibration_provenance_evidence_audit`
 - `derived_local/calibration_provenance_evidence_audit`
 - `calibration_provenance_file_inventory.csv`
 - `calibration_provenance_evidence_statements.csv`
@@ -4663,7 +4663,7 @@ Added `scripts/tier4_hdf5_timebase_provenance_audit.py` and ran it on Isambard t
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/hdf5_timebase_provenance_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/hdf5_timebase_provenance_audit`
 - `derived_local/hdf5_timebase_provenance_audit`
 - `hdf5_timebase_source_summary.csv`
 - `hdf5_timebase_roi_q70_table.csv`
@@ -4695,7 +4695,7 @@ Added `scripts/tier4_source_balanced_sequence_source_control_audit.py` and ran i
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_source_control_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_source_control_audit`
 - `derived_local/source_balanced_sequence_source_control_audit`
 - `source_balanced_sequence_source_control_scalar_tests.csv`
 - `source_balanced_sequence_source_control_model_metrics.csv`
@@ -4723,7 +4723,7 @@ Added `scripts/tier4_timebase_aware_source_balanced_rollout_audit.py` and ran it
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit`
 - `derived_local/timebase_aware_source_balanced_rollout_audit`
 - `timebase_aware_rollout_joined.csv`
 - `timebase_aware_rollout_target_tests.csv`
@@ -4754,7 +4754,7 @@ Added `scripts/tier4_timebase_aware_transport_mechanism_audit.py` and ran it on 
 
 Outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit`
 - `derived_local/timebase_aware_transport_mechanism_audit`
 - `timebase_aware_transport_mechanism_joined.csv`
 - `timebase_aware_transport_mechanism_target_tests.csv`
@@ -4788,8 +4788,8 @@ Added and ran two new separate Isambard folders for the source-balanced pre-even
 
 Commands:
 
-- `scripts/tier5_timebase_corrected_front_fit.py --manifest-csv /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1`
-- `scripts/tier5_segmented_timebase_front_fit.py --manifest-csv /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_segmented_timebase_front_fit_v1`
+- `scripts/tier5_timebase_corrected_front_fit.py --manifest-csv /scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1`
+- `scripts/tier5_segmented_timebase_front_fit.py --manifest-csv /scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences/selected_roi_sequence_manifest.csv --out-dir /scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_segmented_timebase_front_fit_v1`
 
 Results:
 
@@ -4802,7 +4802,7 @@ Results:
 
 ## 2026-05-25 Timebase-Aware Front/Kinetic Concordance Audit
 
-Added `scripts/tier4_timebase_aware_front_kinetic_concordance_audit.py` and ran it on Isambard in a fresh remote folder under `/home/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out`, then synced the compact outputs back to `derived_local/timebase_aware_front_kinetic_concordance_audit`.
+Added `scripts/tier4_timebase_aware_front_kinetic_concordance_audit.py` and ran it on Isambard in a fresh remote folder under `/home/u6hp/<username>/Alek_Jiho/derived/timebase_aware_front_kinetic_concordance_audit/out`, then synced the compact outputs back to `derived_local/timebase_aware_front_kinetic_concordance_audit`.
 
 Outputs:
 

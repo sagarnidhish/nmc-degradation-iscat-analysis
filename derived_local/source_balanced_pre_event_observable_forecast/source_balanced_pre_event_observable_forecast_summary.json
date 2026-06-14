@@ -173,12 +173,12 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "event_diagnostics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_event_diagnostics.csv",
-    "failures": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_failures.csv",
-    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_features.csv",
-    "incremental": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_incremental.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_metrics.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_predictions.csv"
+    "event_diagnostics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_event_diagnostics.csv",
+    "failures": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_failures.csv",
+    "features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_features.csv",
+    "incremental": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_incremental.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_metrics.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_observable_forecast/source_balanced_pre_event_observable_forecast_predictions.csv"
   },
   "prefix_fraction": 0.6,
   "source_heldout_top_metrics": [

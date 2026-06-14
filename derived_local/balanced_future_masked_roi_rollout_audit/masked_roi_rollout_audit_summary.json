@@ -1,5 +1,5 @@
 {
-  "manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv",
+  "manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_sequences/selected_roi_sequence_manifest.csv",
   "n_roi": 72,
   "n_frame_metric_rows": 6912,
   "rank": 16,

@@ -39,11 +39,11 @@
   "n_rows": 172,
   "n_sources": 9,
   "outputs": {
-    "feature_screen": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/invariant_physics_rule_discovery/invariant_rule_feature_screen.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/invariant_physics_rule_discovery/invariant_physics_rule_predictions.csv",
-    "rules": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/invariant_physics_rule_discovery/invariant_physics_rules.csv",
-    "source_support": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/invariant_physics_rule_discovery/invariant_physics_rule_source_support.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/invariant_physics_rule_discovery/invariant_physics_rule_summary.json"
+    "feature_screen": "/scratch/<account>/<username>/Alek_Jiho/derived/invariant_physics_rule_discovery/invariant_rule_feature_screen.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/invariant_physics_rule_discovery/invariant_physics_rule_predictions.csv",
+    "rules": "/scratch/<account>/<username>/Alek_Jiho/derived/invariant_physics_rule_discovery/invariant_physics_rules.csv",
+    "source_support": "/scratch/<account>/<username>/Alek_Jiho/derived/invariant_physics_rule_discovery/invariant_physics_rule_source_support.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/invariant_physics_rule_discovery/invariant_physics_rule_summary.json"
   },
   "positive_rate": 0.7916666666666666,
   "quantile": 0.75,

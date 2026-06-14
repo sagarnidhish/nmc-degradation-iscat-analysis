@@ -164,8 +164,8 @@ def add_qc_flags(df: pd.DataFrame) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_qc_sensitivity")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/front_qc_sensitivity")
     parser.add_argument("--n-bootstrap", type=int, default=2000)
     parser.add_argument("--n-permutation", type=int, default=2000)
     parser.add_argument("--seed", type=int, default=20260521)

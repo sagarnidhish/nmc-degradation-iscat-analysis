@@ -9,13 +9,13 @@
   "n_prefix_rows": 156,
   "n_roi": 52,
   "outputs": {
-    "classification_folds": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_classification_folds.csv",
-    "classification_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_classification_summary.csv",
-    "permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_permutation_null.csv",
-    "prefix_features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_feature_table.csv",
-    "regression_folds": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_regression_folds.csv",
-    "regression_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_regression_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_forecast_summary.json"
+    "classification_folds": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_classification_folds.csv",
+    "classification_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_classification_summary.csv",
+    "permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_permutation_null.csv",
+    "prefix_features": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_feature_table.csv",
+    "regression_folds": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_regression_folds.csv",
+    "regression_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_regression_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_forecast_summary.json"
   },
   "permutation_null": [
     {

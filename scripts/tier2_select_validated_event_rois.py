@@ -222,9 +222,9 @@ def save_selected_overlay(root: str, rows: pd.DataFrame, out_png: str, downsampl
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_roi_validation")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_roi_validation")
     parser.add_argument("--target-cycles", default="86,116")
     parser.add_argument("--top-per-cycle", type=int, default=6)
     parser.add_argument("--max-front-to-object-distance", type=float, default=12.0)

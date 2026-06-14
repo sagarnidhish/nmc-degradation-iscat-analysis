@@ -87,10 +87,10 @@ def spearman_table(df: pd.DataFrame, x_cols: List[str], y_cols: List[str]) -> pd
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mobility-descriptors", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_descriptors.csv")
-    parser.add_argument("--rollout-per-roi", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/roi_rollout_per_roi_metrics.csv")
-    parser.add_argument("--latent-summary", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/roi_latent_dynamics_summary.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling")
+    parser.add_argument("--mobility-descriptors", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_mobility/multi_cycle_roi_mobility_descriptors.csv")
+    parser.add_argument("--rollout-per-roi", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/roi_rollout_per_roi_metrics.csv")
+    parser.add_argument("--latent-summary", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/roi_latent_dynamics_summary.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling")
     args = parser.parse_args()
 
     mobility = pd.read_csv(args.mobility_descriptors)

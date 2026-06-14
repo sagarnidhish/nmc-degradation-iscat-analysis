@@ -222,7 +222,7 @@ def read_manifest(path: Path) -> List[Dict[str, str]]:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--manifest-csv", required=True)
-    ap.add_argument("--h5-root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/NMC_degradation_3_160623_Halfthedata")
+    ap.add_argument("--h5-root", default="/scratch/<account>/<username>/Alek_Jiho/NMC_degradation_3_160623_Halfthedata")
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--pixel-size-um", type=float, default=DEFAULT_PIXEL_SIZE_UM)
     ap.add_argument("--min-window-points", type=int, default=24)

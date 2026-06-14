@@ -72,11 +72,11 @@
   "n_sources": 14,
   "n_targets": 20,
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit/source_balanced_pre_event_echem_front_correlations.csv",
-    "eventbin_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit/source_balanced_pre_event_echem_front_eventbin_tests.csv",
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit/source_balanced_pre_event_echem_front_joined.csv",
-    "residual_fits": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit/source_balanced_pre_event_echem_front_residual_fits.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit/source_balanced_pre_event_echem_front_summary.json"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit/source_balanced_pre_event_echem_front_correlations.csv",
+    "eventbin_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit/source_balanced_pre_event_echem_front_eventbin_tests.csv",
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit/source_balanced_pre_event_echem_front_joined.csv",
+    "residual_fits": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit/source_balanced_pre_event_echem_front_residual_fits.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_front_coupling_audit/source_balanced_pre_event_echem_front_summary.json"
   },
   "targets": [
     "front_radius_q60_slope_px_per_norm_time",

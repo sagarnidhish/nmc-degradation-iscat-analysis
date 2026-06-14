@@ -53,13 +53,13 @@
   "n_prediction_rows": 48,
   "n_sources": 14,
   "outputs": {
-    "feature_weights": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_feature_weights.csv",
-    "folds": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_folds.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_predictions.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/README.md",
-    "score_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_score_tests.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_summary.json",
-    "topk": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_topk.csv"
+    "feature_weights": "/scratch/<account>/<username>/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_feature_weights.csv",
+    "folds": "/scratch/<account>/<username>/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_folds.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_predictions.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/README.md",
+    "score_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_score_tests.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_summary.json",
+    "topk": "/scratch/<account>/<username>/Alek_Jiho/derived/source_heldout_event_rank_transfer_audit/source_heldout_event_rank_transfer_topk.csv"
   },
   "targets": [
     "near_vs_any_non_near"

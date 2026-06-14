@@ -30,12 +30,12 @@
   "n_sources": 14,
   "n_strict_scalar_rows": 0,
   "outputs": {
-    "model_deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/source_balanced_sequence_source_control_model_deltas.csv",
-    "model_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/source_balanced_sequence_source_control_model_metrics.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/source_balanced_sequence_source_control_predictions.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/README.md",
-    "scalar_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/source_balanced_sequence_source_control_scalar_tests.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/source_balanced_sequence_source_control_summary.json"
+    "model_deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/source_balanced_sequence_source_control_model_deltas.csv",
+    "model_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/source_balanced_sequence_source_control_model_metrics.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/source_balanced_sequence_source_control_predictions.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/README.md",
+    "scalar_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/source_balanced_sequence_source_control_scalar_tests.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_sequence_source_control_audit/source_balanced_sequence_source_control_summary.json"
   },
   "strict_source_controlled_scalars": [],
   "targets": [

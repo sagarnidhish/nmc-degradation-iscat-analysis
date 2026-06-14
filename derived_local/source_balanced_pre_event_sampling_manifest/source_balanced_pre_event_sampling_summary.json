@@ -24,16 +24,16 @@
   "n_selected_cycles": 64,
   "n_sources_selected": 14,
   "outputs": {
-    "candidates": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_candidates.csv",
-    "cycle_plan": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_cycle_plan.csv",
-    "missing": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_missing_cycles.csv",
-    "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_roi_table.csv",
-    "segments": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_segments.csv",
-    "source_coverage": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_source_coverage.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_sampling_summary.json"
+    "candidates": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_candidates.csv",
+    "cycle_plan": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_cycle_plan.csv",
+    "missing": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_missing_cycles.csv",
+    "roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_roi_table.csv",
+    "segments": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_segments.csv",
+    "source_coverage": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_source_coverage.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/source_balanced_pre_event_sampling_summary.json"
   },
   "per_source": 5,
-  "ranked_cycles": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_full_cycles.csv",
+  "ranked_cycles": "/scratch/<account>/<username>/Alek_Jiho/derived/masked_residual_state_transfer_warning/masked_residual_state_transfer_full_cycles.csv",
   "roi_bin_counts": {
     "far_pre_event_17_32": 22,
     "mid_pre_event_9_16": 22,
@@ -254,7 +254,7 @@
       "segment_end_frame": 3627,
       "segment_start_frame": 2720,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_88_pre1_10_c2_x10_030723_local3.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_88_pre1_10_c2_x10_030723_local3.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 24.564053048641682
@@ -286,7 +286,7 @@
       "segment_end_frame": 3627,
       "segment_start_frame": 2720,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_88_pre1_10_c2_x10_030723_local3.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_88_pre1_10_c2_x10_030723_local3.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 24.329266672272
@@ -318,7 +318,7 @@
       "segment_end_frame": 5440,
       "segment_start_frame": 4534,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_90_pre2_10_c2_x10_030723_local5.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_90_pre2_10_c2_x10_030723_local5.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 23.842986199481782
@@ -350,7 +350,7 @@
       "segment_end_frame": 5440,
       "segment_start_frame": 4534,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_90_pre2_10_c2_x10_030723_local5.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_90_pre2_10_c2_x10_030723_local5.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 23.307087736570715
@@ -382,7 +382,7 @@
       "segment_end_frame": 7254,
       "segment_start_frame": 6347,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_92_pre3_10_c2_x10_030723_local7.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_92_pre3_10_c2_x10_030723_local7.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 25.488656580292165
@@ -414,7 +414,7 @@
       "segment_end_frame": 7254,
       "segment_start_frame": 6347,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_92_pre3_10_c2_x10_030723_local7.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_92_pre3_10_c2_x10_030723_local7.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 24.29946436055132
@@ -446,7 +446,7 @@
       "segment_end_frame": 9068,
       "segment_start_frame": 8161,
       "selection_reason": "post_event_1_16",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_94_pre4_10_c2_x10_030723_local9.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_94_pre4_10_c2_x10_030723_local9.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 25.14983171634987
@@ -478,7 +478,7 @@
       "segment_end_frame": 9068,
       "segment_start_frame": 8161,
       "selection_reason": "post_event_1_16",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_94_pre4_10_c2_x10_030723_local9.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_94_pre4_10_c2_x10_030723_local9.png",
       "source_stem": "10_c2_x10_030723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 23.93425610271029
@@ -510,7 +510,7 @@
       "segment_end_frame": 1804,
       "segment_start_frame": 902,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_96_pre5_11_c2_x10_050723_local1.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_96_pre5_11_c2_x10_050723_local1.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 24.90960755549438
@@ -542,7 +542,7 @@
       "segment_end_frame": 1804,
       "segment_start_frame": 902,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_96_pre5_11_c2_x10_050723_local1.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_96_pre5_11_c2_x10_050723_local1.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 23.445151520434056
@@ -574,7 +574,7 @@
       "segment_end_frame": 3608,
       "segment_start_frame": 2706,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_98_pre6_11_c2_x10_050723_local3.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_98_pre6_11_c2_x10_050723_local3.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 24.558909812946133
@@ -606,7 +606,7 @@
       "segment_end_frame": 3608,
       "segment_start_frame": 2706,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_98_pre6_11_c2_x10_050723_local3.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_98_pre6_11_c2_x10_050723_local3.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 23.327083525321505
@@ -638,7 +638,7 @@
       "segment_end_frame": 5412,
       "segment_start_frame": 4510,
       "selection_reason": "post_event_1_16",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_100_pre7_11_c2_x10_050723_local5.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_100_pre7_11_c2_x10_050723_local5.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 24.28248417017058
@@ -670,7 +670,7 @@
       "segment_end_frame": 5412,
       "segment_start_frame": 4510,
       "selection_reason": "post_event_1_16",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_100_pre7_11_c2_x10_050723_local5.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_100_pre7_11_c2_x10_050723_local5.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 23.335890706615764
@@ -702,7 +702,7 @@
       "segment_end_frame": 7216,
       "segment_start_frame": 6314,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_102_pre8_11_c2_x10_050723_local7.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_102_pre8_11_c2_x10_050723_local7.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 24.327869033330572
@@ -734,7 +734,7 @@
       "segment_end_frame": 7216,
       "segment_start_frame": 6314,
       "selection_reason": "source_fill",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_102_pre8_11_c2_x10_050723_local7.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_102_pre8_11_c2_x10_050723_local7.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 22.599671263050322
@@ -766,7 +766,7 @@
       "segment_end_frame": 9020,
       "segment_start_frame": 8118,
       "selection_reason": "mid_pre_event_9_16",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_104_pre9_11_c2_x10_050723_local9.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_104_pre9_11_c2_x10_050723_local9.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 24.37434705398142
@@ -798,7 +798,7 @@
       "segment_end_frame": 9020,
       "segment_start_frame": 8118,
       "selection_reason": "mid_pre_event_9_16",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_104_pre9_11_c2_x10_050723_local9.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_104_pre9_11_c2_x10_050723_local9.png",
       "source_stem": "11_c2_x10_050723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 23.914457040802272
@@ -830,7 +830,7 @@
       "segment_end_frame": 1808,
       "segment_start_frame": 904,
       "selection_reason": "mid_pre_event_9_16",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_106_pre10_12_c2_x10_070723_local1.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_106_pre10_12_c2_x10_070723_local1.png",
       "source_stem": "12_c2_x10_070723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 23.87471907906338
@@ -862,7 +862,7 @@
       "segment_end_frame": 1808,
       "segment_start_frame": 904,
       "selection_reason": "mid_pre_event_9_16",
-      "source_reconstructed_overlay_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_106_pre10_12_c2_x10_070723_local1.png",
+      "source_reconstructed_overlay_png": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sampling_manifest/overlays/cycle_106_pre10_12_c2_x10_070723_local1.png",
       "source_stem": "12_c2_x10_070723",
       "validation_label": "source_balanced_pre_event_candidate",
       "validation_score": 23.629607198020047

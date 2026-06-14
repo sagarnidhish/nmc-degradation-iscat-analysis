@@ -243,8 +243,8 @@ def summarize_bins(cycles: pd.DataFrame, features: List[str]) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--readout-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_trajectory_audit")
+    parser.add_argument("--readout-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_readout_audit")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_trajectory_audit")
     parser.add_argument("--n-permutations", type=int, default=1000)
     args = parser.parse_args()
 

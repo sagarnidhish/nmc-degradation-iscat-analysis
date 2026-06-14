@@ -6,11 +6,11 @@
   "n_predictors_tested": 54,
   "n_roi_rows": 52,
   "outputs": {
-    "cycle_collapsed_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_cycle_collapsed_table.csv",
-    "cycle_spearman_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_cycle_spearman_tests.csv",
-    "reference_centered_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_reference_centered_table.csv",
-    "reference_centered_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_reference_centered_spearman_tests.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_fusion_cycle_null_summary.json"
+    "cycle_collapsed_table": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_cycle_collapsed_table.csv",
+    "cycle_spearman_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_cycle_spearman_tests.csv",
+    "reference_centered_table": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_reference_centered_table.csv",
+    "reference_centered_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_reference_centered_spearman_tests.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_cycle_null/roi_trace_fusion_cycle_null_summary.json"
   },
   "robust_cycle_collapsed_tests": [
     {

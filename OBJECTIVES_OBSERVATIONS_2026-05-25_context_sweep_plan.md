@@ -13,9 +13,9 @@ Why this matters:
 
 Planned outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/next_frame_baseline_context_sweep_source_balanced_v1/context_2/`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/next_frame_baseline_context_sweep_source_balanced_v1/context_4/`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/next_frame_baseline_context_sweep_source_balanced_v1/context_8/`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/next_frame_baseline_context_sweep_source_balanced_v1/context_2/`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/next_frame_baseline_context_sweep_source_balanced_v1/context_4/`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/next_frame_baseline_context_sweep_source_balanced_v1/context_8/`
 
 Guardrail:
 

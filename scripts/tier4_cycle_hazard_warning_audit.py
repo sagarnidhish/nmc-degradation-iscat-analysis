@@ -221,8 +221,8 @@ def probability_context_correlations(pred: pd.DataFrame, df: pd.DataFrame, conte
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_hazard_warning_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/cycle_hazard_warning_audit")
     parser.add_argument("--target", default="future_any_drop_within_8cycles")
     parser.add_argument("--purge-cycles", type=int, default=8)
     parser.add_argument("--min-train", type=int, default=24)

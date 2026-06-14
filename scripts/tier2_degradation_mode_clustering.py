@@ -14,9 +14,9 @@ from sklearn.preprocessing import StandardScaler
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--event-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_training_table.csv")
-    parser.add_argument("--cycle-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/degradation_mode_clustering")
+    parser.add_argument("--event-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets/particle_event_training_table.csv")
+    parser.add_argument("--cycle-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/degradation_mode_clustering")
     parser.add_argument("--k-min", type=int, default=2)
     parser.add_argument("--k-max", type=int, default=5)
     parser.add_argument("--seed", type=int, default=20260521)

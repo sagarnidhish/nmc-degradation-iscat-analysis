@@ -250,8 +250,8 @@ def permutation_null(df: pd.DataFrame, features: List[str], target: str, group_c
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_roi_physics_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_roi_physics_audit")
     parser.add_argument("--n-permutation", type=int, default=100)
     parser.add_argument("--random-state", type=int, default=29)
     args = parser.parse_args()

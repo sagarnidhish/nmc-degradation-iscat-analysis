@@ -29,7 +29,7 @@ What it does:
 
 Write under:
 
-`/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_corrected_front_fit_v1/`
+`/scratch/<account>/<username>/Alek_Jiho/derived/timebase_corrected_front_fit_v1/`
 
 Files:
 

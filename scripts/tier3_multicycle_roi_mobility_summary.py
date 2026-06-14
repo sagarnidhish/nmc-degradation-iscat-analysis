@@ -122,10 +122,10 @@ def feature_tests(df: pd.DataFrame, features: List[str], group_col: str = "") ->
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv")
-    parser.add_argument("--cohort-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort/multi_cycle_roi_table.csv")
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_mobility")
+    parser.add_argument("--manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv")
+    parser.add_argument("--cohort-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_cohort/multi_cycle_roi_table.csv")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_mobility")
     args = parser.parse_args()
 
     df = descriptor_rows(args.manifest, args.cohort_table, args.root)

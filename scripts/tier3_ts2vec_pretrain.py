@@ -190,8 +190,8 @@ def crop_and_mask(x: torch.Tensor, crop_ratio: float = 0.5) -> Tuple[torch.Tenso
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--base-dir", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument("--target-len", type=int, default=128)
     parser.add_argument("--hidden", type=int, default=64)
     parser.add_argument("--depth", type=int, default=6)

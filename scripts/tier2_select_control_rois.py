@@ -91,9 +91,9 @@ def select_controls(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--event-roi-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--event-roi-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_roi_validation/selected_event_rois.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_selection")
     parser.add_argument("--controls-per-event-cycle", type=int, default=8)
     parser.add_argument(
         "--max-controls-per-control-cycle",

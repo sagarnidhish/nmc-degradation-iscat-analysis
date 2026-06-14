@@ -236,10 +236,10 @@ def correlation_tests(df: pd.DataFrame, features: List[str], targets: List[str])
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--repo-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--repo-dir", default="/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg")
     parser.add_argument("--echem-csv", default="")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/within_cycle_echem_shape_audit")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/within_cycle_echem_shape_audit")
     parser.add_argument("--chunksize", type=int, default=750000)
     args = parser.parse_args()
 

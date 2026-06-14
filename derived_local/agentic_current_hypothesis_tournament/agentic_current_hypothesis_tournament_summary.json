@@ -204,10 +204,10 @@
   ],
   "guardrail": "This tournament ranks next analyses from existing automatic evidence. It does not create manual QC labels, does not validate a deployable degradation detector, and does not license calibrated diffusion claims.",
   "outputs": {
-    "csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/agentic_current_hypothesis_tournament/agentic_current_hypothesis_tournament.csv",
-    "json": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/agentic_current_hypothesis_tournament/agentic_current_hypothesis_tournament.json",
-    "experiment_specs": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/agentic_current_hypothesis_tournament/agentic_next_experiment_specs.json",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/agentic_current_hypothesis_tournament/README.md"
+    "csv": "/scratch/<account>/<username>/Alek_Jiho/derived/agentic_current_hypothesis_tournament/agentic_current_hypothesis_tournament.csv",
+    "json": "/scratch/<account>/<username>/Alek_Jiho/derived/agentic_current_hypothesis_tournament/agentic_current_hypothesis_tournament.json",
+    "experiment_specs": "/scratch/<account>/<username>/Alek_Jiho/derived/agentic_current_hypothesis_tournament/agentic_next_experiment_specs.json",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/agentic_current_hypothesis_tournament/README.md"
   },
   "physics_guardrail": "This matrix is a multimodal consistency and review-prioritization audit. It does not assign manual QC labels and does not validate calibrated diffusion or material degradation mechanisms."
 }

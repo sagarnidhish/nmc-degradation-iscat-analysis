@@ -5,8 +5,8 @@
   "n_front_rois": 12,
   "n_qc_rois": 12,
   "outputs": {
-    "calibrated_front_tracking": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_roi_calibration_qc/calibrated_front_tracking.csv",
-    "front_roi_qc_calibration": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_roi_calibration_qc/front_roi_qc_calibration.csv"
+    "calibrated_front_tracking": "/scratch/<account>/<username>/Alek_Jiho/derived/front_roi_calibration_qc/calibrated_front_tracking.csv",
+    "front_roi_qc_calibration": "/scratch/<account>/<username>/Alek_Jiho/derived/front_roi_calibration_qc/front_roi_qc_calibration.csv"
   },
   "pixel_area_um2": 0.009216,
   "pixel_size_um": 0.096,

@@ -101,9 +101,9 @@ def frame_count_context(counts: pd.DataFrame, frames: pd.DataFrame) -> pd.DataFr
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--event-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets")
+    parser.add_argument("--event-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets")
     parser.add_argument("--cycle-frames-csv", default="")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_synchrony")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_synchrony")
     parser.add_argument("--n-permutations", type=int, default=20000)
     parser.add_argument("--seed", type=int, default=20260521)
     args = parser.parse_args()
@@ -115,9 +115,9 @@ def main() -> None:
 
     frames_path = resolve_existing_path([
         args.cycle_frames_csv,
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/cycleFrames.csv",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
-        "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/cycleFrames.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
+        "/path/to/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
     ])
 
     table = pd.read_csv(table_path)

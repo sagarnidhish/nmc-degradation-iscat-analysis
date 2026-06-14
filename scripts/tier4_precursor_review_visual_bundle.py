@@ -102,8 +102,8 @@ def make_contact_sheet(image_paths: List[Path], labels: List[str], out_path: Pat
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_review_visual_bundle")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/precursor_review_visual_bundle")
     parser.add_argument("--top-n", type=int, default=12)
     args = parser.parse_args()
 

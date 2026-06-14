@@ -300,8 +300,8 @@ def records(df: pd.DataFrame, n: int) -> list[dict]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_spatial_front_propagation_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/balanced_spatial_front_propagation_audit")
     parser.add_argument("--k-neighbors", type=int, default=3)
     parser.add_argument("--n-permutation", type=int, default=1000)
     args = parser.parse_args()

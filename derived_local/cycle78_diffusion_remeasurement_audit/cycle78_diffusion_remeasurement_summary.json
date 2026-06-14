@@ -147,11 +147,11 @@
   "n_context_rois": 5,
   "n_variant_rows": 1260,
   "outputs": {
-    "context_manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit/cycle78_diffusion_remeasurement_context_manifest.csv",
-    "per_variant": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit/cycle78_diffusion_remeasurement_per_variant.csv",
-    "roi_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit/cycle78_diffusion_remeasurement_roi_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit/cycle78_diffusion_remeasurement_summary.json",
-    "target_plot": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit/plots/cycle78_rank22_obj2_q70_remeasurement.png"
+    "context_manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit/cycle78_diffusion_remeasurement_context_manifest.csv",
+    "per_variant": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit/cycle78_diffusion_remeasurement_per_variant.csv",
+    "roi_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit/cycle78_diffusion_remeasurement_roi_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit/cycle78_diffusion_remeasurement_summary.json",
+    "target_plot": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_diffusion_remeasurement_audit/plots/cycle78_rank22_obj2_q70_remeasurement.png"
   },
   "overall_status": "cycle78_diffusion_remeasurement_ready",
   "pixel_size_um_assumed": 0.096,

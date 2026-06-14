@@ -125,8 +125,8 @@ def build_event_precursor_scores(derived: Path, max_tests: int) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/precursor_informed_roi_review")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/precursor_informed_roi_review")
     parser.add_argument("--max-precursor-tests", type=int, default=10)
     args = parser.parse_args()
 

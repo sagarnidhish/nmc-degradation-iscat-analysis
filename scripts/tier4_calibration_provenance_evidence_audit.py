@@ -507,9 +507,9 @@ def write_readme(out: Path, summary: Dict[str, Any]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--repo-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_provenance_evidence_audit")
+    parser.add_argument("--base-dir", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--repo-dir", default="/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/calibration_provenance_evidence_audit")
     parser.add_argument(
         "--h5-root",
         action="append",

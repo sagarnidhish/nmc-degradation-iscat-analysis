@@ -239,7 +239,7 @@ def main() -> None:
     parser.add_argument("--manifest-csv", required=True, help="ROI sequence manifest with npz_path and source_stem.")
     parser.add_argument(
         "--h5-root",
-        default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/NMC_degradation_3_160623_Halfthedata",
+        default="/scratch/<account>/<username>/Alek_Jiho/NMC_degradation_3_160623_Halfthedata",
         help="Folder containing per-cycle HDF5 files named {source_stem}.hdf5",
     )
     parser.add_argument("--pixel-size-um", type=float, default=DEFAULT_PIXEL_SIZE_UM)

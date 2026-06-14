@@ -26,7 +26,7 @@
       "front_radius_q60_slope_source_residual": null,
       "apparent_diffusion_q70_source_residual": 0.2734206680412371,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle108_rank6_obj2_12_c2_x10_070723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle108_rank6_obj2_12_c2_x10_070723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -46,7 +46,7 @@
       "front_radius_q60_slope_source_residual": -0.9791666666666672,
       "apparent_diffusion_q70_source_residual": -0.6174482474226802,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle132_rank14_obj2_15_c2_x5_HighCOV_120723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle132_rank14_obj2_15_c2_x5_HighCOV_120723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -66,7 +66,7 @@
       "front_radius_q60_slope_source_residual": -1.098950662739323,
       "apparent_diffusion_q70_source_residual": -0.039916206185566884,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle145_rank20_obj2_16_c2_x10_HighHighCOV_130723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle145_rank20_obj2_16_c2_x10_HighHighCOV_130723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -86,7 +86,7 @@
       "front_radius_q60_slope_source_residual": 0.5298539518900347,
       "apparent_diffusion_q70_source_residual": -0.028764371134020417,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle132_rank14_obj1_15_c2_x5_HighCOV_120723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle132_rank14_obj1_15_c2_x5_HighCOV_120723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -106,7 +106,7 @@
       "front_radius_q60_slope_source_residual": 0.09568298969072186,
       "apparent_diffusion_q70_source_residual": -0.0483792494845362,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle108_rank6_obj1_12_c2_x10_070723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle108_rank6_obj1_12_c2_x10_070723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -126,7 +126,7 @@
       "front_radius_q60_slope_source_residual": 0.21548232695139888,
       "apparent_diffusion_q70_source_residual": 0.1712679587628867,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle145_rank20_obj1_16_c2_x10_HighHighCOV_130723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle145_rank20_obj1_16_c2_x10_HighHighCOV_130723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -146,7 +146,7 @@
       "front_radius_q60_slope_source_residual": 0.31213181148748137,
       "apparent_diffusion_q70_source_residual": 0.09221938144329911,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle144_rank19_obj2_16_c2_x10_HighHighCOV_130723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle144_rank19_obj2_16_c2_x10_HighHighCOV_130723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -166,7 +166,7 @@
       "front_radius_q60_slope_source_residual": 0.1626472754050076,
       "apparent_diffusion_q70_source_residual": null,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle144_rank19_obj1_16_c2_x10_HighHighCOV_130723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle144_rank19_obj1_16_c2_x10_HighHighCOV_130723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -186,7 +186,7 @@
       "front_radius_q60_slope_source_residual": -0.7798539518900349,
       "apparent_diffusion_q70_source_residual": -0.2389113402061858,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle151_rank22_obj2_17_c2_x10_HighHighCOV_150723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle151_rank22_obj2_17_c2_x10_HighHighCOV_150723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -206,7 +206,7 @@
       "front_radius_q60_slope_source_residual": null,
       "apparent_diffusion_q70_source_residual": -0.49468701030927836,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle72_rank43_obj2_8_c2_x10_300623.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle72_rank43_obj2_8_c2_x10_300623.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -226,7 +226,7 @@
       "front_radius_q60_slope_source_residual": -1.6575386597938153,
       "apparent_diffusion_q70_source_residual": -0.5992252701030929,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle114_rank9_obj1_12_c2_x10_070723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle114_rank9_obj1_12_c2_x10_070723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -246,7 +246,7 @@
       "front_radius_q60_slope_source_residual": -1.4802405498281792,
       "apparent_diffusion_q70_source_residual": null,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle74_rank44_obj2_8_c2_x10_300623.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle74_rank44_obj2_8_c2_x10_300623.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     }
   ],
@@ -268,7 +268,7 @@
       "front_radius_q60_slope_source_residual": null,
       "apparent_diffusion_q70_source_residual": 0.2734206680412371,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle108_rank6_obj2_12_c2_x10_070723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle108_rank6_obj2_12_c2_x10_070723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -288,7 +288,7 @@
       "front_radius_q60_slope_source_residual": -0.9791666666666672,
       "apparent_diffusion_q70_source_residual": -0.6174482474226802,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle132_rank14_obj2_15_c2_x5_HighCOV_120723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle132_rank14_obj2_15_c2_x5_HighCOV_120723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -308,7 +308,7 @@
       "front_radius_q60_slope_source_residual": -1.098950662739323,
       "apparent_diffusion_q70_source_residual": -0.039916206185566884,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle145_rank20_obj2_16_c2_x10_HighHighCOV_130723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle145_rank20_obj2_16_c2_x10_HighHighCOV_130723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -328,7 +328,7 @@
       "front_radius_q60_slope_source_residual": 0.5298539518900347,
       "apparent_diffusion_q70_source_residual": -0.028764371134020417,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle132_rank14_obj1_15_c2_x5_HighCOV_120723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle132_rank14_obj1_15_c2_x5_HighCOV_120723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -348,7 +348,7 @@
       "front_radius_q60_slope_source_residual": 0.09568298969072186,
       "apparent_diffusion_q70_source_residual": -0.0483792494845362,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle108_rank6_obj1_12_c2_x10_070723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle108_rank6_obj1_12_c2_x10_070723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -368,7 +368,7 @@
       "front_radius_q60_slope_source_residual": 0.21548232695139888,
       "apparent_diffusion_q70_source_residual": 0.1712679587628867,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle145_rank20_obj1_16_c2_x10_HighHighCOV_130723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle145_rank20_obj1_16_c2_x10_HighHighCOV_130723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -388,7 +388,7 @@
       "front_radius_q60_slope_source_residual": 0.31213181148748137,
       "apparent_diffusion_q70_source_residual": 0.09221938144329911,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle144_rank19_obj2_16_c2_x10_HighHighCOV_130723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle144_rank19_obj2_16_c2_x10_HighHighCOV_130723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     },
     {
@@ -408,7 +408,7 @@
       "front_radius_q60_slope_source_residual": 0.1626472754050076,
       "apparent_diffusion_q70_source_residual": null,
       "preview_png": null,
-      "npz_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle144_rank19_obj1_16_c2_x10_HighHighCOV_130723.npz",
+      "npz_path": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_cycle144_rank19_obj1_16_c2_x10_HighHighCOV_130723.npz",
       "manual_qc_instruction": "Review preview/NPZ crop for particle identity, stable mask, phase-front plausibility, and artifact risk; do not treat automatic scores as labels."
     }
   ],
@@ -587,11 +587,11 @@
     }
   ],
   "outputs": {
-    "review_queue": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet/source_balanced_residual_candidate_review_queue.csv",
-    "top_review": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet/source_balanced_residual_candidate_top32.csv",
-    "immediate_manual_qc": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet/source_balanced_residual_candidate_immediate_manual_qc.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet/source_balanced_residual_candidate_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet/source_balanced_residual_candidate_review_summary.json"
+    "review_queue": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet/source_balanced_residual_candidate_review_queue.csv",
+    "top_review": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet/source_balanced_residual_candidate_top32.csv",
+    "immediate_manual_qc": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet/source_balanced_residual_candidate_immediate_manual_qc.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet/source_balanced_residual_candidate_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_candidate_review_packet/source_balanced_residual_candidate_review_summary.json"
   },
   "guardrail": "This packet ranks automatic source-balanced ROI crops for human review. It keeps manual_qc_status pending and does not assign particle identity, front validity, diffusion validity, or degradation labels."
 }

@@ -108,15 +108,15 @@
   "n_roi": 52,
   "n_xy_regions": 7,
   "outputs": {
-    "assignments": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context/cycle_region_mode_assignments.csv",
-    "categorical_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context/mode_context_categorical_tests.csv",
-    "context_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context/mode_context_spearman.csv",
-    "cycle_all_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context/cycle_mode_context_all_roles.csv",
-    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context/cycle_mode_context_summary.csv",
-    "mode_context_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context/mode_context_summary.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context/README.md",
-    "reference_region_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context/event_reference_region_mode_summary.csv",
-    "region_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle_region_mode_context/spatial_region_mode_summary.csv"
+    "assignments": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context/cycle_region_mode_assignments.csv",
+    "categorical_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context/mode_context_categorical_tests.csv",
+    "context_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context/mode_context_spearman.csv",
+    "cycle_all_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context/cycle_mode_context_all_roles.csv",
+    "cycle_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context/cycle_mode_context_summary.csv",
+    "mode_context_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context/mode_context_summary.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context/README.md",
+    "reference_region_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context/event_reference_region_mode_summary.csv",
+    "region_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle_region_mode_context/spatial_region_mode_summary.csv"
   },
   "top_categorical_tests": [
     {

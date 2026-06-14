@@ -77,9 +77,9 @@ def load_npz_metrics(manifest: pd.DataFrame) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--event-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences")
-    parser.add_argument("--control-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison")
+    parser.add_argument("--event-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences")
+    parser.add_argument("--control-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_sequences")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_comparison")
     args = parser.parse_args()
 
     event = load_manifest(os.path.join(args.event_dir, "selected_roi_sequence_manifest.csv"), "event")

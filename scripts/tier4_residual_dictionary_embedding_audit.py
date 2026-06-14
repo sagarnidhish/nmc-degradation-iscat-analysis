@@ -293,8 +293,8 @@ def metric_deltas(metrics: pd.DataFrame) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residual_dictionary_embedding_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/residual_dictionary_embedding_audit")
     parser.add_argument("--downsample", type=int, default=4)
     parser.add_argument("--stride", type=int, default=2)
     parser.add_argument("--rank", type=int, default=16)

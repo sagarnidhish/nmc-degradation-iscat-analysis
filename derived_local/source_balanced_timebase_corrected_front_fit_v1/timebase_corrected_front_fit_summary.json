@@ -3,10 +3,10 @@
   "n_ok": 128,
   "n_rows": 128,
   "outputs": {
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1/README.md",
-    "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1/timebase_corrected_front_fit_rois.csv",
-    "summary_json": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1/timebase_corrected_front_fit_summary.json",
-    "timing_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1/timebase_corrected_front_fit_timing.csv"
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1/README.md",
+    "roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1/timebase_corrected_front_fit_rois.csv",
+    "summary_json": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1/timebase_corrected_front_fit_summary.json",
+    "timing_table": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_timebase_corrected_front_fit_v1/timebase_corrected_front_fit_timing.csv"
   },
   "pixel_size_um": 0.096,
   "timing_dt_max_to_median_ratio_p90": 1.1110251167578489

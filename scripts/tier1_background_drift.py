@@ -197,8 +197,8 @@ def plot_drift(path: str, plots_dir: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--base-dir", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     args = parser.parse_args()
 
     plots_dir = ensure_output_dirs(args.out_dir)

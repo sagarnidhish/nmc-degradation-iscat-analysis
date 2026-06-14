@@ -12,11 +12,11 @@
   "n_roi": 128,
   "n_sources": 14,
   "outputs": {
-    "assets": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit/source_balanced_pre_event_radial_kymograph_assets.csv",
-    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit/source_balanced_pre_event_radial_kymograph_features.csv",
-    "kymograph_pngs": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit/kymograph_pngs",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit/source_balanced_pre_event_radial_kymograph_summary.json",
-    "tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit/source_balanced_pre_event_radial_kymograph_tests.csv"
+    "assets": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit/source_balanced_pre_event_radial_kymograph_assets.csv",
+    "features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit/source_balanced_pre_event_radial_kymograph_features.csv",
+    "kymograph_pngs": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit/kymograph_pngs",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit/source_balanced_pre_event_radial_kymograph_summary.json",
+    "tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_radial_kymograph_audit/source_balanced_pre_event_radial_kymograph_tests.csv"
   },
   "top_clean_pre_vs_post_control_tests": [
     {

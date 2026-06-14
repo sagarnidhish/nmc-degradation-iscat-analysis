@@ -529,10 +529,10 @@
     "empirical_p_average_precision": 0.06965174129353234
   },
   "outputs": {
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout/source_balanced_residual_dictionary_normalized_readout_metrics.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout/source_balanced_residual_dictionary_normalized_readout_predictions.csv",
-    "permutation": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout/source_balanced_residual_dictionary_normalized_readout_permutation.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout/source_balanced_residual_dictionary_normalized_readout_summary.json"
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout/source_balanced_residual_dictionary_normalized_readout_metrics.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout/source_balanced_residual_dictionary_normalized_readout_predictions.csv",
+    "permutation": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout/source_balanced_residual_dictionary_normalized_readout_permutation.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout/source_balanced_residual_dictionary_normalized_readout_summary.json"
   },
   "guardrail": "Source transforms are unsupervised within-source normalizations computed from ROI feature distributions, including held-out source rows without labels. This tests source-normalized readout stability, not a deployable source-transfer warning model."
 }

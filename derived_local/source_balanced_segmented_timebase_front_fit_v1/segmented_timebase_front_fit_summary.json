@@ -4,7 +4,7 @@
   "n_ok": 128,
   "n_rows": 128,
   "outputs": {
-    "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_segmented_timebase_front_fit_v1/segmented_timebase_front_fit_rois.csv"
+    "roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_segmented_timebase_front_fit_v1/segmented_timebase_front_fit_rois.csv"
   },
   "prefer_positive": false
 }

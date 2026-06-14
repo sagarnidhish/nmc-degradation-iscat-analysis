@@ -28,13 +28,13 @@
   "n_event_roi": 24,
   "n_rows": 52,
   "outputs": {
-    "context_fit": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects/front_protocol_context_fit_summary.csv",
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects/protocol_conditioned_front_joined.csv",
-    "leave_reference_classifier": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects/leave_reference_front_residual_classifier_metrics.csv",
-    "raw_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects/raw_front_event_control_tests.csv",
-    "residual_context_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects/front_residual_context_correlations.csv",
-    "residual_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects/protocol_conditioned_front_event_control_tests.csv",
-    "residuals": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects/protocol_conditioned_front_residuals.csv"
+    "context_fit": "/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_front_effects/front_protocol_context_fit_summary.csv",
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_front_effects/protocol_conditioned_front_joined.csv",
+    "leave_reference_classifier": "/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_front_effects/leave_reference_front_residual_classifier_metrics.csv",
+    "raw_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_front_effects/raw_front_event_control_tests.csv",
+    "residual_context_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_front_effects/front_residual_context_correlations.csv",
+    "residual_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_front_effects/protocol_conditioned_front_event_control_tests.csv",
+    "residuals": "/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_front_effects/protocol_conditioned_front_residuals.csv"
   },
   "protocol_echem_covariates": [
     "n_frames_percentile",
@@ -47,8 +47,8 @@
     "duration_s",
     "timing_elapsed_s"
   ],
-  "source_echem": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/multi_cycle_roi_echem_joined.csv",
-  "source_fronts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts/threshold_robust_front_summary.csv",
+  "source_echem": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/multi_cycle_roi_echem_joined.csv",
+  "source_fronts": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts/threshold_robust_front_summary.csv",
   "top_protocol_conditioned_front_tests": [
     {
       "control_mean": -0.029521211955649433,

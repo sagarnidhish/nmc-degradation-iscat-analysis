@@ -101,8 +101,8 @@ def spearman_rows(df: pd.DataFrame, predictors: List[str], targets: List[str], n
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_cycle_null")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_cycle_null")
     parser.add_argument("--n-permutation", type=int, default=1000)
     parser.add_argument("--max-predictors", type=int, default=24)
     parser.add_argument("--seed", type=int, default=20260521)

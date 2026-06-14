@@ -294,8 +294,8 @@ def analyze_row(row: pd.Series, train_fraction: float, latent_rank: int) -> Dict
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--roi-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/history_fallback_masked_rollout_ablation")
+    parser.add_argument("--roi-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/history_fallback_masked_rollout_ablation")
     parser.add_argument("--train-fraction", type=float, default=0.60)
     parser.add_argument("--latent-rank", type=int, default=8)
     args = parser.parse_args()

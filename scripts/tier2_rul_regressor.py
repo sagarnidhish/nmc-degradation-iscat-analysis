@@ -221,7 +221,7 @@ def leave_one_session_out_cv(feat_df: pd.DataFrame, targets: pd.Series,
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 

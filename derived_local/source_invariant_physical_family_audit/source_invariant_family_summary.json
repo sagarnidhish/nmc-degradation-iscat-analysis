@@ -19,13 +19,13 @@
   "n_rows": 172,
   "n_sources": 12,
   "outputs": {
-    "deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_deltas.csv",
-    "family_features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_features.csv",
-    "feature_source_confounds": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_feature_source_confounds.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_metrics.csv",
-    "permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_permutation_null.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_predictions.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_summary.json"
+    "deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_deltas.csv",
+    "family_features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_features.csv",
+    "feature_source_confounds": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_feature_source_confounds.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_metrics.csv",
+    "permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_permutation_null.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_predictions.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_physical_family_audit/source_invariant_family_summary.json"
   },
   "targets": [
     "future_any_drop_within_8cycles",

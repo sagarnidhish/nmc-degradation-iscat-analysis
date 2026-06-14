@@ -20,13 +20,13 @@
   "n_roi": 52,
   "n_rows": 52,
   "outputs": {
-    "coefficient_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_coefficient_summary.csv",
-    "fold_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_importance_folds.csv",
-    "group_ablation": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_group_ablation.csv",
-    "oof_predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_importance_oof_predictions.csv",
-    "permutation_importance": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_permutation_importance.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_importance_summary.json",
-    "univariate_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_univariate_tests.csv"
+    "coefficient_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_coefficient_summary.csv",
+    "fold_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_importance_folds.csv",
+    "group_ablation": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_group_ablation.csv",
+    "oof_predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_importance_oof_predictions.csv",
+    "permutation_importance": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_permutation_importance.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_importance_summary.json",
+    "univariate_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance/prefix_feature_univariate_tests.csv"
   },
   "permutation_null": {
     "empirical_p_ge_observed": 0.7142857142857143,
@@ -39,7 +39,7 @@
     "target": "front_positive_residual_binary"
   },
   "prefix_fraction": 0.75,
-  "source_prefix_features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_feature_table.csv",
+  "source_prefix_features": "/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_forecast/prefix_roi_feature_table.csv",
   "target": "front_positive_residual_binary",
   "top_coefficients": [
     {

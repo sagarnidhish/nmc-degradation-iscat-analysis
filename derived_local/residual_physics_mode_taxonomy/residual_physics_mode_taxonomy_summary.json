@@ -170,9 +170,9 @@
   "n_event_roi": 24,
   "n_roi": 52,
   "outputs": {
-    "assignments": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residual_physics_mode_taxonomy/residual_physics_mode_assignments.csv",
-    "centroids": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residual_physics_mode_taxonomy/residual_physics_mode_centroids.csv",
-    "enrichment": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/residual_physics_mode_taxonomy/residual_physics_mode_enrichment.csv"
+    "assignments": "/scratch/<account>/<username>/Alek_Jiho/derived/residual_physics_mode_taxonomy/residual_physics_mode_assignments.csv",
+    "centroids": "/scratch/<account>/<username>/Alek_Jiho/derived/residual_physics_mode_taxonomy/residual_physics_mode_centroids.csv",
+    "enrichment": "/scratch/<account>/<username>/Alek_Jiho/derived/residual_physics_mode_taxonomy/residual_physics_mode_enrichment.csv"
   },
   "pca_explained_variance_ratio": [
     0.32974838885737784,

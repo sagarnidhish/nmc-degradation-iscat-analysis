@@ -35,13 +35,13 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_correlations.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_feature_tests.csv",
-    "merged": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_merged.csv",
-    "mode_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_mode_summary.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_front_mode_coupling_audit/README.md",
-    "review_queue": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_review_queue.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_summary.json"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_correlations.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_feature_tests.csv",
+    "merged": "/scratch/<account>/<username>/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_merged.csv",
+    "mode_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_mode_summary.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/rollout_front_mode_coupling_audit/README.md",
+    "review_queue": "/scratch/<account>/<username>/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_review_queue.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/rollout_front_mode_coupling_audit/rollout_front_mode_coupling_summary.json"
   },
   "overall_status": "rollout_front_mode_coupling_audit_ready",
   "top_feature_tests": [

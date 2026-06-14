@@ -44,10 +44,10 @@
     "spatial_std_slope"
   ],
   "outputs": {
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit/source_balanced_pre_event_matched_feature_tests.csv",
-    "pairs": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit/source_balanced_pre_event_matched_pairs.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit/source_balanced_pre_event_matched_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit/source_balanced_pre_event_matched_counterfactual_summary.json"
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit/source_balanced_pre_event_matched_feature_tests.csv",
+    "pairs": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit/source_balanced_pre_event_matched_pairs.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit/source_balanced_pre_event_matched_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_matched_counterfactual_audit/source_balanced_pre_event_matched_counterfactual_summary.json"
   },
   "pair_counts": {
     "near_vs_far_pre|source_penalized_global": 32,

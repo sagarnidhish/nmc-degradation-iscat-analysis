@@ -65,15 +65,15 @@
   "n_manifest_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "bin_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_bin_summary.csv",
-    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_features.csv",
-    "model_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_model_metrics.csv",
-    "model_predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_model_predictions.csv",
-    "scalar_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_scalar_tests.csv",
-    "source_bin_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_source_bin_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_audit_summary.json"
+    "bin_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_bin_summary.csv",
+    "features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_features.csv",
+    "model_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_model_metrics.csv",
+    "model_predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_model_predictions.csv",
+    "scalar_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_scalar_tests.csv",
+    "source_bin_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_source_bin_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_audit_summary.json"
   },
-  "sequence_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences",
+  "sequence_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences",
   "target_positive_counts": {
     "target_any_pre_vs_post_control": 76,
     "target_near_pre_vs_rest": 32,

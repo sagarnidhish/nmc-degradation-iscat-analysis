@@ -22,7 +22,7 @@ Use a source/cycle-level bridge instead:
 
 ## Planned Output
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_phase_kinetics_bridge_v2/`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/rollout_phase_kinetics_bridge_v2/`
 
 ## Guardrail
 

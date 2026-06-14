@@ -115,8 +115,8 @@ def process_h5(base_dir: str, path: str) -> Dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--base-dir", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     args = parser.parse_args()
 
     ensure_output_dir(args.out_dir)

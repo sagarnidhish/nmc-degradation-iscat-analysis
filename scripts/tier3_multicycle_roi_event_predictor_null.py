@@ -110,8 +110,8 @@ def summarize_metrics(metric_df: pd.DataFrame) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--predictor-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null")
+    parser.add_argument("--predictor-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor_null")
     parser.add_argument("--n-permutations", type=int, default=200)
     parser.add_argument("--random-state", type=int, default=29)
     args = parser.parse_args()

@@ -179,8 +179,8 @@ def save_plot(df: pd.DataFrame, tests: pd.DataFrame, out_png: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_vs_control_roi_physics")
     parser.add_argument("--train-fraction", type=float, default=0.67)
     args = parser.parse_args()
 

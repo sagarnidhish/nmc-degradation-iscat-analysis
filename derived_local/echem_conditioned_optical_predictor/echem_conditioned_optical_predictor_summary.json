@@ -8,12 +8,12 @@
   "guardrail": "This is a cycle-level weak-label model comparison with blocked cycle-CV and rolling-origin block splits. Echem-regime gains show conditional association, not deployable prediction, causal mechanism, calibrated dQ/dV, or validated front/diffusion physics. Rare 2-4 positive targets are excluded from the model-comparison table, and the permutation null shuffles labels against held-out prediction scores rather than retraining every permutation.",
   "n_cycles": 89,
   "outputs": {
-    "coefficients": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_coefficients.csv",
-    "deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_feature_set_deltas.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_metrics.csv",
-    "permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_permutation_null.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_predictions.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_summary.json"
+    "coefficients": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_coefficients.csv",
+    "deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_feature_set_deltas.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_metrics.csv",
+    "permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_permutation_null.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_predictions.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_optical_predictor/echem_conditioned_optical_predictor_summary.json"
   },
   "targets": [
     "future_any_drop_within_8cycles",

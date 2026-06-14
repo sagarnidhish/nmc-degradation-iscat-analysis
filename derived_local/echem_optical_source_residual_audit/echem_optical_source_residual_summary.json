@@ -54,13 +54,13 @@
   "n_rows": 172,
   "n_sources": 12,
   "outputs": {
-    "direct_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_direct_metrics.csv",
-    "model_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_model_metrics.csv",
-    "permutation_nulls": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_permutation_nulls.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_predictions.csv",
-    "rules": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_rules.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_summary.json",
-    "top_candidates": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_top_candidates.csv"
+    "direct_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_direct_metrics.csv",
+    "model_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_model_metrics.csv",
+    "permutation_nulls": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_permutation_nulls.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_predictions.csv",
+    "rules": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_rules.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_summary.json",
+    "top_candidates": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_source_residual_audit/echem_optical_source_residual_top_candidates.csv"
   },
   "top_candidates": [
     {

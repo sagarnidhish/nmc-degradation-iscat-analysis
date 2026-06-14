@@ -76,11 +76,11 @@
   "n_pre_event_rows": 76,
   "n_pre_event_sources": 10,
   "outputs": {
-    "bin_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_temporal_dose_response_audit/pre_event_temporal_dose_response_bin_summary.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_temporal_dose_response_audit/pre_event_temporal_dose_response_feature_tests.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_temporal_dose_response_audit/README.md",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_temporal_dose_response_audit/pre_event_temporal_dose_response_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/pre_event_temporal_dose_response_audit/pre_event_temporal_dose_response_summary.json"
+    "bin_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_temporal_dose_response_audit/pre_event_temporal_dose_response_bin_summary.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_temporal_dose_response_audit/pre_event_temporal_dose_response_feature_tests.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_temporal_dose_response_audit/README.md",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_temporal_dose_response_audit/pre_event_temporal_dose_response_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/pre_event_temporal_dose_response_audit/pre_event_temporal_dose_response_summary.json"
   },
   "overall_status": "pre_event_temporal_dose_response_ready",
   "top_source_centered_tests": [

@@ -24,32 +24,32 @@
       "selected_front_roi_tracking": true,
       "validated_front_rois": true
     },
-    "derived": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived",
+    "derived": "/scratch/<account>/<username>/Alek_Jiho/derived",
     "paths": {
-      "control_roi_selection": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection/control_roi_selection_summary.json",
-      "control_roi_selection_expanded": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection_expanded/control_roi_selection_summary.json",
-      "echem_cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/echem_cycle_summary.csv",
-      "event_baselines": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",
-      "event_candidate_fronts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/event_candidate_fronts_summary.json",
-      "event_control_roi_classifier_expanded": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_classifier_expanded/event_control_roi_classifier_summary.json",
-      "event_control_roi_comparison_expanded": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_comparison_summary.json",
-      "event_cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
-      "event_echem": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_coupling_summary.json",
-      "event_synchrony": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_synchrony/event_synchrony_summary.json",
-      "event_training": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_training_table.csv",
-      "event_vs_control_roi_physics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_physics_summary.json",
-      "local_particle_events": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/derived_local/particle_event_targets/particle_abrupt_events.csv",
-      "particle_events": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_abrupt_events.csv",
-      "protocol_context": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context/event_protocol_context_summary.json",
-      "recovery_qc": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_recovery_qc/event_recovery_qc_summary.json",
-      "roi_event_conditioned_nextframe": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_event_conditioned_nextframe/roi_event_model_summary.json",
-      "roi_joint_physics_degradation_modes": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes_summary.json",
-      "roi_residual_cnn_fast": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_residual_cnn_fast/roi_residual_cnn_summary.json",
-      "roi_rollout_baselines": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_baseline_summary.json",
-      "selected_front_roi_tracking": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_front_roi_tracking/selected_front_roi_tracking_summary.json",
-      "validated_front_rois": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois/validated_front_rois_summary.json"
+      "control_roi_selection": "/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_selection/control_roi_selection_summary.json",
+      "control_roi_selection_expanded": "/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_selection_expanded/control_roi_selection_summary.json",
+      "echem_cycle_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling/echem_cycle_summary.csv",
+      "event_baselines": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",
+      "event_candidate_fronts": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/event_candidate_fronts_summary.json",
+      "event_control_roi_classifier_expanded": "/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_classifier_expanded/event_control_roi_classifier_summary.json",
+      "event_control_roi_comparison_expanded": "/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_comparison_summary.json",
+      "event_cycle_table": "/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
+      "event_echem": "/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling/event_echem_coupling_summary.json",
+      "event_synchrony": "/scratch/<account>/<username>/Alek_Jiho/derived/event_synchrony/event_synchrony_summary.json",
+      "event_training": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets/particle_event_training_table.csv",
+      "event_vs_control_roi_physics": "/scratch/<account>/<username>/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_physics_summary.json",
+      "local_particle_events": "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/derived_local/particle_event_targets/particle_abrupt_events.csv",
+      "particle_events": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets/particle_abrupt_events.csv",
+      "protocol_context": "/scratch/<account>/<username>/Alek_Jiho/derived/event_protocol_context/event_protocol_context_summary.json",
+      "recovery_qc": "/scratch/<account>/<username>/Alek_Jiho/derived/event_recovery_qc/event_recovery_qc_summary.json",
+      "roi_event_conditioned_nextframe": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_event_conditioned_nextframe/roi_event_model_summary.json",
+      "roi_joint_physics_degradation_modes": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes_summary.json",
+      "roi_residual_cnn_fast": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_residual_cnn_fast/roi_residual_cnn_summary.json",
+      "roi_rollout_baselines": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_baseline_summary.json",
+      "selected_front_roi_tracking": "/scratch/<account>/<username>/Alek_Jiho/derived/selected_front_roi_tracking/selected_front_roi_tracking_summary.json",
+      "validated_front_rois": "/scratch/<account>/<username>/Alek_Jiho/derived/validated_front_rois/validated_front_rois_summary.json"
     },
-    "root": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho"
+    "root": "/scratch/<account>/<username>/Alek_Jiho"
   },
   "next_actions": [
     {
@@ -80,83 +80,83 @@
   ],
   "observations": [
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_synchrony/event_synchrony_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/event_synchrony/event_synchrony_summary.json",
       "observation": "Synchronized optical drop events have already passed a permutation sanity check.",
       "strength": "moderate",
       "topic": "event_synchrony"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_coupling_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling/event_echem_coupling_summary.json",
       "observation": "81 cycles matched to electrochemistry; coarse cycle summaries do not fully explain events.",
       "strength": "moderate",
       "topic": "event_echem"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context/event_protocol_context_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/event_protocol_context/event_protocol_context_summary.json",
       "observation": "Synchronized event cycles are linked to unusually short frame-count regimes.",
       "strength": "moderate",
       "topic": "protocol_context"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/event_candidate_fronts_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/event_candidate_fronts_summary.json",
       "observation": "Detected 88 candidate particle/front regions; outputs are apparent front proxies, not calibrated diffusion coefficients.",
       "strength": "exploratory",
       "topic": "event_candidate_fronts"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois/validated_front_rois_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/validated_front_rois/validated_front_rois_summary.json",
       "observation": "Selected 10 cycle-86/116 candidate ROIs for next tracking from 16 scored candidates; selections are algorithmic and still need manual QC/spatial calibration.",
       "strength": "exploratory_to_moderate",
       "topic": "validated_front_rois"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_front_roi_tracking/selected_front_roi_tracking_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/selected_front_roi_tracking/selected_front_roi_tracking_summary.json",
       "observation": "Tracked 12 selected front ROIs at full-pixel crop scale; cycle 86 mean radius2 slope -0.127 px2/s, R2 0.178; cycle 116 mean radius2 slope -0.167 px2/s, R2 0.284. These are apparent front-motion proxies, not calibrated diffusion coefficients.",
       "strength": "exploratory_to_moderate",
       "topic": "selected_front_roi_tracking"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_baseline_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_baseline_summary.json",
       "observation": "Evaluated 11 particle-ROI sequences with persistence, velocity, and low-rank DMD rollouts; DMD spectral radius 1.002.",
       "strength": "moderate_baseline",
       "topic": "roi_rollout_baselines"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_event_conditioned_nextframe/roi_event_model_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_event_conditioned_nextframe/roi_event_model_summary.json",
       "observation": "Trained a PCA-ridge event-conditioned next-frame model on 11 selected ROI sequences; cycle 86 residual mean 0.00171; cycle 116 residual mean 0.000611. Persistence remains a strong recursive baseline, so residuals are the main degradation descriptor.",
       "strength": "moderate_baseline",
       "topic": "roi_event_conditioned_nextframe"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_residual_cnn_fast/roi_residual_cnn_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_residual_cnn_fast/roi_residual_cnn_summary.json",
       "observation": "A leave-one-cycle residual CNN on 11 selected ROIs did not beat persistence; overall relative MSE improvement -4.23.",
       "strength": "negative_baseline",
       "topic": "roi_residual_cnn_fast"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes_summary.json",
       "observation": "Combined rollout residual, front tracking, ROI physics, residual-CNN guardrails, and cycle evidence into 11 ROI joint modes; selected k=2 with silhouette 0.335. Top ROIs: cycle86_front4_obj9 score 2.86; cycle116_front3_obj9 score 1.72.",
       "strength": "moderate_synthesis",
       "topic": "roi_joint_physics_degradation_modes"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_physics_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_physics_summary.json",
       "observation": "Compared 11 event ROIs against 16 matched control ROIs; strongest shifts: high_fraction_slope_per_frame p=0.000503; roi_mean_slope_per_frame p=0.00123. Leave-pair classifier did not generalize well, so controls are a guardrail.",
       "strength": "moderate_control_check",
       "topic": "event_vs_control_roi_physics"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_comparison_summary.json",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_comparison_summary.json",
       "observation": "Expanded matched controls to 32 ROIs; strongest event-control shifts: first_last_corr d=-1.5, p=0.0187; cumulative_abs_norm_change d=1.48, p=0.01; expanded classifier mean ROC-AUC 0.29.",
       "strength": "moderate_control_check",
       "topic": "event_control_roi_comparison_expanded"
     },
     {
-      "evidence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",
+      "evidence": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets/particle_event_feature_baselines.csv",
       "observation": "Best transparent leave-one-particle event-forecast F1 is 0.435.",
       "strength": "weak_to_moderate",
       "topic": "event_forecasting"
     }
   ],
-  "root": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho"
+  "root": "/scratch/<account>/<username>/Alek_Jiho"
 }

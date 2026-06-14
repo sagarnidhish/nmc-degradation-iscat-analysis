@@ -16,12 +16,12 @@
   "n_cycles": 34,
   "n_rows": 172,
   "outputs": {
-    "deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_feature_set_deltas.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_feature_tests.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_metrics.csv",
-    "permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_permutation_null.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_predictions.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_summary.json"
+    "deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_feature_set_deltas.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_feature_tests.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_metrics.csv",
+    "permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_permutation_null.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_predictions.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_physics_benchmark/acquisition_residualized_summary.json"
   },
   "residualized_video_group_sizes": {
     "all_video": 144,

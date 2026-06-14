@@ -70,14 +70,14 @@
   "n_ok": 128,
   "n_sources": 14,
   "outputs": {
-    "event_tests_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_event_tests.csv",
-    "failures_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_failures.csv",
-    "frame_samples_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_frame_samples.csv",
-    "method_summary_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_method_summary.csv",
-    "per_roi_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_per_roi.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/README.md",
-    "source_summary_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_source_summary.csv",
-    "summary_json": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_summary.json"
+    "event_tests_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_event_tests.csv",
+    "failures_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_failures.csv",
+    "frame_samples_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_frame_samples.csv",
+    "method_summary_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_method_summary.csv",
+    "per_roi_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_per_roi.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/README.md",
+    "source_summary_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_source_summary.csv",
+    "summary_json": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_masked_rollout_benchmark/source_balanced_pre_event_masked_rollout_summary.json"
   },
   "top_event_tests": [
     {

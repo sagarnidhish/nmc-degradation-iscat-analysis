@@ -246,9 +246,9 @@ def save_crop_preview(stack: Dict[str, object], out_png: str, title: str) -> Non
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--roi-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/validated_front_rois/selected_front_rois_for_tracking.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_front_roi_tracking")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--roi-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/validated_front_rois/selected_front_rois_for_tracking.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/selected_front_roi_tracking")
     parser.add_argument("--crop-size-full", type=int, default=192)
     parser.add_argument("--baseline-frames", type=int, default=5)
     args = parser.parse_args()

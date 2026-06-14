@@ -348,8 +348,8 @@ def fmt_optional(value: Any, digits: int = 3) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/prefix_roi_feature_importance")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/prefix_roi_feature_importance")
     parser.add_argument("--prefix-fraction", type=float, default=PREFIX_FRACTION)
     parser.add_argument("--target", default=TARGET)
     parser.add_argument("--model", default=MODEL_NAME, choices=["logistic_l2", "random_forest"])

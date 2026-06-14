@@ -214,9 +214,9 @@ def summarize_bins(df: pd.DataFrame, features: List[str]) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--rollout-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_rollout_audit")
-    parser.add_argument("--mask-front-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_mask_front_audit")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit")
+    parser.add_argument("--rollout-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_rollout_audit")
+    parser.add_argument("--mask-front-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_mask_front_audit")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_readout_audit")
     args = parser.parse_args()
 
     out = Path(args.out_dir)

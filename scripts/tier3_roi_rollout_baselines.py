@@ -195,8 +195,8 @@ def save_cycle_plot(per_roi: pd.DataFrame, latent: pd.DataFrame, out_png: str) -
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--roi-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines")
+    parser.add_argument("--roi-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/roi_rollout_baselines")
     parser.add_argument("--rank", type=int, default=10)
     parser.add_argument("--ridge", type=float, default=1e-4)
     parser.add_argument("--train-fraction", type=float, default=0.67)

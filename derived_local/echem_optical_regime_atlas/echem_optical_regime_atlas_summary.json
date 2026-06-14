@@ -5,12 +5,12 @@
   "n_cycles_missing_echem_shape": 8,
   "n_echem_features": 44,
   "outputs": {
-    "binary_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_binary_tests.csv",
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_correlations.csv",
-    "cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_cycle_table.csv",
-    "regime_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_summary_by_pc1_tertile.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_atlas_summary.json",
-    "top_cycles": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_top_cycles.csv"
+    "binary_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_binary_tests.csv",
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_correlations.csv",
+    "cycle_table": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_cycle_table.csv",
+    "regime_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_summary_by_pc1_tertile.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_atlas_summary.json",
+    "top_cycles": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_regime_atlas/echem_optical_regime_top_cycles.csv"
   },
   "pca_loadings": [
     {

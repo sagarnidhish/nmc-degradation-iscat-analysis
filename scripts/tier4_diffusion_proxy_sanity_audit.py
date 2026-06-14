@@ -137,8 +137,8 @@ def correlations(df: pd.DataFrame, x_cols: Iterable[str], y_cols: Iterable[str])
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_proxy_sanity_audit")
     parser.add_argument("--front-calibration-dir", default=None)
     parser.add_argument("--min-r2", type=float, default=0.50)
     parser.add_argument("--max-drift-ratio", type=float, default=0.25)

@@ -167,8 +167,8 @@ def parse_cycles(values: Iterable[str]) -> List[float]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_cohort")
     parser.add_argument("--event-cycles", nargs="*", default=[str(x) for x in DEFAULT_CYCLES])
     parser.add_argument("--top-events-per-cycle", type=int, default=6)
     parser.add_argument("--top-controls-per-cycle", type=int, default=4)

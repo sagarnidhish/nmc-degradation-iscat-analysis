@@ -90,13 +90,13 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "event_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_event_tests.csv",
-    "matched_pairs": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_matched_pairs.csv",
-    "pair_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_pair_tests.csv",
-    "source_contrasts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_source_contrasts.csv",
-    "source_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_source_tests.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_summary.json",
-    "topk": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_topk.csv"
+    "event_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_event_tests.csv",
+    "matched_pairs": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_matched_pairs.csv",
+    "pair_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_pair_tests.csv",
+    "source_contrasts": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_source_contrasts.csv",
+    "source_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_source_tests.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_summary.json",
+    "topk": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_transport_mechanism_falsification_audit/source_balanced_transport_mechanism_falsification_topk.csv"
   },
   "topk_enrichment": [
     {

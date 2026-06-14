@@ -66,7 +66,7 @@ def write_readme(out: Path, summary: Dict[str, Any]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument("--out-dir", default=None)
     parser.add_argument("--top-n", type=int, default=40)
     args = parser.parse_args()

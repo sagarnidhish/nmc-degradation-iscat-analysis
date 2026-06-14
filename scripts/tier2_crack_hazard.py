@@ -159,7 +159,7 @@ def cox_effect_sizes(X: np.ndarray, y: np.ndarray, feature_names: List[str]) -> 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument("--window", type=int, default=5)
     parser.add_argument("--epochs", type=int, default=300)
     parser.add_argument("--seed", type=int, default=42)

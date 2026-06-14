@@ -179,25 +179,25 @@ def correlate_event_load(df: pd.DataFrame, features: List[str]) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--event-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets")
+    parser.add_argument("--event-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets")
     parser.add_argument("--echem-csv", default="")
     parser.add_argument("--cycle-frames-csv", default="")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling")
     parser.add_argument("--chunksize", type=int, default=750000)
     args = parser.parse_args()
 
     echem_path = resolve_existing_path([
         args.echem_csv,
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/echemDF_full/echemDF_full.csv",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/echemDF_full.csv",
-        "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/echemDF_full/echemDF_full.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/echemDF_full.csv",
+        "/path/to/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
     ])
     frames_path = resolve_existing_path([
         args.cycle_frames_csv,
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/cycleFrames.csv",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
-        "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/cycleFrames.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
+        "/path/to/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
     ])
     table_path = os.path.join(args.event_dir, "particle_event_training_table.csv")
     events_path = os.path.join(args.event_dir, "particle_abrupt_events.csv")

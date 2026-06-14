@@ -411,8 +411,8 @@ def fit_feature_importance(df: pd.DataFrame, features: List[str], random_state: 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model")
     parser.add_argument("--n-permutation", type=int, default=200)
     parser.add_argument("--rf-trees", type=int, default=120)
     parser.add_argument("--random-state", type=int, default=29)

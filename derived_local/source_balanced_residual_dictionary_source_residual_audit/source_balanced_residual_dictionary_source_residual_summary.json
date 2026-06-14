@@ -894,10 +894,10 @@
     }
   ],
   "outputs": {
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit/source_balanced_residual_dictionary_source_residual_metrics.csv",
-    "best_by_transform": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit/source_balanced_residual_dictionary_source_residual_best_by_transform.csv",
-    "best_by_family": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit/source_balanced_residual_dictionary_source_residual_best_by_family.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit/source_balanced_residual_dictionary_source_residual_summary.json"
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit/source_balanced_residual_dictionary_source_residual_metrics.csv",
+    "best_by_transform": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit/source_balanced_residual_dictionary_source_residual_best_by_transform.csv",
+    "best_by_family": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit/source_balanced_residual_dictionary_source_residual_best_by_family.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_source_residual_audit/source_balanced_residual_dictionary_source_residual_summary.json"
   },
   "guardrail": "Source-normalized residual dictionary tests are in-cohort weak-label audits. They can identify source-robust residual dynamics candidates for follow-up, but they do not prove source-transferable prediction or calibrated phase/diffusion physics."
 }

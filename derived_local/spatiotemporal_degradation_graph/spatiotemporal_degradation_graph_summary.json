@@ -46,13 +46,13 @@
     "is_event_roi": 0.46153846153846156
   },
   "outputs": {
-    "continuous_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_continuous_tests.csv",
-    "distance_gradient_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_distance_gradient_tests.csv",
-    "edges": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_edges.csv",
-    "homophily_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_homophily_tests.csv",
-    "lag_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_lag_tests.csv",
-    "nodes": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_nodes.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_degradation_graph_summary.json"
+    "continuous_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_continuous_tests.csv",
+    "distance_gradient_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_distance_gradient_tests.csv",
+    "edges": "/scratch/<account>/<username>/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_edges.csv",
+    "homophily_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_homophily_tests.csv",
+    "lag_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_lag_tests.csv",
+    "nodes": "/scratch/<account>/<username>/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_graph_nodes.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/spatiotemporal_degradation_graph/spatiotemporal_degradation_graph_summary.json"
   },
   "temporal_lag_tests": [
     {

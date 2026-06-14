@@ -153,7 +153,7 @@ def hdbscan_cluster(Z: np.ndarray, min_cluster_size: int = 2) -> np.ndarray:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument("--latent-dim", type=int, default=32)
     parser.add_argument("--epochs", type=int, default=200)
     parser.add_argument("--seed", type=int, default=42)

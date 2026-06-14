@@ -59,17 +59,17 @@
   "n_sync2_drop_cycles": 2,
   "n_sync3_drop_cycles": 2,
   "outputs": {
-    "classifier_folds": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_future_drop_classifier_folds.csv",
-    "classifier_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_future_drop_classifier_null.csv",
-    "classifier_predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_future_drop_classifier_predictions.csv",
-    "classifier_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_future_drop_classifier_summary.csv",
-    "cluster_assignments": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_cluster_assignments.csv",
-    "cluster_selection": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_cluster_selection.csv",
-    "cluster_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_cluster_summary.csv",
-    "cycle_features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_cycle_features.csv",
-    "echem_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_echem_correlations.csv",
-    "event_feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_event_feature_tests.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_physics_audit_summary.json"
+    "classifier_folds": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_future_drop_classifier_folds.csv",
+    "classifier_null": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_future_drop_classifier_null.csv",
+    "classifier_predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_future_drop_classifier_predictions.csv",
+    "classifier_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_future_drop_classifier_summary.csv",
+    "cluster_assignments": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_cluster_assignments.csv",
+    "cluster_selection": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_cluster_selection.csv",
+    "cluster_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_cluster_summary.csv",
+    "cycle_features": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_cycle_features.csv",
+    "echem_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_echem_correlations.csv",
+    "event_feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_event_feature_tests.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_trace_physics_audit/particle_trace_physics_audit_summary.json"
   },
   "top_echem_correlations": [
     {

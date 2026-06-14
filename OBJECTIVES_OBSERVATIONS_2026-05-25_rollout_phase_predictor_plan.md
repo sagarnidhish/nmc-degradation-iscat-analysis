@@ -20,8 +20,8 @@ Why this is useful:
 
 Planned outputs:
 
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_phase_kinetics_predictor/rollout_phase_kinetics_predictor_metrics.csv`
-- `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/rollout_phase_kinetics_predictor/rollout_phase_kinetics_predictor_summary.json`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/rollout_phase_kinetics_predictor/rollout_phase_kinetics_predictor_metrics.csv`
+- `/scratch/<account>/<username>/Alek_Jiho/derived/rollout_phase_kinetics_predictor/rollout_phase_kinetics_predictor_summary.json`
 
 Guardrail:
 

@@ -72,8 +72,8 @@ def summarize_cycle_set(df: pd.DataFrame, cycles: np.ndarray) -> Dict[str, float
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--cycle-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/frame_count_matched_controls")
+    parser.add_argument("--cycle-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/frame_count_matched_controls")
     parser.add_argument("--n-perm", type=int, default=20000)
     parser.add_argument("--frame-band", type=float, default=0.12)
     parser.add_argument("--seed", type=int, default=20260521)

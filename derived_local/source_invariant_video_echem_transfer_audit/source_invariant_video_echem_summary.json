@@ -20,12 +20,12 @@
   "n_rows": 172,
   "n_sources": 12,
   "outputs": {
-    "deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_video_echem_deltas.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_video_echem_metrics.csv",
-    "permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_video_echem_permutation_null.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_video_echem_predictions.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_video_echem_summary.json"
+    "deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_video_echem_deltas.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_video_echem_metrics.csv",
+    "permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_video_echem_permutation_null.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_video_echem_predictions.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_video_echem_transfer_audit/source_invariant_video_echem_summary.json"
   },
   "source_summary": [
     {

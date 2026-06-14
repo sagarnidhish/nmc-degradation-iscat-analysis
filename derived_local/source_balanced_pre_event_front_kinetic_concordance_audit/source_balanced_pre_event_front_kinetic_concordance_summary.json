@@ -4,11 +4,11 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit/source_balanced_pre_event_front_kinetic_concordance_correlations.csv",
-    "event_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit/source_balanced_pre_event_front_kinetic_concordance_event_tests.csv",
-    "ranked_candidates": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit/source_balanced_pre_event_front_kinetic_concordance_ranked_candidates.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit/source_balanced_pre_event_front_kinetic_concordance_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit/source_balanced_pre_event_front_kinetic_concordance_summary.json"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit/source_balanced_pre_event_front_kinetic_concordance_correlations.csv",
+    "event_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit/source_balanced_pre_event_front_kinetic_concordance_event_tests.csv",
+    "ranked_candidates": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit/source_balanced_pre_event_front_kinetic_concordance_ranked_candidates.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit/source_balanced_pre_event_front_kinetic_concordance_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_front_kinetic_concordance_audit/source_balanced_pre_event_front_kinetic_concordance_summary.json"
   },
   "source_summary": [
     {

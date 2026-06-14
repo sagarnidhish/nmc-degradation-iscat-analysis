@@ -1256,10 +1256,10 @@
   ],
   "guardrail": "Cycle-level echem/optical breakpoint audit uses compact derived cycle features and weak optical event labels. It tests temporal co-occurrence and trajectory shifts, not causality, manual ROI validation, or calibrated material transport.",
   "outputs": {
-    "cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_breakpoint_audit/echem_optical_breakpoint_cycle_table.csv",
-    "event_centered_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_breakpoint_audit/echem_optical_event_centered_breakpoint_tests.csv",
-    "breakpoint_scan": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_breakpoint_audit/echem_optical_breakpoint_scan.csv",
-    "future_label_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_breakpoint_audit/echem_optical_future_label_tests.csv",
-    "event_cycle_ranks": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_breakpoint_audit/echem_optical_event_cycle_breakpoint_ranks.csv"
+    "cycle_table": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_breakpoint_audit/echem_optical_breakpoint_cycle_table.csv",
+    "event_centered_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_breakpoint_audit/echem_optical_event_centered_breakpoint_tests.csv",
+    "breakpoint_scan": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_breakpoint_audit/echem_optical_breakpoint_scan.csv",
+    "future_label_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_breakpoint_audit/echem_optical_future_label_tests.csv",
+    "event_cycle_ranks": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_breakpoint_audit/echem_optical_event_cycle_breakpoint_ranks.csv"
   }
 }

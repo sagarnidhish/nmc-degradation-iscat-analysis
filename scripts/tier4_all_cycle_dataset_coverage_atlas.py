@@ -187,9 +187,9 @@ def add_cycle_output_flags(cycles: pd.DataFrame, derived: Path) -> tuple[pd.Data
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--repo-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/all_cycle_dataset_coverage_atlas")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--repo-dir", default="/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/all_cycle_dataset_coverage_atlas")
     args = parser.parse_args()
 
     derived = Path(args.derived_dir)

@@ -185,9 +185,9 @@ def save_candidate_preview(frames: np.ndarray, labels: np.ndarray, candidates: L
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--proxy-qc", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_frame_proxy_qc/event_frame_proxy_qc.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--proxy-qc", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_frame_proxy_qc/event_frame_proxy_qc.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts")
     parser.add_argument("--downsample", type=int, default=4)
     parser.add_argument("--samples-per-segment", type=int, default=32)
     parser.add_argument("--max-candidates", type=int, default=8)

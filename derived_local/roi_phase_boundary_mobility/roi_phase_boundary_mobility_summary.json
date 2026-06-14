@@ -5,13 +5,13 @@
     92.0,
     118.0
   ],
-  "control_manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_sequences_expanded/selected_roi_sequence_manifest.csv",
-  "control_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_roi_selection_expanded/selected_control_rois.csv",
+  "control_manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_sequences_expanded/selected_roi_sequence_manifest.csv",
+  "control_table": "/scratch/<account>/<username>/Alek_Jiho/derived/control_roi_selection_expanded/selected_control_rois.csv",
   "event_cycles": [
     86.0,
     116.0
   ],
-  "event_manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences/selected_roi_sequence_manifest.csv",
+  "event_manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences/selected_roi_sequence_manifest.csv",
   "group_summary": [
     {
       "centroid_path_px": 17.570273563803504,
@@ -70,13 +70,13 @@
   "n_control_roi": 32,
   "n_event_roi": 11,
   "outputs": {
-    "descriptors": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_phase_boundary_mobility/roi_phase_boundary_mobility_descriptors.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_phase_boundary_mobility/roi_phase_boundary_mobility_feature_tests.csv",
-    "group_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_phase_boundary_mobility/roi_phase_boundary_mobility_group_summary.csv",
-    "plot": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_phase_boundary_mobility/roi_phase_boundary_mobility.png",
-    "ranked": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_phase_boundary_mobility/roi_phase_boundary_mobility_ranked.csv"
+    "descriptors": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_phase_boundary_mobility/roi_phase_boundary_mobility_descriptors.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_phase_boundary_mobility/roi_phase_boundary_mobility_feature_tests.csv",
+    "group_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_phase_boundary_mobility/roi_phase_boundary_mobility_group_summary.csv",
+    "plot": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_phase_boundary_mobility/roi_phase_boundary_mobility.png",
+    "ranked": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_phase_boundary_mobility/roi_phase_boundary_mobility_ranked.csv"
   },
-  "root": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho",
+  "root": "/scratch/<account>/<username>/Alek_Jiho",
   "top_feature_tests": [
     {
       "control_mean": 0.0001538923128178083,

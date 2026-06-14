@@ -164,23 +164,23 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--particles-csv", default="")
     parser.add_argument("--cycle-frames-csv", default="")
-    parser.add_argument("--event-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_recovery_qc")
+    parser.add_argument("--event-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_recovery_qc")
     parser.add_argument("--pre-window", type=int, default=2)
     parser.add_argument("--post-window", type=int, default=2)
     args = parser.parse_args()
 
     particles_path = resolve_existing_path([
         args.particles_csv,
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/exampleParticles.csv",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/exampleParticles.csv",
-        "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/exampleParticles.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/exampleParticles.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/exampleParticles.csv",
+        "/path/to/alek_jiho_nmc_deg/echemDF_full/exampleParticles.csv",
     ])
     frames_path = resolve_existing_path([
         args.cycle_frames_csv,
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/cycleFrames.csv",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
-        "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/cycleFrames.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
+        "/path/to/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
     ])
     events_path = os.path.join(args.event_dir, "particle_abrupt_events.csv")
     if not particles_path or not frames_path:

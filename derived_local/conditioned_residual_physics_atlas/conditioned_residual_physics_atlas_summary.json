@@ -107,11 +107,11 @@
   "n_rows": 172,
   "n_sources": 12,
   "outputs": {
-    "alignment": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/conditioned_residual_physics_atlas/conditioned_residual_physics_alignments.csv",
-    "category_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/conditioned_residual_physics_atlas/conditioned_residual_category_summary.csv",
-    "mode_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/conditioned_residual_physics_atlas/conditioned_residual_mode_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/conditioned_residual_physics_atlas/conditioned_residual_physics_atlas_summary.json",
-    "target_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/conditioned_residual_physics_atlas/conditioned_residual_target_tests.csv"
+    "alignment": "/scratch/<account>/<username>/Alek_Jiho/derived/conditioned_residual_physics_atlas/conditioned_residual_physics_alignments.csv",
+    "category_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/conditioned_residual_physics_atlas/conditioned_residual_category_summary.csv",
+    "mode_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/conditioned_residual_physics_atlas/conditioned_residual_mode_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/conditioned_residual_physics_atlas/conditioned_residual_physics_atlas_summary.json",
+    "target_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/conditioned_residual_physics_atlas/conditioned_residual_target_tests.csv"
   },
   "physics_category_counts": {
     "degradation_trace": 24,

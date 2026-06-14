@@ -7,15 +7,15 @@
   "n_rows": 96,
   "n_sources": 14,
   "outputs": {
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_joined.csv",
-    "model_deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_model_deltas.csv",
-    "model_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_model_metrics.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_predictions.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/README.md",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_summary.json",
-    "target_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_target_tests.csv",
-    "timebase_class_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_class_tests.csv",
-    "timebase_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_timebase_correlations.csv"
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_joined.csv",
+    "model_deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_model_deltas.csv",
+    "model_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_model_metrics.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_predictions.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/README.md",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_summary.json",
+    "target_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_target_tests.csv",
+    "timebase_class_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_class_tests.csv",
+    "timebase_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_source_balanced_rollout_audit/timebase_aware_rollout_timebase_correlations.csv"
   },
   "scenario_counts": {
     "all_rows": {

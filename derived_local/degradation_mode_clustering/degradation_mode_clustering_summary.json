@@ -1,8 +1,8 @@
 {
   "best_k": 4,
   "best_silhouette": 0.28946038050927647,
-  "cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
-  "event_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets/particle_event_training_table.csv",
+  "cycle_table": "/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
+  "event_table": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets/particle_event_training_table.csv",
   "feature_cols": [
     "norm_intensity",
     "delta_norm",

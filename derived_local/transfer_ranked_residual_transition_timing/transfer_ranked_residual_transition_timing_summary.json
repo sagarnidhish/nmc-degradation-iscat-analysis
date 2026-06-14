@@ -4,12 +4,12 @@
   "n_roi": 48,
   "n_roi_method_rows": 144,
   "outputs": {
-    "alignment_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_residual_transition_alignment_tests.csv",
-    "per_roi_timing": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_residual_transition_timing_per_roi.csv",
-    "phase_kinetics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_phase_kinetics_roi_table.csv",
-    "target_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_residual_transition_target_correlations.csv",
-    "target_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_residual_transition_target_tests.csv",
-    "transition_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_residual_transition_correlations.csv"
+    "alignment_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_residual_transition_alignment_tests.csv",
+    "per_roi_timing": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_residual_transition_timing_per_roi.csv",
+    "phase_kinetics": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_phase_kinetics_roi_table.csv",
+    "target_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_residual_transition_target_correlations.csv",
+    "target_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_residual_transition_target_tests.csv",
+    "transition_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_residual_transition_timing/transfer_ranked_residual_transition_correlations.csv"
   },
   "target_positive_counts": {
     "any_abrupt_drop": 8,

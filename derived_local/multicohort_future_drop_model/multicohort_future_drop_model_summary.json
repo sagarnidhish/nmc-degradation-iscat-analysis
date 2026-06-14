@@ -155,15 +155,15 @@
   "n_selected_rows": 11,
   "n_transfer_ranked_rows": 48,
   "outputs": {
-    "cycle_oof_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_cycle_oof_metrics.csv",
-    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_cycle_summary.csv",
-    "feature_importance": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_importance.csv",
-    "feature_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_table.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_tests.csv",
-    "feature_tests_by_cohort": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_tests_by_cohort.csv",
-    "label_counts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_label_counts.csv",
-    "leave_cohort_eval": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_leave_cohort_eval.csv",
-    "oof_predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_oof_predictions.csv"
+    "cycle_oof_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_cycle_oof_metrics.csv",
+    "cycle_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_cycle_summary.csv",
+    "feature_importance": "/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_importance.csv",
+    "feature_table": "/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_table.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_tests.csv",
+    "feature_tests_by_cohort": "/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_feature_tests_by_cohort.csv",
+    "label_counts": "/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_label_counts.csv",
+    "leave_cohort_eval": "/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_leave_cohort_eval.csv",
+    "oof_predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/multicohort_future_drop_model/multicohort_future_drop_oof_predictions.csv"
   },
   "permutation_null": {
     "empirical_p_ge_observed": 0.024390243902439025,

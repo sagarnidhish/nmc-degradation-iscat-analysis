@@ -171,11 +171,11 @@
   "n_event_roi": 24,
   "n_rows": 52,
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling/multi_cycle_rollout_mobility_correlations.csv",
-    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling/multi_cycle_rollout_mobility_cycle_summary.csv",
-    "event_control_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling/multi_cycle_rollout_event_control_tests.csv",
-    "merged": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling/multi_cycle_rollout_mobility_descriptors.csv",
-    "ranked": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling/multi_cycle_rollout_mobility_ranked.csv"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling/multi_cycle_rollout_mobility_correlations.csv",
+    "cycle_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling/multi_cycle_rollout_mobility_cycle_summary.csv",
+    "event_control_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling/multi_cycle_rollout_event_control_tests.csv",
+    "merged": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling/multi_cycle_rollout_mobility_descriptors.csv",
+    "ranked": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_rollout_mobility_coupling/multi_cycle_rollout_mobility_ranked.csv"
   },
   "top_event_control_rollout_tests": [
     {

@@ -77,7 +77,7 @@
   ],
   "n_roi": 11,
   "plots": {
-    "mode_plot": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_physics_descriptors/roi_physics_descriptor_modes.png"
+    "mode_plot": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_physics_descriptors/roi_physics_descriptor_modes.png"
   },
-  "roi_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences"
+  "roi_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences"
 }

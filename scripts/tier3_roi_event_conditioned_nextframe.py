@@ -251,8 +251,8 @@ def save_summary_plot(per_roi: pd.DataFrame, residual_features: pd.DataFrame, me
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--roi-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_event_conditioned_nextframe")
+    parser.add_argument("--roi-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/roi_event_conditioned_nextframe")
     parser.add_argument("--rank", type=int, default=24)
     parser.add_argument("--alpha", type=float, default=1.0)
     parser.add_argument("--train-fraction", type=float, default=0.67)

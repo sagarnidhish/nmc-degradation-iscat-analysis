@@ -21,10 +21,10 @@ def split_roi_id(roi_id: str) -> tuple[int, int, int]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_qc_package/control_balanced_front_qc_manifest.csv")
-    parser.add_argument("--front-candidates", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_front_metrics.csv")
-    parser.add_argument("--object-candidates", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_object_candidate_reconstruction/reconstructed_object_candidates.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/control_balanced_front_tracking_table")
+    parser.add_argument("--manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_qc_package/control_balanced_front_qc_manifest.csv")
+    parser.add_argument("--front-candidates", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_front_metrics.csv")
+    parser.add_argument("--object-candidates", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_object_candidate_reconstruction/reconstructed_object_candidates.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/control_balanced_front_tracking_table")
     parser.add_argument("--max-rois", type=int, default=40)
     args = parser.parse_args()
 

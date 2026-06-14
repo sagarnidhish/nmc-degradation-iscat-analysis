@@ -1,5 +1,5 @@
 {
-  "descriptor_source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_descriptors.csv",
+  "descriptor_source": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_analysis/multi_cycle_roi_descriptors.csv",
   "feature_count": 34,
   "feature_sets": {
     "all_physics_plus_qc": [
@@ -319,7 +319,7 @@
     }
   ],
   "guardrail": "Leave-event-cycle-out prediction tests whether ROI physics descriptors generalize. It is not a deployable detector and excludes direct evidence/cycle labels to reduce leakage.",
-  "latent_source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/roi_latent_dynamics_summary.csv",
+  "latent_source": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/roi_latent_dynamics_summary.csv",
   "model_summary": {
     "all_physics_plus_qc:logistic_l2": {
       "folds": 4,
@@ -350,13 +350,13 @@
   "n_event_roi": 24,
   "n_roi": 52,
   "outputs": {
-    "feature_importance_by_fold": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor/feature_importance_by_fold.csv",
-    "feature_importance_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor/feature_importance_summary.csv",
-    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor/multi_cycle_roi_event_predictor_features.csv",
-    "fold_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor/leave_event_cycle_out_metrics.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_event_predictor/leave_event_cycle_out_predictions.csv"
+    "feature_importance_by_fold": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor/feature_importance_by_fold.csv",
+    "feature_importance_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor/feature_importance_summary.csv",
+    "features": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor/multi_cycle_roi_event_predictor_features.csv",
+    "fold_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor/leave_event_cycle_out_metrics.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_event_predictor/leave_event_cycle_out_predictions.csv"
   },
-  "rollout_source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/roi_rollout_per_roi_metrics.csv",
+  "rollout_source": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_rollout_baselines/roi_rollout_per_roi_metrics.csv",
   "top_features": [
     {
       "abs_importance": 0.9308833553506729,

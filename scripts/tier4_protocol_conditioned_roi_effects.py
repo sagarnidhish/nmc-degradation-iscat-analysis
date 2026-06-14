@@ -158,8 +158,8 @@ def leave_reference_classifier(residuals: pd.DataFrame, feature_cols: List[str])
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_roi_effects")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_roi_effects")
     args = parser.parse_args()
 
     in_path = os.path.join(args.derived_dir, "multi_cycle_roi_echem_coupling", "multi_cycle_roi_echem_joined.csv")

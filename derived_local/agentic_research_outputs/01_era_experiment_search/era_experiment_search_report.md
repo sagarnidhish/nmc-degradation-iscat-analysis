@@ -1,6 +1,6 @@
 # ERA-Style Experiment Search
 
-Root: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho`
+Root: `/scratch/<account>/<username>/Alek_Jiho`
 
 ## Top Ranked Experiments
 

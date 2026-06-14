@@ -9,13 +9,13 @@
   "n_permutation": 5000,
   "n_roi": 48,
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_correlations.csv",
-    "cycle_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_cycle_correlations.csv",
-    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_cycle_summary.csv",
-    "cycle_target_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_cycle_target_tests.csv",
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_joined.csv",
-    "review_priority": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_review_priority.csv",
-    "target_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_target_tests.csv"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_correlations.csv",
+    "cycle_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_cycle_correlations.csv",
+    "cycle_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_cycle_summary.csv",
+    "cycle_target_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_cycle_target_tests.csv",
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_joined.csv",
+    "review_priority": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_review_priority.csv",
+    "target_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_front_physics_audit/transfer_ranked_front_physics_target_tests.csv"
   },
   "target_positive_counts": {
     "any_abrupt_drop": 8,

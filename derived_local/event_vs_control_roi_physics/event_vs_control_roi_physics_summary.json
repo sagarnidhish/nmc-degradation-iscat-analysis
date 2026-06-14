@@ -73,11 +73,11 @@
   "n_control_roi": 16,
   "n_event_roi": 11,
   "outputs": {
-    "classifier": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_classifier_leave_pair_out.csv",
-    "descriptors": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_descriptors.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_feature_tests.csv",
-    "group_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_group_summary.csv",
-    "plot": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_physics.png"
+    "classifier": "/scratch/<account>/<username>/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_classifier_leave_pair_out.csv",
+    "descriptors": "/scratch/<account>/<username>/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_descriptors.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_feature_tests.csv",
+    "group_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_group_summary.csv",
+    "plot": "/scratch/<account>/<username>/Alek_Jiho/derived/event_vs_control_roi_physics/event_vs_control_roi_physics.png"
   },
   "top_feature_tests": [
     {

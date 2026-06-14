@@ -20,13 +20,13 @@
   "n_cycles": 34,
   "n_embedding_rows": 172,
   "outputs": {
-    "deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_feature_set_deltas.csv",
-    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_features.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_metrics.csv",
-    "permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_permutation_null.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_predictions.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_summary.json",
-    "training_history": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_training_history.csv"
+    "deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_feature_set_deltas.csv",
+    "features": "/scratch/<account>/<username>/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_features.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_metrics.csv",
+    "permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_permutation_null.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_predictions.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_embedding_summary.json",
+    "training_history": "/scratch/<account>/<username>/Alek_Jiho/derived/learned_video_residual_embedding_audit/learned_video_residual_training_history.csv"
   },
   "regression_targets": [
     "transferred_masked_residual_signature",

@@ -3,7 +3,7 @@
   "guardrail": "apparent_diffusion_proxy_ds_px2_per_frame is in downsampled-pixel^2/frame units and is not a calibrated diffusion coefficient.",
   "n_candidate_rows": 88,
   "n_segment_rows": 11,
-  "proxy_qc": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_frame_proxy_qc/event_frame_proxy_qc.csv",
+  "proxy_qc": "/scratch/<account>/<username>/Alek_Jiho/derived/event_frame_proxy_qc/event_frame_proxy_qc.csv",
   "samples_per_segment": 32,
   "top_candidates": [
     {
@@ -32,7 +32,7 @@
       "is_event_cycle": true,
       "label": 6,
       "particle_event_count": 1,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_60_7_c2_x10_290623_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_60_7_c2_x10_290623_candidates.png",
       "roi_mean_delta_last_minus_first": -122.48275862069022,
       "roi_mean_first": 13334.620689655172,
       "roi_mean_last": 13212.137931034482,
@@ -40,7 +40,7 @@
       "roi_mean_slope_r2": 0.23843438984598841,
       "solidity": 0.8345323741007195,
       "source_stem": "7_c2_x10_290623",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_60_7_c2_x10_290623_cand3.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_60_7_c2_x10_290623_cand3.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": -0.000382821207576678,
@@ -68,7 +68,7 @@
       "is_event_cycle": true,
       "label": 4,
       "particle_event_count": 3,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_86_10_c2_x10_030723_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_86_10_c2_x10_030723_candidates.png",
       "roi_mean_delta_last_minus_first": -7.706806282723846,
       "roi_mean_first": 14140.649214659687,
       "roi_mean_last": 14132.942408376963,
@@ -76,7 +76,7 @@
       "roi_mean_slope_r2": 0.08503939055011867,
       "solidity": 0.7701612903225806,
       "source_stem": "10_c2_x10_030723",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_86_10_c2_x10_030723_cand2.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_86_10_c2_x10_030723_cand2.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": 0.00042300402511996307,
@@ -104,7 +104,7 @@
       "is_event_cycle": false,
       "label": 2,
       "particle_event_count": 0,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_62_7_c2_x10_290623_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_62_7_c2_x10_290623_candidates.png",
       "roi_mean_delta_last_minus_first": -11.692307692304894,
       "roi_mean_first": 17424.615384615383,
       "roi_mean_last": 17412.923076923078,
@@ -112,7 +112,7 @@
       "roi_mean_slope_r2": 0.0164902810976304,
       "solidity": 0.8888888888888888,
       "source_stem": "7_c2_x10_290623",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_62_7_c2_x10_290623_cand2.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_62_7_c2_x10_290623_cand2.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": 0.00020433842244090803,
@@ -140,7 +140,7 @@
       "is_event_cycle": true,
       "label": 2,
       "particle_event_count": 1,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_60_7_c2_x10_290623_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_60_7_c2_x10_290623_candidates.png",
       "roi_mean_delta_last_minus_first": 3.692307692308532,
       "roi_mean_first": 17419.076923076922,
       "roi_mean_last": 17422.76923076923,
@@ -148,7 +148,7 @@
       "roi_mean_slope_r2": 0.0264152056337289,
       "solidity": 0.8524590163934426,
       "source_stem": "7_c2_x10_290623",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_60_7_c2_x10_290623_cand1.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_60_7_c2_x10_290623_cand1.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": -0.0010294590858875988,
@@ -176,7 +176,7 @@
       "is_event_cycle": false,
       "label": 11,
       "particle_event_count": 0,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_62_7_c2_x10_290623_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_62_7_c2_x10_290623_candidates.png",
       "roi_mean_delta_last_minus_first": 179.30158730158655,
       "roi_mean_first": 13350.095238095239,
       "roi_mean_last": 13529.396825396825,
@@ -184,7 +184,7 @@
       "roi_mean_slope_r2": 0.028301911211590647,
       "solidity": 0.8456375838926175,
       "source_stem": "7_c2_x10_290623",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_62_7_c2_x10_290623_cand1.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_62_7_c2_x10_290623_cand1.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": 0.000766356757609095,
@@ -212,7 +212,7 @@
       "is_event_cycle": true,
       "label": 6,
       "particle_event_count": 3,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_86_10_c2_x10_030723_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_86_10_c2_x10_030723_candidates.png",
       "roi_mean_delta_last_minus_first": 22.857142857143117,
       "roi_mean_first": 12547.809523809523,
       "roi_mean_last": 12570.666666666666,
@@ -220,7 +220,7 @@
       "roi_mean_slope_r2": 0.09245268762534109,
       "solidity": 0.7088607594936709,
       "source_stem": "10_c2_x10_030723",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_86_10_c2_x10_030723_cand5.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_86_10_c2_x10_030723_cand5.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": -0.0005389950635360297,
@@ -248,7 +248,7 @@
       "is_event_cycle": true,
       "label": 7,
       "particle_event_count": 3,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_86_10_c2_x10_030723_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_86_10_c2_x10_030723_candidates.png",
       "roi_mean_delta_last_minus_first": -23.89333333333343,
       "roi_mean_first": 12847.36,
       "roi_mean_last": 12823.466666666667,
@@ -256,7 +256,7 @@
       "roi_mean_slope_r2": 0.09076891577867796,
       "solidity": 0.7853403141361257,
       "source_stem": "10_c2_x10_030723",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_86_10_c2_x10_030723_cand6.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_86_10_c2_x10_030723_cand6.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": 0.0003611010573530089,
@@ -284,7 +284,7 @@
       "is_event_cycle": true,
       "label": 12,
       "particle_event_count": 1,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_156_18_c2_xN_HighHighCOV_170723_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_156_18_c2_xN_HighHighCOV_170723_candidates.png",
       "roi_mean_delta_last_minus_first": 975.1578947368434,
       "roi_mean_first": 12496.280701754386,
       "roi_mean_last": 13471.438596491229,
@@ -292,7 +292,7 @@
       "roi_mean_slope_r2": 0.03766802218760268,
       "solidity": 0.6627906976744186,
       "source_stem": "18_c2_xN_HighHighCOV_170723",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_156_18_c2_xN_HighHighCOV_170723_cand7.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_156_18_c2_xN_HighHighCOV_170723_cand7.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": 0.00034928054025853907,
@@ -320,7 +320,7 @@
       "is_event_cycle": false,
       "label": 10,
       "particle_event_count": 0,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_58_7_c2_x10_290623_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_58_7_c2_x10_290623_candidates.png",
       "roi_mean_delta_last_minus_first": 16.122137404579917,
       "roi_mean_first": 11614.778625954199,
       "roi_mean_last": 11630.900763358779,
@@ -328,7 +328,7 @@
       "roi_mean_slope_r2": 0.16993197625116319,
       "solidity": 0.7660818713450293,
       "source_stem": "7_c2_x10_290623",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_58_7_c2_x10_290623_cand6.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_58_7_c2_x10_290623_cand6.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": 0.00013453645462283044,
@@ -356,7 +356,7 @@
       "is_event_cycle": true,
       "label": 17,
       "particle_event_count": 1,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_156_18_c2_xN_HighHighCOV_170723_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_156_18_c2_xN_HighHighCOV_170723_candidates.png",
       "roi_mean_delta_last_minus_first": 4585.567010309278,
       "roi_mean_first": 12712.247422680412,
       "roi_mean_last": 17297.81443298969,
@@ -364,7 +364,7 @@
       "roi_mean_slope_r2": 0.1004399138706853,
       "solidity": 0.9238095238095239,
       "source_stem": "18_c2_xN_HighHighCOV_170723",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_156_18_c2_xN_HighHighCOV_170723_cand8.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_156_18_c2_xN_HighHighCOV_170723_cand8.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": -0.00018406116264004728,
@@ -392,7 +392,7 @@
       "is_event_cycle": false,
       "label": 6,
       "particle_event_count": 0,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_158_18_c2_xN_HighHighCOV_170723_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_158_18_c2_xN_HighHighCOV_170723_candidates.png",
       "roi_mean_delta_last_minus_first": 1626.181818181818,
       "roi_mean_first": 15385.018181818183,
       "roi_mean_last": 17011.2,
@@ -400,7 +400,7 @@
       "roi_mean_slope_r2": 0.016779443106538006,
       "solidity": 0.859375,
       "source_stem": "18_c2_xN_HighHighCOV_170723",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_158_18_c2_xN_HighHighCOV_170723_cand6.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_158_18_c2_xN_HighHighCOV_170723_cand6.csv"
     },
     {
       "apparent_diffusion_proxy_ds_px2_per_frame": -0.000649790520133014,
@@ -428,7 +428,7 @@
       "is_event_cycle": true,
       "label": 4,
       "particle_event_count": 1,
-      "preview_png": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_60_7_c2_x10_290623_candidates.png",
+      "preview_png": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_previews/cycle_60_7_c2_x10_290623_candidates.png",
       "roi_mean_delta_last_minus_first": 52.89256198347175,
       "roi_mean_first": 13382.347107438016,
       "roi_mean_last": 13435.239669421488,
@@ -436,7 +436,7 @@
       "roi_mean_slope_r2": 0.03408122553547355,
       "solidity": 0.8402777777777778,
       "source_stem": "7_c2_x10_290623",
-      "trace_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_60_7_c2_x10_290623_cand4.csv"
+      "trace_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/event_candidate_fronts/candidate_traces/cycle_60_7_c2_x10_290623_cand4.csv"
     }
   ]
 }

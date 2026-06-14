@@ -315,8 +315,8 @@ def candidate_sets(univariate: pd.DataFrame, groups: Dict[str, List[str]], max_p
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_invariant_interpretable_feature_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_invariant_interpretable_feature_audit")
     parser.add_argument("--seed", type=int, default=89)
     parser.add_argument("--n-permutation", type=int, default=500)
     parser.add_argument("--max-pairs", type=int, default=36)

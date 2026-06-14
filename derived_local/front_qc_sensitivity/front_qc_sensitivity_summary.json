@@ -866,11 +866,11 @@
   "n_permutation": 2000,
   "n_roi": 52,
   "outputs": {
-    "focus_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_qc_sensitivity/front_qc_sensitivity_focus_tests.csv",
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_qc_sensitivity/front_qc_sensitivity_joined.csv",
-    "strata": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_qc_sensitivity/front_qc_sensitivity_strata.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_qc_sensitivity/front_qc_sensitivity_summary.json",
-    "tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/front_qc_sensitivity/front_qc_sensitivity_tests.csv"
+    "focus_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/front_qc_sensitivity/front_qc_sensitivity_focus_tests.csv",
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/front_qc_sensitivity/front_qc_sensitivity_joined.csv",
+    "strata": "/scratch/<account>/<username>/Alek_Jiho/derived/front_qc_sensitivity/front_qc_sensitivity_strata.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/front_qc_sensitivity/front_qc_sensitivity_summary.json",
+    "tests": "/scratch/<account>/<username>/Alek_Jiho/derived/front_qc_sensitivity/front_qc_sensitivity_tests.csv"
   },
   "robust_positive_phase_residual_strata": [
     "all_front_rois",
@@ -879,9 +879,9 @@
     "q70_phase_ci_positive",
     "review_panel_selected"
   ],
-  "source_fronts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts/threshold_robust_front_summary.csv",
-  "source_qc_manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_front_qc_package/roi_front_qc_manifest.csv",
-  "source_residuals": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/protocol_conditioned_front_effects/protocol_conditioned_front_residuals.csv",
+  "source_fronts": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts/threshold_robust_front_summary.csv",
+  "source_qc_manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_front_qc_package/roi_front_qc_manifest.csv",
+  "source_residuals": "/scratch/<account>/<username>/Alek_Jiho/derived/protocol_conditioned_front_effects/protocol_conditioned_front_residuals.csv",
   "strata": [
     {
       "event_fraction": 0.46153846153846156,

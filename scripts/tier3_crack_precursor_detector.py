@@ -226,8 +226,8 @@ def curriculum_train(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--base-dir", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument("--window-size", type=int, default=100)
     parser.add_argument("--epochs", type=int, default=300)
     parser.add_argument("--max-h5", type=int, default=3, help="Max HDF5 to extract windows from")

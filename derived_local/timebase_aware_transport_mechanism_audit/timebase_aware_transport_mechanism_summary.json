@@ -7,15 +7,15 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_joined.csv",
-    "model_deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_model_deltas.csv",
-    "model_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_model_metrics.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_predictions.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/README.md",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_summary.json",
-    "target_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_target_tests.csv",
-    "timebase_class_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_class_tests.csv",
-    "timebase_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_timebase_correlations.csv"
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_joined.csv",
+    "model_deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_model_deltas.csv",
+    "model_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_model_metrics.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_predictions.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/README.md",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_summary.json",
+    "target_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_target_tests.csv",
+    "timebase_class_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_class_tests.csv",
+    "timebase_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit/timebase_aware_transport_mechanism_timebase_correlations.csv"
   },
   "scenario_counts": {
     "all_rows": {

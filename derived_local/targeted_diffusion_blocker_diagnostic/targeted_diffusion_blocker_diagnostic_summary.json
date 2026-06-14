@@ -90,12 +90,12 @@
     "threshold_min": 0.55
   },
   "outputs": {
-    "action_counts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/targeted_diffusion_diagnostic_action_counts.csv",
-    "diagnostic_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/targeted_diffusion_candidate_diagnostic.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/README.md",
-    "remeasurement_queue": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/targeted_diffusion_remeasurement_queue.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/targeted_diffusion_blocker_diagnostic_summary.json",
-    "threshold_variants": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/targeted_diffusion_threshold_variants.csv"
+    "action_counts": "/scratch/<account>/<username>/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/targeted_diffusion_diagnostic_action_counts.csv",
+    "diagnostic_table": "/scratch/<account>/<username>/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/targeted_diffusion_candidate_diagnostic.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/README.md",
+    "remeasurement_queue": "/scratch/<account>/<username>/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/targeted_diffusion_remeasurement_queue.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/targeted_diffusion_blocker_diagnostic_summary.json",
+    "threshold_variants": "/scratch/<account>/<username>/Alek_Jiho/derived/targeted_diffusion_blocker_diagnostic/targeted_diffusion_threshold_variants.csv"
   },
   "overall_status": "targeted_diffusion_blocker_diagnostic_ready",
   "top_remeasurement_candidates": [

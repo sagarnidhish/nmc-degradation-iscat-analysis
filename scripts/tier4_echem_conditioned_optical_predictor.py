@@ -321,8 +321,8 @@ def coefficient_table(df: pd.DataFrame, features: List[str], target: str, featur
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_optical_predictor")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_optical_predictor")
     parser.add_argument("--seed", type=int, default=13)
     parser.add_argument("--n-permutation", type=int, default=100)
     args = parser.parse_args()

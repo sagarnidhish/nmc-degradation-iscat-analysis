@@ -95,8 +95,8 @@ def boundary_enrichment(df: pd.DataFrame, label: str) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--event-echem-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_protocol_context")
+    parser.add_argument("--event-echem-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_protocol_context")
     args = parser.parse_args()
 
     in_path = os.path.join(args.event_echem_dir, "event_echem_cycle_table.csv")

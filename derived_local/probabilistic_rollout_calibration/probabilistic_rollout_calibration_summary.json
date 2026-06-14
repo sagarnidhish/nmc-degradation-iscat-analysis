@@ -433,12 +433,12 @@
   "n_roi_method_rows": 156,
   "near_transition_frame_fraction": 0.2644230769230769,
   "outputs": {
-    "coverage_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_coverage_summary.csv",
-    "frame_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_frame_table.csv",
-    "loo_calibration": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_loo_calibration.csv",
-    "physics_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_physics_correlations.csv",
-    "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_roi_table.csv",
-    "transition_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_transition_tests.csv"
+    "coverage_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_coverage_summary.csv",
+    "frame_table": "/scratch/<account>/<username>/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_frame_table.csv",
+    "loo_calibration": "/scratch/<account>/<username>/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_loo_calibration.csv",
+    "physics_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_physics_correlations.csv",
+    "roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_roi_table.csv",
+    "transition_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/probabilistic_rollout_calibration/probabilistic_rollout_transition_tests.csv"
   },
   "top_calibration_physics_correlations": [
     {

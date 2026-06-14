@@ -63,8 +63,8 @@ def safe_ap(y_true: np.ndarray, score: np.ndarray) -> float:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--metrics", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison/event_control_roi_metrics.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_classifier")
+    parser.add_argument("--metrics", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_comparison/event_control_roi_metrics.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_classifier")
     parser.add_argument("--c", type=float, default=0.5)
     args = parser.parse_args()
 

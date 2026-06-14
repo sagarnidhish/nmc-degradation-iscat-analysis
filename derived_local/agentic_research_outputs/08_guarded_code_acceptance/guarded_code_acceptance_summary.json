@@ -4,6 +4,6 @@
   },
   "guardrail": "Acceptance means suitable for human/code review and smoke execution, not scientifically validated.",
   "n_scripts_scanned": 3,
-  "root": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho",
-  "script_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts"
+  "root": "/scratch/<account>/<username>/Alek_Jiho",
+  "script_dir": "/scratch/<account>/<username>/Alek_Jiho/agentic_research_outputs/04_guarded_code_generation/generated_scripts"
 }

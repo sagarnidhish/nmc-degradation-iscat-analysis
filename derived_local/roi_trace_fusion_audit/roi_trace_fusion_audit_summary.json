@@ -11,10 +11,10 @@
   "n_predictors": 100,
   "n_roi_rows": 52,
   "outputs": {
-    "binary_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_binary_tests.csv",
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_joined.csv",
-    "spearman_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_spearman_tests.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_audit_summary.json"
+    "binary_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_binary_tests.csv",
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_joined.csv",
+    "spearman_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_spearman_tests.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_trace_fusion_audit/roi_trace_fusion_audit_summary.json"
   },
   "top_binary_tests": [
     {

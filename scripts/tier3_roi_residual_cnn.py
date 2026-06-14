@@ -233,8 +233,8 @@ def save_preview(model: ResidualCNN, x: np.ndarray, y: np.ndarray, meta: pd.Data
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--roi-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_residual_cnn")
+    parser.add_argument("--roi-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/roi_residual_cnn")
     parser.add_argument("--epochs", type=int, default=80)
     parser.add_argument("--patience", type=int, default=10)
     parser.add_argument("--hidden", type=int, default=24)

@@ -16,10 +16,10 @@
   "n_hard_blockers": 8,
   "n_publication_ready_candidates": 0,
   "outputs": {
-    "candidates": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_claim_readiness_audit/diffusion_claim_readiness_candidates.csv",
-    "criteria": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_claim_readiness_audit/diffusion_claim_readiness_criteria.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_claim_readiness_audit/README.md",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_claim_readiness_audit/diffusion_claim_readiness_summary.json"
+    "candidates": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_claim_readiness_audit/diffusion_claim_readiness_candidates.csv",
+    "criteria": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_claim_readiness_audit/diffusion_claim_readiness_criteria.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_claim_readiness_audit/README.md",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_claim_readiness_audit/diffusion_claim_readiness_summary.json"
   },
   "overall_status": "not_ready_for_calibrated_diffusion_claim",
   "status_counts": {

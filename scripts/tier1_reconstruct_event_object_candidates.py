@@ -251,11 +251,11 @@ def match_adjacent(candidates: pd.DataFrame, max_distance_ds: float) -> pd.DataF
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
     parser.add_argument("--particles-csv", default="")
     parser.add_argument("--cycle-frames-csv", default="")
-    parser.add_argument("--event-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_targets")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_object_candidate_reconstruction")
+    parser.add_argument("--event-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_targets")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/event_object_candidate_reconstruction")
     parser.add_argument("--downsample", type=int, default=4)
     parser.add_argument("--samples-per-segment", type=int, default=10)
     parser.add_argument("--neighbor-count", type=int, default=3)

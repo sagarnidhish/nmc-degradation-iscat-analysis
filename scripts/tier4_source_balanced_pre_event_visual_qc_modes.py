@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 
 
-REMOTE_ROOT = Path("/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
+REMOTE_ROOT = Path("/scratch/<account>/<username>/Alek_Jiho")
 DERIVED = REMOTE_ROOT / "derived"
 VISUAL_DIR = DERIVED / "source_balanced_pre_event_consensus_visual_packet"
 OUT_DIR = DERIVED / "source_balanced_pre_event_visual_qc_modes"

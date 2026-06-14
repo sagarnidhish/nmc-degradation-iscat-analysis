@@ -11,7 +11,7 @@ during galvanostatic cycling, with simultaneous GAMRY potentiostat electrochemis
 4. Predict remaining useful life from early-cycle optical signatures
 5. Identify which optical features precede dQ/dV peak shifts (electro-optical coupling)
 
-## Dataset (Isambard: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/`)
+## Dataset (Isambard: `/scratch/<account>/<username>/Alek_Jiho/`)
 
 | Session | Size | Cycles | Notes |
 |---|---|---|---|
@@ -68,14 +68,14 @@ derived/
 
 ```bash
 # Transfer scripts
-scp -r scripts/ u6hp.aip2.isambard:/scratch/u6hp/nsagar.u6hp/Alek_Jiho/
+scp -r scripts/ u6hp.aip2.isambard:/scratch/<account>/<username>/Alek_Jiho/
 
 # Submit in order (each tier depends on previous tier's derived/ outputs)
-ssh u6hp.aip2.isambard "cd /scratch/u6hp/nsagar.u6hp/Alek_Jiho && sbatch scripts/submit_tier1.sh"
+ssh u6hp.aip2.isambard "cd /scratch/<account>/<username>/Alek_Jiho && sbatch scripts/submit_tier1.sh"
 # After Tier 1 completes:
-ssh u6hp.aip2.isambard "cd /scratch/u6hp/nsagar.u6hp/Alek_Jiho && sbatch scripts/submit_tier2.sh"
+ssh u6hp.aip2.isambard "cd /scratch/<account>/<username>/Alek_Jiho && sbatch scripts/submit_tier2.sh"
 # After Tier 2 completes:
-ssh u6hp.aip2.isambard "cd /scratch/u6hp/nsagar.u6hp/Alek_Jiho && sbatch scripts/submit_tier3.sh"
+ssh u6hp.aip2.isambard "cd /scratch/<account>/<username>/Alek_Jiho && sbatch scripts/submit_tier3.sh"
 ```
 
 ## Environment
@@ -83,7 +83,7 @@ ssh u6hp.aip2.isambard "cd /scratch/u6hp/nsagar.u6hp/Alek_Jiho && sbatch scripts
 - Isambard-AI Phase 2, GH200 (H100 96GB HBM), aarch64
 - `walrus-env` conda: torch 2.5.1+cu124, h5py, scikit-image, pandas, scipy, sklearn
 - **fp32 only** — no fp16/autocast (GH200 NaN issue)
-- SLURM account: `brics.u6hp`
+- SLURM account: `<slurm-account>`
 
 ## Physics hypotheses being tested
 

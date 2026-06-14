@@ -413,9 +413,9 @@
   ],
   "guardrail": "This audit checks whether optical radius-squared front proxies behave like calibrated diffusion estimates. Publication diffusion claims require manual QC plus positive, estimator-consistent, low-drift, threshold-robust slopes; otherwise values remain apparent optical-front proxies.",
   "outputs": {
-    "joined": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_joined.csv",
-    "gate_counts": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_gate_counts.csv",
-    "event_control_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_event_control_tests.csv",
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_correlations.csv"
+    "joined": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_joined.csv",
+    "gate_counts": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_gate_counts.csv",
+    "event_control_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_event_control_tests.csv",
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/diffusion_proxy_sanity_audit/diffusion_proxy_sanity_correlations.csv"
   }
 }

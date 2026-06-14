@@ -93,9 +93,9 @@
   ],
   "n_frame_metric_rows": 1056,
   "n_roi_sequences": 11,
-  "plot_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_cycle_summary.png",
+  "plot_path": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_rollout_baselines/roi_rollout_cycle_summary.png",
   "preview_count": 11,
   "rank": 10,
-  "roi_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences",
+  "roi_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences",
   "train_fraction": 0.67
 }

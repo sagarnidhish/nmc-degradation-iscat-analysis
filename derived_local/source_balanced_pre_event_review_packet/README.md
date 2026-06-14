@@ -2,7 +2,7 @@
 
 - Candidates ranked: 128
 - Top frame strips rendered: 24 / 24
-- Contact sheet: `/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_review_packet/pre_event_review_contact_sheet.png`
+- Contact sheet: `/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_review_packet/pre_event_review_contact_sheet.png`
 - Review reason counts: {'context_or_guardrail_row': 74, 'mid_pre_followup_front_diffusion_review': 22, 'near_pre_front_diffusion_review': 19, 'near_pre_high_source_invariant_front_score': 13}
 
 ## Top Candidates

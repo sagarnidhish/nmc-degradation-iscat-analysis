@@ -5,9 +5,9 @@
   "n_context_rois": 5,
   "n_strategy_rows": 20,
   "outputs": {
-    "per_strategy": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_component_front_retracking_audit/cycle78_component_front_retracking_per_strategy.csv",
-    "plots_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_component_front_retracking_audit/plots",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cycle78_component_front_retracking_audit/cycle78_component_front_retracking_summary.json"
+    "per_strategy": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_component_front_retracking_audit/cycle78_component_front_retracking_per_strategy.csv",
+    "plots_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_component_front_retracking_audit/plots",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/cycle78_component_front_retracking_audit/cycle78_component_front_retracking_summary.json"
   },
   "overall_status": "cycle78_component_front_retracking_ready",
   "target_central_component": {

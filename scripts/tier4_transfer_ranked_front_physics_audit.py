@@ -168,8 +168,8 @@ def correlations(df: pd.DataFrame, xs: List[str], ys: List[str]) -> pd.DataFrame
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_front_physics_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_front_physics_audit")
     parser.add_argument("--n-permutation", type=int, default=5000)
     parser.add_argument("--random-state", type=int, default=29)
     args = parser.parse_args()

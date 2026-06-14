@@ -42,12 +42,12 @@
   "n_event_anchors": 4,
   "n_matched_control_anchors": 24,
   "outputs": {
-    "aligned_rows": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_aligned_rows.csv",
-    "anchors": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_anchors.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_atlas_summary.json",
-    "trajectory_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_trajectory_summary.csv",
-    "window_features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_window_features.csv",
-    "window_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_window_tests.csv"
+    "aligned_rows": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_aligned_rows.csv",
+    "anchors": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_anchors.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_atlas_summary.json",
+    "trajectory_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_trajectory_summary.csv",
+    "window_features": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_window_features.csv",
+    "window_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/particle_event_precursor_atlas/particle_event_precursor_window_tests.csv"
   },
   "top_precursor_window_tests": [
     {

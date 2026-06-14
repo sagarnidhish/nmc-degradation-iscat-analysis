@@ -182,7 +182,7 @@ def train_transformer(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument("--context-len", type=int, default=20)
     parser.add_argument("--d-model", type=int, default=64)
     parser.add_argument("--nhead", type=int, default=4)

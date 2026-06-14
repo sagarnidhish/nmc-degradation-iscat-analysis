@@ -74,20 +74,20 @@ def main() -> None:
     parser.add_argument("--particles-csv", default="")
     parser.add_argument("--cycle-frames-csv", default="")
     parser.add_argument("--echem-per-cycle-csv", default="")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     args = parser.parse_args()
 
     plots_dir = ensure_output_dirs(args.out_dir)
 
     particles_path = resolve_existing_path([
         args.particles_csv,
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/exampleParticles.csv",
-        "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/exampleParticles.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/exampleParticles.csv",
+        "/path/to/alek_jiho_nmc_deg/echemDF_full/exampleParticles.csv",
     ])
     frames_path = resolve_existing_path([
         args.cycle_frames_csv,
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/cycleFrames.csv",
-        "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/cycleFrames.csv",
+        "/path/to/alek_jiho_nmc_deg/echemDF_full/cycleFrames.csv",
     ])
     echem_path = resolve_existing_path([
         args.echem_per_cycle_csv,

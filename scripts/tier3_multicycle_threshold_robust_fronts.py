@@ -293,10 +293,10 @@ def feature_tests(df: pd.DataFrame, features: List[str], group_col: str = "") ->
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv")
-    parser.add_argument("--cohort-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_cohort/multi_cycle_roi_table.csv")
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts")
+    parser.add_argument("--manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_sequences/selected_roi_sequence_manifest.csv")
+    parser.add_argument("--cohort-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_cohort/multi_cycle_roi_table.csv")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_threshold_robust_fronts")
     parser.add_argument("--threshold-quantiles", default="0.55,0.60,0.65,0.70,0.75,0.80,0.85")
     parser.add_argument("--pixel-size-um", type=float, default=0.096)
     parser.add_argument("--n-bootstrap", type=int, default=200)

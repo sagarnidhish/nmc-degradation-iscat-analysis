@@ -215,9 +215,9 @@ def audit_csv(path: Path, max_rows: int = 2000) -> Dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--repo-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/calibration_metadata_audit")
+    parser.add_argument("--base-dir", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--repo-dir", default="/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/calibration_metadata_audit")
     parser.add_argument("--max-h5-files", type=int, default=0, help="Optional cap for metadata-only HDF5 scan; 0 scans all discovered raw HDF5 files.")
     args = parser.parse_args()
 

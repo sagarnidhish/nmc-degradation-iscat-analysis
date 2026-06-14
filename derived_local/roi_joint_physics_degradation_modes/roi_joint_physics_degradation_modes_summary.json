@@ -42,11 +42,11 @@
   },
   "n_roi": 11,
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/joint_feature_spearman_correlations.csv",
-    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/joint_cycle_summary.csv",
-    "joint_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes.csv",
-    "mode_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/joint_mode_summary.csv",
-    "plot": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes.png"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_joint_physics_degradation_modes/joint_feature_spearman_correlations.csv",
+    "cycle_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_joint_physics_degradation_modes/joint_cycle_summary.csv",
+    "joint_table": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes.csv",
+    "mode_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_joint_physics_degradation_modes/joint_mode_summary.csv",
+    "plot": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_joint_physics_degradation_modes/roi_joint_physics_degradation_modes.png"
   },
   "selected_k": 2,
   "silhouette": 0.3351118784180543,

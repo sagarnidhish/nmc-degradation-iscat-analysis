@@ -295,11 +295,11 @@
   "n_event_roi": 0,
   "n_roi": 72,
   "outputs": {
-    "by_event_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts/threshold_robust_front_by_event_tests.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts/threshold_robust_front_feature_tests.csv",
-    "group_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts/threshold_robust_front_group_summary.csv",
-    "robust_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts/threshold_robust_front_summary.csv",
-    "threshold_sweep": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/balanced_future_threshold_robust_fronts/threshold_sweep_per_roi.csv"
+    "by_event_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_threshold_robust_fronts/threshold_robust_front_by_event_tests.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_threshold_robust_fronts/threshold_robust_front_feature_tests.csv",
+    "group_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_threshold_robust_fronts/threshold_robust_front_group_summary.csv",
+    "robust_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_threshold_robust_fronts/threshold_robust_front_summary.csv",
+    "threshold_sweep": "/scratch/<account>/<username>/Alek_Jiho/derived/balanced_future_threshold_robust_fronts/threshold_sweep_per_roi.csv"
   },
   "pixel_size_um": 0.096,
   "threshold_quantiles": [

@@ -183,10 +183,10 @@
     "radial_profile_last_minus_first_l1"
   ],
   "outputs": {
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit/source_balanced_pre_event_echem_matched_feature_tests.csv",
-    "pairs": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit/source_balanced_pre_event_echem_matched_pairs.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit/source_balanced_pre_event_echem_matched_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit/source_balanced_pre_event_echem_matched_summary.json"
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit/source_balanced_pre_event_echem_matched_feature_tests.csv",
+    "pairs": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit/source_balanced_pre_event_echem_matched_pairs.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit/source_balanced_pre_event_echem_matched_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit/source_balanced_pre_event_echem_matched_summary.json"
   },
   "pair_counts": {
     "near_vs_any_non_near|same_source": 32,

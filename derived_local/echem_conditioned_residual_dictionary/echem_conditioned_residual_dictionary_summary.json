@@ -26,13 +26,13 @@
   "n_rows": 172,
   "n_sources": 12,
   "outputs": {
-    "context_fit_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_context_fit_metrics.csv",
-    "deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_deltas.csv",
-    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_features.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_metrics.csv",
-    "permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_permutation_null.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_predictions.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_summary.json"
+    "context_fit_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_context_fit_metrics.csv",
+    "deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_deltas.csv",
+    "features": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_features.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_metrics.csv",
+    "permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_permutation_null.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_predictions.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/echem_conditioned_residual_dictionary/echem_conditioned_residual_dictionary_summary.json"
   },
   "residual_dictionary_features": [
     "residual_energy_mean",

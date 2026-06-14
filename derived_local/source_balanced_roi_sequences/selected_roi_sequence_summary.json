@@ -396,10 +396,10 @@
   "n_sources": 14,
   "output_size": 96,
   "outputs": {
-    "failures": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_sequence_failures.csv",
-    "manifest": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/selected_roi_sequence_manifest.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences/selected_roi_sequence_summary.json"
+    "failures": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/source_balanced_sequence_failures.csv",
+    "manifest": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/selected_roi_sequence_manifest.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences/selected_roi_sequence_summary.json"
   },
-  "roi_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_roi_table.csv",
+  "roi_table": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_roi_table.csv",
   "samples_per_roi": 96
 }

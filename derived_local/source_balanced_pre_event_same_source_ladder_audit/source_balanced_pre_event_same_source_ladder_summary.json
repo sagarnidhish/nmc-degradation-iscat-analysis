@@ -53,11 +53,11 @@
     "temporal_energy_mean"
   ],
   "outputs": {
-    "clock_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit/source_balanced_pre_event_same_source_clock_tests.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit/source_balanced_pre_event_same_source_feature_tests.csv",
-    "ladder_coverage": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit/source_balanced_pre_event_same_source_ladder_coverage.csv",
-    "pairs": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit/source_balanced_pre_event_same_source_pairs.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit/source_balanced_pre_event_same_source_ladder_summary.json"
+    "clock_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit/source_balanced_pre_event_same_source_clock_tests.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit/source_balanced_pre_event_same_source_feature_tests.csv",
+    "ladder_coverage": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit/source_balanced_pre_event_same_source_ladder_coverage.csv",
+    "pairs": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit/source_balanced_pre_event_same_source_pairs.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_same_source_ladder_audit/source_balanced_pre_event_same_source_ladder_summary.json"
   },
   "pair_counts": {
     "near_vs_any_non_near_same_source": 32,

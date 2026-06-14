@@ -172,7 +172,7 @@ def make_dqdv_heatmap(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--echem-csv", default="")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument("--chunksize", type=int, default=500000)
     parser.add_argument("--sgolay-window", type=int, default=31)
     parser.add_argument("--sgolay-polyorder", type=int, default=3)
@@ -183,17 +183,17 @@ def main() -> None:
 
     csv_path = resolve_existing_path([
         args.echem_csv.strip() if args.echem_csv else "",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/echemDF_full/echemDF_full.csv",
-        "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/echemDF_full.csv",
-        "/home/ns2038/Downloads/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/echemDF_full/echemDF_full.csv",
+        "/scratch/<account>/<username>/Alek_Jiho/echemDF_full.csv",
+        "/path/to/alek_jiho_nmc_deg/echemDF_full/echemDF_full.csv",
     ])
 
     # Fallback: concatenate individual per-session electrochemistry CSVs from dataset dirs
     if not csv_path:
         import glob as _glob
         indiv_csvs = sorted(_glob.glob(
-            "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/**/*electrochemistry.csv", recursive=True
+            "/scratch/<account>/<username>/Alek_Jiho/**/*electrochemistry.csv", recursive=True
         ))
         if indiv_csvs:
             print(f"echemDF_full.csv not found. Merging {len(indiv_csvs)} individual echem CSVs...")

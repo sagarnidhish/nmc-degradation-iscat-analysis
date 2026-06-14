@@ -246,8 +246,8 @@ def summarize_permutation(observed: Dict[str, Any], null_df: pd.DataFrame) -> Di
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--in-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_audit")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout")
+    parser.add_argument("--in-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_audit")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_dictionary_normalized_readout")
     parser.add_argument("--permutations", type=int, default=200)
     parser.add_argument("--seed", type=int, default=29)
     args = parser.parse_args()

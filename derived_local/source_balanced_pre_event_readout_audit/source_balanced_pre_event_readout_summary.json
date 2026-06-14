@@ -462,11 +462,11 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "best_by_target_transform": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_best_by_target_transform.csv",
-    "event_bin_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_bin_summary.csv",
-    "merged_features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_features.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_metrics.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_summary.json"
+    "best_by_target_transform": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_best_by_target_transform.csv",
+    "event_bin_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_bin_summary.csv",
+    "merged_features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_features.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_metrics.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_summary.json"
   },
   "transforms": [
     "raw",

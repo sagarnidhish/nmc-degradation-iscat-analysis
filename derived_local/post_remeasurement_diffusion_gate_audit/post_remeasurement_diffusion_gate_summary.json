@@ -5,11 +5,11 @@
   "current_claim_diffusion_status": "not_ready_for_calibrated_diffusion_claim",
   "guardrail": "This audit propagates a target-specific automatic q70 CI update through existing readiness gates. It does not rerun global diffusion readiness, accept manual labels, verify raw calibration metadata, or create publication-ready diffusion coefficients.",
   "outputs": {
-    "candidate_update": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_candidate_update.csv",
-    "gate_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_gate_table.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/README.md",
-    "scenario_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_scenario_table.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_gate_summary.json"
+    "candidate_update": "/scratch/<account>/<username>/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_candidate_update.csv",
+    "gate_table": "/scratch/<account>/<username>/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_gate_table.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/README.md",
+    "scenario_table": "/scratch/<account>/<username>/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_scenario_table.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/post_remeasurement_diffusion_gate_audit/post_remeasurement_diffusion_gate_summary.json"
   },
   "overall_status": "diffusion_claim_still_blocked_after_target_q70_update",
   "post_candidate_blockers": [

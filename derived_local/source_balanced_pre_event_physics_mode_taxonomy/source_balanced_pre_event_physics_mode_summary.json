@@ -21,7 +21,7 @@
     }
   ],
   "guardrail": "Pre-event physics modes are unsupervised clusters of automatic source-residual ROI features. Mode enrichment and event-clock tests nominate repeatable front/diffusion/heterogeneity states for review; they are not manual degradation labels, calibrated phase boundaries, diffusion coefficients, or causal forecasts.",
-  "input_features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_features.csv",
+  "input_features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit/source_balanced_pre_event_directionality_features.csv",
   "k_scores": [
     {
       "inertia": 3684.322503125584,
@@ -98,13 +98,13 @@
   "n_rows": 128,
   "n_sources": 14,
   "outputs": {
-    "assignments": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_assignments.csv",
-    "clock_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_clock_tests.csv",
-    "enrichment": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_enrichment.csv",
-    "feature_source_eta": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_feature_source_eta.csv",
-    "k_scores": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_k_scores.csv",
-    "representatives": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_representatives.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_summary.csv"
+    "assignments": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_assignments.csv",
+    "clock_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_clock_tests.csv",
+    "enrichment": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_enrichment.csv",
+    "feature_source_eta": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_feature_source_eta.csv",
+    "k_scores": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_k_scores.csv",
+    "representatives": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_representatives.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_physics_mode_taxonomy/source_balanced_pre_event_physics_mode_summary.csv"
   },
   "representatives": [
     {

@@ -29,12 +29,12 @@
   "n_input_rows": 40,
   "n_sources_hidden_key": 12,
   "outputs": {
-    "blinded_workbook_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/source_balanced_pre_event_manual_qc_blinded_workbook.csv",
-    "hidden_key_csv": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/source_balanced_pre_event_manual_qc_blinded_key.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/README.md",
-    "review_html": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/source_balanced_pre_event_manual_qc_blinded_review.html",
-    "rubric_json": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/source_balanced_pre_event_manual_qc_rubric.json",
-    "summary_json": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/source_balanced_pre_event_manual_qc_blind_summary.json"
+    "blinded_workbook_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/source_balanced_pre_event_manual_qc_blinded_workbook.csv",
+    "hidden_key_csv": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/source_balanced_pre_event_manual_qc_blinded_key.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/README.md",
+    "review_html": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/source_balanced_pre_event_manual_qc_blinded_review.html",
+    "rubric_json": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/source_balanced_pre_event_manual_qc_rubric.json",
+    "summary_json": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_manual_qc_blind_workbook/source_balanced_pre_event_manual_qc_blind_summary.json"
   },
   "review_fields": [
     "reviewer_id",

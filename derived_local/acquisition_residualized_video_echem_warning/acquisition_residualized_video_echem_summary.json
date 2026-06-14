@@ -17,11 +17,11 @@
   "n_rows": 172,
   "n_sources": 12,
   "outputs": {
-    "deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_echem_warning/acquisition_residualized_video_echem_deltas.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_echem_warning/acquisition_residualized_video_echem_metrics.csv",
-    "permutation_null": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_echem_warning/acquisition_residualized_video_echem_permutation_null.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_echem_warning/acquisition_residualized_video_echem_predictions.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/acquisition_residualized_video_echem_warning/acquisition_residualized_video_echem_summary.json"
+    "deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_echem_warning/acquisition_residualized_video_echem_deltas.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_echem_warning/acquisition_residualized_video_echem_metrics.csv",
+    "permutation_null": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_echem_warning/acquisition_residualized_video_echem_permutation_null.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_echem_warning/acquisition_residualized_video_echem_predictions.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/acquisition_residualized_video_echem_warning/acquisition_residualized_video_echem_summary.json"
   },
   "strict_cycle_balanced_source_cohort_deltas": [
     {

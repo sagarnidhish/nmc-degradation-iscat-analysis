@@ -840,11 +840,11 @@
     }
   ],
   "outputs": {
-    "scalar_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_future_specific_residual_audit/source_balanced_future_specific_scalar_tests.csv",
-    "model_metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_future_specific_residual_audit/source_balanced_future_specific_model_metrics.csv",
-    "model_deltas": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_future_specific_residual_audit/source_balanced_future_specific_model_deltas.csv",
-    "predictions": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_future_specific_residual_audit/source_balanced_future_specific_model_predictions.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_future_specific_residual_audit/source_balanced_future_specific_residual_summary.json"
+    "scalar_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_future_specific_residual_audit/source_balanced_future_specific_scalar_tests.csv",
+    "model_metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_future_specific_residual_audit/source_balanced_future_specific_model_metrics.csv",
+    "model_deltas": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_future_specific_residual_audit/source_balanced_future_specific_model_deltas.csv",
+    "predictions": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_future_specific_residual_audit/source_balanced_future_specific_model_predictions.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_future_specific_residual_audit/source_balanced_future_specific_residual_summary.json"
   },
   "guardrail": "Past-event context uses event-cycle labels derived from full particle abrupt-drop cycles. Excluding or modeling past windows tests future specificity on the source-balanced ROI table; it does not prove causality, source transfer, or calibrated phase/diffusion physics."
 }

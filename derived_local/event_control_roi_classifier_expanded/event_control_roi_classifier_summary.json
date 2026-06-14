@@ -13,7 +13,7 @@
   "mean_accuracy": 0.37192118226600984,
   "mean_average_precision": 0.347798131925921,
   "mean_roc_auc": 0.2895833333333333,
-  "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_metrics.csv",
+  "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_comparison_expanded/event_control_roi_metrics.csv",
   "n_control": 32,
   "n_event": 11,
   "n_rows": 43,
@@ -39,7 +39,7 @@
       "test_pair": 116
     }
   ],
-  "plot_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_control_roi_classifier_expanded/event_control_roi_classifier.png",
+  "plot_path": "/scratch/<account>/<username>/Alek_Jiho/derived/event_control_roi_classifier_expanded/event_control_roi_classifier.png",
   "top_coefficients": [
     {
       "abs_mean_coefficient": 0.45396600755794736,

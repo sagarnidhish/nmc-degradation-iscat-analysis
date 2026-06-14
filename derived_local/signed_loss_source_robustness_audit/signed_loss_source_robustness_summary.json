@@ -576,13 +576,13 @@
   "n_rows": 172,
   "n_sources": 12,
   "outputs": {
-    "balanced_bootstrap": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_balanced_bootstrap.csv",
-    "metrics": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_metrics.csv",
-    "permutation_nulls": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_permutation_nulls.csv",
-    "source_influence": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_source_influence.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_summary.json",
-    "transformed_scores": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_scores.csv"
+    "balanced_bootstrap": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_balanced_bootstrap.csv",
+    "metrics": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_metrics.csv",
+    "permutation_nulls": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_permutation_nulls.csv",
+    "source_influence": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_source_influence.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_summary.json",
+    "transformed_scores": "/scratch/<account>/<username>/Alek_Jiho/derived/signed_loss_source_robustness_audit/signed_loss_source_robustness_scores.csv"
   },
   "source_summary": [
     {

@@ -12,13 +12,13 @@
   "n_sources": 9,
   "n_strict_timebase_sources": 5,
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_correlations.csv",
-    "h5_file_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_h5_file_table.csv",
-    "readme": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/hdf5_timebase_provenance_audit/README.md",
-    "roi_q70_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_roi_q70_table.csv",
-    "scenario_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_scenario_table.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_provenance_summary.json"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_correlations.csv",
+    "h5_file_table": "/scratch/<account>/<username>/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_h5_file_table.csv",
+    "readme": "/scratch/<account>/<username>/Alek_Jiho/derived/hdf5_timebase_provenance_audit/README.md",
+    "roi_q70_table": "/scratch/<account>/<username>/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_roi_q70_table.csv",
+    "scenario_table": "/scratch/<account>/<username>/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_scenario_table.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/hdf5_timebase_provenance_audit/hdf5_timebase_provenance_summary.json"
   },
   "pause_heavy_sources": [
     "5_c2_x10_260623",

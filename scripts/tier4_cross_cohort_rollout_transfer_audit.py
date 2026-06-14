@@ -234,9 +234,9 @@ def correlation_table(per_roi: pd.DataFrame) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--selected-manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences/selected_roi_sequence_manifest.csv")
-    parser.add_argument("--transfer-manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/transfer_ranked_roi_sequences/selected_roi_sequence_manifest.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/cross_cohort_rollout_transfer_audit")
+    parser.add_argument("--selected-manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences/selected_roi_sequence_manifest.csv")
+    parser.add_argument("--transfer-manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/transfer_ranked_roi_sequences/selected_roi_sequence_manifest.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/cross_cohort_rollout_transfer_audit")
     parser.add_argument("--rank", type=int, default=16)
     parser.add_argument("--ridge", type=float, default=1e-4)
     parser.add_argument("--train-fraction", type=float, default=0.67)

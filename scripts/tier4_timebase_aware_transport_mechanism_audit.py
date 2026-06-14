@@ -419,9 +419,9 @@ def write_readme(out: Path, summary: Dict[str, Any]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--transport-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_transport_mechanism_dossier")
-    parser.add_argument("--timebase-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/hdf5_timebase_provenance_audit")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit")
+    parser.add_argument("--transport-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_transport_mechanism_dossier")
+    parser.add_argument("--timebase-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/hdf5_timebase_provenance_audit")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/timebase_aware_transport_mechanism_audit")
     parser.add_argument("--seed", type=int, default=84)
     args = parser.parse_args()
 

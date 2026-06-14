@@ -785,12 +785,12 @@
     }
   ],
   "outputs": {
-    "features": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_features.csv",
-    "feature_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_feature_tests.csv",
-    "cycle_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_cycle_summary.csv",
-    "cycle_tests": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_cycle_tests.csv",
-    "source_summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_source_summary.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_summary.json"
+    "features": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_features.csv",
+    "feature_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_feature_tests.csv",
+    "cycle_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_cycle_summary.csv",
+    "cycle_tests": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_cycle_tests.csv",
+    "source_summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_source_summary.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_mask_front_sanity_audit/source_balanced_mask_front_summary.json"
   },
   "guardrail": "Automatic crop-local masks/front radii are source-balanced sanity proxies from resized ROI tensors; they are not manual particle masks, not calibrated fronts, and apparent diffusion uses an approximate 0.192 um/output-pixel scale."
 }

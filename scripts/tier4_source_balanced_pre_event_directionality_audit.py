@@ -169,9 +169,9 @@ def merge_inputs(readout: pd.DataFrame, sequence: pd.DataFrame) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--readout-features", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_features.csv")
-    parser.add_argument("--sequence-features", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_features.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit")
+    parser.add_argument("--readout-features", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_readout_audit/source_balanced_pre_event_readout_features.csv")
+    parser.add_argument("--sequence-features", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_sequence_audit/source_balanced_pre_event_sequence_features.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_directionality_audit")
     parser.add_argument("--n-perm", type=int, default=250)
     parser.add_argument("--seed", type=int, default=20260522)
     args = parser.parse_args()

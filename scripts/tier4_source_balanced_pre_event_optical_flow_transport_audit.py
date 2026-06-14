@@ -286,8 +286,8 @@ def summarize_roi(row: pd.Series, train_fraction: float) -> Tuple[Dict[str, Any]
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences/selected_roi_sequence_manifest.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_optical_flow_transport_audit")
+    parser.add_argument("--manifest", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_roi_sequences/selected_roi_sequence_manifest.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_optical_flow_transport_audit")
     parser.add_argument("--train-fraction", type=float, default=0.6)
     args = parser.parse_args()
 

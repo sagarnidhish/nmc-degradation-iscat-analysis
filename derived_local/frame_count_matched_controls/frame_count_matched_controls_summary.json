@@ -1,5 +1,5 @@
 {
-  "cycle_table": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
+  "cycle_table": "/scratch/<account>/<username>/Alek_Jiho/derived/event_echem_coupling/event_echem_cycle_table.csv",
   "failed_event_matches": 0,
   "interpretation": "If observed low frame-count percentile remains extreme after matching, event cycles are not explained by frame-count/protocol artifact alone. If it does not, raw ROI QC is mandatory before physical claims.",
   "n_matched_draws": 20000,

@@ -39,7 +39,7 @@
     "I_abs_mean_mA",
     "duration_s"
   ],
-  "source": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/multi_cycle_roi_echem_joined.csv",
+  "source": "/scratch/<account>/<username>/Alek_Jiho/derived/multi_cycle_roi_echem_coupling/multi_cycle_roi_echem_joined.csv",
   "top_protocol_conditioned_event_control_tests": [
     {
       "control_mean": -0.0014879010345997408,

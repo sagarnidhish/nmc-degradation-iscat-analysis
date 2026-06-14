@@ -32,7 +32,7 @@ import pandas as pd
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
     parser.add_argument("--out-dir", default="")
     parser.add_argument("--smoke", action="store_true")
     args = parser.parse_args()

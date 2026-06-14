@@ -189,9 +189,9 @@ def export_one(root: Path, row: pd.Series, out_dir: Path, crop_size_full: int, o
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho")
-    parser.add_argument("--roi-table", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_roi_table.csv")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_roi_sequences")
+    parser.add_argument("--root", default="/scratch/<account>/<username>/Alek_Jiho")
+    parser.add_argument("--roi-table", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_expansion_manifest/source_balanced_roi_table.csv")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_roi_sequences")
     parser.add_argument("--crop-size-full", type=int, default=192)
     parser.add_argument("--output-size", type=int, default=96)
     parser.add_argument("--samples-per-roi", type=int, default=96)

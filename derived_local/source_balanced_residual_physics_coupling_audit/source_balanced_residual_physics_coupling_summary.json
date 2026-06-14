@@ -530,10 +530,10 @@
     }
   ],
   "outputs": {
-    "correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit/source_balanced_residual_physics_correlations.csv",
-    "candidate_correlations": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit/source_balanced_primary_residual_candidate_correlations.csv",
-    "target_aligned_pairs": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit/source_balanced_residual_physics_target_aligned_pairs.csv",
-    "summary": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit/source_balanced_residual_physics_coupling_summary.json"
+    "correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit/source_balanced_residual_physics_correlations.csv",
+    "candidate_correlations": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit/source_balanced_primary_residual_candidate_correlations.csv",
+    "target_aligned_pairs": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit/source_balanced_residual_physics_target_aligned_pairs.csv",
+    "summary": "/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_residual_physics_coupling_audit/source_balanced_residual_physics_coupling_summary.json"
   },
   "guardrail": "Residual-physics coupling is a source-normalized correlation audit over automatic crop-local optical proxies. It can prioritize follow-up mechanisms, but it does not calibrate diffusion coefficients or prove phase-boundary physics without manual/QC and physical scale validation."
 }

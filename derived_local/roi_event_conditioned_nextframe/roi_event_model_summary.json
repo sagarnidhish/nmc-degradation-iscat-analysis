@@ -163,7 +163,7 @@
   "n_metric_rows": 2079,
   "n_roi_sequences": 11,
   "pca_explained_variance_ratio_sum": 0.9958291053771973,
-  "plot_path": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/roi_event_conditioned_nextframe/roi_event_model_summary.png",
+  "plot_path": "/scratch/<account>/<username>/Alek_Jiho/derived/roi_event_conditioned_nextframe/roi_event_model_summary.png",
   "rank": 24,
   "residual_cycle_summary": [
     {
@@ -183,7 +183,7 @@
       "truth_roi_delta_tail": -0.013631384509305159
     }
   ],
-  "roi_dir": "/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/selected_roi_sequences",
+  "roi_dir": "/scratch/<account>/<username>/Alek_Jiho/derived/selected_roi_sequences",
   "train_fraction": 0.67,
   "train_latent_delta_mse": 0.0006666512084695846
 }

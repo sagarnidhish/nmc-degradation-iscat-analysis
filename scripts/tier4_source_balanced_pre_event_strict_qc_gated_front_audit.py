@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 
 
-DERIVED = Path("/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+DERIVED = Path("/scratch/<account>/<username>/Alek_Jiho/derived")
 OUT = DERIVED / "source_balanced_pre_event_strict_qc_gated_front_audit"
 
 

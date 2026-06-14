@@ -347,10 +347,10 @@ def write_readme(out: Path, summary: Dict[str, Any]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
     parser.add_argument(
         "--out-dir",
-        default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit",
+        default="/scratch/<account>/<username>/Alek_Jiho/derived/source_balanced_pre_event_echem_matched_residual_audit",
     )
     parser.add_argument("--n-perm", type=int, default=1000)
     parser.add_argument("--seed", type=int, default=20260522)

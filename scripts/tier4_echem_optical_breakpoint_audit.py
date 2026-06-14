@@ -262,8 +262,8 @@ def add_derivative_features(df: pd.DataFrame, base_features: List[str]) -> tuple
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--derived-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived")
-    parser.add_argument("--out-dir", default="/scratch/u6hp/nsagar.u6hp/Alek_Jiho/derived/echem_optical_breakpoint_audit")
+    parser.add_argument("--derived-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived")
+    parser.add_argument("--out-dir", default="/scratch/<account>/<username>/Alek_Jiho/derived/echem_optical_breakpoint_audit")
     parser.add_argument("--n-perm", type=int, default=DEFAULT_N_PERM)
     parser.add_argument("--seed", type=int, default=29)
     args = parser.parse_args()
